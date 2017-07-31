@@ -1,0 +1,290 @@
+<?xml version="1.0" encoding="ASCII"?>
+<ecore:EPackage xmi:version="2.0" xmlns:xmi="http://www.omg.org/XMI" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:ecore="http://www.eclipse.org/emf/2002/Ecore" xmlns:fUML.Syntax.Actions.BasicActions="http://www.modelexecution.org/xmof/syntax/actions/basicactions" xmlns:fUML.Syntax.Actions.IntermediateActions="http://www.modelexecution.org/xmof/syntax/actions/intermediateactions" xmlns:fUML.Syntax.Activities.ExtraStructuredActivities="http://www.modelexecution.org/xmof/syntax/activities/extrastructuredactivities" xmlns:fUML.Syntax.Activities.IntermediateActivities="http://www.modelexecution.org/xmof/syntax/activities/intermediateactivities" xmlns:fUML.Syntax.CommonBehaviors.BasicBehaviors="http://www.modelexecution.org/xmof/syntax/commonbehaviors/basicbehaviors" xmlns:kernel="http://www.modelexecution.org/xmof/syntax/classes/mykernel" name="petrinetConfiguration" nsURI="http://petrinet/1.0/configuration" nsPrefix="petrinetConf">
+  <eClassifiers xsi:type="kernel:BehavioredEClass" name="NetConfiguration">
+    <eSuperTypes href="petrinet.ecore#//Net"/>
+    <eOperations xsi:type="kernel:BehavioredEOperation" name="main" method="//NetConfiguration/main.1"/>
+    <eOperations xsi:type="kernel:BehavioredEOperation" name="run" method="//NetConfiguration/run.1"/>
+    <ownedBehavior xsi:type="fUML.Syntax.Activities.IntermediateActivities:Activity" name="main" specification="//NetConfiguration/main">
+      <node xsi:type="fUML.Syntax.Activities.IntermediateActivities:InitialNode" outgoing="//NetConfiguration/main.1/%.3"/>
+      <node xsi:type="fUML.Syntax.Actions.IntermediateActions:ReadSelfAction" name="Read self" incoming="//NetConfiguration/main.1/%.3">
+        <result name="result" outgoing="//NetConfiguration/main.1/%.4" lowerBound="1"/>
+      </node>
+      <node xsi:type="fUML.Syntax.Activities.IntermediateActivities:ForkNode" outgoing="//NetConfiguration/main.1/%.5 //NetConfiguration/main.1/%.6" incoming="//NetConfiguration/main.1/%.4"/>
+      <node xsi:type="fUML.Syntax.Actions.IntermediateActions:ReadStructuralFeatureAction" name="Read places">
+        <structuralFeature xsi:type="ecore:EReference" href="petrinet.ecore#//Net/places"/>
+        <object name="object" incoming="//NetConfiguration/main.1/%.5" lowerBound="1"/>
+        <result name="result" outgoing="//NetConfiguration/main.1/%.7" upperBound="0"/>
+      </node>
+      <node xsi:type="fUML.Syntax.Actions.BasicActions:CallOperationAction" name="Call run" incoming="//NetConfiguration/main.1/%.8" operation="//NetConfiguration/run">
+        <target name="target" incoming="//NetConfiguration/main.1/%.6" lowerBound="1"/>
+      </node>
+      <node xsi:type="fUML.Syntax.Activities.ExtraStructuredActivities:ExpansionRegion" name="Expansion Region" outgoing="//NetConfiguration/main.1/%.8" inputElement="//NetConfiguration/main.1/%.2">
+        <node xsi:type="fUML.Syntax.Activities.IntermediateActivities:ForkNode" outgoing="//NetConfiguration/main.1/Expansion%20Region/%.2 //NetConfiguration/main.1/Expansion%20Region/%.3" incoming="//NetConfiguration/main.1/Expansion%20Region/%.1"/>
+        <node xsi:type="fUML.Syntax.Actions.IntermediateActions:ReadStructuralFeatureAction" name="Read initialTokens">
+          <structuralFeature xsi:type="ecore:EAttribute" href="petrinet.ecore#//Place/initialTokens"/>
+          <object name="object" incoming="//NetConfiguration/main.1/Expansion%20Region/%.2" lowerBound="1"/>
+          <result name="result" outgoing="//NetConfiguration/main.1/Expansion%20Region/%.4" upperBound="0"/>
+        </node>
+        <node xsi:type="fUML.Syntax.Actions.IntermediateActions:AddStructuralFeatureValueAction" name="Set tokens" structuralFeature="//PlaceConfiguration/tokens" replaceAll="true">
+          <object name="object" incoming="//NetConfiguration/main.1/Expansion%20Region/%.3" lowerBound="1"/>
+          <value name="value" incoming="//NetConfiguration/main.1/Expansion%20Region/%.4" lowerBound="1"/>
+          <result name="result" lowerBound="1"/>
+        </node>
+        <edge xsi:type="fUML.Syntax.Activities.IntermediateActivities:ObjectFlow" source="//NetConfiguration/main.1/%.2" target="//NetConfiguration/main.1/Expansion%20Region/%"/>
+        <edge xsi:type="fUML.Syntax.Activities.IntermediateActivities:ObjectFlow" source="//NetConfiguration/main.1/Expansion%20Region/%" target="//NetConfiguration/main.1/Expansion%20Region/Read%20initialTokens/object"/>
+        <edge xsi:type="fUML.Syntax.Activities.IntermediateActivities:ObjectFlow" source="//NetConfiguration/main.1/Expansion%20Region/%" target="//NetConfiguration/main.1/Expansion%20Region/Set%20tokens/object"/>
+        <edge xsi:type="fUML.Syntax.Activities.IntermediateActivities:ObjectFlow" source="//NetConfiguration/main.1/Expansion%20Region/Read%20initialTokens/result" target="//NetConfiguration/main.1/Expansion%20Region/Set%20tokens/value"/>
+      </node>
+      <node xsi:type="fUML.Syntax.Activities.ExtraStructuredActivities:ExpansionNode" outgoing="//NetConfiguration/main.1/Expansion%20Region/%.1" incoming="//NetConfiguration/main.1/%.7" regionAsInput="//NetConfiguration/main.1/Expansion%20Region"/>
+      <edge xsi:type="fUML.Syntax.Activities.IntermediateActivities:ControlFlow" source="//NetConfiguration/main.1/%" target="//NetConfiguration/main.1/Read%20self"/>
+      <edge xsi:type="fUML.Syntax.Activities.IntermediateActivities:ObjectFlow" source="//NetConfiguration/main.1/Read%20self/result" target="//NetConfiguration/main.1/%.1"/>
+      <edge xsi:type="fUML.Syntax.Activities.IntermediateActivities:ObjectFlow" source="//NetConfiguration/main.1/%.1" target="//NetConfiguration/main.1/Read%20places/object"/>
+      <edge xsi:type="fUML.Syntax.Activities.IntermediateActivities:ObjectFlow" source="//NetConfiguration/main.1/%.1" target="//NetConfiguration/main.1/Call%20run/target"/>
+      <edge xsi:type="fUML.Syntax.Activities.IntermediateActivities:ObjectFlow" source="//NetConfiguration/main.1/Read%20places/result" target="//NetConfiguration/main.1/%.2"/>
+      <edge xsi:type="fUML.Syntax.Activities.IntermediateActivities:ControlFlow" source="//NetConfiguration/main.1/Expansion%20Region" target="//NetConfiguration/main.1/Call%20run"/>
+    </ownedBehavior>
+    <ownedBehavior xsi:type="fUML.Syntax.Activities.IntermediateActivities:Activity" name="run" specification="//NetConfiguration/run">
+      <node xsi:type="fUML.Syntax.Activities.IntermediateActivities:InitialNode" outgoing="//NetConfiguration/run.1/%.4"/>
+      <node xsi:type="fUML.Syntax.Activities.IntermediateActivities:MergeNode" outgoing="//NetConfiguration/run.1/%.5" incoming="//NetConfiguration/run.1/%.4 //NetConfiguration/run.1/%.12"/>
+      <node xsi:type="fUML.Syntax.Actions.IntermediateActions:ReadSelfAction" name="Read self" incoming="//NetConfiguration/run.1/%.5">
+        <result name="result" outgoing="//NetConfiguration/run.1/%.6" lowerBound="1"/>
+      </node>
+      <node xsi:type="fUML.Syntax.Actions.IntermediateActions:ReadStructuralFeatureAction" name="Read transitions">
+        <structuralFeature xsi:type="ecore:EReference" href="petrinet.ecore#//Net/transitions"/>
+        <object name="object" incoming="//NetConfiguration/run.1/%.6" lowerBound="1"/>
+        <result name="result" outgoing="//NetConfiguration/run.1/%.7" upperBound="0"/>
+      </node>
+      <node xsi:type="fUML.Syntax.Activities.ExtraStructuredActivities:ExpansionRegion" name="Expansion Region" outgoing="//NetConfiguration/run.1/%.11" inputElement="//NetConfiguration/run.1/%.2" outputElement="//NetConfiguration/run.1/%.3">
+        <node xsi:type="fUML.Syntax.Activities.IntermediateActivities:ForkNode" outgoing="//NetConfiguration/run.1/Expansion%20Region/%.3 //NetConfiguration/run.1/Expansion%20Region/%.5" incoming="//NetConfiguration/run.1/Expansion%20Region/%.2"/>
+        <node xsi:type="fUML.Syntax.Actions.BasicActions:CallOperationAction" name="Call isEnabled" operation="//TransitionConfiguration/isEnabled">
+          <result name="return" outgoing="//NetConfiguration/run.1/Expansion%20Region/run_decisionInputFlow"/>
+          <target name="target" incoming="//NetConfiguration/run.1/Expansion%20Region/%.5" lowerBound="1"/>
+        </node>
+        <node xsi:type="fUML.Syntax.Activities.IntermediateActivities:DecisionNode" outgoing="//NetConfiguration/run.1/Expansion%20Region/%.4" incoming="//NetConfiguration/run.1/Expansion%20Region/%.3 //NetConfiguration/run.1/Expansion%20Region/run_decisionInputFlow" decisionInputFlow="//NetConfiguration/run.1/Expansion%20Region/run_decisionInputFlow"/>
+        <edge xsi:type="fUML.Syntax.Activities.IntermediateActivities:ObjectFlow" source="//NetConfiguration/run.1/%.2" target="//NetConfiguration/run.1/Expansion%20Region/%"/>
+        <edge xsi:type="fUML.Syntax.Activities.IntermediateActivities:ObjectFlow" source="//NetConfiguration/run.1/Expansion%20Region/%" target="//NetConfiguration/run.1/Expansion%20Region/%.1"/>
+        <edge xsi:type="fUML.Syntax.Activities.IntermediateActivities:ObjectFlow" source="//NetConfiguration/run.1/Expansion%20Region/%.1" target="//NetConfiguration/run.1/%.3">
+          <guard xsi:type="kernel:LiteralBoolean" value="true"/>
+        </edge>
+        <edge xsi:type="fUML.Syntax.Activities.IntermediateActivities:ObjectFlow" source="//NetConfiguration/run.1/Expansion%20Region/%" target="//NetConfiguration/run.1/Expansion%20Region/Call%20isEnabled/target"/>
+        <edge xsi:type="fUML.Syntax.Activities.IntermediateActivities:ObjectFlow" name="run_decisionInputFlow" source="//NetConfiguration/run.1/Expansion%20Region/Call%20isEnabled/return" target="//NetConfiguration/run.1/Expansion%20Region/%.1"/>
+      </node>
+      <node xsi:type="fUML.Syntax.Activities.ExtraStructuredActivities:ExpansionNode" outgoing="//NetConfiguration/run.1/Expansion%20Region/%.2" incoming="//NetConfiguration/run.1/%.7" regionAsInput="//NetConfiguration/run.1/Expansion%20Region"/>
+      <node xsi:type="fUML.Syntax.Activities.ExtraStructuredActivities:ExpansionNode" outgoing="//NetConfiguration/run.1/%.8" incoming="//NetConfiguration/run.1/Expansion%20Region/%.4" regionAsOutput="//NetConfiguration/run.1/Expansion%20Region"/>
+      <node xsi:type="fUML.Syntax.Actions.BasicActions:CallBehaviorAction" name="Call listGet">
+        <argument name="list" incoming="//NetConfiguration/run.1/%.8" lowerBound="1" upperBound="-1"/>
+        <argument name="index" incoming="//NetConfiguration/run.1/%.10" lowerBound="1"/>
+        <result name="result" outgoing="//NetConfiguration/run.1/%.9"/>
+        <behavior xsi:type="fUML.Syntax.CommonBehaviors.BasicBehaviors:FunctionBehavior" href="pathmap://XMOF_LIBRARY/xmof_library.xmof#//PrimitiveBehaviors/ListFunctions/ListGet"/>
+      </node>
+      <node xsi:type="fUML.Syntax.Actions.BasicActions:CallOperationAction" name="Call fire" outgoing="//NetConfiguration/run.1/%.12" operation="//TransitionConfiguration/fire">
+        <target name="target" incoming="//NetConfiguration/run.1/%.9" lowerBound="1"/>
+      </node>
+      <node xsi:type="fUML.Syntax.Actions.IntermediateActions:ValueSpecificationAction" name="Specify 1" incoming="//NetConfiguration/run.1/%.11">
+        <value xsi:type="kernel:LiteralInteger" value="1"/>
+        <result name="result" outgoing="//NetConfiguration/run.1/%.10" lowerBound="1"/>
+      </node>
+      <edge xsi:type="fUML.Syntax.Activities.IntermediateActivities:ControlFlow" source="//NetConfiguration/run.1/%" target="//NetConfiguration/run.1/%.1"/>
+      <edge xsi:type="fUML.Syntax.Activities.IntermediateActivities:ControlFlow" source="//NetConfiguration/run.1/%.1" target="//NetConfiguration/run.1/Read%20self"/>
+      <edge xsi:type="fUML.Syntax.Activities.IntermediateActivities:ObjectFlow" source="//NetConfiguration/run.1/Read%20self/result" target="//NetConfiguration/run.1/Read%20transitions/object"/>
+      <edge xsi:type="fUML.Syntax.Activities.IntermediateActivities:ObjectFlow" source="//NetConfiguration/run.1/Read%20transitions/result" target="//NetConfiguration/run.1/%.2"/>
+      <edge xsi:type="fUML.Syntax.Activities.IntermediateActivities:ObjectFlow" source="//NetConfiguration/run.1/%.3" target="//NetConfiguration/run.1/Call%20listGet/list"/>
+      <edge xsi:type="fUML.Syntax.Activities.IntermediateActivities:ObjectFlow" source="//NetConfiguration/run.1/Call%20listGet/result" target="//NetConfiguration/run.1/Call%20fire/target"/>
+      <edge xsi:type="fUML.Syntax.Activities.IntermediateActivities:ObjectFlow" source="//NetConfiguration/run.1/Specify%201/result" target="//NetConfiguration/run.1/Call%20listGet/index"/>
+      <edge xsi:type="fUML.Syntax.Activities.IntermediateActivities:ControlFlow" source="//NetConfiguration/run.1/Expansion%20Region" target="//NetConfiguration/run.1/Specify%201"/>
+      <edge xsi:type="fUML.Syntax.Activities.IntermediateActivities:ControlFlow" source="//NetConfiguration/run.1/Call%20fire" target="//NetConfiguration/run.1/%.1"/>
+    </ownedBehavior>
+  </eClassifiers>
+  <eClassifiers xsi:type="kernel:BehavioredEClass" name="PlaceConfiguration">
+    <eSuperTypes href="petrinet.ecore#//Place"/>
+    <eOperations xsi:type="kernel:BehavioredEOperation" name="removeToken" method="//PlaceConfiguration/removeToken.1"/>
+    <eOperations xsi:type="kernel:BehavioredEOperation" name="addToken" method="//PlaceConfiguration/addToken.1"/>
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="tokens">
+      <eType xsi:type="ecore:EDataType" href="http://www.eclipse.org/emf/2002/Ecore#//EInt"/>
+    </eStructuralFeatures>
+    <ownedBehavior xsi:type="fUML.Syntax.Activities.IntermediateActivities:Activity" name="addToken" specification="//PlaceConfiguration/addToken">
+      <node xsi:type="fUML.Syntax.Activities.IntermediateActivities:InitialNode" outgoing="//PlaceConfiguration/addToken.1/%.3"/>
+      <node xsi:type="fUML.Syntax.Actions.IntermediateActions:ReadSelfAction" name="Read self" incoming="//PlaceConfiguration/addToken.1/%.4">
+        <result name="result" outgoing="//PlaceConfiguration/addToken.1/%.6" lowerBound="1"/>
+      </node>
+      <node xsi:type="fUML.Syntax.Activities.IntermediateActivities:ForkNode" outgoing="//PlaceConfiguration/addToken.1/%.4 //PlaceConfiguration/addToken.1/%.5" incoming="//PlaceConfiguration/addToken.1/%.3"/>
+      <node xsi:type="fUML.Syntax.Actions.IntermediateActions:ValueSpecificationAction" name="Specify 1" incoming="//PlaceConfiguration/addToken.1/%.5">
+        <value xsi:type="kernel:LiteralInteger" value="1"/>
+        <result name="result" outgoing="//PlaceConfiguration/addToken.1/%.10" lowerBound="1"/>
+      </node>
+      <node xsi:type="fUML.Syntax.Activities.IntermediateActivities:ForkNode" outgoing="//PlaceConfiguration/addToken.1/%.7 //PlaceConfiguration/addToken.1/%.8" incoming="//PlaceConfiguration/addToken.1/%.6"/>
+      <node xsi:type="fUML.Syntax.Actions.IntermediateActions:ReadStructuralFeatureAction" name="Read tokens" structuralFeature="//PlaceConfiguration/tokens">
+        <object name="object" incoming="//PlaceConfiguration/addToken.1/%.7" lowerBound="1"/>
+        <result name="result" outgoing="//PlaceConfiguration/addToken.1/%.9" upperBound="0"/>
+      </node>
+      <node xsi:type="fUML.Syntax.Actions.BasicActions:CallBehaviorAction" name="Call add">
+        <argument name="x" incoming="//PlaceConfiguration/addToken.1/%.9" lowerBound="1"/>
+        <argument name="y" incoming="//PlaceConfiguration/addToken.1/%.10" lowerBound="1"/>
+        <result name="result" outgoing="//PlaceConfiguration/addToken.1/%.11"/>
+        <behavior xsi:type="fUML.Syntax.CommonBehaviors.BasicBehaviors:FunctionBehavior" href="pathmap://XMOF_LIBRARY/xmof_library.xmof#//PrimitiveBehaviors/IntegerFunctions/IntegerPlus"/>
+      </node>
+      <node xsi:type="fUML.Syntax.Actions.IntermediateActions:AddStructuralFeatureValueAction" name="Set tokens" structuralFeature="//PlaceConfiguration/tokens" replaceAll="true">
+        <object name="object" incoming="//PlaceConfiguration/addToken.1/%.8" lowerBound="1"/>
+        <value name="value" incoming="//PlaceConfiguration/addToken.1/%.11" lowerBound="1"/>
+        <result name="result" lowerBound="1"/>
+      </node>
+      <edge xsi:type="fUML.Syntax.Activities.IntermediateActivities:ControlFlow" source="//PlaceConfiguration/addToken.1/%" target="//PlaceConfiguration/addToken.1/%.1"/>
+      <edge xsi:type="fUML.Syntax.Activities.IntermediateActivities:ControlFlow" source="//PlaceConfiguration/addToken.1/%.1" target="//PlaceConfiguration/addToken.1/Read%20self"/>
+      <edge xsi:type="fUML.Syntax.Activities.IntermediateActivities:ControlFlow" source="//PlaceConfiguration/addToken.1/%.1" target="//PlaceConfiguration/addToken.1/Specify%201"/>
+      <edge xsi:type="fUML.Syntax.Activities.IntermediateActivities:ObjectFlow" source="//PlaceConfiguration/addToken.1/Read%20self/result" target="//PlaceConfiguration/addToken.1/%.2"/>
+      <edge xsi:type="fUML.Syntax.Activities.IntermediateActivities:ObjectFlow" source="//PlaceConfiguration/addToken.1/%.2" target="//PlaceConfiguration/addToken.1/Read%20tokens/object"/>
+      <edge xsi:type="fUML.Syntax.Activities.IntermediateActivities:ObjectFlow" source="//PlaceConfiguration/addToken.1/%.2" target="//PlaceConfiguration/addToken.1/Set%20tokens/object"/>
+      <edge xsi:type="fUML.Syntax.Activities.IntermediateActivities:ObjectFlow" source="//PlaceConfiguration/addToken.1/Read%20tokens/result" target="//PlaceConfiguration/addToken.1/Call%20add/x"/>
+      <edge xsi:type="fUML.Syntax.Activities.IntermediateActivities:ObjectFlow" source="//PlaceConfiguration/addToken.1/Specify%201/result" target="//PlaceConfiguration/addToken.1/Call%20add/y"/>
+      <edge xsi:type="fUML.Syntax.Activities.IntermediateActivities:ObjectFlow" source="//PlaceConfiguration/addToken.1/Call%20add/result" target="//PlaceConfiguration/addToken.1/Set%20tokens/value"/>
+    </ownedBehavior>
+    <ownedBehavior xsi:type="fUML.Syntax.Activities.IntermediateActivities:Activity" name="removeToken" specification="//PlaceConfiguration/removeToken">
+      <node xsi:type="fUML.Syntax.Activities.IntermediateActivities:InitialNode" outgoing="//PlaceConfiguration/removeToken.1/%.3"/>
+      <node xsi:type="fUML.Syntax.Activities.IntermediateActivities:ForkNode" outgoing="//PlaceConfiguration/removeToken.1/%.4 //PlaceConfiguration/removeToken.1/%.5" incoming="//PlaceConfiguration/removeToken.1/%.3"/>
+      <node xsi:type="fUML.Syntax.Actions.IntermediateActions:ValueSpecificationAction" name="Specify 1" incoming="//PlaceConfiguration/removeToken.1/%.5">
+        <value xsi:type="kernel:LiteralInteger" value="1"/>
+        <result name="result" outgoing="//PlaceConfiguration/removeToken.1/%.10" lowerBound="1"/>
+      </node>
+      <node xsi:type="fUML.Syntax.Actions.IntermediateActions:ReadSelfAction" name="Read self" incoming="//PlaceConfiguration/removeToken.1/%.4">
+        <result name="result" outgoing="//PlaceConfiguration/removeToken.1/%.6" lowerBound="1"/>
+      </node>
+      <node xsi:type="fUML.Syntax.Activities.IntermediateActivities:ForkNode" outgoing="//PlaceConfiguration/removeToken.1/%.7 //PlaceConfiguration/removeToken.1/%.8" incoming="//PlaceConfiguration/removeToken.1/%.6"/>
+      <node xsi:type="fUML.Syntax.Actions.BasicActions:CallBehaviorAction" name="Call subtract">
+        <argument name="x" incoming="//PlaceConfiguration/removeToken.1/%.9" lowerBound="1"/>
+        <argument name="y" incoming="//PlaceConfiguration/removeToken.1/%.10" lowerBound="1"/>
+        <result name="result" outgoing="//PlaceConfiguration/removeToken.1/%.11"/>
+        <behavior xsi:type="fUML.Syntax.CommonBehaviors.BasicBehaviors:FunctionBehavior" href="pathmap://XMOF_LIBRARY/xmof_library.xmof#//PrimitiveBehaviors/IntegerFunctions/IntegerMinus"/>
+      </node>
+      <node xsi:type="fUML.Syntax.Actions.IntermediateActions:ReadStructuralFeatureAction" name="Read tokens" structuralFeature="//PlaceConfiguration/tokens">
+        <object name="object" incoming="//PlaceConfiguration/removeToken.1/%.7" lowerBound="1"/>
+        <result name="result" outgoing="//PlaceConfiguration/removeToken.1/%.9" upperBound="0"/>
+      </node>
+      <node xsi:type="fUML.Syntax.Actions.IntermediateActions:AddStructuralFeatureValueAction" name="Set tokens" structuralFeature="//PlaceConfiguration/tokens" replaceAll="true">
+        <object name="object" incoming="//PlaceConfiguration/removeToken.1/%.8" lowerBound="1"/>
+        <value name="value" incoming="//PlaceConfiguration/removeToken.1/%.11" lowerBound="1"/>
+        <result name="result" lowerBound="1"/>
+      </node>
+      <edge xsi:type="fUML.Syntax.Activities.IntermediateActivities:ControlFlow" source="//PlaceConfiguration/removeToken.1/%" target="//PlaceConfiguration/removeToken.1/%.1"/>
+      <edge xsi:type="fUML.Syntax.Activities.IntermediateActivities:ControlFlow" source="//PlaceConfiguration/removeToken.1/%.1" target="//PlaceConfiguration/removeToken.1/Read%20self"/>
+      <edge xsi:type="fUML.Syntax.Activities.IntermediateActivities:ControlFlow" source="//PlaceConfiguration/removeToken.1/%.1" target="//PlaceConfiguration/removeToken.1/Specify%201"/>
+      <edge xsi:type="fUML.Syntax.Activities.IntermediateActivities:ObjectFlow" source="//PlaceConfiguration/removeToken.1/Read%20self/result" target="//PlaceConfiguration/removeToken.1/%.2"/>
+      <edge xsi:type="fUML.Syntax.Activities.IntermediateActivities:ObjectFlow" source="//PlaceConfiguration/removeToken.1/%.2" target="//PlaceConfiguration/removeToken.1/Read%20tokens/object"/>
+      <edge xsi:type="fUML.Syntax.Activities.IntermediateActivities:ObjectFlow" source="//PlaceConfiguration/removeToken.1/%.2" target="//PlaceConfiguration/removeToken.1/Set%20tokens/object"/>
+      <edge xsi:type="fUML.Syntax.Activities.IntermediateActivities:ObjectFlow" source="//PlaceConfiguration/removeToken.1/Read%20tokens/result" target="//PlaceConfiguration/removeToken.1/Call%20subtract/x"/>
+      <edge xsi:type="fUML.Syntax.Activities.IntermediateActivities:ObjectFlow" source="//PlaceConfiguration/removeToken.1/Specify%201/result" target="//PlaceConfiguration/removeToken.1/Call%20subtract/y"/>
+      <edge xsi:type="fUML.Syntax.Activities.IntermediateActivities:ObjectFlow" source="//PlaceConfiguration/removeToken.1/Call%20subtract/result" target="//PlaceConfiguration/removeToken.1/Set%20tokens/value"/>
+    </ownedBehavior>
+  </eClassifiers>
+  <eClassifiers xsi:type="kernel:BehavioredEClass" name="TransitionConfiguration">
+    <eSuperTypes href="petrinet.ecore#//Transition"/>
+    <eOperations xsi:type="kernel:BehavioredEOperation" name="isEnabled" method="//TransitionConfiguration/isEnabled.1">
+      <eParameters xsi:type="kernel:DirectedParameter" name="return" direction="RETURN"/>
+    </eOperations>
+    <eOperations xsi:type="kernel:BehavioredEOperation" name="fire" method="//TransitionConfiguration/fire.1"/>
+    <ownedBehavior xsi:type="fUML.Syntax.Activities.IntermediateActivities:Activity" name="isEnabled" specification="//TransitionConfiguration/isEnabled">
+      <ownedParameter name="return" direction="RETURN"/>
+      <node xsi:type="fUML.Syntax.Activities.IntermediateActivities:ActivityParameterNode" name="return" incoming="//TransitionConfiguration/isEnabled.1/%.9 //TransitionConfiguration/isEnabled.1/%.10" parameter="//TransitionConfiguration/isEnabled.1/return"/>
+      <node xsi:type="fUML.Syntax.Activities.IntermediateActivities:InitialNode" outgoing="//TransitionConfiguration/isEnabled.1/%.4"/>
+      <node xsi:type="fUML.Syntax.Actions.IntermediateActions:ReadSelfAction" name="Read self" incoming="//TransitionConfiguration/isEnabled.1/%.4">
+        <result name="result" outgoing="//TransitionConfiguration/isEnabled.1/%.6" lowerBound="1"/>
+      </node>
+      <node xsi:type="fUML.Syntax.Actions.IntermediateActions:ReadStructuralFeatureAction" name="Read input">
+        <structuralFeature xsi:type="ecore:EReference" href="petrinet.ecore#//Transition/input"/>
+        <object name="object" incoming="//TransitionConfiguration/isEnabled.1/%.6" lowerBound="1"/>
+        <result name="result" outgoing="//TransitionConfiguration/isEnabled.1/%.7" upperBound="0"/>
+      </node>
+      <node xsi:type="fUML.Syntax.Activities.ExtraStructuredActivities:ExpansionRegion" name="Expansion Region" outgoing="//TransitionConfiguration/isEnabled.1/%.5 //TransitionConfiguration/isEnabled.1/%.11" inputElement="//TransitionConfiguration/isEnabled.1/%.1" outputElement="//TransitionConfiguration/isEnabled.1/%.2">
+        <node xsi:type="fUML.Syntax.Activities.IntermediateActivities:ForkNode" outgoing="//TransitionConfiguration/isEnabled.1/Expansion%20Region/%.2 //TransitionConfiguration/isEnabled.1/Expansion%20Region/%.3" incoming="//TransitionConfiguration/isEnabled.1/Expansion%20Region/%.1"/>
+        <node xsi:type="fUML.Syntax.Actions.IntermediateActions:ReadStructuralFeatureAction" name="Read tokens" structuralFeature="//PlaceConfiguration/tokens">
+          <object name="object" incoming="//TransitionConfiguration/isEnabled.1/Expansion%20Region/%.2" lowerBound="1"/>
+          <result name="result" outgoing="//TransitionConfiguration/isEnabled.1/Expansion%20Region/isEnabled_decisionInputFlow" upperBound="0"/>
+        </node>
+        <node xsi:type="fUML.Syntax.Activities.IntermediateActivities:DecisionNode" name="isEnabled_decision1" outgoing="//TransitionConfiguration/isEnabled.1/Expansion%20Region/%.4" incoming="//TransitionConfiguration/isEnabled.1/Expansion%20Region/%.3 //TransitionConfiguration/isEnabled.1/Expansion%20Region/isEnabled_decisionInputFlow" decisionInputFlow="//TransitionConfiguration/isEnabled.1/Expansion%20Region/isEnabled_decisionInputFlow"/>
+        <edge xsi:type="fUML.Syntax.Activities.IntermediateActivities:ObjectFlow" source="//TransitionConfiguration/isEnabled.1/%.1" target="//TransitionConfiguration/isEnabled.1/Expansion%20Region/%"/>
+        <edge xsi:type="fUML.Syntax.Activities.IntermediateActivities:ObjectFlow" source="//TransitionConfiguration/isEnabled.1/Expansion%20Region/%" target="//TransitionConfiguration/isEnabled.1/Expansion%20Region/Read%20tokens/object"/>
+        <edge xsi:type="fUML.Syntax.Activities.IntermediateActivities:ObjectFlow" source="//TransitionConfiguration/isEnabled.1/Expansion%20Region/%" target="//TransitionConfiguration/isEnabled.1/Expansion%20Region/isEnabled_decision1"/>
+        <edge xsi:type="fUML.Syntax.Activities.IntermediateActivities:ObjectFlow" name="isEnabled_decisionInputFlow" source="//TransitionConfiguration/isEnabled.1/Expansion%20Region/Read%20tokens/result" target="//TransitionConfiguration/isEnabled.1/Expansion%20Region/isEnabled_decision1">
+          <guard xsi:type="kernel:LiteralInteger"/>
+        </edge>
+        <edge xsi:type="fUML.Syntax.Activities.IntermediateActivities:ObjectFlow" source="//TransitionConfiguration/isEnabled.1/Expansion%20Region/isEnabled_decision1" target="//TransitionConfiguration/isEnabled.1/%.2">
+          <guard xsi:type="kernel:LiteralInteger"/>
+        </edge>
+      </node>
+      <node xsi:type="fUML.Syntax.Activities.ExtraStructuredActivities:ExpansionNode" outgoing="//TransitionConfiguration/isEnabled.1/Expansion%20Region/%.1" incoming="//TransitionConfiguration/isEnabled.1/%.7" regionAsInput="//TransitionConfiguration/isEnabled.1/Expansion%20Region"/>
+      <node xsi:type="fUML.Syntax.Activities.ExtraStructuredActivities:ExpansionNode" outgoing="//TransitionConfiguration/isEnabled.1/%.8" incoming="//TransitionConfiguration/isEnabled.1/Expansion%20Region/%.4" regionAsOutput="//TransitionConfiguration/isEnabled.1/Expansion%20Region"/>
+      <node xsi:type="fUML.Syntax.Actions.IntermediateActions:ValueSpecificationAction" name="Specify 0" incoming="//TransitionConfiguration/isEnabled.1/%.5">
+        <value xsi:type="kernel:LiteralInteger"/>
+        <result name="result0" outgoing="//TransitionConfiguration/isEnabled.1/isEnabled_decisionInputFlow2" lowerBound="1"/>
+      </node>
+      <node xsi:type="fUML.Syntax.Actions.BasicActions:CallBehaviorAction" name="Call listSize" incoming="//TransitionConfiguration/isEnabled.1/%.11">
+        <argument name="list" incoming="//TransitionConfiguration/isEnabled.1/%.8" upperBound="-1"/>
+        <result name="result" outgoing="//TransitionConfiguration/isEnabled.1/listSize2decision"/>
+        <behavior xsi:type="fUML.Syntax.CommonBehaviors.BasicBehaviors:FunctionBehavior" href="pathmap://XMOF_LIBRARY/xmof_library.xmof#//PrimitiveBehaviors/ListFunctions/ListSize"/>
+      </node>
+      <node xsi:type="fUML.Syntax.Activities.IntermediateActivities:DecisionNode" outgoing="//TransitionConfiguration/isEnabled.1/isEnabledTrue //TransitionConfiguration/isEnabled.1/isEnabledFalse" incoming="//TransitionConfiguration/isEnabled.1/listSize2decision //TransitionConfiguration/isEnabled.1/isEnabled_decisionInputFlow2" decisionInputFlow="//TransitionConfiguration/isEnabled.1/isEnabled_decisionInputFlow2">
+        <decisionInput xsi:type="fUML.Syntax.CommonBehaviors.BasicBehaviors:FunctionBehavior" href="pathmap://XMOF_LIBRARY/xmof_library.xmof#//PrimitiveBehaviors/IntegerFunctions/IntegerGreater"/>
+      </node>
+      <node xsi:type="fUML.Syntax.Actions.IntermediateActions:ValueSpecificationAction" name="Specify true" incoming="//TransitionConfiguration/isEnabled.1/isEnabledTrue">
+        <value xsi:type="kernel:LiteralBoolean" value="true"/>
+        <result name="resulttrue" outgoing="//TransitionConfiguration/isEnabled.1/%.9" lowerBound="1"/>
+      </node>
+      <node xsi:type="fUML.Syntax.Actions.IntermediateActions:ValueSpecificationAction" name="Specify false" incoming="//TransitionConfiguration/isEnabled.1/isEnabledFalse">
+        <value xsi:type="kernel:LiteralBoolean"/>
+        <result name="resultfalse" outgoing="//TransitionConfiguration/isEnabled.1/%.10" lowerBound="1"/>
+      </node>
+      <edge xsi:type="fUML.Syntax.Activities.IntermediateActivities:ControlFlow" source="//TransitionConfiguration/isEnabled.1/%" target="//TransitionConfiguration/isEnabled.1/Read%20self"/>
+      <edge xsi:type="fUML.Syntax.Activities.IntermediateActivities:ControlFlow" name="isEnabledTrue" source="//TransitionConfiguration/isEnabled.1/%.3" target="//TransitionConfiguration/isEnabled.1/Specify%20true">
+        <guard xsi:type="kernel:LiteralBoolean"/>
+      </edge>
+      <edge xsi:type="fUML.Syntax.Activities.IntermediateActivities:ControlFlow" name="isEnabledFalse" source="//TransitionConfiguration/isEnabled.1/%.3" target="//TransitionConfiguration/isEnabled.1/Specify%20false">
+        <guard xsi:type="kernel:LiteralBoolean" value="true"/>
+      </edge>
+      <edge xsi:type="fUML.Syntax.Activities.IntermediateActivities:ControlFlow" source="//TransitionConfiguration/isEnabled.1/Expansion%20Region" target="//TransitionConfiguration/isEnabled.1/Specify%200"/>
+      <edge xsi:type="fUML.Syntax.Activities.IntermediateActivities:ObjectFlow" source="//TransitionConfiguration/isEnabled.1/Read%20self/result" target="//TransitionConfiguration/isEnabled.1/Read%20input/object"/>
+      <edge xsi:type="fUML.Syntax.Activities.IntermediateActivities:ObjectFlow" source="//TransitionConfiguration/isEnabled.1/Read%20input/result" target="//TransitionConfiguration/isEnabled.1/%.1"/>
+      <edge xsi:type="fUML.Syntax.Activities.IntermediateActivities:ObjectFlow" source="//TransitionConfiguration/isEnabled.1/%.2" target="//TransitionConfiguration/isEnabled.1/Call%20listSize/list"/>
+      <edge xsi:type="fUML.Syntax.Activities.IntermediateActivities:ObjectFlow" name="listSize2decision" source="//TransitionConfiguration/isEnabled.1/Call%20listSize/result" target="//TransitionConfiguration/isEnabled.1/%.3"/>
+      <edge xsi:type="fUML.Syntax.Activities.IntermediateActivities:ObjectFlow" name="isEnabled_decisionInputFlow2" source="//TransitionConfiguration/isEnabled.1/Specify%200/result0" target="//TransitionConfiguration/isEnabled.1/%.3"/>
+      <edge xsi:type="fUML.Syntax.Activities.IntermediateActivities:ObjectFlow" source="//TransitionConfiguration/isEnabled.1/Specify%20true/resulttrue" target="//TransitionConfiguration/isEnabled.1/return.1"/>
+      <edge xsi:type="fUML.Syntax.Activities.IntermediateActivities:ObjectFlow" source="//TransitionConfiguration/isEnabled.1/Specify%20false/resultfalse" target="//TransitionConfiguration/isEnabled.1/return.1"/>
+      <edge xsi:type="fUML.Syntax.Activities.IntermediateActivities:ControlFlow" source="//TransitionConfiguration/isEnabled.1/Expansion%20Region" target="//TransitionConfiguration/isEnabled.1/Call%20listSize"/>
+    </ownedBehavior>
+    <ownedBehavior xsi:type="fUML.Syntax.Activities.IntermediateActivities:Activity" name="fire" specification="//TransitionConfiguration/fire">
+      <node xsi:type="fUML.Syntax.Activities.IntermediateActivities:InitialNode" name="fire initial node" outgoing="//TransitionConfiguration/fire.1/%.3"/>
+      <node xsi:type="fUML.Syntax.Actions.IntermediateActions:ReadSelfAction" name="Read self" incoming="//TransitionConfiguration/fire.1/%.3">
+        <result name="result" outgoing="//TransitionConfiguration/fire.1/%.4" lowerBound="1"/>
+      </node>
+      <node xsi:type="fUML.Syntax.Activities.IntermediateActivities:ForkNode" outgoing="//TransitionConfiguration/fire.1/%.5 //TransitionConfiguration/fire.1/%.6" incoming="//TransitionConfiguration/fire.1/%.4"/>
+      <node xsi:type="fUML.Syntax.Actions.IntermediateActions:ReadStructuralFeatureAction" name="Read output">
+        <structuralFeature xsi:type="ecore:EReference" href="petrinet.ecore#//Transition/output"/>
+        <object name="object" incoming="//TransitionConfiguration/fire.1/%.5" lowerBound="1"/>
+        <result name="result" outgoing="//TransitionConfiguration/fire.1/%.7" upperBound="0"/>
+      </node>
+      <node xsi:type="fUML.Syntax.Actions.IntermediateActions:ReadStructuralFeatureAction" name="Read input">
+        <structuralFeature xsi:type="ecore:EReference" href="petrinet.ecore#//Transition/input"/>
+        <object name="object" incoming="//TransitionConfiguration/fire.1/%.6" lowerBound="1"/>
+        <result name="result" outgoing="//TransitionConfiguration/fire.1/%.8" upperBound="0"/>
+      </node>
+      <node xsi:type="fUML.Syntax.Activities.ExtraStructuredActivities:ExpansionRegion" name="Expansion Region" inputElement="//TransitionConfiguration/fire.1/%.1">
+        <node xsi:type="fUML.Syntax.Actions.BasicActions:CallOperationAction" name="Call addToken" operation="//PlaceConfiguration/addToken">
+          <target name="target" incoming="//TransitionConfiguration/fire.1/Expansion%20Region/%" lowerBound="1"/>
+        </node>
+        <edge xsi:type="fUML.Syntax.Activities.IntermediateActivities:ObjectFlow" source="//TransitionConfiguration/fire.1/%.1" target="//TransitionConfiguration/fire.1/Expansion%20Region/Call%20addToken/target"/>
+      </node>
+      <node xsi:type="fUML.Syntax.Activities.ExtraStructuredActivities:ExpansionRegion" name="Expansion Region" inputElement="//TransitionConfiguration/fire.1/%.2">
+        <node xsi:type="fUML.Syntax.Actions.BasicActions:CallOperationAction" name="Call removeToken" operation="//PlaceConfiguration/removeToken">
+          <target name="target" incoming="//TransitionConfiguration/fire.1/Expansion%20Region.1/%" lowerBound="1"/>
+        </node>
+        <edge xsi:type="fUML.Syntax.Activities.IntermediateActivities:ObjectFlow" source="//TransitionConfiguration/fire.1/%.2" target="//TransitionConfiguration/fire.1/Expansion%20Region.1/Call%20removeToken/target"/>
+      </node>
+      <node xsi:type="fUML.Syntax.Activities.ExtraStructuredActivities:ExpansionNode" outgoing="//TransitionConfiguration/fire.1/Expansion%20Region/%" incoming="//TransitionConfiguration/fire.1/%.7" regionAsInput="//TransitionConfiguration/fire.1/Expansion%20Region"/>
+      <node xsi:type="fUML.Syntax.Activities.ExtraStructuredActivities:ExpansionNode" outgoing="//TransitionConfiguration/fire.1/Expansion%20Region.1/%" incoming="//TransitionConfiguration/fire.1/%.8" regionAsInput="//TransitionConfiguration/fire.1/Expansion%20Region.1"/>
+      <edge xsi:type="fUML.Syntax.Activities.IntermediateActivities:ControlFlow" source="//TransitionConfiguration/fire.1/fire%20initial%20node" target="//TransitionConfiguration/fire.1/Read%20self"/>
+      <edge xsi:type="fUML.Syntax.Activities.IntermediateActivities:ObjectFlow" source="//TransitionConfiguration/fire.1/Read%20self/result" target="//TransitionConfiguration/fire.1/%"/>
+      <edge xsi:type="fUML.Syntax.Activities.IntermediateActivities:ObjectFlow" source="//TransitionConfiguration/fire.1/%" target="//TransitionConfiguration/fire.1/Read%20output/object"/>
+      <edge xsi:type="fUML.Syntax.Activities.IntermediateActivities:ObjectFlow" source="//TransitionConfiguration/fire.1/%" target="//TransitionConfiguration/fire.1/Read%20input/object"/>
+      <edge xsi:type="fUML.Syntax.Activities.IntermediateActivities:ObjectFlow" source="//TransitionConfiguration/fire.1/Read%20output/result" target="//TransitionConfiguration/fire.1/%.1"/>
+      <edge xsi:type="fUML.Syntax.Activities.IntermediateActivities:ObjectFlow" source="//TransitionConfiguration/fire.1/Read%20input/result" target="//TransitionConfiguration/fire.1/%.2"/>
+    </ownedBehavior>
+  </eClassifiers>
+</ecore:EPackage>

@@ -1,0 +1,146 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd" xmlns="http://maven.apache.org/POM/4.0.0"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+  <modelVersion>4.0.0</modelVersion>
+  <groupId>org.eclipse.gemoc.trace.manager</groupId>
+  <artifactId>org.eclipse.gemoc.trace.manager.root</artifactId>
+  <version>2.3.0-SNAPSHOT</version>
+  <packaging>pom</packaging>
+  
+  	<parent>
+		<groupId>org.eclipse.gemoc</groupId>
+		<artifactId>org.eclipse.gemoc.modeldebugging.root</artifactId>
+    	<version>2.3.0-SNAPSHOT</version>
+		<relativePath>../..</relativePath>
+	</parent>
+  
+    <modules>
+    
+      <!-- Plugins -->
+      <module>plugins/org.eclipse.gemoc.addon.multidimensional.timeline</module>
+      <module>plugins/org.eclipse.gemoc.addon.stategraph</module>
+      <module>plugins/org.eclipse.gemoc.addon.diffviewer</module>
+      
+      <!-- Build feature -->
+      <module>releng/org.eclipse.gemoc.trace.manager.feature</module>
+
+    </modules> 
+  
+  <properties>
+    <java.version>1.7</java.version>
+    <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+  </properties>
+  
+  <profiles>
+    <!-- Profiles are used for switching the repositories used for the build so they either use the CI update sites or local repositories -->
+    	<profile>
+	        <id>ignore_CI_repositories</id>
+	        <activation>
+	            <activeByDefault>false</activeByDefault>
+	        </activation>
+	        <repositories>
+		    </repositories>
+	    </profile>
+	    <profile>
+	        <id>use_CI_repositories</id>
+	        <activation>
+	            <activeByDefault>true</activeByDefault>
+	        </activation>
+  
+		  <repositories>
+		        	        
+	    
+		    	<!-- GEMOC and model animation update site on CI -->
+		    	<repository>
+		            <id>gemoc-studio_commons on CI</id>
+		            <layout>p2</layout>
+		            <url>https://ci.inria.fr/gemoc/job/gemoc-studio_commons/lastSuccessfulBuild/artifact/commons/releng/org.eclipse.gemoc.commons.repository/target/repository/</url>
+		        </repository>
+		    <!--     <repository>
+		            <id>modeldebugging_trace_commons on CI</id>
+		            <layout>p2</layout>
+		            <url>https://ci.inria.fr/gemoc/job/modeldebugging_trace_commons/lastSuccessfulBuild/artifact/trace/commons/releng/org.eclipse.gemoc.trace.commons.updatesite/target/repository/</url>
+		        </repository>
+		    	<repository>
+		            <id>modeldebugging_trace_generator on CI</id>
+		            <layout>p2</layout>
+		            <url>https://ci.inria.fr/gemoc/job/modeldebugging_trace_generator/lastSuccessfulBuild/artifact/trace/generator/releng/org.gemoc.modeldebugging.trace.generator.updatesite/target/repository/</url>
+		        </repository>
+		        <repository>
+		            <id>modeldebugging_framework_frameworkcommons on CI</id>
+		            <layout>p2</layout>
+		            <url>https://ci.inria.fr/gemoc/job/modeldebugging_framework_framework_commons/lastSuccessfulBuild/artifact/framework/framework_commons/releng/org.gemoc.modeldebugging.framework.commons.repository/target/repository/</url>
+		        </repository>
+		        <repository>
+		            <id>modeldebugging_framework_xdsmlframework on CI</id>
+		            <layout>p2</layout>
+		            <url>https://ci.inria.fr/gemoc/job/modeldebugging_framework_xdsmlframework/lastSuccessfulBuild/artifact/framework/xdsml_framework/releng/org.gemoc.modeldebugging.xdsmlframework.repository/target/repository/</url>
+		        </repository>
+		        <repository>
+		            <id>modeldebugging_framework_executionframework on CI</id>
+		            <layout>p2</layout>
+		            <url>https://ci.inria.fr/gemoc/job/modeldebugging_framework_executionframework/lastSuccessfulBuild/artifact/framework/execution_framework/releng/org.gemoc.modeldebugging.executionframework.repository/target/repository/</url>
+		        </repository> -->
+		        <repository>
+		            <id>modelanimation_siriusmodelanimation on CI</id>
+		            <layout>p2</layout>
+		            <url>http://obeo-siriuslab-nightly.s3-website-eu-west-1.amazonaws.com/SiriusAnimator/master/repository/</url>
+		        </repository>
+		  </repositories>
+		</profile>
+    	
+    </profiles>
+    
+
+   <build>
+     <plugins>
+ 
+    		<plugin>
+				<groupId>org.eclipse.xtend</groupId>
+				<artifactId>xtend-maven-plugin</artifactId>
+				<version>${xtend.version}</version>
+				<executions>
+					<execution>
+						<goals>
+							<goal>compile</goal>
+						</goals>
+						<configuration>
+							<outputDirectory>xtend-gen</outputDirectory>
+						</configuration>
+					</execution>
+				</executions>
+			</plugin>
+
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-compiler-plugin</artifactId>
+				<version>3.1</version>
+				<configuration>
+					<source>${java.version}</source>
+					<target>${java.version}</target>
+				</configuration>
+			</plugin>
+
+
+      </plugins>
+      </build>
+   
+   
+   	<dependencies>
+		<dependency>
+			<groupId>org.eclipse.xtend</groupId>
+			<artifactId>xtend-maven-plugin</artifactId>
+			<version>${xtend.version}</version>
+		</dependency>
+		<dependency>
+			<groupId>org.eclipse.xtend</groupId>
+			<artifactId>org.eclipse.xtend.lib</artifactId>
+			<version>${xtend.version}</version>
+		</dependency>
+	</dependencies>
+
+   
+   
+   
+  
+</project>

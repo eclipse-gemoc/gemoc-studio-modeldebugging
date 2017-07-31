@@ -1,0 +1,1690 @@
+<?xml version="1.0" encoding="ASCII"?>
+<ecorext:Ecorext xmi:version="2.0" xmlns:xmi="http://www.omg.org/XMI" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:ecore="http://www.eclipse.org/emf/2002/Ecore" xmlns:ecorext="http://ecorext/1.0" xmlns:kernel="http://www.modelexecution.org/xmof/syntax/classes/mykernel">
+  <classesExtensions>
+    <extendedExistingClass href="platform:/plugin/org.modelexecution.xmof.examples/fuml/fuml.xmof#//Loci/ExecutionEnvironment"/>
+    <newProperties xsi:type="ecore:EReference" name="locus_ExecutionEnvironment" lowerBound="1" containment="true">
+      <eAnnotations source="http://www.modelexecution.org/trace/XMOF">
+        <details key="executionMetamodelElement" value="//Loci/ExecutionEnvironment/locus_ExecutionEnvironment"/>
+      </eAnnotations>
+      <eType xsi:type="kernel:BehavioredEClass" href="platform:/plugin/org.modelexecution.xmof.examples/fuml/fuml.xmof#//Loci/Locus"/>
+    </newProperties>
+  </classesExtensions>
+  <classesExtensions>
+    <extendedExistingClass href="platform:/plugin/org.modelexecution.xmof.examples/fuml/fuml.xmof#//Classes/Kernel/Object"/>
+    <newProperties xsi:type="ecore:EReference" name="types" upperBound="-1">
+      <eAnnotations source="http://www.modelexecution.org/trace/XMOF">
+        <details key="executionMetamodelElement" value="//Classes/Kernel/Object/types"/>
+      </eAnnotations>
+      <eType xsi:type="ecore:EClass" href="http://www.eclipse.org/uml2/5.0.0/UML#//Class"/>
+    </newProperties>
+  </classesExtensions>
+  <classesExtensions>
+    <extendedExistingClass href="platform:/plugin/org.modelexecution.xmof.examples/fuml/fuml.xmof#//CommonBehaviors/BasicBehaviors/ParameterValue"/>
+    <newProperties xsi:type="ecore:EReference" name="parameter_ParameterValue" lowerBound="1">
+      <eAnnotations source="http://www.modelexecution.org/trace/XMOF">
+        <details key="executionMetamodelElement" value="//CommonBehaviors/BasicBehaviors/ParameterValue/parameter_ParameterValue"/>
+      </eAnnotations>
+      <eType xsi:type="ecore:EClass" href="http://www.eclipse.org/uml2/5.0.0/UML#//Parameter"/>
+    </newProperties>
+    <newProperties xsi:type="ecore:EReference" name="values_ParameterValue" upperBound="-1" containment="true">
+      <eAnnotations source="http://www.modelexecution.org/trace/XMOF">
+        <details key="executionMetamodelElement" value="//CommonBehaviors/BasicBehaviors/ParameterValue/values_ParameterValue"/>
+      </eAnnotations>
+      <eType xsi:type="kernel:BehavioredEClass" href="platform:/plugin/org.modelexecution.xmof.examples/fuml/fuml.xmof#//Classes/Kernel/Value"/>
+    </newProperties>
+  </classesExtensions>
+  <classesExtensions>
+    <extendedExistingClass href="platform:/plugin/org.modelexecution.xmof.examples/fuml/fuml.xmof#//Loci/Executor"/>
+    <newProperties xsi:type="ecore:EReference" name="locus_Executor">
+      <eAnnotations source="http://www.modelexecution.org/trace/XMOF">
+        <details key="executionMetamodelElement" value="//Loci/Executor/locus_Executor"/>
+      </eAnnotations>
+      <eType xsi:type="kernel:BehavioredEClass" href="platform:/plugin/org.modelexecution.xmof.examples/fuml/fuml.xmof#//Loci/Locus"/>
+    </newProperties>
+  </classesExtensions>
+  <classesExtensions>
+    <extendedExistingClass href="platform:/plugin/org.modelexecution.xmof.examples/fuml/fuml.xmof#//ElementConfiguration"/>
+    <newProperties xsi:type="ecore:EReference" name="semanticVisitor" upperBound="-1">
+      <eAnnotations source="http://www.modelexecution.org/trace/XMOF">
+        <details key="executionMetamodelElement" value="//ElementConfiguration/semanticVisitor"/>
+      </eAnnotations>
+      <eType xsi:type="kernel:BehavioredEClass" href="platform:/plugin/org.modelexecution.xmof.examples/fuml/fuml.xmof#//Loci/SemanticVisitor"/>
+    </newProperties>
+  </classesExtensions>
+  <classesExtensions>
+    <extendedExistingClass href="platform:/plugin/org.modelexecution.xmof.examples/fuml/fuml.xmof#//Loci/SemanticVisitor"/>
+    <newProperties xsi:type="ecore:EReference" name="runtimeModelElement">
+      <eAnnotations source="http://www.modelexecution.org/trace/XMOF">
+        <details key="executionMetamodelElement" value="//Loci/SemanticVisitor/runtimeModelElement"/>
+      </eAnnotations>
+      <eType xsi:type="kernel:BehavioredEClass" href="platform:/plugin/org.modelexecution.xmof.examples/fuml/fuml.xmof#//ElementConfiguration"/>
+    </newProperties>
+  </classesExtensions>
+  <classesExtensions>
+    <extendedExistingClass href="platform:/plugin/org.modelexecution.xmof.examples/fuml/fuml.xmof#//Loci/Locus"/>
+    <newProperties xsi:type="ecore:EReference" name="factory" containment="true">
+      <eAnnotations source="http://www.modelexecution.org/trace/XMOF">
+        <details key="executionMetamodelElement" value="//Loci/Locus/factory"/>
+      </eAnnotations>
+      <eType xsi:type="kernel:BehavioredEClass" href="platform:/plugin/org.modelexecution.xmof.examples/fuml/fuml.xmof#//Loci/ExecutionFactory"/>
+    </newProperties>
+    <newProperties xsi:type="ecore:EReference" name="executor" containment="true">
+      <eAnnotations source="http://www.modelexecution.org/trace/XMOF">
+        <details key="executionMetamodelElement" value="//Loci/Locus/executor"/>
+      </eAnnotations>
+      <eType xsi:type="kernel:BehavioredEClass" href="platform:/plugin/org.modelexecution.xmof.examples/fuml/fuml.xmof#//Loci/Executor"/>
+    </newProperties>
+    <newProperties xsi:type="ecore:EReference" name="extensionalValues" upperBound="-1" containment="true">
+      <eAnnotations source="http://www.modelexecution.org/trace/XMOF">
+        <details key="executionMetamodelElement" value="//Loci/Locus/extensionalValues"/>
+      </eAnnotations>
+      <eType xsi:type="kernel:BehavioredEClass" href="platform:/plugin/org.modelexecution.xmof.examples/fuml/fuml.xmof#//Classes/Kernel/ExtensionalValue"/>
+    </newProperties>
+  </classesExtensions>
+  <classesExtensions>
+    <extendedExistingClass href="platform:/plugin/org.modelexecution.xmof.examples/fuml/fuml.xmof#//Loci/ExecutionFactory"/>
+    <newProperties xsi:type="ecore:EReference" name="locus_ExecutionFactory">
+      <eAnnotations source="http://www.modelexecution.org/trace/XMOF">
+        <details key="executionMetamodelElement" value="//Loci/ExecutionFactory/locus_ExecutionFactory"/>
+      </eAnnotations>
+      <eType xsi:type="kernel:BehavioredEClass" href="platform:/plugin/org.modelexecution.xmof.examples/fuml/fuml.xmof#//Loci/Locus"/>
+    </newProperties>
+    <newProperties xsi:type="ecore:EReference" name="primitiveBehaviorPrototypes" upperBound="-1">
+      <eAnnotations source="http://www.modelexecution.org/trace/XMOF">
+        <details key="executionMetamodelElement" value="//Loci/ExecutionFactory/primitiveBehaviorPrototypes"/>
+      </eAnnotations>
+      <eType xsi:type="kernel:BehavioredEClass" href="platform:/plugin/org.modelexecution.xmof.examples/fuml/fuml.xmof#//CommonBehaviors/BasicBehaviors/OpaqueBehaviorExecution"/>
+    </newProperties>
+    <newProperties xsi:type="ecore:EReference" name="builtInTypes" upperBound="-1">
+      <eAnnotations source="http://www.modelexecution.org/trace/XMOF">
+        <details key="executionMetamodelElement" value="//Loci/ExecutionFactory/builtInTypes"/>
+      </eAnnotations>
+      <eType xsi:type="ecore:EClass" href="http://www.eclipse.org/uml2/5.0.0/UML#//PrimitiveType"/>
+    </newProperties>
+  </classesExtensions>
+  <classesExtensions>
+    <extendedExistingClass href="platform:/plugin/org.modelexecution.xmof.examples/fuml/fuml.xmof#//Classes/Kernel/ExtensionalValue"/>
+    <newProperties xsi:type="ecore:EReference" name="locus_ExtensionalValue">
+      <eAnnotations source="http://www.modelexecution.org/trace/XMOF">
+        <details key="executionMetamodelElement" value="//Classes/Kernel/ExtensionalValue/locus_ExtensionalValue"/>
+      </eAnnotations>
+      <eType xsi:type="kernel:BehavioredEClass" href="platform:/plugin/org.modelexecution.xmof.examples/fuml/fuml.xmof#//Loci/Locus"/>
+    </newProperties>
+  </classesExtensions>
+  <classesExtensions>
+    <extendedExistingClass href="platform:/plugin/org.modelexecution.xmof.examples/fuml/fuml.xmof#//CommonBehaviors/BasicBehaviors/Execution"/>
+    <newProperties xsi:type="ecore:EReference" name="parameterValues" upperBound="-1" containment="true">
+      <eAnnotations source="http://www.modelexecution.org/trace/XMOF">
+        <details key="executionMetamodelElement" value="//CommonBehaviors/BasicBehaviors/Execution/parameterValues"/>
+      </eAnnotations>
+      <eType xsi:type="kernel:BehavioredEClass" href="platform:/plugin/org.modelexecution.xmof.examples/fuml/fuml.xmof#//CommonBehaviors/BasicBehaviors/ParameterValue"/>
+    </newProperties>
+    <newProperties xsi:type="ecore:EReference" name="context" lowerBound="1">
+      <eAnnotations source="http://www.modelexecution.org/trace/XMOF">
+        <details key="executionMetamodelElement" value="//CommonBehaviors/BasicBehaviors/Execution/context"/>
+      </eAnnotations>
+      <eType xsi:type="kernel:BehavioredEClass" href="platform:/plugin/org.modelexecution.xmof.examples/fuml/fuml.xmof#//Classes/Kernel/Object"/>
+    </newProperties>
+  </classesExtensions>
+  <classesExtensions>
+    <extendedExistingClass href="platform:/plugin/org.modelexecution.xmof.examples/fuml/fuml.xmof#//Activities/IntermediateActivities/ActivityExecution"/>
+    <newProperties xsi:type="ecore:EReference" name="activationGroup" lowerBound="1" containment="true">
+      <eAnnotations source="http://www.modelexecution.org/trace/XMOF">
+        <details key="executionMetamodelElement" value="//Activities/IntermediateActivities/ActivityExecution/activationGroup"/>
+      </eAnnotations>
+      <eType xsi:type="kernel:BehavioredEClass" href="platform:/plugin/org.modelexecution.xmof.examples/fuml/fuml.xmof#//Activities/IntermediateActivities/ActivityNodeActivationGroup"/>
+    </newProperties>
+  </classesExtensions>
+  <classesExtensions>
+    <extendedExistingClass href="platform:/plugin/org.modelexecution.xmof.examples/fuml/fuml.xmof#//Classes/Kernel/Evaluation"/>
+    <newProperties xsi:type="ecore:EReference" name="specification_Evaluation" lowerBound="1">
+      <eAnnotations source="http://www.modelexecution.org/trace/XMOF">
+        <details key="executionMetamodelElement" value="//Classes/Kernel/Evaluation/specification_Evaluation"/>
+      </eAnnotations>
+      <eType xsi:type="ecore:EClass" href="http://www.eclipse.org/uml2/5.0.0/UML#//ValueSpecification"/>
+    </newProperties>
+    <newProperties xsi:type="ecore:EReference" name="locus_Evaluation" lowerBound="1">
+      <eAnnotations source="http://www.modelexecution.org/trace/XMOF">
+        <details key="executionMetamodelElement" value="//Classes/Kernel/Evaluation/locus_Evaluation"/>
+      </eAnnotations>
+      <eType xsi:type="kernel:BehavioredEClass" href="platform:/plugin/org.modelexecution.xmof.examples/fuml/fuml.xmof#//Loci/Locus"/>
+    </newProperties>
+  </classesExtensions>
+  <classesExtensions>
+    <extendedExistingClass href="platform:/plugin/org.modelexecution.xmof.examples/fuml/fuml.xmof#//Activities/IntermediateActivities/ActivityNodeActivation"/>
+    <newProperties xsi:type="ecore:EReference" name="outgoingEdges" upperBound="-1">
+      <eAnnotations source="http://www.modelexecution.org/trace/XMOF">
+        <details key="executionMetamodelElement" value="//Activities/IntermediateActivities/ActivityNodeActivation/outgoingEdges"/>
+      </eAnnotations>
+      <eType xsi:type="kernel:BehavioredEClass" href="platform:/plugin/org.modelexecution.xmof.examples/fuml/fuml.xmof#//Activities/IntermediateActivities/ActivityEdgeInstance"/>
+    </newProperties>
+    <newProperties xsi:type="ecore:EReference" name="incomingEdges" upperBound="-1">
+      <eAnnotations source="http://www.modelexecution.org/trace/XMOF">
+        <details key="executionMetamodelElement" value="//Activities/IntermediateActivities/ActivityNodeActivation/incomingEdges"/>
+      </eAnnotations>
+      <eType xsi:type="kernel:BehavioredEClass" href="platform:/plugin/org.modelexecution.xmof.examples/fuml/fuml.xmof#//Activities/IntermediateActivities/ActivityEdgeInstance"/>
+    </newProperties>
+    <newProperties xsi:type="ecore:EReference" name="node_ActivityNodeActivation">
+      <eAnnotations source="http://www.modelexecution.org/trace/XMOF">
+        <details key="executionMetamodelElement" value="//Activities/IntermediateActivities/ActivityNodeActivation/node_ActivityNodeActivation"/>
+      </eAnnotations>
+      <eType xsi:type="ecore:EClass" href="http://www.eclipse.org/uml2/5.0.0/UML#//ActivityNode"/>
+    </newProperties>
+    <newProperties xsi:type="ecore:EReference" name="heldTokens" upperBound="-1" containment="true">
+      <eAnnotations source="http://www.modelexecution.org/trace/XMOF">
+        <details key="executionMetamodelElement" value="//Activities/IntermediateActivities/ActivityNodeActivation/heldTokens"/>
+      </eAnnotations>
+      <eType xsi:type="kernel:BehavioredEClass" href="platform:/plugin/org.modelexecution.xmof.examples/fuml/fuml.xmof#//Activities/IntermediateActivities/Token"/>
+    </newProperties>
+    <newProperties xsi:type="ecore:EAttribute" name="isRunning" lowerBound="1">
+      <eAnnotations source="http://www.modelexecution.org/trace/XMOF">
+        <details key="executionMetamodelElement" value="//Activities/IntermediateActivities/ActivityNodeActivation/isRunning.1"/>
+      </eAnnotations>
+      <eType xsi:type="ecore:EDataType" href="http://www.eclipse.org/emf/2002/Ecore#//EBoolean"/>
+    </newProperties>
+    <newProperties xsi:type="ecore:EAttribute" name="running" lowerBound="1">
+      <eAnnotations source="http://www.modelexecution.org/trace/XMOF">
+        <details key="executionMetamodelElement" value="//Activities/IntermediateActivities/ActivityNodeActivation/running"/>
+      </eAnnotations>
+      <eType xsi:type="ecore:EDataType" href="http://www.eclipse.org/emf/2002/Ecore#//EBoolean"/>
+    </newProperties>
+    <newProperties xsi:type="ecore:EReference" name="group_ActivityNodeActivation">
+      <eAnnotations source="http://www.modelexecution.org/trace/XMOF">
+        <details key="executionMetamodelElement" value="//Activities/IntermediateActivities/ActivityNodeActivation/group_ActivityNodeActivation"/>
+      </eAnnotations>
+      <eType xsi:type="kernel:BehavioredEClass" href="platform:/plugin/org.modelexecution.xmof.examples/fuml/fuml.xmof#//Activities/IntermediateActivities/ActivityNodeActivationGroup"/>
+    </newProperties>
+  </classesExtensions>
+  <classesExtensions>
+    <extendedExistingClass href="platform:/plugin/org.modelexecution.xmof.examples/fuml/fuml.xmof#//Activities/IntermediateActivities/ObjectNodeActivation"/>
+    <newProperties xsi:type="ecore:EAttribute" name="offeredTokenCount" lowerBound="1">
+      <eAnnotations source="http://www.modelexecution.org/trace/XMOF">
+        <details key="executionMetamodelElement" value="//Activities/IntermediateActivities/ObjectNodeActivation/offeredTokenCount"/>
+      </eAnnotations>
+      <eType xsi:type="ecore:EDataType" href="http://www.eclipse.org/emf/2002/Ecore#//EInt"/>
+    </newProperties>
+  </classesExtensions>
+  <classesExtensions>
+    <extendedExistingClass href="platform:/plugin/org.modelexecution.xmof.examples/fuml/fuml.xmof#//Actions/BasicActions/ActionActivation"/>
+    <newProperties xsi:type="ecore:EAttribute" name="firing" lowerBound="1">
+      <eAnnotations source="http://www.modelexecution.org/trace/XMOF">
+        <details key="executionMetamodelElement" value="//Actions/BasicActions/ActionActivation/firing"/>
+      </eAnnotations>
+      <eType xsi:type="ecore:EDataType" href="http://www.eclipse.org/emf/2002/Ecore#//EBoolean"/>
+    </newProperties>
+    <newProperties xsi:type="ecore:EReference" name="pinActivations" upperBound="-1">
+      <eAnnotations source="http://www.modelexecution.org/trace/XMOF">
+        <details key="executionMetamodelElement" value="//Actions/BasicActions/ActionActivation/pinActivations"/>
+      </eAnnotations>
+      <eType xsi:type="kernel:BehavioredEClass" href="platform:/plugin/org.modelexecution.xmof.examples/fuml/fuml.xmof#//Actions/BasicActions/PinActivation"/>
+    </newProperties>
+  </classesExtensions>
+  <classesExtensions>
+    <extendedExistingClass href="platform:/plugin/org.modelexecution.xmof.examples/fuml/fuml.xmof#//Classes/Kernel/CompoundValue"/>
+    <newProperties xsi:type="ecore:EReference" name="featureValues" upperBound="-1" containment="true">
+      <eAnnotations source="http://www.modelexecution.org/trace/XMOF">
+        <details key="executionMetamodelElement" value="//Classes/Kernel/CompoundValue/featureValues"/>
+      </eAnnotations>
+      <eType xsi:type="kernel:BehavioredEClass" href="platform:/plugin/org.modelexecution.xmof.examples/fuml/fuml.xmof#//Classes/Kernel/FeatureValue"/>
+    </newProperties>
+  </classesExtensions>
+  <classesExtensions>
+    <extendedExistingClass href="platform:/plugin/org.modelexecution.xmof.examples/fuml/fuml.xmof#//Classes/Kernel/PrimitiveValue"/>
+    <newProperties xsi:type="ecore:EReference" name="type" lowerBound="1">
+      <eAnnotations source="http://www.modelexecution.org/trace/XMOF">
+        <details key="executionMetamodelElement" value="//Classes/Kernel/PrimitiveValue/type"/>
+      </eAnnotations>
+      <eType xsi:type="ecore:EClass" href="http://www.eclipse.org/uml2/5.0.0/UML#//PrimitiveType"/>
+    </newProperties>
+  </classesExtensions>
+  <classesExtensions>
+    <extendedExistingClass href="platform:/plugin/org.modelexecution.xmof.examples/fuml/fuml.xmof#//Classes/Kernel/IntegerValue"/>
+    <newProperties xsi:type="ecore:EAttribute" name="value_IntegerValue" lowerBound="1">
+      <eAnnotations source="http://www.modelexecution.org/trace/XMOF">
+        <details key="executionMetamodelElement" value="//Classes/Kernel/IntegerValue/value_IntegerValue"/>
+      </eAnnotations>
+      <eType xsi:type="ecore:EDataType" href="http://www.eclipse.org/emf/2002/Ecore#//EInt"/>
+    </newProperties>
+  </classesExtensions>
+  <classesExtensions>
+    <extendedExistingClass href="platform:/plugin/org.modelexecution.xmof.examples/fuml/fuml.xmof#//Classes/Kernel/BooleanValue"/>
+    <newProperties xsi:type="ecore:EAttribute" name="value_BooleanValue" lowerBound="1">
+      <eAnnotations source="http://www.modelexecution.org/trace/XMOF">
+        <details key="executionMetamodelElement" value="//Classes/Kernel/BooleanValue/value_BooleanValue"/>
+      </eAnnotations>
+      <eType xsi:type="ecore:EDataType" href="http://www.eclipse.org/emf/2002/Ecore#//EBoolean"/>
+    </newProperties>
+  </classesExtensions>
+  <classesExtensions>
+    <extendedExistingClass href="platform:/plugin/org.modelexecution.xmof.examples/fuml/fuml.xmof#//Classes/Kernel/Reference"/>
+    <newProperties xsi:type="ecore:EReference" name="referent" lowerBound="1">
+      <eAnnotations source="http://www.modelexecution.org/trace/XMOF">
+        <details key="executionMetamodelElement" value="//Classes/Kernel/Reference/referent"/>
+      </eAnnotations>
+      <eType xsi:type="kernel:BehavioredEClass" href="platform:/plugin/org.modelexecution.xmof.examples/fuml/fuml.xmof#//Classes/Kernel/Object"/>
+    </newProperties>
+  </classesExtensions>
+  <classesExtensions>
+    <extendedExistingClass href="platform:/plugin/org.modelexecution.xmof.examples/fuml/fuml.xmof#//Classes/Kernel/FeatureValue"/>
+    <newProperties xsi:type="ecore:EReference" name="feature" lowerBound="1">
+      <eAnnotations source="http://www.modelexecution.org/trace/XMOF">
+        <details key="executionMetamodelElement" value="//Classes/Kernel/FeatureValue/feature"/>
+      </eAnnotations>
+      <eType xsi:type="ecore:EClass" href="http://www.eclipse.org/uml2/5.0.0/UML#//StructuralFeature"/>
+    </newProperties>
+    <newProperties xsi:type="ecore:EAttribute" name="position">
+      <eAnnotations source="http://www.modelexecution.org/trace/XMOF">
+        <details key="executionMetamodelElement" value="//Classes/Kernel/FeatureValue/position"/>
+      </eAnnotations>
+      <eType xsi:type="ecore:EDataType" href="http://www.eclipse.org/emf/2002/Ecore#//EInt"/>
+    </newProperties>
+    <newProperties xsi:type="ecore:EReference" name="values_FeatureValue" upperBound="-1" containment="true">
+      <eAnnotations source="http://www.modelexecution.org/trace/XMOF">
+        <details key="executionMetamodelElement" value="//Classes/Kernel/FeatureValue/values_FeatureValue"/>
+      </eAnnotations>
+      <eType xsi:type="kernel:BehavioredEClass" href="platform:/plugin/org.modelexecution.xmof.examples/fuml/fuml.xmof#//Classes/Kernel/Value"/>
+    </newProperties>
+  </classesExtensions>
+  <classesExtensions>
+    <extendedExistingClass href="platform:/plugin/org.modelexecution.xmof.examples/fuml/fuml.xmof#//Activities/IntermediateActivities/ActivityNodeActivationGroup"/>
+    <newProperties xsi:type="ecore:EReference" name="nodeActivations" upperBound="-1" containment="true">
+      <eAnnotations source="http://www.modelexecution.org/trace/XMOF">
+        <details key="executionMetamodelElement" value="//Activities/IntermediateActivities/ActivityNodeActivationGroup/nodeActivations"/>
+      </eAnnotations>
+      <eType xsi:type="kernel:BehavioredEClass" href="platform:/plugin/org.modelexecution.xmof.examples/fuml/fuml.xmof#//Activities/IntermediateActivities/ActivityNodeActivation"/>
+    </newProperties>
+    <newProperties xsi:type="ecore:EReference" name="edgeInstances" upperBound="-1" containment="true">
+      <eAnnotations source="http://www.modelexecution.org/trace/XMOF">
+        <details key="executionMetamodelElement" value="//Activities/IntermediateActivities/ActivityNodeActivationGroup/edgeInstances"/>
+      </eAnnotations>
+      <eType xsi:type="kernel:BehavioredEClass" href="platform:/plugin/org.modelexecution.xmof.examples/fuml/fuml.xmof#//Activities/IntermediateActivities/ActivityEdgeInstance"/>
+    </newProperties>
+    <newProperties xsi:type="ecore:EReference" name="activityExecution">
+      <eAnnotations source="http://www.modelexecution.org/trace/XMOF">
+        <details key="executionMetamodelElement" value="//Activities/IntermediateActivities/ActivityNodeActivationGroup/activityExecution"/>
+      </eAnnotations>
+      <eType xsi:type="kernel:BehavioredEClass" href="platform:/plugin/org.modelexecution.xmof.examples/fuml/fuml.xmof#//Activities/IntermediateActivities/ActivityExecution"/>
+    </newProperties>
+  </classesExtensions>
+  <classesExtensions>
+    <extendedExistingClass href="platform:/plugin/org.modelexecution.xmof.examples/fuml/fuml.xmof#//Activities/IntermediateActivities/Token"/>
+    <newProperties xsi:type="ecore:EReference" name="holder">
+      <eAnnotations source="http://www.modelexecution.org/trace/XMOF">
+        <details key="executionMetamodelElement" value="//Activities/IntermediateActivities/Token/holder"/>
+      </eAnnotations>
+      <eType xsi:type="kernel:BehavioredEClass" href="platform:/plugin/org.modelexecution.xmof.examples/fuml/fuml.xmof#//Activities/IntermediateActivities/ActivityNodeActivation"/>
+    </newProperties>
+  </classesExtensions>
+  <classesExtensions>
+    <extendedExistingClass href="platform:/plugin/org.modelexecution.xmof.examples/fuml/fuml.xmof#//Activities/IntermediateActivities/ActivityEdgeInstance"/>
+    <newProperties xsi:type="ecore:EReference" name="target" lowerBound="1">
+      <eAnnotations source="http://www.modelexecution.org/trace/XMOF">
+        <details key="executionMetamodelElement" value="//Activities/IntermediateActivities/ActivityEdgeInstance/target"/>
+      </eAnnotations>
+      <eType xsi:type="kernel:BehavioredEClass" href="platform:/plugin/org.modelexecution.xmof.examples/fuml/fuml.xmof#//Activities/IntermediateActivities/ActivityNodeActivation"/>
+    </newProperties>
+    <newProperties xsi:type="ecore:EReference" name="group_ActivityEdgeInstance" lowerBound="1">
+      <eAnnotations source="http://www.modelexecution.org/trace/XMOF">
+        <details key="executionMetamodelElement" value="//Activities/IntermediateActivities/ActivityEdgeInstance/group_ActivityEdgeInstance"/>
+      </eAnnotations>
+      <eType xsi:type="kernel:BehavioredEClass" href="platform:/plugin/org.modelexecution.xmof.examples/fuml/fuml.xmof#//Activities/IntermediateActivities/ActivityNodeActivationGroup"/>
+    </newProperties>
+    <newProperties xsi:type="ecore:EReference" name="offers" upperBound="-1">
+      <eAnnotations source="http://www.modelexecution.org/trace/XMOF">
+        <details key="executionMetamodelElement" value="//Activities/IntermediateActivities/ActivityEdgeInstance/offers"/>
+      </eAnnotations>
+      <eType xsi:type="kernel:BehavioredEClass" href="platform:/plugin/org.modelexecution.xmof.examples/fuml/fuml.xmof#//Activities/IntermediateActivities/Offer"/>
+    </newProperties>
+    <newProperties xsi:type="ecore:EReference" name="source" lowerBound="1">
+      <eAnnotations source="http://www.modelexecution.org/trace/XMOF">
+        <details key="executionMetamodelElement" value="//Activities/IntermediateActivities/ActivityEdgeInstance/source"/>
+      </eAnnotations>
+      <eType xsi:type="kernel:BehavioredEClass" href="platform:/plugin/org.modelexecution.xmof.examples/fuml/fuml.xmof#//Activities/IntermediateActivities/ActivityNodeActivation"/>
+    </newProperties>
+    <newProperties xsi:type="ecore:EReference" name="edge_ActivityEdgeInstance">
+      <eAnnotations source="http://www.modelexecution.org/trace/XMOF">
+        <details key="executionMetamodelElement" value="//Activities/IntermediateActivities/ActivityEdgeInstance/edge_ActivityEdgeInstance"/>
+      </eAnnotations>
+      <eType xsi:type="ecore:EClass" href="http://www.eclipse.org/uml2/5.0.0/UML#//ActivityEdge"/>
+    </newProperties>
+  </classesExtensions>
+  <classesExtensions>
+    <extendedExistingClass href="platform:/plugin/org.modelexecution.xmof.examples/fuml/fuml.xmof#//Actions/BasicActions/PinActivation"/>
+    <newProperties xsi:type="ecore:EAttribute" name="count_temp">
+      <eAnnotations source="http://www.modelexecution.org/trace/XMOF">
+        <details key="executionMetamodelElement" value="//Actions/BasicActions/PinActivation/count_temp"/>
+      </eAnnotations>
+      <eType xsi:type="ecore:EDataType" href="http://www.eclipse.org/emf/2002/Ecore#//EInt"/>
+    </newProperties>
+    <newProperties xsi:type="ecore:EReference" name="actionActivation">
+      <eAnnotations source="http://www.modelexecution.org/trace/XMOF">
+        <details key="executionMetamodelElement" value="//Actions/BasicActions/PinActivation/actionActivation"/>
+      </eAnnotations>
+      <eType xsi:type="kernel:BehavioredEClass" href="platform:/plugin/org.modelexecution.xmof.examples/fuml/fuml.xmof#//Actions/BasicActions/ActionActivation"/>
+    </newProperties>
+  </classesExtensions>
+  <classesExtensions>
+    <extendedExistingClass href="platform:/plugin/org.modelexecution.xmof.examples/fuml/fuml.xmof#//Actions/BasicActions/CallActionActivation"/>
+    <newProperties xsi:type="ecore:EReference" name="callExecutions" upperBound="-1" containment="true">
+      <eAnnotations source="http://www.modelexecution.org/trace/XMOF">
+        <details key="executionMetamodelElement" value="//Actions/BasicActions/CallActionActivation/callExecutions"/>
+      </eAnnotations>
+      <eType xsi:type="kernel:BehavioredEClass" href="platform:/plugin/org.modelexecution.xmof.examples/fuml/fuml.xmof#//CommonBehaviors/BasicBehaviors/Execution"/>
+    </newProperties>
+  </classesExtensions>
+  <classesExtensions>
+    <extendedExistingClass href="platform:/plugin/org.modelexecution.xmof.examples/fuml/fuml.xmof#//Activities/IntermediateActivities/ForkedToken"/>
+    <newProperties xsi:type="ecore:EAttribute" name="remainingOffersCount" lowerBound="1">
+      <eAnnotations source="http://www.modelexecution.org/trace/XMOF">
+        <details key="executionMetamodelElement" value="//Activities/IntermediateActivities/ForkedToken/remainingOffersCount"/>
+      </eAnnotations>
+      <eType xsi:type="ecore:EDataType" href="http://www.eclipse.org/emf/2002/Ecore#//EInt"/>
+    </newProperties>
+    <newProperties xsi:type="ecore:EAttribute" name="baseTokenIsWithdrawn" lowerBound="1">
+      <eAnnotations source="http://www.modelexecution.org/trace/XMOF">
+        <details key="executionMetamodelElement" value="//Activities/IntermediateActivities/ForkedToken/baseTokenIsWithdrawn"/>
+      </eAnnotations>
+      <eType xsi:type="ecore:EDataType" href="http://www.eclipse.org/emf/2002/Ecore#//EBoolean"/>
+    </newProperties>
+    <newProperties xsi:type="ecore:EReference" name="baseToken" lowerBound="1">
+      <eAnnotations source="http://www.modelexecution.org/trace/XMOF">
+        <details key="executionMetamodelElement" value="//Activities/IntermediateActivities/ForkedToken/baseToken"/>
+      </eAnnotations>
+      <eType xsi:type="kernel:BehavioredEClass" href="platform:/plugin/org.modelexecution.xmof.examples/fuml/fuml.xmof#//Activities/IntermediateActivities/Token"/>
+    </newProperties>
+  </classesExtensions>
+  <classesExtensions>
+    <extendedExistingClass href="platform:/plugin/org.modelexecution.xmof.examples/fuml/fuml.xmof#//Activities/IntermediateActivities/ObjectToken"/>
+    <newProperties xsi:type="ecore:EReference" name="value" containment="true">
+      <eAnnotations source="http://www.modelexecution.org/trace/XMOF">
+        <details key="executionMetamodelElement" value="//Activities/IntermediateActivities/ObjectToken/value"/>
+      </eAnnotations>
+      <eType xsi:type="kernel:BehavioredEClass" href="platform:/plugin/org.modelexecution.xmof.examples/fuml/fuml.xmof#//Classes/Kernel/Value"/>
+    </newProperties>
+  </classesExtensions>
+  <classesExtensions>
+    <extendedExistingClass href="platform:/plugin/org.modelexecution.xmof.examples/fuml/fuml.xmof#//Activities/IntermediateActivities/Offer"/>
+    <newProperties xsi:type="ecore:EReference" name="offeredTokens" upperBound="-1">
+      <eAnnotations source="http://www.modelexecution.org/trace/XMOF">
+        <details key="executionMetamodelElement" value="//Activities/IntermediateActivities/Offer/offeredTokens"/>
+      </eAnnotations>
+      <eType xsi:type="kernel:BehavioredEClass" href="platform:/plugin/org.modelexecution.xmof.examples/fuml/fuml.xmof#//Activities/IntermediateActivities/Token"/>
+    </newProperties>
+  </classesExtensions>
+  <classesExtensions>
+    <extendedExistingClass href="platform:/plugin/org.modelexecution.xmof.examples/fuml/fuml.xmof#//Input/InputParameterValues"/>
+    <newProperties xsi:type="ecore:EAttribute" name="name">
+      <eAnnotations source="http://www.modelexecution.org/trace/XMOF">
+        <details key="executionMetamodelElement" value="//Input/InputParameterValues/name"/>
+      </eAnnotations>
+      <eType xsi:type="ecore:EDataType" href="http://www.eclipse.org/emf/2002/Ecore#//EString"/>
+    </newProperties>
+    <newProperties xsi:type="ecore:EReference" name="parameterValues" upperBound="-1" containment="true">
+      <eAnnotations source="http://www.modelexecution.org/trace/XMOF">
+        <details key="executionMetamodelElement" value="//Input/InputParameterValues/parameterValues"/>
+      </eAnnotations>
+      <eType xsi:type="kernel:BehavioredEClass" href="platform:/plugin/org.modelexecution.xmof.examples/fuml/fuml.xmof#//CommonBehaviors/BasicBehaviors/ParameterValue"/>
+    </newProperties>
+  </classesExtensions>
+  <rules calledRules="//@rules.1" stepRule="true">
+    <operation name="main" upperBound="-1">
+      <eType xsi:type="kernel:BehavioredEClass" href="platform:/plugin/org.modelexecution.xmof.examples/fuml/fuml.xmof#//CommonBehaviors/BasicBehaviors/ParameterValue"/>
+      <eParameters name="executionEnvironment" lowerBound="1">
+        <eType xsi:type="kernel:BehavioredEClass" href="platform:/plugin/org.modelexecution.xmof.examples/fuml/fuml.xmof#//Loci/ExecutionEnvironment"/>
+      </eParameters>
+      <eParameters name="behavior" lowerBound="1">
+        <eType xsi:type="ecore:EClass" href="http://www.eclipse.org/uml2/5.0.0/UML#//Behavior"/>
+      </eParameters>
+      <eParameters name="context">
+        <eType xsi:type="kernel:BehavioredEClass" href="platform:/plugin/org.modelexecution.xmof.examples/fuml/fuml.xmof#//Classes/Kernel/Object"/>
+      </eParameters>
+      <eParameters name="inputs" upperBound="-1">
+        <eType xsi:type="kernel:BehavioredEClass" href="platform:/plugin/org.modelexecution.xmof.examples/fuml/fuml.xmof#//CommonBehaviors/BasicBehaviors/ParameterValue"/>
+      </eParameters>
+    </operation>
+    <containingClass href="platform:/plugin/org.modelexecution.xmof.examples/fuml/fuml.xmof#//ModelConfiguration"/>
+  </rules>
+  <rules calledRules="//@rules.6 //@rules.7 //@rules.10 //@rules.11" stepRule="true">
+    <operation name="execute_Executor" upperBound="-1">
+      <eType xsi:type="kernel:BehavioredEClass" href="platform:/plugin/org.modelexecution.xmof.examples/fuml/fuml.xmof#//CommonBehaviors/BasicBehaviors/ParameterValue"/>
+      <eParameters name="behavior" lowerBound="1">
+        <eType xsi:type="ecore:EClass" href="http://www.eclipse.org/uml2/5.0.0/UML#//Behavior"/>
+      </eParameters>
+      <eParameters name="context">
+        <eType xsi:type="kernel:BehavioredEClass" href="platform:/plugin/org.modelexecution.xmof.examples/fuml/fuml.xmof#//Classes/Kernel/Object"/>
+      </eParameters>
+      <eParameters name="inputs" upperBound="-1">
+        <eType xsi:type="kernel:BehavioredEClass" href="platform:/plugin/org.modelexecution.xmof.examples/fuml/fuml.xmof#//CommonBehaviors/BasicBehaviors/ParameterValue"/>
+      </eParameters>
+    </operation>
+    <containingClass href="platform:/plugin/org.modelexecution.xmof.examples/fuml/fuml.xmof#//Loci/Executor"/>
+  </rules>
+  <rules stepRule="true">
+    <operation name="remove_Locus">
+      <eParameters name="value" lowerBound="1">
+        <eType xsi:type="kernel:BehavioredEClass" href="platform:/plugin/org.modelexecution.xmof.examples/fuml/fuml.xmof#//Classes/Kernel/ExtensionalValue"/>
+      </eParameters>
+    </operation>
+    <containingClass href="platform:/plugin/org.modelexecution.xmof.examples/fuml/fuml.xmof#//Loci/Locus"/>
+  </rules>
+  <rules stepRule="true">
+    <operation name="add_Locus">
+      <eParameters name="value" lowerBound="1">
+        <eType xsi:type="kernel:BehavioredEClass" href="platform:/plugin/org.modelexecution.xmof.examples/fuml/fuml.xmof#//Classes/Kernel/ExtensionalValue"/>
+      </eParameters>
+    </operation>
+    <containingClass href="platform:/plugin/org.modelexecution.xmof.examples/fuml/fuml.xmof#//Loci/Locus"/>
+  </rules>
+  <rules calledRules="//@rules.5 //@rules.3" stepRule="true">
+    <operation name="instantiate_Locus" lowerBound="1">
+      <eType xsi:type="kernel:BehavioredEClass" href="platform:/plugin/org.modelexecution.xmof.examples/fuml/fuml.xmof#//Classes/Kernel/Object"/>
+      <eParameters name="type" lowerBound="1">
+        <eType xsi:type="ecore:EClass" href="http://www.eclipse.org/uml2/5.0.0/UML#//Class"/>
+      </eParameters>
+    </operation>
+    <containingClass href="platform:/plugin/org.modelexecution.xmof.examples/fuml/fuml.xmof#//Loci/Locus"/>
+  </rules>
+  <rules calledRules="//@rules.37 //@rules.39" stepRule="true">
+    <operation name="createFeatureValues_StructuredValue"/>
+    <containingClass href="platform:/plugin/org.modelexecution.xmof.examples/fuml/fuml.xmof#//Classes/Kernel/StructuredValue"/>
+  </rules>
+  <rules calledRules="//@rules.17 //@rules.5 //@rules.18" stepRule="true">
+    <operation name="createExecution_ExecutionFactory">
+      <eType xsi:type="kernel:BehavioredEClass" href="platform:/plugin/org.modelexecution.xmof.examples/fuml/fuml.xmof#//CommonBehaviors/BasicBehaviors/Execution"/>
+      <eParameters name="behavior" lowerBound="1">
+        <eType xsi:type="ecore:EClass" href="http://www.eclipse.org/uml2/5.0.0/UML#//Behavior"/>
+      </eParameters>
+      <eParameters name="context">
+        <eType xsi:type="kernel:BehavioredEClass" href="platform:/plugin/org.modelexecution.xmof.examples/fuml/fuml.xmof#//Classes/Kernel/Object"/>
+      </eParameters>
+    </operation>
+    <containingClass href="platform:/plugin/org.modelexecution.xmof.examples/fuml/fuml.xmof#//Loci/ExecutionFactory"/>
+  </rules>
+  <rules stepRule="true" overridenBy="//@rules.8 //@rules.9">
+    <operation name="execute_Execution"/>
+    <containingClass href="platform:/plugin/org.modelexecution.xmof.examples/fuml/fuml.xmof#//CommonBehaviors/BasicBehaviors/Execution"/>
+  </rules>
+  <rules calledRules="//@rules.65 //@rules.66" stepRule="true" overrides="//@rules.7">
+    <operation name="execute_ActivityExecution"/>
+    <containingClass href="platform:/plugin/org.modelexecution.xmof.examples/fuml/fuml.xmof#//Activities/IntermediateActivities/ActivityExecution"/>
+  </rules>
+  <rules calledRules="//@rules.24 //@rules.57 //@rules.11 //@rules.61" stepRule="true" overrides="//@rules.7">
+    <operation name="execute_OpaqueBehaviorExecution"/>
+    <containingClass href="platform:/plugin/org.modelexecution.xmof.examples/fuml/fuml.xmof#//CommonBehaviors/BasicBehaviors/OpaqueBehaviorExecution"/>
+  </rules>
+  <rules stepRule="true">
+    <operation name="getOutputParameterValues_Execution" upperBound="-1">
+      <eType xsi:type="kernel:BehavioredEClass" href="platform:/plugin/org.modelexecution.xmof.examples/fuml/fuml.xmof#//CommonBehaviors/BasicBehaviors/ParameterValue"/>
+    </operation>
+    <containingClass href="platform:/plugin/org.modelexecution.xmof.examples/fuml/fuml.xmof#//CommonBehaviors/BasicBehaviors/Execution"/>
+  </rules>
+  <rules calledRules="//@rules.57" stepRule="true">
+    <operation name="setParameterValue_Execution">
+      <eParameters name="parameterValue" lowerBound="1">
+        <eType xsi:type="kernel:BehavioredEClass" href="platform:/plugin/org.modelexecution.xmof.examples/fuml/fuml.xmof#//CommonBehaviors/BasicBehaviors/ParameterValue"/>
+      </eParameters>
+    </operation>
+    <containingClass href="platform:/plugin/org.modelexecution.xmof.examples/fuml/fuml.xmof#//CommonBehaviors/BasicBehaviors/Execution"/>
+  </rules>
+  <rules calledRules="//@rules.13 //@rules.14" stepRule="true">
+    <operation name="evaluate_Executor" lowerBound="1">
+      <eType xsi:type="kernel:BehavioredEClass" href="platform:/plugin/org.modelexecution.xmof.examples/fuml/fuml.xmof#//Classes/Kernel/Value"/>
+      <eParameters name="specification" lowerBound="1">
+        <eType xsi:type="ecore:EClass" href="http://www.eclipse.org/uml2/5.0.0/UML#//ValueSpecification"/>
+      </eParameters>
+    </operation>
+    <containingClass href="platform:/plugin/org.modelexecution.xmof.examples/fuml/fuml.xmof#//Loci/Executor"/>
+  </rules>
+  <rules calledRules="//@rules.17" stepRule="true">
+    <operation name="createEvaluation_ExecutionFactory" lowerBound="1">
+      <eType xsi:type="kernel:BehavioredEClass" href="platform:/plugin/org.modelexecution.xmof.examples/fuml/fuml.xmof#//Classes/Kernel/Evaluation"/>
+      <eParameters name="specification" lowerBound="1">
+        <eType xsi:type="ecore:EClass" href="http://www.eclipse.org/uml2/5.0.0/UML#//ValueSpecification"/>
+      </eParameters>
+    </operation>
+    <containingClass href="platform:/plugin/org.modelexecution.xmof.examples/fuml/fuml.xmof#//Loci/ExecutionFactory"/>
+  </rules>
+  <rules stepRule="true" overridenBy="//@rules.15 //@rules.16">
+    <operation name="evaluate_Evaluation" lowerBound="1">
+      <eType xsi:type="kernel:BehavioredEClass" href="platform:/plugin/org.modelexecution.xmof.examples/fuml/fuml.xmof#//Classes/Kernel/Value"/>
+    </operation>
+    <containingClass href="platform:/plugin/org.modelexecution.xmof.examples/fuml/fuml.xmof#//Classes/Kernel/Evaluation"/>
+  </rules>
+  <rules calledRules="//@rules.56" stepRule="true" overrides="//@rules.14">
+    <operation name="evaluate_LiteralIntegerEvaluation" lowerBound="1">
+      <eType xsi:type="kernel:BehavioredEClass" href="platform:/plugin/org.modelexecution.xmof.examples/fuml/fuml.xmof#//Classes/Kernel/Value"/>
+    </operation>
+    <containingClass href="platform:/plugin/org.modelexecution.xmof.examples/fuml/fuml.xmof#//Classes/Kernel/LiteralIntegerEvaluation"/>
+  </rules>
+  <rules calledRules="//@rules.56" stepRule="true" overrides="//@rules.14">
+    <operation name="evaluate_LiteralBooleanEvaluation" lowerBound="1">
+      <eType xsi:type="kernel:BehavioredEClass" href="platform:/plugin/org.modelexecution.xmof.examples/fuml/fuml.xmof#//Classes/Kernel/Value"/>
+    </operation>
+    <containingClass href="platform:/plugin/org.modelexecution.xmof.examples/fuml/fuml.xmof#//Classes/Kernel/LiteralBooleanEvaluation"/>
+  </rules>
+  <rules calledRules="//@rules.19" stepRule="true">
+    <operation name="instantiateVisitor_ExecutionFactory">
+      <eType xsi:type="kernel:BehavioredEClass" href="platform:/plugin/org.modelexecution.xmof.examples/fuml/fuml.xmof#//Loci/SemanticVisitor"/>
+      <eParameters name="element" lowerBound="1">
+        <eType xsi:type="ecore:EClass" href="http://www.eclipse.org/uml2/5.0.0/UML#//Element"/>
+      </eParameters>
+    </operation>
+    <containingClass href="platform:/plugin/org.modelexecution.xmof.examples/fuml/fuml.xmof#//Loci/ExecutionFactory"/>
+  </rules>
+  <rules calledRules="//@rules.24 //@rules.25" stepRule="true">
+    <operation name="instantiateOpaqueBehaviorExecution_ExecutionFactory">
+      <eType xsi:type="kernel:BehavioredEClass" href="platform:/plugin/org.modelexecution.xmof.examples/fuml/fuml.xmof#//CommonBehaviors/BasicBehaviors/OpaqueBehaviorExecution"/>
+      <eParameters name="behavior" lowerBound="1">
+        <eType xsi:type="ecore:EClass" href="http://www.eclipse.org/uml2/5.0.0/UML#//OpaqueBehavior"/>
+      </eParameters>
+    </operation>
+    <containingClass href="platform:/plugin/org.modelexecution.xmof.examples/fuml/fuml.xmof#//Loci/ExecutionFactory"/>
+  </rules>
+  <rules stepRule="true" overridenBy="//@rules.20 //@rules.21 //@rules.22">
+    <operation name="initialize_SemanticVisitor"/>
+    <containingClass href="platform:/plugin/org.modelexecution.xmof.examples/fuml/fuml.xmof#//Loci/SemanticVisitor"/>
+  </rules>
+  <rules stepRule="true" overrides="//@rules.19">
+    <operation name="initialize_ActivityNodeActivation"/>
+    <containingClass href="platform:/plugin/org.modelexecution.xmof.examples/fuml/fuml.xmof#//Activities/IntermediateActivities/ActivityNodeActivation"/>
+  </rules>
+  <rules stepRule="true" overrides="//@rules.19">
+    <operation name="initialize_ObjectNodeActivation"/>
+    <containingClass href="platform:/plugin/org.modelexecution.xmof.examples/fuml/fuml.xmof#//Activities/IntermediateActivities/ObjectNodeActivation"/>
+  </rules>
+  <rules stepRule="true" overrides="//@rules.19">
+    <operation name="inisitalize_ActionActivation"/>
+    <containingClass href="platform:/plugin/org.modelexecution.xmof.examples/fuml/fuml.xmof#//Actions/BasicActions/ActionActivation"/>
+  </rules>
+  <rules stepRule="true">
+    <operation name="getBuiltInType_ExecutionFactory" lowerBound="1">
+      <eType xsi:type="ecore:EClass" href="http://www.eclipse.org/uml2/5.0.0/UML#//PrimitiveType"/>
+      <eParameters name="name" lowerBound="1">
+        <eType xsi:type="ecore:EDataType" href="http://www.eclipse.org/emf/2002/Ecore#//EString"/>
+      </eParameters>
+    </operation>
+    <containingClass href="platform:/plugin/org.modelexecution.xmof.examples/fuml/fuml.xmof#//Loci/ExecutionFactory"/>
+  </rules>
+  <rules calledRules="//@rules.37" stepRule="true">
+    <operation name="getBehavior_Execution" lowerBound="1">
+      <eType xsi:type="ecore:EClass" href="http://www.eclipse.org/uml2/5.0.0/UML#//Behavior"/>
+    </operation>
+    <containingClass href="platform:/plugin/org.modelexecution.xmof.examples/fuml/fuml.xmof#//CommonBehaviors/BasicBehaviors/Execution"/>
+  </rules>
+  <rules calledRules="//@rules.46" stepRule="true" overridenBy="//@rules.26 //@rules.27 //@rules.28 //@rules.29 //@rules.30 //@rules.31 //@rules.32">
+    <operation name="copy_Value" lowerBound="1">
+      <eType xsi:type="kernel:BehavioredEClass" href="platform:/plugin/org.modelexecution.xmof.examples/fuml/fuml.xmof#//Classes/Kernel/Value"/>
+    </operation>
+    <containingClass href="platform:/plugin/org.modelexecution.xmof.examples/fuml/fuml.xmof#//Classes/Kernel/Value"/>
+  </rules>
+  <rules calledRules="//@rules.29 //@rules.60" stepRule="true" overrides="//@rules.25">
+    <operation name="copy_Execution" lowerBound="1">
+      <eType xsi:type="kernel:BehavioredEClass" href="platform:/plugin/org.modelexecution.xmof.examples/fuml/fuml.xmof#//Classes/Kernel/Value"/>
+    </operation>
+    <containingClass href="platform:/plugin/org.modelexecution.xmof.examples/fuml/fuml.xmof#//CommonBehaviors/BasicBehaviors/Execution"/>
+  </rules>
+  <rules calledRules="//@rules.25 //@rules.45" stepRule="true" overrides="//@rules.25">
+    <operation name="copy_CompoundValue" lowerBound="1">
+      <eType xsi:type="kernel:BehavioredEClass" href="platform:/plugin/org.modelexecution.xmof.examples/fuml/fuml.xmof#//Classes/Kernel/Value"/>
+    </operation>
+    <containingClass href="platform:/plugin/org.modelexecution.xmof.examples/fuml/fuml.xmof#//Classes/Kernel/CompoundValue"/>
+  </rules>
+  <rules calledRules="//@rules.27 //@rules.3" stepRule="true" overrides="//@rules.25">
+    <operation name="copy_ExtensionalValue" lowerBound="1">
+      <eType xsi:type="kernel:BehavioredEClass" href="platform:/plugin/org.modelexecution.xmof.examples/fuml/fuml.xmof#//Classes/Kernel/Value"/>
+    </operation>
+    <containingClass href="platform:/plugin/org.modelexecution.xmof.examples/fuml/fuml.xmof#//Classes/Kernel/ExtensionalValue"/>
+  </rules>
+  <rules calledRules="//@rules.28" stepRule="true" overrides="//@rules.25">
+    <operation name="copy_Object" lowerBound="1">
+      <eType xsi:type="kernel:BehavioredEClass" href="platform:/plugin/org.modelexecution.xmof.examples/fuml/fuml.xmof#//Classes/Kernel/Value"/>
+    </operation>
+    <containingClass href="platform:/plugin/org.modelexecution.xmof.examples/fuml/fuml.xmof#//Classes/Kernel/Object"/>
+  </rules>
+  <rules calledRules="//@rules.25" stepRule="true" overrides="//@rules.25">
+    <operation name="copy_PrimitiveValue" lowerBound="1">
+      <eType xsi:type="kernel:BehavioredEClass" href="platform:/plugin/org.modelexecution.xmof.examples/fuml/fuml.xmof#//Classes/Kernel/Value"/>
+    </operation>
+    <containingClass href="platform:/plugin/org.modelexecution.xmof.examples/fuml/fuml.xmof#//Classes/Kernel/PrimitiveValue"/>
+  </rules>
+  <rules calledRules="//@rules.30" stepRule="true" overrides="//@rules.25">
+    <operation name="copy_IntegerValue" lowerBound="1">
+      <eType xsi:type="kernel:BehavioredEClass" href="platform:/plugin/org.modelexecution.xmof.examples/fuml/fuml.xmof#//Classes/Kernel/Value"/>
+    </operation>
+    <containingClass href="platform:/plugin/org.modelexecution.xmof.examples/fuml/fuml.xmof#//Classes/Kernel/IntegerValue"/>
+  </rules>
+  <rules calledRules="//@rules.30" stepRule="true" overrides="//@rules.25">
+    <operation name="copy_BooleanValue" lowerBound="1">
+      <eType xsi:type="kernel:BehavioredEClass" href="platform:/plugin/org.modelexecution.xmof.examples/fuml/fuml.xmof#//Classes/Kernel/Value"/>
+    </operation>
+    <containingClass href="platform:/plugin/org.modelexecution.xmof.examples/fuml/fuml.xmof#//Classes/Kernel/BooleanValue"/>
+  </rules>
+  <rules calledRules="//@rules.2" stepRule="true" overridenBy="//@rules.34">
+    <operation name="destroy_ExtensionalValue"/>
+    <containingClass href="platform:/plugin/org.modelexecution.xmof.examples/fuml/fuml.xmof#//Classes/Kernel/ExtensionalValue"/>
+  </rules>
+  <rules calledRules="//@rules.33" stepRule="true" overrides="//@rules.33">
+    <operation name="destroy_Object"/>
+    <containingClass href="platform:/plugin/org.modelexecution.xmof.examples/fuml/fuml.xmof#//Classes/Kernel/Object"/>
+  </rules>
+  <rules stepRule="true" overrides="//@rules.37">
+    <operation name="getTypes_Object" upperBound="-1">
+      <eType xsi:type="ecore:EClass" href="http://www.eclipse.org/uml2/5.0.0/UML#//Classifier"/>
+    </operation>
+    <containingClass href="platform:/plugin/org.modelexecution.xmof.examples/fuml/fuml.xmof#//Classes/Kernel/Object"/>
+  </rules>
+  <rules stepRule="true" overrides="//@rules.46">
+    <operation name="new_Object" lowerBound="1">
+      <eType xsi:type="kernel:BehavioredEClass" href="platform:/plugin/org.modelexecution.xmof.examples/fuml/fuml.xmof#//Classes/Kernel/Value"/>
+    </operation>
+    <containingClass href="platform:/plugin/org.modelexecution.xmof.examples/fuml/fuml.xmof#//Classes/Kernel/Object"/>
+  </rules>
+  <rules stepRule="true" overridenBy="//@rules.35 //@rules.38">
+    <operation name="getTypes_Value" upperBound="-1">
+      <eType xsi:type="ecore:EClass" href="http://www.eclipse.org/uml2/5.0.0/UML#//Classifier"/>
+    </operation>
+    <containingClass href="platform:/plugin/org.modelexecution.xmof.examples/fuml/fuml.xmof#//Classes/Kernel/Value"/>
+  </rules>
+  <rules stepRule="true" overrides="//@rules.37">
+    <operation name="getTypes_PrimitiveValue" upperBound="-1">
+      <eType xsi:type="ecore:EClass" href="http://www.eclipse.org/uml2/5.0.0/UML#//Classifier"/>
+    </operation>
+    <containingClass href="platform:/plugin/org.modelexecution.xmof.examples/fuml/fuml.xmof#//Classes/Kernel/PrimitiveValue"/>
+  </rules>
+  <rules stepRule="true" overridenBy="//@rules.40 //@rules.41" abstract="true">
+    <operation name="setFeatureValue">
+      <eParameters name="feature" lowerBound="1">
+        <eType xsi:type="ecore:EClass" href="http://www.eclipse.org/uml2/5.0.0/UML#//StructuralFeature"/>
+      </eParameters>
+      <eParameters name="values" upperBound="-1">
+        <eType xsi:type="kernel:BehavioredEClass" href="platform:/plugin/org.modelexecution.xmof.examples/fuml/fuml.xmof#//Classes/Kernel/Value"/>
+      </eParameters>
+      <eParameters name="position" lowerBound="1">
+        <eType xsi:type="ecore:EDataType" href="http://www.eclipse.org/emf/2002/Ecore#//EInt"/>
+      </eParameters>
+    </operation>
+    <containingClass href="platform:/plugin/org.modelexecution.xmof.examples/fuml/fuml.xmof#//Classes/Kernel/StructuredValue"/>
+  </rules>
+  <rules calledRules="//@rules.42" stepRule="true" overrides="//@rules.39">
+    <operation name="setFeatureValue_CompoundValue">
+      <eParameters name="feature" lowerBound="1">
+        <eType xsi:type="ecore:EClass" href="http://www.eclipse.org/uml2/5.0.0/UML#//StructuralFeature"/>
+      </eParameters>
+      <eParameters name="values" upperBound="-1">
+        <eType xsi:type="kernel:BehavioredEClass" href="platform:/plugin/org.modelexecution.xmof.examples/fuml/fuml.xmof#//Classes/Kernel/Value"/>
+      </eParameters>
+      <eParameters name="position" lowerBound="1">
+        <eType xsi:type="ecore:EDataType" href="http://www.eclipse.org/emf/2002/Ecore#//EInt"/>
+      </eParameters>
+    </operation>
+    <containingClass href="platform:/plugin/org.modelexecution.xmof.examples/fuml/fuml.xmof#//Classes/Kernel/CompoundValue"/>
+  </rules>
+  <rules calledRules="//@rules.39" stepRule="true" overrides="//@rules.39">
+    <operation name="setFeatureValue_Reference">
+      <eParameters name="feature" lowerBound="1">
+        <eType xsi:type="ecore:EClass" href="http://www.eclipse.org/uml2/5.0.0/UML#//StructuralFeature"/>
+      </eParameters>
+      <eParameters name="values" upperBound="-1">
+        <eType xsi:type="kernel:BehavioredEClass" href="platform:/plugin/org.modelexecution.xmof.examples/fuml/fuml.xmof#//Classes/Kernel/Value"/>
+      </eParameters>
+      <eParameters name="position" lowerBound="1">
+        <eType xsi:type="ecore:EDataType" href="http://www.eclipse.org/emf/2002/Ecore#//EInt"/>
+      </eParameters>
+    </operation>
+    <containingClass href="platform:/plugin/org.modelexecution.xmof.examples/fuml/fuml.xmof#//Classes/Kernel/Reference"/>
+  </rules>
+  <rules stepRule="true" overridenBy="//@rules.43 //@rules.44" abstract="true">
+    <operation name="getFeatureValue">
+      <eType xsi:type="kernel:BehavioredEClass" href="platform:/plugin/org.modelexecution.xmof.examples/fuml/fuml.xmof#//Classes/Kernel/FeatureValue"/>
+      <eParameters name="feature" lowerBound="1">
+        <eType xsi:type="ecore:EClass" href="http://www.eclipse.org/uml2/5.0.0/UML#//StructuralFeature"/>
+      </eParameters>
+    </operation>
+    <containingClass href="platform:/plugin/org.modelexecution.xmof.examples/fuml/fuml.xmof#//Classes/Kernel/StructuredValue"/>
+  </rules>
+  <rules stepRule="true" overrides="//@rules.42">
+    <operation name="getFeatureValue_CompoundValue">
+      <eType xsi:type="kernel:BehavioredEClass" href="platform:/plugin/org.modelexecution.xmof.examples/fuml/fuml.xmof#//Classes/Kernel/FeatureValue"/>
+      <eParameters name="feature" lowerBound="1">
+        <eType xsi:type="ecore:EClass" href="http://www.eclipse.org/uml2/5.0.0/UML#//StructuralFeature"/>
+      </eParameters>
+    </operation>
+    <containingClass href="platform:/plugin/org.modelexecution.xmof.examples/fuml/fuml.xmof#//Classes/Kernel/CompoundValue"/>
+  </rules>
+  <rules calledRules="//@rules.42" stepRule="true" overrides="//@rules.42">
+    <operation name="getFeatureValue_Reference">
+      <eType xsi:type="kernel:BehavioredEClass" href="platform:/plugin/org.modelexecution.xmof.examples/fuml/fuml.xmof#//Classes/Kernel/FeatureValue"/>
+      <eParameters name="feature" lowerBound="1">
+        <eType xsi:type="ecore:EClass" href="http://www.eclipse.org/uml2/5.0.0/UML#//StructuralFeature"/>
+      </eParameters>
+    </operation>
+    <containingClass href="platform:/plugin/org.modelexecution.xmof.examples/fuml/fuml.xmof#//Classes/Kernel/Reference"/>
+  </rules>
+  <rules calledRules="//@rules.25" stepRule="true">
+    <operation name="copy_FeatureValue" lowerBound="1">
+      <eType xsi:type="kernel:BehavioredEClass" href="platform:/plugin/org.modelexecution.xmof.examples/fuml/fuml.xmof#//Classes/Kernel/FeatureValue"/>
+    </operation>
+    <containingClass href="platform:/plugin/org.modelexecution.xmof.examples/fuml/fuml.xmof#//Classes/Kernel/FeatureValue"/>
+  </rules>
+  <rules stepRule="true" overridenBy="//@rules.47 //@rules.36 //@rules.48 //@rules.49 //@rules.50 //@rules.51">
+    <operation name="new_Value" lowerBound="1">
+      <eType xsi:type="kernel:BehavioredEClass" href="platform:/plugin/org.modelexecution.xmof.examples/fuml/fuml.xmof#//Classes/Kernel/Value"/>
+    </operation>
+    <containingClass href="platform:/plugin/org.modelexecution.xmof.examples/fuml/fuml.xmof#//Classes/Kernel/Value"/>
+  </rules>
+  <rules stepRule="true" overrides="//@rules.46">
+    <operation name="new_IntegerValue" lowerBound="1">
+      <eType xsi:type="kernel:BehavioredEClass" href="platform:/plugin/org.modelexecution.xmof.examples/fuml/fuml.xmof#//Classes/Kernel/Value"/>
+    </operation>
+    <containingClass href="platform:/plugin/org.modelexecution.xmof.examples/fuml/fuml.xmof#//Classes/Kernel/IntegerValue"/>
+  </rules>
+  <rules stepRule="true" overrides="//@rules.46">
+    <operation name="new_IntegerPlusFunctionBehaviorExecution" lowerBound="1">
+      <eType xsi:type="kernel:BehavioredEClass" href="platform:/plugin/org.modelexecution.xmof.examples/fuml/fuml.xmof#//Classes/Kernel/Value"/>
+    </operation>
+    <containingClass href="platform:/plugin/org.modelexecution.xmof.examples/fuml/fuml.xmof#//PrimitiveBehaviors/IntegerFunctions/IntegerPlusFunctionBehaviorExecution"/>
+  </rules>
+  <rules stepRule="true" overrides="//@rules.46">
+    <operation name="new_BooleanValue" lowerBound="1">
+      <eType xsi:type="kernel:BehavioredEClass" href="platform:/plugin/org.modelexecution.xmof.examples/fuml/fuml.xmof#//Classes/Kernel/Value"/>
+    </operation>
+    <containingClass href="platform:/plugin/org.modelexecution.xmof.examples/fuml/fuml.xmof#//Classes/Kernel/BooleanValue"/>
+  </rules>
+  <rules stepRule="true" overrides="//@rules.46">
+    <operation name="new_IntegerGreaterFunctionBehaviorExecution" lowerBound="1">
+      <eType xsi:type="kernel:BehavioredEClass" href="platform:/plugin/org.modelexecution.xmof.examples/fuml/fuml.xmof#//Classes/Kernel/Value"/>
+    </operation>
+    <containingClass href="platform:/plugin/org.modelexecution.xmof.examples/fuml/fuml.xmof#//PrimitiveBehaviors/IntegerFunctions/IntegerGreaterFunctionBehaviorExecution"/>
+  </rules>
+  <rules stepRule="true" overrides="//@rules.46">
+    <operation name="new_IntegerLessFunctionBehaviorExecution" lowerBound="1">
+      <eType xsi:type="kernel:BehavioredEClass" href="platform:/plugin/org.modelexecution.xmof.examples/fuml/fuml.xmof#//Classes/Kernel/Value"/>
+    </operation>
+    <containingClass href="platform:/plugin/org.modelexecution.xmof.examples/fuml/fuml.xmof#//PrimitiveBehaviors/IntegerFunctions/IntegerLessFunctionBehaviorExecution"/>
+  </rules>
+  <rules calledRules="//@rules.37 //@rules.55" stepRule="true" overridenBy="//@rules.53 //@rules.54">
+    <operation name="equals_Value" lowerBound="1">
+      <eType xsi:type="ecore:EDataType" href="http://www.eclipse.org/emf/2002/Ecore#//EBoolean"/>
+      <eParameters name="otherValue" lowerBound="1">
+        <eType xsi:type="kernel:BehavioredEClass" href="platform:/plugin/org.modelexecution.xmof.examples/fuml/fuml.xmof#//Classes/Kernel/Value"/>
+      </eParameters>
+    </operation>
+    <containingClass href="platform:/plugin/org.modelexecution.xmof.examples/fuml/fuml.xmof#//Classes/Kernel/Value"/>
+  </rules>
+  <rules stepRule="true" overrides="//@rules.52">
+    <operation name="equals_BooleanValue" lowerBound="1">
+      <eType xsi:type="ecore:EDataType" href="http://www.eclipse.org/emf/2002/Ecore#//EBoolean"/>
+      <eParameters name="otherValue" lowerBound="1">
+        <eType xsi:type="kernel:BehavioredEClass" href="platform:/plugin/org.modelexecution.xmof.examples/fuml/fuml.xmof#//Classes/Kernel/Value"/>
+      </eParameters>
+    </operation>
+    <containingClass href="platform:/plugin/org.modelexecution.xmof.examples/fuml/fuml.xmof#//Classes/Kernel/BooleanValue"/>
+  </rules>
+  <rules stepRule="true" overrides="//@rules.52">
+    <operation name="equals_IntegerValue" lowerBound="1">
+      <eType xsi:type="ecore:EDataType" href="http://www.eclipse.org/emf/2002/Ecore#//EBoolean"/>
+      <eParameters name="otherValue" lowerBound="1">
+        <eType xsi:type="kernel:BehavioredEClass" href="platform:/plugin/org.modelexecution.xmof.examples/fuml/fuml.xmof#//Classes/Kernel/Value"/>
+      </eParameters>
+    </operation>
+    <containingClass href="platform:/plugin/org.modelexecution.xmof.examples/fuml/fuml.xmof#//Classes/Kernel/IntegerValue"/>
+  </rules>
+  <rules calledRules="//@rules.37" stepRule="true">
+    <operation name="hasType_Value" lowerBound="1">
+      <eType xsi:type="ecore:EDataType" href="http://www.eclipse.org/emf/2002/Ecore#//EBoolean"/>
+      <eParameters name="type" lowerBound="1">
+        <eType xsi:type="ecore:EClass" href="http://www.eclipse.org/uml2/5.0.0/UML#//Classifier"/>
+      </eParameters>
+    </operation>
+    <containingClass href="platform:/plugin/org.modelexecution.xmof.examples/fuml/fuml.xmof#//Classes/Kernel/Value"/>
+  </rules>
+  <rules calledRules="//@rules.23" stepRule="true">
+    <operation name="getType_LiteralEvaluation" lowerBound="1">
+      <eType xsi:type="ecore:EClass" href="http://www.eclipse.org/uml2/5.0.0/UML#//PrimitiveType"/>
+      <eParameters name="builtInTypeName" lowerBound="1">
+        <eType xsi:type="ecore:EDataType" href="http://www.eclipse.org/emf/2002/Ecore#//EString"/>
+      </eParameters>
+    </operation>
+    <containingClass href="platform:/plugin/org.modelexecution.xmof.examples/fuml/fuml.xmof#//Classes/Kernel/LiteralEvaluation"/>
+  </rules>
+  <rules stepRule="true">
+    <operation name="getParameterValue_Execution">
+      <eType xsi:type="kernel:BehavioredEClass" href="platform:/plugin/org.modelexecution.xmof.examples/fuml/fuml.xmof#//CommonBehaviors/BasicBehaviors/ParameterValue"/>
+      <eParameters name="parameter" lowerBound="1">
+        <eType xsi:type="ecore:EClass" href="http://www.eclipse.org/uml2/5.0.0/UML#//Parameter"/>
+      </eParameters>
+    </operation>
+    <containingClass href="platform:/plugin/org.modelexecution.xmof.examples/fuml/fuml.xmof#//CommonBehaviors/BasicBehaviors/Execution"/>
+  </rules>
+  <rules stepRule="true" overridenBy="//@rules.59">
+    <operation name="terminate_Execution"/>
+    <containingClass href="platform:/plugin/org.modelexecution.xmof.examples/fuml/fuml.xmof#//CommonBehaviors/BasicBehaviors/Execution"/>
+  </rules>
+  <rules calledRules="//@rules.70" stepRule="true" overrides="//@rules.58">
+    <operation name="terminate_ActivityExecution"/>
+    <containingClass href="platform:/plugin/org.modelexecution.xmof.examples/fuml/fuml.xmof#//Activities/IntermediateActivities/ActivityExecution"/>
+  </rules>
+  <rules calledRules="//@rules.25" stepRule="true">
+    <operation name="copy_ParameterValue" lowerBound="1">
+      <eType xsi:type="kernel:BehavioredEClass" href="platform:/plugin/org.modelexecution.xmof.examples/fuml/fuml.xmof#//CommonBehaviors/BasicBehaviors/ParameterValue"/>
+    </operation>
+    <containingClass href="platform:/plugin/org.modelexecution.xmof.examples/fuml/fuml.xmof#//CommonBehaviors/BasicBehaviors/ParameterValue"/>
+  </rules>
+  <rules stepRule="true" overridenBy="//@rules.62 //@rules.63 //@rules.64">
+    <operation name="doBody_OpaqueBehaviorExecution">
+      <eParameters name="inputParameters" upperBound="-1">
+        <eType xsi:type="kernel:BehavioredEClass" href="platform:/plugin/org.modelexecution.xmof.examples/fuml/fuml.xmof#//CommonBehaviors/BasicBehaviors/ParameterValue"/>
+      </eParameters>
+      <eParameters name="outputParameters" upperBound="-1">
+        <eType xsi:type="kernel:BehavioredEClass" href="platform:/plugin/org.modelexecution.xmof.examples/fuml/fuml.xmof#//CommonBehaviors/BasicBehaviors/ParameterValue"/>
+      </eParameters>
+    </operation>
+    <containingClass href="platform:/plugin/org.modelexecution.xmof.examples/fuml/fuml.xmof#//CommonBehaviors/BasicBehaviors/OpaqueBehaviorExecution"/>
+  </rules>
+  <rules stepRule="true" overrides="//@rules.61">
+    <operation name="doBody_IntegerPlusFunctionBehaviorExecution">
+      <eParameters name="inputParameters" upperBound="-1">
+        <eType xsi:type="kernel:BehavioredEClass" href="platform:/plugin/org.modelexecution.xmof.examples/fuml/fuml.xmof#//CommonBehaviors/BasicBehaviors/ParameterValue"/>
+      </eParameters>
+      <eParameters name="outputParameters" upperBound="-1">
+        <eType xsi:type="kernel:BehavioredEClass" href="platform:/plugin/org.modelexecution.xmof.examples/fuml/fuml.xmof#//CommonBehaviors/BasicBehaviors/ParameterValue"/>
+      </eParameters>
+    </operation>
+    <containingClass href="platform:/plugin/org.modelexecution.xmof.examples/fuml/fuml.xmof#//PrimitiveBehaviors/IntegerFunctions/IntegerPlusFunctionBehaviorExecution"/>
+  </rules>
+  <rules stepRule="true" overrides="//@rules.61">
+    <operation name="doBody_IntegerGreaterFunctionBehaviorExecution">
+      <eParameters name="inputParameters" upperBound="-1">
+        <eType xsi:type="kernel:BehavioredEClass" href="platform:/plugin/org.modelexecution.xmof.examples/fuml/fuml.xmof#//CommonBehaviors/BasicBehaviors/ParameterValue"/>
+      </eParameters>
+      <eParameters name="outputParameters" upperBound="-1">
+        <eType xsi:type="kernel:BehavioredEClass" href="platform:/plugin/org.modelexecution.xmof.examples/fuml/fuml.xmof#//CommonBehaviors/BasicBehaviors/ParameterValue"/>
+      </eParameters>
+    </operation>
+    <containingClass href="platform:/plugin/org.modelexecution.xmof.examples/fuml/fuml.xmof#//PrimitiveBehaviors/IntegerFunctions/IntegerGreaterFunctionBehaviorExecution"/>
+  </rules>
+  <rules stepRule="true" overrides="//@rules.61">
+    <operation name="doBody_IntegerLessFunctionBehaviorExecution">
+      <eParameters name="inputParameters" upperBound="-1">
+        <eType xsi:type="kernel:BehavioredEClass" href="platform:/plugin/org.modelexecution.xmof.examples/fuml/fuml.xmof#//CommonBehaviors/BasicBehaviors/ParameterValue"/>
+      </eParameters>
+      <eParameters name="outputParameters" upperBound="-1">
+        <eType xsi:type="kernel:BehavioredEClass" href="platform:/plugin/org.modelexecution.xmof.examples/fuml/fuml.xmof#//CommonBehaviors/BasicBehaviors/ParameterValue"/>
+      </eParameters>
+    </operation>
+    <containingClass href="platform:/plugin/org.modelexecution.xmof.examples/fuml/fuml.xmof#//PrimitiveBehaviors/IntegerFunctions/IntegerLessFunctionBehaviorExecution"/>
+  </rules>
+  <rules calledRules="//@rules.71 //@rules.72 //@rules.73" stepRule="true">
+    <operation name="activate_ActivityNodeActivationGroup">
+      <eParameters name="nodes" upperBound="-1">
+        <eType xsi:type="ecore:EClass" href="http://www.eclipse.org/uml2/5.0.0/UML#//ActivityNode"/>
+      </eParameters>
+      <eParameters name="edges" upperBound="-1">
+        <eType xsi:type="ecore:EClass" href="http://www.eclipse.org/uml2/5.0.0/UML#//ActivityEdge"/>
+      </eParameters>
+    </operation>
+    <containingClass href="platform:/plugin/org.modelexecution.xmof.examples/fuml/fuml.xmof#//Activities/IntermediateActivities/ActivityNodeActivationGroup"/>
+  </rules>
+  <rules calledRules="//@rules.67 //@rules.68 //@rules.11" stepRule="true">
+    <operation name="collectOutputParameterValues_ActivityExecution"/>
+    <containingClass href="platform:/plugin/org.modelexecution.xmof.examples/fuml/fuml.xmof#//Activities/IntermediateActivities/ActivityExecution"/>
+  </rules>
+  <rules stepRule="true">
+    <operation name="getOutputParameterNodeActivations_ActivityNodeActivationGroup" upperBound="-1">
+      <eType xsi:type="ecore:EClass" href="http://www.eclipse.org/emf/2002/Ecore#//EObject"/>
+    </operation>
+    <containingClass href="platform:/plugin/org.modelexecution.xmof.examples/fuml/fuml.xmof#//Activities/IntermediateActivities/ActivityNodeActivationGroup"/>
+  </rules>
+  <rules calledRules="//@rules.69" stepRule="true">
+    <operation name="setParameterValueValues_ActivityExecution">
+      <eParameters name="parameterValue" lowerBound="1">
+        <eType xsi:type="kernel:BehavioredEClass" href="platform:/plugin/org.modelexecution.xmof.examples/fuml/fuml.xmof#//CommonBehaviors/BasicBehaviors/ParameterValue"/>
+      </eParameters>
+      <eParameters name="outputActivation" lowerBound="1">
+        <eType xsi:type="kernel:BehavioredEClass" href="platform:/plugin/org.modelexecution.xmof.examples/fuml/fuml.xmof#//Activities/IntermediateActivities/ActivityParameterNodeActivation"/>
+      </eParameters>
+    </operation>
+    <containingClass href="platform:/plugin/org.modelexecution.xmof.examples/fuml/fuml.xmof#//Activities/IntermediateActivities/ActivityExecution"/>
+  </rules>
+  <rules stepRule="true">
+    <operation name="getTokens_ActivityNodeActivation" upperBound="-1">
+      <eType xsi:type="kernel:BehavioredEClass" href="platform:/plugin/org.modelexecution.xmof.examples/fuml/fuml.xmof#//Activities/IntermediateActivities/Token"/>
+    </operation>
+    <containingClass href="platform:/plugin/org.modelexecution.xmof.examples/fuml/fuml.xmof#//Activities/IntermediateActivities/ActivityNodeActivation"/>
+  </rules>
+  <rules calledRules="//@rules.90" stepRule="true">
+    <operation name="terminateAll_ActivityNodeActivationGroup"/>
+    <containingClass href="platform:/plugin/org.modelexecution.xmof.examples/fuml/fuml.xmof#//Activities/IntermediateActivities/ActivityNodeActivationGroup"/>
+  </rules>
+  <rules calledRules="//@rules.74" stepRule="true">
+    <operation name="createNodeActivations_ActivityNodeActivationGroup">
+      <eParameters name="nodes" upperBound="-1">
+        <eType xsi:type="ecore:EClass" href="http://www.eclipse.org/uml2/5.0.0/UML#//ActivityNode"/>
+      </eParameters>
+    </operation>
+    <containingClass href="platform:/plugin/org.modelexecution.xmof.examples/fuml/fuml.xmof#//Activities/IntermediateActivities/ActivityNodeActivationGroup"/>
+  </rules>
+  <rules calledRules="//@rules.78 //@rules.79" stepRule="true">
+    <operation name="createEdgeInstances_ActivityNodeActivationGroup">
+      <eParameters name="edges" upperBound="-1">
+        <eType xsi:type="ecore:EClass" href="http://www.eclipse.org/uml2/5.0.0/UML#//ActivityEdge"/>
+      </eParameters>
+    </operation>
+    <containingClass href="platform:/plugin/org.modelexecution.xmof.examples/fuml/fuml.xmof#//Activities/IntermediateActivities/ActivityNodeActivationGroup"/>
+  </rules>
+  <rules calledRules="//@rules.81 //@rules.82 //@rules.83" stepRule="true">
+    <operation name="run_ActivityNodeActivationGroup">
+      <eParameters name="activations" upperBound="-1">
+        <eType xsi:type="kernel:BehavioredEClass" href="platform:/plugin/org.modelexecution.xmof.examples/fuml/fuml.xmof#//Activities/IntermediateActivities/ActivityNodeActivation"/>
+      </eParameters>
+    </operation>
+    <containingClass href="platform:/plugin/org.modelexecution.xmof.examples/fuml/fuml.xmof#//Activities/IntermediateActivities/ActivityNodeActivationGroup"/>
+  </rules>
+  <rules calledRules="//@rules.75 //@rules.17 //@rules.76" stepRule="true">
+    <operation name="createNodeActivation_ActivityNodeActivationGroup">
+      <eType xsi:type="kernel:BehavioredEClass" href="platform:/plugin/org.modelexecution.xmof.examples/fuml/fuml.xmof#//Activities/IntermediateActivities/ActivityNodeActivation"/>
+      <eParameters name="node" lowerBound="1">
+        <eType xsi:type="ecore:EClass" href="http://www.eclipse.org/uml2/5.0.0/UML#//ActivityNode"/>
+      </eParameters>
+    </operation>
+    <containingClass href="platform:/plugin/org.modelexecution.xmof.examples/fuml/fuml.xmof#//Activities/IntermediateActivities/ActivityNodeActivationGroup"/>
+  </rules>
+  <rules stepRule="true">
+    <operation name="getActivityExecution_ActivityNodeActivationGroup">
+      <eType xsi:type="kernel:BehavioredEClass" href="platform:/plugin/org.modelexecution.xmof.examples/fuml/fuml.xmof#//Activities/IntermediateActivities/ActivityExecution"/>
+    </operation>
+    <containingClass href="platform:/plugin/org.modelexecution.xmof.examples/fuml/fuml.xmof#//Activities/IntermediateActivities/ActivityNodeActivationGroup"/>
+  </rules>
+  <rules stepRule="true" overridenBy="//@rules.77">
+    <operation name="createNodeActivations_ActivityNodeActivation"/>
+    <containingClass href="platform:/plugin/org.modelexecution.xmof.examples/fuml/fuml.xmof#//Activities/IntermediateActivities/ActivityNodeActivation"/>
+  </rules>
+  <rules calledRules="//@rules.71 //@rules.78" stepRule="true" overrides="//@rules.76">
+    <operation name="createNodeActivations_ActionActivation"/>
+    <containingClass href="platform:/plugin/org.modelexecution.xmof.examples/fuml/fuml.xmof#//Actions/BasicActions/ActionActivation"/>
+  </rules>
+  <rules calledRules="//@rules.80" stepRule="true">
+    <operation name="getNodeActivation_ActivityNodeActivationGroup">
+      <eType xsi:type="kernel:BehavioredEClass" href="platform:/plugin/org.modelexecution.xmof.examples/fuml/fuml.xmof#//Activities/IntermediateActivities/ActivityNodeActivation"/>
+      <eParameters name="node" lowerBound="1">
+        <eType xsi:type="ecore:EClass" href="http://www.eclipse.org/uml2/5.0.0/UML#//ActivityNode"/>
+      </eParameters>
+    </operation>
+    <containingClass href="platform:/plugin/org.modelexecution.xmof.examples/fuml/fuml.xmof#//Activities/IntermediateActivities/ActivityNodeActivationGroup"/>
+  </rules>
+  <rules stepRule="true">
+    <operation name="createEdgeInstances_ActivityNodeActivation"/>
+    <containingClass href="platform:/plugin/org.modelexecution.xmof.examples/fuml/fuml.xmof#//Activities/IntermediateActivities/ActivityNodeActivation"/>
+  </rules>
+  <rules stepRule="true">
+    <operation name="getNodeActivation_ActivityNodeActivation">
+      <eType xsi:type="kernel:BehavioredEClass" href="platform:/plugin/org.modelexecution.xmof.examples/fuml/fuml.xmof#//Activities/IntermediateActivities/ActivityNodeActivation"/>
+      <eParameters name="node" lowerBound="1">
+        <eType xsi:type="ecore:EClass" href="http://www.eclipse.org/uml2/5.0.0/UML#//ActivityNode"/>
+      </eParameters>
+    </operation>
+    <containingClass href="platform:/plugin/org.modelexecution.xmof.examples/fuml/fuml.xmof#//Activities/IntermediateActivities/ActivityNodeActivation"/>
+  </rules>
+  <rules calledRules="//@rules.85" stepRule="true">
+    <operation name="runNodes_ActivityNodeActivationGroup">
+      <eParameters name="activations" upperBound="-1">
+        <eType xsi:type="kernel:BehavioredEClass" href="platform:/plugin/org.modelexecution.xmof.examples/fuml/fuml.xmof#//Activities/IntermediateActivities/ActivityNodeActivation"/>
+      </eParameters>
+    </operation>
+    <containingClass href="platform:/plugin/org.modelexecution.xmof.examples/fuml/fuml.xmof#//Activities/IntermediateActivities/ActivityNodeActivationGroup"/>
+  </rules>
+  <rules calledRules="//@rules.86 //@rules.87" stepRule="true">
+    <operation name="getInitiallyEnabledNodeActivations_ActivityNodeActivationGroup" upperBound="-1">
+      <eType xsi:type="kernel:BehavioredEClass" href="platform:/plugin/org.modelexecution.xmof.examples/fuml/fuml.xmof#//Activities/IntermediateActivities/ActivityNodeActivation"/>
+      <eParameters name="activations" upperBound="-1">
+        <eType xsi:type="kernel:BehavioredEClass" href="platform:/plugin/org.modelexecution.xmof.examples/fuml/fuml.xmof#//Activities/IntermediateActivities/ActivityNodeActivation"/>
+      </eParameters>
+    </operation>
+    <containingClass href="platform:/plugin/org.modelexecution.xmof.examples/fuml/fuml.xmof#//Activities/IntermediateActivities/ActivityNodeActivationGroup"/>
+  </rules>
+  <rules calledRules="//@rules.101 //@rules.106 //@rules.110" stepRule="true" overridenBy="//@rules.84">
+    <operation name="receiveOffer_ActivityNodeActivation"/>
+    <containingClass href="platform:/plugin/org.modelexecution.xmof.examples/fuml/fuml.xmof#//Activities/IntermediateActivities/ActivityNodeActivation"/>
+  </rules>
+  <rules calledRules="//@rules.83" stepRule="true" overrides="//@rules.83">
+    <operation name="receiveOffer_InputPinActivation"/>
+    <containingClass href="platform:/plugin/org.modelexecution.xmof.examples/fuml/fuml.xmof#//Actions/BasicActions/InputPinActivation"/>
+  </rules>
+  <rules stepRule="true">
+    <operation name="run_ActivityNodeActivation"/>
+    <containingClass href="platform:/plugin/org.modelexecution.xmof.examples/fuml/fuml.xmof#//Activities/IntermediateActivities/ActivityNodeActivation"/>
+  </rules>
+  <rules calledRules="//@rules.88" stepRule="true">
+    <operation name="checkIncomingEdges_ActivityNodeActivationGroup" lowerBound="1">
+      <eType xsi:type="ecore:EDataType" href="http://www.eclipse.org/emf/2002/Ecore#//EBoolean"/>
+      <eParameters name="activation" upperBound="-1">
+        <eType xsi:type="kernel:BehavioredEClass" href="platform:/plugin/org.modelexecution.xmof.examples/fuml/fuml.xmof#//Activities/IntermediateActivities/ActivityNodeActivation"/>
+      </eParameters>
+      <eParameters name="activations" upperBound="-1">
+        <eType xsi:type="kernel:BehavioredEClass" href="platform:/plugin/org.modelexecution.xmof.examples/fuml/fuml.xmof#//Activities/IntermediateActivities/ActivityNodeActivation"/>
+      </eParameters>
+    </operation>
+    <containingClass href="platform:/plugin/org.modelexecution.xmof.examples/fuml/fuml.xmof#//Activities/IntermediateActivities/ActivityNodeActivationGroup"/>
+  </rules>
+  <rules stepRule="true">
+    <operation name="getPinActivation_ActionActivation">
+      <eType xsi:type="kernel:BehavioredEClass" href="platform:/plugin/org.modelexecution.xmof.examples/fuml/fuml.xmof#//Actions/BasicActions/PinActivation"/>
+      <eParameters name="pin" lowerBound="1">
+        <eType xsi:type="ecore:EClass" href="http://www.eclipse.org/uml2/5.0.0/UML#//Pin"/>
+      </eParameters>
+    </operation>
+    <containingClass href="platform:/plugin/org.modelexecution.xmof.examples/fuml/fuml.xmof#//Actions/BasicActions/ActionActivation"/>
+  </rules>
+  <rules calledRules="//@rules.89" stepRule="true">
+    <operation name="getSourceActivations_ActivityNodeActivationGroup" upperBound="-1">
+      <eType xsi:type="kernel:BehavioredEClass" href="platform:/plugin/org.modelexecution.xmof.examples/fuml/fuml.xmof#//Activities/IntermediateActivities/ActivityNodeActivation"/>
+      <eParameters name="activations" upperBound="-1">
+        <eType xsi:type="kernel:BehavioredEClass" href="platform:/plugin/org.modelexecution.xmof.examples/fuml/fuml.xmof#//Activities/IntermediateActivities/ActivityNodeActivation"/>
+      </eParameters>
+      <eParameters name="incomingEdge" lowerBound="1">
+        <eType xsi:type="kernel:BehavioredEClass" href="platform:/plugin/org.modelexecution.xmof.examples/fuml/fuml.xmof#//Activities/IntermediateActivities/ActivityEdgeInstance"/>
+      </eParameters>
+    </operation>
+    <containingClass href="platform:/plugin/org.modelexecution.xmof.examples/fuml/fuml.xmof#//Activities/IntermediateActivities/ActivityNodeActivationGroup"/>
+  </rules>
+  <rules stepRule="true">
+    <operation name="isSourceFor_ActivityNodeActivation" lowerBound="1">
+      <eType xsi:type="ecore:EDataType" href="http://www.eclipse.org/emf/2002/Ecore#//EBoolean"/>
+      <eParameters name="edgeInstance" lowerBound="1">
+        <eType xsi:type="kernel:BehavioredEClass" href="platform:/plugin/org.modelexecution.xmof.examples/fuml/fuml.xmof#//Activities/IntermediateActivities/ActivityEdgeInstance"/>
+      </eParameters>
+    </operation>
+    <containingClass href="platform:/plugin/org.modelexecution.xmof.examples/fuml/fuml.xmof#//Activities/IntermediateActivities/ActivityNodeActivation"/>
+  </rules>
+  <rules stepRule="true" overridenBy="//@rules.91 //@rules.92 //@rules.93">
+    <operation name="terminate_ActivityNodeActivation"/>
+    <containingClass href="platform:/plugin/org.modelexecution.xmof.examples/fuml/fuml.xmof#//Activities/IntermediateActivities/ActivityNodeActivation"/>
+  </rules>
+  <rules calledRules="//@rules.90" stepRule="true" overrides="//@rules.90">
+    <operation name="terminate_ActionActivation"/>
+    <containingClass href="platform:/plugin/org.modelexecution.xmof.examples/fuml/fuml.xmof#//Actions/BasicActions/ActionActivation"/>
+  </rules>
+  <rules calledRules="//@rules.128 //@rules.90" stepRule="true" overrides="//@rules.90">
+    <operation name="terminate_ObjectNodeActivation"/>
+    <containingClass href="platform:/plugin/org.modelexecution.xmof.examples/fuml/fuml.xmof#//Activities/IntermediateActivities/ObjectNodeActivation"/>
+  </rules>
+  <rules calledRules="//@rules.58 //@rules.91" stepRule="true" overrides="//@rules.90">
+    <operation name="terminate_CallActionActivation"/>
+    <containingClass href="platform:/plugin/org.modelexecution.xmof.examples/fuml/fuml.xmof#//Actions/BasicActions/CallActionActivation"/>
+  </rules>
+  <rules calledRules="//@rules.57 //@rules.75 //@rules.95 //@rules.97 //@rules.98" stepRule="true" overrides="//@rules.110">
+    <operation name="fire_ActivityParameterNodeActivation">
+      <eParameters name="incomingTokens" upperBound="-1">
+        <eType xsi:type="kernel:BehavioredEClass" href="platform:/plugin/org.modelexecution.xmof.examples/fuml/fuml.xmof#//Activities/IntermediateActivities/Token"/>
+      </eParameters>
+    </operation>
+    <containingClass href="platform:/plugin/org.modelexecution.xmof.examples/fuml/fuml.xmof#//Activities/IntermediateActivities/ActivityParameterNodeActivation"/>
+  </rules>
+  <rules calledRules="//@rules.124" stepRule="true" overridenBy="//@rules.96">
+    <operation name="addToken_ActivityNodeActivation">
+      <eParameters name="token" lowerBound="1">
+        <eType xsi:type="kernel:BehavioredEClass" href="platform:/plugin/org.modelexecution.xmof.examples/fuml/fuml.xmof#//Activities/IntermediateActivities/Token"/>
+      </eParameters>
+    </operation>
+    <containingClass href="platform:/plugin/org.modelexecution.xmof.examples/fuml/fuml.xmof#//Activities/IntermediateActivities/ActivityNodeActivation"/>
+  </rules>
+  <rules calledRules="//@rules.135 //@rules.129 //@rules.95" stepRule="true" overrides="//@rules.95">
+    <operation name="addToken_ObjectNodeActivation">
+      <eParameters name="token" lowerBound="1">
+        <eType xsi:type="kernel:BehavioredEClass" href="platform:/plugin/org.modelexecution.xmof.examples/fuml/fuml.xmof#//Activities/IntermediateActivities/Token"/>
+      </eParameters>
+    </operation>
+    <containingClass href="platform:/plugin/org.modelexecution.xmof.examples/fuml/fuml.xmof#//Activities/IntermediateActivities/ObjectNodeActivation"/>
+  </rules>
+  <rules calledRules="//@rules.149 //@rules.125" stepRule="true">
+    <operation name="sendUnofferedTokens_ObjectNodeActivation"/>
+    <containingClass href="platform:/plugin/org.modelexecution.xmof.examples/fuml/fuml.xmof#//Activities/IntermediateActivities/ObjectNodeActivation"/>
+  </rules>
+  <rules calledRules="//@rules.95" stepRule="true">
+    <operation name="addTokens_ActivityNodeActivation">
+      <eParameters name="tokens" upperBound="-1">
+        <eType xsi:type="kernel:BehavioredEClass" href="platform:/plugin/org.modelexecution.xmof.examples/fuml/fuml.xmof#//Activities/IntermediateActivities/Token"/>
+      </eParameters>
+    </operation>
+    <containingClass href="platform:/plugin/org.modelexecution.xmof.examples/fuml/fuml.xmof#//Activities/IntermediateActivities/ActivityNodeActivation"/>
+  </rules>
+  <rules calledRules="//@rules.100" stepRule="true" overrides="//@rules.128">
+    <operation name="clearTokens_ActivityParameterNodeActivation"/>
+    <containingClass href="platform:/plugin/org.modelexecution.xmof.examples/fuml/fuml.xmof#//Activities/IntermediateActivities/ActivityParameterNodeActivation"/>
+  </rules>
+  <rules calledRules="//@rules.128" stepRule="true" overrides="//@rules.128">
+    <operation name="clearTokens_ObjectNodeActivation"/>
+    <containingClass href="platform:/plugin/org.modelexecution.xmof.examples/fuml/fuml.xmof#//Activities/IntermediateActivities/ObjectNodeActivation"/>
+  </rules>
+  <rules calledRules="//@rules.118" stepRule="true" overridenBy="//@rules.102 //@rules.103 //@rules.104 //@rules.105">
+    <operation name="isReady_ActivityNodeActivation" lowerBound="1">
+      <eType xsi:type="ecore:EDataType" href="http://www.eclipse.org/emf/2002/Ecore#//EBoolean"/>
+    </operation>
+    <containingClass href="platform:/plugin/org.modelexecution.xmof.examples/fuml/fuml.xmof#//Activities/IntermediateActivities/ActivityNodeActivation"/>
+  </rules>
+  <rules calledRules="//@rules.101 //@rules.119" stepRule="true" overrides="//@rules.101">
+    <operation name="isReady_ActionActivation" lowerBound="1">
+      <eType xsi:type="ecore:EDataType" href="http://www.eclipse.org/emf/2002/Ecore#//EBoolean"/>
+    </operation>
+    <containingClass href="platform:/plugin/org.modelexecution.xmof.examples/fuml/fuml.xmof#//Actions/BasicActions/ActionActivation"/>
+  </rules>
+  <rules calledRules="//@rules.101 //@rules.147 //@rules.151" stepRule="true" overrides="//@rules.101">
+    <operation name="isReady_InputPinActivation" lowerBound="1">
+      <eType xsi:type="ecore:EDataType" href="http://www.eclipse.org/emf/2002/Ecore#//EBoolean"/>
+    </operation>
+    <containingClass href="platform:/plugin/org.modelexecution.xmof.examples/fuml/fuml.xmof#//Actions/BasicActions/InputPinActivation"/>
+  </rules>
+  <rules calledRules="//@rules.121" stepRule="true" overrides="//@rules.101">
+    <operation name="isReady_JoinNodeActivation" lowerBound="1">
+      <eType xsi:type="ecore:EDataType" href="http://www.eclipse.org/emf/2002/Ecore#//EBoolean"/>
+    </operation>
+    <containingClass href="platform:/plugin/org.modelexecution.xmof.examples/fuml/fuml.xmof#//Activities/IntermediateActivities/JoinNodeActivation"/>
+  </rules>
+  <rules calledRules="//@rules.121" stepRule="true" overrides="//@rules.101">
+    <operation name="isReady_DecisionNodeActivation" lowerBound="1">
+      <eType xsi:type="ecore:EDataType" href="http://www.eclipse.org/emf/2002/Ecore#//EBoolean"/>
+    </operation>
+    <containingClass href="platform:/plugin/org.modelexecution.xmof.examples/fuml/fuml.xmof#//Activities/IntermediateActivities/DecisionNodeActivation"/>
+  </rules>
+  <rules calledRules="//@rules.122" stepRule="true" overridenBy="//@rules.107 //@rules.108 //@rules.109">
+    <operation name="takeOfferedTokens_ActivityNodeActivation" upperBound="-1">
+      <eType xsi:type="kernel:BehavioredEClass" href="platform:/plugin/org.modelexecution.xmof.examples/fuml/fuml.xmof#//Activities/IntermediateActivities/Token"/>
+    </operation>
+    <containingClass href="platform:/plugin/org.modelexecution.xmof.examples/fuml/fuml.xmof#//Activities/IntermediateActivities/ActivityNodeActivation"/>
+  </rules>
+  <rules calledRules="//@rules.122 //@rules.129 //@rules.87 //@rules.106 //@rules.110" stepRule="true" overrides="//@rules.106">
+    <operation name="takeOfferedTokens_ActionActivation" upperBound="-1">
+      <eType xsi:type="kernel:BehavioredEClass" href="platform:/plugin/org.modelexecution.xmof.examples/fuml/fuml.xmof#//Activities/IntermediateActivities/Token"/>
+    </operation>
+    <containingClass href="platform:/plugin/org.modelexecution.xmof.examples/fuml/fuml.xmof#//Actions/BasicActions/ActionActivation"/>
+  </rules>
+  <rules calledRules="//@rules.147 //@rules.146 //@rules.122 //@rules.144" stepRule="true" overrides="//@rules.106">
+    <operation name="takeOfferedTokens_PinActivation" upperBound="-1">
+      <eType xsi:type="kernel:BehavioredEClass" href="platform:/plugin/org.modelexecution.xmof.examples/fuml/fuml.xmof#//Activities/IntermediateActivities/Token"/>
+    </operation>
+    <containingClass href="platform:/plugin/org.modelexecution.xmof.examples/fuml/fuml.xmof#//Actions/BasicActions/PinActivation"/>
+  </rules>
+  <rules calledRules="//@rules.122" stepRule="true" overrides="//@rules.106">
+    <operation name="takeOfferedTokens_DecisionNodeActivation" upperBound="-1">
+      <eType xsi:type="kernel:BehavioredEClass" href="platform:/plugin/org.modelexecution.xmof.examples/fuml/fuml.xmof#//Activities/IntermediateActivities/Token"/>
+    </operation>
+    <containingClass href="platform:/plugin/org.modelexecution.xmof.examples/fuml/fuml.xmof#//Activities/IntermediateActivities/DecisionNodeActivation"/>
+  </rules>
+  <rules stepRule="true" overridenBy="//@rules.111 //@rules.112 //@rules.94 //@rules.113 //@rules.114 //@rules.115 //@rules.116 //@rules.117">
+    <operation name="fire_ActivityNodeActivation">
+      <eParameters name="incomingTokens" upperBound="-1">
+        <eType xsi:type="kernel:BehavioredEClass" href="platform:/plugin/org.modelexecution.xmof.examples/fuml/fuml.xmof#//Activities/IntermediateActivities/Token"/>
+      </eParameters>
+    </operation>
+    <containingClass href="platform:/plugin/org.modelexecution.xmof.examples/fuml/fuml.xmof#//Activities/IntermediateActivities/ActivityNodeActivation"/>
+  </rules>
+  <rules calledRules="//@rules.162 //@rules.163 //@rules.170" stepRule="true" overrides="//@rules.110">
+    <operation name="fire_ActionActivation">
+      <eParameters name="incomingTokens" upperBound="-1">
+        <eType xsi:type="kernel:BehavioredEClass" href="platform:/plugin/org.modelexecution.xmof.examples/fuml/fuml.xmof#//Activities/IntermediateActivities/Token"/>
+      </eParameters>
+    </operation>
+    <containingClass href="platform:/plugin/org.modelexecution.xmof.examples/fuml/fuml.xmof#//Actions/BasicActions/ActionActivation"/>
+  </rules>
+  <rules calledRules="//@rules.98 //@rules.125" stepRule="true" overrides="//@rules.110">
+    <operation name="fire_InitialNodeActivation">
+      <eParameters name="incomingTokens" upperBound="-1">
+        <eType xsi:type="kernel:BehavioredEClass" href="platform:/plugin/org.modelexecution.xmof.examples/fuml/fuml.xmof#//Activities/IntermediateActivities/Token"/>
+      </eParameters>
+    </operation>
+    <containingClass href="platform:/plugin/org.modelexecution.xmof.examples/fuml/fuml.xmof#//Activities/IntermediateActivities/InitialNodeActivation"/>
+  </rules>
+  <rules calledRules="//@rules.161 //@rules.98 //@rules.125" stepRule="true" overrides="//@rules.110">
+    <operation name="fire_ForkNodeActivation">
+      <eParameters name="incomingTokens" upperBound="-1">
+        <eType xsi:type="kernel:BehavioredEClass" href="platform:/plugin/org.modelexecution.xmof.examples/fuml/fuml.xmof#//Activities/IntermediateActivities/Token"/>
+      </eParameters>
+    </operation>
+    <containingClass href="platform:/plugin/org.modelexecution.xmof.examples/fuml/fuml.xmof#//Activities/IntermediateActivities/ForkNodeActivation"/>
+  </rules>
+  <rules calledRules="//@rules.125" stepRule="true" overrides="//@rules.110">
+    <operation name="fire_ControlNodeActivation">
+      <eParameters name="incomingTokens" upperBound="-1">
+        <eType xsi:type="kernel:BehavioredEClass" href="platform:/plugin/org.modelexecution.xmof.examples/fuml/fuml.xmof#//Activities/IntermediateActivities/Token"/>
+      </eParameters>
+    </operation>
+    <containingClass href="platform:/plugin/org.modelexecution.xmof.examples/fuml/fuml.xmof#//Activities/IntermediateActivities/ControlNodeActivation"/>
+  </rules>
+  <rules calledRules="//@rules.153 //@rules.154 //@rules.155 //@rules.127" stepRule="true" overrides="//@rules.110">
+    <operation name="fire_DecisionNodeActivation">
+      <eParameters name="incomingTokens" upperBound="-1">
+        <eType xsi:type="kernel:BehavioredEClass" href="platform:/plugin/org.modelexecution.xmof.examples/fuml/fuml.xmof#//Activities/IntermediateActivities/Token"/>
+      </eParameters>
+    </operation>
+    <containingClass href="platform:/plugin/org.modelexecution.xmof.examples/fuml/fuml.xmof#//Activities/IntermediateActivities/DecisionNodeActivation"/>
+  </rules>
+  <rules calledRules="//@rules.70" stepRule="true" overrides="//@rules.110">
+    <operation name="fire_ActivityFinalNodeActivation">
+      <eParameters name="incomingTokens" upperBound="-1">
+        <eType xsi:type="kernel:BehavioredEClass" href="platform:/plugin/org.modelexecution.xmof.examples/fuml/fuml.xmof#//Activities/IntermediateActivities/Token"/>
+      </eParameters>
+    </operation>
+    <containingClass href="platform:/plugin/org.modelexecution.xmof.examples/fuml/fuml.xmof#//Activities/IntermediateActivities/ActivityFinalNodeActivation"/>
+  </rules>
+  <rules calledRules="//@rules.98" stepRule="true" overrides="//@rules.110">
+    <operation name="fire_PinActivation">
+      <eParameters name="incomingTokens" upperBound="-1">
+        <eType xsi:type="kernel:BehavioredEClass" href="platform:/plugin/org.modelexecution.xmof.examples/fuml/fuml.xmof#//Activities/IntermediateActivities/Token"/>
+      </eParameters>
+    </operation>
+    <containingClass href="platform:/plugin/org.modelexecution.xmof.examples/fuml/fuml.xmof#//Actions/BasicActions/PinActivation"/>
+  </rules>
+  <rules stepRule="true">
+    <operation name="isRunning_ActivityNodeActivation" lowerBound="1">
+      <eType xsi:type="ecore:EDataType" href="http://www.eclipse.org/emf/2002/Ecore#//EBoolean"/>
+    </operation>
+    <containingClass href="platform:/plugin/org.modelexecution.xmof.examples/fuml/fuml.xmof#//Activities/IntermediateActivities/ActivityNodeActivation"/>
+  </rules>
+  <rules calledRules="//@rules.121" stepRule="true" overridenBy="//@rules.120">
+    <operation name="hasOffers_ActivityNodeActivation" lowerBound="1">
+      <eType xsi:type="ecore:EDataType" href="http://www.eclipse.org/emf/2002/Ecore#//EBoolean"/>
+    </operation>
+    <containingClass href="platform:/plugin/org.modelexecution.xmof.examples/fuml/fuml.xmof#//Activities/IntermediateActivities/ActivityNodeActivation"/>
+  </rules>
+  <rules calledRules="//@rules.119 //@rules.87 //@rules.101" stepRule="true" overrides="//@rules.119">
+    <operation name="hasOffers_ActionActivation" lowerBound="1">
+      <eType xsi:type="ecore:EDataType" href="http://www.eclipse.org/emf/2002/Ecore#//EBoolean"/>
+    </operation>
+    <containingClass href="platform:/plugin/org.modelexecution.xmof.examples/fuml/fuml.xmof#//Actions/BasicActions/ActionActivation"/>
+  </rules>
+  <rules calledRules="//@rules.142" stepRule="true">
+    <operation name="hasOffer_ActivityEdgeInstance" lowerBound="1">
+      <eType xsi:type="ecore:EDataType" href="http://www.eclipse.org/emf/2002/Ecore#//EBoolean"/>
+    </operation>
+    <containingClass href="platform:/plugin/org.modelexecution.xmof.examples/fuml/fuml.xmof#//Activities/IntermediateActivities/ActivityEdgeInstance"/>
+  </rules>
+  <rules calledRules="//@rules.143" stepRule="true">
+    <operation name="takeOfferedTokens_ActivityEdgeInstance" upperBound="-1">
+      <eType xsi:type="kernel:BehavioredEClass" href="platform:/plugin/org.modelexecution.xmof.examples/fuml/fuml.xmof#//Activities/IntermediateActivities/Token"/>
+    </operation>
+    <containingClass href="platform:/plugin/org.modelexecution.xmof.examples/fuml/fuml.xmof#//Activities/IntermediateActivities/ActivityEdgeInstance"/>
+  </rules>
+  <rules stepRule="true">
+    <operation name="removeToken_ActivityNodeActivation" lowerBound="1">
+      <eType xsi:type="ecore:EDataType" href="http://www.eclipse.org/emf/2002/Ecore#//EInt"/>
+      <eParameters name="token" lowerBound="1">
+        <eType xsi:type="kernel:BehavioredEClass" href="platform:/plugin/org.modelexecution.xmof.examples/fuml/fuml.xmof#//Activities/IntermediateActivities/Token"/>
+      </eParameters>
+    </operation>
+    <containingClass href="platform:/plugin/org.modelexecution.xmof.examples/fuml/fuml.xmof#//Activities/IntermediateActivities/ActivityNodeActivation"/>
+  </rules>
+  <rules calledRules="//@rules.129" stepRule="true">
+    <operation name="transfer_Token" lowerBound="1">
+      <eType xsi:type="kernel:BehavioredEClass" href="platform:/plugin/org.modelexecution.xmof.examples/fuml/fuml.xmof#//Activities/IntermediateActivities/Token"/>
+      <eParameters name="holder" lowerBound="1">
+        <eType xsi:type="kernel:BehavioredEClass" href="platform:/plugin/org.modelexecution.xmof.examples/fuml/fuml.xmof#//Activities/IntermediateActivities/ActivityNodeActivation"/>
+      </eParameters>
+    </operation>
+    <containingClass href="platform:/plugin/org.modelexecution.xmof.examples/fuml/fuml.xmof#//Activities/IntermediateActivities/Token"/>
+  </rules>
+  <rules calledRules="//@rules.127" stepRule="true" overridenBy="//@rules.126">
+    <operation name="sendOffers_ActivityNodeActivation">
+      <eParameters name="tokens" upperBound="-1">
+        <eType xsi:type="kernel:BehavioredEClass" href="platform:/plugin/org.modelexecution.xmof.examples/fuml/fuml.xmof#//Activities/IntermediateActivities/Token"/>
+      </eParameters>
+    </operation>
+    <containingClass href="platform:/plugin/org.modelexecution.xmof.examples/fuml/fuml.xmof#//Activities/IntermediateActivities/ActivityNodeActivation"/>
+  </rules>
+  <rules calledRules="//@rules.125" stepRule="true" overrides="//@rules.125">
+    <operation name="sendOffers_ObjectNodeActivation">
+      <eParameters name="tokens" upperBound="-1">
+        <eType xsi:type="kernel:BehavioredEClass" href="platform:/plugin/org.modelexecution.xmof.examples/fuml/fuml.xmof#//Activities/IntermediateActivities/Token"/>
+      </eParameters>
+    </operation>
+    <containingClass href="platform:/plugin/org.modelexecution.xmof.examples/fuml/fuml.xmof#//Activities/IntermediateActivities/ObjectNodeActivation"/>
+  </rules>
+  <rules calledRules="//@rules.83" stepRule="true">
+    <operation name="sendOffer_ActivityEdgeInstance">
+      <eParameters name="tokens" upperBound="-1">
+        <eType xsi:type="kernel:BehavioredEClass" href="platform:/plugin/org.modelexecution.xmof.examples/fuml/fuml.xmof#//Activities/IntermediateActivities/Token"/>
+      </eParameters>
+    </operation>
+    <containingClass href="platform:/plugin/org.modelexecution.xmof.examples/fuml/fuml.xmof#//Activities/IntermediateActivities/ActivityEdgeInstance"/>
+  </rules>
+  <rules calledRules="//@rules.129" stepRule="true" overridenBy="//@rules.100 //@rules.99">
+    <operation name="clearTokens_ActivityNodeActivation"/>
+    <containingClass href="platform:/plugin/org.modelexecution.xmof.examples/fuml/fuml.xmof#//Activities/IntermediateActivities/ActivityNodeActivation"/>
+  </rules>
+  <rules calledRules="//@rules.134 //@rules.123" stepRule="true" overridenBy="//@rules.130">
+    <operation name="withdraw_Token"/>
+    <containingClass href="platform:/plugin/org.modelexecution.xmof.examples/fuml/fuml.xmof#//Activities/IntermediateActivities/Token"/>
+  </rules>
+  <rules calledRules="//@rules.129 //@rules.134" stepRule="true" overrides="//@rules.129">
+    <operation name="withdraw_ForkedToken"/>
+    <containingClass href="platform:/plugin/org.modelexecution.xmof.examples/fuml/fuml.xmof#//Activities/IntermediateActivities/ForkedToken"/>
+  </rules>
+  <rules calledRules="//@rules.132" stepRule="true">
+    <operation name="getExecutionLocus_ActivityNodeActivation" lowerBound="1">
+      <eType xsi:type="kernel:BehavioredEClass" href="platform:/plugin/org.modelexecution.xmof.examples/fuml/fuml.xmof#//Loci/Locus"/>
+    </operation>
+    <containingClass href="platform:/plugin/org.modelexecution.xmof.examples/fuml/fuml.xmof#//Activities/IntermediateActivities/ActivityNodeActivation"/>
+  </rules>
+  <rules calledRules="//@rules.75" stepRule="true">
+    <operation name="getActivityExecution_ActivityNodeActivation" lowerBound="1">
+      <eType xsi:type="kernel:BehavioredEClass" href="platform:/plugin/org.modelexecution.xmof.examples/fuml/fuml.xmof#//Activities/IntermediateActivities/ActivityExecution"/>
+    </operation>
+    <containingClass href="platform:/plugin/org.modelexecution.xmof.examples/fuml/fuml.xmof#//Activities/IntermediateActivities/ActivityNodeActivation"/>
+  </rules>
+  <rules calledRules="//@rules.132" stepRule="true">
+    <operation name="getExecutionContext_ActivityNodeActivation">
+      <eType xsi:type="kernel:BehavioredEClass" href="platform:/plugin/org.modelexecution.xmof.examples/fuml/fuml.xmof#//Classes/Kernel/Object"/>
+    </operation>
+    <containingClass href="platform:/plugin/org.modelexecution.xmof.examples/fuml/fuml.xmof#//Activities/IntermediateActivities/ActivityNodeActivation"/>
+  </rules>
+  <rules stepRule="true">
+    <operation name="isWithdrawn_Token" lowerBound="1">
+      <eType xsi:type="ecore:EDataType" href="http://www.eclipse.org/emf/2002/Ecore#//EBoolean"/>
+    </operation>
+    <containingClass href="platform:/plugin/org.modelexecution.xmof.examples/fuml/fuml.xmof#//Activities/IntermediateActivities/Token"/>
+  </rules>
+  <rules stepRule="true" overridenBy="//@rules.136 //@rules.137">
+    <operation name="getValue_Token">
+      <eType xsi:type="kernel:BehavioredEClass" href="platform:/plugin/org.modelexecution.xmof.examples/fuml/fuml.xmof#//Classes/Kernel/Value"/>
+    </operation>
+    <containingClass href="platform:/plugin/org.modelexecution.xmof.examples/fuml/fuml.xmof#//Activities/IntermediateActivities/Token"/>
+  </rules>
+  <rules stepRule="true" overrides="//@rules.135">
+    <operation name="getValue_ObjectToken">
+      <eType xsi:type="kernel:BehavioredEClass" href="platform:/plugin/org.modelexecution.xmof.examples/fuml/fuml.xmof#//Classes/Kernel/Value"/>
+    </operation>
+    <containingClass href="platform:/plugin/org.modelexecution.xmof.examples/fuml/fuml.xmof#//Activities/IntermediateActivities/ObjectToken"/>
+  </rules>
+  <rules calledRules="//@rules.135" stepRule="true" overrides="//@rules.135">
+    <operation name="getValue_ForkedToken">
+      <eType xsi:type="kernel:BehavioredEClass" href="platform:/plugin/org.modelexecution.xmof.examples/fuml/fuml.xmof#//Classes/Kernel/Value"/>
+    </operation>
+    <containingClass href="platform:/plugin/org.modelexecution.xmof.examples/fuml/fuml.xmof#//Activities/IntermediateActivities/ForkedToken"/>
+  </rules>
+  <rules stepRule="true" overridenBy="//@rules.139 //@rules.140 //@rules.141">
+    <operation name="isControl_Token" lowerBound="1">
+      <eType xsi:type="ecore:EDataType" href="http://www.eclipse.org/emf/2002/Ecore#//EBoolean"/>
+    </operation>
+    <containingClass href="platform:/plugin/org.modelexecution.xmof.examples/fuml/fuml.xmof#//Activities/IntermediateActivities/Token"/>
+  </rules>
+  <rules stepRule="true" overrides="//@rules.138">
+    <operation name="isControl_ObjectToken" lowerBound="1">
+      <eType xsi:type="ecore:EDataType" href="http://www.eclipse.org/emf/2002/Ecore#//EBoolean"/>
+    </operation>
+    <containingClass href="platform:/plugin/org.modelexecution.xmof.examples/fuml/fuml.xmof#//Activities/IntermediateActivities/ObjectToken"/>
+  </rules>
+  <rules stepRule="true" overrides="//@rules.138">
+    <operation name="isControl_ControlToken" lowerBound="1">
+      <eType xsi:type="ecore:EDataType" href="http://www.eclipse.org/emf/2002/Ecore#//EBoolean"/>
+    </operation>
+    <containingClass href="platform:/plugin/org.modelexecution.xmof.examples/fuml/fuml.xmof#//Activities/IntermediateActivities/ControlToken"/>
+  </rules>
+  <rules calledRules="//@rules.138" stepRule="true" overrides="//@rules.138">
+    <operation name="isControl_ForkedToken" lowerBound="1">
+      <eType xsi:type="ecore:EDataType" href="http://www.eclipse.org/emf/2002/Ecore#//EBoolean"/>
+    </operation>
+    <containingClass href="platform:/plugin/org.modelexecution.xmof.examples/fuml/fuml.xmof#//Activities/IntermediateActivities/ForkedToken"/>
+  </rules>
+  <rules calledRules="//@rules.152" stepRule="true">
+    <operation name="hasTokens_Offer" lowerBound="1">
+      <eType xsi:type="ecore:EDataType" href="http://www.eclipse.org/emf/2002/Ecore#//EBoolean"/>
+    </operation>
+    <containingClass href="platform:/plugin/org.modelexecution.xmof.examples/fuml/fuml.xmof#//Activities/IntermediateActivities/Offer"/>
+  </rules>
+  <rules calledRules="//@rules.152" stepRule="true">
+    <operation name="getOfferedTokens_Offer" upperBound="-1">
+      <eType xsi:type="kernel:BehavioredEClass" href="platform:/plugin/org.modelexecution.xmof.examples/fuml/fuml.xmof#//Activities/IntermediateActivities/Token"/>
+    </operation>
+    <containingClass href="platform:/plugin/org.modelexecution.xmof.examples/fuml/fuml.xmof#//Activities/IntermediateActivities/Offer"/>
+  </rules>
+  <rules calledRules="//@rules.145 //@rules.143" stepRule="true">
+    <operation name="takeOfferedTokens_int_ActivityEdgeInstance" upperBound="-1">
+      <eType xsi:type="kernel:BehavioredEClass" href="platform:/plugin/org.modelexecution.xmof.examples/fuml/fuml.xmof#//Activities/IntermediateActivities/Token"/>
+      <eParameters name="maxCount" lowerBound="1">
+        <eType xsi:type="ecore:EDataType" href="http://www.eclipse.org/emf/2002/Ecore#//EInt"/>
+      </eParameters>
+    </operation>
+    <containingClass href="platform:/plugin/org.modelexecution.xmof.examples/fuml/fuml.xmof#//Activities/IntermediateActivities/ActivityEdgeInstance"/>
+  </rules>
+  <rules calledRules="//@rules.152" stepRule="true">
+    <operation name="countOfferedValues_Offer" lowerBound="1">
+      <eType xsi:type="ecore:EDataType" href="http://www.eclipse.org/emf/2002/Ecore#//EInt"/>
+    </operation>
+    <containingClass href="platform:/plugin/org.modelexecution.xmof.examples/fuml/fuml.xmof#//Activities/IntermediateActivities/Offer"/>
+  </rules>
+  <rules calledRules="//@rules.145" stepRule="true">
+    <operation name="countOfferedValues_ActivityEdgeInstance" lowerBound="1">
+      <eType xsi:type="ecore:EDataType" href="http://www.eclipse.org/emf/2002/Ecore#//EInt"/>
+    </operation>
+    <containingClass href="platform:/plugin/org.modelexecution.xmof.examples/fuml/fuml.xmof#//Activities/IntermediateActivities/ActivityEdgeInstance"/>
+  </rules>
+  <rules stepRule="true">
+    <operation name="countUnofferedTokens_ObjectNodeActivation" lowerBound="1">
+      <eType xsi:type="ecore:EDataType" href="http://www.eclipse.org/emf/2002/Ecore#//EInt"/>
+    </operation>
+    <containingClass href="platform:/plugin/org.modelexecution.xmof.examples/fuml/fuml.xmof#//Activities/IntermediateActivities/ObjectNodeActivation"/>
+  </rules>
+  <rules calledRules="//@rules.123" stepRule="true">
+    <operation name="removeToken_ObjectNodeActivation" lowerBound="1">
+      <eType xsi:type="ecore:EDataType" href="http://www.eclipse.org/emf/2002/Ecore#//EInt"/>
+      <eParameters name="token" lowerBound="1">
+        <eType xsi:type="kernel:BehavioredEClass" href="platform:/plugin/org.modelexecution.xmof.examples/fuml/fuml.xmof#//Activities/IntermediateActivities/Token"/>
+      </eParameters>
+    </operation>
+    <containingClass href="platform:/plugin/org.modelexecution.xmof.examples/fuml/fuml.xmof#//Activities/IntermediateActivities/ObjectNodeActivation"/>
+  </rules>
+  <rules calledRules="//@rules.147" stepRule="true">
+    <operation name="getUnofferedTokens_ObjectNodeActivation" upperBound="-1">
+      <eType xsi:type="kernel:BehavioredEClass" href="platform:/plugin/org.modelexecution.xmof.examples/fuml/fuml.xmof#//Activities/IntermediateActivities/Token"/>
+    </operation>
+    <containingClass href="platform:/plugin/org.modelexecution.xmof.examples/fuml/fuml.xmof#//Activities/IntermediateActivities/ObjectNodeActivation"/>
+  </rules>
+  <rules calledRules="//@rules.149 //@rules.129" stepRule="true">
+    <operation name="takeUnofferedTokens_ObjectNodeActivation" upperBound="-1">
+      <eType xsi:type="kernel:BehavioredEClass" href="platform:/plugin/org.modelexecution.xmof.examples/fuml/fuml.xmof#//Activities/IntermediateActivities/Token"/>
+    </operation>
+    <containingClass href="platform:/plugin/org.modelexecution.xmof.examples/fuml/fuml.xmof#//Activities/IntermediateActivities/ObjectNodeActivation"/>
+  </rules>
+  <rules calledRules="//@rules.146" stepRule="true">
+    <operation name="countOfferedValues_ObjectNodeActivation" lowerBound="1">
+      <eType xsi:type="ecore:EDataType" href="http://www.eclipse.org/emf/2002/Ecore#//EInt"/>
+    </operation>
+    <containingClass href="platform:/plugin/org.modelexecution.xmof.examples/fuml/fuml.xmof#//Activities/IntermediateActivities/ObjectNodeActivation"/>
+  </rules>
+  <rules calledRules="//@rules.134" stepRule="true">
+    <operation name="removeWithdrawnTokens_Offer"/>
+    <containingClass href="platform:/plugin/org.modelexecution.xmof.examples/fuml/fuml.xmof#//Activities/IntermediateActivities/Offer"/>
+  </rules>
+  <rules calledRules="//@rules.157 //@rules.138" stepRule="true">
+    <operation name="removeJoinedControlTokens_DecisionNodeActivation" upperBound="-1">
+      <eType xsi:type="kernel:BehavioredEClass" href="platform:/plugin/org.modelexecution.xmof.examples/fuml/fuml.xmof#//Activities/IntermediateActivities/Token"/>
+      <eParameters name="incomingTokens" upperBound="-1">
+        <eType xsi:type="kernel:BehavioredEClass" href="platform:/plugin/org.modelexecution.xmof.examples/fuml/fuml.xmof#//Activities/IntermediateActivities/Token"/>
+      </eParameters>
+    </operation>
+    <containingClass href="platform:/plugin/org.modelexecution.xmof.examples/fuml/fuml.xmof#//Activities/IntermediateActivities/DecisionNodeActivation"/>
+  </rules>
+  <rules calledRules="//@rules.158 //@rules.159 //@rules.135" stepRule="true">
+    <operation name="getDecisionValues_DecisionNodeActivation" upperBound="-1">
+      <eType xsi:type="kernel:BehavioredEClass" href="platform:/plugin/org.modelexecution.xmof.examples/fuml/fuml.xmof#//Classes/Kernel/Value"/>
+      <eParameters name="incomingTokens" upperBound="-1">
+        <eType xsi:type="kernel:BehavioredEClass" href="platform:/plugin/org.modelexecution.xmof.examples/fuml/fuml.xmof#//Activities/IntermediateActivities/Token"/>
+      </eParameters>
+    </operation>
+    <containingClass href="platform:/plugin/org.modelexecution.xmof.examples/fuml/fuml.xmof#//Activities/IntermediateActivities/DecisionNodeActivation"/>
+  </rules>
+  <rules calledRules="//@rules.156" stepRule="true">
+    <operation name="determineOfferedTokens_DecisionNodeActivation" upperBound="-1">
+      <eType xsi:type="kernel:BehavioredEClass" href="platform:/plugin/org.modelexecution.xmof.examples/fuml/fuml.xmof#//Activities/IntermediateActivities/Token"/>
+      <eParameters name="incomingTokens" upperBound="-1">
+        <eType xsi:type="kernel:BehavioredEClass" href="platform:/plugin/org.modelexecution.xmof.examples/fuml/fuml.xmof#//Activities/IntermediateActivities/Token"/>
+      </eParameters>
+      <eParameters name="decisionValues" upperBound="-1">
+        <eType xsi:type="kernel:BehavioredEClass" href="platform:/plugin/org.modelexecution.xmof.examples/fuml/fuml.xmof#//Classes/Kernel/Value"/>
+      </eParameters>
+      <eParameters name="edgeInstance" lowerBound="1">
+        <eType xsi:type="kernel:BehavioredEClass" href="platform:/plugin/org.modelexecution.xmof.examples/fuml/fuml.xmof#//Activities/IntermediateActivities/ActivityEdgeInstance"/>
+      </eParameters>
+    </operation>
+    <containingClass href="platform:/plugin/org.modelexecution.xmof.examples/fuml/fuml.xmof#//Activities/IntermediateActivities/DecisionNodeActivation"/>
+  </rules>
+  <rules calledRules="//@rules.131 //@rules.12 //@rules.52" stepRule="true">
+    <operation name="test_DecisionNodeActivation" lowerBound="1">
+      <eType xsi:type="ecore:EDataType" href="http://www.eclipse.org/emf/2002/Ecore#//EBoolean"/>
+      <eParameters name="guard" lowerBound="1">
+        <eType xsi:type="ecore:EClass" href="http://www.eclipse.org/uml2/5.0.0/UML#//ValueSpecification"/>
+      </eParameters>
+      <eParameters name="value" lowerBound="1">
+        <eType xsi:type="kernel:BehavioredEClass" href="platform:/plugin/org.modelexecution.xmof.examples/fuml/fuml.xmof#//Classes/Kernel/Value"/>
+      </eParameters>
+    </operation>
+    <containingClass href="platform:/plugin/org.modelexecution.xmof.examples/fuml/fuml.xmof#//Activities/IntermediateActivities/DecisionNodeActivation"/>
+  </rules>
+  <rules stepRule="true">
+    <operation name="hasObjectFlowInput_DecisionNodeActivation" lowerBound="1">
+      <eType xsi:type="ecore:EDataType" href="http://www.eclipse.org/emf/2002/Ecore#//EBoolean"/>
+    </operation>
+    <containingClass href="platform:/plugin/org.modelexecution.xmof.examples/fuml/fuml.xmof#//Activities/IntermediateActivities/DecisionNodeActivation"/>
+  </rules>
+  <rules calledRules="//@rules.160 //@rules.122 //@rules.135" stepRule="true">
+    <operation name="getDecisionInputFlowValue_DecisionNodeActivation">
+      <eType xsi:type="kernel:BehavioredEClass" href="platform:/plugin/org.modelexecution.xmof.examples/fuml/fuml.xmof#//Classes/Kernel/Value"/>
+    </operation>
+    <containingClass href="platform:/plugin/org.modelexecution.xmof.examples/fuml/fuml.xmof#//Activities/IntermediateActivities/DecisionNodeActivation"/>
+  </rules>
+  <rules stepRule="true">
+    <operation name="executeDecisionInputBehavior_DecisionNodeActivation" lowerBound="1">
+      <eType xsi:type="kernel:BehavioredEClass" href="platform:/plugin/org.modelexecution.xmof.examples/fuml/fuml.xmof#//Classes/Kernel/Value"/>
+      <eParameters name="inputValue" lowerBound="1">
+        <eType xsi:type="kernel:BehavioredEClass" href="platform:/plugin/org.modelexecution.xmof.examples/fuml/fuml.xmof#//Classes/Kernel/Value"/>
+      </eParameters>
+      <eParameters name="decisionInputValue">
+        <eType xsi:type="kernel:BehavioredEClass" href="platform:/plugin/org.modelexecution.xmof.examples/fuml/fuml.xmof#//Classes/Kernel/Value"/>
+      </eParameters>
+    </operation>
+    <containingClass href="platform:/plugin/org.modelexecution.xmof.examples/fuml/fuml.xmof#//Activities/IntermediateActivities/DecisionNodeActivation"/>
+  </rules>
+  <rules stepRule="true">
+    <operation name="getDecisionInputFlowInstance_DecisionNodeActivation">
+      <eType xsi:type="kernel:BehavioredEClass" href="platform:/plugin/org.modelexecution.xmof.examples/fuml/fuml.xmof#//Activities/IntermediateActivities/ActivityEdgeInstance"/>
+    </operation>
+    <containingClass href="platform:/plugin/org.modelexecution.xmof.examples/fuml/fuml.xmof#//Activities/IntermediateActivities/DecisionNodeActivation"/>
+  </rules>
+  <rules stepRule="true">
+    <operation name="initialize_ForkedToken"/>
+    <containingClass href="platform:/plugin/org.modelexecution.xmof.examples/fuml/fuml.xmof#//Activities/IntermediateActivities/ForkedToken"/>
+  </rules>
+  <rules calledRules="//@rules.101 //@rules.106" stepRule="true">
+    <operation name="shouldFireAgain_ActionActivation" lowerBound="1">
+      <eType xsi:type="ecore:EDataType" href="http://www.eclipse.org/emf/2002/Ecore#//EBoolean"/>
+    </operation>
+    <containingClass href="platform:/plugin/org.modelexecution.xmof.examples/fuml/fuml.xmof#//Actions/BasicActions/ActionActivation"/>
+  </rules>
+  <rules stepRule="true" overridenBy="//@rules.164 //@rules.165 //@rules.166 //@rules.167 //@rules.168 //@rules.169">
+    <operation name="doAction_ActionActivation"/>
+    <containingClass href="platform:/plugin/org.modelexecution.xmof.examples/fuml/fuml.xmof#//Actions/BasicActions/ActionActivation"/>
+  </rules>
+  <rules stepRule="true" overrides="//@rules.163">
+    <operation name="doAction_OpaqueAction"/>
+    <containingClass href="platform:/plugin/org.modelexecution.xmof.examples/fuml/fuml.xmof#//Actions/BasicActions/OpaqueActionActivation"/>
+  </rules>
+  <rules calledRules="//@rules.131 //@rules.12 //@rules.172" stepRule="true" overrides="//@rules.163">
+    <operation name="doAction_ValueSpecificationActionActivation"/>
+    <containingClass href="platform:/plugin/org.modelexecution.xmof.examples/fuml/fuml.xmof#//Actions/IntermediateActions/ValueSpecificationActionActivation"/>
+  </rules>
+  <rules calledRules="//@rules.175 //@rules.177 //@rules.178 //@rules.7 //@rules.179 //@rules.33" stepRule="true" overrides="//@rules.163">
+    <operation name="doAction_CallActionActivation"/>
+    <containingClass href="platform:/plugin/org.modelexecution.xmof.examples/fuml/fuml.xmof#//Actions/BasicActions/CallActionActivation"/>
+  </rules>
+  <rules calledRules="//@rules.131 //@rules.4 //@rules.172" stepRule="true" overrides="//@rules.163">
+    <operation name="doAction_CreateObjectActionActivation"/>
+    <containingClass href="platform:/plugin/org.modelexecution.xmof.examples/fuml/fuml.xmof#//Actions/IntermediateActions/CreateObjectActionActivation"/>
+  </rules>
+  <rules calledRules="//@rules.173 //@rules.42 //@rules.174" stepRule="true" overrides="//@rules.163">
+    <operation name="doAction_ReadStructuralFeatureActionActivation"/>
+    <containingClass href="platform:/plugin/org.modelexecution.xmof.examples/fuml/fuml.xmof#//Actions/IntermediateActions/ReadStructuralFeatureActionActivation"/>
+  </rules>
+  <rules calledRules="//@rules.39 //@rules.172 //@rules.173" stepRule="true" overrides="//@rules.163">
+    <operation name="doAction_AddStructuralFeatureValueActionActivation"/>
+    <containingClass href="platform:/plugin/org.modelexecution.xmof.examples/fuml/fuml.xmof#//Actions/IntermediateActions/AddStructuralFeatureValueActionActivation"/>
+  </rules>
+  <rules calledRules="//@rules.87 //@rules.97 //@rules.98 //@rules.127" stepRule="true">
+    <operation name="sendOffers_ActionActivation"/>
+    <containingClass href="platform:/plugin/org.modelexecution.xmof.examples/fuml/fuml.xmof#//Actions/BasicActions/ActionActivation"/>
+  </rules>
+  <rules calledRules="//@rules.89" stepRule="true">
+    <operation name="isSourceFor_ActionActivation" lowerBound="1">
+      <eType xsi:type="ecore:EDataType" href="http://www.eclipse.org/emf/2002/Ecore#//EBoolean"/>
+      <eParameters name="edgeInstance" lowerBound="1">
+        <eType xsi:type="kernel:BehavioredEClass" href="platform:/plugin/org.modelexecution.xmof.examples/fuml/fuml.xmof#//Activities/IntermediateActivities/ActivityEdgeInstance"/>
+      </eParameters>
+    </operation>
+    <containingClass href="platform:/plugin/org.modelexecution.xmof.examples/fuml/fuml.xmof#//Actions/BasicActions/ActionActivation"/>
+  </rules>
+  <rules calledRules="//@rules.87 //@rules.95" stepRule="true">
+    <operation name="putToken_ActionActivation">
+      <eParameters name="pin" lowerBound="1">
+        <eType xsi:type="ecore:EClass" href="http://www.eclipse.org/uml2/5.0.0/UML#//OutputPin"/>
+      </eParameters>
+      <eParameters name="value" lowerBound="1">
+        <eType xsi:type="kernel:BehavioredEClass" href="platform:/plugin/org.modelexecution.xmof.examples/fuml/fuml.xmof#//Classes/Kernel/Value"/>
+      </eParameters>
+    </operation>
+    <containingClass href="platform:/plugin/org.modelexecution.xmof.examples/fuml/fuml.xmof#//Actions/BasicActions/ActionActivation"/>
+  </rules>
+  <rules calledRules="//@rules.87 //@rules.150" stepRule="true">
+    <operation name="takeTokens_ActionActivation" upperBound="-1">
+      <eType xsi:type="kernel:BehavioredEClass" href="platform:/plugin/org.modelexecution.xmof.examples/fuml/fuml.xmof#//Classes/Kernel/Value"/>
+      <eParameters name="pin" lowerBound="1">
+        <eType xsi:type="ecore:EClass" href="http://www.eclipse.org/uml2/5.0.0/UML#//InputPin"/>
+      </eParameters>
+    </operation>
+    <containingClass href="platform:/plugin/org.modelexecution.xmof.examples/fuml/fuml.xmof#//Actions/BasicActions/ActionActivation"/>
+  </rules>
+  <rules calledRules="//@rules.172" stepRule="true">
+    <operation name="putTokens_ActionActivation">
+      <eParameters name="pin" lowerBound="1">
+        <eType xsi:type="ecore:EClass" href="http://www.eclipse.org/uml2/5.0.0/UML#//OutputPin"/>
+      </eParameters>
+      <eParameters name="values" lowerBound="1" upperBound="-1">
+        <eType xsi:type="kernel:BehavioredEClass" href="platform:/plugin/org.modelexecution.xmof.examples/fuml/fuml.xmof#//Classes/Kernel/Value"/>
+      </eParameters>
+    </operation>
+    <containingClass href="platform:/plugin/org.modelexecution.xmof.examples/fuml/fuml.xmof#//Actions/BasicActions/ActionActivation"/>
+  </rules>
+  <rules stepRule="true" overridenBy="//@rules.176">
+    <operation name="getCallExecution_CallActionActivation" lowerBound="1">
+      <eType xsi:type="kernel:BehavioredEClass" href="platform:/plugin/org.modelexecution.xmof.examples/fuml/fuml.xmof#//CommonBehaviors/BasicBehaviors/Execution"/>
+    </operation>
+    <containingClass href="platform:/plugin/org.modelexecution.xmof.examples/fuml/fuml.xmof#//Actions/BasicActions/CallActionActivation"/>
+  </rules>
+  <rules calledRules="//@rules.131 //@rules.6 //@rules.133" stepRule="true" overrides="//@rules.175">
+    <operation name="getCallExecution_CallBehaviorActionActivation" lowerBound="1">
+      <eType xsi:type="kernel:BehavioredEClass" href="platform:/plugin/org.modelexecution.xmof.examples/fuml/fuml.xmof#//CommonBehaviors/BasicBehaviors/Execution"/>
+    </operation>
+    <containingClass href="platform:/plugin/org.modelexecution.xmof.examples/fuml/fuml.xmof#//Actions/BasicActions/CallBehaviorActionActivation"/>
+  </rules>
+  <rules calledRules="//@rules.24 //@rules.173 //@rules.11" stepRule="true">
+    <operation name="initializeInputParameterValues_CallActionActivation">
+      <eParameters name="callExecution" lowerBound="1">
+        <eType xsi:type="kernel:BehavioredEClass" href="platform:/plugin/org.modelexecution.xmof.examples/fuml/fuml.xmof#//CommonBehaviors/BasicBehaviors/Execution"/>
+      </eParameters>
+    </operation>
+    <containingClass href="platform:/plugin/org.modelexecution.xmof.examples/fuml/fuml.xmof#//Actions/BasicActions/CallActionActivation"/>
+  </rules>
+  <rules calledRules="//@rules.10 //@rules.172" stepRule="true">
+    <operation name="collectOutputParameterValues_CallActionActivation">
+      <eParameters name="callExecution" lowerBound="1">
+        <eType xsi:type="kernel:BehavioredEClass" href="platform:/plugin/org.modelexecution.xmof.examples/fuml/fuml.xmof#//CommonBehaviors/BasicBehaviors/Execution"/>
+      </eParameters>
+    </operation>
+    <containingClass href="platform:/plugin/org.modelexecution.xmof.examples/fuml/fuml.xmof#//Actions/BasicActions/CallActionActivation"/>
+  </rules>
+  <rules stepRule="true">
+    <operation name="removeCallExecution_CallActionActivation">
+      <eParameters name="execution" lowerBound="1">
+        <eType xsi:type="kernel:BehavioredEClass" href="platform:/plugin/org.modelexecution.xmof.examples/fuml/fuml.xmof#//CommonBehaviors/BasicBehaviors/Execution"/>
+      </eParameters>
+    </operation>
+    <containingClass href="platform:/plugin/org.modelexecution.xmof.examples/fuml/fuml.xmof#//Actions/BasicActions/CallActionActivation"/>
+  </rules>
+</ecorext:Ecorext>

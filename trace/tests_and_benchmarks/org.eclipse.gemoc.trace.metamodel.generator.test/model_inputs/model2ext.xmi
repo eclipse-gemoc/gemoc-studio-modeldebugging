@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="ASCII"?>
+<ecorext:Ecorext xmi:version="2.0" xmlns:xmi="http://www.omg.org/XMI" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:ecore="http://www.eclipse.org/emf/2002/Ecore" xmlns:ecorext="http://ecorext/1.0">
+  <newPackages name="model2Configuration" nsURI="model2Configuration_trace" nsPrefix="model2Conf_trace">
+    <eClassifiers xsi:type="ecore:EClass" name="C">
+      <eAnnotations source="http://www.modelexecution.org/trace/XMOF">
+        <details key="executionMetamodelElement" value="//C"/>
+      </eAnnotations>
+      <eStructuralFeatures xsi:type="ecore:EReference" name="c">
+        <eAnnotations source="http://www.modelexecution.org/trace/XMOF">
+          <details key="executionMetamodelElement" value="//C/c"/>
+        </eAnnotations>
+        <eType xsi:type="ecore:EClass" href="../model_inputs/model2.ecore#//F"/>
+      </eStructuralFeatures>
+    </eClassifiers>
+    <eClassifiers xsi:type="ecore:EClass" name="B">
+      <eAnnotations source="http://www.modelexecution.org/trace/XMOF">
+        <details key="executionMetamodelElement" value="//B"/>
+      </eAnnotations>
+      <eStructuralFeatures xsi:type="ecore:EAttribute" name="b">
+        <eAnnotations source="http://www.modelexecution.org/trace/XMOF">
+          <details key="executionMetamodelElement" value="//B/b"/>
+        </eAnnotations>
+        <eType xsi:type="ecore:EDataType" href="http://www.eclipse.org/emf/2002/Ecore#//EInt"/>
+      </eStructuralFeatures>
+    </eClassifiers>
+  </newPackages>
+  <classesExtensions>
+    <extendedExistingClass href="../model_inputs/model2.ecore#//A"/>
+    <newProperties xsi:type="ecore:EAttribute" name="a">
+      <eAnnotations source="http://www.modelexecution.org/trace/XMOF">
+        <details key="executionMetamodelElement" value="//AConfiguration/a"/>
+      </eAnnotations>
+      <eType xsi:type="ecore:EDataType" href="http://www.eclipse.org/emf/2002/Ecore#//EInt"/>
+    </newProperties>
+  </classesExtensions>
+  <rules stepRule="true">
+    <operation name="doA">
+      <eParameters name="paramA" lowerBound="1" eType="//@newPackages.0/C"/>
+    </operation>
+    <containingClass href="../model_inputs/model2.ecore#//A"/>
+  </rules>
+  <rules stepRule="true" containingClass="//@newPackages.0/C">
+    <operation name="doC">
+      <eParameters name="paramC" lowerBound="1" eType="//@newPackages.0/B"/>
+    </operation>
+  </rules>
+</ecorext:Ecorext>

@@ -1,0 +1,10 @@
+Manifest-Version: 1.0
+Bundle-ManifestVersion: 2
+Bundle-Name: Moliz-models
+Bundle-SymbolicName: moliz-models
+Bundle-Version: 2.3.0.qualifier
+Bundle-Activator: moliz_models.Activator
+Require-Bundle: org.eclipse.core.runtime,
+ org.modelexecution.operationalsemantics.gemoc.sequential.dynamic;bundle-version="1.0.0"
+Bundle-RequiredExecutionEnvironment: JavaSE-1.8
+Bundle-ActivationPolicy: lazy

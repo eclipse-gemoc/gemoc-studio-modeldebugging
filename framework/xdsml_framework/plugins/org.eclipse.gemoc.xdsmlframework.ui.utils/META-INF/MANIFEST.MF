@@ -1,0 +1,17 @@
+Manifest-Version: 1.0
+Bundle-ManifestVersion: 2
+Bundle-Name: Utils
+Bundle-SymbolicName: org.eclipse.gemoc.xdsmlframework.ui.utils
+Bundle-Version: 2.3.0.qualifier
+Bundle-Activator: org.eclipse.gemoc.xdsmlframework.ui.utils.Activator
+Require-Bundle: org.eclipse.core.runtime,
+ org.eclipse.emf.codegen.ecore.ui;bundle-version="2.8.0",
+ org.eclipse.gemoc.commons.eclipse,
+ org.eclipse.gemoc.commons.eclipse.ui,
+ org.eclipse.emf.ecore.editor,
+ fr.inria.diverse.k3.al.annotationprocessor.plugin,
+ fr.inria.diverse.melange.metamodel
+Bundle-RequiredExecutionEnvironment: JavaSE-1.8
+Bundle-ActivationPolicy: lazy
+Export-Package: org.eclipse.gemoc.xdsmlframework.ui.utils,
+ org.eclipse.gemoc.xdsmlframework.ui.utils.dialogs

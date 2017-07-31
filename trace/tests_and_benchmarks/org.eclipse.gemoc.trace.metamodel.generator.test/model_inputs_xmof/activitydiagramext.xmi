@@ -1,0 +1,523 @@
+<?xml version="1.0" encoding="ASCII"?>
+<ecorext:Ecorext xmi:version="2.0" xmlns:xmi="http://www.omg.org/XMI" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:ecore="http://www.eclipse.org/emf/2002/Ecore" xmlns:ecorext="http://ecorext/1.0" xmlns:kernel="http://www.modelexecution.org/xmof/syntax/classes/mykernel">
+  <newPackages name="activitydiagramConfiguration" nsURI="activitydiagramConfiguration_trace" nsPrefix="activitydiagramConf_trace">
+    <eClassifiers xsi:type="ecore:EClass" name="Trace">
+      <eAnnotations source="http://www.modelexecution.org/trace/XMOF">
+        <details key="executionMetamodelElement" value="//Trace"/>
+      </eAnnotations>
+      <eStructuralFeatures xsi:type="ecore:EReference" name="executedNodes" upperBound="-1">
+        <eAnnotations source="http://www.modelexecution.org/trace/XMOF">
+          <details key="executionMetamodelElement" value="//Trace/executedNodes"/>
+        </eAnnotations>
+        <eType xsi:type="ecore:EClass" href="activitydiagram.ecore#//ActivityNode"/>
+      </eStructuralFeatures>
+    </eClassifiers>
+    <eClassifiers xsi:type="ecore:EClass" name="Input">
+      <eAnnotations source="http://www.modelexecution.org/trace/XMOF">
+        <details key="executionMetamodelElement" value="//Input"/>
+      </eAnnotations>
+      <eStructuralFeatures xsi:type="ecore:EReference" name="inputValues" upperBound="-1" eType="//@newPackages.0/InputValue" containment="true">
+        <eAnnotations source="http://www.modelexecution.org/trace/XMOF">
+          <details key="executionMetamodelElement" value="//Input/inputValues"/>
+        </eAnnotations>
+      </eStructuralFeatures>
+    </eClassifiers>
+    <eClassifiers xsi:type="ecore:EClass" name="InputValue">
+      <eAnnotations source="http://www.modelexecution.org/trace/XMOF">
+        <details key="executionMetamodelElement" value="//InputValue"/>
+      </eAnnotations>
+      <eStructuralFeatures xsi:type="ecore:EReference" name="value" lowerBound="1" containment="true">
+        <eAnnotations source="http://www.modelexecution.org/trace/XMOF">
+          <details key="executionMetamodelElement" value="//InputValue/value"/>
+        </eAnnotations>
+        <eType xsi:type="ecore:EClass" href="activitydiagram.ecore#//Value"/>
+      </eStructuralFeatures>
+      <eStructuralFeatures xsi:type="ecore:EReference" name="variable" lowerBound="1">
+        <eAnnotations source="http://www.modelexecution.org/trace/XMOF">
+          <details key="executionMetamodelElement" value="//InputValue/variable"/>
+        </eAnnotations>
+        <eType xsi:type="ecore:EClass" href="activitydiagram.ecore#//Variable"/>
+      </eStructuralFeatures>
+    </eClassifiers>
+  </newPackages>
+  <classesExtensions>
+    <extendedExistingClass href="activitydiagram.xmof#//ActivityConfiguration"/>
+    <newProperties xsi:type="ecore:EReference" name="trace" lowerBound="1" eType="//@newPackages.0/Trace" containment="true">
+      <eAnnotations source="http://www.modelexecution.org/trace/XMOF">
+        <details key="executionMetamodelElement" value="//ActivityConfiguration/trace"/>
+      </eAnnotations>
+    </newProperties>
+  </classesExtensions>
+  <classesExtensions>
+    <extendedExistingClass href="activitydiagram.xmof#//VariableConfiguration"/>
+    <newProperties xsi:type="ecore:EReference" name="currentValue" lowerBound="1" containment="true">
+      <eAnnotations source="http://www.modelexecution.org/trace/XMOF">
+        <details key="executionMetamodelElement" value="//VariableConfiguration/currentValue"/>
+      </eAnnotations>
+      <eType xsi:type="ecore:EClass" href="activitydiagram.ecore#//Value"/>
+    </newProperties>
+  </classesExtensions>
+  <classesExtensions>
+    <extendedExistingClass href="activitydiagram.xmof#//ActivityNodeConfiguration"/>
+    <newProperties xsi:type="ecore:EReference" name="heldTokens" upperBound="-1" containment="true">
+      <eAnnotations source="http://www.modelexecution.org/trace/XMOF">
+        <details key="executionMetamodelElement" value="//ActivityNodeConfiguration/heldTokens"/>
+      </eAnnotations>
+      <eType xsi:type="kernel:BehavioredEClass" href="activitydiagram.xmof#//Token"/>
+    </newProperties>
+    <newProperties xsi:type="ecore:EAttribute" name="running" lowerBound="1" defaultValueLiteral="false">
+      <eAnnotations source="http://www.modelexecution.org/trace/XMOF">
+        <details key="executionMetamodelElement" value="//ActivityNodeConfiguration/running"/>
+      </eAnnotations>
+      <eType xsi:type="ecore:EDataType" href="http://www.eclipse.org/emf/2002/Ecore#//EBoolean"/>
+    </newProperties>
+  </classesExtensions>
+  <classesExtensions>
+    <extendedExistingClass href="activitydiagram.xmof#//Token"/>
+    <newProperties xsi:type="ecore:EReference" name="holder" lowerBound="1">
+      <eAnnotations source="http://www.modelexecution.org/trace/XMOF">
+        <details key="executionMetamodelElement" value="//Token/holder"/>
+      </eAnnotations>
+      <eType xsi:type="ecore:EClass" href="activitydiagram.ecore#//ActivityNode"/>
+    </newProperties>
+  </classesExtensions>
+  <classesExtensions>
+    <extendedExistingClass href="activitydiagram.xmof#//ActivityEdgeConfiguration"/>
+    <newProperties xsi:type="ecore:EReference" name="offers" upperBound="-1" containment="true">
+      <eAnnotations source="http://www.modelexecution.org/trace/XMOF">
+        <details key="executionMetamodelElement" value="//ActivityEdgeConfiguration/offers"/>
+      </eAnnotations>
+      <eType xsi:type="kernel:BehavioredEClass" href="activitydiagram.xmof#//Offer"/>
+    </newProperties>
+  </classesExtensions>
+  <classesExtensions>
+    <extendedExistingClass href="activitydiagram.xmof#//ForkedToken"/>
+    <newProperties xsi:type="ecore:EReference" name="baseToken" lowerBound="1">
+      <eAnnotations source="http://www.modelexecution.org/trace/XMOF">
+        <details key="executionMetamodelElement" value="//ForkedToken/baseToken"/>
+      </eAnnotations>
+      <eType xsi:type="kernel:BehavioredEClass" href="activitydiagram.xmof#//Token"/>
+    </newProperties>
+    <newProperties xsi:type="ecore:EAttribute" name="baseTokenIsWithdrawn" lowerBound="1" defaultValueLiteral="false">
+      <eAnnotations source="http://www.modelexecution.org/trace/XMOF">
+        <details key="executionMetamodelElement" value="//ForkedToken/baseTokenIsWithdrawn"/>
+      </eAnnotations>
+      <eType xsi:type="ecore:EDataType" href="http://www.eclipse.org/emf/2002/Ecore#//EBoolean"/>
+    </newProperties>
+    <newProperties xsi:type="ecore:EAttribute" name="remainingOffersCount" lowerBound="1" defaultValueLiteral="0">
+      <eAnnotations source="http://www.modelexecution.org/trace/XMOF">
+        <details key="executionMetamodelElement" value="//ForkedToken/remainingOffersCount"/>
+      </eAnnotations>
+      <eType xsi:type="ecore:EDataType" href="http://www.eclipse.org/emf/2002/Ecore#//EInt"/>
+    </newProperties>
+  </classesExtensions>
+  <classesExtensions>
+    <extendedExistingClass href="activitydiagram.xmof#//Offer"/>
+    <newProperties xsi:type="ecore:EReference" name="offeredTokens" upperBound="-1">
+      <eAnnotations source="http://www.modelexecution.org/trace/XMOF">
+        <details key="executionMetamodelElement" value="//Offer/offeredTokens"/>
+      </eAnnotations>
+      <eType xsi:type="kernel:BehavioredEClass" href="activitydiagram.xmof#//Token"/>
+    </newProperties>
+  </classesExtensions>
+  <rules calledRules="//@rules.1 //@rules.2" stepRule="true">
+    <operation name="main">
+      <eParameters name="inputValues" upperBound="-1">
+        <eType xsi:type="ecore:EClass" href="http://www.eclipse.org/emf/2002/Ecore#//EObject"/>
+      </eParameters>
+    </operation>
+    <containingClass href="activitydiagram.xmof#//ActivityConfiguration"/>
+  </rules>
+  <rules calledRules="//@rules.3" stepRule="true">
+    <operation name="initialize">
+      <eParameters name="inputValues" upperBound="-1">
+        <eType xsi:type="ecore:EClass" href="http://www.eclipse.org/emf/2002/Ecore#//EObject"/>
+      </eParameters>
+    </operation>
+    <containingClass href="activitydiagram.xmof#//ActivityConfiguration"/>
+  </rules>
+  <rules calledRules="//@rules.7 //@rules.8 //@rules.9 //@rules.10 //@rules.11" stepRule="true">
+    <operation name="run"/>
+    <containingClass href="activitydiagram.xmof#//ActivityConfiguration"/>
+  </rules>
+  <rules stepRule="true" overridenBy="//@rules.4 //@rules.5 //@rules.6" abstract="true">
+    <operation name="setCurrentValue">
+      <eParameters name="value" lowerBound="1">
+        <eType xsi:type="ecore:EClass" href="activitydiagram.ecore#//Value"/>
+      </eParameters>
+    </operation>
+    <containingClass href="activitydiagram.xmof#//VariableConfiguration"/>
+  </rules>
+  <rules stepRule="true" overrides="//@rules.3">
+    <operation name="setCurrentValue_boolenVariable">
+      <eParameters name="value" lowerBound="1">
+        <eType xsi:type="ecore:EClass" href="activitydiagram.ecore#//Value"/>
+      </eParameters>
+    </operation>
+    <containingClass href="activitydiagram.xmof#//BooleanVariableConfiguration"/>
+  </rules>
+  <rules stepRule="true" overrides="//@rules.3">
+    <operation name="setCurrentValue_integerVariable">
+      <eParameters name="value" lowerBound="1">
+        <eType xsi:type="ecore:EClass" href="activitydiagram.ecore#//Value"/>
+      </eParameters>
+    </operation>
+    <containingClass href="activitydiagram.xmof#//IntegerVariableConfiguration"/>
+  </rules>
+  <rules stepRule="true" overrides="//@rules.3">
+    <operation name="setCurrentValue_stringVariable">
+      <eParameters name="value" lowerBound="1">
+        <eType xsi:type="ecore:EClass" href="activitydiagram.ecore#//Value"/>
+      </eParameters>
+    </operation>
+    <containingClass href="activitydiagram.xmof#//StringVariableConfiguration"/>
+  </rules>
+  <rules calledRules="//@rules.12" stepRule="true">
+    <operation name="runNodes"/>
+    <containingClass href="activitydiagram.xmof#//ActivityConfiguration"/>
+  </rules>
+  <rules calledRules="//@rules.13 //@rules.11" stepRule="true">
+    <operation name="fireInitialNode"/>
+    <containingClass href="activitydiagram.xmof#//ActivityConfiguration"/>
+  </rules>
+  <rules calledRules="//@rules.14" stepRule="true">
+    <operation name="getEnabledNodes" upperBound="-1">
+      <eType xsi:type="ecore:EClass" href="http://www.eclipse.org/emf/2002/Ecore#//EObject"/>
+    </operation>
+    <containingClass href="activitydiagram.xmof#//ActivityConfiguration"/>
+  </rules>
+  <rules stepRule="true">
+    <operation name="selectNextNode" lowerBound="1">
+      <eType xsi:type="ecore:EClass" href="http://www.eclipse.org/emf/2002/Ecore#//EObject"/>
+      <eParameters name="activityNodes" lowerBound="1" upperBound="-1">
+        <eType xsi:type="ecore:EClass" href="http://www.eclipse.org/emf/2002/Ecore#//EObject"/>
+      </eParameters>
+    </operation>
+    <containingClass href="activitydiagram.xmof#//ActivityConfiguration"/>
+  </rules>
+  <rules calledRules="//@rules.20 //@rules.21" stepRule="true">
+    <operation name="fireNode">
+      <eParameters name="node" lowerBound="1">
+        <eType xsi:type="ecore:EClass" href="http://www.eclipse.org/emf/2002/Ecore#//EObject"/>
+      </eParameters>
+    </operation>
+    <containingClass href="activitydiagram.xmof#//ActivityConfiguration"/>
+  </rules>
+  <rules stepRule="true">
+    <operation name="run_activityNode"/>
+    <containingClass href="activitydiagram.xmof#//ActivityNodeConfiguration"/>
+  </rules>
+  <rules stepRule="true">
+    <operation name="getInitialNode" lowerBound="1">
+      <eType xsi:type="ecore:EClass" href="http://www.eclipse.org/emf/2002/Ecore#//EObject"/>
+    </operation>
+    <containingClass href="activitydiagram.xmof#//ActivityConfiguration"/>
+  </rules>
+  <rules calledRules="//@rules.28" stepRule="true" overridenBy="//@rules.15 //@rules.16 //@rules.17">
+    <operation name="isReady" lowerBound="1">
+      <eType xsi:type="ecore:EClass" href="http://www.eclipse.org/emf/2002/Ecore#//EObject"/>
+    </operation>
+    <containingClass href="activitydiagram.xmof#//ActivityNodeConfiguration"/>
+  </rules>
+  <rules calledRules="//@rules.14 //@rules.37" stepRule="true" overrides="//@rules.14">
+    <operation name="isReady_action" lowerBound="1">
+      <eType xsi:type="ecore:EClass" href="http://www.eclipse.org/emf/2002/Ecore#//EObject"/>
+    </operation>
+    <containingClass href="activitydiagram.xmof#//ActionConfiguration"/>
+  </rules>
+  <rules calledRules="//@rules.14 //@rules.37" stepRule="true" overrides="//@rules.14">
+    <operation name="isReady_ControlNode" lowerBound="1">
+      <eType xsi:type="ecore:EClass" href="http://www.eclipse.org/emf/2002/Ecore#//EObject"/>
+    </operation>
+    <containingClass href="activitydiagram.xmof#//ControlNodeConfiguration"/>
+  </rules>
+  <rules stepRule="true" overrides="//@rules.14">
+    <operation name="isReady_InitialNode" lowerBound="1">
+      <eType xsi:type="ecore:EClass" href="http://www.eclipse.org/emf/2002/Ecore#//EObject"/>
+    </operation>
+    <containingClass href="activitydiagram.xmof#//InitialNodeConfiguration"/>
+  </rules>
+  <rules calledRules="//@rules.19" stepRule="true">
+    <operation name="terminate"/>
+    <containingClass href="activitydiagram.xmof#//ActivityConfiguration"/>
+  </rules>
+  <rules stepRule="true">
+    <operation name="terminate_activityNode"/>
+    <containingClass href="activitydiagram.xmof#//ActivityNodeConfiguration"/>
+  </rules>
+  <rules calledRules="//@rules.31 //@rules.32" stepRule="true">
+    <operation name="takeOfferedTokens" upperBound="-1">
+      <eType xsi:type="ecore:EClass" href="http://www.eclipse.org/emf/2002/Ecore#//EObject"/>
+    </operation>
+    <containingClass href="activitydiagram.xmof#//ActivityNodeConfiguration"/>
+  </rules>
+  <rules stepRule="true" overridenBy="//@rules.22 //@rules.23 //@rules.24 //@rules.25 //@rules.26 //@rules.27" abstract="true">
+    <operation name="fire">
+      <eParameters name="tokens" upperBound="-1">
+        <eType xsi:type="kernel:BehavioredEClass" href="activitydiagram.xmof#//Token"/>
+      </eParameters>
+    </operation>
+    <containingClass href="activitydiagram.xmof#//ActivityNodeConfiguration"/>
+  </rules>
+  <rules calledRules="//@rules.42 //@rules.41" stepRule="true" overrides="//@rules.21">
+    <operation name="fire_action">
+      <eParameters name="tokens" upperBound="-1">
+        <eType xsi:type="kernel:BehavioredEClass" href="activitydiagram.xmof#//Token"/>
+      </eParameters>
+    </operation>
+    <containingClass href="activitydiagram.xmof#//ActionConfiguration"/>
+  </rules>
+  <rules calledRules="//@rules.18" stepRule="true" overrides="//@rules.21">
+    <operation name="fire_activityFinalNode">
+      <eParameters name="tokens" upperBound="-1">
+        <eType xsi:type="kernel:BehavioredEClass" href="activitydiagram.xmof#//Token"/>
+      </eParameters>
+    </operation>
+    <containingClass href="activitydiagram.xmof#//ActivityFinalNodeConfiguration"/>
+  </rules>
+  <rules calledRules="//@rules.29" stepRule="true" overrides="//@rules.21">
+    <operation name="fire_controlNode">
+      <eParameters name="tokens" upperBound="-1">
+        <eType xsi:type="kernel:BehavioredEClass" href="activitydiagram.xmof#//Token"/>
+      </eParameters>
+    </operation>
+    <containingClass href="activitydiagram.xmof#//ControlNodeConfiguration"/>
+  </rules>
+  <rules calledRules="//@rules.30" stepRule="true" overrides="//@rules.21">
+    <operation name="fire_decisionNode">
+      <eParameters name="tokens" upperBound="-1">
+        <eType xsi:type="kernel:BehavioredEClass" href="activitydiagram.xmof#//Token"/>
+      </eParameters>
+    </operation>
+    <containingClass href="activitydiagram.xmof#//DecisionNodeConfiguration"/>
+  </rules>
+  <rules calledRules="//@rules.34 //@rules.29" stepRule="true" overrides="//@rules.21">
+    <operation name="fire_forkNode">
+      <eParameters name="tokens" upperBound="-1">
+        <eType xsi:type="kernel:BehavioredEClass" href="activitydiagram.xmof#//Token"/>
+      </eParameters>
+    </operation>
+    <containingClass href="activitydiagram.xmof#//ForkNodeConfiguration"/>
+  </rules>
+  <rules calledRules="//@rules.34 //@rules.29" stepRule="true" overrides="//@rules.21">
+    <operation name="fire_initialNode">
+      <eParameters name="tokens" upperBound="-1">
+        <eType xsi:type="kernel:BehavioredEClass" href="activitydiagram.xmof#//Token"/>
+      </eParameters>
+    </operation>
+    <containingClass href="activitydiagram.xmof#//InitialNodeConfiguration"/>
+  </rules>
+  <rules stepRule="true">
+    <operation name="isRunning" lowerBound="1">
+      <eType xsi:type="ecore:EClass" href="http://www.eclipse.org/emf/2002/Ecore#//EObject"/>
+    </operation>
+    <containingClass href="activitydiagram.xmof#//ActivityNodeConfiguration"/>
+  </rules>
+  <rules calledRules="//@rules.30" stepRule="true">
+    <operation name="sendOffers">
+      <eParameters name="tokens" lowerBound="1" upperBound="-1">
+        <eType xsi:type="ecore:EClass" href="http://www.eclipse.org/emf/2002/Ecore#//EObject"/>
+      </eParameters>
+    </operation>
+    <containingClass href="activitydiagram.xmof#//ActivityNodeConfiguration"/>
+  </rules>
+  <rules stepRule="true">
+    <operation name="sendOffer">
+      <eParameters name="tokens" upperBound="-1">
+        <eType xsi:type="ecore:EClass" href="http://www.eclipse.org/emf/2002/Ecore#//EObject"/>
+      </eParameters>
+    </operation>
+    <containingClass href="activitydiagram.xmof#//ActivityEdgeConfiguration"/>
+  </rules>
+  <rules stepRule="true">
+    <operation name="takeOfferedTokens_activityEdge" upperBound="-1">
+      <eType xsi:type="ecore:EClass" href="http://www.eclipse.org/emf/2002/Ecore#//EObject"/>
+    </operation>
+    <containingClass href="activitydiagram.xmof#//ActivityEdgeConfiguration"/>
+  </rules>
+  <rules calledRules="//@rules.64 //@rules.36" stepRule="true" overridenBy="//@rules.33">
+    <operation name="withdraw"/>
+    <containingClass href="activitydiagram.xmof#//Token"/>
+  </rules>
+  <rules calledRules="//@rules.32 //@rules.64" stepRule="true" overrides="//@rules.32">
+    <operation name="withdraw_forkedToken"/>
+    <containingClass href="activitydiagram.xmof#//ForkedToken"/>
+  </rules>
+  <rules calledRules="//@rules.35" stepRule="true">
+    <operation name="addTokens">
+      <eParameters name="tokens" lowerBound="1" upperBound="-1">
+        <eType xsi:type="ecore:EClass" href="http://www.eclipse.org/emf/2002/Ecore#//EObject"/>
+      </eParameters>
+    </operation>
+    <containingClass href="activitydiagram.xmof#//ActivityNodeConfiguration"/>
+  </rules>
+  <rules calledRules="//@rules.32" stepRule="true">
+    <operation name="transfer" lowerBound="1">
+      <eType xsi:type="ecore:EClass" href="http://www.eclipse.org/emf/2002/Ecore#//EObject"/>
+      <eParameters name="holder" lowerBound="1">
+        <eType xsi:type="ecore:EClass" href="http://www.eclipse.org/emf/2002/Ecore#//EObject"/>
+      </eParameters>
+    </operation>
+    <containingClass href="activitydiagram.xmof#//Token"/>
+  </rules>
+  <rules stepRule="true">
+    <operation name="removeToken">
+      <eParameters name="token" lowerBound="1">
+        <eType xsi:type="ecore:EClass" href="http://www.eclipse.org/emf/2002/Ecore#//EObject"/>
+      </eParameters>
+    </operation>
+    <containingClass href="activitydiagram.xmof#//ActivityNodeConfiguration"/>
+  </rules>
+  <rules calledRules="//@rules.39" stepRule="true" overridenBy="//@rules.38">
+    <operation name="hasOffers" lowerBound="1">
+      <eType xsi:type="ecore:EClass" href="http://www.eclipse.org/emf/2002/Ecore#//EObject"/>
+    </operation>
+    <containingClass href="activitydiagram.xmof#//ActivityNodeConfiguration"/>
+  </rules>
+  <rules calledRules="//@rules.39" stepRule="true" overrides="//@rules.37">
+    <operation name="hasOffers_mergeNode" lowerBound="1">
+      <eType xsi:type="ecore:EClass" href="http://www.eclipse.org/emf/2002/Ecore#//EObject"/>
+    </operation>
+    <containingClass href="activitydiagram.xmof#//MergeNodeConfiguration"/>
+  </rules>
+  <rules calledRules="//@rules.40" stepRule="true">
+    <operation name="hasOffer" lowerBound="1">
+      <eType xsi:type="ecore:EClass" href="http://www.eclipse.org/emf/2002/Ecore#//EObject"/>
+    </operation>
+    <containingClass href="activitydiagram.xmof#//ActivityEdgeConfiguration"/>
+  </rules>
+  <rules stepRule="true">
+    <operation name="hasTokens" lowerBound="1">
+      <eType xsi:type="ecore:EClass" href="http://www.eclipse.org/emf/2002/Ecore#//EObject"/>
+    </operation>
+    <containingClass href="activitydiagram.xmof#//Offer"/>
+  </rules>
+  <rules calledRules="//@rules.34 //@rules.30" stepRule="true">
+    <operation name="sendOffers_action"/>
+    <containingClass href="activitydiagram.xmof#//ActionConfiguration"/>
+  </rules>
+  <rules stepRule="true" overridenBy="//@rules.43" abstract="true">
+    <operation name="doAction"/>
+    <containingClass href="activitydiagram.xmof#//ActionConfiguration"/>
+  </rules>
+  <rules calledRules="//@rules.44" stepRule="true" overrides="//@rules.42">
+    <operation name="doAction_opaqueAction"/>
+    <containingClass href="activitydiagram.xmof#//OpaqueActionConfiguration"/>
+  </rules>
+  <rules stepRule="true" overridenBy="//@rules.45 //@rules.46 //@rules.47 //@rules.48" abstract="true">
+    <operation name="execute"/>
+    <containingClass href="activitydiagram.xmof#//ExpressionConfiguration"/>
+  </rules>
+  <rules calledRules="//@rules.62 //@rules.63 //@rules.3" stepRule="true" overrides="//@rules.44">
+    <operation name="execute_booleanBinaryExpression"/>
+    <containingClass href="activitydiagram.xmof#//BooleanBinaryExpressionConfiguration"/>
+  </rules>
+  <rules calledRules="//@rules.3 //@rules.61" stepRule="true" overrides="//@rules.44">
+    <operation name="execute_booleanUnaryExpression"/>
+    <containingClass href="activitydiagram.xmof#//BooleanUnaryExpressionConfiguration"/>
+  </rules>
+  <rules calledRules="//@rules.54 //@rules.55 //@rules.3" stepRule="true" overrides="//@rules.44">
+    <operation name="execute_integerCalculationExpression"/>
+    <containingClass href="activitydiagram.xmof#//IntegerCalculationExpressionConfiguration"/>
+  </rules>
+  <rules calledRules="//@rules.56 //@rules.57 //@rules.58 //@rules.59 //@rules.3 //@rules.60" stepRule="true" overrides="//@rules.44">
+    <operation name="execute_IntegerComparisionExpression"/>
+    <containingClass href="activitydiagram.xmof#//IntegerComparisonExpressionConfiguration"/>
+  </rules>
+  <rules stepRule="true" overridenBy="//@rules.50 //@rules.51 //@rules.52" abstract="true">
+    <operation name="getCurrentValueValue" lowerBound="1">
+      <eType xsi:type="ecore:EClass" href="http://www.eclipse.org/emf/2002/Ecore#//EObject"/>
+    </operation>
+    <containingClass href="activitydiagram.xmof#//VariableConfiguration"/>
+  </rules>
+  <rules stepRule="true" overrides="//@rules.49">
+    <operation name="getCurrentValueValue_booleanVariable" lowerBound="1">
+      <eType xsi:type="ecore:EClass" href="http://www.eclipse.org/emf/2002/Ecore#//EObject"/>
+    </operation>
+    <containingClass href="activitydiagram.xmof#//BooleanVariableConfiguration"/>
+  </rules>
+  <rules stepRule="true" overrides="//@rules.49">
+    <operation name="getCurrentValueValue_integerVariable" lowerBound="1">
+      <eType xsi:type="ecore:EClass" href="http://www.eclipse.org/emf/2002/Ecore#//EObject"/>
+    </operation>
+    <containingClass href="activitydiagram.xmof#//IntegerVariableConfiguration"/>
+  </rules>
+  <rules stepRule="true" overrides="//@rules.49">
+    <operation name="getCurrentValueValue_stringVariable" lowerBound="1">
+      <eType xsi:type="ecore:EClass" href="http://www.eclipse.org/emf/2002/Ecore#//EObject"/>
+    </operation>
+    <containingClass href="activitydiagram.xmof#//StringVariableConfiguration"/>
+  </rules>
+  <rules calledRules="//@rules.49" stepRule="true">
+    <operation name="getOperandCurrentValues" lowerBound="1">
+      <eType xsi:type="ecore:EClass" href="http://www.eclipse.org/emf/2002/Ecore#//EObject"/>
+    </operation>
+    <containingClass href="activitydiagram.xmof#//IntegerExpressionConfiguration"/>
+  </rules>
+  <rules calledRules="//@rules.53" stepRule="true">
+    <operation name="evaluateADD" lowerBound="1">
+      <eType xsi:type="ecore:EClass" href="http://www.eclipse.org/emf/2002/Ecore#//EObject"/>
+    </operation>
+    <containingClass href="activitydiagram.xmof#//IntegerCalculationExpressionConfiguration"/>
+  </rules>
+  <rules calledRules="//@rules.53" stepRule="true">
+    <operation name="evaluateSUBTRACT" lowerBound="1">
+      <eType xsi:type="ecore:EClass" href="http://www.eclipse.org/emf/2002/Ecore#//EObject"/>
+    </operation>
+    <containingClass href="activitydiagram.xmof#//IntegerCalculationExpressionConfiguration"/>
+  </rules>
+  <rules calledRules="//@rules.53" stepRule="true">
+    <operation name="evaluateSMALLER" lowerBound="1">
+      <eType xsi:type="ecore:EClass" href="http://www.eclipse.org/emf/2002/Ecore#//EObject"/>
+    </operation>
+    <containingClass href="activitydiagram.xmof#//IntegerComparisonExpressionConfiguration"/>
+  </rules>
+  <rules calledRules="//@rules.53" stepRule="true">
+    <operation name="evaluateSMALLER_EQUALS" lowerBound="1">
+      <eType xsi:type="ecore:EClass" href="http://www.eclipse.org/emf/2002/Ecore#//EObject"/>
+    </operation>
+    <containingClass href="activitydiagram.xmof#//IntegerComparisonExpressionConfiguration"/>
+  </rules>
+  <rules calledRules="//@rules.53" stepRule="true">
+    <operation name="evaluateEQUALS" lowerBound="1">
+      <eType xsi:type="ecore:EClass" href="http://www.eclipse.org/emf/2002/Ecore#//EObject"/>
+    </operation>
+    <containingClass href="activitydiagram.xmof#//IntegerComparisonExpressionConfiguration"/>
+  </rules>
+  <rules calledRules="//@rules.53" stepRule="true">
+    <operation name="evaluateGREATER_EQUALS" lowerBound="1">
+      <eType xsi:type="ecore:EClass" href="http://www.eclipse.org/emf/2002/Ecore#//EObject"/>
+    </operation>
+    <containingClass href="activitydiagram.xmof#//IntegerComparisonExpressionConfiguration"/>
+  </rules>
+  <rules calledRules="//@rules.53" stepRule="true">
+    <operation name="evaluateGREATER" lowerBound="1">
+      <eType xsi:type="ecore:EClass" href="http://www.eclipse.org/emf/2002/Ecore#//EObject"/>
+    </operation>
+    <containingClass href="activitydiagram.xmof#//IntegerComparisonExpressionConfiguration"/>
+  </rules>
+  <rules calledRules="//@rules.49" stepRule="true">
+    <operation name="evaluateNOT" lowerBound="1">
+      <eType xsi:type="ecore:EClass" href="http://www.eclipse.org/emf/2002/Ecore#//EObject"/>
+    </operation>
+    <containingClass href="activitydiagram.xmof#//BooleanUnaryExpressionConfiguration"/>
+  </rules>
+  <rules calledRules="//@rules.49" stepRule="true">
+    <operation name="evaluateAND" lowerBound="1">
+      <eType xsi:type="ecore:EClass" href="http://www.eclipse.org/emf/2002/Ecore#//EObject"/>
+    </operation>
+    <containingClass href="activitydiagram.xmof#//BooleanBinaryExpressionConfiguration"/>
+  </rules>
+  <rules calledRules="//@rules.49" stepRule="true">
+    <operation name="evaluateOR" lowerBound="1">
+      <eType xsi:type="ecore:EClass" href="http://www.eclipse.org/emf/2002/Ecore#//EObject"/>
+    </operation>
+    <containingClass href="activitydiagram.xmof#//BooleanBinaryExpressionConfiguration"/>
+  </rules>
+  <rules stepRule="true">
+    <operation name="isWithdrawn" lowerBound="1">
+      <eType xsi:type="ecore:EClass" href="http://www.eclipse.org/emf/2002/Ecore#//EObject"/>
+    </operation>
+    <containingClass href="activitydiagram.xmof#//Token"/>
+  </rules>
+</ecorext:Ecorext>

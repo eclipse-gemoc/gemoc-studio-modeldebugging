@@ -1,0 +1,71 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?eclipse version="3.4"?>
+<!--
+    Copyright (c) 2017 Inria and others.
+    All rights reserved. This program and the accompanying materials
+    are made available under the terms of the Eclipse Public License v1.0
+    which accompanies this distribution, and is available at
+    http://www.eclipse.org/legal/epl-v10.html
+   
+    Contributors:
+        Inria - initial API and implementation
+ -->
+
+<plugin>
+   <extension
+         point="org.eclipse.ui.newWizards">
+      <wizard
+            category="org.eclipse.gemoc.xdsmlframework.category/org.eclipse.gemoc.xdsmlframework.fragment.category"
+            class="org.eclipse.gemoc.xdsmlframework.extensions.sirius.wizards.NewGemocDebugRepresentationWizard"
+            hasPages="true"
+            icon="icons/IconeGemocLanguage-16.png"
+            id="org.eclipse.gemoc.xdsmlframework.extensions.sirius.wizards.NewGemocDebugRepresentationWizard"
+            name="Debug/Animation Viewpoint Specification">
+         <description>
+            Create a debug/animation representation for a GEMOC language. May create a new project, or modify or extend an existing Viewpoint Specification.
+         </description>
+      </wizard>
+   </extension>
+   <extension
+         point="org.eclipse.ui.commands">
+      <command
+            defaultHandler="org.eclipse.gemoc.xdsmlframework.extensions.sirius.command.AddDebugLayerHandler"
+            id="org.gemoc.gemoc_language_workbench.extensions.sirius.addDebugLayer"
+            name="Add debug layer">
+      </command>
+   </extension>
+   <extension
+         point="org.eclipse.ui.menus">
+      <menuContribution
+            allPopups="false"
+            locationURI="popup:org.eclipse.sirius.editor.editorPlugin.SiriusEditorID">
+         <menu
+               icon="icons/IconeGemocLanguage-16.png"
+               id="gemoc"
+               label="Gemoc">
+            <command
+                  commandId="org.gemoc.gemoc_language_workbench.extensions.sirius.addDebugLayer"
+                  icon="icons/IconeGemocLanguage-16.png"
+                  label="Add debug layer"
+                  style="push"
+                  tooltip="Add a debug layer to the selected diagram description">
+               <visibleWhen
+                     checkEnabled="false">
+                  <with
+                        variable="selection">
+                     <count
+                           value="1">
+                     </count>
+                     <iterate>
+                        <instanceof
+                              value="org.eclipse.sirius.diagram.description.DiagramDescription">
+                        </instanceof>
+                     </iterate>
+                  </with>
+               </visibleWhen>
+            </command>
+         </menu>
+      </menuContribution>
+   </extension>
+
+</plugin>

@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="ASCII"?>
+<ecore:EPackage xmi:version="2.0" xmlns:xmi="http://www.omg.org/XMI" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:ecore="http://www.eclipse.org/emf/2002/Ecore" xmlns:fUML.Syntax.Activities.IntermediateActivities="http://www.modelexecution.org/xmof/syntax/activities/intermediateactivities" xmlns:kernel="http://www.modelexecution.org/xmof/syntax/classes/mykernel" name="model1Configuration" nsURI="http://model1/1.0/configuration" nsPrefix="model1Conf">
+  <eClassifiers xsi:type="kernel:BehavioredEClass" name="AConfiguration">
+    <eSuperTypes href="model1.ecore#//A"/>
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="a">
+      <eType xsi:type="ecore:EDataType" href="http://www.eclipse.org/emf/2002/Ecore#//EInt"/>
+    </eStructuralFeatures>
+    <ownedBehavior xsi:type="fUML.Syntax.Activities.IntermediateActivities:Activity" name="doA">
+      <ownedParameter name="paramA" lowerBound="1" eType="//C"/>
+    </ownedBehavior>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="B">
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="b">
+      <eType xsi:type="ecore:EDataType" href="http://www.eclipse.org/emf/2002/Ecore#//EInt"/>
+    </eStructuralFeatures>
+  </eClassifiers>
+  <eClassifiers xsi:type="kernel:BehavioredEClass" name="C">
+    <ownedBehavior xsi:type="fUML.Syntax.Activities.IntermediateActivities:Activity" name="doC">
+      <ownedParameter name="paramC" lowerBound="1" eType="//B"/>
+    </ownedBehavior>
+  </eClassifiers>
+</ecore:EPackage>

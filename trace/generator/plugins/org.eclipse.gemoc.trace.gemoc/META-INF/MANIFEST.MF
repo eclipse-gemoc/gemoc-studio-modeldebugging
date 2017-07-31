@@ -1,0 +1,20 @@
+Manifest-Version: 1.0
+Bundle-ManifestVersion: 2
+Bundle-Name: org.eclipse.gemoc.tracemm.gemoctrace
+Bundle-SymbolicName: org.eclipse.gemoc.trace.gemoc;singleton:=true
+Bundle-Version: 2.3.0.qualifier
+Bundle-RequiredExecutionEnvironment: JavaSE-1.8
+Require-Bundle: org.eclipse.gemoc.timeline;bundle-version="1.0.0",
+ org.eclipse.gemoc.xdsmlframework.api;bundle-version="0.1.0",
+ org.eclipse.xtend.lib,
+ org.eclipse.gemoc.executionframework.engine;bundle-version="0.1.0",
+ org.eclipse.emf.transaction;bundle-version="1.8.0",
+ org.eclipse.gemoc.trace.gemoc.api;bundle-version="1.0.0",
+ org.eclipse.xtext,
+ org.eclipse.gemoc.trace.commons.model;bundle-version="0.1.0",
+ org.eclipse.gemoc.commons.eclipse;bundle-version="0.1.0",
+ org.eclipse.emf.compare,
+ org.eclipse.gemoc.xdsmlframework.commons
+Export-Package: org.eclipse.gemoc.trace.gemoc.traceaddon
+Bundle-ActivationPolicy: lazy
+

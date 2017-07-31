@@ -1,0 +1,233 @@
+<?xml version="1.0" encoding="ASCII"?>
+<activitydiagram:Activity
+    xmi:version="2.0"
+    xmlns:xmi="http://www.omg.org/XMI"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xmlns:activitydiagram="http://activitydiagram/1.0"
+    name="3651-2">
+  <nodes xsi:type="activitydiagram:InitialNode"
+      outgoing="//@edges.0"/>
+  <nodes xsi:type="activitydiagram:ActivityFinalNode"
+      incoming="//@edges.9"/>
+  <nodes xsi:type="activitydiagram:MergeNode"
+      name="merge e"
+      outgoing="//@edges.5"
+      incoming="//@edges.4 //@edges.19"/>
+  <nodes xsi:type="activitydiagram:MergeNode"
+      name="merge final"
+      outgoing="//@edges.9"
+      incoming="//@edges.8 //@edges.12 //@edges.17"/>
+  <nodes xsi:type="activitydiagram:DecisionNode"
+      name="decision i"
+      outgoing="//@edges.7 //@edges.10 //@edges.13"
+      incoming="//@edges.6"/>
+  <nodes xsi:type="activitydiagram:DecisionNode"
+      name="decision loop1"
+      outgoing="//@edges.16 //@edges.18"
+      incoming="//@edges.15"/>
+  <nodes xsi:type="activitydiagram:OpaqueAction"
+      name="a"
+      outgoing="//@edges.1"
+      incoming="//@edges.0">
+    <expressions
+        xsi:type="activitydiagram:IntegerComparisonExpression"
+        operand2="//@locals.7"
+        operand1="//@inputs.0"
+        assignee="//@locals.1"
+        operator=">"/>
+    <expressions
+        xsi:type="activitydiagram:IntegerComparisonExpression"
+        operand2="//@locals.7"
+        operand1="//@inputs.0"
+        assignee="//@locals.2"
+        operator="="/>
+    <expressions
+        xsi:type="activitydiagram:IntegerComparisonExpression"
+        operand2="//@locals.6"
+        operand1="//@inputs.0"
+        assignee="//@locals.3"
+        operator="="/>
+  </nodes>
+  <nodes xsi:type="activitydiagram:OpaqueAction"
+      name="b"
+      outgoing="//@edges.2"
+      incoming="//@edges.1"/>
+  <nodes xsi:type="activitydiagram:OpaqueAction"
+      name="c"
+      outgoing="//@edges.3"
+      incoming="//@edges.2"/>
+  <nodes xsi:type="activitydiagram:OpaqueAction"
+      name="d"
+      outgoing="//@edges.4"
+      incoming="//@edges.3"/>
+  <nodes xsi:type="activitydiagram:OpaqueAction"
+      name="e"
+      outgoing="//@edges.6"
+      incoming="//@edges.5"/>
+  <nodes xsi:type="activitydiagram:OpaqueAction"
+      name="f"
+      outgoing="//@edges.8"
+      incoming="//@edges.7"/>
+  <nodes xsi:type="activitydiagram:OpaqueAction"
+      name="g"
+      outgoing="//@edges.11"
+      incoming="//@edges.10"/>
+  <nodes xsi:type="activitydiagram:OpaqueAction"
+      name="h"
+      outgoing="//@edges.12"
+      incoming="//@edges.11"/>
+  <nodes xsi:type="activitydiagram:OpaqueAction"
+      name="i"
+      outgoing="//@edges.14"
+      incoming="//@edges.13"/>
+  <nodes xsi:type="activitydiagram:OpaqueAction"
+      name="j"
+      outgoing="//@edges.15"
+      incoming="//@edges.14">
+    <expressions
+        xsi:type="activitydiagram:IntegerComparisonExpression"
+        operand2="//@locals.8"
+        operand1="//@locals.0"
+        assignee="//@locals.5"
+        operator="="/>
+    <expressions
+        xsi:type="activitydiagram:IntegerComparisonExpression"
+        operand2="//@locals.0"
+        operand1="//@locals.8"
+        assignee="//@locals.4"
+        operator=">"/>
+  </nodes>
+  <nodes xsi:type="activitydiagram:OpaqueAction"
+      name="k"
+      outgoing="//@edges.17"
+      incoming="//@edges.16"/>
+  <nodes xsi:type="activitydiagram:OpaqueAction"
+      name="l"
+      outgoing="//@edges.19"
+      incoming="//@edges.18">
+    <expressions
+        xsi:type="activitydiagram:IntegerCalculationExpression"
+        operand2="//@locals.6"
+        operand1="//@locals.0"
+        assignee="//@locals.0"/>
+  </nodes>
+  <edges xsi:type="activitydiagram:ControlFlow"
+      source="//@nodes.0"
+      target="//@nodes.6"/>
+  <edges xsi:type="activitydiagram:ControlFlow"
+      source="//@nodes.6"
+      target="//@nodes.7"/>
+  <edges xsi:type="activitydiagram:ControlFlow"
+      source="//@nodes.7"
+      target="//@nodes.8"/>
+  <edges xsi:type="activitydiagram:ControlFlow"
+      source="//@nodes.8"
+      target="//@nodes.9"/>
+  <edges xsi:type="activitydiagram:ControlFlow"
+      source="//@nodes.9"
+      target="//@nodes.2"/>
+  <edges xsi:type="activitydiagram:ControlFlow"
+      source="//@nodes.2"
+      target="//@nodes.10"/>
+  <edges xsi:type="activitydiagram:ControlFlow"
+      source="//@nodes.10"
+      target="//@nodes.4"/>
+  <edges xsi:type="activitydiagram:ControlFlow"
+      source="//@nodes.4"
+      target="//@nodes.11"
+      guard="//@locals.1"/>
+  <edges xsi:type="activitydiagram:ControlFlow"
+      source="//@nodes.11"
+      target="//@nodes.3"/>
+  <edges xsi:type="activitydiagram:ControlFlow"
+      source="//@nodes.3"
+      target="//@nodes.1"/>
+  <edges xsi:type="activitydiagram:ControlFlow"
+      source="//@nodes.4"
+      target="//@nodes.12"
+      guard="//@locals.2"/>
+  <edges xsi:type="activitydiagram:ControlFlow"
+      source="//@nodes.12"
+      target="//@nodes.13"/>
+  <edges xsi:type="activitydiagram:ControlFlow"
+      source="//@nodes.13"
+      target="//@nodes.3"/>
+  <edges xsi:type="activitydiagram:ControlFlow"
+      source="//@nodes.4"
+      target="//@nodes.14"
+      guard="//@locals.3"/>
+  <edges xsi:type="activitydiagram:ControlFlow"
+      source="//@nodes.14"
+      target="//@nodes.15"/>
+  <edges xsi:type="activitydiagram:ControlFlow"
+      source="//@nodes.15"
+      target="//@nodes.5"/>
+  <edges xsi:type="activitydiagram:ControlFlow"
+      source="//@nodes.5"
+      target="//@nodes.16"
+      guard="//@locals.5"/>
+  <edges xsi:type="activitydiagram:ControlFlow"
+      source="//@nodes.16"
+      target="//@nodes.3"/>
+  <edges xsi:type="activitydiagram:ControlFlow"
+      source="//@nodes.5"
+      target="//@nodes.17"
+      guard="//@locals.4"/>
+  <edges xsi:type="activitydiagram:ControlFlow"
+      source="//@nodes.17"
+      target="//@nodes.2"/>
+  <locals xsi:type="activitydiagram:IntegerVariable"
+      name="loop1">
+    <initialValue
+        xsi:type="activitydiagram:IntegerValue"/>
+  </locals>
+  <locals xsi:type="activitydiagram:BooleanVariable"
+      name="i greater 2">
+    <initialValue
+        xsi:type="activitydiagram:BooleanValue"/>
+  </locals>
+  <locals xsi:type="activitydiagram:BooleanVariable"
+      name="i equals 2">
+    <initialValue
+        xsi:type="activitydiagram:BooleanValue"/>
+  </locals>
+  <locals xsi:type="activitydiagram:BooleanVariable"
+      name="i equals 1">
+    <initialValue
+        xsi:type="activitydiagram:BooleanValue"/>
+  </locals>
+  <locals xsi:type="activitydiagram:BooleanVariable"
+      name="loop1 smaller 14">
+    <initialValue
+        xsi:type="activitydiagram:BooleanValue"/>
+  </locals>
+  <locals xsi:type="activitydiagram:BooleanVariable"
+      name="loop1 equals 14">
+    <initialValue
+        xsi:type="activitydiagram:BooleanValue"/>
+  </locals>
+  <locals xsi:type="activitydiagram:IntegerVariable"
+      name="one">
+    <initialValue
+        xsi:type="activitydiagram:IntegerValue"
+        value="1"/>
+  </locals>
+  <locals xsi:type="activitydiagram:IntegerVariable"
+      name="two">
+    <initialValue
+        xsi:type="activitydiagram:IntegerValue"
+        value="2"/>
+  </locals>
+  <locals xsi:type="activitydiagram:IntegerVariable"
+      name="fourteen">
+    <initialValue
+        xsi:type="activitydiagram:IntegerValue"
+        value="14"/>
+  </locals>
+  <inputs xsi:type="activitydiagram:IntegerVariable"
+      name="i">
+    <initialValue
+        xsi:type="activitydiagram:IntegerValue"
+        value="1"/>
+  </inputs>
+</activitydiagram:Activity>

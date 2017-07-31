@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?eclipse version="3.4"?>
+<!--
+    Copyright (c) 2017 Inria and others.
+    All rights reserved. This program and the accompanying materials
+    are made available under the terms of the Eclipse Public License v1.0
+    which accompanies this distribution, and is available at
+    http://www.eclipse.org/legal/epl-v10.html
+   
+    Contributors:
+        Inria - initial API and implementation
+ -->
+
+<plugin>
+   <extension
+         point="org.eclipse.ui.perspectives">
+      <perspective
+            class="org.eclipse.gemoc.xdsmlframework.ide.ui.perspective.XDSMLPerspectiveFactory"
+            icon="icons/IconeGemocLanguage-16.png"
+            id="org.eclipse.gemoc.xdsmlframework.ide.ui.xdsml.perspective"
+            name="xDSML">
+      </perspective>
+   </extension>
+   <extension
+         point="org.eclipse.ui.perspectiveExtensions">
+      <perspectiveExtension
+            targetID="org.eclipse.gemoc.xdsmlframework.ide.ui.xdsml.perspective">
+         <newWizardShortcut
+               id="fr.inria.diverse.k3.ui.wizards.NewK3XtendClassWizard">
+         </newWizardShortcut>
+         <newWizardShortcut
+               id="org.eclipse.jdt.ui.wizards.NewClassCreationWizard">
+         </newWizardShortcut>
+         <newWizardShortcut
+               id="org.eclipse.xtend.ide.wizards.NewXtendClassWizard">
+         </newWizardShortcut>
+      </perspectiveExtension>
+   </extension>
+   <extension
+         point="org.eclipse.ui.menus">
+      <menuContribution
+            allPopups="false"
+            locationURI="popup:org.eclipse.ui.popup.any?after=additions">
+         <separator
+               name="xdsmlGroup"
+               visible="true">
+         </separator>
+         <separator
+               name="xdsmlGroupEnd"
+               visible="true">
+         </separator>
+      </menuContribution>
+   </extension>
+
+</plugin>

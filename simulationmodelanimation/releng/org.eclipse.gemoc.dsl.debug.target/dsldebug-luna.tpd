@@ -1,0 +1,20 @@
+target "dsldebug_luna" with source, requirements
+
+location Eclipse-Luna "http://download.eclipse.org/releases/luna/201502271000" {
+	org.eclipse.platform.sdk lazy
+	org.eclipse.equinox.executable.feature.group lazy
+	org.eclipse.emf.edit.feature.group lazy
+	org.eclipse.emf.ecore.editor.feature.group lazy
+	org.eclipse.emf.transaction.feature.group lazy
+	org.eclipse.emf.ecore.feature.group lazy
+	org.eclipse.emf.edit.ui.feature.group lazy
+	org.eclipse.gmf.runtime.sdk.feature.group lazy
+	com.google.guava [15.0.0,16.0.0)
+	org.junit lazy
+}
+
+location Sirius "http://download.eclipse.org/sirius/updates/nightly/2.0.x/luna" {
+	org.eclipse.sirius.runtime.feature.group lazy
+	org.eclipse.sirius.runtime.acceleo.feature.group lazy
+	org.eclipse.sirius.runtime.ide.ui.feature.group lazy
+}

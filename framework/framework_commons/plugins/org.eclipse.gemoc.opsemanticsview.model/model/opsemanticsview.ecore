@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ecore:EPackage xmi:version="2.0" xmlns:xmi="http://www.omg.org/XMI" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xmlns:ecore="http://www.eclipse.org/emf/2002/Ecore" name="opsemanticsview" nsURI="http://opsemanticsview/1.0" nsPrefix="opsemanticsview">
+  <eClassifiers xsi:type="ecore:EClass" name="OperationalSemanticsView">
+    <eStructuralFeatures xsi:type="ecore:EReference" name="rules" upperBound="-1"
+        eType="#//Rule" containment="true"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="dynamicProperties" upperBound="-1"
+        eType="ecore:EClass http://www.eclipse.org/emf/2002/Ecore#//EStructuralFeature"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="dynamicClasses" upperBound="-1"
+        eType="ecore:EClass http://www.eclipse.org/emf/2002/Ecore#//EClass"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="executionToASmapping" upperBound="-1"
+        eType="#//ExecutionToASEntry" containment="true"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="executionMetamodel" lowerBound="1"
+        eType="ecore:EClass http://www.eclipse.org/emf/2002/Ecore#//EPackage"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="abstractSyntax" eType="ecore:EClass http://www.eclipse.org/emf/2002/Ecore#//EPackage"/>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="Rule">
+    <eStructuralFeatures xsi:type="ecore:EReference" name="calledRules" ordered="false"
+        upperBound="-1" eType="#//Rule"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="operation" lowerBound="1"
+        eType="ecore:EClass http://www.eclipse.org/emf/2002/Ecore#//EOperation" containment="true"/>
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="stepRule" lowerBound="1"
+        eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EBoolean"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="overridenBy" ordered="false"
+        upperBound="-1" eType="#//Rule" eOpposite="#//Rule/overrides"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="overrides" eType="#//Rule"
+        eOpposite="#//Rule/overridenBy"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="containingClass" eType="ecore:EClass http://www.eclipse.org/emf/2002/Ecore#//EClass"/>
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="abstract" lowerBound="1"
+        eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EBoolean"/>
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="main" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EBoolean"/>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="ExecutionToASEntry">
+    <eStructuralFeatures xsi:type="ecore:EReference" name="executionClass" lowerBound="1"
+        eType="ecore:EClass http://www.eclipse.org/emf/2002/Ecore#//EClass"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="ASclass" lowerBound="1"
+        eType="ecore:EClass http://www.eclipse.org/emf/2002/Ecore#//EClass"/>
+  </eClassifiers>
+</ecore:EPackage>

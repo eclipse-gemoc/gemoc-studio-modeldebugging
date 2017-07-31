@@ -1,0 +1,421 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project>
+	<modelVersion>4.0.0</modelVersion>
+	<prerequisites>
+		<maven>3.0</maven>
+	</prerequisites>
+	
+	<groupId>org.eclipse.gemoc</groupId>
+	<artifactId>org.eclipse.gemoc.modeldebugging.root</artifactId>
+	<version>2.3.0-SNAPSHOT</version>
+	
+	<licenses>
+		<license>
+			<name>Eclipse Public License v1.0</name>
+			<comments>
+        All rights reserved. This program and the accompanying materials are made available under the terms of the Eclipse Public License v1.0 which accompanies this distribution, and is available at http://www.eclipse.org/legal/epl-v10.htm
+       </comments>
+		</license>
+	</licenses>
+	
+	<packaging>pom</packaging>
+	
+	<modules>
+	</modules>
+
+    <properties>
+		<tycho-version>0.26.0</tycho-version>
+    	<xtend.version>2.10.0</xtend.version>
+		<project.build.sourceEncoding>UTF8</project.build.sourceEncoding>
+		<tycho.scmUrl>scm:git:https://github.com/SiriusLab/ModelDebugging.git</tycho.scmUrl>
+		<!-- <sonar.projectKey>gemoc:${project.groupId}:${project.artifactId}</sonar.projectKey>-->		
+	</properties>
+	
+  	<repositories>
+  	<!-- List of P2 repositories of external tool used to build the components -->
+  	<!--  must NOT include the repositories of the tools included in the Studio has it has its own complementary list -->
+
+		<repository>
+            <id>Neon release</id>
+            <layout>p2</layout>
+            <url>http://download.eclipse.org/releases/neon</url>
+        </repository>
+        <repository>
+            <id>diverse-commons</id>
+            <layout>p2</layout>
+            <url>https://ci.inria.fr/diverse-commons/job/diverse-commons.eclipse.root/lastSuccessfulBuild/artifact/commons-eclipse/fr.inria.diverse.commons.eclipse.root/p2updatesite/target/repository/</url>
+        </repository>
+        <repository>
+            <id>kermeta-3</id>
+            <layout>p2</layout>
+            <url>http://www.kermeta.org/k3/update/</url>
+        </repository>
+        <repository>
+            <id>melange</id>
+            <layout>p2</layout>
+            <url>http://melange-lang.org/updatesite/</url>
+        </repository>
+        <repository>
+            <id>elk</id>
+            <layout>p2</layout>
+            <url>http://download.eclipse.org/elk/updates/releases/0.1.0/</url>
+        </repository>
+        <repository>
+            <id>Sirius</id>
+            <layout>p2</layout>
+            <url>http://download.eclipse.org/sirius/updates/releases/4.1.2/neon/</url>
+        </repository>
+<!--         <repository> -->
+<!--             <id>umldesigner</id> -->
+<!--             <layout>p2</layout> -->
+<!--             <url>http://releases.umldesigner.org/5.0.0/repository/</url> -->
+<!--         </repository> -->
+        <repository>
+            <id>nebula</id>
+            <layout>p2</layout>
+            <url>http://download.eclipse.org/technology/nebula/incubation/snapshot</url>
+        </repository>
+        <!-- <repository>
+            <id>javafx</id>
+            <layout>p2</layout>
+            <url>http://download.eclipse.org/efxclipse/updates-released/2.1.0/site</url>
+        </repository>-->
+<!--          <repository> -->
+<!-- 			<id>efxclipse-repo</id> -->
+<!-- 			<layout>p2</layout> -->
+<!-- 			<url>http://download.eclipse.org/efxclipse/runtime-nightly/site</url> -->
+<!-- 		</repository> -->
+<!-- 		<repository> -->
+<!-- 			<id>efxclipse-addons</id> -->
+<!-- 			<layout>p2</layout> -->
+<!-- 			<url>http://downloads.efxclipse.org/efxclipse.bestsolution.at/p2-repos/addons/nightly/site/</url> -->
+<!-- 		</repository>  -->
+		    	<repository>
+		            <id>gemoc-studio_commons on CI</id>
+		            <layout>p2</layout>
+		            <url>https://ci.inria.fr/gemoc/job/gemoc-studio_commons/lastSuccessfulBuild/artifact/commons/releng/org.eclipse.gemoc.commons.repository/target/repository/</url>
+		        </repository>
+    </repositories>
+
+
+	<build>
+		<plugins>
+			<plugin>
+				<groupId>org.eclipse.tycho</groupId>
+				<artifactId>tycho-maven-plugin</artifactId>
+				<version>${tycho-version}</version>
+				<extensions>true</extensions>
+			</plugin>
+			<!-- make sure to use a java8 JDT and javafxswt (see http://cdtdoug.ca/2014/04/21/tutorial-a-simple-approach-to-writing-javafx-eclipse-rcp-apps/)  -->
+			<plugin>
+				<groupId>org.eclipse.tycho</groupId>
+				<artifactId>tycho-compiler-plugin</artifactId>
+				<version>${tycho-version}</version>
+				<configuration>
+					<encoding>UTF-8</encoding>
+					<source>1.8</source>
+					<target>1.8</target>
+					<extraClasspathElements>
+						<extraClasspathElement>
+							<groupId>com.oracle</groupId>
+							<artifactId>javafx</artifactId>
+							<version>2.3.0-SNAPSHOT</version>
+							<systemPath>${java.home}/lib/jfxrt.jar</systemPath>
+							<scope>system</scope>
+						</extraClasspathElement>
+						<extraClasspathElement>
+			                <groupId>com.oracle</groupId>
+			                <artifactId>javafxswt</artifactId>
+			                <version>2.3.0-SNAPSHOT</version>
+			                <systemPath>${java.home}/lib/jfxswt.jar</systemPath>
+			                <scope>system</scope>
+			            </extraClasspathElement>
+					</extraClasspathElements>
+				</configuration>
+			</plugin>
+			<!-- enable source bundle generation -->
+			<plugin>
+				<groupId>org.eclipse.tycho</groupId>
+				<artifactId>tycho-source-plugin</artifactId>
+				<version>${tycho-version}</version>
+				<executions>
+					<execution>
+						<id>plugin-source</id>
+						<goals>
+							<goal>plugin-source</goal>
+						</goals>
+					</execution>
+				</executions>
+			</plugin>
+			<!-- enable source feature generation -->
+			<plugin>
+		      <groupId>org.eclipse.tycho.extras</groupId>
+		      <artifactId>tycho-source-feature-plugin</artifactId>
+		      <version>${tycho-version}</version>
+		      <executions>
+		        <execution>
+		          <id>source-feature</id>
+		          <phase>package</phase>
+		          <goals>
+		            <goal>source-feature</goal>
+		          </goals>
+		        </execution>
+		      </executions>
+		    </plugin>
+		    <plugin>
+		     <groupId>org.eclipse.tycho</groupId>
+		     <artifactId>tycho-p2-plugin</artifactId>
+		     <version>${tycho-version}</version>
+		     <executions>
+		       <execution>
+		         <id>attach-p2-metadata</id>
+		         <phase>package</phase>
+		         <goals>
+		           <goal>p2-metadata</goal>
+		         </goals>
+		       </execution>
+		     </executions>
+		    </plugin>
+		    <!-- enable generation of Eclipse-SourceReferences MANIFEST header -->
+		    <plugin>
+				<groupId>org.eclipse.tycho</groupId>
+				<artifactId>tycho-packaging-plugin</artifactId>
+				<version>${tycho-version}</version>
+				<dependencies>
+					<dependency>
+       					<groupId>org.eclipse.tycho.extras</groupId>
+			        	<artifactId>tycho-sourceref-jgit</artifactId>
+			        	<version>${tycho-version}</version>
+			      	</dependency>
+				</dependencies>
+				<configuration>
+					<sourceReferences>
+       					<generate>true</generate>
+     				</sourceReferences>
+				</configuration>
+			</plugin>
+			<!--<plugin>
+				<groupId>org.eclipse.tycho</groupId>
+				<artifactId>tycho-p2-director-plugin</artifactId>
+				<version>${tycho-version}</version>
+				<executions>
+					<execution>
+						<id>materialize-products</id>
+						<goals>
+							<goal>materialize-products</goal>
+						</goals>
+					</execution>
+					<execution>
+						<id>archive-products</id>
+						<goals>
+							<goal>archive-products</goal>
+						</goals>
+					</execution>
+				</executions>
+			</plugin>-->
+			<plugin>
+				<groupId>org.eclipse.tycho</groupId>
+				<artifactId>target-platform-configuration</artifactId>
+				<version>${tycho-version}</version>
+				<configuration>
+					<!-- environments that will be built -->
+					<environments>
+						<environment>
+							<os>linux</os>
+							<ws>gtk</ws>
+							<arch>x86_64</arch>
+						</environment>
+						<environment>
+							<os>linux</os>
+							<ws>gtk</ws>
+							<arch>x86</arch>
+						</environment>
+						<environment>
+							<os>win32</os>
+							<ws>win32</ws>
+							<arch>x86</arch>
+						</environment>
+						<environment>
+							<os>win32</os>
+							<ws>win32</ws>
+							<arch>x86_64</arch>
+						</environment>
+						<environment>
+							<os>macosx</os>
+							<ws>cocoa</ws>
+							<arch>x86_64</arch>
+						</environment>
+					</environments>
+				</configuration>
+			</plugin>
+			<plugin>
+				<groupId>org.eclipse.xtend</groupId>
+				<artifactId>xtend-maven-plugin</artifactId>
+				<version>${xtend.version}</version>
+				<executions>
+					<execution>
+						<goals>
+							<goal>compile</goal>
+							<goal>xtend-install-debug-info</goal>
+							<goal>testCompile</goal>
+							<goal>xtend-test-install-debug-info</goal>
+						</goals>
+						<configuration>
+							<outputDirectory>xtend-gen</outputDirectory>
+						</configuration>
+					</execution>
+				</executions>
+			</plugin>
+            <!-- Java compiler plugin -->
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-compiler-plugin</artifactId>
+				<version>2.5</version>
+				<configuration>
+					<source>1.8</source>
+					<target>1.8</target>
+					<encoding>${project.build.sourceEncoding}</encoding>
+				</configuration>
+			</plugin>
+			<!-- Javadoc -->
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-javadoc-plugin</artifactId>
+				<version>2.10.4</version>
+				<configuration>
+				  	<!-- Default configuration for all reports -->
+              		<!-- disable javadoc checking -->
+                	<additionalparam>-Xdoclint:none</additionalparam>
+				</configuration>
+				<executions>
+					<execution>
+						<id>aggregate</id>
+						<goals>
+							<goal>aggregate</goal>
+					    </goals>
+					    <phase>site</phase>
+						<configuration>
+							<!-- Specific configuration for the aggregate report -->
+						    <!-- switch off dependency-driven aggregation -->
+              				<includeDependencySources>false</includeDependencySources>
+						</configuration>
+					</execution>
+				</executions>
+			</plugin>
+		</plugins>
+		<pluginManagement>
+			<plugins>
+				<plugin>
+					<artifactId>maven-clean-plugin</artifactId>
+		    		<version>3.0.0</version>
+				</plugin>
+				<plugin>
+					<groupId>org.apache.maven.plugins</groupId>
+					<artifactId>maven-antrun-plugin</artifactId>
+					<version>1.8</version>
+				</plugin>
+			</plugins>
+		</pluginManagement>
+	</build>
+	
+	<profiles>
+		<!-- profiles are used to build sub groups -->
+		<!--  as they areactive by default, simply do mvn clean package to build everything -->
+		<profile>
+	        <id>modelanimation</id>
+	        <activation>
+	            <activeByDefault>true</activeByDefault>
+	        </activation>
+	        <modules>
+	        	<module>simulationmodelanimation/pom.xml</module>
+	        </modules>
+		</profile>
+		<profile>
+	        <id>trace_and_framework</id>
+	        <activation>
+	            <activeByDefault>true</activeByDefault>
+	        </activation>
+	        <modules>
+	        	<module>trace/commons/pom.xml</module>
+	        	<module>trace/generator/pom.xml</module>
+	        	<module>trace/manager/pom.xml</module>
+	        	<module>framework/xdsml_framework/pom.xml</module>
+	        	<module>framework/execution_framework/pom.xml</module>
+	        	<module>framework/framework_commons/pom.xml</module>
+	        </modules>
+		</profile>
+		<profile>
+	        <id>java_execution</id>
+	        <activation>
+	            <activeByDefault>true</activeByDefault>
+	        </activation>
+	        <modules>
+	        	<module>java_execution/pom.xml</module>
+	        </modules>
+		</profile>
+		<profile>
+	        <id>repository</id>
+	        <activation>
+	            <activeByDefault>true</activeByDefault>
+	        </activation>
+	        <modules>
+	        	<module>releng/org.eclipse.gemoc.modeldebugging.repository/pom.xml</module>
+	        </modules>
+		</profile>
+		<profile>
+			<!-- This profile should be enabled for sonar analysis -->
+			<id>quality</id>
+			<activation>
+				<activeByDefault>false</activeByDefault>
+			</activation>
+			<properties>
+				<!-- Sonar properties -->
+				<sonar.core.codeCoveragePlugin>jacoco</sonar.core.codeCoveragePlugin>
+				<sonar.dynamicAnalysis>reuseReports</sonar.dynamicAnalysis>
+				<!-- Points to the target folder of the global parent project -->
+				<sonar.jacoco.reportPath>./target/jacoco.exec</sonar.jacoco.reportPath>
+			</properties>
+			<build>
+				<plugins>
+					<plugin>
+						<groupId>org.jacoco</groupId>
+						<artifactId>jacoco-maven-plugin</artifactId>
+						<version>0.5.6.201201232323</version>
+						<executions>
+							<execution>
+								<goals>
+									<goal>prepare-agent</goal>
+								</goals>
+								<configuration>
+									<append>true</append>
+									<destFile>${sonar.jacoco.reportPath}</destFile>
+								</configuration>
+							</execution>
+						</executions>
+					</plugin>
+				</plugins>
+			</build>
+		</profile>
+	</profiles>
+	<dependencies>
+		<dependency>
+			<groupId>org.eclipse.xtend</groupId>
+			<artifactId>xtend-maven-plugin</artifactId>
+			<version>${xtend.version}</version>
+		</dependency>
+		<dependency>
+			<groupId>org.eclipse.xtend</groupId>
+			<artifactId>org.eclipse.xtend.lib</artifactId>
+			<version>${xtend.version}</version>
+		</dependency>
+	</dependencies>
+	<!-- <pluginRepositories>
+		<pluginRepository>
+			<id>tycho</id>
+			<url>http://repository.sonatype.org/content/groups/sonatype-public-grid</url>
+			<snapshots>
+				<enabled>true</enabled>
+			</snapshots>
+		</pluginRepository>
+	</pluginRepositories>-->
+</project>

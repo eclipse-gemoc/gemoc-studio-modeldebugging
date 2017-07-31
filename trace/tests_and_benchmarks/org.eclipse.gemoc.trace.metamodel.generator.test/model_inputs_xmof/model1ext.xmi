@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="ASCII"?>
+<ecorext:Ecorext xmi:version="2.0" xmlns:xmi="http://www.omg.org/XMI" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:ecore="http://www.eclipse.org/emf/2002/Ecore" xmlns:ecorext="http://ecorext/1.0" xmlns:kernel="http://www.modelexecution.org/xmof/syntax/classes/mykernel">
+  <newPackages name="model1Configuration" nsURI="model1Configuration_trace" nsPrefix="model1Conf_trace">
+    <eClassifiers xsi:type="ecore:EClass" name="B">
+      <eAnnotations source="http://www.modelexecution.org/trace/XMOF">
+        <details key="executionMetamodelElement" value="//B"/>
+      </eAnnotations>
+      <eStructuralFeatures xsi:type="ecore:EAttribute" name="b">
+        <eAnnotations source="http://www.modelexecution.org/trace/XMOF">
+          <details key="executionMetamodelElement" value="//B/b"/>
+        </eAnnotations>
+        <eType xsi:type="ecore:EDataType" href="http://www.eclipse.org/emf/2002/Ecore#//EInt"/>
+      </eStructuralFeatures>
+    </eClassifiers>
+  </newPackages>
+  <classesExtensions>
+    <extendedExistingClass href="model1.xmof#//AConfiguration"/>
+    <newProperties xsi:type="ecore:EAttribute" name="a">
+      <eAnnotations source="http://www.modelexecution.org/trace/XMOF">
+        <details key="executionMetamodelElement" value="//AConfiguration/a"/>
+      </eAnnotations>
+      <eType xsi:type="ecore:EDataType" href="http://www.eclipse.org/emf/2002/Ecore#//EInt"/>
+    </newProperties>
+  </classesExtensions>
+  <rules stepRule="true">
+    <operation name="doA">
+      <eParameters name="paramA" lowerBound="1">
+        <eType xsi:type="kernel:BehavioredEClass" href="model1.xmof#//C"/>
+      </eParameters>
+    </operation>
+    <containingClass href="model1.xmof#//AConfiguration"/>
+  </rules>
+  <rules stepRule="true">
+    <operation name="doC">
+      <eParameters name="paramC" lowerBound="1" eType="//@newPackages.0/B"/>
+    </operation>
+    <containingClass href="model1.xmof#//C"/>
+  </rules>
+</ecorext:Ecorext>

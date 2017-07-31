@@ -1,0 +1,353 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?eclipse version="3.4"?>
+<!--
+    Copyright (c) 2017 Inria and others.
+    All rights reserved. This program and the accompanying materials
+    are made available under the terms of the Eclipse Public License v1.0
+    which accompanies this distribution, and is available at
+    http://www.eclipse.org/legal/epl-v10.html
+   
+    Contributors:
+        Inria - initial API and implementation
+ -->
+
+<plugin>
+
+<!--   <extension
+         point="org.eclipse.ui.popupMenus">
+      <objectContribution
+            adaptable="true"
+            objectClass="org.eclipse.core.resources.IProject"
+            nameFilter="*"
+            id="org.gemoc.gemoc_modeling_workbench.ui.addnature.contribution">
+         <action
+               class="org.gemoc.gemoc_modeling_workbench.ui.builder.ToggleNatureAction"
+               enablesFor="+"
+               icon="icons/IconeGemocModel-16.png"
+               id="org.gemoc.gemoc_modeling_workbench.ui.addRemoveNatureAction"
+               label="Add Executable Modeling Nature"
+               menubarPath="org.eclipse.ui.projectConfigure/additions">
+         </action>
+         <visibility>
+         <and>
+            <not>
+                <objectState name="projectNature" value="org.gemoc.gemoc_modeling_workbench.ui.gemocReflectiveModelNature"/>
+            </not>
+            <objectClass name="org.eclipse.core.resources.IProject" />
+          </and>
+         </visibility>
+      </objectContribution>
+      <objectContribution
+            adaptable="true"
+            objectClass="org.eclipse.core.resources.IProject"
+            nameFilter="*"
+            id="org.gemoc.gemoc_modeling_workbench.ui.removenature.contribution">
+         <action
+               class="org.gemoc.gemoc_modeling_workbench.ui.builder.ToggleNatureAction"
+               enablesFor="+"
+               icon="icons/IconeGemocModel-16.png"
+               id="org.gemoc.gemoc_modeling_workbench.ui.addRemoveNatureAction"
+               label="Remove Executable Modeling Nature (Reflective)"
+               menubarPath="org.eclipse.ui.projectConfigure/additions">
+         </action>
+         
+	    <visibility>
+	       <and>
+	          <objectClass
+	                name="org.eclipse.core.resources.IProject">
+	          </objectClass>
+	          <objectState
+	                name="projectNature"
+	                value="org.gemoc.gemoc_modeling_workbench.ui.gemocReflectiveModelNature">
+	          </objectState>
+	       </and>
+	    </visibility>
+      </objectContribution>
+   </extension> -->
+   <!-- definitions of launch menu -->
+   <extension point="org.eclipse.core.expressions.definitions">
+      <definition id="onValidationPerspective">
+         <with variable="activeWorkbenchWindow.activePerspective">
+               <equals value="org.eclipse.debug.ui.DebugPerspective"/>
+          </with>
+      </definition>
+   </extension>
+   	<extension
+         point="org.eclipse.debug.core.launchConfigurationTypes">
+      <launchConfigurationType
+            delegate="org.eclipse.gemoc.execution.sequential.javaengine.ui.launcher.Launcher"
+            id="org.eclipse.gemoc.execution.sequential.javaengine.ui.launcher"
+            modes="run, debug"
+            name="Gemoc Sequential eXecutable Model"
+            public="true"
+            sourceLocatorId="org.eclipse.gemoc.execution.sequential.javaengine.ui.sourceLocator">
+      </launchConfigurationType>
+   </extension>
+    <extension
+          point="org.eclipse.debug.ui.debugModelPresentations">
+       <debugModelPresentation
+             class="org.eclipse.gemoc.execution.sequential.javaengine.ui.launcher.GemocDebugModelPresentation"
+             id="org.eclipse.gemoc.execution.sequential.javaengine.ui.debugModel">
+       </debugModelPresentation>
+    </extension>
+       <extension
+          point="org.eclipse.debug.ui.debugModelPresentations">
+       <debugModelPresentation
+             class="org.eclipse.gemoc.execution.sequential.javaengine.ui.launcher.PlainK3DebugModelPresentation"
+             id="org.eclipse.gemoc.execution.sequential.javaengine.ui.debugModel">
+       </debugModelPresentation>
+    </extension>
+   <extension point="org.eclipse.debug.ui.launchConfigurationTypeImages">
+    <launchConfigurationTypeImage
+        icon="icons/IconeGemocModel-16.png"
+        configTypeID="org.eclipse.gemoc.execution.sequential.javaengine.ui.launcher"
+        id="org.eclipse.gemoc.execution.sequential.javaengine.ui.launcher.image">
+    </launchConfigurationTypeImage>
+	</extension>
+	   <extension point="org.eclipse.debug.ui.launchConfigurationTabGroups">
+	    <launchConfigurationTabGroup
+           class="org.eclipse.gemoc.execution.sequential.javaengine.ui.launcher.LauncherTabGroup"
+           id="org.eclipse.gemoc.execution.sequential.javaengine.ui.launcher.tabGroup"
+           type="org.eclipse.gemoc.execution.sequential.javaengine.ui.launcher">
+	    </launchConfigurationTabGroup>
+	</extension>
+    <extension
+          point="org.eclipse.core.expressions.propertyTesters">
+       <propertyTester
+             class="org.eclipse.gemoc.execution.sequential.javaengine.ui.propertytesters.GemocSequentialPropertyTester"
+             id="org.eclipse.gemoc.execution.sequential.javaengine.ui.propertytesters.GemocSequentialPropertyTester"
+             namespace="org.eclipse.gemoc.execution.sequential.javaengine.ui.propertytesters"
+             properties="isModel, isExecutableDomainSpecificModel"
+             type="org.eclipse.core.runtime.IAdaptable">
+       </propertyTester>
+    </extension>
+	<extension
+         point="org.eclipse.debug.ui.launchShortcuts">
+      <shortcut
+            class="org.eclipse.gemoc.execution.sequential.javaengine.ui.launcher.Launcher"
+            description="Create a configuration to launch an Eclipse application in debug mode."
+            icon="icons/IconeGemocModel-16.png"
+            id="org.eclipse.gemoc.execution.sequential.javaengine.ui.GemocExecutableReflectiveModel"
+            label="Gemoc Sequential eXecutable Model"
+            modes="run, debug">
+         <configurationType
+               id="org.eclipse.gemoc.execution.sequential.javaengine.ui.launcher">
+         </configurationType>
+         <contextualLaunch>
+            <enablement>
+            	<with variable="selection">
+		     		<count value="1"/>
+	      			<iterate>
+	       				<or>
+	        				<test property="org.eclipse.gemoc.execution.sequential.javaengine.ui.propertytesters.isExecutableDomainSpecificModel"/>
+	        				<test property="org.eclipse.debug.ui.matchesPattern"
+	                        	value="*.xmi">
+	                     	</test>
+	        			</or>
+	      			</iterate>
+		     </with>
+            </enablement>
+            <contextLabel
+                  label="Gemoc Sequential eXecutable Model"
+                  mode="run">
+            </contextLabel>
+            <contextLabel
+                  label="Gemoc Sequential eXecutable Model"
+                  mode="debug">
+            </contextLabel>
+         </contextualLaunch>
+      </shortcut>
+   </extension>
+   <extension
+         point="org.eclipse.sirius.externalJavaAction">
+      <javaActions
+            actionClass="org.eclipse.gemoc.execution.sequential.javaengine.ui.debug.sirius.action.GemocSequentialDebugAs"
+            id="org.eclipse.gemoc.execution.sequential.javaengine.ui.debug.sirius.action.gemocDebugAs">
+      </javaActions>
+      <javaActions
+            actionClass="org.eclipse.gemoc.execution.sequential.javaengine.ui.debug.sirius.action.GemocSequentialToggleBreakpointAction"
+            id="org.eclipse.gemoc.execution.sequential.javaengine.ui.debug.sirius.action.GemocSequentialToggleBreakpointAction">
+      </javaActions>
+   </extension>
+   <extension
+         point="org.eclipse.debug.core.sourceLocators">
+      <sourceLocator
+            class="org.eclipse.gemoc.execution.sequential.javaengine.ui.launcher.GemocSourceLocator"
+            id="org.eclipse.gemoc.execution.sequential.javaengine.ui.sourceLocator"
+            name="Gemoc Sequential Source Locator">
+      </sourceLocator>
+   </extension>
+   <extension
+         point="org.eclipse.ui.perspectiveExtensions">
+      <perspectiveExtension
+            targetID="*">
+         <actionSet
+               id="org.eclipse.debug.ui.launchActionSet">
+         </actionSet>
+      </perspectiveExtension>
+      <perspectiveExtension
+            targetID="org.eclipse.sirius.ui.tools.perspective.modeling">
+        <!-- <newWizardShortcut
+               id="org.gemoc.gemoc_modeling_workbench.ui.wizards.CreateNewGemocModelingProject">
+         </newWizardShortcut>-->
+         <view
+               id="org.eclipse.gemoc.executionframework.engine.io.views.steps.LogicalStepsView"
+               minimized="false"
+               relationship="stack"
+               relative="org.eclipse.sirius.ui.tools.views.model.explorer"
+               visible="true">
+         </view>
+      </perspectiveExtension>
+      <perspectiveExtension
+            targetID="org.eclipse.debug.ui.DebugPerspective">
+         <view
+               id="org.eclipse.gemoc.executionframework.engine.io.views.steps.LogicalStepsView"
+               minimized="false"
+               ratio="0.5"
+               relationship="right"
+               relative="org.eclipse.debug.ui.VariableView">
+         </view>
+      </perspectiveExtension>
+      
+   </extension>
+   
+      <extension
+            point="org.eclipse.ui.commands">
+         <command
+               defaultHandler="org.eclipse.gemoc.execution.sequential.javaengine.ui.commands.GemocToggleBreakpointHandler"
+               id="org.eclipse.gemoc.execution.sequential.javaengine.ui.commands.ToggleBreapointCommand"
+               name="Toggle breapoint (sequential)">
+         </command>
+         <category
+               id="org.eclipse.gemoc.execution.sequential.javaengine.ui.commands.category"
+               name="GEMOC Sequential engine commands Category">
+         </category>
+         <command
+               categoryId="org.eclipse.gemoc.execution.sequential.javaengine.ui.commands.category"
+               defaultHandler="org.eclipse.gemoc.execution.sequential.javaengine.ui.handlers.StepBackIntoHandler"
+               id="org.eclipse.gemoc.execution.sequential.javaengine.ui.commands.stepBackInto"
+               name="Step Back Into">
+         </command>
+         <command
+               categoryId="org.eclipse.gemoc.execution.sequential.javaengine.ui.commands.category"
+               defaultHandler="org.eclipse.gemoc.execution.sequential.javaengine.ui.handlers.StepBackOverHandler"
+               id="org.eclipse.gemoc.execution.sequential.javaengine.ui.commands.stepBackOver"
+               name="Step Back Over">
+         </command>
+         <command
+               categoryId="org.eclipse.gemoc.execution.sequential.javaengine.ui.commands.category"
+               defaultHandler="org.eclipse.gemoc.execution.sequential.javaengine.ui.handlers.StepBackOutHandler"
+               id="org.eclipse.gemoc.execution.sequential.javaengine.ui.commands.stepBackOut"
+               name="Step Back Out">
+         </command>
+      </extension>
+      <extension
+            point="org.eclipse.ui.menus">
+         <!-- <menuContribution
+               allPopups="false"
+               locationURI="popup:org.eclipse.gemoc.executionframework.engine.io.views.timeline.TimeLineView">
+            <command
+                  commandId="org.eclipse.gemoc.execution.sequential.javaengine.ui.timeline.ShowCallerCommand"
+                  icon="icons/showCaller.png"
+                  label="Show Caller"
+                  style="toggle">
+               <visibleWhen
+                     checkEnabled="true">
+                  <with
+                        variable="selection">
+                     <and>
+                        <count
+                              value="1">
+                        </count>
+                        <iterate>
+                           <instanceof
+                                 value="org.eclipse.gemoc.timeline.editpart.PossibleStepEditPart">
+                           </instanceof>
+                        </iterate>
+                     </and>
+                  </with>
+               </visibleWhen>
+            </command>
+         </menuContribution> -->
+         <menuContribution
+               locationURI="toolbar:org.eclipse.ui.main.toolbar?before=org.eclipse.debug.ui.actions.StepInto">
+            <toolbar
+                  id="org.eclipse.debug.ui.main.toolbar"
+                  label="Debug">
+               <command
+                     commandId="org.eclipse.gemoc.execution.sequential.javaengine.ui.commands.stepBackOut"
+                     icon="icons/stepbackout_co.png"
+                     id="org.eclipse.gemoc.execution.sequential.javaengine.ui.toolbars.stepBackOut"
+                     label="Step Back Out"
+                     style="push">
+                     <visibleWhen checkEnabled="false">
+				     	<reference
+				     		definitionId="onValidationPerspective">
+			         	</reference>
+				     </visibleWhen>
+               </command>
+               <command
+                     commandId="org.eclipse.gemoc.execution.sequential.javaengine.ui.commands.stepBackOver"
+                     icon="icons/stepbackover_co.png"
+                     id="org.eclipse.gemoc.execution.sequential.javaengine.ui.toolbars.stepBackOver"
+                     label="Step Back Over"
+                     style="push">
+                     <visibleWhen checkEnabled="false">
+				     	<reference
+				     		definitionId="onValidationPerspective">
+			         	</reference>
+				     </visibleWhen>
+               </command>
+               <command
+                     commandId="org.eclipse.gemoc.execution.sequential.javaengine.ui.commands.stepBackInto"
+                     icon="icons/stepbackinto_co.png"
+                     id="org.eclipse.gemoc.execution.sequential.javaengine.ui.toolbars.stepBackInto"
+                     label="Step Back Into"
+                     style="push">
+                     <visibleWhen checkEnabled="false">
+				     	<reference
+				     		definitionId="onValidationPerspective">
+			         	</reference>
+				     </visibleWhen>
+               </command>
+            </toolbar>
+         </menuContribution>
+      </extension>
+      <extension
+            point="org.eclipse.ui.startup">
+         <startup
+               class="org.eclipse.gemoc.execution.sequential.javaengine.ui.ModelingWorkbenchEarlyStartup">
+         </startup>
+      </extension>
+      <extension
+            point="org.eclipse.ui.views">
+      <category
+            id="org.eclipse.gemoc.executionframework.engine.io.category"
+            name="Gemoc">
+      </category>
+	</extension>
+      <!--<extension
+            point="org.eclipse.ui.handlers">
+         <handler
+               class="org.eclipse.gemoc.execution.sequential.javaengine.ui.handlers.StepBackIntoHandler"
+               commandId="org.eclipse.gemoc.execution.sequential.javaengine.ui.commands.stepBackInto">
+         </handler>
+      </extension>-->
+      <extension
+            point="org.eclipse.ui.bindings">
+         <key
+               commandId="org.eclipse.gemoc.execution.sequential.javaengine.ui.commands.stepBackInto"
+               contextId="org.eclipse.ui.contexts.window"
+               schemeId="org.eclipse.ui.defaultAcceleratorConfiguration"
+               sequence="M1+6">
+         </key>
+      </extension>
+      <extension
+            point="org.eclipse.gemoc.dsl.debug.locator">
+         <Locator
+               class="org.eclipse.gemoc.execution.sequential.javaengine.ui.launcher.XtextLocator"
+               id="org.eclipse.gemoc.execution.sequential.javaengine.ui.xtextlocator"
+               name="Xtext Locator">
+         </Locator>
+      </extension>
+</plugin>

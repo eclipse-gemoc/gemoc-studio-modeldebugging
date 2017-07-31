@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="ASCII"?>
+<ecorext:Ecorext xmi:version="2.0" xmlns:xmi="http://www.omg.org/XMI" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:ecore="http://www.eclipse.org/emf/2002/Ecore" xmlns:ecorext="http://ecorext/1.0">
+  <classesExtensions>
+    <extendedExistingClass href="petrinet.xmof#//PlaceConfiguration"/>
+    <newProperties xsi:type="ecore:EAttribute" name="tokens">
+      <eAnnotations source="http://www.modelexecution.org/trace/XMOF">
+        <details key="executionMetamodelElement" value="//PlaceConfiguration/tokens"/>
+      </eAnnotations>
+      <eType xsi:type="ecore:EDataType" href="http://www.eclipse.org/emf/2002/Ecore#//EInt"/>
+    </newProperties>
+  </classesExtensions>
+  <rules calledRules="//@rules.1" stepRule="true">
+    <operation name="main"/>
+    <containingClass href="petrinet.xmof#//NetConfiguration"/>
+  </rules>
+  <rules calledRules="//@rules.2 //@rules.3" stepRule="true">
+    <operation name="run"/>
+    <containingClass href="petrinet.xmof#//NetConfiguration"/>
+  </rules>
+  <rules stepRule="true">
+    <operation name="isEnabled">
+      <eType xsi:type="ecore:EClass" href="http://www.eclipse.org/emf/2002/Ecore#//EObject"/>
+    </operation>
+    <containingClass href="petrinet.xmof#//TransitionConfiguration"/>
+  </rules>
+  <rules calledRules="//@rules.4 //@rules.5" stepRule="true">
+    <operation name="fire"/>
+    <containingClass href="petrinet.xmof#//TransitionConfiguration"/>
+  </rules>
+  <rules stepRule="true">
+    <operation name="addToken"/>
+    <containingClass href="petrinet.xmof#//PlaceConfiguration"/>
+  </rules>
+  <rules stepRule="true">
+    <operation name="removeToken"/>
+    <containingClass href="petrinet.xmof#//PlaceConfiguration"/>
+  </rules>
+</ecorext:Ecorext>

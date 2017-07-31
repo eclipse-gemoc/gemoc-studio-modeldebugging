@@ -1,0 +1,97 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?eclipse version="3.0"?>
+<!--
+    Copyright (c) 2017 Inria and others.
+    All rights reserved. This program and the accompanying materials
+    are made available under the terms of the Eclipse Public License v1.0
+    which accompanies this distribution, and is available at
+    http://www.eclipse.org/legal/epl-v10.html
+   
+    Contributors:
+        Inria - initial API and implementation
+ -->
+
+<plugin>
+    <extension
+          id="org.eclipse.gemoc.executionframework.debugger.breakpointMarker"
+          point="org.eclipse.core.resources.markers">
+       <persistent
+             value="true">
+       </persistent>
+       <super
+             type="org.eclipse.gemoc.dsl.debug.ide.breakpointMarker">
+       </super>
+    </extension>
+    <extension
+          point="org.eclipse.debug.core.breakpoints">
+       <breakpoint
+             class="org.eclipse.gemoc.executionframework.debugger.GemocBreakpoint"
+             id="org.eclipse.gemoc.executionframework.debugger.breakpoint"
+             markerType="org.eclipse.gemoc.executionframework.debugger.ui.org.eclipse.gemoc.executionframework.debugger.breakpointMarker"
+             name="Gemoc Breakpoints">
+       </breakpoint>
+    </extension>
+
+ <extension
+       point="org.eclipse.debug.ui.detailPaneFactories">
+    <detailFactories
+          class="org.eclipse.gemoc.executionframework.debugger.ui.breakpoints.BreakpointDetailPaneFactory"
+          id="org.eclipse.gemoc.executionframework.debugger.detailFactories">
+       <enablement>
+          <with
+                variable="selection">
+             <count
+                   value="1">
+             </count>
+             <iterate>
+                <instanceof
+                      value="org.eclipse.gemoc.executionframework.debugger.GemocBreakpoint">
+                </instanceof>
+             </iterate>
+          </with>
+       </enablement>
+    </detailFactories>
+ </extension>
+ <extension
+         point="org.eclipse.ui.bindings">
+      <key
+            commandId="org.eclipse.gemoc.executionframework.debugger.ui.openSemantics"
+            contextId="org.eclipse.debug.ui.debugging"
+            schemeId="org.eclipse.ui.defaultAcceleratorConfiguration"
+            sequence="M1+6">
+      </key>
+   </extension>
+
+   <extension
+         point="org.eclipse.ui.commands">
+      <command
+            id="org.eclipse.gemoc.executionframework.debugger.ui.openSemantics"
+            name="Open Semantics">
+      </command>
+   </extension>
+   <extension
+         point="org.eclipse.ui.handlers">
+      <handler
+            class="org.eclipse.gemoc.executionframework.debugger.ui.OpenSemanticsHandler"
+            commandId="org.eclipse.gemoc.executionframework.debugger.ui.openSemantics">
+      </handler>
+   </extension>
+   <extension
+         point="org.eclipse.ui.menus">
+      <menuContribution
+            allPopups="false"
+            locationURI="popup:org.eclipse.debug.ui.DebugView">
+         <command
+               commandId="org.eclipse.gemoc.executionframework.debugger.ui.openSemantics"
+               label="Open Semantics">
+         </command>
+      </menuContribution>
+   </extension>
+   <extension
+         point="org.eclipse.sirius.externalJavaAction">
+      <javaActions
+            actionClass="org.eclipse.gemoc.executionframework.debugger.ui.breakpoints.GemocToggleBreakpointAction"
+            id="org.eclipse.gemoc.executionframework.debugger.ui.GemocToggleBreakpointAction">
+      </javaActions>
+   </extension>
+</plugin>

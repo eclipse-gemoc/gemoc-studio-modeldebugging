@@ -1,0 +1,9 @@
+Manifest-Version: 1.0
+Bundle-ManifestVersion: 2
+Bundle-Name: org.eclipse.gemoc.xdsmlframework.commons
+Bundle-SymbolicName: org.eclipse.gemoc.xdsmlframework.commons
+Bundle-Version: 2.3.0.qualifier
+Require-Bundle: org.eclipse.emf.ecore,
+ org.eclipse.xtend.lib
+Export-Package: org.eclipse.gemoc.xdsmlframework.commons
+Bundle-RequiredExecutionEnvironment: JavaSE-1.8

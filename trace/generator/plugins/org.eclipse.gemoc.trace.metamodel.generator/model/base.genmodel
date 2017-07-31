@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<genmodel:GenModel xmi:version="2.0" xmlns:xmi="http://www.omg.org/XMI" xmlns:ecore="http://www.eclipse.org/emf/2002/Ecore"
+    xmlns:genmodel="http://www.eclipse.org/emf/2002/GenModel" modelDirectory="/fr.inria.diverse.trace.metamodel.generator/src"
+    modelPluginID="fr.inria.diverse.trace.metamodel.generator" modelName="Base" rootExtendsClass="org.eclipse.emf.ecore.impl.MinimalEObjectImpl$Container"
+    importerID="org.eclipse.emf.importer.ecore" complianceLevel="8.0" copyrightFields="false"
+    usedGenPackages="../../org.eclipse.emf.ecore/model/Ecore.genmodel#//ecore ../../fr.inria.diverse.trace.commons.model/model/GenericTrace.genmodel#//trace"
+    operationReflection="true" importOrganizing="true">
+  <foreignModel>base.ecore</foreignModel>
+  <genPackages prefix="Base" disposableProviderFactory="true" ecorePackage="base.ecore#/">
+    <genClasses ecoreClass="base.ecore#//SpecificTrace">
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference base.ecore#//SpecificTrace/statesTrace"/>
+    </genClasses>
+    <nestedGenPackages prefix="Steps" disposableProviderFactory="true" ecorePackage="base.ecore#//Steps">
+      <genClasses image="false" ecoreClass="base.ecore#//Steps/SpecificStep">
+        <genFeatures notify="false" createChild="false" propertySortChoices="true"
+            ecoreFeature="ecore:EReference base.ecore#//Steps/SpecificStep/startingState"/>
+        <genFeatures notify="false" createChild="false" propertySortChoices="true"
+            ecoreFeature="ecore:EReference base.ecore#//Steps/SpecificStep/endingState"/>
+      </genClasses>
+      <genClasses ecoreClass="base.ecore#//Steps/RootImplicitStep"/>
+    </nestedGenPackages>
+    <nestedGenPackages prefix="States" disposableProviderFactory="true" ecorePackage="base.ecore#//States">
+      <genClasses ecoreClass="base.ecore#//States/State">
+        <genFeatures notify="false" createChild="false" propertySortChoices="true"
+            ecoreFeature="ecore:EReference base.ecore#//States/State/startedSteps"/>
+        <genFeatures notify="false" createChild="false" propertySortChoices="true"
+            ecoreFeature="ecore:EReference base.ecore#//States/State/endedSteps"/>
+      </genClasses>
+      <genClasses image="false" ecoreClass="base.ecore#//States/Value">
+        <genFeatures property="Readonly" notify="false" createChild="false" ecoreFeature="ecore:EReference base.ecore#//States/Value/statesNoOpposite"/>
+      </genClasses>
+    </nestedGenPackages>
+  </genPackages>
+</genmodel:GenModel>

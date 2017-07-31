@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?eclipse version="3.4"?>
+<!--
+    Copyright (c) 2017 Inria and others.
+    All rights reserved. This program and the accompanying materials
+    are made available under the terms of the Eclipse Public License v1.0
+    which accompanies this distribution, and is available at
+    http://www.eclipse.org/legal/epl-v10.html
+   
+    Contributors:
+        Inria - initial API and implementation
+ -->
+
+<plugin>
+
+<!--   <extension-point id="org.gemoc.gemoc_language_workbench.xdsml" name="Gemoc Language Definition" schema="schema/org.gemoc.gemoc_language_workbench.xdsml.exsd"/>
+   <extension-point id="org.gemoc.gemoc_language_workbench.deciders" name="GEMOC Decider" schema="schema/org.gemoc.gemoc_language_workbench.decider.exsd"/>
+   -->
+   <extension-point id="org.gemoc.gemoc_language_workbench.engine_addon" name="Engine Addon" schema="schema/org.gemoc.gemoc_language_workbench.engine_addon.exsd"/>
+   <extension-point id="org.gemoc.gemoc_language_workbench.engine_addon_group" name="Engine AddonGroup" schema="schema/org.gemoc.gemoc_language_workbench.engine_addon_group.exsd"/>
+
+   <extension
+         point="org.gemoc.gemoc_language_workbench.engine_addon_group">
+         <AddonGroup
+            Name="General"
+            id="General.AddonGroup">
+      </AddonGroup>
+   </extension>
+</plugin>

@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?eclipse version="3.4"?>
+<!--
+    Copyright (c) 2017 Inria and others.
+    All rights reserved. This program and the accompanying materials
+    are made available under the terms of the Eclipse Public License v1.0
+    which accompanies this distribution, and is available at
+    http://www.eclipse.org/legal/epl-v10.html
+   
+    Contributors:
+        Inria - initial API and implementation
+ -->
+
+<plugin>
+   <extension-point id="org.eclipse.gemoc.dsl.debug.locator" name="Locator" schema="schema/org.eclipse.gemoc.dsl.debug.locator.exsd"/>
+   <extension
+         point="org.eclipse.debug.core.sourceLocators">
+      <sourceLocator
+            class="org.eclipse.gemoc.dsl.debug.ide.DSLSourceLocator"
+            id="org.eclipse.gemoc.dsl.debug.ide.sourceLocator"
+            name="DSL Debug Source Locator">
+      </sourceLocator>
+   </extension>
+   <extension
+         id="breakpointMarker"
+         point="org.eclipse.core.resources.markers">
+      <persistent
+            value="true">
+      </persistent>
+      <super
+            type="org.eclipse.debug.core.breakpointMarker">
+      </super>
+      <super
+            type="org.eclipse.emf.ecore.diagnostic">
+      </super>
+      <attribute
+            name="image">
+      </attribute>
+      <attribute
+            name="text">
+      </attribute>
+   </extension>
+   <extension
+         point="org.eclipse.debug.core.breakpoints">
+      <breakpoint
+            class="org.eclipse.gemoc.dsl.debug.ide.DSLBreakpoint"
+            id="org.eclipse.gemoc.dsl.debug.ide.breakpoint"
+            markerType="org.eclipse.gemoc.dsl.debug.ide.breakpointMarker"
+            name="DSL Breakpoints">
+      </breakpoint>
+   </extension>
+
+</plugin>

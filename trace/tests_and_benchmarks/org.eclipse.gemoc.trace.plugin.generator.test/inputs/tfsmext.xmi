@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="ASCII"?>
+<ecorext:Ecorext xmi:version="2.0" xmlns:xmi="http://www.omg.org/XMI" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:ecore="http://www.eclipse.org/emf/2002/Ecore" xmlns:ecorext="http://ecorext/1.0">
+  <classesExtensions>
+    <extendedExistingClass href="../inputs/tfsm.ecore#//TFSM"/>
+    <newProperties xsi:type="ecore:EReference" name="currentState">
+      <eAnnotations source="dynamic"/>
+      <eType xsi:type="ecore:EClass" href="../inputs/tfsm.ecore#//State"/>
+    </newProperties>
+  </classesExtensions>
+  <classesExtensions>
+    <extendedExistingClass href="../inputs/tfsm.ecore#//FSMEvent"/>
+    <newProperties xsi:type="ecore:EAttribute" name="isTriggered">
+      <eAnnotations source="dynamic"/>
+      <eType xsi:type="ecore:EDataType" href="http://www.eclipse.org/emf/2002/Ecore#//EBoolean"/>
+    </newProperties>
+  </classesExtensions>
+  <classesExtensions>
+    <extendedExistingClass href="../inputs/tfsm.ecore#//FSMClock"/>
+    <newProperties xsi:type="ecore:EAttribute" name="numberOfTicks">
+      <eAnnotations source="dynamic"/>
+      <eType xsi:type="ecore:EDataType" href="http://www.eclipse.org/emf/2002/Ecore#//EIntegerObject"/>
+    </newProperties>
+  </classesExtensions>
+</ecorext:Ecorext>

@@ -1,0 +1,541 @@
+/*******************************************************************************
+ * Copyright (c) 2015, 2017 Obeo.
+ * All rights reserved. This program and the accompanying materials
+ * are made available under the terms of the Eclipse Public License v1.0
+ * which accompanies this distribution, and is available at
+ * http://www.eclipse.org/legal/epl-v10.html
+ *
+ * Contributors:
+ *     Obeo - initial API and implementation
+ *******************************************************************************/
+package org.eclipse.gemoc.dsl.debug.ide;
+
+import org.eclipse.gemoc.dsl.debug.DebugTarget;
+import org.eclipse.gemoc.dsl.debug.StackFrame;
+import org.eclipse.gemoc.dsl.debug.Thread;
+import org.eclipse.gemoc.dsl.debug.Variable;
+import org.eclipse.gemoc.dsl.debug.ide.adapter.DSLDebugTargetAdapter;
+import org.eclipse.gemoc.dsl.debug.ide.adapter.DSLStackFrameAdapter;
+import org.eclipse.gemoc.dsl.debug.ide.adapter.DSLThreadAdapter;
+import org.eclipse.gemoc.dsl.debug.ide.adapter.DSLVariableAdapter;
+import org.eclipse.gemoc.dsl.debug.ide.adapter.value.DSLArrayValue;
+import org.eclipse.gemoc.dsl.debug.ide.adapter.value.DSLBooleanArrayValue;
+import org.eclipse.gemoc.dsl.debug.ide.adapter.value.DSLByteArrayValue;
+import org.eclipse.gemoc.dsl.debug.ide.adapter.value.DSLCharArrayValue;
+import org.eclipse.gemoc.dsl.debug.ide.adapter.value.DSLDoubleArrayValue;
+import org.eclipse.gemoc.dsl.debug.ide.adapter.value.DSLEObjectValueAdapter;
+import org.eclipse.gemoc.dsl.debug.ide.adapter.value.DSLFloatArrayValue;
+import org.eclipse.gemoc.dsl.debug.ide.adapter.value.DSLIntArrayValue;
+import org.eclipse.gemoc.dsl.debug.ide.adapter.value.DSLLongArrayValue;
+import org.eclipse.gemoc.dsl.debug.ide.adapter.value.DSLNullValue;
+import org.eclipse.gemoc.dsl.debug.ide.adapter.value.DSLObjectValue;
+import org.eclipse.gemoc.dsl.debug.ide.adapter.value.DSLShortArrayValue;
+import org.eclipse.gemoc.dsl.debug.ide.adapter.variable.DSLObjectVariable;
+import org.eclipse.gemoc.dsl.debug.ide.event.IDSLDebugEventProcessor;
+import org.eclipse.gemoc.dsl.debug.provider.DebugItemProviderAdapterFactory;
+import org.eclipse.gemoc.dsl.debug.util.DebugAdapterFactory;
+
+import java.util.Collection;
+import java.util.HashSet;
+import java.util.Set;
+
+import org.eclipse.debug.core.ILaunch;
+import org.eclipse.debug.core.model.IBreakpoint;
+import org.eclipse.debug.core.model.IDebugTarget;
+import org.eclipse.debug.core.model.IStackFrame;
+import org.eclipse.debug.core.model.IThread;
+import org.eclipse.debug.core.model.IValue;
+import org.eclipse.debug.core.model.IVariable;
+import org.eclipse.emf.common.notify.Adapter;
+import org.eclipse.emf.common.notify.AdapterFactory;
+import org.eclipse.emf.ecore.EObject;
+import org.eclipse.emf.edit.provider.ComposedAdapterFactory;
+import org.eclipse.emf.edit.provider.ReflectiveItemProviderAdapterFactory;
+import org.eclipse.emf.edit.provider.resource.ResourceItemProviderAdapterFactory;
+
+/**
+ * A {@link DebugAdapterFactory} providing {@link org.eclipse.debug.core.model.IDebugElement IDebugElement}.
+ * 
+ * @author <a href="mailto:yvan.lussaud@obeo.fr">Yvan Lussaud</a>
+ */
+public class DSLEclipseDebugIntegration extends DebugAdapterFactory {
+
+	/**
+	 * {@link Set} of {@link org.eclipse.emf.common.notify.AdapterFactory#isFactoryForType(Object)
+	 * supported types}.
+	 */
+	private static final Set<Object> SUPPORTED_TYPES = initSupportedTypes();
+
+	/**
+	 * The launching debug session.
+	 */
+	private final ILaunch launch;
+
+	/**
+	 * A generic {@link org.eclipse.emf.edit.provider.IItemLabelProvider IItemLabelProvider} factory.
+	 */
+	private final ComposedAdapterFactory genericLabelFactory;
+
+	/**
+	 * The {@link org.eclipse.gemoc.dsl.debug.ide.event.DSLDebugEventDispatcher dispatcher} for asynchronous
+	 * communication or the {@link org.eclipse.gemoc.dsl.debug.ide.IDSLDebugger debugger} for synchronous
+	 * communication.
+	 */
+	private final IDSLDebugEventProcessor debugger;
+
+	/**
+	 * The {@link DSLDebugTargetAdapter} to work with.
+	 */
+	private final DSLDebugTargetAdapter debugTarget;
+
+	/**
+	 * The {@link IModelUpdater} responsible for EMF debug model updates.
+	 */
+	private final IModelUpdater modelUpdater;
+
+	/**
+	 * The debug model identifier.
+	 */
+	private final String identifier;
+
+	/**
+	 * Constructor.
+	 * 
+	 * @param identifier
+	 *            the debug model identifier
+	 * @param launch
+	 *            the launching debug session
+	 * @param debugTarget
+	 *            the {@link DebugTarget}
+	 * @param modelUpdater
+	 *            the {@link IModelUpdater}
+	 * @param debugger
+	 *            the {@link org.eclipse.gemoc.dsl.debug.ide.event.DSLDebugEventDispatcher dispatcher} for
+	 *            asynchronous communication or the {@link org.eclipse.gemoc.dsl.debug.ide.IDSLDebugger debugger}
+	 *            for synchronous communication
+	 */
+	public DSLEclipseDebugIntegration(String identifier, ILaunch launch, DebugTarget debugTarget,
+		IModelUpdater modelUpdater, IDSLDebugEventProcessor debugger) {
+	this.identifier = identifier;
+	this.launch = launch;
+	this.debugger = debugger;
+
+	this.debugTarget = getDebugTarget(debugTarget);
+	this.modelUpdater = modelUpdater;
+
+	genericLabelFactory = new ComposedAdapterFactory(ComposedAdapterFactory.Descriptor.Registry.INSTANCE);
+	genericLabelFactory.addAdapterFactory(new DebugItemProviderAdapterFactory());
+	genericLabelFactory.addAdapterFactory(new ResourceItemProviderAdapterFactory());
+	genericLabelFactory.addAdapterFactory(new ReflectiveItemProviderAdapterFactory());
+	}
+
+	/**
+	 * Initializes {@link DSLEclipseDebugIntegration#SUPPORTED_TYPES}.
+	 * 
+	 * @return the {@link Set} of
+	 *         {@link org.eclipse.emf.common.notify.AdapterFactory#isFactoryForType(Object) supported
+	 *         types}.
+	 */
+	private static Set<Object> initSupportedTypes() {
+	final Set<Object> res = new HashSet<Object>();
+
+	res.add(IThread.class);
+	res.add(IDebugTarget.class);
+	res.add(IStackFrame.class);
+	res.add(IVariable.class);
+	res.add(IBreakpoint.class);
+
+	return res;
+	}
+
+	@Override
+	public boolean isFactoryForType(Object object) {
+	return SUPPORTED_TYPES.contains(object) || super.isFactoryForType(object);
+	}
+
+	@Override
+	public Adapter createDebugTargetAdapter() {
+	return new DSLDebugTargetAdapter(this);
+	}
+
+	@Override
+	public Adapter createThreadAdapter() {
+	return new DSLThreadAdapter(this);
+	}
+
+	@Override
+	public Adapter createStackFrameAdapter() {
+	return new DSLStackFrameAdapter(this);
+	}
+
+	@Override
+	public Adapter createVariableAdapter() {
+	return new DSLVariableAdapter(this);
+	}
+
+	/**
+	 * Gets the launching debug session.
+	 * 
+	 * @return the launching debug session
+	 */
+	public ILaunch getLaunch() {
+	return launch;
+	}
+
+	/**
+	 * Gets the {@link org.eclipse.gemoc.dsl.debug.ide.event.DSLDebugEventDispatcher dispatcher} for asynchronous
+	 * communication or the {@link org.eclipse.gemoc.dsl.debug.ide.IDSLDebugger debugger} for synchronous
+	 * communication.
+	 * 
+	 * @return the {@link org.eclipse.gemoc.dsl.debug.ide.event.DSLDebugEventDispatcher dispatcher} for asynchronous
+	 *         communication or the {@link org.eclipse.gemoc.dsl.debug.ide.IDSLDebugger debugger} for synchronous
+	 *         communication
+	 */
+	public IDSLDebugEventProcessor getDebugger() {
+	return debugger;
+	}
+
+	/**
+	 * Gets a generic {@link org.eclipse.emf.edit.provider.IItemLabelProvider IItemLabelProvider} factory.
+	 * 
+	 * @return a generic {@link org.eclipse.emf.edit.provider.IItemLabelProvider IItemLabelProvider}
+	 *         factory
+	 */
+	public AdapterFactory getLabelFactory() {
+	return genericLabelFactory;
+	}
+
+	/**
+	 * Gets the {@link DSLDebugTargetAdapter} to work with.
+	 * 
+	 * @return the {@link DSLDebugTargetAdapter} to work with
+	 */
+	public DSLDebugTargetAdapter getDebugTarget() {
+	return debugTarget;
+	}
+
+	/**
+	 * Gets an {@link IDebugTarget} form a {@link DebugTarget}.
+	 * 
+	 * @param target
+	 *            the {@link DebugTarget}
+	 * @return the {@link IDebugTarget}
+	 */
+	public DSLDebugTargetAdapter getDebugTarget(DebugTarget target) {
+	synchronized(target) {
+		final DSLDebugTargetAdapter res = (DSLDebugTargetAdapter)adapt(target, IDebugTarget.class);
+		if (res == null) {
+		throw new IllegalStateException("can't addapt DebugTarget to IDebugTarget.");
+		}
+		return res;
+	}
+	}
+
+	/**
+	 * Gets an {@link IThread} form a {@link Thread}.
+	 * 
+	 * @param thread
+	 *            the {@link Thread}
+	 * @return the {@link IThread}
+	 */
+	public DSLThreadAdapter getThread(Thread thread) {
+	synchronized(thread) {
+		final DSLThreadAdapter res = (DSLThreadAdapter)adapt(thread, IThread.class);
+		if (res == null) {
+		throw new IllegalStateException("can't addapt Thread to IThread.");
+		}
+		return res;
+	}
+	}
+
+	/**
+	 * Gets an {@link IStackFrame} form a {@link StackFrame}.
+	 * 
+	 * @param frame
+	 *            the {@link StackFrame}
+	 * @return the {@link IStackFrame}
+	 */
+	public DSLStackFrameAdapter getStackFrame(StackFrame frame) {
+	synchronized(frame) {
+		final DSLStackFrameAdapter res = (DSLStackFrameAdapter)adapt(frame, IStackFrame.class);
+		if (res == null) {
+		throw new IllegalStateException("can't addapt StackFrame to IStackFrame.");
+		}
+		return res;
+	}
+	}
+
+	/**
+	 * Gets an {@link IVariable} form a {@link Variable}.
+	 * 
+	 * @param variable
+	 *            the {@link Variable}
+	 * @return the {@link IVariable}
+	 */
+	public DSLVariableAdapter getVariable(Variable variable) {
+	synchronized(variable) {
+		final DSLVariableAdapter res = (DSLVariableAdapter)adapt(variable, IVariable.class);
+		if (res == null) {
+		throw new IllegalStateException("can't addapt Variable to IVariable.");
+		}
+		return res;
+	}
+	}
+
+	/**
+	 * Gets the {@link IValue} for the given {@link Object}.
+	 * 
+	 * @param referenceTypeName
+	 *            the reference type name
+	 * @param value
+	 *            the {@link Object value}
+	 * @return the corresponding {@link IValue}
+	 */
+	public IValue getValue(String referenceTypeName, Object value) {
+	final IValue res;
+
+	if (value instanceof EObject) {
+		res = createEObjectValue(referenceTypeName, (EObject)value);
+	} else if (value instanceof Collection<?>) {
+		res = new DSLArrayValue(this, referenceTypeName, ((Collection<?>)value).toArray());
+	} else if (value instanceof Object[]) {
+		res = new DSLArrayValue(this, referenceTypeName, (Object[])value);
+	} else if (value instanceof byte[]) {
+		res = createByteArrayValue(referenceTypeName, (byte[])value);
+	} else if (value instanceof short[]) {
+		res = createShortArrayValue(referenceTypeName, (short[])value);
+	} else if (value instanceof int[]) {
+		res = createIntegerArrayValue(referenceTypeName, (int[])value);
+	} else if (value instanceof long[]) {
+		res = createLongArrayValue(referenceTypeName, (long[])value);
+	} else if (value instanceof float[]) {
+		res = createFloatArrayValue(referenceTypeName, (float[])value);
+	} else if (value instanceof double[]) {
+		res = createDoubleArrayValue(referenceTypeName, (double[])value);
+	} else if (value instanceof char[]) {
+		res = createCharacterArrayValue(referenceTypeName, (char[])value);
+	} else if (value instanceof boolean[]) {
+		res = createBooleanArrayValue(referenceTypeName, (boolean[])value);
+	} else if (value == null) {
+		res = new DSLNullValue(this, referenceTypeName);
+	} else {
+		res = new DSLObjectValue(this, referenceTypeName, value);
+	}
+
+	return res;
+	}
+
+	/**
+	 * Creates an {@link IValue} for the given {@link EObject}.
+	 * 
+	 * @param referenceTypeName
+	 *            the reference type name
+	 * @param value
+	 *            the {@link EObject}
+	 * @return the created {@link IValue}
+	 */
+	private IValue createEObjectValue(String referenceTypeName, EObject value) {
+	final IValue res;
+	DSLEObjectValueAdapter valueAdapter = null;
+	synchronized(value) {
+		for (Adapter adapter : value.eAdapters()) {
+		if (adapter.isAdapterForType(IValue.class)) {
+			valueAdapter = (DSLEObjectValueAdapter)adapter;
+			break;
+		}
+		}
+		if (valueAdapter == null) {
+		valueAdapter = new DSLEObjectValueAdapter(this, referenceTypeName, value);
+		value.eAdapters().add(valueAdapter);
+		}
+	}
+	res = valueAdapter;
+	return res;
+	}
+
+	/**
+	 * Creates an {@link IValue} for a byte[].
+	 * 
+	 * @param referenceTypeName
+	 *            the reference type name
+	 * @param value
+	 *            the byte[]
+	 * @return the created {@link IValue}
+	 */
+	private IValue createByteArrayValue(String referenceTypeName, byte[] value) {
+	final IValue res;
+	Byte[] array = new Byte[value.length];
+	for (int i = 0; i < value.length; ++i) {
+		array[i] = Byte.valueOf(value[i]);
+	}
+	res = new DSLByteArrayValue(this, referenceTypeName, array);
+	return res;
+	}
+
+	/**
+	 * Creates an {@link IValue} for a short[].
+	 * 
+	 * @param referenceTypeName
+	 *            the reference type name
+	 * @param value
+	 *            the short[]
+	 * @return the created {@link IValue}
+	 */
+	private IValue createShortArrayValue(String referenceTypeName, short[] value) {
+	final IValue res;
+	Short[] array = new Short[value.length];
+	for (int i = 0; i < value.length; ++i) {
+		array[i] = Short.valueOf(value[i]);
+	}
+	res = new DSLShortArrayValue(this, referenceTypeName, array);
+	return res;
+	}
+
+	/**
+	 * Creates an {@link IValue} for a int[].
+	 * 
+	 * @param referenceTypeName
+	 *            the reference type name
+	 * @param value
+	 *            the int[]
+	 * @return the created {@link IValue}
+	 */
+	private IValue createIntegerArrayValue(String referenceTypeName, int[] value) {
+	final IValue res;
+	Integer[] array = new Integer[value.length];
+	for (int i = 0; i < value.length; ++i) {
+		array[i] = Integer.valueOf(value[i]);
+	}
+	res = new DSLIntArrayValue(this, referenceTypeName, array);
+	return res;
+	}
+
+	/**
+	 * Creates an {@link IValue} for a long[].
+	 * 
+	 * @param referenceTypeName
+	 *            the reference type name
+	 * @param value
+	 *            the long[]
+	 * @return the created {@link IValue}
+	 */
+	private IValue createLongArrayValue(String referenceTypeName, long[] value) {
+	final IValue res;
+	Long[] array = new Long[value.length];
+	for (int i = 0; i < value.length; ++i) {
+		array[i] = Long.valueOf(value[i]);
+	}
+	res = new DSLLongArrayValue(this, referenceTypeName, array);
+	return res;
+	}
+
+	/**
+	 * Creates an {@link IValue} for a float[].
+	 * 
+	 * @param referenceTypeName
+	 *            the reference type name
+	 * @param value
+	 *            the float[]
+	 * @return the created {@link IValue}
+	 */
+	private IValue createFloatArrayValue(String referenceTypeName, float[] value) {
+	final IValue res;
+	Float[] array = new Float[value.length];
+	for (int i = 0; i < value.length; ++i) {
+		array[i] = Float.valueOf(value[i]);
+	}
+	res = new DSLFloatArrayValue(this, referenceTypeName, array);
+	return res;
+	}
+
+	/**
+	 * Creates an {@link IValue} for a double[].
+	 * 
+	 * @param referenceTypeName
+	 *            the reference type name
+	 * @param value
+	 *            the double[]
+	 * @return the created {@link IValue}
+	 */
+	private IValue createDoubleArrayValue(String referenceTypeName, double[] value) {
+	final IValue res;
+	Double[] array = new Double[value.length];
+	for (int i = 0; i < value.length; ++i) {
+		array[i] = Double.valueOf(value[i]);
+	}
+	res = new DSLDoubleArrayValue(this, referenceTypeName, array);
+	return res;
+	}
+
+	/**
+	 * Creates an {@link IValue} for a char[].
+	 * 
+	 * @param referenceTypeName
+	 *            the reference type name
+	 * @param value
+	 *            the char[]
+	 * @return the created {@link IValue}
+	 */
+	private IValue createCharacterArrayValue(String referenceTypeName, char[] value) {
+	final IValue res;
+	Character[] array = new Character[value.length];
+	for (int i = 0; i < value.length; ++i) {
+		array[i] = Character.valueOf(value[i]);
+	}
+	res = new DSLCharArrayValue(this, referenceTypeName, array);
+	return res;
+	}
+
+	/**
+	 * Creates an {@link IValue} for a boolean[].
+	 * 
+	 * @param referenceTypeName
+	 *            the reference type name
+	 * @param value
+	 *            the boolean[]
+	 * @return the created {@link IValue}
+	 */
+	private IValue createBooleanArrayValue(String referenceTypeName, boolean[] value) {
+	final IValue res;
+	Boolean[] array = new Boolean[value.length];
+	for (int i = 0; i < value.length; ++i) {
+		array[i] = Boolean.valueOf(value[i]);
+	}
+	res = new DSLBooleanArrayValue(this, referenceTypeName, array);
+	return res;
+	}
+
+	/**
+	 * Gets a {@link IVariable} for the given {@link Object}.
+	 * 
+	 * @param referenceTypeName
+	 *            the reference type name
+	 * @param variableName
+	 *            the variable name
+	 * @param value
+	 *            the value
+	 * @return the {@link IVariable}
+	 */
+	public IVariable getVariable(String referenceTypeName, String variableName, Object value) {
+	return new DSLObjectVariable(this, referenceTypeName, variableName, value);
+	}
+
+	/**
+	 * Gets the {@link IModelUpdater} responsible for EMF debug model updates.
+	 * 
+	 * @return the {@link IModelUpdater} responsible for EMF debug model updates
+	 */
+	public IModelUpdater getModelUpdater() {
+	return modelUpdater;
+	}
+
+	/**
+	 * Gets the debug model identifier.
+	 * 
+	 * @return the debug model identifier
+	 */
+	public String getModelIdentifier() {
+	return identifier;
+	}
+
+}

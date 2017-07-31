@@ -1,0 +1,36 @@
+Manifest-Version: 1.0
+Bundle-ManifestVersion: 2
+Bundle-Name: ExecutionFramework Language Workbench UI
+Bundle-SymbolicName: org.eclipse.gemoc.xdsmlframework.ide.ui;singleton:=true
+Bundle-Version: 2.3.0.qualifier
+Bundle-Activator: org.eclipse.gemoc.xdsmlframework.ide.ui.Activator
+Bundle-Vendor: INRIA
+Require-Bundle: org.eclipse.core.runtime,
+ org.eclipse.emf.codegen.ecore.ui;bundle-version="2.8.0",
+ org.eclipse.acceleo.engine;bundle-version="3.3.0",
+ org.eclipse.gemoc.xdsmlframework.api;bundle-version="0.1.0",
+ fr.inria.diverse.k3.ui;bundle-version="1.0.0",
+ org.eclipse.gemoc.commons.eclipse,
+ org.eclipse.gemoc.commons.eclipse.ui,
+ org.eclipse.emf.ecore.editor,
+ org.eclipse.gemoc.xdsmlframework.ui.utils,
+ org.eclipse.gemoc.xdsmlframework.extensions.sirius;bundle-version="0.1.0",
+ fr.inria.diverse.melange.metamodel,
+ org.eclipse.xtext.ui,
+ org.eclipse.xtext,
+ org.eclipse.sirius.ui,
+ org.eclipse.jdt.ui,
+ org.eclipse.ui.console,
+ org.eclipse.debug.ui,
+ org.eclipse.emf.ecoretools.design.ui;bundle-version="3.0.0",
+ org.jdom2;bundle-version="2.0.6"
+Bundle-RequiredExecutionEnvironment: JavaSE-1.8
+Bundle-ActivationPolicy: lazy
+Bundle-ClassPath: .
+Export-Package: org.eclipse.gemoc.xdsmlframework.ide.ui,
+ org.eclipse.gemoc.xdsmlframework.ide.ui.builder.pde,
+ org.eclipse.gemoc.xdsmlframework.ide.ui.commands,
+ org.eclipse.gemoc.xdsmlframework.ide.ui.xdsml.wizards,
+ org.eclipse.gemoc.xdsmlframework.ide.ui.xdsml.wizards.pages,
+ org.jdom2
+
