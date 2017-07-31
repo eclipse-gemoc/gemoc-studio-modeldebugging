@@ -43,7 +43,6 @@ import org.eclipse.gemoc.executionframework.engine.core.AbstractCommandBasedSequ
 import org.eclipse.gemoc.executionframework.engine.core.EngineStoppedException;
 import org.eclipse.gemoc.xdsmlframework.api.core.IExecutionContext;
 import org.eclipse.gemoc.xdsmlframework.api.core.IRunConfiguration;
-import org.kermeta.utils.provisionner4eclipse.Provisionner;
 import org.osgi.framework.Bundle;
 
 import fr.inria.diverse.k3.al.annotationprocessor.stepmanager.IStepManager;
@@ -334,7 +333,7 @@ public class PlainK3ExecutionEngine extends AbstractCommandBasedSequentialExecut
 	 */
 	private Bundle findBundle(final IExecutionContext executionContext, String aspectClassName) {
 
-		// first look using JavaWorkspaceScope as this is safer and will look in
+		// Look using JavaWorkspaceScope as this is safer and will look in
 		// dependencies
 		IType mainIType = getITypeMainByWorkspaceScope(aspectClassName);
 
@@ -347,27 +346,8 @@ public class PlainK3ExecutionEngine extends AbstractCommandBasedSequentialExecut
 			bundleName = packageFragmentRoot.getPath().removeLastSegments(1).lastSegment().toString();
 			if (bundleName != null) {
 
-				// First we try to look into an already loaded bundle
+				// We try to look into an already loaded bundle
 				bundle = Platform.getBundle(bundleName);
-
-				// If this doesn't work, we use the provisioner to load
-				// the corresponding project
-				if (bundle == null) {
-
-					String projectName = mainIType.getJavaProject().getElementName();
-					IProject project = ResourcesPlugin.getWorkspace().getRoot().getProject(projectName);
-					if (project != null && project.exists()
-							&& !project.getFullPath().equals(executionContext.getWorkspace().getProjectPath())) {
-						Provisionner p = new Provisionner();
-						IStatus status = p.provisionFromProject(project, null);
-						if (!status.isOK()) {
-							// return status;
-							throw new RuntimeException("Coudln't provision project.");
-						}
-					}
-					bundleName = project.getName();
-					bundle = Platform.getBundle(bundleName);
-				}
 			}
 		} else {
 			// the main isn't visible directly from the workspace, try another

@@ -10,7 +10,7 @@
  *******************************************************************************/
 package org.eclipse.gemoc.opsemanticsview.gen.k3
  
-import fr.inria.diverse.commons.eclipse.callgraph.CallHierarchyHelper
+import org.eclipse.gemoc.commons.eclipse.jdt.CallHierarchyHelper
 import java.util.ArrayList
 import java.util.HashMap
 import java.util.HashSet
