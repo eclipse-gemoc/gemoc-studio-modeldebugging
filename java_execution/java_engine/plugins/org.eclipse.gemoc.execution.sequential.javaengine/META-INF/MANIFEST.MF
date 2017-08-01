@@ -9,7 +9,6 @@ Require-Bundle: org.eclipse.gemoc.xdsmlframework.api,
  fr.inria.diverse.k3.al.annotationprocessor.plugin,
  org.eclipse.jdt.core,
  org.eclipse.emf.transaction,
- fr.inria.diverse.commons.provisionner4eclipse,
  fr.inria.diverse.melange.adapters,
  org.eclipse.gemoc.trace.commons.model;bundle-version="0.1.0",
  org.eclipse.gemoc.trace.commons;bundle-version="1.0.0"

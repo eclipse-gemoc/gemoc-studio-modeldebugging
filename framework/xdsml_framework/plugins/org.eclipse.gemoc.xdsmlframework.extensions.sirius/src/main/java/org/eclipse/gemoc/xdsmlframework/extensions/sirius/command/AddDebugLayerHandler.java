@@ -69,7 +69,7 @@ import org.eclipse.ui.handlers.HandlerUtil;
 import org.eclipse.gemoc.xdsmlframework.extensions.sirius.Activator;
 import org.osgi.framework.BundleException;
 
-import fr.inria.diverse.commons.eclipse.pde.manifest.ManifestChanger;
+import org.eclipse.gemoc.commons.eclipse.pde.manifest.ManifestChanger;
 
 public class AddDebugLayerHandler extends AbstractHandler {
 
