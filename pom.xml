@@ -90,11 +90,7 @@
 <!-- 			<layout>p2</layout> -->
 <!-- 			<url>http://downloads.efxclipse.org/efxclipse.bestsolution.at/p2-repos/addons/nightly/site/</url> -->
 <!-- 		</repository>  -->
-		    	<repository>
-		            <id>gemoc-studio_commons on CI</id>
-		            <layout>p2</layout>
-		            <url>https://ci.inria.fr/gemoc/job/gemoc-studio_commons/lastSuccessfulBuild/artifact/commons/releng/org.eclipse.gemoc.commons.repository/target/repository/</url>
-		        </repository>
+		    
     </repositories>
 
 
