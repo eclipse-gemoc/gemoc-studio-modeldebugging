@@ -432,7 +432,7 @@ public abstract class AbstractGemocDebugger extends AbstractDSLDebugger implemen
 							final IWorkbenchPage workbenchPage = workbench.getActiveWorkbenchWindow().getActivePage();
 							final IViewPart view = workbenchPage.findView("org.eclipse.debug.ui.DebugView");
 							if(view == null){
-								Activator.getDefault().warn("Cannot find view org.eclipse.debug.ui.DebugView and update the stack", null);
+								Activator.getDefault().debug("Cannot find view org.eclipse.debug.ui.DebugView (may be not opened yet), => not updating the debug stack. ");
 								return;
 							}
 							view.setFocus();
