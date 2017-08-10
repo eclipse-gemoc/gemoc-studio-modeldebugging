@@ -11,7 +11,7 @@
 <stringAttribute key="LAUNCH_METHOD_ENTRY_POINT" value="public static void org.gemoc.activitydiagram.sequential.xactivitydiagram.aspects.ActivityAspect.main(org.gemoc.activitydiagram.sequential.xactivitydiagram.activitydiagram.Activity)"/>
 <stringAttribute key="LAUNCH_MODEL_ENTRY_POINT" value="IBM2557-1"/>
 <booleanAttribute key="MultiBranch Reflective Trace" value="false"/>
-<stringAttribute key="Resource" value="/fr.inria.diverse.trace.benchmark/models/2557-1_4.xsad"/>
+<stringAttribute key="Resource" value="/org.eclipse.gemoc.trace.benchmark/models/2557-1_4.xsad"/>
 <booleanAttribute key="activitydiagram MultiDimensional Generic Trace" value="false"/>
 <booleanAttribute key="activitydiagram MultiDimensional Trace" value="false"/>
 <stringAttribute key="airdResource" value=""/>

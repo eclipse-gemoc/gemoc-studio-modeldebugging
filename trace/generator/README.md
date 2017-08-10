@@ -14,12 +14,12 @@ The generation process is divided in three steps:
 
 1. Because operation semantics can be defined in using any language(s), we first extract the execution extension into an intermediate representation in order to then generically process it with the generator. The intermediate representation is defined using the Ecore metamodel that can be found in the plugin `fr.inria.diverse.opsemanticsview.model`. An conforming model is composed of new `EStructuralFeature` added to classes of the abstract classes, of new `EClass` objects, and of transformation rules specified as `EOperation` objects. Two extractors are provided for now:
 
-    - One for Kermeta in the plugin `fr.inria.diverse.trace.plaink3.tracematerialextractor`.
-    - One for xMOF in the plugin `fr.inria.diverse.trace.xmof.tracematerialextractor`.
+    - One for Kermeta in the plugin `org.eclipse.gemoc.trace.plaink3.tracematerialextractor`.
+    - One for xMOF in the plugin `org.eclipse.gemoc.trace.xmof.tracematerialextractor`.
 
-2. A generic generator is called to process the intermediate representation and to produce an Ecore multidimensional domain-specific trace metamodel. The generator can be found in the plugin `fr.inria.diverse.trace.metamodel.generator`.
+2. A generic generator is called to process the intermediate representation and to produce an Ecore multidimensional domain-specific trace metamodel. The generator can be found in the plugin `org.eclipse.gemoc.trace.metamodel.generator`.
 
-3. A GEMOC engine addon generator is called, to process the intermediate representation, the generated trace metamodel and some traceability links in order to produce a trace management plugin that contains the trace metamodel and a trace manager (in Java). The *state manager* provides services to construct a trace, and to restore the executed model into a former state in order to create a Java class to integrate the trace plugin into a GEMOC engine addon. Contrary to the previous steps, this last step is specific and dependent to the GEMOC Studio plugins. The generator can be found in `fr.inria.diverse.trace.gemoc.generator`.
+3. A GEMOC engine addon generator is called, to process the intermediate representation, the generated trace metamodel and some traceability links in order to produce a trace management plugin that contains the trace metamodel and a trace manager (in Java). The *state manager* provides services to construct a trace, and to restore the executed model into a former state in order to create a Java class to integrate the trace plugin into a GEMOC engine addon. Contrary to the previous steps, this last step is specific and dependent to the GEMOC Studio plugins. The generator can be found in `org.eclipse.gemoc.trace.gemoc.generator`.
 
 ## Publication
 

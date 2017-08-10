@@ -26,7 +26,7 @@ import org.eclipse.gemoc.commons.eclipse.messagingsystem.api.MessagingSystem;
 public class Activator extends GemocPlugin {
 
 	// The plug-in ID
-	public static final String PLUGIN_ID = "org.executionframework.debugger"; //$NON-NLS-1$
+	public static final String PLUGIN_ID = "org.eclipse.gemoc.executionframework.debugger"; //$NON-NLS-1$
 
 	// The shared instance
 	private static Activator plugin;
@@ -92,7 +92,7 @@ public class Activator extends GemocPlugin {
 		if (_loggingBackend == null) {
 			_loggingBackend = new DefaultLoggingBackend(this);
 			MessagingSystemManager msm = new MessagingSystemManager();
-			MessagingSystem ms = msm.createBestPlatformMessagingSystem(PLUGIN_ID, "Debugger");
+			MessagingSystem ms = msm.createBestPlatformMessagingSystem(PLUGIN_ID, "Model Debugger console");
 			_loggingBackend.setMessagingSystem(ms);
 		}
 		return _loggingBackend;
