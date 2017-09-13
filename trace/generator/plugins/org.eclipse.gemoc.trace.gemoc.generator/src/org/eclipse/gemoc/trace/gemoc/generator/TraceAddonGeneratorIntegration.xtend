@@ -10,11 +10,8 @@
  *******************************************************************************/
 package org.eclipse.gemoc.trace.gemoc.generator
 
-import fr.inria.diverse.melange.metamodel.melange.Language
-import fr.inria.diverse.melange.metamodel.melange.ModelTypingSpace
-import fr.inria.diverse.melange.ui.internal.MelangeActivator
-import org.eclipse.gemoc.opsemanticsview.gen.OperationalSemanticsViewGenerator
 import java.io.IOException
+import java.util.Properties
 import opsemanticsview.OperationalSemanticsView
 import org.eclipse.core.resources.IFile
 import org.eclipse.core.resources.IProject
@@ -26,10 +23,7 @@ import org.eclipse.core.runtime.IProgressMonitor
 import org.eclipse.core.runtime.IStatus
 import org.eclipse.core.runtime.Platform
 import org.eclipse.core.runtime.Status
-import org.eclipse.emf.common.util.URI
-import org.eclipse.emf.ecore.resource.Resource
-import org.eclipse.emf.ecore.resource.ResourceSet
-import org.eclipse.xtext.ui.resource.IResourceSetProvider
+import org.eclipse.gemoc.opsemanticsview.gen.OperationalSemanticsViewGenerator
 import org.eclipse.gemoc.xdsmlframework.ide.ui.xdsml.wizards.MelangeXDSMLProjectHelper
 
 /**
@@ -46,17 +40,11 @@ class TraceAddonGeneratorIntegration {
 		generateAddon(melangeFile, selectedLanguage, pluginName, replace, monitor)
 	}
 
-	static def void generateAddon(IFile melangeFile, String selectedLanguage, String pluginName, boolean replace,
+	static def void generateAddon(IFile dslFile, String selectedLanguage, String pluginName, boolean replace,
 		IProgressMonitor monitor) {
 
-		// Loading Melange model
-		val URI uri = URI.createPlatformResourceURI(melangeFile.getFullPath().toString(), true);
-		val injector = MelangeActivator.getInstance().getInjector(MelangeActivator.FR_INRIA_DIVERSE_MELANGE_MELANGE)
-		val IResourceSetProvider provider = injector.getInstance(typeof(IResourceSetProvider))
-		val ResourceSet resSet = provider.get(melangeFile.getProject())
-		val Resource resource = resSet.getResource(uri, true)
-		val ModelTypingSpace root = resource.getContents().get(0) as ModelTypingSpace
-		val Language selection = root.elements.filter(Language).findFirst[name == selectedLanguage]
+		// Loading
+		val selection = loadDsl(dslFile)
 
 		// We find all extension points
 		val configNew = Platform.getExtensionRegistry().getConfigurationElementsFor(
@@ -66,12 +54,12 @@ class TraceAddonGeneratorIntegration {
 		val OperationalSemanticsViewGenerator validViewGenerator = configNew.map [ e |
 			e.createExecutableExtension("class")
 		].filter(OperationalSemanticsViewGenerator).findFirst [ conf |
-			conf.canHandle(selection, melangeFile.project)
+			conf.canHandle(selection, dslFile.project)
 		]
 
 		// If we find one, we generate
 		if (validViewGenerator != null) {
-			val OperationalSemanticsView mmextension = validViewGenerator.generate(selection, melangeFile.project);
+			val OperationalSemanticsView mmextension = validViewGenerator.generate(selection, dslFile.project);
 			generateAddon(selectedLanguage, pluginName, replace, monitor, mmextension)
 
 		} // Otherwise, we error
@@ -133,6 +121,12 @@ class TraceAddonGeneratorIntegration {
 			// TODO Do real error handling
 			e.printStackTrace();
 		}
+	}
+	
+	protected static def Properties loadDsl(IFile dslFile) {
+		val dslProp = new Properties()
+		dslProp.load(dslFile.getContents())
+		return dslProp
 	}
 
 }

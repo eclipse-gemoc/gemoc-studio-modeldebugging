@@ -16,6 +16,7 @@ import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.LinkedHashSet;
 import java.util.List;
+import java.util.Properties;
 import java.util.Set;
 
 import org.eclipse.core.runtime.IConfigurationElement;
@@ -137,30 +138,19 @@ public class MelangeHelper {
 	public static Set<Class<?>> getAspects(String languageName){
 		Set<Class<?>> res = new HashSet<Class<?>>();
 		
-		IConfigurationElement[] melangeLanguages = Platform
-				.getExtensionRegistry().getConfigurationElementsFor(
-						"fr.inria.diverse.melange.language");
-		
-		String serializedAspects = "";
-		for (IConfigurationElement lang : melangeLanguages) {
-			if (lang.getAttribute("id").equals(languageName)) {
-				serializedAspects = lang.getAttribute("aspects");
-				break;
+		Properties dsl = DslHelper.load(languageName);
+		if(dsl != null) {
+			String aspectValue = ((String)dsl.get("behavior"));
+			if(aspectValue != null){
+				String[] classNames = aspectValue.split(",");
+				
+				for (String asp : classNames) {
+					Class<?> cls = loadAspect(languageName, asp);
+					if(cls != null) {
+						res.add(cls);
+					}
+				}
 			}
-		}
-		if(serializedAspects.isEmpty()) return res;
-		Set<String> classNames = new HashSet<String>();
-		//serializedAspects is a list of pairs (target : aspects)
-		for (String rawPair : serializedAspects.split(";")) { // ; is the separator between pairs
-			String[] pair = rawPair.split(":"); // : the separator between target & aspects
-			String[] weavedAsp = pair[1].split(","); // , the separator between aspects
-			for (String asp : weavedAsp) {
-				classNames.add(asp);
-			}
-		}
-		for (String asp : classNames) {
-			Class<?> cls = loadAspect(languageName, asp);
-			res.add(cls);
 		}
 		
 		return res;
@@ -207,7 +197,7 @@ public class MelangeHelper {
 	 */
 	public static Class<?> loadAspect(String languageName, String aspectName){
 		try {
-			return getMelangeBundle(languageName).loadClass(aspectName);
+			return DslHelper.getDslBundle(languageName).loadClass(aspectName);
 		} catch (ClassNotFoundException e) {
 			e.printStackTrace();
 		}

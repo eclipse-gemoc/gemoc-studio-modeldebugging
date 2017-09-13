@@ -10,7 +10,6 @@
  *******************************************************************************/
 package org.eclipse.gemoc.execution.sequential.javaxdsml.ide.ui.menu
 
-import fr.inria.diverse.melange.metamodel.melange.Language
 import java.util.List
 import java.util.Set
 import org.eclipse.core.commands.ExecutionEvent
@@ -22,27 +21,29 @@ import org.eclipse.gemoc.execution.sequential.javaxdsml.ide.ui.commands.CreateDS
 
 class AddDSA extends CreateDSAProjectHandler {
 	
-	override protected updateMelange(ExecutionEvent event, Language language, Set<String> aspects) {
-		val editor = EditorUtils.getActiveXtextEditor(event)
-		if (editor != null) {
-			val document = editor.document
-			document.modify[
-				val EStructuralFeature operators = language.eClass().getEStructuralFeature("operators");
-				val List<INode> nodesOp = NodeModelUtils.findNodesForFeature(language, operators);
-				var int lastOffset = -1
-				for(node : nodesOp){
-					if(node.endOffset > lastOffset) lastOffset = node.endOffset
-				}
-				if(lastOffset != -1){
-					
-					val StringBuilder insertion = new StringBuilder
-					aspects.forEach[asp |
-						insertion.append("\twith "+ asp + "\n")
-					] 
-					document.replace(lastOffset,0, "\n\n"+insertion.toString)
-					return null // no computed value
-				}
-			]
-		}
-	}
+	//FIXME: deprecated?
+	
+//	override protected updateMelange(ExecutionEvent event, Language language, Set<String> aspects) {
+//		val editor = EditorUtils.getActiveXtextEditor(event)
+//		if (editor != null) {
+//			val document = editor.document
+//			document.modify[
+//				val EStructuralFeature operators = language.eClass().getEStructuralFeature("operators");
+//				val List<INode> nodesOp = NodeModelUtils.findNodesForFeature(language, operators);
+//				var int lastOffset = -1
+//				for(node : nodesOp){
+//					if(node.endOffset > lastOffset) lastOffset = node.endOffset
+//				}
+//				if(lastOffset != -1){
+//					
+//					val StringBuilder insertion = new StringBuilder
+//					aspects.forEach[asp |
+//						insertion.append("\twith "+ asp + "\n")
+//					] 
+//					document.replace(lastOffset,0, "\n\n"+insertion.toString)
+//					return null // no computed value
+//				}
+//			]
+//		}
+//	}
 }
