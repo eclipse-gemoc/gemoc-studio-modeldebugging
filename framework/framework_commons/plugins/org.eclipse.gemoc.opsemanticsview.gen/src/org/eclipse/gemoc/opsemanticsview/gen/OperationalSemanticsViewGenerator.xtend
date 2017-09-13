@@ -11,14 +11,14 @@
  package org.eclipse.gemoc.opsemanticsview.gen
 
 import opsemanticsview.OperationalSemanticsView
-import fr.inria.diverse.melange.metamodel.melange.Language
 import org.eclipse.core.resources.IProject
+import org.eclipse.gemoc.dsl.Dsl
 
 interface OperationalSemanticsViewGenerator {
 
-	public def boolean canHandle(Language language, IProject melangeProject)
+	public def boolean canHandle(Dsl language, IProject melangeProject)
 
-	public def OperationalSemanticsView generate(Language language, IProject melangeProject)
+	public def OperationalSemanticsView generate(Dsl language, IProject melangeProject)
 	
 
 }

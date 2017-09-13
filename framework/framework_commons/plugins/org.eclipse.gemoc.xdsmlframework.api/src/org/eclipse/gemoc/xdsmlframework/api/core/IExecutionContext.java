@@ -35,6 +35,6 @@ public interface IExecutionContext extends IDisposable
 
 	MSEModel getMSEModel();
 	
-	Bundle getMelangeBundle();
+	Bundle getDslBundle();
 	 
 }

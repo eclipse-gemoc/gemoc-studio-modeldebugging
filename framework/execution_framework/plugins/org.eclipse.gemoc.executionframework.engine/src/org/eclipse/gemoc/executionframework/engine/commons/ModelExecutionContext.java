@@ -35,7 +35,7 @@ public abstract class ModelExecutionContext implements IExecutionContext {
 
 	protected LanguageDefinitionExtension _languageDefinition;
 	
-	protected Bundle _melangeBundle;
+	protected Bundle _dslBundle;
 
 	public ModelExecutionContext(IRunConfiguration runConfiguration, ExecutionMode executionMode) throws EngineContextException {
 		_runConfiguration = runConfiguration;
@@ -48,7 +48,7 @@ public abstract class ModelExecutionContext implements IExecutionContext {
 				// TODO throw warning that we couldn't copy the model
 			}
 			_languageDefinition = getLanguageDefinition(_runConfiguration.getLanguageName());
-			_melangeBundle = MelangeHelper.getMelangeBundle(_runConfiguration.getLanguageName());
+			_dslBundle = DslHelper.getDslBundle(_runConfiguration.getLanguageName());
 			_executionPlatform = createExecutionPlatform(); // new
 															// DefaultExecutionPlatform(_languageDefinition,
 															// _runConfiguration);
@@ -156,7 +156,8 @@ public abstract class ModelExecutionContext implements IExecutionContext {
 		return _languageDefinition;
 	}
 
-	public Bundle getMelangeBundle(){
-		return _melangeBundle;
+	@Override
+	public Bundle getDslBundle(){
+		return _dslBundle;
 	}
 }
