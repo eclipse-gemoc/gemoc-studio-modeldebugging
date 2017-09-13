@@ -2,7 +2,7 @@ Manifest-Version: 1.0
 Bundle-ManifestVersion: 2
 Bundle-Name: Gemoc extension for Sirius
 Bundle-SymbolicName: org.eclipse.gemoc.xdsmlframework.extensions.sirius;singleton:=true
-Bundle-Version: 2.3.0.qualifier
+Bundle-Version: 2.4.0.qualifier
 Bundle-Activator: org.eclipse.gemoc.xdsmlframework.extensions.sirius.Activator
 Require-Bundle: org.eclipse.gemoc.xdsmlframework.api,
  org.eclipse.gemoc.commons.eclipse.messagingsystem.api;bundle-version="1.0.0",
