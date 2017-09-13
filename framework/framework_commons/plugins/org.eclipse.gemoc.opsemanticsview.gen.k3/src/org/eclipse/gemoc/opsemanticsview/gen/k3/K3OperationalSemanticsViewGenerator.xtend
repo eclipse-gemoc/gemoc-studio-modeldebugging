@@ -67,7 +67,7 @@ class K3OperationalSemanticsViewGenerator implements OperationalSemanticsViewGen
 	}
 
 	override canHandle(Properties language, IProject melangeProject) {
-		!(language.get("behavior") as String).empty
+		!(language.get("behavior") == null && (language.get("behavior") as String).empty)
 	}
 
 }
