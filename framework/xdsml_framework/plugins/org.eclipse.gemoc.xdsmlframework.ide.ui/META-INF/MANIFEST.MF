@@ -23,7 +23,7 @@ Require-Bundle: org.eclipse.core.runtime,
  org.eclipse.ui.console,
  org.eclipse.debug.ui,
  org.eclipse.emf.ecoretools.design.ui;bundle-version="3.0.0",
- org.jdom2;bundle-version="2.0.6"
+ org.jdom2;bundle-version="2.0.6";visibility:=reexport
 Bundle-RequiredExecutionEnvironment: JavaSE-1.8
 Bundle-ActivationPolicy: lazy
 Bundle-ClassPath: .
@@ -31,6 +31,5 @@ Export-Package: org.eclipse.gemoc.xdsmlframework.ide.ui,
  org.eclipse.gemoc.xdsmlframework.ide.ui.builder.pde,
  org.eclipse.gemoc.xdsmlframework.ide.ui.commands,
  org.eclipse.gemoc.xdsmlframework.ide.ui.xdsml.wizards,
- org.eclipse.gemoc.xdsmlframework.ide.ui.xdsml.wizards.pages,
- org.jdom2
+ org.eclipse.gemoc.xdsmlframework.ide.ui.xdsml.wizards.pages
 
