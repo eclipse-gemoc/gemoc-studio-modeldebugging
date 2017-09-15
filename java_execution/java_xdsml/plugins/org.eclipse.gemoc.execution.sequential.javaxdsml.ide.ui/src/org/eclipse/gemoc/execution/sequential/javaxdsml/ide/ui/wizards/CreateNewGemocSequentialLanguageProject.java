@@ -46,7 +46,7 @@ public class CreateNewGemocSequentialLanguageProject extends NewMelangeProjectWi
 	}
 	
 	/**
-	 * Look for extension point="fr.inria.diverse.commons.eclipse.pde.projectContent"
+	 * Look for extension point="org.eclipse.gemoc.commons.eclipse.pde.projectContent"
 	 * and filter wizards
 	 */
 	@Override
