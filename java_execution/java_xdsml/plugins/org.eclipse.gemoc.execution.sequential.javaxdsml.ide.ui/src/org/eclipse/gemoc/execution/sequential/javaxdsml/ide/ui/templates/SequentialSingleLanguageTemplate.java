@@ -30,6 +30,7 @@ import org.eclipse.ui.IWorkbenchWindow;
 import org.eclipse.ui.PlatformUI;
 import org.eclipse.xtext.util.Strings;
 import org.eclipse.gemoc.commons.eclipse.core.resources.FileFinderVisitor;
+import org.eclipse.gemoc.commons.eclipse.core.resources.IFolderUtils;
 import org.eclipse.gemoc.execution.sequential.javaxdsml.ide.ui.Activator;
 import org.eclipse.gemoc.execution.sequential.javaxdsml.ide.ui.dialogs.SelectDSAIProjectDialog;
 import org.eclipse.jface.viewers.IStructuredSelection;
@@ -330,13 +331,21 @@ public class SequentialSingleLanguageTemplate extends JavaxdsmlTemplateSection {
 			ManifestChanger manifestChanger;
 			try {
 				manifestChanger = new ManifestChanger(project.getFile("META-INF/MANIFEST.MF"));
-				if(this.ecoreIFile != null){
-					manifestChanger.addPluginDependency(this.ecoreIFile.getProject().getName(), "0.0.0", false, true);
-				}
 				manifestChanger.addPluginDependency(this.dsaProjectName, "0.0.0", false, true);
 				manifestChanger.commit();
 			} catch (IOException | BundleException e) {
 			}
 		}
+		if(this.ecoreIFile != null){
+			ManifestChanger manifestChanger;
+			try {
+				manifestChanger = new ManifestChanger(project.getFile("META-INF/MANIFEST.MF"));
+				manifestChanger.addPluginDependency(this.ecoreIFile.getProject().getName(), "0.0.0", false, true);
+				manifestChanger.commit();
+			} catch (IOException | BundleException e) {
+			}
+		}
+		// create empty folders in order to avoid warning on creation
+		IFolderUtils.createFolder("model-gen", project, monitor);
 	}
 }
