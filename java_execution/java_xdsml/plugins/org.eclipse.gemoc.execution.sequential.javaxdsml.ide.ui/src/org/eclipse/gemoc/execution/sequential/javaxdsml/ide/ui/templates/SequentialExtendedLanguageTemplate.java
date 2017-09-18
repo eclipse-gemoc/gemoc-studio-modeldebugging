@@ -47,10 +47,11 @@ import org.eclipse.gemoc.commons.eclipse.pde.wizards.pages.pde.ui.templates.Temp
 
 import fr.inria.diverse.melange.ui.wizards.pages.NewMelangeProjectWizardFields;
 
-public class SequentialSingleLanguageTemplate extends JavaxdsmlTemplateSection {
+public class SequentialExtendedLanguageTemplate extends JavaxdsmlTemplateSection {
 	public static final String KEY_MELANGE_FILE_NAME = "melangeFileName"; //$NON-NLS-1$
 	public static final String KEY_ASPECTCLASS_POSTFIX = "aspectClassPostfix"; //$NON-NLS-1$
-	public static final String KEY_METAMODEL_NAME = "metamodelName"; //$NON-NLS-1$
+	public static final String KEY_METAMODEL_NAME = "languageName"; //$NON-NLS-1$
+	public static final String KEY_BASE_LANGUAGE_NAME = "baseLanguageName"; //$NON-NLS-1$
 	public static final String METAMODEL_NAME = "MyLanguage"; //$NON-NLS-1$
 	public static final String KEY_ECOREFILE_PATH = "ecoreFilePath"; //$NON-NLS-1$
 
@@ -68,25 +69,28 @@ public class SequentialSingleLanguageTemplate extends JavaxdsmlTemplateSection {
 	
 	private TemplateOption dsaProjectLocationOption;
 	
-	public SequentialSingleLanguageTemplate() {
+	public SequentialExtendedLanguageTemplate() {
 		super();
 		setPageCount(1);
 		createOptions();
 	}
 	
 	private void createOptions() {
-		addOption(KEY_PACKAGE_NAME, WizardTemplateMessages.SequentialSingleLanguageTemplate_packageName,
-				WizardTemplateMessages.SequentialSingleLanguageTemplate_packageNameToolTip, 
+		addOption(KEY_PACKAGE_NAME, WizardTemplateMessages.SequentialExtendedLanguageTemplate_packageName,
+				WizardTemplateMessages.SequentialExtendedLanguageTemplate_packageNameToolTip, 
 				(String) null, 0);
-		addOption(KEY_MELANGE_FILE_NAME, WizardTemplateMessages.SequentialSingleLanguageTemplate_melangeFileName, 
-				WizardTemplateMessages.SequentialSingleLanguageTemplate_melangeFileNameTooltip, 
-				WizardTemplateMessages.SequentialSingleLanguageTemplate_melangeDefaultFileName, 0);
-		addOption(KEY_METAMODEL_NAME, WizardTemplateMessages.SequentialSingleLanguageTemplate_melangeMetamodelName,
-				WizardTemplateMessages.SequentialSingleLanguageTemplate_melangeMetamodelNameToolTip, 
+		addOption(KEY_MELANGE_FILE_NAME, WizardTemplateMessages.SequentialExtendedLanguageTemplate_melangeFileName, 
+				WizardTemplateMessages.SequentialExtendedLanguageTemplate_melangeFileNameTooltip, 
+				WizardTemplateMessages.SequentialExtendedLanguageTemplate_melangeDefaultFileName, 0);
+		addOption(KEY_METAMODEL_NAME, WizardTemplateMessages.SequentialExtendedLanguageTemplate_melangeMetamodelName,
+				WizardTemplateMessages.SequentialExtendedLanguageTemplate_melangeMetamodelNameToolTip, 
 				METAMODEL_NAME, 0);
+		addOption(KEY_BASE_LANGUAGE_NAME, WizardTemplateMessages.SequentialExtendedLanguageTemplate_baseLanguageName,
+				WizardTemplateMessages.SequentialExtendedLanguageTemplate_baseLanguageNameToolTip, 
+				METAMODEL_NAME+"Base", 0);
 		TemplateOption ecoreLocationOption  = new AbstractStringWithButtonOption(this, KEY_ECOREFILE_PATH, 
-				WizardTemplateMessages.SequentialSingleLanguageTemplate_ecoreFileLocation,
-				WizardTemplateMessages.SequentialSingleLanguageTemplate_ecoreFileLocationTooltip) {
+				WizardTemplateMessages.SequentialExtendedLanguageTemplate_ecoreFileLocation,
+				WizardTemplateMessages.SequentialExtendedLanguageTemplate_ecoreFileLocationTooltip) {
 			@Override
 			public String doSelectButton() {
 				final IWorkbenchWindow workbenchWindow = PlatformUI
@@ -121,9 +125,9 @@ public class SequentialSingleLanguageTemplate extends JavaxdsmlTemplateSection {
 								"Select ecore", true, null,
 								Collections.singletonList(viewerFilter));
 				if (files.length > 0) {
-					SequentialSingleLanguageTemplate.this.ecoreIFile = files[0];
+					SequentialExtendedLanguageTemplate.this.ecoreIFile = files[0];
 					//txtPathEcore.setText(files[i].getFullPath().toOSString());
-					SequentialSingleLanguageTemplate.this.ecoreProjectPath = files[0].getProject().getFullPath().toString();
+					SequentialExtendedLanguageTemplate.this.ecoreProjectPath = files[0].getProject().getFullPath().toString();
 					String ecorePath = files[0].getFullPath().toString();
 					if(ecorePath.charAt(0) == '/')
 						ecorePath = ecorePath.substring(1);
@@ -136,8 +140,8 @@ public class SequentialSingleLanguageTemplate extends JavaxdsmlTemplateSection {
 		ecoreLocationOption.setRequired(false);
 		registerOption(ecoreLocationOption, (String) null, 0);
 		dsaProjectLocationOption  = new AbstractStringWithButtonOption(this, KEY_ASPECTS, 
-				WizardTemplateMessages.SequentialSingleLanguageTemplate_dsaProjectName,
-				WizardTemplateMessages.SequentialSingleLanguageTemplate_dsaProjectNameTooltip) {
+				WizardTemplateMessages.SequentialExtendedLanguageTemplate_dsaProjectName,
+				WizardTemplateMessages.SequentialExtendedLanguageTemplate_dsaProjectNameTooltip) {
 
 			@Override
 			public String doSelectButton() {
@@ -159,9 +163,9 @@ public class SequentialSingleLanguageTemplate extends JavaxdsmlTemplateSection {
 	}
 	
 	public void addPages(Wizard wizard) {
-		WizardPage page = createPage(0, IHelpContextIds.TEMPLATE_SEQUENTIAL_SINGLE_LANGUAGE);
-		page.setTitle(WizardTemplateMessages.SequentialSingleLanguageTemplate_title);
-		page.setDescription(WizardTemplateMessages.SequentialSingleLanguageTemplate_desc);
+		WizardPage page = createPage(0, IHelpContextIds.TEMPLATE_SEQUENTIAL_EXTENDED_LANGUAGE);
+		page.setTitle(WizardTemplateMessages.SequentialExtendedLanguageTemplate_title);
+		page.setDescription(WizardTemplateMessages.SequentialExtendedLanguageTemplate_desc);
 		wizard.addPage(page);
 		markPagesAdded();
 	}
@@ -178,6 +182,9 @@ public class SequentialSingleLanguageTemplate extends JavaxdsmlTemplateSection {
 			}
 			else if(option.getName().equals(KEY_METAMODEL_NAME) && languageName != null){
 				option.setValue(languageName);
+			}
+			else if(option.getName().equals(KEY_BASE_LANGUAGE_NAME) && languageName != null){
+				option.setValue(languageName+"Base");
 			}
 			else if(option.getName().equals(KEY_MELANGE_FILE_NAME) && fileName != null){
 				option.setValue(fileName);
@@ -227,7 +234,7 @@ public class SequentialSingleLanguageTemplate extends JavaxdsmlTemplateSection {
 	
 	@Override
 	public String getSectionId() {
-		return "SequentialSingleLanguage";
+		return "SequentialExtendedLanguage";
 	}
 	
 	@Override

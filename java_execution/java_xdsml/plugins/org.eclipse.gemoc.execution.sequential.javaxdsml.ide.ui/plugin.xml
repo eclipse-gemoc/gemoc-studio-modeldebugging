@@ -310,6 +310,15 @@
             This template creates a sequential language defined using a single Melange language and K3 aspects.
          </description>
       </wizard>
+      <wizard
+            class="org.eclipse.gemoc.execution.sequential.javaxdsml.ide.ui.templates.SequentialExtendedLanguageNewWizard"
+            id="org.eclipse.gemoc.execution.sequential.javaxdsml.ide.ui.templates.projectContent.SequentialExtendedLanguage"
+            name="GEMOC sequential project"
+            targetPluginId="fr.inria.diverse.melange.ui">
+         <description>
+            This template creates a sequential language defined using a Melange language that is extended with K3 aspects in order to define a second language.
+         </description>
+      </wizard>
    </extension>
    
    <extension
@@ -318,6 +327,12 @@
             class="org.eclipse.gemoc.execution.sequential.javaxdsml.ide.ui.templates.SequentialSingleLanguageTemplate"
             contributingId="fr.inria.diverse.melange.ui.templates.template1"
             id="org.eclipse.gemoc.execution.sequential.javaxdsml.ide.ui.templates.template_simple_sequential_language"
+            name="Simple GEMOC sequential project">
+      </template>
+      <template
+            class="org.eclipse.gemoc.execution.sequential.javaxdsml.ide.ui.templates.SequentialExtendedLanguageTemplate"
+            contributingId="fr.inria.diverse.melange.ui.templates.template1"
+            id="org.eclipse.gemoc.execution.sequential.javaxdsml.ide.ui.templates.template_sequential_extended_language"
             name="Simple GEMOC sequential project">
       </template>
    </extension>

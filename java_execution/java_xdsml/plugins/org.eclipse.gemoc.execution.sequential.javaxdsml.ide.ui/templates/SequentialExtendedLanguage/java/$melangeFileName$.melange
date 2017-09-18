@@ -1,0 +1,11 @@
+package $packageName$
+
+external language $baseLanguageName$ {
+	syntax "platform:/resource/$ecoreFilePath$"
+	
+}
+
+language $languageName$ inherits $baseLanguageName$ {
+	
+$listOfAspects$
+}
