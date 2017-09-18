@@ -12,11 +12,10 @@ package org.eclipse.gemoc.execution.sequential.javaxdsml.ide.ui.templates;
 
 import org.eclipse.gemoc.commons.eclipse.pde.wizards.pages.pde.ui.BaseProjectWizardFields;
 import org.eclipse.gemoc.commons.eclipse.pde.wizards.pages.pde.ui.templates.ITemplateSection;
+import org.eclipse.gemoc.commons.eclipse.pde.wizards.pages.pde.ui.templates.NewProjectTemplateWizard;
 import org.eclipse.xtext.util.Strings;
 
-import fr.inria.diverse.melange.ui.templates.melange.SimpleMTNewWizard;
-
-public class SequentialSingleLanguageNewWizard extends SimpleMTNewWizard{
+public class SequentialSingleLanguageNewWizard extends NewProjectTemplateWizard{
 
 	@Override
 	public void init(BaseProjectWizardFields data) {
