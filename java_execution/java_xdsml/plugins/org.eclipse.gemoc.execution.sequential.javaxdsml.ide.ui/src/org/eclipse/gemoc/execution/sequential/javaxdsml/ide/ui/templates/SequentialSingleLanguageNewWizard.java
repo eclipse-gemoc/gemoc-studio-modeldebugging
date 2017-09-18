@@ -36,7 +36,7 @@ public class SequentialSingleLanguageNewWizard extends SimpleMTNewWizard{
 				languageName = Strings.toFirstUpper(languageName);
 
 				ITemplateSection[] selections = getTemplateSections();
-				SequentialNewLanguageTemplate selection = (SequentialNewLanguageTemplate) selections[0];
+				SequentialSingleLanguageTemplate selection = (SequentialSingleLanguageTemplate) selections[0];
 				selection.updateOptions(packageName, languageName, languageName);
 			}
 		} catch (Exception e) {}
@@ -44,6 +44,6 @@ public class SequentialSingleLanguageNewWizard extends SimpleMTNewWizard{
 	
 	@Override
 	public ITemplateSection[] createTemplateSections() {
-		return new ITemplateSection[] {new SequentialNewLanguageTemplate()};
+		return new ITemplateSection[] {new SequentialSingleLanguageTemplate()};
 	}
 }

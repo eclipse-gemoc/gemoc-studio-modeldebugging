@@ -315,7 +315,7 @@
    <extension
          point="org.eclipse.gemoc.commons.eclipse.pde.templates">
       <template
-            class="org.eclipse.gemoc.execution.sequential.javaxdsml.ide.ui.templates.SequentialNewLanguageTemplate"
+            class="org.eclipse.gemoc.execution.sequential.javaxdsml.ide.ui.templates.SequentialSingleLanguageTemplate"
             contributingId="fr.inria.diverse.melange.ui.templates.template1"
             id="org.eclipse.gemoc.execution.sequential.javaxdsml.ide.ui.templates.template_simple_sequential_language"
             name="Simple GEMOC sequential project">

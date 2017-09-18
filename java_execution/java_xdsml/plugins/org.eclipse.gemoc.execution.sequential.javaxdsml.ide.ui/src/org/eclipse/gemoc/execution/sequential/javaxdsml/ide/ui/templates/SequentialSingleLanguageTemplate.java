@@ -46,7 +46,7 @@ import org.eclipse.gemoc.commons.eclipse.pde.wizards.pages.pde.ui.templates.Temp
 
 import fr.inria.diverse.melange.ui.wizards.pages.NewMelangeProjectWizardFields;
 
-public class SequentialNewLanguageTemplate extends JavaxdsmlTemplateSection {
+public class SequentialSingleLanguageTemplate extends JavaxdsmlTemplateSection {
 	public static final String KEY_MELANGE_FILE_NAME = "melangeFileName"; //$NON-NLS-1$
 	public static final String KEY_ASPECTCLASS_POSTFIX = "aspectClassPostfix"; //$NON-NLS-1$
 	public static final String KEY_METAMODEL_NAME = "metamodelName"; //$NON-NLS-1$
@@ -67,7 +67,7 @@ public class SequentialNewLanguageTemplate extends JavaxdsmlTemplateSection {
 	
 	private TemplateOption dsaProjectLocationOption;
 	
-	public SequentialNewLanguageTemplate() {
+	public SequentialSingleLanguageTemplate() {
 		super();
 		setPageCount(1);
 		createOptions();
@@ -120,9 +120,9 @@ public class SequentialNewLanguageTemplate extends JavaxdsmlTemplateSection {
 								"Select ecore", true, null,
 								Collections.singletonList(viewerFilter));
 				if (files.length > 0) {
-					SequentialNewLanguageTemplate.this.ecoreIFile = files[0];
+					SequentialSingleLanguageTemplate.this.ecoreIFile = files[0];
 					//txtPathEcore.setText(files[i].getFullPath().toOSString());
-					SequentialNewLanguageTemplate.this.ecoreProjectPath = files[0].getProject().getFullPath().toString();
+					SequentialSingleLanguageTemplate.this.ecoreProjectPath = files[0].getProject().getFullPath().toString();
 					String ecorePath = files[0].getFullPath().toString();
 					if(ecorePath.charAt(0) == '/')
 						ecorePath = ecorePath.substring(1);
