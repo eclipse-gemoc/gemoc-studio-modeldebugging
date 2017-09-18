@@ -57,7 +57,7 @@ public class CreateNewGemocSequentialLanguageProject extends NewMelangeProjectWi
 		for (Object element : superRes.getChildren()) {
 			if(element instanceof WizardElement){
 				WizardElement wizardElem = (WizardElement) element;
-				if(wizardElem.getID().equals("fr.inria.diverse.melange.ui.templates.projectContent.Sequential")){
+				if(wizardElem.getID().equals("org.eclipse.gemoc.execution.sequential.javaxdsml.ide.ui.templates.projectContent.SequentialSingleLanguage")){
 					newRes.add(wizardElem);
 				}
 			}

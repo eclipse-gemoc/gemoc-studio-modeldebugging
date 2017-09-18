@@ -16,12 +16,12 @@ import org.eclipse.xtext.util.Strings;
 
 import fr.inria.diverse.melange.ui.templates.melange.SimpleMTNewWizard;
 
-public class SequentialNewWizard extends SimpleMTNewWizard{
+public class SequentialSingleLanguageNewWizard extends SimpleMTNewWizard{
 
 	@Override
 	public void init(BaseProjectWizardFields data) {
 		super.init(data);
-		setWindowTitle("Simple sequential GEMOC project");
+		setWindowTitle(WizardTemplateMessages.SequentialSingleLanguageTemplate_wtitle);
 		
 		try {
 			String project = getData().projectName;
@@ -36,14 +36,14 @@ public class SequentialNewWizard extends SimpleMTNewWizard{
 				languageName = Strings.toFirstUpper(languageName);
 
 				ITemplateSection[] selections = getTemplateSections();
-				SequentialTemplate selection = (SequentialTemplate) selections[0];
-				selection.updateOptions(packageName, languageName);
+				SequentialNewLanguageTemplate selection = (SequentialNewLanguageTemplate) selections[0];
+				selection.updateOptions(packageName, languageName, languageName);
 			}
 		} catch (Exception e) {}
 	}
 	
 	@Override
 	public ITemplateSection[] createTemplateSections() {
-		return new ITemplateSection[] {new SequentialTemplate()};
+		return new ITemplateSection[] {new SequentialNewLanguageTemplate()};
 	}
 }
