@@ -50,11 +50,13 @@ import fr.inria.diverse.melange.ui.wizards.pages.NewMelangeProjectWizardFields;
 public class SequentialExtendedLanguageTemplate extends JavaxdsmlTemplateSection {
 	public static final String KEY_MELANGE_FILE_NAME = "melangeFileName"; //$NON-NLS-1$
 	public static final String KEY_ASPECTCLASS_POSTFIX = "aspectClassPostfix"; //$NON-NLS-1$
-	public static final String KEY_METAMODEL_NAME = "languageName"; //$NON-NLS-1$
+	public static final String KEY_LANGUAGE_NAME = "languageName"; //$NON-NLS-1$
 	public static final String KEY_BASE_LANGUAGE_NAME = "baseLanguageName"; //$NON-NLS-1$
-	public static final String METAMODEL_NAME = "MyLanguage"; //$NON-NLS-1$
+	public static final String DEFAULT_LANGUAGE_NAME = "MyLanguage"; //$NON-NLS-1$
 	public static final String KEY_ECOREFILE_PATH = "ecoreFilePath"; //$NON-NLS-1$
 
+	public static final String KEY_LANGUAGE_NAME_LCFIRST = "languageNameLCFirst"; //$NON-NLS-1$
+	public static final String KEY_IS_SYNTAX_COMMENTED = "isSyntaxStatementCommented"; //$NON-NLS-1$
 	public static final String KEY_ASPECTS = "listOfAspects"; //$NON-NLS-1$
 	
 	protected static final List<String> FILE_EXTENSIONS = Arrays.asList(new String [] { "ecore" });
@@ -82,12 +84,12 @@ public class SequentialExtendedLanguageTemplate extends JavaxdsmlTemplateSection
 		addOption(KEY_MELANGE_FILE_NAME, WizardTemplateMessages.SequentialExtendedLanguageTemplate_melangeFileName, 
 				WizardTemplateMessages.SequentialExtendedLanguageTemplate_melangeFileNameTooltip, 
 				WizardTemplateMessages.SequentialExtendedLanguageTemplate_melangeDefaultFileName, 0);
-		addOption(KEY_METAMODEL_NAME, WizardTemplateMessages.SequentialExtendedLanguageTemplate_melangeMetamodelName,
+		addOption(KEY_LANGUAGE_NAME, WizardTemplateMessages.SequentialExtendedLanguageTemplate_melangeMetamodelName,
 				WizardTemplateMessages.SequentialExtendedLanguageTemplate_melangeMetamodelNameToolTip, 
-				METAMODEL_NAME, 0);
+				DEFAULT_LANGUAGE_NAME, 0);
 		addOption(KEY_BASE_LANGUAGE_NAME, WizardTemplateMessages.SequentialExtendedLanguageTemplate_baseLanguageName,
 				WizardTemplateMessages.SequentialExtendedLanguageTemplate_baseLanguageNameToolTip, 
-				METAMODEL_NAME+"Base", 0);
+				DEFAULT_LANGUAGE_NAME+"Base", 0);
 		TemplateOption ecoreLocationOption  = new AbstractStringWithButtonOption(this, KEY_ECOREFILE_PATH, 
 				WizardTemplateMessages.SequentialExtendedLanguageTemplate_ecoreFileLocation,
 				WizardTemplateMessages.SequentialExtendedLanguageTemplate_ecoreFileLocationTooltip) {
@@ -180,7 +182,7 @@ public class SequentialExtendedLanguageTemplate extends JavaxdsmlTemplateSection
 			if(option.getName().equals(KEY_PACKAGE_NAME) && packageName != null){
 				option.setValue(packageName);
 			}
-			else if(option.getName().equals(KEY_METAMODEL_NAME) && languageName != null){
+			else if(option.getName().equals(KEY_LANGUAGE_NAME) && languageName != null){
 				option.setValue(languageName);
 			}
 			else if(option.getName().equals(KEY_BASE_LANGUAGE_NAME) && languageName != null){
@@ -301,8 +303,20 @@ public class SequentialExtendedLanguageTemplate extends JavaxdsmlTemplateSection
 	public void execute(IProject project, IProgressMonitor monitor)
 			throws CoreException {
 		
+		// adds a virtual option in order to have replacement for these keys
+		addOption(KEY_LANGUAGE_NAME_LCFIRST, 
+				(String) null,
+				(String) null, 
+				Strings.toFirstLower(getStringOption(KEY_LANGUAGE_NAME)), 0);
+		
+		
+		addOption(KEY_IS_SYNTAX_COMMENTED, 
+				(String) null,
+				(String) null, 
+				ecoreIFile == null?"//":"", 0);
+		
 		//Replace KEY_ASPECTS' value (which is a project name) by a list of aspects 
-		final String DEFAULT_VALUE = "/*\n *\twith qualified.class.name\n */\n";
+		final String DEFAULT_VALUE = "//\twith qualified.class.name\n";
 		
 		String selection = dsaProjectName;
 		if(selection != null && !selection.isEmpty()){
