@@ -10,11 +10,9 @@
  *******************************************************************************/
 package org.eclipse.gemoc.execution.sequential.javaxdsml.ide.ui.commands;
 
-import java.io.File;
-import java.io.FileOutputStream;
 import java.io.IOException;
-import java.net.URI;
-import java.util.Properties;
+import java.util.HashMap;
+import java.util.Optional;
 
 import org.eclipse.core.commands.ExecutionEvent;
 import org.eclipse.core.commands.ExecutionException;
@@ -22,10 +20,15 @@ import org.eclipse.core.commands.IHandler;
 import org.eclipse.core.resources.IFile;
 import org.eclipse.core.resources.IProject;
 import org.eclipse.core.resources.ResourcesPlugin;
-import org.eclipse.core.runtime.CoreException;
-import org.eclipse.core.runtime.IPath;
 import org.eclipse.core.runtime.OperationCanceledException;
 import org.eclipse.core.runtime.jobs.Job;
+import org.eclipse.emf.common.util.URI;
+import org.eclipse.emf.ecore.resource.Resource;
+import org.eclipse.emf.ecore.resource.impl.ResourceSetImpl;
+import org.eclipse.gemoc.dsl.Dsl;
+import org.eclipse.gemoc.dsl.DslFactory;
+import org.eclipse.gemoc.dsl.DslPackage;
+import org.eclipse.gemoc.dsl.SimpleValue;
 import org.eclipse.gemoc.xdsmlframework.ide.ui.commands.AbstractDslSelectHandler;
 import org.eclipse.gemoc.xdsmlframework.ide.ui.xdsml.wizards.CreateDomainModelWizardContextAction;
 import org.eclipse.gemoc.xdsmlframework.ide.ui.xdsml.wizards.CreateDomainModelWizardContextAction.CreateDomainModelAction;
@@ -54,21 +57,29 @@ public class CreateDomainModelProjectHandler extends AbstractDslSelectHandler im
 	protected void updateDsl(ExecutionEvent event, IProject project, String language, String ecoreURI) {
 		
 		IFile dslFile = getDslFileFromProject(project);
-		Properties dslProp = new Properties();
+		Resource res = (new ResourceSetImpl()).getResource(URI.createURI(dslFile.getFullPath().toOSString()), true);
+		Dsl dsl = (Dsl) res.getContents().get(0);
+		Optional<SimpleValue> syntax = dsl
+			.getAbstractSyntax()
+			.getValues()
+			.stream()
+			.filter(v -> v instanceof SimpleValue)
+			.map(v -> (SimpleValue) v)
+			.filter(v -> v.getName().equals("ecore"))
+			.findFirst();
+		
+		if(syntax.isPresent()) {
+			syntax.get().getValues().add(ecoreURI);
+		}
+		else {
+			SimpleValue newEcore = ((DslFactory)DslPackage.eINSTANCE.getEFactoryInstance()).createSimpleValue();
+			newEcore.setName("ecore");
+			newEcore.getValues().add(ecoreURI);
+			dsl.getAbstractSyntax().getValues().add(newEcore);
+		}
 		try {
-			
-			dslProp.load(dslFile.getContents());
-			String allSyntaxes = (String) dslProp.get("syntax");
-			if(allSyntaxes == null || allSyntaxes.isEmpty()) {
-				allSyntaxes = ecoreURI;
-			}
-			else {
-				allSyntaxes = allSyntaxes + "," + ecoreURI;
-			}
-			dslProp.put("syntax", allSyntaxes);
-			dslProp.store(new FileOutputStream(new File(dslFile.getLocationURI())), "");
-			
-		} catch (IOException | CoreException e) {
+			res.save(new HashMap());
+		} catch (IOException e) {
 			e.printStackTrace();
 		}
 	}

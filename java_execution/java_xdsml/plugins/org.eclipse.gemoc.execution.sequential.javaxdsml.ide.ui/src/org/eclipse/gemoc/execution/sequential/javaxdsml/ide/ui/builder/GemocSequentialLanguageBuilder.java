@@ -12,7 +12,6 @@ package org.eclipse.gemoc.execution.sequential.javaxdsml.ide.ui.builder;
 
 import java.io.IOException;
 import java.util.Map;
-import java.util.Properties;
 
 import org.eclipse.core.resources.IFile;
 import org.eclipse.core.resources.IProject;
@@ -23,7 +22,11 @@ import org.eclipse.core.resources.IResourceVisitor;
 import org.eclipse.core.resources.IncrementalProjectBuilder;
 import org.eclipse.core.runtime.CoreException;
 import org.eclipse.core.runtime.IProgressMonitor;
+import org.eclipse.emf.common.util.URI;
+import org.eclipse.emf.ecore.resource.Resource;
+import org.eclipse.emf.ecore.resource.impl.ResourceSetImpl;
 import org.eclipse.gemoc.commons.eclipse.pde.manifest.ManifestChanger;
+import org.eclipse.gemoc.dsl.Dsl;
 import org.eclipse.gemoc.execution.sequential.javaxdsml.api.extensions.languages.SequentialLanguageDefinitionExtensionPoint;
 import org.eclipse.gemoc.xdsmlframework.api.extensions.languages.LanguageDefinitionExtensionPoint;
 import org.eclipse.gemoc.xdsmlframework.ide.ui.builder.pde.PluginXMLHelper;
@@ -108,17 +111,13 @@ public class GemocSequentialLanguageBuilder extends IncrementalProjectBuilder {
 			// try {
 			if (file.exists()) {
 				
-				try {
-					Properties dslProp = new Properties();
-					dslProp.load(file.getContents());
-					String languageName = (String) dslProp.get("name");
-					if(languageName == null || languageName.isEmpty()) {
-						languageName = file.getName();
-					}
-					setPluginLanguageNameAndFilePath(project, file, languageName);
-				} catch (IOException | CoreException e1) {
-					e1.printStackTrace();
+				Resource res = (new ResourceSetImpl()).getResource(URI.createURI(file.getFullPath().toOSString()), true);
+				Dsl dsl = (Dsl) res.getContents().get(0);
+				String languageName = dsl.getName();
+				if(languageName == null || languageName.isEmpty()) {
+					languageName = file.getName();
 				}
+				setPluginLanguageNameAndFilePath(project, file, languageName);
 				
 				//Use default model loader
 				updateModelLoaderClass(project, null);
@@ -163,7 +162,7 @@ public class GemocSequentialLanguageBuilder extends IncrementalProjectBuilder {
 		helper.updateXDSMLDefinitionInExtensionPoint(gemocExtensionPoint, languageName);
 		helper.updateXDSMLDefinitionAttributeInExtensionPoint(gemocExtensionPoint,
 				LanguageDefinitionExtensionPoint.GEMOC_LANGUAGE_EXTENSION_POINT_XDSML_DEF_XDSML_FILE_PATH_ATT,
-				project.getFullPath().toString() + "/" + dslFile.getProjectRelativePath());
+				"platform:/plugin/" + project.getName() + "/" + dslFile.getProjectRelativePath());
 		helper.saveDocument(pluginfile);
 	}
 	

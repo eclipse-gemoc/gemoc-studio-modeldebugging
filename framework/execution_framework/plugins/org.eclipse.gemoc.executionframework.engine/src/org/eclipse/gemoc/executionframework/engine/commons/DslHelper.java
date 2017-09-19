@@ -1,18 +1,14 @@
 package org.eclipse.gemoc.executionframework.engine.commons;
 
-import java.io.File;
-import java.io.IOException;
-import java.io.InputStream;
-import java.net.URISyntaxException;
-import java.net.URL;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Properties;
 
-import org.eclipse.core.resources.IFile;
-import org.eclipse.core.runtime.FileLocator;
 import org.eclipse.core.runtime.IConfigurationElement;
 import org.eclipse.core.runtime.Platform;
+import org.eclipse.emf.common.util.URI;
+import org.eclipse.emf.ecore.resource.Resource;
+import org.eclipse.emf.ecore.resource.impl.ResourceSetImpl;
+import org.eclipse.gemoc.dsl.Dsl;
 import org.osgi.framework.Bundle;
 
 public class DslHelper {
@@ -46,34 +42,18 @@ public class DslHelper {
 		return languagesNames;
 	}
 	
-	public static Properties load(String languageName) {
+	public static Dsl load(String languageName) {
 		
-		InputStream dslFile = null;
 		IConfigurationElement[] languages = Platform.getExtensionRegistry().getConfigurationElementsFor("org.gemoc.gemoc_language_workbench.sequential.xdsml");
 		for (IConfigurationElement lang : languages) {
 			String xdsmlPath = lang.getAttribute("xdsmlFilePath");
 			String xdsmlName = lang.getAttribute("name");
 			if (xdsmlName.equals(languageName) && xdsmlPath.endsWith(".dsl")) {
-				String dslBundleName = lang.getContributor().getName();
-				Bundle bundle = Platform.getBundle(dslBundleName);
-				URL fileURL = bundle.getEntry(xdsmlPath.substring(dslBundleName.length()+1));
-				try {
-					dslFile = fileURL.openConnection().getInputStream();
-				} catch (IOException e) {
-					e.printStackTrace();
-				}
+				Resource res = (new ResourceSetImpl()).getResource(URI.createURI(xdsmlPath), true);
+				Dsl dsl = (Dsl) res.getContents().get(0);
+				return dsl;
 			}
 		}
-		
-		Properties dslProp = new Properties();
-		if(dslFile != null) {
-			try {
-				dslProp.load(dslFile);
-				dslFile.close();
-			} catch (IOException e) {
-				e.printStackTrace();
-			}
-		}
-		return dslProp;
+		return null;
 	}
 }

@@ -16,13 +16,17 @@ import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.LinkedHashSet;
 import java.util.List;
+import java.util.Optional;
 import java.util.Properties;
 import java.util.Set;
 
 import org.eclipse.core.runtime.IConfigurationElement;
 import org.eclipse.core.runtime.Platform;
+import org.eclipse.emf.common.util.EList;
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.resource.Resource;
+import org.eclipse.gemoc.dsl.Dsl;
+import org.eclipse.gemoc.dsl.SimpleValue;
 import org.osgi.framework.Bundle;
 
 import fr.inria.diverse.k3.al.annotationprocessor.Aspect;
@@ -135,15 +139,20 @@ public class MelangeHelper {
 	/**
 	 * @return Aspects defined in 'languageName'
 	 */
-	public static Set<Class<?>> getAspects(String languageName){
+	public static Set<Class<?>> getAspects(String languageName) {
 		Set<Class<?>> res = new HashSet<Class<?>>();
 		
-		Properties dsl = DslHelper.load(languageName);
+		Dsl dsl = DslHelper.load(languageName);
 		if(dsl != null) {
-			String aspectValue = ((String)dsl.get("behavior"));
-			if(aspectValue != null){
-				String[] classNames = aspectValue.split(",");
-				
+			Optional<SimpleValue> semantic = dsl.getSemantic()
+				.getValues()
+				.stream()
+				.filter(v -> v instanceof SimpleValue)
+				.map(v -> (SimpleValue)v)
+				.filter(v -> v.getName().equals("k3"))
+				.findFirst();
+			if(semantic.isPresent()) {
+				List<String> classNames = semantic.get().getValues();
 				for (String asp : classNames) {
 					Class<?> cls = loadAspect(languageName, asp);
 					if(cls != null) {

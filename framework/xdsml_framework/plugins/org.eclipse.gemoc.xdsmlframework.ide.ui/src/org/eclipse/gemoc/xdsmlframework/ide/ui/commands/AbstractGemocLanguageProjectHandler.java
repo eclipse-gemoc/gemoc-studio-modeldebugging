@@ -10,10 +10,7 @@
  *******************************************************************************/
 package org.eclipse.gemoc.xdsmlframework.ide.ui.commands;
 
-
-import java.io.IOException;
 import java.util.Iterator;
-import java.util.Properties;
 
 import org.eclipse.core.commands.AbstractHandler;
 import org.eclipse.core.commands.ExecutionEvent;
@@ -22,7 +19,11 @@ import org.eclipse.core.resources.IProject;
 import org.eclipse.core.resources.IResource;
 import org.eclipse.core.runtime.CoreException;
 import org.eclipse.core.runtime.IAdaptable;
+import org.eclipse.emf.common.util.URI;
+import org.eclipse.emf.ecore.resource.Resource;
+import org.eclipse.emf.ecore.resource.impl.ResourceSetImpl;
 import org.eclipse.gemoc.commons.eclipse.core.resources.FileFinderVisitor;
+import org.eclipse.gemoc.dsl.Dsl;
 import org.eclipse.jface.text.ITextSelection;
 import org.eclipse.jface.viewers.ISelection;
 import org.eclipse.jface.viewers.IStructuredSelection;
@@ -31,26 +32,23 @@ import org.eclipse.ui.handlers.HandlerUtil;
 public abstract class AbstractGemocLanguageProjectHandler extends AbstractHandler {
 
 	public static final String DSL_EXTENSION = "dsl";
-	
+
 	protected IProject getUpdatedGemocLanguageProjectFromSelection(ExecutionEvent event) {
 		IProject updatedGemocLanguageProject = null;
 		ISelection selection = HandlerUtil.getActiveWorkbenchWindow(event).getActivePage().getSelection();
 		if (selection != null & selection instanceof IStructuredSelection) {
 			IStructuredSelection strucSelection = (IStructuredSelection) selection;
 			for (@SuppressWarnings("unchecked")
-				Iterator<Object> iterator = strucSelection.iterator(); 
-				iterator.hasNext();) {
-				
+			Iterator<Object> iterator = strucSelection.iterator(); iterator.hasNext();) {
+
 				Object element = iterator.next();
 
 				if (element instanceof IResource) {
-					updatedGemocLanguageProject = ((IResource) element)
-							.getProject();
+					updatedGemocLanguageProject = ((IResource) element).getProject();
 
 				}
 				if (element instanceof IAdaptable) {
-					IResource res = (IResource) ((IAdaptable) element)
-							.getAdapter(IResource.class);
+					IResource res = (IResource) ((IAdaptable) element).getAdapter(IResource.class);
 					if (res != null) {
 						updatedGemocLanguageProject = res.getProject();
 					}
@@ -64,12 +62,9 @@ public abstract class AbstractGemocLanguageProjectHandler extends AbstractHandle
 				 * +element.toString());
 				 */
 			}
-		}
-		else if (selection != null & selection instanceof ITextSelection) {
-			IResource res = (IResource) HandlerUtil
-					.getActiveWorkbenchWindow(event).getActivePage()
-					.getActiveEditor().getEditorInput()
-					.getAdapter(IResource.class);
+		} else if (selection != null & selection instanceof ITextSelection) {
+			IResource res = (IResource) HandlerUtil.getActiveWorkbenchWindow(event).getActivePage().getActiveEditor()
+					.getEditorInput().getAdapter(IResource.class);
 			if (res != null) {
 				updatedGemocLanguageProject = res.getProject();
 			}
@@ -77,48 +72,46 @@ public abstract class AbstractGemocLanguageProjectHandler extends AbstractHandle
 		return updatedGemocLanguageProject;
 	}
 
-	protected IFile getDslFileFromSelection(ExecutionEvent event){
+	protected IFile getDslFileFromSelection(ExecutionEvent event) {
 		IFile selectedDslIFile = null;
 		ISelection selection = HandlerUtil.getActiveWorkbenchWindow(event).getActivePage().getSelection();
 		if (selection != null & selection instanceof IStructuredSelection) {
 			IStructuredSelection strucSelection = (IStructuredSelection) selection;
 			for (@SuppressWarnings("unchecked")
-				Iterator<Object> iterator = strucSelection.iterator(); 
-				iterator.hasNext();) {
-				
+			Iterator<Object> iterator = strucSelection.iterator(); iterator.hasNext();) {
+
 				Object element = iterator.next();
 
-				if (element instanceof IFile && ((IFile)element).getFileExtension().equals(DSL_EXTENSION)) {
+				if (element instanceof IFile && ((IFile) element).getFileExtension().equals(DSL_EXTENSION)) {
 					selectedDslIFile = (IFile) element;
 
 				}
 				if (element instanceof IAdaptable) {
-					IFile res = (IFile) ((IAdaptable) element)
-							.getAdapter(IFile.class);
+					IFile res = (IFile) ((IAdaptable) element).getAdapter(IFile.class);
 					if (res != null && res.getFileExtension().equals(DSL_EXTENSION)) {
 						selectedDslIFile = res;
 					}
 				}
 			}
 		}
-		
-		if(selectedDslIFile == null) {
+
+		if (selectedDslIFile == null) {
 			// we will search for all .dsl files in the project
 			IProject updatedGemocLanguageProject = getUpdatedGemocLanguageProjectFromSelection(event);
 			return getDslFileFromProject(updatedGemocLanguageProject);
 		}
-		
+
 		return selectedDslIFile;
 	}
-	
-	protected IFile getDslFileFromProject(IProject updatedGemocLanguageProject){
+
+	protected IFile getDslFileFromProject(IProject updatedGemocLanguageProject) {
 		FileFinderVisitor dslProjectVisitor = new FileFinderVisitor(DSL_EXTENSION);
 		try {
 			updatedGemocLanguageProject.accept(dslProjectVisitor);
 			for (IFile projectDslIFile : dslProjectVisitor.getFiles()) {
 				// consider all dsl files in the project
-				if (!(projectDslIFile.getFullPath().toString().contains("/bin/") | projectDslIFile
-						.getFullPath().toString().contains("/target/"))) {
+				if (!(projectDslIFile.getFullPath().toString().contains("/bin/")
+						| projectDslIFile.getFullPath().toString().contains("/target/"))) {
 					return projectDslIFile;
 				}
 			}
@@ -127,22 +120,10 @@ public abstract class AbstractGemocLanguageProjectHandler extends AbstractHandle
 		}
 		return null;
 	}
-	
-	protected String getDslNameFromSelection(ExecutionEvent event){
+
+	protected String getDslNameFromSelection(ExecutionEvent event) {
 		IFile dslFile = getDslFileFromSelection(event);
-		Properties dslProp = new Properties();
-		try {
-			dslProp.load(dslFile.getContents());
-			String name = (String) dslProp.get("name");
-			if(name == null || name.isEmpty()) {
-				return dslFile.getName();
-			}
-			else {
-				return name;
-			}
-		} catch (IOException | CoreException e) {
-			e.printStackTrace();
-		}
-		return null;
+		Resource res = (new ResourceSetImpl()).getResource(URI.createURI(dslFile.getFullPath().toOSString()), true);
+		return ((Dsl) res.getContents().get(0)).getName();
 	}
 }

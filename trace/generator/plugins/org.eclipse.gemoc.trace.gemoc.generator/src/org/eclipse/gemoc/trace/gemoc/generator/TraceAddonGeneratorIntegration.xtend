@@ -11,7 +11,6 @@
 package org.eclipse.gemoc.trace.gemoc.generator
 
 import java.io.IOException
-import java.util.Properties
 import opsemanticsview.OperationalSemanticsView
 import org.eclipse.core.resources.IFile
 import org.eclipse.core.resources.IProject
@@ -25,6 +24,10 @@ import org.eclipse.core.runtime.Platform
 import org.eclipse.core.runtime.Status
 import org.eclipse.gemoc.opsemanticsview.gen.OperationalSemanticsViewGenerator
 import org.eclipse.gemoc.xdsmlframework.ide.ui.xdsml.wizards.MelangeXDSMLProjectHelper
+import org.eclipse.emf.ecore.resource.impl.ResourceSetImpl
+import org.eclipse.emf.ecore.resource.Resource
+import org.eclipse.emf.common.util.URI
+import org.eclipse.gemoc.dsl.Dsl
 
 /**
  * Plenty of ways to call the generator in an eclipse context.
@@ -123,10 +126,10 @@ class TraceAddonGeneratorIntegration {
 		}
 	}
 	
-	protected static def Properties loadDsl(IFile dslFile) {
-		val dslProp = new Properties()
-		dslProp.load(dslFile.getContents())
-		return dslProp
+	protected static def Dsl loadDsl(IFile dslFile) {
+		val Resource res = (new ResourceSetImpl()).getResource(URI.createURI(dslFile.getFullPath().toOSString()), true);
+		val Dsl dsl = res.getContents().get(0) as Dsl;
+		return dsl
 	}
 
 }

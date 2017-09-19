@@ -10,15 +10,15 @@
  *******************************************************************************/
  package org.eclipse.gemoc.opsemanticsview.gen
 
-import java.util.Properties
 import opsemanticsview.OperationalSemanticsView
 import org.eclipse.core.resources.IProject
+import org.eclipse.gemoc.dsl.Dsl
 
 interface OperationalSemanticsViewGenerator {
 
-	public def boolean canHandle(Properties language, IProject melangeProject)
+	public def boolean canHandle(Dsl language, IProject melangeProject)
 
-	public def OperationalSemanticsView generate(Properties language, IProject melangeProject)
+	public def OperationalSemanticsView generate(Dsl language, IProject melangeProject)
 	
 
 }
