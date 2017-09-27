@@ -11,12 +11,8 @@
 package org.eclipse.gemoc.execution.sequential.javaxdsml.ide.ui.builder;
 
 import java.io.IOException;
-import java.io.InputStream;
-import java.io.PipedInputStream;
-import java.io.PipedOutputStream;
 import java.lang.reflect.InvocationTargetException;
 import java.util.Iterator;
-import java.util.Properties;
 
 import org.eclipse.core.commands.AbstractHandler;
 import org.eclipse.core.commands.ExecutionEvent;
@@ -26,18 +22,17 @@ import org.eclipse.core.resources.IProjectDescription;
 import org.eclipse.core.runtime.CoreException;
 import org.eclipse.core.runtime.IAdaptable;
 import org.eclipse.core.runtime.IProgressMonitor;
-import org.eclipse.core.runtime.NullProgressMonitor;
 import org.eclipse.core.runtime.OperationCanceledException;
-import org.eclipse.jface.viewers.ISelection;
-import org.eclipse.jface.viewers.IStructuredSelection;
-import org.eclipse.ui.handlers.HandlerUtil;
-import org.eclipse.gemoc.commons.eclipse.core.resources.NatureToggling;
 import org.eclipse.gemoc.commons.eclipse.core.resources.IProjectUtils;
+import org.eclipse.gemoc.commons.eclipse.core.resources.NatureToggling;
 import org.eclipse.gemoc.commons.eclipse.jdt.JavaProject;
 import org.eclipse.gemoc.commons.eclipse.pde.manifest.ManifestChanger;
 import org.eclipse.gemoc.commons.eclipse.pde.ui.PluginConverter;
 import org.eclipse.gemoc.execution.sequential.javaxdsml.ide.ui.Activator;
 import org.eclipse.gemoc.xdsmlframework.ide.ui.builder.pde.PluginXMLHelper;
+import org.eclipse.jface.viewers.ISelection;
+import org.eclipse.jface.viewers.IStructuredSelection;
+import org.eclipse.ui.handlers.HandlerUtil;
 import org.osgi.framework.BundleException;
 
 
@@ -46,7 +41,6 @@ public class AddRemoveGemocSequentialLanguageNatureHandler extends AbstractHandl
 	//private ISelection selection;
 
 	public Object execute(ExecutionEvent event) throws ExecutionException {
-		// TODO Auto-generated method stub
 		ISelection selection = HandlerUtil.getCurrentSelection(event);
 		//
 		if (selection instanceof IStructuredSelection) {
@@ -160,20 +154,15 @@ public class AddRemoveGemocSequentialLanguageNatureHandler extends AbstractHandl
 			changer.addPluginDependency("org.eclipse.gemoc.xdsmlframework.api");				
 			changer.addPluginDependency("org.eclipse.gemoc.execution.sequential.javaxdsml.api");		
 			changer.addPluginDependency("org.eclipse.gemoc.executionframework.engine");
-//			changer.addSingleton();
-//			changer.addAttributes("Bundle-RequiredExecutionEnvironment","JavaSE-1.7");
 			changer.commit();	
 		} catch (BundleException | IOException | CoreException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
+			Activator.error("Failed to update manifest "+e.getMessage(), e);
 		}
 	}
 	
 	private void addGemocNature(IProject project)
 			throws CoreException {
 		addAsMainNature(project, GemocSequentialLanguageNature.NATURE_ID, null);
-		addMissingResourcesToNature(project);
-		addGemocResourcesToBuildProperties(project);
 	}
 
 	// add the nature making sure this will be the first
@@ -196,50 +185,7 @@ public class AddRemoveGemocSequentialLanguageNatureHandler extends AbstractHandl
 		}
 	}
 	
-	private void addMissingResourcesToNature(IProject project) {
-		
-	}
 	
-	private void addGemocResourcesToBuildProperties(IProject project){
 
-		PipedInputStream in = null;
-		try {
-			Properties properties = new Properties();
-			InputStream inputStream = project.getFile("build.properties").getContents();
-			properties.load(inputStream);
-			String binIncludes = properties.getProperty("bin.includes");
-			if(binIncludes != null ){
-//				if(!binIncludes.contains("project.xdsml")){
-//					properties.put("bin.includes", binIncludes+", project.xdsml");
-//				}
-			}
-			//create an empty InputStream
-			in = new PipedInputStream();
-			//create an OutputStream with the InputStream from above as input
-			PipedOutputStream out = new PipedOutputStream(in);
-
-			//now work on the OutputStream e.g.
-			properties.store(out, "");
-			in.close();
-			out.close();
-			//now you have the OutputStream as InputStream
-
-			//overwrite file contents
-			project.getFile("build.properties").setContents(in, true, true, new NullProgressMonitor());
-				
-		} catch (CoreException e1) {
-			Activator.error(e1.getMessage(), e1);
-		} catch (IOException e) {
-			Activator.error(e.getMessage(), e);
-		} finally {
-			if(in != null){
-				try {
-					in.close();
-				} catch (IOException e) {
-					Activator.error(e.getMessage(), e);
-				}
-			}
-		}
-	}
 
 }

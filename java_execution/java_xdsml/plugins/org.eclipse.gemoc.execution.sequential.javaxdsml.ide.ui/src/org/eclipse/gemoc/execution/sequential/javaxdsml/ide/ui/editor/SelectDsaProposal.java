@@ -18,7 +18,7 @@ import org.eclipse.jface.dialogs.Dialog;
 import org.eclipse.ui.PlatformUI;
 import org.eclipse.gemoc.commons.eclipse.pde.manifest.ManifestChanger;
 import org.eclipse.gemoc.commons.eclipse.ui.dialogs.SelectAnyIProjectDialog;
-import org.eclipse.gemoc.execution.sequential.javaxdsml.ide.ui.templates.SequentialTemplate;
+import org.eclipse.gemoc.execution.sequential.javaxdsml.ide.ui.templates.SequentialSingleLanguageTemplate;
 
 import fr.inria.diverse.melange.ui.contentassist.IProposal;
 
@@ -41,7 +41,7 @@ public class SelectDsaProposal implements IProposal{
 				&& selections[0] instanceof IProject 
 			){
 				dsaProject = (IProject) selections[0];
-				Set<String> aspects = SequentialTemplate.getAspectClassesList(dsaProject);
+				Set<String> aspects = SequentialSingleLanguageTemplate.getAspectClassesList(dsaProject);
 				final StringBuilder insertion = new StringBuilder();
 				for (String asp : aspects) {
 					insertion.append("\twith " + asp + "\n");

@@ -1,0 +1,16 @@
+package $packageName$
+
+external language $baseLanguageName$ {
+	// untouched/original ecore where the editors live. 
+	// It usually corresponds to the abstract syntax of the language without runtime data.
+$isSyntaxStatementCommented$	syntax "platform:/resource/$ecoreFilePath$"
+	
+}
+
+language $languageName$ inherits $baseLanguageName$ {
+	// generates an extended ecore in a language runtime project ($packageName$.$languageNameLCFirst$)
+	// that copies everything needed for the  execution (abstract syntax and aspects), 
+	// The animator is based on this ecore. The animator can be defined as an extension of the $baseLanguageName$ editor.
+	// model instance of $languageName$ are executed as it, model instance of $baseLanguageName$ will be "cast" to $languageName$ before execution
+$listOfAspects$
+}

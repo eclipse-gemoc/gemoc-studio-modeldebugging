@@ -12,16 +12,15 @@ package org.eclipse.gemoc.execution.sequential.javaxdsml.ide.ui.templates;
 
 import org.eclipse.gemoc.commons.eclipse.pde.wizards.pages.pde.ui.BaseProjectWizardFields;
 import org.eclipse.gemoc.commons.eclipse.pde.wizards.pages.pde.ui.templates.ITemplateSection;
+import org.eclipse.gemoc.commons.eclipse.pde.wizards.pages.pde.ui.templates.NewProjectTemplateWizard;
 import org.eclipse.xtext.util.Strings;
 
-import fr.inria.diverse.melange.ui.templates.melange.SimpleMTNewWizard;
-
-public class SequentialNewWizard extends SimpleMTNewWizard{
+public class SequentialSingleLanguageNewWizard extends NewProjectTemplateWizard{
 
 	@Override
 	public void init(BaseProjectWizardFields data) {
 		super.init(data);
-		setWindowTitle("Simple sequential GEMOC project");
+		setWindowTitle(WizardTemplateMessages.SequentialSingleLanguageTemplate_wtitle);
 		
 		try {
 			String project = getData().projectName;
@@ -36,14 +35,14 @@ public class SequentialNewWizard extends SimpleMTNewWizard{
 				languageName = Strings.toFirstUpper(languageName);
 
 				ITemplateSection[] selections = getTemplateSections();
-				SequentialTemplate selection = (SequentialTemplate) selections[0];
-				selection.updateOptions(packageName, languageName);
+				SequentialSingleLanguageTemplate selection = (SequentialSingleLanguageTemplate) selections[0];
+				selection.updateOptions(packageName, languageName, languageName);
 			}
 		} catch (Exception e) {}
 	}
 	
 	@Override
 	public ITemplateSection[] createTemplateSections() {
-		return new ITemplateSection[] {new SequentialTemplate()};
+		return new ITemplateSection[] {new SequentialSingleLanguageTemplate()};
 	}
 }

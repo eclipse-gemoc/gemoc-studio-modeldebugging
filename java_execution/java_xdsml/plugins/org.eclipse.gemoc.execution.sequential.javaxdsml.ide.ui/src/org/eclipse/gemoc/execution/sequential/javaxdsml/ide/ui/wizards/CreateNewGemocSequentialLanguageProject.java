@@ -36,7 +36,7 @@ public class CreateNewGemocSequentialLanguageProject extends NewMelangeProjectWi
 		NewMelangeProjectWizardPage firstPage = (NewMelangeProjectWizardPage) getPage("wizardPage"); 
 		firstPage.setTitle("Project");
 		firstPage.setDescription("Create a new Gemoc Sequential Language Project");
-		firstPage.updateNameProject("org.company.my_sequential_language");
+		firstPage.updateNameProject("org.company.mySequentialLanguage");
 	}
 
 	@Override
@@ -46,7 +46,7 @@ public class CreateNewGemocSequentialLanguageProject extends NewMelangeProjectWi
 	}
 	
 	/**
-	 * Look for extension point="fr.inria.diverse.commons.eclipse.pde.projectContent"
+	 * Look for extension point="org.eclipse.gemoc.commons.eclipse.pde.projectContent"
 	 * and filter wizards
 	 */
 	@Override
@@ -57,7 +57,9 @@ public class CreateNewGemocSequentialLanguageProject extends NewMelangeProjectWi
 		for (Object element : superRes.getChildren()) {
 			if(element instanceof WizardElement){
 				WizardElement wizardElem = (WizardElement) element;
-				if(wizardElem.getID().equals("fr.inria.diverse.melange.ui.templates.projectContent.Sequential")){
+				String id = wizardElem.getID();
+				if(id.equals("org.eclipse.gemoc.execution.sequential.javaxdsml.ide.ui.templates.projectContent.SequentialSingleLanguage") ||
+				   id.equals("org.eclipse.gemoc.execution.sequential.javaxdsml.ide.ui.templates.projectContent.SequentialExtendedLanguage")		){
 					newRes.add(wizardElem);
 				}
 			}
@@ -71,6 +73,7 @@ public class CreateNewGemocSequentialLanguageProject extends NewMelangeProjectWi
 		super.createPageControls(pageContainer);
 		TemplateListSelectionPage templatesPage = getTemplateListSelectionPage(context);
 		templatesPage.setUseTemplate(true);
-		templatesPage.selectTemplate("fr.inria.diverse.melange.ui.templates.projectContent.Sequential");
+		// select this template as default
+		templatesPage.selectTemplate("org.eclipse.gemoc.execution.sequential.javaxdsml.ide.ui.templates.projectContent.SequentialSingleLanguage");
 	}
 }
