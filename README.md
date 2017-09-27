@@ -20,5 +20,5 @@ This project is included within the [GEMOC](http://gemoc.org/ "GEMOC Homepage").
 This project is still in incubation and need more work to reach industrial grade. If you need some help to get started with this project or have any questions about it feel free to contact [Cédric Brun](mailto:cedric.brun@obeo.fr).
 
 # Development
-- Continuous integration on Travis [![Build Status](https://travis-ci.org/SiriusLab/ModelDebugging.svg?branch=master)](https://travis-ci.org/SiriusLab/ModelDebugging)
+- Continuous integration on [Eclipse CI](https://ci.eclipse.org/gemoc/job/gemoc-studio/)
 - Javadoc will come soon
