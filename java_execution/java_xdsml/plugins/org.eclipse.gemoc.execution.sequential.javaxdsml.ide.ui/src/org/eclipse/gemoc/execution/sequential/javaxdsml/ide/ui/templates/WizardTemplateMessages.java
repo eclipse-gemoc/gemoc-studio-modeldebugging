@@ -20,7 +20,8 @@ public class WizardTemplateMessages extends NLS {
 		NLS.initializeMessages(BUNDLE_NAME, WizardTemplateMessages.class);
 	}
 		
-		
+	public static String FirstCharUpperError;
+	
 	// SequentialSingleLanguage constants
 	public static String SequentialSingleLanguageTemplate_packageName;
 	public static String SequentialSingleLanguageTemplate_packageNameToolTip;

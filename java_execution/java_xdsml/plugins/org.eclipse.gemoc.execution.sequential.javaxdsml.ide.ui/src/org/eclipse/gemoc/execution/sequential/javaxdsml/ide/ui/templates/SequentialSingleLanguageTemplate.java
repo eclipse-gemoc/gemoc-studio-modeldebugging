@@ -26,11 +26,12 @@ import org.eclipse.core.resources.ResourcesPlugin;
 import org.eclipse.core.runtime.CoreException;
 import org.eclipse.core.runtime.IProgressMonitor;
 import org.eclipse.emf.common.ui.dialogs.WorkspaceResourceDialog;
-import org.eclipse.ui.IWorkbenchWindow;
-import org.eclipse.ui.PlatformUI;
-import org.eclipse.xtext.util.Strings;
 import org.eclipse.gemoc.commons.eclipse.core.resources.FileFinderVisitor;
 import org.eclipse.gemoc.commons.eclipse.core.resources.IFolderUtils;
+import org.eclipse.gemoc.commons.eclipse.pde.manifest.ManifestChanger;
+import org.eclipse.gemoc.commons.eclipse.pde.wizards.pages.pde.ui.BaseProjectWizardFields;
+import org.eclipse.gemoc.commons.eclipse.pde.wizards.pages.pde.ui.templates.AbstractStringWithButtonOption;
+import org.eclipse.gemoc.commons.eclipse.pde.wizards.pages.pde.ui.templates.TemplateOption;
 import org.eclipse.gemoc.execution.sequential.javaxdsml.ide.ui.Activator;
 import org.eclipse.gemoc.execution.sequential.javaxdsml.ide.ui.dialogs.SelectDSAIProjectDialog;
 import org.eclipse.jface.viewers.IStructuredSelection;
@@ -38,12 +39,10 @@ import org.eclipse.jface.viewers.Viewer;
 import org.eclipse.jface.viewers.ViewerFilter;
 import org.eclipse.jface.wizard.Wizard;
 import org.eclipse.jface.wizard.WizardPage;
+import org.eclipse.ui.IWorkbenchWindow;
+import org.eclipse.ui.PlatformUI;
+import org.eclipse.xtext.util.Strings;
 import org.osgi.framework.BundleException;
-
-import org.eclipse.gemoc.commons.eclipse.pde.manifest.ManifestChanger;
-import org.eclipse.gemoc.commons.eclipse.pde.wizards.pages.pde.ui.BaseProjectWizardFields;
-import org.eclipse.gemoc.commons.eclipse.pde.wizards.pages.pde.ui.templates.AbstractStringWithButtonOption;
-import org.eclipse.gemoc.commons.eclipse.pde.wizards.pages.pde.ui.templates.TemplateOption;
 
 import fr.inria.diverse.melange.ui.wizards.pages.NewMelangeProjectWizardFields;
 
@@ -361,4 +360,18 @@ public class SequentialSingleLanguageTemplate extends JavaxdsmlTemplateSection {
 		// create empty folders in order to avoid warning on creation
 		IFolderUtils.createFolder("model-gen", project, monitor);
 	}
+	
+	@Override
+	public void validateOptions(TemplateOption source) {
+		super.validateOptions(source);
+		if( source.getName().contentEquals(KEY_LANGUAGE_NAME)){
+			String langName = getStringOption(KEY_LANGUAGE_NAME);
+			if(langName!=null && !langName.isEmpty() && !Character.isUpperCase(langName.charAt(0))){
+				flagErrorOnOption(source, WizardTemplateMessages.FirstCharUpperError);
+			}
+		}
+	}
+	
+
+	
 }

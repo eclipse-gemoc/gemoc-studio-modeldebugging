@@ -369,4 +369,20 @@ public class SequentialExtendedLanguageTemplate extends JavaxdsmlTemplateSection
 		// create empty folders in order to avoid warning on creation
 		IFolderUtils.createFolder("model-gen", project, monitor);
 	}
+	
+	@Override
+	public void validateOptions(TemplateOption source) {
+		super.validateOptions(source);
+		if( source.getName().contentEquals(KEY_LANGUAGE_NAME)){
+			String langName = getStringOption(KEY_LANGUAGE_NAME);
+			if(langName!=null && !langName.isEmpty() && !Character.isUpperCase(langName.charAt(0))){
+				flagErrorOnOption(source, WizardTemplateMessages.FirstCharUpperError);
+			}
+		} else if( source.getName().contentEquals(KEY_BASE_LANGUAGE_NAME)){
+			String langName = getStringOption(KEY_BASE_LANGUAGE_NAME);
+			if(langName!=null && !langName.isEmpty() && !Character.isUpperCase(langName.charAt(0))){
+				flagErrorOnOption(source, WizardTemplateMessages.FirstCharUpperError);
+			}
+		}
+	}
 }
