@@ -112,12 +112,15 @@ public class GemocSequentialLanguageBuilder extends IncrementalProjectBuilder {
 			if (file.exists()) {
 				
 				Resource res = (new ResourceSetImpl()).getResource(URI.createURI(file.getFullPath().toOSString()), true);
-				Dsl dsl = (Dsl) res.getContents().get(0);
-				String languageName = dsl.getName();
-				if(languageName == null || languageName.isEmpty()) {
-					languageName = file.getName();
+				if(res != null && res.getContents().size() > 0 && res.getContents().get(0) instanceof Dsl) {
+					Dsl dsl = (Dsl) res.getContents().get(0);
+					String languageName = dsl.getName();
+					if(languageName == null || languageName.isEmpty()) {
+						languageName = file.getName();
+					}
+					setPluginLanguageNameAndFilePath(project, file, languageName);
+					
 				}
-				setPluginLanguageNameAndFilePath(project, file, languageName);
 				
 				//Use default model loader
 				updateModelLoaderClass(project, null);
