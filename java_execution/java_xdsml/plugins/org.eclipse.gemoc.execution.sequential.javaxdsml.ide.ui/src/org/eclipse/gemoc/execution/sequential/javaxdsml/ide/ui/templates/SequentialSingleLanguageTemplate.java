@@ -19,6 +19,7 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.Properties;
 import java.util.Set;
+import java.util.StringJoiner;
 
 import org.eclipse.core.resources.IFile;
 import org.eclipse.core.resources.IProject;
@@ -307,7 +308,7 @@ public class SequentialSingleLanguageTemplate extends JavaxdsmlTemplateSection {
 				ecoreIFile == null?"//":"", 0);
 		
 		//Replace KEY_ASPECTS' value (which is a project name) by a list of aspects 
-		final String DEFAULT_VALUE = "//\twith qualified.class.name\n";
+		final String DEFAULT_VALUE = "//\t\tk3 = \"qualified.class.name\"";
 		
 		String selection = dsaProjectName;
 		if(selection != null && !selection.isEmpty()){
@@ -315,14 +316,19 @@ public class SequentialSingleLanguageTemplate extends JavaxdsmlTemplateSection {
 			IProject dsaProject = ResourcesPlugin.getWorkspace().getRoot().getProject(selection);
 			Set<String> aspects = getAspectClassesList(dsaProject);
 			
+			StringJoiner sj = new StringJoiner("\",\n\t\t     \"", "\t\tk3 = \"", "\"");
+			
+			
+			
 			StringBuilder templateWith = new StringBuilder();
 			if(aspects.isEmpty()){
 				templateWith.append(DEFAULT_VALUE);
 			}
 			else{
 				for(String aspect : aspects){
-					templateWith.append("\twith "+aspect+"\n");
+					sj.add(aspect);
 				}
+				templateWith.append(sj);
 			}
 			dsaProjectLocationOption.setValue(templateWith.toString());
 		}
