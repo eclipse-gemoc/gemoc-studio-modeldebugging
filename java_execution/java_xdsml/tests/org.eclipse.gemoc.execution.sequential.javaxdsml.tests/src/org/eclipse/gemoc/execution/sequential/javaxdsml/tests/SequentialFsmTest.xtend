@@ -39,6 +39,7 @@ public class SequentialFsmTest extends AbstractXtextTests
 	static final String MELANGE_FILE = PROJECT_NAME+"/src/org/eclipse/gemoc/sample/legacyfsm/fsm/FSM.melange"
 	static final String PROJECT_NAME2 = BASE_PROJECT_NAME+".xsfsm"
 	static final String MELANGE_FILE2 = PROJECT_NAME2+"/src/org/eclipse/gemoc/sample/legacyfsm/xsfsm/language/XSFSM.melange"
+	static final String DSL_FILE2 = PROJECT_NAME2+"/src/org/gemoc/sample/legacyfsm/xsfsm/language/XSFSM.dsl"
 	
 	@Before
 	override setUp() {
@@ -90,7 +91,7 @@ public class SequentialFsmTest extends AbstractXtextTests
 	
 	@Test
 	def void test03GenerateTrace_NoErrorsInWorkspace() {
-		helper.generateTrace(MELANGE_FILE2, "XSFSM", PROJECT_NAME2+".trace")
+		helper.generateTrace(DSL_FILE2, "XSFSM", PROJECT_NAME2+".trace")
 		IResourcesSetupUtil::reallyWaitForAutoBuild
 		helper.assertNoMarkers
 		
