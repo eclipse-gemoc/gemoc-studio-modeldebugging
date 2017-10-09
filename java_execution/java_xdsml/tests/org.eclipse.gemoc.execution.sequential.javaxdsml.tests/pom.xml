@@ -119,6 +119,11 @@
 			               <id>org.eclipse.sdk</id>
 			               <versionRange>1.0.0</versionRange>
 			            </requirement>
+			            <requirement>
+	                        <type>eclipse-feature</type>
+	                        <id>org.eclipse.xtext.sdk</id>
+	                        <versionRange>1.0.0</versionRange>
+	                     </requirement>
 			            <!-- GEMOC components -->
 			            <requirement>
 			               <type>eclipse-feature</type>
