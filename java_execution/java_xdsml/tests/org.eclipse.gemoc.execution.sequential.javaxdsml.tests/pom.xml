@@ -42,7 +42,7 @@
 				<configuration>
 					<argLine>-Xmx2048m</argLine>
 					<useUIHarness>true</useUIHarness>
-					<useUIThread>false</useUIThread>
+					<useUIThread>true</useUIThread>
 				</configuration>
 			</plugin>
 		
