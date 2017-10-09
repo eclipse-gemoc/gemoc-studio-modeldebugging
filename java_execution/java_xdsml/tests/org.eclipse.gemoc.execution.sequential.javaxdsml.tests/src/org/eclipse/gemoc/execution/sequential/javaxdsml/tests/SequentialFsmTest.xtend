@@ -24,6 +24,7 @@ import org.junit.runner.RunWith
 import org.junit.runners.MethodSorters
 import org.eclipse.gemoc.xdsmlframework.test.lib.WorkspaceTestHelper
 import org.eclipse.gemoc.xdsmlframework.test.lib.MelangeUiInjectorProvider
+import org.eclipse.swt.widgets.Display
 
 @RunWith(XtextRunner)
 @InjectWith(MelangeUiInjectorProvider)
@@ -79,8 +80,13 @@ public class SequentialFsmTest extends AbstractXtextTests
 	
 	@Test
 	def void test01GenerateAllMelange_NoErrorsInWorkspace() {
-		helper.generateAll(MELANGE_FILE)
-		helper.generateAll(MELANGE_FILE2)
+		Display.^default.syncExec(
+			new Runnable() {
+				override run() {
+					helper.generateAll(MELANGE_FILE)
+					helper.generateAll(MELANGE_FILE2)
+				}
+		})
 		IResourcesSetupUtil::reallyWaitForAutoBuild
 		helper.assertNoMarkers
 		
