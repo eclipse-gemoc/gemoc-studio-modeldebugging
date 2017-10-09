@@ -63,11 +63,21 @@ public class SequentialFsmTest extends AbstractXtextTests
 			helper.deployProject(PROJECT_NAME2+".design",BASE_FOLDER_NAME+"/"+PROJECT_NAME2+".design.zip")
 			
 			IResourcesSetupUtil::reallyWaitForAutoBuild
-			helper.cleanAll(MELANGE_FILE)
-			helper.cleanAll(MELANGE_FILE2)
+			Display.^default.syncExec(
+			new Runnable() {
+					override run() {
+						helper.cleanAll(MELANGE_FILE)
+						helper.cleanAll(MELANGE_FILE2)
+					}
+			})
 			IResourcesSetupUtil::reallyWaitForAutoBuild
-			helper.openEditor(MELANGE_FILE)
-			helper.openEditor(MELANGE_FILE2)
+			Display.^default.syncExec(
+			new Runnable() {
+					override run() {
+						helper.openEditor(MELANGE_FILE)
+						helper.openEditor(MELANGE_FILE2)
+					}
+			})
 		} else {
 			melangeProject = helper.getProject(PROJECT_NAME)
 		}
