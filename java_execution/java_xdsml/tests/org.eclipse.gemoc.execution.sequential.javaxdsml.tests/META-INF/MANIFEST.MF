@@ -20,4 +20,7 @@ Require-Bundle: org.eclipse.gemoc.execution.sequential.javaxdsml.ide.ui;bundle-v
  org.eclipse.core.expressions;bundle-version="3.5.100",
  org.eclipse.gemoc.trace.gemoc.generator;bundle-version="2.4.0",
  org.eclipse.gemoc.trace.gemoc;bundle-version="2.4.0",
- org.eclipse.gemoc.xdsmlframework.test.lib;bundle-version="2.4.0"
+ org.eclipse.gemoc.xdsmlframework.test.lib;bundle-version="2.4.0",
+ org.eclipse.swtbot.eclipse.finder,
+ org.eclipse.swtbot.junit4_x,
+ org.hamcrest.core
