@@ -13,8 +13,7 @@ node {
 	         checkout gemocstudioScm
 	      }
 	      dir('gemoc-studio-modeldebugging') {
-	         def gemocstudiomodeldebuggingScm = resolveScm source: [$class: 'GitSCMSource', credentialsId: '', id: '_', remote: 'https://github.com/gemoc/gemoc-studio-modeldebugging-eclipsefork.git', traits: [[$class: 'BranchDiscoveryTrait']]], targets: [BRANCH_NAME, 'master']
-
+	         def gemocstudiomodeldebuggingScm = resolveScm source: [$class: 'GitSCMSource', credentialsId: '', id: '_', remote: 'https://github.com/eclipse/gemoc-studio-modeldebugging.git', traits: [[$class: 'BranchDiscoveryTrait']]], targets: [BRANCH_NAME, 'master']
 	         checkout gemocstudiomodeldebuggingScm
 	      }
 	      echo 'Content of the workspace'
@@ -40,3 +39,4 @@ node {
    }
    step([$class: 'Mailer', notifyEveryUnstableBuild: true, recipients: '', sendToIndividuals: true])
 }
+
