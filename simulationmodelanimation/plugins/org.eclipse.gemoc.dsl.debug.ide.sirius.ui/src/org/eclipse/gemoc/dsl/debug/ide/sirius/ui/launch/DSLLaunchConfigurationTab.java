@@ -10,10 +10,6 @@
  *******************************************************************************/
 package org.eclipse.gemoc.dsl.debug.ide.sirius.ui.launch;
 
-import org.eclipse.gemoc.dsl.debug.ide.Activator;
-import org.eclipse.gemoc.dsl.debug.ide.launch.AbstractDSLLaunchConfigurationDelegate;
-import org.eclipse.gemoc.dsl.debug.ide.ui.launch.FilteredFileContentProvider;
-
 import org.eclipse.core.resources.IFile;
 import org.eclipse.core.resources.ResourcesPlugin;
 import org.eclipse.core.runtime.CoreException;
@@ -25,6 +21,9 @@ import org.eclipse.emf.common.util.WrappedException;
 import org.eclipse.emf.ecore.resource.Resource;
 import org.eclipse.emf.ecore.resource.ResourceSet;
 import org.eclipse.emf.ecore.resource.impl.ResourceSetImpl;
+import org.eclipse.gemoc.dsl.debug.ide.Activator;
+import org.eclipse.gemoc.dsl.debug.ide.launch.AbstractDSLLaunchConfigurationDelegate;
+import org.eclipse.gemoc.dsl.debug.ide.ui.launch.FilteredFileContentProvider;
 import org.eclipse.jface.window.Window;
 import org.eclipse.sirius.business.api.helper.SiriusUtil;
 import org.eclipse.swt.SWT;
@@ -50,7 +49,7 @@ import org.eclipse.ui.model.WorkbenchLabelProvider;
 public class DSLLaunchConfigurationTab extends org.eclipse.gemoc.dsl.debug.ide.ui.launch.DSLLaunchConfigurationTab {
 
 	/**
-	 * The {@link Text} used for the {@link AbstractDSLLaunchConfigurationDelegateUI#SIRIUS_RESOURCE_URI}.
+	 * The {@link Text} used for the * {@link AbstractDSLLaunchConfigurationDelegateUI#SIRIUS_RESOURCE_URI}.
 	 */
 	private Text siriusResourceURIText;
 
@@ -107,8 +106,8 @@ public class DSLLaunchConfigurationTab extends org.eclipse.gemoc.dsl.debug.ide.u
 			if (res) {
 				String siriusResourceURI = launchConfig.getAttribute(
 						AbstractDSLLaunchConfigurationDelegateUI.SIRIUS_RESOURCE_URI, "");
-				IFile resourceFile = ResourcesPlugin.getWorkspace().getRoot().getFile(
-						new Path(siriusResourceURI));
+				IFile resourceFile = ResourcesPlugin.getWorkspace().getRoot().getFile(new Path(
+						siriusResourceURI));
 				Resource resource = null;
 				if (resourceFile.exists()) {
 					final ResourceSet rs = new ResourceSetImpl();
@@ -116,8 +115,8 @@ public class DSLLaunchConfigurationTab extends org.eclipse.gemoc.dsl.debug.ide.u
 						resource = rs.getResource(URI.createPlatformResourceURI(siriusResourceURI, true),
 								true);
 					} catch (WrappedException e) {
-						errorMessage = "Sirius session model can't be loaded: "
-								+ ((WrappedException)e).exception().getLocalizedMessage() + ".";
+						errorMessage = "Sirius session model can't be loaded: " + ((WrappedException)e)
+								.exception().getLocalizedMessage() + ".";
 					}
 				}
 				res = resource != null;
@@ -183,8 +182,8 @@ public class DSLLaunchConfigurationTab extends org.eclipse.gemoc.dsl.debug.ide.u
 	 */
 	private void openSiriusModelSelection(final Composite parent) {
 		ElementTreeSelectionDialog dialog = new ElementTreeSelectionDialog(parent.getShell(),
-				new WorkbenchLabelProvider(), new FilteredFileContentProvider(
-						new String[] {SiriusUtil.SESSION_RESOURCE_EXTENSION }));
+				new WorkbenchLabelProvider(), new FilteredFileContentProvider(new String[] {
+						SiriusUtil.SESSION_RESOURCE_EXTENSION }));
 		dialog.setTitle("Select model file");
 		dialog.setMessage("Select the model file to execute:");
 		dialog.setInput(ResourcesPlugin.getWorkspace().getRoot());

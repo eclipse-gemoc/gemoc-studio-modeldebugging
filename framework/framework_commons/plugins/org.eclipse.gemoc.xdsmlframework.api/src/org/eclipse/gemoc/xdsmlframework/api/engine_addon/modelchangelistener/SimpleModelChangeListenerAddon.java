@@ -23,10 +23,9 @@ import org.eclipse.emf.ecore.EStructuralFeature;
 import org.eclipse.emf.ecore.resource.Resource;
 import org.eclipse.emf.ecore.util.EContentAdapter;
 import org.eclipse.gemoc.xdsmlframework.api.core.IExecutionEngine;
-import org.eclipse.gemoc.xdsmlframework.api.engine_addon.DefaultEngineAddon;
 import org.eclipse.gemoc.xdsmlframework.api.engine_addon.IEngineAddon;
 
-public class SimpleModelChangeListenerAddon extends DefaultEngineAddon implements IModelChangeListenerAddon {
+public class SimpleModelChangeListenerAddon implements IEngineAddon, IModelChangeListenerAddon {
 
 	private EContentAdapter adapter;
 	private IExecutionEngine engine;

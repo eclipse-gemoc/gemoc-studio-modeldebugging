@@ -62,7 +62,6 @@ public class GemocToggleBreakpointHandler extends AbstractHandler {
 				{
 					res = super.getInstruction(selected);
 				}
-
 				return res;
 			}
 			

@@ -13,7 +13,6 @@ package org.eclipse.gemoc.executionframework.debugger;
 import java.util.ArrayDeque;
 import java.util.ArrayList;
 import java.util.Arrays;
-import java.util.Collection;
 import java.util.Collections;
 import java.util.Comparator;
 import java.util.Deque;
@@ -35,6 +34,15 @@ import org.eclipse.debug.internal.ui.views.launch.LaunchView;
 import org.eclipse.emf.common.util.TreeIterator;
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.resource.Resource;
+import org.eclipse.gemoc.dsl.debug.StackFrame;
+import org.eclipse.gemoc.dsl.debug.ide.AbstractDSLDebugger;
+import org.eclipse.gemoc.dsl.debug.ide.adapter.DSLStackFrameAdapter;
+import org.eclipse.gemoc.dsl.debug.ide.event.IDSLDebugEventProcessor;
+import org.eclipse.gemoc.trace.commons.model.trace.MSEOccurrence;
+import org.eclipse.gemoc.xdsmlframework.api.core.IExecutionEngine;
+import org.eclipse.gemoc.xdsmlframework.api.engine_addon.modelchangelistener.FieldChange;
+import org.eclipse.gemoc.xdsmlframework.api.engine_addon.modelchangelistener.IModelChangeListenerAddon;
+import org.eclipse.gemoc.xdsmlframework.api.engine_addon.modelchangelistener.SimpleModelChangeListenerAddon;
 import org.eclipse.jface.viewers.ISelectionProvider;
 import org.eclipse.jface.viewers.StructuredSelection;
 import org.eclipse.jface.viewers.TreePath;
@@ -46,19 +54,6 @@ import org.eclipse.ui.IViewPart;
 import org.eclipse.ui.IWorkbench;
 import org.eclipse.ui.IWorkbenchPage;
 import org.eclipse.ui.PlatformUI;
-import org.eclipse.gemoc.xdsmlframework.api.core.EngineStatus.RunStatus;
-import org.eclipse.gemoc.xdsmlframework.api.core.IExecutionEngine;
-import org.eclipse.gemoc.xdsmlframework.api.engine_addon.IEngineAddon;
-import org.eclipse.gemoc.xdsmlframework.api.engine_addon.modelchangelistener.FieldChange;
-import org.eclipse.gemoc.xdsmlframework.api.engine_addon.modelchangelistener.IModelChangeListenerAddon;
-import org.eclipse.gemoc.xdsmlframework.api.engine_addon.modelchangelistener.SimpleModelChangeListenerAddon;
-
-import org.eclipse.gemoc.trace.commons.model.trace.MSEOccurrence;
-import org.eclipse.gemoc.trace.commons.model.trace.Step;
-import org.eclipse.gemoc.dsl.debug.StackFrame;
-import org.eclipse.gemoc.dsl.debug.ide.AbstractDSLDebugger;
-import org.eclipse.gemoc.dsl.debug.ide.adapter.DSLStackFrameAdapter;
-import org.eclipse.gemoc.dsl.debug.ide.event.IDSLDebugEventProcessor;
 
 @SuppressWarnings("restriction")
 public abstract class AbstractGemocDebugger extends AbstractDSLDebugger implements IGemocDebugger {
@@ -465,40 +460,5 @@ public abstract class AbstractGemocDebugger extends AbstractDSLDebugger implemen
 								}
 							}
 						});
-	}
-
-	@Override
-	public void engineAboutToStart(IExecutionEngine engine) {
-	}
-
-	@Override
-	public void engineAboutToStop(IExecutionEngine engine) {
-		resume();
-	}
-
-	@Override
-	public void engineAboutToDispose(IExecutionEngine engine) {
-		resume();
-	}
-
-	@Override
-	public void engineStatusChanged(IExecutionEngine engine, RunStatus newStatus) {
-	}
-
-	@Override
-	public void aboutToSelectStep(IExecutionEngine engine, Collection<Step<?>> logicalSteps) {
-	}
-
-	@Override
-	public void proposedStepsChanged(IExecutionEngine engine, Collection<Step<?>> logicalSteps) {
-	}
-
-	@Override
-	public void stepSelected(IExecutionEngine engine, Step<?> selectedLogicalStep) {
-	}
-
-	@Override
-	public List<String> validate(List<IEngineAddon> otherAddons) {
-		return new ArrayList<String>();
 	}
 }

@@ -1,18 +1,10 @@
 package org.eclipse.gemoc.trace.plugin.generator.test
 
-import org.eclipse.gemoc.trace.plugin.generator.GenericTracePluginGenerator
-import java.util.Random
-import org.eclipse.emf.common.util.URI
-import org.junit.Test
+import org.eclipse.core.resources.IProject
 import org.eclipse.gemoc.trace.commons.testutil.EclipseTestUtil
 import org.junit.After
-import org.eclipse.core.resources.IProject
 import org.junit.AfterClass
-import org.eclipse.emf.ecore.resource.ResourceSet
-import org.eclipse.emf.ecore.resource.impl.ResourceSetImpl
-import org.eclipse.emf.ecore.resource.Resource
-import org.eclipse.emf.ecore.EPackage
-import org.eclipse.gemoc.trace.commons.EMFUtil
+import org.junit.Test
 
 /**
  * Taken from http://www.informit.com/articles/article.aspx?p=1315271&seqNum=8
