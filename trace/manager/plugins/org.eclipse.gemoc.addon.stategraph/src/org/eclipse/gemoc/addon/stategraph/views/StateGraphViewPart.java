@@ -25,6 +25,20 @@ import org.eclipse.emf.ecore.resource.ResourceSet;
 import org.eclipse.emf.ecore.resource.impl.ResourceSetImpl;
 import org.eclipse.emf.ecore.util.EcoreUtil;
 import org.eclipse.emf.ecore.xmi.impl.XMIResourceFactoryImpl;
+import org.eclipse.gemoc.addon.stategraph.Activator;
+import org.eclipse.gemoc.addon.stategraph.layout.StateGraphLayoutCommand;
+import org.eclipse.gemoc.addon.stategraph.logic.StateGraph;
+import org.eclipse.gemoc.addon.stategraph.logic.StateVertex;
+import org.eclipse.gemoc.executionframework.ui.views.engine.EngineSelectionDependentViewPart;
+import org.eclipse.gemoc.executionframework.ui.views.engine.actions.AbstractEngineAction;
+import org.eclipse.gemoc.trace.commons.model.trace.Dimension;
+import org.eclipse.gemoc.trace.commons.model.trace.State;
+import org.eclipse.gemoc.trace.commons.model.trace.Step;
+import org.eclipse.gemoc.trace.commons.model.trace.TracedObject;
+import org.eclipse.gemoc.trace.commons.model.trace.Value;
+import org.eclipse.gemoc.trace.gemoc.api.IMultiDimensionalTraceAddon;
+import org.eclipse.gemoc.trace.gemoc.traceaddon.AbstractTraceAddon;
+import org.eclipse.gemoc.xdsmlframework.api.core.IExecutionEngine;
 import org.eclipse.jface.action.Action;
 import org.eclipse.jface.action.IToolBarManager;
 import org.eclipse.jface.resource.ImageDescriptor;
@@ -33,16 +47,7 @@ import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.FileDialog;
 import org.eclipse.swt.widgets.Shell;
 import org.eclipse.ui.IActionBars;
-import org.eclipse.gemoc.executionframework.ui.views.engine.EngineSelectionDependentViewPart;
-import org.eclipse.gemoc.executionframework.ui.views.engine.actions.AbstractEngineAction;
-import org.eclipse.gemoc.addon.stategraph.Activator;
-import org.eclipse.gemoc.addon.stategraph.layout.StateGraphLayoutCommand;
-import org.eclipse.gemoc.addon.stategraph.logic.StateGraph;
-import org.eclipse.gemoc.addon.stategraph.logic.StateVertex;
-import org.eclipse.gemoc.xdsmlframework.api.core.IExecutionEngine;
 
-import org.eclipse.gemoc.trace.gemoc.api.IMultiDimensionalTraceAddon;
-import org.eclipse.gemoc.trace.gemoc.traceaddon.AbstractTraceAddon;
 import javafx.embed.swt.FXCanvas;
 import javafx.scene.Cursor;
 import javafx.scene.Scene;
@@ -76,7 +81,7 @@ public class StateGraphViewPart extends EngineSelectionDependentViewPart {
 		if (engine != null) {
 			Set<IMultiDimensionalTraceAddon> traceAddons = engine.getAddonsTypedBy(IMultiDimensionalTraceAddon.class);
 			if (!traceAddons.isEmpty()) {
-				final IMultiDimensionalTraceAddon traceAddon = traceAddons.iterator().next();
+				final IMultiDimensionalTraceAddon<Step<?>, State<?,?>, TracedObject<?>, Dimension<?>, Value<?>> traceAddon = traceAddons.iterator().next();
 				stateGraph = new StateGraph();
 				stateGraph.setTraceExtractor(traceAddon.getTraceExtractor());
 				stateGraph.setTraceExplorer(traceAddon.getTraceExplorer());

@@ -24,7 +24,4 @@ public class GemocSequentialToggleBreakpointAction extends GemocToggleBreakpoint
 	protected String getModelIdentifier() {
 		return Activator.DEBUG_MODEL_ID;
 	}
-
-	
-	
 }

@@ -29,12 +29,4 @@
       </setup>
    </extension>
 
-   <extension point="org.eclipse.emf.ecore.generated_package">
-      <!-- @generated stategraph -->
-      <package
-            uri="http://stategraph/"
-            class="org.eclipse.gemoc.addon.stategraph.model.stategraph.StategraphPackage"
-            genModel="model/stategraph.genmodel"/>
-   </extension>
-
 </plugin>

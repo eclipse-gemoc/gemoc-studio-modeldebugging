@@ -428,7 +428,7 @@ class K3StepExtractor {
 			return simpleName == "Step"
 		]
 		annotation != null && annotation.memberValuePairs.exists [ p |
-			p.memberName == "eventTriggerable" && p.value instanceof Boolean && p.value as Boolean
+			p.memberName == "eventHandler" && p.value instanceof Boolean && p.value as Boolean
 		]
 	}
 

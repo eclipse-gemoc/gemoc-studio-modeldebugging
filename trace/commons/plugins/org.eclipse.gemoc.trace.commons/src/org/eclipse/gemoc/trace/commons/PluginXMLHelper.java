@@ -92,7 +92,6 @@ public class PluginXMLHelper {
 		}
 	}
 	
-	
 	public Element getOrCreateExtensionPoint(String extensionPointName){
 		Element result;
 		List<Element> elements = root.getContent(new ExtensionFilter(extensionPointName));

@@ -14,7 +14,6 @@ import org.eclipse.gemoc.trace.commons.CodeGenUtil
 import org.eclipse.gemoc.trace.commons.EclipseUtil
 import org.eclipse.gemoc.trace.commons.EcoreCraftingUtil
 import org.eclipse.gemoc.trace.commons.ManifestUtil
-import org.eclipse.gemoc.trace.commons.PluginXMLHelper
 import org.eclipse.gemoc.trace.gemoc.generator.codegen.StateManagerGeneratorJava
 import org.eclipse.gemoc.trace.gemoc.generator.codegen.TraceConstructorGeneratorJava
 import org.eclipse.gemoc.trace.gemoc.generator.util.StandaloneEMFProjectGenerator
@@ -42,6 +41,7 @@ import org.eclipse.xtend.lib.annotations.Accessors
 import org.eclipse.gemoc.xdsmlframework.api.extensions.engine_addon.EngineAddonSpecificationExtensionPoint
 import org.jdom2.Element
 import org.jdom2.filter.ElementFilter
+import org.eclipse.gemoc.xdsmlframework.ide.ui.builder.pde.PluginXMLHelper
 
 class GenericEngineTraceAddonGenerator {
 

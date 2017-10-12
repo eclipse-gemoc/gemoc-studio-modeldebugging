@@ -37,9 +37,6 @@
          point="org.eclipse.ui.perspectiveExtensions">
       <perspectiveExtension
             targetID="org.eclipse.debug.ui.DebugPerspective">
-         <viewShortcut
-               id="org.eclipse.gemoc.addon.diffviewer.TimelineDiffView">
-         </viewShortcut>
       </perspectiveExtension>
       <perspectiveExtension
             targetID="org.eclipse.sirius.ui.tools.perspective.modeling">

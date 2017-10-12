@@ -10,6 +10,12 @@
  *******************************************************************************/
 package org.eclipse.gemoc.addon.diffviewer.views;
 
+import org.eclipse.gemoc.trace.commons.model.trace.Dimension;
+import org.eclipse.gemoc.trace.commons.model.trace.State;
+import org.eclipse.gemoc.trace.commons.model.trace.Step;
+import org.eclipse.gemoc.trace.commons.model.trace.TracedObject;
+import org.eclipse.gemoc.trace.commons.model.trace.Value;
+import org.eclipse.gemoc.trace.gemoc.api.ITraceExtractor;
 import org.eclipse.jface.dialogs.IMessageProvider;
 import org.eclipse.jface.dialogs.TitleAreaDialog;
 import org.eclipse.swt.SWT;
@@ -18,13 +24,10 @@ import org.eclipse.swt.layout.GridLayout;
 import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Control;
 import org.eclipse.swt.widgets.Shell;
-import org.eclipse.swt.widgets.Text;
 
-import org.eclipse.gemoc.trace.gemoc.api.ITraceExtractor;
 import javafx.beans.property.ReadOnlyDoubleProperty;
 import javafx.embed.swt.FXCanvas;
 import javafx.geometry.Pos;
-import javafx.scene.Group;
 import javafx.scene.Scene;
 import javafx.scene.control.Label;
 import javafx.scene.control.OverrunStyle;
@@ -47,13 +50,14 @@ public class TraceSectionsDialog extends TitleAreaDialog {
 	private int e1 = -1;
 	private int e2 = -1;
 
-	private ITraceExtractor extractor1;
-	private ITraceExtractor extractor2;
+	private ITraceExtractor<Step<?>, State<?,?>, TracedObject<?>, Dimension<?>, Value<?>> extractor1;
+	private ITraceExtractor<Step<?>, State<?,?>, TracedObject<?>, Dimension<?>, Value<?>> extractor2;
 	
 	private static final Background TRANSPARENT_BACKGROUND = new Background(
 			new BackgroundFill(Color.TRANSPARENT, null, null));
 
-	public TraceSectionsDialog(Shell parentShell, ITraceExtractor extractor1, ITraceExtractor extractor2) {
+	public TraceSectionsDialog(Shell parentShell, ITraceExtractor<Step<?>, State<?,?>, TracedObject<?>, Dimension<?>, Value<?>> extractor1,
+			ITraceExtractor<Step<?>, State<?,?>, TracedObject<?>, Dimension<?>, Value<?>> extractor2) {
 		super(parentShell);
 		this.extractor1 = extractor1;
 		this.extractor2 = extractor2;
@@ -72,7 +76,7 @@ public class TraceSectionsDialog extends TitleAreaDialog {
 		return new Polygon(0, 7.5, 5, 0, -5, 0);
 	}
 	
-	private Pane createTraceWidget(ITraceExtractor extractor, String label, ReadOnlyDoubleProperty width) {
+	private Pane createTraceWidget(ITraceExtractor<Step<?>, State<?,?>, TracedObject<?>, Dimension<?>, Value<?>> extractor, String label, ReadOnlyDoubleProperty width) {
 		final Pane pane = new Pane();
 		pane.setBackground(TRANSPARENT_BACKGROUND);
 		final Rectangle rectangle = new Rectangle(0, 0, 0, 12);
@@ -97,10 +101,7 @@ public class TraceSectionsDialog extends TitleAreaDialog {
 		pane.setMinHeight(25);
 		pane.setMaxHeight(25);
 
-		final Group group1 = new Group();
-		final Label label1 = new Label();
 		final Shape arrow1 = createCursor();
-		final Group group2 = new Group();
 		final Shape arrow2 = createCursor();
 		arrow1.setTranslateX(5);
 		arrow1.setTranslateY(4);

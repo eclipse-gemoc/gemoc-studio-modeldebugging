@@ -20,19 +20,19 @@ import java.util.function.BiPredicate;
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.EcorePackage;
 import org.eclipse.emf.ecore.resource.Resource;
-import org.eclipse.xtext.naming.DefaultDeclarativeQualifiedNameProvider;
-import org.eclipse.xtext.naming.QualifiedName;
+import org.eclipse.gemoc.dsl.debug.ide.event.IDSLDebugEventProcessor;
 import org.eclipse.gemoc.execution.sequential.javaengine.PlainK3ExecutionEngine;
 import org.eclipse.gemoc.executionframework.debugger.AbstractGemocDebugger;
 import org.eclipse.gemoc.executionframework.debugger.GemocBreakpoint;
 import org.eclipse.gemoc.executionframework.engine.core.EngineStoppedException;
-import org.eclipse.gemoc.xdsmlframework.api.core.IExecutionEngine;
-
-import fr.inria.diverse.melange.resource.MelangeResourceImpl;
 import org.eclipse.gemoc.trace.commons.model.trace.MSE;
 import org.eclipse.gemoc.trace.commons.model.trace.MSEOccurrence;
 import org.eclipse.gemoc.trace.commons.model.trace.Step;
-import org.eclipse.gemoc.dsl.debug.ide.event.IDSLDebugEventProcessor;
+import org.eclipse.gemoc.xdsmlframework.api.core.IExecutionEngine;
+import org.eclipse.xtext.naming.DefaultDeclarativeQualifiedNameProvider;
+import org.eclipse.xtext.naming.QualifiedName;
+
+import fr.inria.diverse.melange.resource.MelangeResourceImpl;
 
 public class GenericSequentialModelDebugger extends AbstractGemocDebugger {
 
@@ -227,7 +227,7 @@ public class GenericSequentialModelDebugger extends AbstractGemocDebugger {
 		}
 		return false;
 	}
-
+	
 	private boolean hasRegularBreakpointTrue(EObject o) {
 		EObject target = o;
 		// Try to get the original object if 'o' comes from 
@@ -253,7 +253,9 @@ public class GenericSequentialModelDebugger extends AbstractGemocDebugger {
 		
 		return super.shouldBreak(target)
 				&& (Boolean.valueOf((String) getBreakpointAttributes(target, GemocBreakpoint.BREAK_ON_LOGICAL_STEP)) || Boolean
-						.valueOf((String) getBreakpointAttributes(target, GemocBreakpoint.BREAK_ON_MSE_OCCURRENCE)));
+						.valueOf((String) getBreakpointAttributes(target, GemocBreakpoint.BREAK_ON_MSE_OCCURRENCE)))
+//				&& checkBreakpointProperty(target, o)
+				;
 	}
 
 	private boolean shouldBreakMSEOccurence(MSEOccurrence mseOccurrence) {

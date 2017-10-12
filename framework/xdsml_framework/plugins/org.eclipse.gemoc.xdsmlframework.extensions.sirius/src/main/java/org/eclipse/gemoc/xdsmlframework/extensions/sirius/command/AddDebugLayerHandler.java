@@ -38,6 +38,8 @@ import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.edit.command.ChangeCommand;
 import org.eclipse.emf.edit.domain.EditingDomain;
 import org.eclipse.emf.edit.domain.IEditingDomainProvider;
+import org.eclipse.gemoc.commons.eclipse.pde.manifest.ManifestChanger;
+import org.eclipse.gemoc.xdsmlframework.extensions.sirius.Activator;
 import org.eclipse.jface.viewers.ISelection;
 import org.eclipse.jface.viewers.IStructuredSelection;
 import org.eclipse.sirius.diagram.description.AdditionalLayer;
@@ -66,10 +68,7 @@ import org.eclipse.sirius.viewpoint.description.tool.PopupMenu;
 import org.eclipse.sirius.viewpoint.description.tool.ToolPackage;
 import org.eclipse.ui.IEditorInput;
 import org.eclipse.ui.handlers.HandlerUtil;
-import org.eclipse.gemoc.xdsmlframework.extensions.sirius.Activator;
 import org.osgi.framework.BundleException;
-
-import org.eclipse.gemoc.commons.eclipse.pde.manifest.ManifestChanger;
 
 public class AddDebugLayerHandler extends AbstractHandler {
 
@@ -268,23 +267,41 @@ public class AddDebugLayerHandler extends AbstractHandler {
 		initialOperation.setFirstModelOperations(debugJavaAction);
 		debugAction.setInitialOperation(initialOperation);
 		// Toggle breakpoint action
-		OperationAction toogleBreakpointAction = ToolPackage.eINSTANCE
+		OperationAction toggleBreakpointAction = ToolPackage.eINSTANCE
 				.getToolFactory().createOperationAction();
-		toogleBreakpointAction.setName("Toggle breakpoint");
-		toogleBreakpointAction
+		toggleBreakpointAction.setName("Toggle breakpoint");
+		toggleBreakpointAction
 				.setIcon("/org.eclipse.gemoc.executionframework.extensions.sirius/icons/debug_exc.gif");
-		popupMenu.getMenuItemDescription().add(toogleBreakpointAction);
-		ExternalJavaAction toogleBreakpointJavaAction = ToolPackage.eINSTANCE
+		popupMenu.getMenuItemDescription().add(toggleBreakpointAction);
+		ExternalJavaAction toggleBreakpointJavaAction = ToolPackage.eINSTANCE
 				.getToolFactory().createExternalJavaAction();
-		toogleBreakpointJavaAction.setName("Toggle Gemoc breakpoint");
-		toogleBreakpointJavaAction
+		toggleBreakpointJavaAction.setName("Toggle Gemoc breakpoint");
+		toggleBreakpointJavaAction
 				.setId("org.eclipse.gemoc.execution.sequential.javaengine.ui.debug.sirius.action.GemocSequentialToggleBreakpointAction");
-		toogleBreakpointJavaAction
+		toggleBreakpointJavaAction
 				.setIcon("/org.eclipse.gemoc.executionframework.extensions.sirius/icons/breakpoint.gif");
 		initialOperation = ToolPackage.eINSTANCE.getToolFactory()
 				.createInitialOperation();
-		initialOperation.setFirstModelOperations(toogleBreakpointJavaAction);
-		toogleBreakpointAction.setInitialOperation(initialOperation);
+		initialOperation.setFirstModelOperations(toggleBreakpointJavaAction);
+		toggleBreakpointAction.setInitialOperation(initialOperation);
+		// Toggle conditional breakpoint action
+		OperationAction toggleConditionalBreakpointAction = ToolPackage.eINSTANCE
+				.getToolFactory().createOperationAction();
+		toggleConditionalBreakpointAction.setName("Toggle conditional breakpoint");
+		toggleConditionalBreakpointAction
+				.setIcon("/org.eclipse.gemoc.executionframework.extensions.sirius/icons/debug_exc.gif");
+		popupMenu.getMenuItemDescription().add(toggleConditionalBreakpointAction);
+		ExternalJavaAction toggleConditionalBreakpointJavaAction = ToolPackage.eINSTANCE
+				.getToolFactory().createExternalJavaAction();
+		toggleConditionalBreakpointJavaAction.setName("Toggle Gemoc conditional breakpoint");
+		toggleConditionalBreakpointJavaAction
+				.setId("org.eclipse.gemoc.execution.sequential.javaengine.ui.debug.sirius.action.GemocSequentialToggleConditionalBreakpointAction");
+		toggleConditionalBreakpointJavaAction
+				.setIcon("/org.eclipse.gemoc.executionframework.extensions.sirius/icons/breakpoint.gif");
+		initialOperation = ToolPackage.eINSTANCE.getToolFactory()
+				.createInitialOperation();
+		initialOperation.setFirstModelOperations(toggleConditionalBreakpointJavaAction);
+		toggleConditionalBreakpointAction.setInitialOperation(initialOperation);
 
 		DecorationDescriptionsSet decorationSet = DescriptionPackage.eINSTANCE
 				.getDescriptionFactory().createDecorationDescriptionsSet();
@@ -407,7 +424,25 @@ public class AddDebugLayerHandler extends AbstractHandler {
 		DecorationDescriptionsSet decorationSet = DescriptionPackage.eINSTANCE
 				.getDescriptionFactory().createDecorationDescriptionsSet();
 		res.setDecorationDescriptionsSet(decorationSet);
-
+		// Toggle conditional breakpoint action
+		OperationAction toggleConditionalBreakpointAction = ToolPackage.eINSTANCE
+				.getToolFactory().createOperationAction();
+		toggleConditionalBreakpointAction.setName("Toggle conditional breakpoint");
+		toggleConditionalBreakpointAction
+				.setIcon("/org.eclipse.gemoc.executionframework.extensions.sirius/icons/debug_exc.gif");
+		popupMenu.getMenuItemDescription().add(toggleConditionalBreakpointAction);
+		ExternalJavaAction toggleConditionalBreakpointJavaAction = ToolPackage.eINSTANCE
+				.getToolFactory().createExternalJavaAction();
+		toggleConditionalBreakpointJavaAction.setName("Toggle Gemoc conditional breakpoint");
+		toggleConditionalBreakpointJavaAction
+				.setId("org.eclipse.gemoc.execution.sequential.javaengine.ui.debug.sirius.action.GemocSequentialToggleConditionalBreakpointAction");
+		toggleConditionalBreakpointJavaAction
+				.setIcon("/org.eclipse.gemoc.executionframework.extensions.sirius/icons/breakpoint.gif");
+		initialOperation = ToolPackage.eINSTANCE.getToolFactory()
+				.createInitialOperation();
+		initialOperation.setFirstModelOperations(toggleConditionalBreakpointJavaAction);
+		toggleConditionalBreakpointAction.setInitialOperation(initialOperation);
+		
 		List<DiagramElementMapping> mappings = getAllMapping(descriptionExtension);
 		// enabled breakpoint decorator
 		MappingBasedDecoration enabledBreakpoint = org.eclipse.sirius.diagram.description.DescriptionPackage.eINSTANCE
@@ -816,7 +851,6 @@ public class AddDebugLayerHandler extends AbstractHandler {
 	 */
 	public static void setContent(File file, String charsetName, String content)
 			throws IOException {
-		
 		if (!file.exists()) {
 			throw new IOException(file.getAbsolutePath() + " doesn't exists.");
 		} else if (file.isDirectory()) {
@@ -826,13 +860,17 @@ public class AddDebugLayerHandler extends AbstractHandler {
 		}
 
 		FileOutputStream fos = null;
+		OutputStreamWriter output = null;
 		try {
 			fos = new FileOutputStream(file);
-			OutputStreamWriter output = new OutputStreamWriter(
+			output = new OutputStreamWriter(
 					new BufferedOutputStream(fos),
 					charsetName);
 			output.write(content.toString());
 		} finally{
+			if (output != null) {
+				output.close();
+			}
 			if(fos != null) {
 				fos.close();
 			}

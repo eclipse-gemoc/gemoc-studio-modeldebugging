@@ -19,4 +19,3 @@ Require-Bundle: com.google.guava,
  org.eclipse.gemoc.executionframework.engine;bundle-version="2.4.0"
 Export-Package: org.eclipse.gemoc.executionframework.test.lib,
  org.eclipse.gemoc.executionframework.test.lib.impl
-

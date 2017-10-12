@@ -16,10 +16,10 @@ import java.util.Map;
 
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.resource.ResourceSet;
+import org.eclipse.gemoc.xdsmlframework.api.core.IExecutionCheckpoint;
 import org.eclipse.sirius.ecore.extender.business.api.permission.IAuthorityListener;
 import org.eclipse.sirius.ecore.extender.business.api.permission.LockStatus;
 import org.eclipse.sirius.ecore.extender.business.internal.permission.AbstractPermissionAuthority;
-import org.eclipse.gemoc.xdsmlframework.api.core.IExecutionCheckpoint;
 
 public class DebugPermissionAuthority extends AbstractPermissionAuthority
 		implements IExecutionCheckpoint {

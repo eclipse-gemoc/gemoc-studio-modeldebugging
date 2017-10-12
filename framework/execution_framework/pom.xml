@@ -16,9 +16,16 @@
         <module>plugins/org.eclipse.gemoc.executionframework.engine</module>        
         <module>plugins/org.eclipse.gemoc.executionframework.engine.ui</module>
         <module>plugins/org.eclipse.gemoc.executionframework.ui</module>
-        <module>plugins/org.eclipse.gemoc.executionframework.extensions.sirius</module>    
+        <module>plugins/org.eclipse.gemoc.executionframework.extensions.sirius</module>
         <module>plugins/org.eclipse.gemoc.executionframework.debugger</module>
         <module>plugins/org.eclipse.gemoc.executionframework.debugger.ui</module>
+        
+        <module>plugins/org.eclipse.gemoc.executionframework.event.manager</module>
+        <module>plugins/org.eclipse.gemoc.executionframework.event.model</module>
+        <module>plugins/org.eclipse.gemoc.executionframework.event.model.edit</module>
+        <module>plugins/org.eclipse.gemoc.executionframework.event.model.editor</module>
+        <module>plugins/org.eclipse.gemoc.executionframework.event.ui</module>
+        
 
         <!-- feature -->
         <module>releng/org.eclipse.gemoc.executionframework.feature</module>

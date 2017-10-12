@@ -162,8 +162,6 @@ public class GemocSequentialLanguageBuilder extends IncrementalProjectBuilder {
 				LanguageDefinitionExtensionPoint.GEMOC_LANGUAGE_EXTENSION_POINT_XDSML_DEF_LOADMODEL_ATT,
 				modelLoaderClass != null ? modelLoaderClass : "org.eclipse.gemoc.executionframework.extensions.sirius.modelloader.DefaultModelLoader");
 		helper.saveDocument(pluginfile);
-
-
 	}
 	
 	protected void setPluginLanguageNameAndFilePath(IProject project, IFile melangeFile , final String languageName) {
