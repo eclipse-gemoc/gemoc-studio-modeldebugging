@@ -22,7 +22,7 @@ Require-Bundle: org.eclipse.gemoc.timeline;bundle-version="1.0.0",
  org.eclipse.gemoc.dsl.debug.ide,
  org.eclipse.gemoc.xdsmlframework.api,
  org.eclipse.gemoc.executionframework.debugger,
- org.eclipse.fx.osgi
+ org.eclipse.fx.core
 Bundle-ActivationPolicy: lazy
 Bundle-RequiredExecutionEnvironment: JavaSE-1.8
 Export-Package: org.eclipse.gemoc.addon.multidimensional.timeline,
