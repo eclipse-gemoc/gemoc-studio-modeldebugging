@@ -19,7 +19,7 @@ import org.eclipse.gemoc.xdsmlframework.api.extensions.ExtensionPoint;
 public class EngineAddonSpecificationExtensionPoint extends ExtensionPoint<EngineAddonSpecificationExtension>
 {
 
-	public static final String GEMOC_ENGINE_ADDON_EXTENSION_POINT = "org.gemoc.gemoc_language_workbench.engine_addon";
+	public static final String GEMOC_ENGINE_ADDON_EXTENSION_POINT = "org.eclipse.gemoc.gemoc_language_workbench.engine_addon";
 	public static final String GEMOC_ENGINE_ADDON_EXTENSION_POINT_ID = "id";
 	public static final String GEMOC_ENGINE_ADDON_EXTENSION_POINT_NAME = "Name";
 	public static final String GEMOC_ENGINE_ADDON_EXTENSION_POINT_SHORTDESCRIPTION = "ShortDescription";

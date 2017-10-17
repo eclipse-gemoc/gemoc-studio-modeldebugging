@@ -3,7 +3,7 @@
 import java.util.ArrayList;
 import java.util.List;
 
-import org.gemoc.executionframework.extensions.sirius.services.AbstractGemocDebuggerServices;
+import org.eclipse.gemoc.executionframework.extensions.sirius.services.AbstractGemocDebuggerServices;
 
 public class CLASS_NAME extends AbstractGemocDebuggerServices {
 
@@ -28,11 +28,11 @@ public class CLASS_NAME extends AbstractGemocDebuggerServices {
 	public String getModelIdentifier(){
 		// Important Note:
 		// by default the wizard  generates a ModelIdentifier linked with the sequential engine.
-		// ie. return org.gemoc.execution.sequential.javaengine.ui.Activator.DEBUG_MODEL_ID;
+		// ie. return org.eclipse.gemoc.execution.sequential.javaengine.ui.Activator.DEBUG_MODEL_ID;
 		// however, if the Debug service is to be used by another engine, you must use the targeted engine's
 		// debug model id and update the manifest dependencies accordingly.
-		// for example, org.gemoc.execution.concurrent.ccsljavaengine.ui.Activator.DEBUG_MODEL_ID for the concurrent engine.
-		return org.gemoc.execution.sequential.javaengine.ui.Activator.DEBUG_MODEL_ID;
+		// for example, org.eclipse.gemoc.execution.concurrent.ccsljavaengine.ui.Activator.DEBUG_MODEL_ID for the concurrent engine.
+		return org.eclipse.gemoc.execution.sequential.javaengine.ui.Activator.DEBUG_MODEL_ID;
 	}	
 
 }

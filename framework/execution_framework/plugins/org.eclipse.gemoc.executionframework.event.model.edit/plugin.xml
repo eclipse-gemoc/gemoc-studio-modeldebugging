@@ -48,7 +48,7 @@
    <extension point="org.eclipse.emf.edit.itemProviderAdapterFactories">
       <!-- @generated event -->
       <factory
-            uri="http://www.eclipse.org/gemoc/event"
+            uri="http://www.eclipse.org/eclipse/gemoc/event"
             class="org.eclipse.gemoc.executionframework.event.model.event.provider.EventItemProviderAdapterFactory"
             supportedTypes=
               "org.eclipse.emf.edit.provider.IEditingDomainItemProvider

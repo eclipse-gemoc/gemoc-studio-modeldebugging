@@ -72,7 +72,7 @@ import org.osgi.framework.BundleException;
 
 public class AddDebugLayerHandler extends AbstractHandler {
 
-	private static final String DEBUG_SERVICE_TEMPLATE_PATH = "org/gemoc/xdsmlframework/extensions/sirius/command/debug_services_template.txt";
+	private static final String DEBUG_SERVICE_TEMPLATE_PATH = "org/eclipse/gemoc/xdsmlframework/extensions/sirius/command/debug_services_template.txt";
 
 	private static final String PACKAGE_TAG = "PACKAGE";
 

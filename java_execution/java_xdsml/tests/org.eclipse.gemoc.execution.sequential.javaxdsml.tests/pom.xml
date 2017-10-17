@@ -65,35 +65,35 @@
 								<!-- LegacyFSM -->
 								<mkdir dir="${sequentialFSM.tests-inputs-gen.path}" />
 								
-								<zip destfile="${sequentialFSM.tests-inputs-gen.path}/org.gemoc.sample.legacyfsm.fsm.zip">
-									<fileset dir="${sequentialFSM.language.root}/org.gemoc.sample.legacyfsm.fsm/" />
+								<zip destfile="${sequentialFSM.tests-inputs-gen.path}/org.eclipse.gemoc.sample.legacyfsm.fsm.zip">
+									<fileset dir="${sequentialFSM.language.root}/org.eclipse.gemoc.sample.legacyfsm.fsm/" />
 								</zip>
-								<zip destfile="${sequentialFSM.tests-inputs-gen.path}/org.gemoc.sample.legacyfsm.fsm.design.zip">
-									<fileset dir="${sequentialFSM.language.root}/org.gemoc.sample.legacyfsm.fsm.design/" />
+								<zip destfile="${sequentialFSM.tests-inputs-gen.path}/org.eclipse.gemoc.sample.legacyfsm.fsm.design.zip">
+									<fileset dir="${sequentialFSM.language.root}/org.eclipse.gemoc.sample.legacyfsm.fsm.design/" />
 								</zip>
-								<zip destfile="${sequentialFSM.tests-inputs-gen.path}/org.gemoc.sample.legacyfsm.fsm.k3dsa.zip">
-									<fileset dir="${sequentialFSM.language.root}/org.gemoc.sample.legacyfsm.fsm.k3dsa/" />
+								<zip destfile="${sequentialFSM.tests-inputs-gen.path}/org.eclipse.gemoc.sample.legacyfsm.fsm.k3dsa.zip">
+									<fileset dir="${sequentialFSM.language.root}/org.eclipse.gemoc.sample.legacyfsm.fsm.k3dsa/" />
 								</zip>
-								<zip destfile="${sequentialFSM.tests-inputs-gen.path}/org.gemoc.sample.legacyfsm.fsm.model.zip">
-									<fileset dir="${sequentialFSM.language.root}/org.gemoc.sample.legacyfsm.fsm.model/" />
+								<zip destfile="${sequentialFSM.tests-inputs-gen.path}/org.eclipse.gemoc.sample.legacyfsm.fsm.model.zip">
+									<fileset dir="${sequentialFSM.language.root}/org.eclipse.gemoc.sample.legacyfsm.fsm.model/" />
 								</zip>
-								<zip destfile="${sequentialFSM.tests-inputs-gen.path}/org.gemoc.sample.legacyfsm.fsm.model.edit.zip">
-									<fileset dir="${sequentialFSM.language.root}/org.gemoc.sample.legacyfsm.fsm.model.edit/" />
+								<zip destfile="${sequentialFSM.tests-inputs-gen.path}/org.eclipse.gemoc.sample.legacyfsm.fsm.model.edit.zip">
+									<fileset dir="${sequentialFSM.language.root}/org.eclipse.gemoc.sample.legacyfsm.fsm.model.edit/" />
 								</zip>
-								<zip destfile="${sequentialFSM.tests-inputs-gen.path}/org.gemoc.sample.legacyfsm.fsm.model.editor.zip">
-									<fileset dir="${sequentialFSM.language.root}/org.gemoc.sample.legacyfsm.fsm.model.editor/" />
+								<zip destfile="${sequentialFSM.tests-inputs-gen.path}/org.eclipse.gemoc.sample.legacyfsm.fsm.model.editor.zip">
+									<fileset dir="${sequentialFSM.language.root}/org.eclipse.gemoc.sample.legacyfsm.fsm.model.editor/" />
 								</zip>
-								<zip destfile="${sequentialFSM.tests-inputs-gen.path}/org.gemoc.sample.legacyfsm.xsfsm.zip">
-									<fileset dir="${sequentialFSM.language.root}/org.gemoc.sample.legacyfsm.xsfsm/" />
+								<zip destfile="${sequentialFSM.tests-inputs-gen.path}/org.eclipse.gemoc.sample.legacyfsm.xsfsm.zip">
+									<fileset dir="${sequentialFSM.language.root}/org.eclipse.gemoc.sample.legacyfsm.xsfsm/" />
 								</zip>
-								<zip destfile="${sequentialFSM.tests-inputs-gen.path}/org.gemoc.sample.legacyfsm.xsfsm.design.zip">
-									<fileset dir="${sequentialFSM.language.root}/org.gemoc.sample.legacyfsm.xsfsm.design/" />
+								<zip destfile="${sequentialFSM.tests-inputs-gen.path}/org.eclipse.gemoc.sample.legacyfsm.xsfsm.design.zip">
+									<fileset dir="${sequentialFSM.language.root}/org.eclipse.gemoc.sample.legacyfsm.xsfsm.design/" />
 								</zip>
-								<zip destfile="${sequentialFSM.tests-inputs-gen.path}/org.gemoc.sample.legacyfsm.xsfsm.trace.zip">
-									<fileset dir="${sequentialFSM.language.root}/org.gemoc.sample.legacyfsm.xsfsm.trace/" />
+								<zip destfile="${sequentialFSM.tests-inputs-gen.path}/org.eclipse.gemoc.sample.legacyfsm.xsfsm.trace.zip">
+									<fileset dir="${sequentialFSM.language.root}/org.eclipse.gemoc.sample.legacyfsm.xsfsm.trace/" />
 								</zip>
-								<zip destfile="${sequentialFSM.tests-inputs-gen.path}/org.gemoc.sample.legacyfsm.xsfsm.xsfsm.zip">
-									<fileset dir="${sequentialFSM.language.root}/org.gemoc.sample.legacyfsm.xsfsm.xsfsm/" />
+								<zip destfile="${sequentialFSM.tests-inputs-gen.path}/org.eclipse.gemoc.sample.legacyfsm.xsfsm.xsfsm.zip">
+									<fileset dir="${sequentialFSM.language.root}/org.eclipse.gemoc.sample.legacyfsm.xsfsm.xsfsm/" />
 								</zip>
 
 							</target>

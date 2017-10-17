@@ -122,7 +122,7 @@
   <extension point="org.eclipse.ui.newWizards">
     <category id="org.eclipse.gemoc.xdsmlframework.category" name="GEMOC Language"/>
     <category id="org.eclipse.gemoc.xdsmlframework.fragment.category" name="GEMOC Specific Language Fragment" parentCategory="org.eclipse.gemoc.xdsmlframework.category"/>
-    <wizard category="org.eclipse.gemoc.xdsmlframework.category" class="org.eclipse.gemoc.execution.sequential.javaxdsml.ide.ui.wizards.CreateNewGemocSequentialLanguageProject" finalPerspective="org.eclipse.gemoc.xdsmlframework.ide.ui.xdsml.perspective" icon="icons/IconeGemocLanguage-16.png" id="org.gemoc.gemoc_language_workbench.ui.wizards.CreateNewGemocSequentialLanguageProject" name="GEMOC Sequential xDSML Project" project="true">
+    <wizard category="org.eclipse.gemoc.xdsmlframework.category" class="org.eclipse.gemoc.execution.sequential.javaxdsml.ide.ui.wizards.CreateNewGemocSequentialLanguageProject" finalPerspective="org.eclipse.gemoc.xdsmlframework.ide.ui.xdsml.perspective" icon="icons/IconeGemocLanguage-16.png" id="org.eclipse.gemoc.gemoc_language_workbench.ui.wizards.CreateNewGemocSequentialLanguageProject" name="GEMOC Sequential xDSML Project" project="true">
       <description>
             Create a new xDSML project to specify an executable language that will run using the GEMOC java sequential  engine.
          </description>
@@ -130,7 +130,7 @@
   </extension>
   <extension point="org.eclipse.ui.perspectiveExtensions">
     <perspectiveExtension targetID="org.eclipse.gemoc.xdsmlframework.ide.ui.xdsml.perspective">
-      <newWizardShortcut id="org.gemoc.gemoc_language_workbench.ui.wizards.CreateNewGemocSequentialLanguageProject"/>
+      <newWizardShortcut id="org.eclipse.gemoc.gemoc_language_workbench.ui.wizards.CreateNewGemocSequentialLanguageProject"/>
     </perspectiveExtension>
   </extension>
   <extension point="org.eclipse.gemoc.commons.eclipse.pde.projectContent">

@@ -23,22 +23,22 @@ public class GemocBreakpoint extends DSLBreakpoint {
 	/**
 	 * The marker type ID.
 	 */
-	public static final String MARKER_ID = "org.gemoc.gemoc_modeling_workbench.ui.breakpoint.breakpointMarker";
+	public static final String MARKER_ID = "org.eclipse.gemoc.gemoc_modeling_workbench.ui.breakpoint.breakpointMarker";
 
 	/**
 	 * The break on logical step attribute.
 	 */
-	public static final String BREAK_ON_LOGICAL_STEP = "org.gemoc.gemoc_modeling_workbench.ui.breakpoint.breakOnLogicalStep";
+	public static final String BREAK_ON_LOGICAL_STEP = "org.eclipse.gemoc.gemoc_modeling_workbench.ui.breakpoint.breakOnLogicalStep";
 
 	/**
 	 * The break on MSE.
 	 */
-	public static final String BREAK_ON_MSE_OCCURRENCE = "org.gemoc.gemoc_modeling_workbench.ui.breakpoint.breakOnMSE";
+	public static final String BREAK_ON_MSE_OCCURRENCE = "org.eclipse.gemoc.gemoc_modeling_workbench.ui.breakpoint.breakOnMSE";
 
 	/**
 	 * The property.
 	 */
-	public static final String PROPERTY = "org.gemoc.gemoc_modeling_workbench.ui.breakpoint.property";
+	public static final String PROPERTY = "org.eclipse.gemoc.gemoc_modeling_workbench.ui.breakpoint.property";
 
 	/**
 	 * Should we break on {@link LogicalStep}.

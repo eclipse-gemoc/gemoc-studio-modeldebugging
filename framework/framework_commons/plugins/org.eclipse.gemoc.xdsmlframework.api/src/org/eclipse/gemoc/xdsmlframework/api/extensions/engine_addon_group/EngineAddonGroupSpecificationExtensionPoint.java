@@ -17,7 +17,7 @@ import org.eclipse.gemoc.xdsmlframework.api.extensions.ExtensionPoint;
 public class EngineAddonGroupSpecificationExtensionPoint extends ExtensionPoint<EngineAddonGroupSpecificationExtension>
 {
 
-	public static final String GEMOC_ENGINE_ADDON_GROUP_EXTENSION_POINT = "org.gemoc.gemoc_language_workbench.engine_addon_group";
+	public static final String GEMOC_ENGINE_ADDON_GROUP_EXTENSION_POINT = "org.eclipse.gemoc.gemoc_language_workbench.engine_addon_group";
 	public static final String GEMOC_ENGINE_ADDON_GROUP_EXTENSION_POINT_ID = "id";
 	public static final String GEMOC_ENGINE_ADDON_GROUP_EXTENSION_POINT_NAME = "Name";
 

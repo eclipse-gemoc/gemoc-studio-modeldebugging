@@ -1,9 +1,9 @@
 <?xml version='1.0' encoding='UTF-8'?>
 <!-- Schema file written by PDE -->
-<schema targetNamespace="org.gemoc.gemoc_language_workbench.ui" xmlns="http://www.w3.org/2001/XMLSchema">
+<schema targetNamespace="org.eclipse.gemoc.gemoc_language_workbench.ui" xmlns="http://www.w3.org/2001/XMLSchema">
 <annotation>
       <appinfo>
-         <meta.schema plugin="org.gemoc.gemoc_language_workbench.ui" id="org.gemoc.gemoc_language_workbench.xdsml" name="Gemoc Language Definition"/>
+         <meta.schema plugin="org.eclipse.gemoc.gemoc_language_workbench.ui" id="org.eclipse.gemoc.gemoc_language_workbench.xdsml" name="Gemoc Language Definition"/>
       </appinfo>
       <documentation>
          [Enter description of this extension point.]
@@ -75,7 +75,7 @@
                   Optional ModelLoader, in case the user does not want to use XMI-compliant formats for their model...
                </documentation>
                <appinfo>
-                  <meta.attribute kind="java" basedOn=":org.gemoc.gemoc_language_workbench.api.core.IModelLoader"/>
+                  <meta.attribute kind="java" basedOn=":org.eclipse.gemoc.gemoc_language_workbench.api.core.IModelLoader"/>
                </appinfo>
             </annotation>
          </attribute>
@@ -86,7 +86,7 @@
 It will be used instead of the generic SequentialModelDebugger for providing the mapping for the debug variable view and debug stack view
                </documentation>
                <appinfo>
-                  <meta.attribute kind="java" basedOn="org.gemoc.executionframework.engine.debug.AbstractGemocDebuggerFactory:"/>
+                  <meta.attribute kind="java" basedOn="org.eclipse.gemoc.executionframework.engine.debug.AbstractGemocDebuggerFactory:"/>
                </appinfo>
             </annotation>
          </attribute>
@@ -105,7 +105,7 @@ This is optional, if not set, the engine will ignore it.
 Addons defined there are available for this language only.
                </documentation>
                <appinfo>
-                  <meta.attribute kind="java" basedOn=":org.gemoc.gemoc_language_workbench.api.engine_addon.IEngineAddon"/>
+                  <meta.attribute kind="java" basedOn=":org.eclipse.gemoc.gemoc_language_workbench.api.engine_addon.IEngineAddon"/>
                </appinfo>
             </annotation>
          </attribute>

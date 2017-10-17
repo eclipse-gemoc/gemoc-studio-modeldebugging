@@ -19,19 +19,19 @@
             adaptable="true"
             objectClass="org.eclipse.core.resources.IProject"
             nameFilter="*"
-            id="org.gemoc.gemoc_modeling_workbench.ui.addnature.contribution">
+            id="org.eclipse.gemoc.gemoc_modeling_workbench.ui.addnature.contribution">
          <action
-               class="org.gemoc.gemoc_modeling_workbench.ui.builder.ToggleNatureAction"
+               class="org.eclipse.gemoc.gemoc_modeling_workbench.ui.builder.ToggleNatureAction"
                enablesFor="+"
                icon="icons/IconeGemocModel-16.png"
-               id="org.gemoc.gemoc_modeling_workbench.ui.addRemoveNatureAction"
+               id="org.eclipse.gemoc.gemoc_modeling_workbench.ui.addRemoveNatureAction"
                label="Add Executable Modeling Nature"
                menubarPath="org.eclipse.ui.projectConfigure/additions">
          </action>
          <visibility>
          <and>
             <not>
-                <objectState name="projectNature" value="org.gemoc.gemoc_modeling_workbench.ui.gemocReflectiveModelNature"/>
+                <objectState name="projectNature" value="org.eclipse.gemoc.gemoc_modeling_workbench.ui.gemocReflectiveModelNature"/>
             </not>
             <objectClass name="org.eclipse.core.resources.IProject" />
           </and>
@@ -41,12 +41,12 @@
             adaptable="true"
             objectClass="org.eclipse.core.resources.IProject"
             nameFilter="*"
-            id="org.gemoc.gemoc_modeling_workbench.ui.removenature.contribution">
+            id="org.eclipse.gemoc.gemoc_modeling_workbench.ui.removenature.contribution">
          <action
-               class="org.gemoc.gemoc_modeling_workbench.ui.builder.ToggleNatureAction"
+               class="org.eclipse.gemoc.gemoc_modeling_workbench.ui.builder.ToggleNatureAction"
                enablesFor="+"
                icon="icons/IconeGemocModel-16.png"
-               id="org.gemoc.gemoc_modeling_workbench.ui.addRemoveNatureAction"
+               id="org.eclipse.gemoc.gemoc_modeling_workbench.ui.addRemoveNatureAction"
                label="Remove Executable Modeling Nature (Reflective)"
                menubarPath="org.eclipse.ui.projectConfigure/additions">
          </action>
@@ -58,7 +58,7 @@
 	          </objectClass>
 	          <objectState
 	                name="projectNature"
-	                value="org.gemoc.gemoc_modeling_workbench.ui.gemocReflectiveModelNature">
+	                value="org.eclipse.gemoc.gemoc_modeling_workbench.ui.gemocReflectiveModelNature">
 	          </objectState>
 	       </and>
 	    </visibility>
@@ -188,7 +188,7 @@
       <perspectiveExtension
             targetID="org.eclipse.sirius.ui.tools.perspective.modeling">
         <!-- <newWizardShortcut
-               id="org.gemoc.gemoc_modeling_workbench.ui.wizards.CreateNewGemocModelingProject">
+               id="org.eclipse.gemoc.gemoc_modeling_workbench.ui.wizards.CreateNewGemocModelingProject">
          </newWizardShortcut>-->
          <view
                id="org.eclipse.gemoc.executionframework.engine.io.views.steps.LogicalStepsView"

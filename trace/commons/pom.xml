@@ -49,7 +49,7 @@
 		       <!--  <repository>
 		            <id>modelanimation_executionengine_java on CI</id>
 		            <layout>p2</layout>
-		            <url>https://ci.inria.fr/gemoc/job/modelanimation_executionengine_java/lastSuccessfulBuild/artifact/executionengine/java/releng/org.gemoc.executionengine.java.repository/target/repository/</url>
+		            <url>https://ci.inria.fr/gemoc/job/modelanimation_executionengine_java/lastSuccessfulBuild/artifact/executionengine/java/releng/org.eclipse.gemoc.executionengine.java.repository/target/repository/</url>
 		        </repository>-->
 		    
 		    	<!-- GEMOC and model animation update site on CI -->
@@ -61,7 +61,7 @@
 		    <!-- 	<repository>
 		            <id>modeldebugging_framework_frameworkcommons on CI</id>
 		            <layout>p2</layout>
-		            <url>https://ci.inria.fr/gemoc/job/modeldebugging_framework_framework_commons/lastSuccessfulBuild/artifact/framework/framework_commons/releng/org.gemoc.modeldebugging.framework.commons.repository/target/repository/</url>
+		            <url>https://ci.inria.fr/gemoc/job/modeldebugging_framework_framework_commons/lastSuccessfulBuild/artifact/framework/framework_commons/releng/org.eclipse.gemoc.modeldebugging.framework.commons.repository/target/repository/</url>
 		        </repository> -->
 		        <repository>
 		            <id>modelanimation_siriusmodelanimation on CI</id>
