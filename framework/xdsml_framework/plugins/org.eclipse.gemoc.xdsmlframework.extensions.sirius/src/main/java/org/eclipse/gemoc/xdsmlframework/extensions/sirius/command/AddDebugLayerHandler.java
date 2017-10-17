@@ -314,7 +314,7 @@ public class AddDebugLayerHandler extends AbstractHandler {
 		enabledBreakpoint.setName("Enabled breakpoint");
 		enabledBreakpoint.setPosition(Position.WEST_LITERAL);
 		enabledBreakpoint
-				.setDecoratorPath("/org.eclipse.gemoc.executionframework.extensions.sirius/icons/breakpoint_enabled.gif");
+				.setImageExpression("/org.eclipse.gemoc.executionframework.extensions.sirius/icons/breakpoint_enabled.gif");
 		enabledBreakpoint
 				.setPreconditionExpression("service:self.hasEnabledBreakpoint");
 		enabledBreakpoint.getMappings().addAll(mappings);
@@ -325,7 +325,7 @@ public class AddDebugLayerHandler extends AbstractHandler {
 		disabledBreakpoint.setName("Disabled breakpoint");
 		disabledBreakpoint.setPosition(Position.WEST_LITERAL);
 		disabledBreakpoint
-				.setDecoratorPath("/org.eclipse.gemoc.executionframework.extensions.sirius/icons/breakpoint_disabled.gif");
+				.setImageExpression("/org.eclipse.gemoc.executionframework.extensions.sirius/icons/breakpoint_disabled.gif");
 		disabledBreakpoint
 				.setPreconditionExpression("service:self.hasDisabledBreakpoint");
 		disabledBreakpoint.getMappings().addAll(mappings);
@@ -450,7 +450,7 @@ public class AddDebugLayerHandler extends AbstractHandler {
 		enabledBreakpoint.setName("Enabled breakpoint");
 		enabledBreakpoint.setPosition(Position.WEST_LITERAL);
 		enabledBreakpoint
-				.setDecoratorPath("/org.eclipse.gemoc.executionframework.extensions.sirius/icons/breakpoint_enabled.gif");
+				.setImageExpression("/org.eclipse.gemoc.executionframework.extensions.sirius/icons/breakpoint_enabled.gif");
 		enabledBreakpoint
 				.setPreconditionExpression("service:self.hasEnabledBreakpoint");
 		enabledBreakpoint.getMappings().addAll(mappings);
@@ -461,7 +461,7 @@ public class AddDebugLayerHandler extends AbstractHandler {
 		disabledBreakpoint.setName("Disabled breakpoint");
 		disabledBreakpoint.setPosition(Position.WEST_LITERAL);
 		disabledBreakpoint
-				.setDecoratorPath("/org.eclipse.gemoc.executionframework.extensions.sirius/icons/breakpoint_disabled.gif");
+				.setImageExpression("/org.eclipse.gemoc.executionframework.extensions.sirius/icons/breakpoint_disabled.gif");
 		disabledBreakpoint
 				.setPreconditionExpression("service:self.hasDisabledBreakpoint");
 		disabledBreakpoint.getMappings().addAll(mappings);

@@ -2,7 +2,7 @@
 <feature
       id="org.eclipse.gemoc.trace.generator.feature"
       label="Domain Specific Trace Metamodel Generator SDK"
-      version="2.4.0.qualifier"
+      version="3.0.0.qualifier"
       image="gemocstudio32.png">
 
    <description url="http://www.example.com/description">

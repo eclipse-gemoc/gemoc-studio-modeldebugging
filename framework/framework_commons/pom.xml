@@ -3,12 +3,12 @@
     <modelVersion>4.0.0</modelVersion>
     <groupId>org.eclipse.gemoc.modeldebugging.framework.commons</groupId>
     <artifactId>org.eclipse.gemoc.modeldebugging.framework.commons.root</artifactId>
-    <version>2.4.0-SNAPSHOT</version>
+    <version>3.0.0-SNAPSHOT</version>
     <packaging>pom</packaging>    
 	<parent>
 		<groupId>org.eclipse.gemoc</groupId>
 		<artifactId>org.eclipse.gemoc.modeldebugging.root</artifactId>
-    	<version>2.4.0-SNAPSHOT</version>
+    	<version>3.0.0-SNAPSHOT</version>
 		<relativePath>../..</relativePath>
 	</parent>
     <modules>
@@ -52,7 +52,7 @@
 <!-- 		        <repository> -->
 <!-- 		            <id>Gemoc Target Platform all-except-gemoc-executionframework</id> -->
 <!-- 		            <layout>p2</layout> -->
-<!-- 		            <url>https://ci.inria.fr/gemoc/job/org.eclipse.gemoc.targetplatform.redirects/lastSuccessfulBuild/artifact/org/eclipse/gemoc/targetplatform/update/all-except-gemoc-executionframework</url> -->
+<!-- 		            <url>https://ci.inria.fr/gemoc/job/org.gemoc.targetplatform.redirects/lastSuccessfulBuild/artifact/org/gemoc/targetplatform/update/all-except-gemoc-executionframework</url> -->
 <!-- 		        </repository> -->
 				<repository>
 		            <id>gemoc-studio_commons on CI</id>

@@ -1,4 +1,12 @@
+-------------
+This repository is part of a serie of repositories related to [GEMOC Studio](http://eclipse.org/gemoc) :
+- https://github.com/eclipse/gemoc-studio
+- https://github.com/eclipse/gemoc-studio-modeldebugging
+-------------
+
 # ModelDebugging
+
+
 Runtime and tools to bring execution, debug and simulation in your domain specific tooling built with Sirius and/or Eclipse Modeling Framework.
 
 To have a better understanding of the features and services offered by this framework, you can read the following [post (Breathe life into your designer)](http://gemoc.org/breathe-life-into-your-designer/).
@@ -21,4 +29,4 @@ This project is still in incubation and need more work to reach industrial grade
 
 # Development
 - Continuous integration on [Eclipse CI](https://ci.eclipse.org/gemoc/job/gemoc-studio/)
-- Javadoc will come soon
+

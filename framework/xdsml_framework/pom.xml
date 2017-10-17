@@ -3,12 +3,12 @@
     <modelVersion>4.0.0</modelVersion>
     <groupId>org.eclipse.gemoc.modeldebugging.xdsmlframework</groupId>
     <artifactId>org.eclipse.gemoc.modeldebugging.xdsmlframework.root</artifactId>
-    <version>2.4.0-SNAPSHOT</version>
+    <version>3.0.0-SNAPSHOT</version>
     <packaging>pom</packaging>    
 	<parent>
 		<groupId>org.eclipse.gemoc</groupId>
 		<artifactId>org.eclipse.gemoc.modeldebugging.root</artifactId>
-    	<version>2.4.0-SNAPSHOT</version>
+    	<version>3.0.0-SNAPSHOT</version>
 		<relativePath>../..</relativePath>
 	</parent>
     <modules>
@@ -49,7 +49,7 @@
 <!-- 		        <repository> -->
 <!-- 		            <id>Gemoc Target Platform all-except-gemoc-executionframework</id> -->
 <!-- 		            <layout>p2</layout> -->
-<!-- 		            <url>https://ci.inria.fr/gemoc/job/org.eclipse.gemoc.targetplatform.redirects/lastSuccessfulBuild/artifact/org/eclipse/gemoc/targetplatform/update/all-except-gemoc-executionframework</url> -->
+<!-- 		            <url>https://ci.inria.fr/gemoc/job/org.gemoc.targetplatform.redirects/lastSuccessfulBuild/artifact/org/gemoc/targetplatform/update/all-except-gemoc-executionframework</url> -->
 <!-- 		        </repository> -->
 				<repository>
 		            <id>gemoc-studio_commons on CI</id>
@@ -59,7 +59,7 @@
 		     <!--    <repository>
 		            <id>modeldebugging_framework_frameworkcommons on CI</id>
 		            <layout>p2</layout>
-		            <url>https://ci.inria.fr/gemoc/job/modeldebugging_framework_framework_commons/lastSuccessfulBuild/artifact/framework/framework_commons/releng/org.eclipse.gemoc.modeldebugging.framework.commons.repository/target/repository/</url>
+		            <url>https://ci.inria.fr/gemoc/job/modeldebugging_framework_framework_commons/lastSuccessfulBuild/artifact/framework/framework_commons/releng/org.gemoc.modeldebugging.framework.commons.repository/target/repository/</url>
 		        </repository>-->		        
 		        <repository>
 		            <id>modelanimation_siriusmodelanimation on CI</id>
