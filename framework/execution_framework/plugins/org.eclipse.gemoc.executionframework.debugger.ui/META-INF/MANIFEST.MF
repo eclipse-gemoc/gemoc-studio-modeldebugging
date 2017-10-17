@@ -2,7 +2,7 @@ Manifest-Version: 1.0
 Bundle-ManifestVersion: 2
 Bundle-Name: org.eclipse.gemoc.executionframework.debugger.ui
 Bundle-SymbolicName: org.eclipse.gemoc.executionframework.debugger.ui;singleton:=true
-Bundle-Version: 2.4.0.qualifier
+Bundle-Version: 3.0.0.qualifier
 Bundle-RequiredExecutionEnvironment: JavaSE-1.8
 Bundle-Activator: org.eclipse.gemoc.executionframework.debugger.ui.Activator
 Export-Package: org.eclipse.gemoc.executionframework.debugger.ui;uses:="org.eclipse.gemoc.xdsmlframework.api.core,org.eclipse.core.commands,org.eclipse.jface.viewers",
