@@ -405,13 +405,5 @@
 			<version>${xtend.version}</version>
 		</dependency>
 	</dependencies>
-	<!-- <pluginRepositories>
-		<pluginRepository>
-			<id>tycho</id>
-			<url>http://repository.sonatype.org/content/groups/sonatype-public-grid</url>
-			<snapshots>
-				<enabled>true</enabled>
-			</snapshots>
-		</pluginRepository>
-	</pluginRepositories>-->
+
 </project>
