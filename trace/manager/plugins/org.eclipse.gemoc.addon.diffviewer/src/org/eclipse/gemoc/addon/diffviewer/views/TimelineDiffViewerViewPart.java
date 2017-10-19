@@ -119,7 +119,7 @@ public class TimelineDiffViewerViewPart extends ViewPart {
 						try {
 							IExtensionRegistry extReg = Platform.getExtensionRegistry();
 							IExtensionPoint ep = extReg
-									.getExtensionPoint("org.gemoc.gemoc_language_workbench.engine_addon");
+									.getExtensionPoint("org.eclipse.gemoc.gemoc_language_workbench.engine_addon");
 							IExtension[] extensions = ep.getExtensions();
 							for (int i = 0; i < extensions.length && newTraceAddon == null; i++) {
 								IExtension ext = extensions[i];

@@ -13,6 +13,6 @@
 
 <plugin>
 
-   <extension-point id="org.gemoc.gemoc_language_workbench.sequential.xdsml" name="Gemoc Sequential Language Definition" schema="schema/org.gemoc.gemoc_language_workbench.sequential.xdsml.exsd"/>
+   <extension-point id="org.eclipse.gemoc.gemoc_language_workbench.sequential.xdsml" name="Gemoc Sequential Language Definition" schema="schema/org.eclipse.gemoc.gemoc_language_workbench.sequential.xdsml.exsd"/>
 
 </plugin>

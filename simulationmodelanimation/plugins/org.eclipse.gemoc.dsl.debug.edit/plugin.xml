@@ -17,7 +17,7 @@ Contributors:
    <extension point="org.eclipse.emf.edit.itemProviderAdapterFactories">
       <!-- @generated debug -->
       <factory
-            uri="http://eclipse.org/gemoc/dsl/debug"
+            uri="http://eclipse.org/eclipse/gemoc/dsl/debug"
             class="org.eclipse.gemoc.dsl.debug.provider.DebugItemProviderAdapterFactory"
             supportedTypes=
               "org.eclipse.emf.edit.provider.IEditingDomainItemProvider

@@ -15,15 +15,15 @@ import org.eclipse.gemoc.executionframework.test.lib.ILanguageWrapper
 class LegacyFSM implements ILanguageWrapper {
 	
 	override getEntryPoint() {
-		"public static void org.gemoc.sample.legacyfsm.xsfsm.xsfsm.aspects.StateMachineAspect.main(org.gemoc.sample.legacyfsm.xsfsm.xsfsm.fsm.StateMachine)"
+		"public static void org.eclipse.gemoc.sample.legacyfsm.xsfsm.xsfsm.aspects.StateMachineAspect.main(org.eclipse.gemoc.sample.legacyfsm.xsfsm.xsfsm.fsm.StateMachine)"
 	}
 	
 	override getLanguageName() {
-		"org.gemoc.sample.legacyfsm.xsfsm.XSFSM"
+		"org.eclipse.gemoc.sample.legacyfsm.xsfsm.XSFSM"
 	}
 	
 	override getInitializationMethod() {
-		"org.gemoc.sample.legacyfsm.xsfsm.xsfsm.aspects.StateMachineAspect.initializeModel"
+		"org.eclipse.gemoc.sample.legacyfsm.xsfsm.xsfsm.aspects.StateMachineAspect.initializeModel"
 	}
 	
 	

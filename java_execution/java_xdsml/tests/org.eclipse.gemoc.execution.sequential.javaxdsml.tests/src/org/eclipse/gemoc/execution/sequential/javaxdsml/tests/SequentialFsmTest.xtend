@@ -34,11 +34,11 @@ public class SequentialFsmTest extends AbstractXtextTests
 	IProject melangeProject
 	IProject melangeProject2
 	static final String BASE_FOLDER_NAME = "tests-inputs-gen/SequentialFSM"
-	static final String BASE_PROJECT_NAME = "org.gemoc.sample.legacyfsm"
+	static final String BASE_PROJECT_NAME = "org.eclipse.gemoc.sample.legacyfsm"
 	static final String PROJECT_NAME = BASE_PROJECT_NAME+".fsm"
-	static final String MELANGE_FILE = PROJECT_NAME+"/src/org/gemoc/sample/legacyfsm/fsm/FSM.melange"
+	static final String MELANGE_FILE = PROJECT_NAME+"/src/org/eclipse/gemoc/sample/legacyfsm/fsm/FSM.melange"
 	static final String PROJECT_NAME2 = BASE_PROJECT_NAME+".xsfsm"
-	static final String MELANGE_FILE2 = PROJECT_NAME2+"/src/org/gemoc/sample/legacyfsm/xsfsm/language/XSFSM.melange"
+	static final String MELANGE_FILE2 = PROJECT_NAME2+"/src/org/eclipse/gemoc/sample/legacyfsm/xsfsm/language/XSFSM.melange"
 	
 	@Before
 	override setUp() {

@@ -43,6 +43,21 @@
                   icon="icons/generate-16.png"
                   label="Generate Multidimensional Trace Addon project for language"
                   style="push">
+               <visibleWhen
+                     checkEnabled="false">
+                  <with
+                        variable="selection">
+                     <count
+                           value="1">
+                     </count>
+                     <iterate
+                           ifEmpty="false">
+                        <reference
+                              definitionId="org.eclipse.gemoc.execution.sequential.javaxdsml.ide.ui.definitions.IsSelectionInGemocSequentialLanguageProject">
+                        </reference>
+                     </iterate>
+                  </with>
+               </visibleWhen>
             </command>
          </menu>
       </menuContribution>

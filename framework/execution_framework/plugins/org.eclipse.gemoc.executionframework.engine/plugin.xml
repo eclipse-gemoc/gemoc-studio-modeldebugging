@@ -3,7 +3,7 @@
 <plugin>
    
    <extension
-         point="org.gemoc.gemoc_language_workbench.engine_addon_group">
+         point="org.eclipse.gemoc.gemoc_language_workbench.engine_addon_group">
          <AddonGroup
             Name="General"
             id="General.AddonGroup">

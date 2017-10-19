@@ -36,7 +36,7 @@ public interface EventPackage extends EPackage {
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	String eNS_URI = "http://www.eclipse.org/gemoc/event";
+	String eNS_URI = "http://www.eclipse.org/eclipse/gemoc/event";
 
 	/**
 	 * The package namespace name.

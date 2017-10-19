@@ -29,7 +29,7 @@ import org.eclipse.gemoc.executionframework.debugger.GemocBreakpoint;
  */
 public class GemocBreakpointDetailPane implements IDetailPane {
 
-	public final static String PANEL_TYPE = "org.gemoc.gemoc_modeling_workbench.ui.breakpoint.GemocPanelType";
+	public final static String PANEL_TYPE = "org.eclipse.gemoc.gemoc_modeling_workbench.ui.breakpoint.GemocPanelType";
 
 	private Button logicalStepButton;
 

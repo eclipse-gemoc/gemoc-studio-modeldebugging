@@ -52,7 +52,7 @@ public interface DebugPackage extends EPackage {
 	 * 
 	 * @generated
 	 */
-	String eNS_URI = "http://eclipse.org/gemoc/dsl/debug";
+	String eNS_URI = "http://eclipse.org/eclipse/gemoc/dsl/debug";
 
 	/**
 	 * The package namespace name. <!-- begin-user-doc --> <!-- end-user-doc -->
