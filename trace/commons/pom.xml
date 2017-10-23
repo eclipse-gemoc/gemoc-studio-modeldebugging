@@ -1,83 +1,39 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<project xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd" xmlns="http://maven.apache.org/POM/4.0.0"
-    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
-  <modelVersion>4.0.0</modelVersion>
-  <groupId>org.eclipse.gemoc.trace.commons</groupId>
-  <artifactId>org.eclipse.gemoc.trace.commons.root</artifactId>
-  <version>2.4.0-SNAPSHOT</version>
-  <packaging>pom</packaging>
-  
-  	<parent>
+<project
+	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd"
+	xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+	<modelVersion>4.0.0</modelVersion>
+	<groupId>org.eclipse.gemoc.trace.commons</groupId>
+	<artifactId>org.eclipse.gemoc.trace.commons.root</artifactId>
+	<version>3.0.0-SNAPSHOT</version>
+	<packaging>pom</packaging>
+
+	<parent>
 		<groupId>org.eclipse.gemoc</groupId>
 		<artifactId>org.eclipse.gemoc.modeldebugging.root</artifactId>
-    	<version>2.4.0-SNAPSHOT</version>
+		<version>3.0.0-SNAPSHOT</version>
 		<relativePath>../..</relativePath>
 	</parent>
-  
-    <modules>
-    
-      <module>plugins/org.eclipse.gemoc.trace.commons</module>
-      <module>plugins/org.eclipse.gemoc.trace.gemoc.api</module>
-      <module>plugins/org.eclipse.gemoc.trace.commons.model</module>
-      <module>releng/org.eclipse.gemoc.trace.commons.feature</module>
 
-    </modules> 
-  
-  <properties>
-    <java.version>1.7</java.version>
-    <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
-  </properties>
-  
-  <profiles>
-    <!-- Profiles are used for switching the repositories used for the build so they either use the CI update sites or local repositories -->
-    	<profile>
-	        <id>ignore_CI_repositories</id>
-	        <activation>
-	            <activeByDefault>false</activeByDefault>
-	        </activation>
-	        <repositories>
-		    </repositories>
-	    </profile>
-	    <profile>
-	        <id>use_CI_repositories</id>
-	        <activation>
-	            <activeByDefault>true</activeByDefault>
-	        </activation>
-  
-		  <repositories>
-		                
-		       <!--  <repository>
-		            <id>modelanimation_executionengine_java on CI</id>
-		            <layout>p2</layout>
-		            <url>https://ci.inria.fr/gemoc/job/modelanimation_executionengine_java/lastSuccessfulBuild/artifact/executionengine/java/releng/org.eclipse.gemoc.executionengine.java.repository/target/repository/</url>
-		        </repository>-->
-		    
-		    	<!-- GEMOC and model animation update site on CI -->
-		    	<repository>
-		            <id>gemoc-studio_commons on CI</id>
-		            <layout>p2</layout>
-		            <url>https://ci.inria.fr/gemoc/job/gemoc-studio_commons/lastSuccessfulBuild/artifact/commons/releng/org.eclipse.gemoc.commons.repository/target/repository/</url>
-		        </repository>
-		    <!-- 	<repository>
-		            <id>modeldebugging_framework_frameworkcommons on CI</id>
-		            <layout>p2</layout>
-		            <url>https://ci.inria.fr/gemoc/job/modeldebugging_framework_framework_commons/lastSuccessfulBuild/artifact/framework/framework_commons/releng/org.eclipse.gemoc.modeldebugging.framework.commons.repository/target/repository/</url>
-		        </repository> -->
-		        <repository>
-		            <id>modelanimation_siriusmodelanimation on CI</id>
-		            <layout>p2</layout>
-		            <url>http://obeo-siriuslab-nightly.s3-website-eu-west-1.amazonaws.com/SiriusAnimator/master/repository/</url>
-		        </repository>
-		  </repositories>
-		</profile>
-    	
-    </profiles>
-    
+	<modules>
 
-   <build>
-     <plugins>
- 
-    		<plugin>
+		<module>plugins/org.eclipse.gemoc.trace.commons</module>
+		<module>plugins/org.eclipse.gemoc.trace.gemoc.api</module>
+		<module>plugins/org.eclipse.gemoc.trace.commons.model</module>
+		<module>releng/org.eclipse.gemoc.trace.commons.feature</module>
+
+	</modules>
+
+	<properties>
+		<java.version>1.7</java.version>
+		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+	</properties>
+
+
+	<build>
+		<plugins>
+
+			<plugin>
 				<groupId>org.eclipse.xtend</groupId>
 				<artifactId>xtend-maven-plugin</artifactId>
 				<version>${xtend.version}</version>
@@ -104,11 +60,11 @@
 			</plugin>
 
 
-      </plugins>
-      </build>
-   
-   
-   	<dependencies>
+		</plugins>
+	</build>
+
+
+	<dependencies>
 		<dependency>
 			<groupId>org.eclipse.xtend</groupId>
 			<artifactId>xtend-maven-plugin</artifactId>
@@ -121,8 +77,4 @@
 		</dependency>
 	</dependencies>
 
-   
-   
-   
-  
 </project>

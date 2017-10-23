@@ -3,12 +3,12 @@
     <modelVersion>4.0.0</modelVersion>
     <groupId>org.eclipse.gemoc.execution.sequential.java</groupId>
     <artifactId>org.eclipse.gemoc.execution.sequential.java.root</artifactId>
-    <version>2.4.0-SNAPSHOT</version>
+    <version>3.0.0-SNAPSHOT</version>
     <packaging>pom</packaging>    
 	<parent>
 		<groupId>org.eclipse.gemoc</groupId>
 		<artifactId>org.eclipse.gemoc.modeldebugging.root</artifactId>
-    	<version>2.4.0-SNAPSHOT</version>
+    	<version>3.0.0-SNAPSHOT</version>
 		<relativePath>..</relativePath>
 	</parent>
     <modules>
@@ -18,8 +18,7 @@
         <module>java_engine/plugins/org.eclipse.gemoc.execution.sequential.javaengine</module>       
         <module>java_xdsml/plugins/org.eclipse.gemoc.execution.sequential.javaxdsml.ide.ui</module>
         <module>java_engine/plugins/org.eclipse.gemoc.execution.sequential.javaengine.ui</module>
-        
-        
+               
         <!-- features -->
         <module>releng/org.eclipse.gemoc.execution.sequential.javaxdsml.feature</module>
         <module>releng/org.eclipse.gemoc.execution.sequential.javaengine.feature</module>
@@ -29,35 +28,4 @@
         <module>java_xdsml/tests/org.eclipse.gemoc.execution.sequential.javaxdsml.tests</module>
     </modules>
 
-
- 
-	<profiles>
-    <!-- Profiles are used for switching the repositories used for the build so they either use the CI update sites or local repositories -->
-    	<profile>
-	        <id>ignore_CI_repositories</id>
-	        <activation>
-	        </activation>
-	        <repositories>
-		    </repositories>
-	    </profile>
-	    <profile>
-	        <id>use_CI_repositories</id>
-	        <activation>
-	            <activeByDefault>true</activeByDefault>
-	        </activation>
-	        <repositories>
-				<repository>
-		            <id>gemoc-studio_commons on CI</id>
-		            <layout>p2</layout>
-		            <url>https://ci.inria.fr/gemoc/job/gemoc-studio_commons/lastSuccessfulBuild/artifact/commons/releng/org.eclipse.gemoc.commons.repository/target/repository/</url>
-		        </repository>
-		    	<repository>
-		            <id>modelanimation_siriusmodelanimation on CI</id>
-		            <layout>p2</layout>
-		            <url>http://obeo-siriuslab-nightly.s3-website-eu-west-1.amazonaws.com/SiriusAnimator/master/repository/</url>
-		        </repository>
-		    </repositories>
-	    </profile>
-    	
-    </profiles>
 </project>
