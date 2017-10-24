@@ -105,7 +105,9 @@ public class GemocSequentialLanguageBuilder extends IncrementalProjectBuilder {
 	 */
 	private void updateProjectPluginConfiguration(IResource resource) {
 		if (resource instanceof IFile 
-			&& resource.getFileExtension().equals("dsl")) {
+			&& resource.getFileExtension().equals("dsl")
+			&& !resource.getLocation().toString().contains("/bin/")) {
+			
 			IFile file = (IFile) resource;
 			IProject project = file.getProject();
 			// try {
