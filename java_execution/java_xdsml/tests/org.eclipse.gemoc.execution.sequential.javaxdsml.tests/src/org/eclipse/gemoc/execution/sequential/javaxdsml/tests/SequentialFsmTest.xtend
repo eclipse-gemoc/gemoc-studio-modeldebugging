@@ -22,7 +22,7 @@ import org.junit.FixMethodOrder
 import org.junit.Test
 import org.junit.runner.RunWith
 import org.junit.runners.MethodSorters
-import org.eclipse.gemoc.xdsmlframework.test.lib.WorkspaceTestHelper
+import org.eclipse.gemoc.xdsmlframework.test.lib.MelangeWorkspaceTestHelper
 import org.eclipse.gemoc.xdsmlframework.test.lib.MelangeUiInjectorProvider
 
 @RunWith(XtextRunner)
@@ -30,7 +30,7 @@ import org.eclipse.gemoc.xdsmlframework.test.lib.MelangeUiInjectorProvider
 @FixMethodOrder(MethodSorters::NAME_ASCENDING)
 public class SequentialFsmTest extends AbstractXtextTests
 {
-	@Inject WorkspaceTestHelper helper
+	@Inject MelangeWorkspaceTestHelper helper
 	IProject melangeProject
 	IProject melangeProject2
 	static final String BASE_FOLDER_NAME = "tests-inputs-gen/SequentialFSM"
