@@ -37,9 +37,12 @@ import org.junit.FixMethodOrder
 import org.junit.Test
 import org.junit.runner.RunWith
 import org.junit.runners.MethodSorters
+import org.eclipse.gemoc.execution.sequential.javaxdsml.api.extensions.languages.SequentialLanguageDefinitionExtensionPoint
 
 import static org.eclipse.swtbot.swt.finder.matchers.WidgetMatcherFactory.*
 import java.util.jar.Manifest
+import org.eclipse.core.runtime.NullProgressMonitor
+import org.eclipse.gemoc.xdsmlframework.ide.ui.builder.pde.PluginXMLHelper
 
 /**
  * This class check the result of the GEMOC Sequential xDSML project wizard
@@ -195,7 +198,7 @@ public class NewProjectTest extends AbstractXtextTests
 	}
 	
 	@Test
-	def void test7_PluginContent() {
+	def void test7_ManifestContent() {
 		val projects = ResourcesPlugin.workspace.root.projects
 		val project = projects.findFirst[project | project.name == "org.company.mySequentialLanguage"]
 		val manifest =  new Manifest(project.getFile(new Path("META-INF/MANIFEST.MF")).getContents())
@@ -203,5 +206,21 @@ public class NewProjectTest extends AbstractXtextTests
 		
 		assertTrue(dependencies.contains("org.gemoc.sample.legacyfsm.fsm.model"))
 		assertTrue(dependencies.contains("org.gemoc.sample.legacyfsm.fsm.k3dsa"))
+	}
+	
+	@Test
+	def void test7_PluginContent() {
+		val projects = ResourcesPlugin.workspace.root.projects
+		val project = projects.findFirst[project | project.name == "org.company.mySequentialLanguage"]
+		val pluginXmlFile = project.getFile(PluginXMLHelper.PLUGIN_FILENAME);
+		
+		val PluginXMLHelper helper = new PluginXMLHelper();
+		helper.loadDocument(pluginXmlFile);
+		val elements = helper.getExtensionPoints(SequentialLanguageDefinitionExtensionPoint.GEMOC_SEQUENTIAL_LANGUAGE_EXTENSION_POINT)
+		assertEquals(1, elements.size)
+		
+		assertEquals("org.company.mysequentiallanguage.MySequentialLanguage",helper.getXDSMLDefinitionAttribute(elements.head,"name"))
+		assertEquals("platform:/plugin/org.company.mySequentialLanguage/src/org/company/mysequentiallanguage/MySequentialLanguage.dsl",helper.getXDSMLDefinitionAttribute(elements.head,"xdsmlFilePath"))
+		assertEquals("org.eclipse.gemoc.executionframework.extensions.sirius.modelloader.DefaultModelLoader",helper.getXDSMLDefinitionAttribute(elements.head,"modelLoader_class"))
 	}
 }
