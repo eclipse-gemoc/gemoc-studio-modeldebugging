@@ -56,7 +56,7 @@ public class NewProjectTest extends AbstractXtextTests
 	static WorkspaceTestHelper helper = new WorkspaceTestHelper
 	
 	static final String BASE_FOLDER_NAME = "tests-inputs-gen/SequentialFSM"
-	static final String BASE_PROJECT_NAME = "org.gemoc.sample.legacyfsm"
+	static final String BASE_PROJECT_NAME = "org.eclipse.gemoc.sample.legacyfsm"
 	static final String PROJECT_NAME = BASE_PROJECT_NAME+".fsm"
 	
 	private static SWTWorkbenchBot	bot;
@@ -99,9 +99,9 @@ public class NewProjectTest extends AbstractXtextTests
 		val k3Browse = new SWTBotButton(bot.widget(matcher,1) as Button);
 
 		ecoreBrowse.click();
-		bot.tree().getTreeItem("org.gemoc.sample.legacyfsm.fsm.model").expand();
-		bot.tree().getTreeItem("org.gemoc.sample.legacyfsm.fsm.model").getNode("model").expand();
-		bot.tree().getTreeItem("org.gemoc.sample.legacyfsm.fsm.model").getNode("model").getNode("fsm.ecore").select();
+		bot.tree().getTreeItem("org.eclipse.gemoc.sample.legacyfsm.fsm.model").expand();
+		bot.tree().getTreeItem("org.eclipse.gemoc.sample.legacyfsm.fsm.model").getNode("model").expand();
+		bot.tree().getTreeItem("org.eclipse.gemoc.sample.legacyfsm.fsm.model").getNode("model").getNode("fsm.ecore").select();
 		bot.button("OK").click();
 		k3Browse.click();
 		bot.button("OK").click();
@@ -115,8 +115,8 @@ public class NewProjectTest extends AbstractXtextTests
 		IResourcesSetupUtil::reallyWaitForAutoBuild
 		val projects = ResourcesPlugin.workspace.root.projects
 		assertEquals(3,projects.size)
-		helper.assertProjectExists("org.gemoc.sample.legacyfsm.fsm.model")
-		helper.assertProjectExists("org.gemoc.sample.legacyfsm.fsm.k3dsa")
+		helper.assertProjectExists("org.eclipse.gemoc.sample.legacyfsm.fsm.model")
+		helper.assertProjectExists("org.eclipse.gemoc.sample.legacyfsm.fsm.k3dsa")
 		helper.assertProjectExists("org.company.mySequentialLanguage")
 	}
 	
@@ -162,13 +162,13 @@ public class NewProjectTest extends AbstractXtextTests
 		'''DSL org.company.mysequentiallanguage.MySequentialLanguage {
 	
 	abstract-syntax {
-		ecore = "platform:/resource/org.gemoc.sample.legacyfsm.fsm.model/model/fsm.ecore"
+		ecore = "platform:/resource/org.eclipse.gemoc.sample.legacyfsm.fsm.model/model/fsm.ecore"
 	}
 	
 	semantic {
-		k3 = "org.gemoc.sample.legacyfsm.fsm.k3dsa.StateAspect",
-		     "org.gemoc.sample.legacyfsm.fsm.k3dsa.StateMachineAspect",
-		     "org.gemoc.sample.legacyfsm.fsm.k3dsa.TransitionAspect"
+		k3 = "org.eclipse.gemoc.sample.legacyfsm.fsm.k3dsa.StateAspect",
+		     "org.eclipse.gemoc.sample.legacyfsm.fsm.k3dsa.StateMachineAspect",
+		     "org.eclipse.gemoc.sample.legacyfsm.fsm.k3dsa.TransitionAspect"
 	}
 }'''
 
@@ -204,8 +204,8 @@ public class NewProjectTest extends AbstractXtextTests
 		val manifest =  new Manifest(project.getFile(new Path("META-INF/MANIFEST.MF")).getContents())
 		val dependencies = manifest.mainAttributes.getValue("Require-Bundle")
 		
-		assertTrue(dependencies.contains("org.gemoc.sample.legacyfsm.fsm.model"))
-		assertTrue(dependencies.contains("org.gemoc.sample.legacyfsm.fsm.k3dsa"))
+		assertTrue(dependencies.contains("org.eclipse.gemoc.sample.legacyfsm.fsm.model"))
+		assertTrue(dependencies.contains("org.eclipse.gemoc.sample.legacyfsm.fsm.k3dsa"))
 	}
 	
 	@Test
