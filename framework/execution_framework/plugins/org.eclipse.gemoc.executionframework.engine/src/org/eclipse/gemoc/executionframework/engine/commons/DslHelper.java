@@ -18,7 +18,7 @@ public class DslHelper {
 	 */
 	public static Bundle getDslBundle(String languageName) {
 		
-		IConfigurationElement[] languages = Platform.getExtensionRegistry().getConfigurationElementsFor("org.gemoc.gemoc_language_workbench.sequential.xdsml");
+		IConfigurationElement[] languages = Platform.getExtensionRegistry().getConfigurationElementsFor("org.eclipse.gemoc.gemoc_language_workbench.sequential.xdsml");
 		for (IConfigurationElement lang : languages) {
 			String xdsmlPath = lang.getAttribute("xdsmlFilePath");
 			String xdsmlName = lang.getAttribute("name");
@@ -35,7 +35,7 @@ public class DslHelper {
 	 */
 	public static List<String> getAllLanguages(){
 		List<String> languagesNames = new ArrayList<String>();
-		IConfigurationElement[] languages = Platform.getExtensionRegistry().getConfigurationElementsFor("org.gemoc.gemoc_language_workbench.sequential.xdsml");
+		IConfigurationElement[] languages = Platform.getExtensionRegistry().getConfigurationElementsFor("org.eclipse.gemoc.gemoc_language_workbench.sequential.xdsml");
 		for (IConfigurationElement lang : languages) {
 			languagesNames.add(lang.getAttribute("name"));
 		}
@@ -44,7 +44,7 @@ public class DslHelper {
 	
 	public static Dsl load(String languageName) {
 		
-		IConfigurationElement[] languages = Platform.getExtensionRegistry().getConfigurationElementsFor("org.gemoc.gemoc_language_workbench.sequential.xdsml");
+		IConfigurationElement[] languages = Platform.getExtensionRegistry().getConfigurationElementsFor("org.eclipse.gemoc.gemoc_language_workbench.sequential.xdsml");
 		for (IConfigurationElement lang : languages) {
 			String xdsmlPath = lang.getAttribute("xdsmlFilePath");
 			String xdsmlName = lang.getAttribute("name");
