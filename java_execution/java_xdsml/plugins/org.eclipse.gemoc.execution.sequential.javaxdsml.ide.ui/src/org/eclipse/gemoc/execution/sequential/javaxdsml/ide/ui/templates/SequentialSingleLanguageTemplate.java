@@ -13,6 +13,7 @@ package org.eclipse.gemoc.execution.sequential.javaxdsml.ide.ui.templates;
 import java.io.IOException;
 import java.net.MalformedURLException;
 import java.net.URL;
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collections;
 import java.util.HashSet;
@@ -44,6 +45,8 @@ import org.eclipse.ui.IWorkbenchWindow;
 import org.eclipse.ui.PlatformUI;
 import org.eclipse.xtext.util.Strings;
 import org.osgi.framework.BundleException;
+
+import com.google.common.collect.Lists;
 
 import fr.inria.diverse.melange.ui.wizards.pages.NewMelangeProjectWizardFields;
 
@@ -314,7 +317,9 @@ public class SequentialSingleLanguageTemplate extends JavaxdsmlTemplateSection {
 		if(selection != null && !selection.isEmpty()){
 			
 			IProject dsaProject = ResourcesPlugin.getWorkspace().getRoot().getProject(selection);
-			Set<String> aspects = getAspectClassesList(dsaProject);
+			
+			List<String> aspects = new ArrayList<>(getAspectClassesList(dsaProject));
+			Collections.sort(aspects);
 			
 			StringJoiner sj = new StringJoiner("\",\n\t\t     \"", "\t\tk3 = \"", "\"");
 			
