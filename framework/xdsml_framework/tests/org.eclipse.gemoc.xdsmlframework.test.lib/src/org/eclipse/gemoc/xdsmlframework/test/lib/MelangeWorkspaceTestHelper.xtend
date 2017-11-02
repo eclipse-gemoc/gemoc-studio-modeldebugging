@@ -35,8 +35,8 @@ import org.eclipse.emf.ecore.EStructuralFeature
 import org.eclipse.emf.ecore.EcorePackage
 import org.eclipse.emf.ecore.resource.impl.ResourceSetImpl
 import org.eclipse.gemoc.trace.gemoc.generator.TraceAddonGeneratorIntegration
+import org.eclipse.gemoc.xdsmlframework.ide.ui.XDSMLFrameworkUI
 import org.eclipse.jdt.core.JavaCore
-import org.eclipse.jdt.ui.JavaUI
 import org.eclipse.jface.viewers.StructuredSelection
 import org.eclipse.jface.viewers.TreeViewer
 import org.eclipse.pde.internal.core.natures.PDE
@@ -79,7 +79,7 @@ class MelangeWorkspaceTestHelper extends WorkspaceTestHelper {
 	override void init() {
 		Display.^default.syncExec(new Runnable(){
 				override run() {
-					PlatformUI::workbench.showPerspective(JavaUI.ID_PERSPECTIVE, PlatformUI.workbench.activeWorkbenchWindow)
+					PlatformUI::workbench.showPerspective(XDSMLFrameworkUI.ID_PERSPECTIVE, PlatformUI.workbench.activeWorkbenchWindow)
 					closeWelcomePage
 				}
 			})

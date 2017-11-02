@@ -30,11 +30,11 @@ import org.eclipse.core.runtime.jobs.Job
 import org.eclipse.debug.core.DebugPlugin
 import org.eclipse.debug.core.ILaunchManager
 import org.eclipse.debug.ui.IDebugUIConstants
+import org.eclipse.gemoc.xdsmlframework.ide.ui.XDSMLFrameworkUI
 import org.eclipse.jdt.core.IJavaProject
 import org.eclipse.jdt.core.JavaCore
 import org.eclipse.jdt.launching.IJavaLaunchConfigurationConstants
 import org.eclipse.jdt.launching.JavaRuntime
-import org.eclipse.jdt.ui.JavaUI
 import org.eclipse.osgi.internal.framework.EquinoxBundle
 import org.eclipse.osgi.storage.BundleInfo.Generation
 import org.eclipse.pde.core.target.ITargetDefinition
@@ -43,6 +43,8 @@ import org.eclipse.pde.core.target.ITargetPlatformService
 import org.eclipse.pde.core.target.LoadTargetDefinitionJob
 import org.eclipse.pde.internal.core.target.TargetPlatformService
 import org.eclipse.swt.widgets.Display
+import org.eclipse.ui.IWindowListener
+import org.eclipse.ui.IWorkbenchWindow
 import org.eclipse.ui.PlatformUI
 import org.eclipse.ui.dialogs.IOverwriteQuery
 import org.eclipse.ui.internal.wizards.datatransfer.ZipLeveledStructureProvider
@@ -59,7 +61,7 @@ class WorkspaceTestHelper {
 	def void init() {
 		Display.^default.syncExec(new Runnable(){
 				override run() {
-					PlatformUI::workbench.showPerspective(JavaUI.ID_PERSPECTIVE, PlatformUI.workbench.activeWorkbenchWindow)
+					PlatformUI::workbench.showPerspective(XDSMLFrameworkUI.ID_PERSPECTIVE, PlatformUI.workbench.activeWorkbenchWindow)
 					closeWelcomePage
 				}
 			})
@@ -148,6 +150,17 @@ class WorkspaceTestHelper {
 	}
 	
 	/**
+	 * Usage : projectName/folder
+	 */
+	def void assertFolderExists(String foldername) {
+		val ws = ResourcesPlugin::workspace
+		Assert.assertTrue(
+			"Cannot find file " + foldername,
+			ws.root.getFolder(new Path(foldername)).exists
+		)
+	}
+	
+	/**
 	 * Check if {@link project} exist
 	 */
 	def void assertProjectExists(String project){
@@ -169,6 +182,11 @@ class WorkspaceTestHelper {
 		)
 	}
 
+
+	/** search in the given list if it contains the searchedString, report the error with a message*/
+	def void assertContains(String baseMessage, String searchedString, List<String> list){
+		Assert.assertTrue(baseMessage+" "+searchedString, list.contains(searchedString));
+	}
 
 	/**
 	 * Creates and lauches a new run configuration for {@link project}
@@ -284,5 +302,77 @@ class WorkspaceTestHelper {
 		}
 		val parentClassLoader = project.getClass().getClassLoader();
 		return new URLClassLoader(urlList, parentClassLoader);
+	}
+	
+	def void waitFileExistOrAssert(String fileName, int retry, long sleep){
+		val ws = ResourcesPlugin::workspace
+		for (i : 0 ..< retry) {
+			if(ws.root.getFile(new Path(fileName)).exists) {
+				return
+			} 
+			try {
+				Thread.sleep(sleep)
+			} catch (InterruptedException e){}
+		}
+		assertFileExists(fileName)
+	}
+	/**
+	 * relaunch the  waitForJobs several times in case some other background task
+	 * also wait for idle time to triggers new jobs 
+	 */
+	public static def void reallyWaitForJobs(int retry) {
+		for(i : 0.. retry){
+			waitForJobs
+			Thread.sleep(100)
+		}
+		waitForJobs
+	}
+	
+	public static def void waitForJobs() {
+		while (!Job.getJobManager().isIdle())
+			delay(100);
+	}
+	static var closed = false;
+	public static def void delay(long waitTimeMillis) {
+		val Display display = Display.getCurrent();
+
+		// We try to capture when the window is closed by the tester
+		PlatformUI.getWorkbench.addWindowListener(
+			new IWindowListener() {
+
+				override windowActivated(IWorkbenchWindow window) {
+				}
+
+				override windowClosed(IWorkbenchWindow window) {
+					closed = true
+				}
+
+				override windowDeactivated(IWorkbenchWindow window) {
+				}
+
+				override windowOpened(IWorkbenchWindow window) {
+				}
+
+			}
+		)
+
+		// If this is the UI thread,
+		// then process input.
+		if (display != null) {
+			val long endTimeMillis = System.currentTimeMillis() + waitTimeMillis;
+			while (System.currentTimeMillis() < endTimeMillis && !closed) {
+				if (!display.readAndDispatch())
+					display.sleep();
+			}
+			display.update();
+		}
+      // Otherwise, perform a simple sleep.
+		else {
+			try {
+				Thread.sleep(waitTimeMillis);
+			} catch (InterruptedException e) {
+				// Ignored.
+			}
+		}
 	}	
 }
