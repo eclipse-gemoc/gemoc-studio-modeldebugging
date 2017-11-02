@@ -8,7 +8,7 @@
  * Contributors:
  *     Inria - initial API and implementation
  *******************************************************************************/
-package org.eclipse.gemoc.execution.sequential.javaxdsml.tests
+package org.eclipse.gemoc.execution.sequential.javaxdsml.system.tests
 
 import com.google.inject.Inject
 import org.eclipse.core.resources.IProject
@@ -28,7 +28,7 @@ import org.eclipse.gemoc.xdsmlframework.test.lib.MelangeUiInjectorProvider
 @RunWith(XtextRunner)
 @InjectWith(MelangeUiInjectorProvider)
 @FixMethodOrder(MethodSorters::NAME_ASCENDING)
-public class SequentialFsmTest extends AbstractXtextTests
+public class CompileOfficialSequentialFsm_Test extends AbstractXtextTests
 {
 	@Inject MelangeWorkspaceTestHelper helper
 	IProject melangeProject
