@@ -42,7 +42,9 @@
 				<configuration>
 					<argLine>-Xmx2048m</argLine>
 					<useUIHarness>true</useUIHarness>
-					<useUIThread>true</useUIThread>
+					<useUIThread>false</useUIThread>
+					<product>org.eclipse.sdk.ide</product>
+              		<application>org.eclipse.ui.ide.workbench</application>
 				</configuration>
 			</plugin>
 		
@@ -122,35 +124,37 @@
 			            <!-- GEMOC components -->
 			            <requirement>
 			               <type>eclipse-feature</type>
-			               <id>org.eclipse.gemoc.dsl.debug.feature</id>
+			               <id>org.eclipse.gemoc.modeldebugging.feature</id>
 			               <versionRange>1.0.0</versionRange>
 			            </requirement>
 			            <requirement>
 			               <type>eclipse-feature</type>
-			               <id>org.eclipse.gemoc.execution.sequential.javaengine.ui.feature</id>
+			               <id>org.eclipse.gemoc.gemoc_studio.branding.feature</id>
 			               <versionRange>1.0.0</versionRange>
 			            </requirement>
 			            <requirement>
 			               <type>eclipse-feature</type>
-			               <id>org.eclipse.gemoc.xdsmlframework.feature</id>
+			               <id>org.eclipse.gemoc.gemoc_studio.additions.feature</id>
+			               <versionRange>1.0.0</versionRange>
+			            </requirement>
+			            <!-- SWTBot features -->
+			            <requirement>
+			               <type>eclipse-feature</type>
+			               <id>org.eclipse.swtbot</id>
 			               <versionRange>1.0.0</versionRange>
 			            </requirement>
 			            <requirement>
 			               <type>eclipse-feature</type>
-			               <id>org.eclipse.gemoc.trace.generator.feature</id>
+			               <id>org.eclipse.swtbot.eclipse</id>
 			               <versionRange>1.0.0</versionRange>
 			            </requirement>
 			            <requirement>
 			               <type>eclipse-feature</type>
-			               <id>org.eclipse.gemoc.trace.manager.feature</id>
-			               <versionRange>1.0.0</versionRange>
-			            </requirement>
-			            <requirement>
-			               <type>eclipse-feature</type>
-			               <id>org.eclipse.gemoc.modeldebugging.framework.commons.feature</id>
+			               <id>org.eclipse.swtbot.ide</id>
 			               <versionRange>1.0.0</versionRange>
 			            </requirement>
 			         </extraRequirements>
+			        
 			      </dependency-resolution>
 			   </configuration>
 			</plugin>

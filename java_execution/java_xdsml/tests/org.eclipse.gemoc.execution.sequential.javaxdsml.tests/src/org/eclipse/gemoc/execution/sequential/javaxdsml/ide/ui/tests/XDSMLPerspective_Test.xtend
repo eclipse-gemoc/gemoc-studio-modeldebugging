@@ -51,15 +51,17 @@ public class XDSMLPerspective_Test extends AbstractXtextTests
 	@Before
 	override setUp() {
 		bot.resetWorkbench
+		// helps to reset the workspace state by closing menu as bot.resetWorkbench is not enough
+		val Keyboard key = KeyboardFactory.getSWTKeyboard();
+		key.pressShortcut(Keystrokes.ESC);
+		// make sure we are on the correct perspective
 		bot.perspectiveById(XDSMLFrameworkUI.ID_PERSPECTIVE).activate()
 		val projExplorerBot = bot.viewByTitle("Project Explorer").bot
 	}
 	
 	@After
 	override tearDown() {
-		// helps to reset the workspace state by closing menu as bot.resetWorkbench is not enough
-		val Keyboard key = KeyboardFactory.getSWTKeyboard();
-		key.pressShortcut(Keystrokes.ESC);
+		// Nothing to do
 	}
 	
 	@Test
@@ -77,7 +79,7 @@ public class XDSMLPerspective_Test extends AbstractXtextTests
 		newMenu.menuItem("K3 Project").click
 		bot.button("Cancel").click
 		
-		newMenu.menuItem("GEMOC Sequential xDSMdL Project").click
+		newMenu.menuItem("GEMOC Sequential xDSML Project").click
 		bot.button("Cancel").click
 		
 		newMenu.menuItem("Ecore Modeling Project").click

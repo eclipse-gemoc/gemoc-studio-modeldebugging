@@ -24,6 +24,7 @@ import org.junit.runner.RunWith
 import org.junit.runners.MethodSorters
 import org.eclipse.gemoc.xdsmlframework.test.lib.MelangeWorkspaceTestHelper
 import org.eclipse.gemoc.xdsmlframework.test.lib.MelangeUiInjectorProvider
+import org.eclipse.swt.widgets.Display
 
 @RunWith(XtextRunner)
 @InjectWith(MelangeUiInjectorProvider)
@@ -64,8 +65,12 @@ public class CompileOfficialSequentialFsm_Test extends AbstractXtextTests
 			helper.cleanAll(MELANGE_FILE)
 			helper.cleanAll(MELANGE_FILE2)
 			IResourcesSetupUtil::reallyWaitForAutoBuild
-			helper.openEditor(MELANGE_FILE)
-			helper.openEditor(MELANGE_FILE2)
+			Display.^default.syncExec(new Runnable() {
+				override run() {
+					helper.openEditor(MELANGE_FILE)
+					helper.openEditor(MELANGE_FILE2)
+				}	
+			})
 		} else {
 			melangeProject = helper.getProject(PROJECT_NAME)
 		}
@@ -78,8 +83,12 @@ public class CompileOfficialSequentialFsm_Test extends AbstractXtextTests
 	
 	@Test
 	def void test01GenerateAllMelange_NoErrorsInWorkspace() {
-		helper.generateAll(MELANGE_FILE)
-		helper.generateAll(MELANGE_FILE2)
+		Display.^default.syncExec(new Runnable(){
+				override run() {
+					helper.generateAll(MELANGE_FILE)
+					helper.generateAll(MELANGE_FILE2)
+				}
+			})
 		IResourcesSetupUtil::reallyWaitForAutoBuild
 		helper.assertNoMarkers
 		
@@ -90,7 +99,11 @@ public class CompileOfficialSequentialFsm_Test extends AbstractXtextTests
 	
 	@Test
 	def void test03GenerateTrace_NoErrorsInWorkspace() {
-		helper.generateTrace(MELANGE_FILE2, "XSFSM", PROJECT_NAME2+".trace")
+		Display.^default.syncExec(new Runnable(){
+				override run() {
+					helper.generateTrace(MELANGE_FILE2, "XSFSM", PROJECT_NAME2+".trace")
+				}
+			})
 		IResourcesSetupUtil::reallyWaitForAutoBuild
 		helper.assertNoMarkers
 		

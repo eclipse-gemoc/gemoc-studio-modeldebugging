@@ -157,7 +157,11 @@ class MelangeWorkspaceTestHelper extends WorkspaceTestHelper {
 	}
 	
 	def void cleanAll(String melangeFile) {
-		invokeMelangeCommand(MELANGE_CMD_CLEAN_ALL, melangeFile)
+		Display.^default.syncExec(new Runnable() {
+			override run() {
+				invokeMelangeCommand(MELANGE_CMD_CLEAN_ALL, melangeFile)
+			}
+		})
 	}
 
 

@@ -48,6 +48,9 @@ import org.eclipse.core.resources.IWorkspaceRunnable
 import org.eclipse.core.runtime.IProgressMonitor
 import org.eclipse.core.runtime.CoreException
 import org.eclipse.core.resources.IProject
+import org.eclipse.swtbot.swt.finder.keyboard.Keyboard
+import org.eclipse.swtbot.swt.finder.keyboard.KeyboardFactory
+import org.eclipse.swtbot.swt.finder.keyboard.Keystrokes
 
 /**
  * This class check the result of the GEMOC Sequential xDSML project wizard
@@ -70,21 +73,28 @@ public class CreateSingleSequentialLanguageFromOfficialFSM_Test extends Abstract
  
 	@BeforeClass
 	def static void beforeClass() throws Exception {
-		bot = new SWTWorkbenchBot()
-		IResourcesSetupUtil::cleanWorkspace
 		helper.init
+		bot = new SWTWorkbenchBot()
+		bot.resetWorkbench
+		IResourcesSetupUtil::cleanWorkspace
 		helper.deployProject(SOURCE_PROJECT_NAME+".model",BASE_FOLDER_NAME+"/"+SOURCE_PROJECT_NAME+".model.zip")
 		helper.deployProject(SOURCE_PROJECT_NAME+".k3dsa",BASE_FOLDER_NAME+"/"+SOURCE_PROJECT_NAME+".k3dsa.zip")
 	}
 	
 	@Before
 	override setUp() {
-		// Nope
+		bot.resetWorkbench
+		// helps to reset the workspace state by closing menu as bot.resetWorkbench is not enough
+		val Keyboard key = KeyboardFactory.getSWTKeyboard();
+		key.pressShortcut(Keystrokes.ESC);		
+		// make sure we are on the correct perspective
+		bot.perspectiveById(XDSMLFrameworkUI.ID_PERSPECTIVE).activate()
+		val projExplorerBot = bot.viewByTitle("Project Explorer").bot
 	}
 	
 	@After
 	override tearDown() {
-		// Nope
+		// Nothing to do
 	}
 	
 	@Test

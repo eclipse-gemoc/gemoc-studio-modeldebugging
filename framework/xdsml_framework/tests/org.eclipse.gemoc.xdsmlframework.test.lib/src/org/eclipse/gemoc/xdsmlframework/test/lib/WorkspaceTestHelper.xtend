@@ -75,24 +75,34 @@ class WorkspaceTestHelper {
 		return getProject(projectName).exists
 	}
 
+
+	private IProject deployProjectResult = null;
 	def IProject deployProject(String projectName, String zipLocation) {
-		val newProject = JavaProjectSetupUtil::createSimpleProject(projectName)
 		
-		val zip = new ZipFile(zipLocation)
-		val structureProvider = new ZipLeveledStructureProvider(zip)
-		val queryOverwrite = new IOverwriteQuery() {
-			override queryOverwrite(String file) { return ALL }
-		}
-
-		new ImportOperation(
-			newProject.project.fullPath,
-			structureProvider.root,
-			structureProvider,
-			queryOverwrite
-		).run(new NullProgressMonitor)
-
-		zip.close
-		return newProject.project
+		deployProjectResult = null
+		Display.^default.syncExec(new Runnable(){
+				override run() {
+			val newProject = JavaProjectSetupUtil::createSimpleProject(projectName)
+			
+			val zip = new ZipFile(zipLocation)
+			val structureProvider = new ZipLeveledStructureProvider(zip)
+			val queryOverwrite = new IOverwriteQuery() {
+				override queryOverwrite(String file) { return ALL }
+			}
+	
+			new ImportOperation(
+				newProject.project.fullPath,
+				structureProvider.root,
+				structureProvider,
+				queryOverwrite
+			).run(new NullProgressMonitor)
+	
+			zip.close
+			deployProjectResult = newProject.project
+			
+			}
+		})
+		return deployProjectResult
 	}
 	
 
