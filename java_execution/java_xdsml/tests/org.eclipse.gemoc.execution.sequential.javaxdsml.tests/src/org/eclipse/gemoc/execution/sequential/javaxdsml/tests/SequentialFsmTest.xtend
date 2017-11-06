@@ -24,6 +24,8 @@ import org.junit.runner.RunWith
 import org.junit.runners.MethodSorters
 import org.eclipse.gemoc.xdsmlframework.test.lib.WorkspaceTestHelper
 import org.eclipse.gemoc.xdsmlframework.test.lib.MelangeUiInjectorProvider
+import org.eclipse.swt.widgets.Display
+import org.junit.Assert
 
 @RunWith(XtextRunner)
 @InjectWith(MelangeUiInjectorProvider)
@@ -36,36 +38,43 @@ public class SequentialFsmTest extends AbstractXtextTests
 	static final String BASE_FOLDER_NAME = "tests-inputs-gen/SequentialFSM"
 	static final String BASE_PROJECT_NAME = "org.eclipse.gemoc.sample.legacyfsm"
 	static final String PROJECT_NAME = BASE_PROJECT_NAME+".fsm"
-	static final String MELANGE_FILE = PROJECT_NAME+"/src/org/eclipse/gemoc/sample/legacyfsm/fsm/FSM.melange"
 	static final String PROJECT_NAME2 = BASE_PROJECT_NAME+".xsfsm"
 	static final String MELANGE_FILE2 = PROJECT_NAME2+"/src/org/eclipse/gemoc/sample/legacyfsm/xsfsm/language/XSFSM.melange"
+	static final String DSL_FILE2 = PROJECT_NAME2+".xsfsm/model/XSFSM.dsl"
 	
 	@Before
 	override setUp() {
 		helper.setTargetPlatform
 		if (!helper.projectExists(PROJECT_NAME)) {
-			super.setUp
+			SequentialFsmTest.super.setUp
 			helper.init
 			IResourcesSetupUtil::cleanWorkspace
-			
-			// try to respect build order in order to ease compilation, this will speed up the test
-			helper.deployProject(PROJECT_NAME+".model",BASE_FOLDER_NAME+"/"+PROJECT_NAME+".model.zip")
-			helper.deployProject(PROJECT_NAME+".k3dsa",BASE_FOLDER_NAME+"/"+PROJECT_NAME+".k3dsa.zip")
-			melangeProject = helper.deployProject(PROJECT_NAME,BASE_FOLDER_NAME+"/"+PROJECT_NAME+".zip")
-			helper.deployProject(PROJECT_NAME+".design",BASE_FOLDER_NAME+"/"+PROJECT_NAME+".design.zip")
-			helper.deployProject(PROJECT_NAME+".model.edit",BASE_FOLDER_NAME+"/"+PROJECT_NAME+".model.edit.zip")
-			helper.deployProject(PROJECT_NAME+".model.editor",BASE_FOLDER_NAME+"/"+PROJECT_NAME+".model.editor.zip")
-			
-			
-			melangeProject2 = helper.deployProject(PROJECT_NAME2,BASE_FOLDER_NAME+"/"+PROJECT_NAME2+".zip")
-			helper.deployProject(PROJECT_NAME2+".design",BASE_FOLDER_NAME+"/"+PROJECT_NAME2+".design.zip")
-			
-			IResourcesSetupUtil::reallyWaitForAutoBuild
-			helper.cleanAll(MELANGE_FILE)
-			helper.cleanAll(MELANGE_FILE2)
-			IResourcesSetupUtil::reallyWaitForAutoBuild
-			helper.openEditor(MELANGE_FILE)
-			helper.openEditor(MELANGE_FILE2)
+			Display.^default.syncExec(
+				new Runnable() {
+					override run() {
+						try {
+							// try to respect build order in order to ease compilation, this will speed up the test
+							helper.deployProject(PROJECT_NAME+".model",BASE_FOLDER_NAME+"/"+PROJECT_NAME+".model.zip")
+							helper.deployProject(PROJECT_NAME+".k3dsa",BASE_FOLDER_NAME+"/"+PROJECT_NAME+".k3dsa.zip")
+							melangeProject = helper.deployProject(PROJECT_NAME,BASE_FOLDER_NAME+"/"+PROJECT_NAME+".zip")
+							helper.deployProject(PROJECT_NAME+".design",BASE_FOLDER_NAME+"/"+PROJECT_NAME+".design.zip")
+							helper.deployProject(PROJECT_NAME+".model.edit",BASE_FOLDER_NAME+"/"+PROJECT_NAME+".model.edit.zip")
+							helper.deployProject(PROJECT_NAME+".model.editor",BASE_FOLDER_NAME+"/"+PROJECT_NAME+".model.editor.zip")
+							
+							
+							melangeProject2 = helper.deployProject(PROJECT_NAME2,BASE_FOLDER_NAME+"/"+PROJECT_NAME2+".zip")
+							helper.deployProject(PROJECT_NAME2+".design",BASE_FOLDER_NAME+"/"+PROJECT_NAME2+".design.zip")
+							
+							IResourcesSetupUtil::reallyWaitForAutoBuild
+							helper.cleanAll(MELANGE_FILE2)
+							IResourcesSetupUtil::reallyWaitForAutoBuild
+							helper.openEditor(MELANGE_FILE2)
+						} catch (Exception e) {
+								e.printStackTrace
+								Assert.fail(e.message)
+							}
+						}
+					})
 		} else {
 			melangeProject = helper.getProject(PROJECT_NAME)
 		}
@@ -78,8 +87,17 @@ public class SequentialFsmTest extends AbstractXtextTests
 	
 	@Test
 	def void test01GenerateAllMelange_NoErrorsInWorkspace() {
-		helper.generateAll(MELANGE_FILE)
-		helper.generateAll(MELANGE_FILE2)
+		Display.^default.syncExec(
+			new Runnable() {
+				override run() {
+					try {
+						helper.generateAll(MELANGE_FILE2)
+					} catch (Exception e) {
+							e.printStackTrace
+							Assert.fail(e.message)
+						}
+					}
+				})
 		IResourcesSetupUtil::reallyWaitForAutoBuild
 		helper.assertNoMarkers
 		
@@ -90,7 +108,17 @@ public class SequentialFsmTest extends AbstractXtextTests
 	
 	@Test
 	def void test03GenerateTrace_NoErrorsInWorkspace() {
-		helper.generateTrace(MELANGE_FILE2, "XSFSM", PROJECT_NAME2+".trace")
+		Display.^default.syncExec(
+			new Runnable() {
+				override run() {
+					try {
+						helper.generateTrace(DSL_FILE2, "XSFSM", PROJECT_NAME2+".trace")
+					} catch (Exception e) {
+							e.printStackTrace
+							Assert.fail(e.message)
+						}
+					}
+				})
 		IResourcesSetupUtil::reallyWaitForAutoBuild
 		helper.assertNoMarkers
 		

@@ -23,8 +23,6 @@ import org.eclipse.gemoc.commons.eclipse.ui.WizardFinder;
 import org.eclipse.gemoc.xdsmlframework.extensions.sirius.wizards.NewGemocDebugRepresentationWizard;
 import org.eclipse.gemoc.xdsmlframework.ide.ui.Activator;
 
-import fr.inria.diverse.melange.metamodel.melange.Language;
-
 //import org.eclipse.emf.ecoretools.design.wizard.EcoreModelerWizard;
 
 /**
@@ -45,7 +43,7 @@ public class CreateAnimatorProjectWizardContextAction {
 	// one of these must be set, depending on it it will work on the file or
 	// directly in the model
 	protected IProject gemocLanguageIProject = null;	
-	protected Language melangeLanguage = null;
+	protected String languageName = null;
 
 	public CreateAnimatorProjectWizardContextAction(
 			IProject updatedGemocLanguageProject) {
@@ -54,9 +52,9 @@ public class CreateAnimatorProjectWizardContextAction {
 	
 	public CreateAnimatorProjectWizardContextAction(
 			IProject updatedGemocLanguageProject,
-			Language language) {
+			String language) {
 		gemocLanguageIProject = updatedGemocLanguageProject;
-		melangeLanguage = language;
+		languageName = language;
 	}
 
 	
@@ -91,9 +89,9 @@ public class CreateAnimatorProjectWizardContextAction {
 				IWorkbenchWizard wizard;
 				wizard = descriptor.createWizard();
 				((NewGemocDebugRepresentationWizard) wizard).setInitialProjectName(gemocLanguageIProject.getName());
-				if(melangeLanguage != null){
+				if(languageName != null){
 					((NewGemocDebugRepresentationWizard) wizard)
-					.setInitialLanguageName(melangeLanguage.getName());
+					.setInitialLanguageName(languageName);
 				}
 				IWorkbench workbench = PlatformUI.getWorkbench();
 				wizard.init(workbench, null);

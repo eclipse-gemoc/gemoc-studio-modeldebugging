@@ -13,12 +13,14 @@ package org.eclipse.gemoc.execution.sequential.javaxdsml.ide.ui.templates;
 import java.io.IOException;
 import java.net.MalformedURLException;
 import java.net.URL;
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collections;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Properties;
 import java.util.Set;
+import java.util.StringJoiner;
 
 import org.eclipse.core.resources.IFile;
 import org.eclipse.core.resources.IProject;
@@ -43,6 +45,8 @@ import org.eclipse.ui.IWorkbenchWindow;
 import org.eclipse.ui.PlatformUI;
 import org.eclipse.xtext.util.Strings;
 import org.osgi.framework.BundleException;
+
+import com.google.common.collect.Lists;
 
 import fr.inria.diverse.melange.ui.wizards.pages.NewMelangeProjectWizardFields;
 
@@ -307,13 +311,19 @@ public class SequentialSingleLanguageTemplate extends JavaxdsmlTemplateSection {
 				ecoreIFile == null?"//":"", 0);
 		
 		//Replace KEY_ASPECTS' value (which is a project name) by a list of aspects 
-		final String DEFAULT_VALUE = "//\twith qualified.class.name\n";
+		final String DEFAULT_VALUE = "//\t\tk3 = \"qualified.class.name\"";
 		
 		String selection = dsaProjectName;
 		if(selection != null && !selection.isEmpty()){
 			
 			IProject dsaProject = ResourcesPlugin.getWorkspace().getRoot().getProject(selection);
-			Set<String> aspects = getAspectClassesList(dsaProject);
+			
+			List<String> aspects = new ArrayList<>(getAspectClassesList(dsaProject));
+			Collections.sort(aspects);
+			
+			StringJoiner sj = new StringJoiner("\",\n\t\t     \"", "\t\tk3 = \"", "\"");
+			
+			
 			
 			StringBuilder templateWith = new StringBuilder();
 			if(aspects.isEmpty()){
@@ -321,8 +331,9 @@ public class SequentialSingleLanguageTemplate extends JavaxdsmlTemplateSection {
 			}
 			else{
 				for(String aspect : aspects){
-					templateWith.append("\twith "+aspect+"\n");
+					sj.add(aspect);
 				}
+				templateWith.append(sj);
 			}
 			dsaProjectLocationOption.setValue(templateWith.toString());
 		}

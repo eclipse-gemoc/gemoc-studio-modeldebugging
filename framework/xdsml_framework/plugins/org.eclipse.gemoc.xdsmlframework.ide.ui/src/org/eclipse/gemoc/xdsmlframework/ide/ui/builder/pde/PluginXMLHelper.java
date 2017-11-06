@@ -155,6 +155,17 @@ public class PluginXMLHelper {
 		}
 		return result;
 	}
+	
+	public List<Element> getExtensionPoints(String extensionPointName){
+		return root.getContent(new ExtensionFilter(extensionPointName));
+	}
+	public String getXDSMLDefinitionAttribute(Element extensionPoint, String attributeName){
+		List<Element> elements = extensionPoint.getContent(new ElementFilter(LanguageDefinitionExtensionPoint.GEMOC_LANGUAGE_EXTENSION_POINT_XDSML_DEF));
+		if(!elements.isEmpty()){
+			return elements.get(0).getAttributeValue(attributeName);
+		}
+		return null;
+	}
 
 	public class ExtensionFilter extends ElementFilter{
 		

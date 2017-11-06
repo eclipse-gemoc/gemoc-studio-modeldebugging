@@ -24,17 +24,14 @@ import org.eclipse.core.runtime.CoreException;
 import org.eclipse.core.runtime.IProgressMonitor;
 import org.eclipse.emf.common.util.URI;
 import org.eclipse.emf.ecore.resource.Resource;
-import org.eclipse.emf.ecore.resource.ResourceSet;
 import org.eclipse.emf.ecore.resource.impl.ResourceSetImpl;
 import org.eclipse.gemoc.commons.eclipse.pde.manifest.ManifestChanger;
+import org.eclipse.gemoc.dsl.Dsl;
 import org.eclipse.gemoc.execution.sequential.javaxdsml.api.extensions.languages.SequentialLanguageDefinitionExtensionPoint;
 import org.eclipse.gemoc.xdsmlframework.api.extensions.languages.LanguageDefinitionExtensionPoint;
 import org.eclipse.gemoc.xdsmlframework.ide.ui.builder.pde.PluginXMLHelper;
 import org.jdom2.Element;
 import org.osgi.framework.BundleException;
-
-import fr.inria.diverse.melange.metamodel.melange.Language;
-import fr.inria.diverse.melange.metamodel.melange.ModelTypingSpace;
 
 public class GemocSequentialLanguageBuilder extends IncrementalProjectBuilder {
 
@@ -108,26 +105,23 @@ public class GemocSequentialLanguageBuilder extends IncrementalProjectBuilder {
 	 */
 	private void updateProjectPluginConfiguration(IResource resource) {
 		if (resource instanceof IFile 
-			&& resource.getFileExtension().equals("melange")) {
+			&& resource.getFileExtension().equals("dsl")
+			&& !resource.getLocation().toString().contains("/bin/")) {
+			
 			IFile file = (IFile) resource;
 			IProject project = file.getProject();
 			// try {
 			if (file.exists()) {
 				
-				//Load .melange file
-				URI uri = URI.createPlatformResourceURI(file.getFullPath().toString(), true);
-				ResourceSet rs = new ResourceSetImpl();
-				Resource res = rs.getResource(uri, true);
-				ModelTypingSpace root = (ModelTypingSpace)res.getContents().get(0);
-				String packageName = root.getName();
-				
-				//Browse declared Languages
-				for (fr.inria.diverse.melange.metamodel.melange.Element element : root.getElements()) {
-					if(element instanceof Language){
-						Language language = (Language) element;
-						// update entry in plugin.xml
-						setPluginLanguageNameAndFilePath(project, file, packageName+"."+language.getName());
+				Resource res = (new ResourceSetImpl()).getResource(URI.createURI(file.getFullPath().toOSString()), true);
+				if(res != null && res.getContents().size() > 0 && res.getContents().get(0) instanceof Dsl) {
+					Dsl dsl = (Dsl) res.getContents().get(0);
+					String languageName = dsl.getName();
+					if(languageName == null || languageName.isEmpty()) {
+						languageName = file.getName();
 					}
+					setPluginLanguageNameAndFilePath(project, file, languageName);
+					
 				}
 				
 				//Use default model loader
@@ -164,7 +158,7 @@ public class GemocSequentialLanguageBuilder extends IncrementalProjectBuilder {
 		helper.saveDocument(pluginfile);
 	}
 	
-	protected void setPluginLanguageNameAndFilePath(IProject project, IFile melangeFile , final String languageName) {
+	protected void setPluginLanguageNameAndFilePath(IProject project, IFile dslFile , final String languageName) {
 		IFile pluginfile = project.getFile(PluginXMLHelper.PLUGIN_FILENAME);
 		PluginXMLHelper.createEmptyTemplateFile(pluginfile, false);
 		PluginXMLHelper helper = new PluginXMLHelper();
@@ -173,7 +167,7 @@ public class GemocSequentialLanguageBuilder extends IncrementalProjectBuilder {
 		helper.updateXDSMLDefinitionInExtensionPoint(gemocExtensionPoint, languageName);
 		helper.updateXDSMLDefinitionAttributeInExtensionPoint(gemocExtensionPoint,
 				LanguageDefinitionExtensionPoint.GEMOC_LANGUAGE_EXTENSION_POINT_XDSML_DEF_XDSML_FILE_PATH_ATT,
-				project.getFullPath().toString() + "/" + melangeFile.getProjectRelativePath());
+				"platform:/plugin/" + project.getName() + "/" + dslFile.getProjectRelativePath());
 		helper.saveDocument(pluginfile);
 	}
 	
