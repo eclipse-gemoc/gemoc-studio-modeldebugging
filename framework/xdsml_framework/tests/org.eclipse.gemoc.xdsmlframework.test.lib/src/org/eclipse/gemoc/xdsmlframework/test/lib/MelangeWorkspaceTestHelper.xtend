@@ -117,19 +117,19 @@ class MelangeWorkspaceTestHelper extends WorkspaceTestHelper {
 	}
 
 	def void generateAll(String melangeFile) {
-		invokeMelangeCommand(MELANGE_CMD_GENERATE_ALL, melangeFile)
+		invokeCommandOnSelectedFile(MELANGE_CMD_GENERATE_ALL, melangeFile)
 	}
 
 	def void generateAdapters(String melangeFile) {
-		invokeMelangeCommand(MELANGE_CMD_GENERATE_ADAPTERS, melangeFile)
+		invokeCommandOnSelectedFile(MELANGE_CMD_GENERATE_ADAPTERS, melangeFile)
 	}
 	
 	def void generateLanguages(String melangeFile) {
-		invokeMelangeCommand(MELANGE_CMD_GENERATE_LANGUAGES, melangeFile)
+		invokeCommandOnSelectedFile(MELANGE_CMD_GENERATE_LANGUAGES, melangeFile)
 	}
 	
 	def void generateInterfaces(String melangeFile) {
-		invokeMelangeCommand(MELANGE_CMD_GENERATE_INTERFACES, melangeFile)
+		invokeCommandOnSelectedFile(MELANGE_CMD_GENERATE_INTERFACES, melangeFile)
 	}
 	
 	def void generateTrace(String melangeFile, String languageName, String targetProjectName) {
@@ -159,7 +159,7 @@ class MelangeWorkspaceTestHelper extends WorkspaceTestHelper {
 	def void cleanAll(String melangeFile) {
 		Display.^default.syncExec(new Runnable() {
 			override run() {
-				invokeMelangeCommand(MELANGE_CMD_CLEAN_ALL, melangeFile)
+				invokeCommandOnSelectedFile(MELANGE_CMD_CLEAN_ALL, melangeFile)
 			}
 		})
 	}
@@ -194,24 +194,6 @@ class MelangeWorkspaceTestHelper extends WorkspaceTestHelper {
 		return treeViewer
 	}
 
-	private def void invokeMelangeCommand(String commandId, String melangeFile) {
-		val ws = ResourcesPlugin::workspace
-		val wb = PlatformUI::workbench
-		val mlgFile = ws.root.getFile(new Path(melangeFile))
-		val commandService = wb.getService(typeof(ICommandService)) as ICommandService
-		val handlerService = wb.getService(typeof(IHandlerService)) as IHandlerService
-
-		val command = commandService.getCommand(commandId)
-		val executionEvent = handlerService.createExecutionEvent(command, null)
-		val context = executionEvent.applicationContext as IEvaluationContext
-
-		context.parent.addVariable(ISources.ACTIVE_MENU_SELECTION_NAME,
-			new StructuredSelection(mlgFile))
-
-		command.executeWithChecks(executionEvent)
-	
-		IResourcesSetupUtil::reallyWaitForAutoBuild
-	}
 	
 	/**
 	 * Check for each aspect from {@link aspects} that K3-generated files are inside {@link project}

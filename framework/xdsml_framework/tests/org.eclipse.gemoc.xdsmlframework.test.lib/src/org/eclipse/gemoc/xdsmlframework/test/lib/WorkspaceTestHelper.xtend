@@ -52,12 +52,20 @@ import org.eclipse.ui.wizards.datatransfer.ImportOperation
 import org.eclipse.xtext.junit4.ui.util.JavaProjectSetupUtil
 import org.junit.Assert
 import org.osgi.framework.Bundle
+import org.eclipse.ui.commands.ICommandService
+import org.eclipse.ui.handlers.IHandlerService
+import org.eclipse.xtext.junit4.ui.util.IResourcesSetupUtil
+import org.eclipse.core.expressions.IEvaluationContext
+import org.eclipse.ui.ISources
+import org.eclipse.jface.viewers.StructuredSelection
 
 /**
  * Class containing helper methods for testing a workspace in a GEMOC Language workbench
  */
 class WorkspaceTestHelper {
 		
+	public static final String CMD_PROJECT_CLEAN = "org.eclipse.ui.project.cleanAction"	
+	
 	def void init() {
 		Display.^default.syncExec(new Runnable(){
 				override run() {
@@ -80,28 +88,30 @@ class WorkspaceTestHelper {
 	def IProject deployProject(String projectName, String zipLocation) {
 		
 		deployProjectResult = null
-		Display.^default.syncExec(new Runnable(){
-				override run() {
-			val newProject = JavaProjectSetupUtil::createSimpleProject(projectName)
-			
-			val zip = new ZipFile(zipLocation)
-			val structureProvider = new ZipLeveledStructureProvider(zip)
-			val queryOverwrite = new IOverwriteQuery() {
-				override queryOverwrite(String file) { return ALL }
-			}
-	
-			new ImportOperation(
-				newProject.project.fullPath,
-				structureProvider.root,
-				structureProvider,
-				queryOverwrite
-			).run(new NullProgressMonitor)
-	
-			zip.close
-			deployProjectResult = newProject.project
-			
-			}
-		})
+		val ArrayList<Throwable> thrownException = newArrayList()
+		Display.^default.syncExec([
+			try {
+				val newProject = JavaProjectSetupUtil::createSimpleProject(projectName)
+				
+				val zip = new ZipFile(zipLocation)
+				val structureProvider = new ZipLeveledStructureProvider(zip)
+				val queryOverwrite = new IOverwriteQuery() {
+					override queryOverwrite(String file) { return ALL }
+				}
+		
+				new ImportOperation(
+					newProject.project.fullPath,
+					structureProvider.root,
+					structureProvider,
+					queryOverwrite
+				).run(new NullProgressMonitor)
+		
+				zip.close
+				deployProjectResult = newProject.project
+				
+			} catch (Exception e) { thrownException.add(e) }
+		])
+		thrownException.forall[e| throw new Exception(e)] // rethrown exception that was executed in the ui thread
 		return deployProjectResult
 	}
 	
@@ -299,6 +309,33 @@ class WorkspaceTestHelper {
 		val Job job = new LoadTargetDefinitionJob(targetDef);
 		job.schedule();
 		job.join();
+	}
+	
+
+	
+	
+	/**
+	 * call a command the selection file, if file is null or empty it will call the command without selection
+	 */
+	public def static void invokeCommandOnSelectedFile(String commandId, String file) {
+		val ws = ResourcesPlugin::workspace
+		val wb = PlatformUI::workbench
+		
+		val commandService = wb.getService(typeof(ICommandService)) as ICommandService
+		val handlerService = wb.getService(typeof(IHandlerService)) as IHandlerService
+
+		val command = commandService.getCommand(commandId)
+		val executionEvent = handlerService.createExecutionEvent(command, null)
+		val context = executionEvent.applicationContext as IEvaluationContext
+
+		if(!file.isNullOrEmpty){
+			val iFile = ws.root.getFile(new Path(file))
+			context.parent.addVariable(ISources.ACTIVE_MENU_SELECTION_NAME,
+				new StructuredSelection(iFile))
+		}
+		command.executeWithChecks(executionEvent)
+	
+		IResourcesSetupUtil::reallyWaitForAutoBuild
 	}
 	
 	def ClassLoader createClassLoader(IJavaProject project) {
