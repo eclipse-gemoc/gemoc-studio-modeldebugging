@@ -63,6 +63,7 @@ public class NewProjectTest extends AbstractXtextTests
  
 	@BeforeClass
 	def static void beforeClass() throws Exception {
+		helper.setTargetPlatform
 		bot = new SWTWorkbenchBot()
 		IResourcesSetupUtil::cleanWorkspace
 		helper.init
