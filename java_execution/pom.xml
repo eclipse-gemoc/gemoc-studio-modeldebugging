@@ -25,7 +25,7 @@
         <module>releng/org.eclipse.gemoc.execution.sequential.javaengine.ui.feature</module>
         
         <!-- tests -->
-        <module>java_xdsml/tests/org.eclipse.gemoc.execution.sequential.javaxdsml.tests</module>
+        
     </modules>
 
 </project>
