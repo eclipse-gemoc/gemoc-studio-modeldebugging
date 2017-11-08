@@ -1,5 +1,0 @@
-# ignore all
-*
-# but .gitignore and readme
-!.gitignore
-!readme.md
