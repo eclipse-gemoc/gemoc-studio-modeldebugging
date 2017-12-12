@@ -28,7 +28,7 @@ import org.eclipse.emf.ecore.resource.impl.ResourceSetImpl;
 import org.eclipse.gemoc.dsl.Dsl;
 import org.eclipse.gemoc.dsl.DslFactory;
 import org.eclipse.gemoc.dsl.DslPackage;
-import org.eclipse.gemoc.dsl.SimpleValue;
+import org.eclipse.gemoc.dsl.Entry;
 import org.eclipse.gemoc.xdsmlframework.ide.ui.commands.AbstractDslSelectHandler;
 import org.eclipse.gemoc.xdsmlframework.ide.ui.xdsml.wizards.CreateEditorProjectWizardContextAction;
 import org.eclipse.gemoc.xdsmlframework.ide.ui.xdsml.wizards.CreateEditorProjectWizardContextAction.CreateEditorProjectAction;
@@ -63,23 +63,34 @@ public class CreateXtextEditorProjectHandler extends AbstractDslSelectHandler im
 		IFile dslFile = getDslFileFromProject(project);
 		Resource res = (new ResourceSetImpl()).getResource(URI.createURI(dslFile.getFullPath().toOSString()), true);
 		Dsl dsl = (Dsl) res.getContents().get(0);
-		Optional<SimpleValue> sirius = dsl
-			.getValues()
-			.stream()
-			.filter(v -> v instanceof SimpleValue)
-			.map(v -> (SimpleValue) v)
-			.filter(v -> v.getName().equals("xtext"))
-			.findFirst();
 		
-		if(sirius.isPresent()) {
-			sirius.get().getValues().clear();
-			sirius.get().getValues().add(xtextPath);
+		Optional<Entry> xtext = dsl.getEntries()
+				.stream()
+				.filter(entry -> entry.getKey().equals("xtext"))
+				.findFirst();
+		
+//		Optional<SimpleValue> sirius = dsl
+//			.getValues()
+//			.stream()
+//			.filter(v -> v instanceof SimpleValue)
+//			.map(v -> (SimpleValue) v)
+//			.filter(v -> v.getName().equals("xtext"))
+//			.findFirst();
+		
+		if(xtext.isPresent()) {
+			xtext.get().setValue(xtextPath);
+//			sirius.get().getValues().clear();
+//			sirius.get().getValues().add(xtextPath);
 		}
 		else {
-			SimpleValue newSirius = ((DslFactory)DslPackage.eINSTANCE.getEFactoryInstance()).createSimpleValue();
-			newSirius.setName("xtext");
-			newSirius.getValues().add(xtextPath);
-			dsl.getValues().add(newSirius);
+			Entry xtextEntry = ((DslFactory)DslPackage.eINSTANCE.getEFactoryInstance()).createEntry();
+			xtextEntry.setKey("xtext");
+			xtextEntry.setValue(xtextPath);
+			dsl.getEntries().add(xtextEntry);
+//			SimpleValue newSirius = ((DslFactory)DslPackage.eINSTANCE.getEFactoryInstance()).createSimpleValue();
+//			newSirius.setName("xtext");
+//			newSirius.getValues().add(xtextPath);
+//			dsl.getValues().add(newSirius);
 		}
 		try {
 			res.save(new HashMap());

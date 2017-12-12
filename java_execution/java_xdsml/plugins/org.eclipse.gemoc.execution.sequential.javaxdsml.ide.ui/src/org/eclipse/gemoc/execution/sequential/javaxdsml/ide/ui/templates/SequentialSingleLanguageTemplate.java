@@ -311,7 +311,7 @@ public class SequentialSingleLanguageTemplate extends JavaxdsmlTemplateSection {
 				ecoreIFile == null?"//":"", 0);
 		
 		//Replace KEY_ASPECTS' value (which is a project name) by a list of aspects 
-		final String DEFAULT_VALUE = "//\t\tk3 = \"qualified.class.name\"";
+		final String DEFAULT_VALUE = "qualified.class.name";
 		
 		String selection = dsaProjectName;
 		if(selection != null && !selection.isEmpty()){
@@ -321,7 +321,7 @@ public class SequentialSingleLanguageTemplate extends JavaxdsmlTemplateSection {
 			List<String> aspects = new ArrayList<>(getAspectClassesList(dsaProject));
 			Collections.sort(aspects);
 			
-			StringJoiner sj = new StringJoiner("\",\n\t\t     \"", "\t\tk3 = \"", "\"");
+			StringJoiner sj = new StringJoiner(",");
 			
 			
 			

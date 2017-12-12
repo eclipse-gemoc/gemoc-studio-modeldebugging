@@ -1,10 +1,3 @@
-DSL $packageName$.$languageName$ {
-	
-	abstract-syntax {
-		ecore = "platform:/resource/$ecoreFilePath$"
-	}
-	
-	semantic {
-$listOfAspects$
-	}
-}
+name = $packageName$.$languageName$
+ecore = "platform:/resource/$ecoreFilePath$"
+k3 = $listOfAspects$

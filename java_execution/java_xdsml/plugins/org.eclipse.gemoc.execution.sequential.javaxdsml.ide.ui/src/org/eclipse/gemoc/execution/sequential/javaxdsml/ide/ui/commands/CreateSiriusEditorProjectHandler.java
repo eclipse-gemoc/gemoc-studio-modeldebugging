@@ -28,7 +28,7 @@ import org.eclipse.emf.ecore.resource.impl.ResourceSetImpl;
 import org.eclipse.gemoc.dsl.Dsl;
 import org.eclipse.gemoc.dsl.DslFactory;
 import org.eclipse.gemoc.dsl.DslPackage;
-import org.eclipse.gemoc.dsl.SimpleValue;
+import org.eclipse.gemoc.dsl.Entry;
 import org.eclipse.gemoc.xdsmlframework.ide.ui.commands.AbstractDslSelectHandler;
 import org.eclipse.gemoc.xdsmlframework.ide.ui.xdsml.wizards.CreateEditorProjectWizardContextAction;
 import org.eclipse.gemoc.xdsmlframework.ide.ui.xdsml.wizards.CreateEditorProjectWizardContextAction.CreateEditorProjectAction;
@@ -62,23 +62,32 @@ public class CreateSiriusEditorProjectHandler extends AbstractDslSelectHandler i
 		IFile dslFile = getDslFileFromProject(project);
 		Resource res = (new ResourceSetImpl()).getResource(URI.createURI(dslFile.getFullPath().toOSString()), true);
 		Dsl dsl = (Dsl) res.getContents().get(0);
-		Optional<SimpleValue> sirius = dsl
-			.getValues()
+		
+		Optional<Entry> sirius = dsl.getEntries()
 			.stream()
-			.filter(v -> v instanceof SimpleValue)
-			.map(v -> (SimpleValue) v)
-			.filter(v -> v.getName().equals("sirius"))
+			.filter(entry -> entry.getKey().equals("sirius"))
 			.findFirst();
 		
+//		Optional<SimpleValue> sirius = dsl
+//			.getValues()
+//			.stream()
+//			.filter(v -> v instanceof SimpleValue)
+//			.map(v -> (SimpleValue) v)
+//			.filter(v -> v.getName().equals("sirius"))
+//			.findFirst();
+		
 		if(sirius.isPresent()) {
-			sirius.get().getValues().clear();
-			sirius.get().getValues().add(siriusPath);
+			sirius.get().setValue(siriusPath);
 		}
 		else {
-			SimpleValue newSirius = ((DslFactory)DslPackage.eINSTANCE.getEFactoryInstance()).createSimpleValue();
-			newSirius.setName("sirius");
-			newSirius.getValues().add(siriusPath);
-			dsl.getValues().add(newSirius);
+			Entry siriusEntry = ((DslFactory)DslPackage.eINSTANCE.getEFactoryInstance()).createEntry();
+			siriusEntry.setKey("sirius");
+			siriusEntry.setValue(siriusPath);
+			dsl.getEntries().add(siriusEntry);
+//			SimpleValue newSirius = ((DslFactory)DslPackage.eINSTANCE.getEFactoryInstance()).createSimpleValue();
+//			newSirius.setName("sirius");
+//			newSirius.getValues().add(siriusPath);
+//			dsl.getValues().add(newSirius);
 		}
 		try {
 			res.save(new HashMap());

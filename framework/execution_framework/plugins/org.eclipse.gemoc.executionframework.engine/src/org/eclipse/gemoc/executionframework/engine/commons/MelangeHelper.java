@@ -17,16 +17,14 @@ import java.util.HashSet;
 import java.util.LinkedHashSet;
 import java.util.List;
 import java.util.Optional;
-import java.util.Properties;
 import java.util.Set;
 
 import org.eclipse.core.runtime.IConfigurationElement;
 import org.eclipse.core.runtime.Platform;
-import org.eclipse.emf.common.util.EList;
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.resource.Resource;
 import org.eclipse.gemoc.dsl.Dsl;
-import org.eclipse.gemoc.dsl.SimpleValue;
+import org.eclipse.gemoc.dsl.Entry;
 import org.osgi.framework.Bundle;
 
 import fr.inria.diverse.k3.al.annotationprocessor.Aspect;
@@ -144,17 +142,15 @@ public class MelangeHelper {
 		
 		Dsl dsl = DslHelper.load(languageName);
 		if(dsl != null) {
-			Optional<SimpleValue> semantic = dsl.getSemantic()
-				.getValues()
+			
+			Optional<Entry> semantics = dsl.getEntries()
 				.stream()
-				.filter(v -> v instanceof SimpleValue)
-				.map(v -> (SimpleValue)v)
-				.filter(v -> v.getName().equals("k3"))
+				.filter(entry -> entry.getKey().equals("k3"))
 				.findFirst();
-			if(semantic.isPresent()) {
-				List<String> classNames = semantic.get().getValues();
+			if(semantics.isPresent()) {
+				String[] classNames = semantics.get().getValue().split(",");
 				for (String asp : classNames) {
-					Class<?> cls = loadAspect(languageName, asp);
+					Class<?> cls = loadAspect(languageName, asp.trim());
 					if(cls != null) {
 						res.add(cls);
 					}
