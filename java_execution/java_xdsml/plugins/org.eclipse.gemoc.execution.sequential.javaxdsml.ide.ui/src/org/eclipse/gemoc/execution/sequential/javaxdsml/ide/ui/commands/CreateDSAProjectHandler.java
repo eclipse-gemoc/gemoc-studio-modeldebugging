@@ -76,15 +76,6 @@ public class CreateDSAProjectHandler extends AbstractDslSelectHandler implements
 				.stream()
 				.filter(entry -> entry.getKey().equals("k3"))
 				.findFirst();
-//		Optional<SimpleValue> semantic = dsl
-//			.getSemantic()
-//			.getValues()
-//			.stream()
-//			.filter(v -> v instanceof SimpleValue)
-//			.map(v -> (SimpleValue) v)
-//			.filter(v -> v.getName().equals("k3"))
-//			.findFirst();
-		
 		if(semantics.isPresent()) {
 			semantics.get().setValue(semantics.get().getValue() + "," + aspects.stream().collect(Collectors.joining(", ")));
 		}
@@ -93,10 +84,6 @@ public class CreateDSAProjectHandler extends AbstractDslSelectHandler implements
 			k3Entry.setKey("k3");
 			k3Entry.setValue(aspects.stream().collect(Collectors.joining(",")));
 			dsl.getEntries().add(k3Entry);
-//			SimpleValue newAspects = ((DslFactory)DslPackage.eINSTANCE.getEFactoryInstance()).createSimpleValue();
-//			newAspects.setName("k3");
-//			newAspects.getValues().addAll(aspects);
-//			dsl.getSemantic().getValues().add(newAspects);
 		}
 		try {
 			res.save(new HashMap());
@@ -115,14 +102,6 @@ public class CreateDSAProjectHandler extends AbstractDslSelectHandler implements
 			.stream()
 			.filter(entry -> entry.getKey().equals("ecore"))
 			.findFirst();
-//		Optional<SimpleValue> syntax = dsl
-//			.getAbstractSyntax()
-//			.getValues()
-//			.stream()
-//			.filter(v -> v instanceof SimpleValue)
-//			.map(v -> (SimpleValue) v)
-//			.filter(v -> v.getName().equals("ecore"))
-//			.findFirst();
 		if(syntax.isPresent() && !syntax.get().getValue().isEmpty()) {
 			ecoreURI = syntax.get().getValue();
 			if(ecoreURI.contains(",")) {

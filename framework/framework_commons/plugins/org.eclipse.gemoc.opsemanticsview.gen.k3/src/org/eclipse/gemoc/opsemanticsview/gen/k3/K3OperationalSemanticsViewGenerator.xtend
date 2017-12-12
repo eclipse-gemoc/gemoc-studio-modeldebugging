@@ -36,29 +36,10 @@ class K3OperationalSemanticsViewGenerator implements OperationalSemanticsViewGen
 			.filter[entry | entry.key == "ecore"]			
 			.map[entry | entry.value.split(",").head]
 			.head
-//		val ecoreUri = 
-//			language
-//			.abstractSyntax
-//			.values
-//			.filter[v | v instanceof SimpleValue]
-//			.map[v| v as SimpleValue]
-//			.filter[v | v.name == "ecore"]
-//			.head
-//			.values
-//			.head
 		val rs = new ResourceSetImpl
 		val executionMetamodelResource = rs.getResource(URI.createURI(ecoreUri), true)
 		val executionMetamodel = executionMetamodelResource.contents.filter(EPackage).head
 		
-		
-//		val LanguageOperator inheritance = language.operators.filter(Inheritance).head
-//		val abstractSyntax = if (inheritance != null) {
-//			val asURI = URI.createURI(inheritance.getTargetLanguage().syntax.ecoreUri)
-//			val asResource = rs.getResource(asURI,true)
-//			asResource.contents.filter(EPackage).head
-//		} else {
-//			null
-//		}
 		val abstractSyntax = null //FIXME: check where it is used
 		
 		val K3DynamicElementsFinder dynFinder = new K3DynamicElementsFinder(abstractSyntax, executionMetamodel, result);
@@ -80,12 +61,6 @@ class K3OperationalSemanticsViewGenerator implements OperationalSemanticsViewGen
 			.entries
 			.filter[entry | entry.key == "k3"]			
 			.head
-//		val SimpleValue semantic = language.getSemantic()
-//				.getValues()
-//				.filter[v | v instanceof SimpleValue]
-//				.map[v | v as SimpleValue]
-//				.filter[v | v.getName() == "k3"]
-//				.head
 		if(semantics !== null) {
 			val aspectNames = semantics.value.split(",").map[asp | asp.trim]
 			val IJavaProject javaProject = JavaCore.create(melangeProject);
@@ -101,12 +76,6 @@ class K3OperationalSemanticsViewGenerator implements OperationalSemanticsViewGen
 			.entries
 			.filter[entry | entry.key == "k3"]			
 			.head
-//		val SimpleValue semantic = language.getSemantic()
-//			.getValues()
-//			.filter[v | v instanceof SimpleValue]
-//			.map[v | v as SimpleValue]
-//			.filter[v | v.getName() == "k3"]
-//			.head
 		return semantics !== null && !semantics.value.isEmpty
 	}
 

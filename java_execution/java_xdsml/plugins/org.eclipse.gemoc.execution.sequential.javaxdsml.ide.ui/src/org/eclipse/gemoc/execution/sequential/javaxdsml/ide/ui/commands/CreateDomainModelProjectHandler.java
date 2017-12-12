@@ -68,28 +68,15 @@ public class CreateDomainModelProjectHandler extends AbstractDslSelectHandler im
 			.stream()
 			.filter(entry -> entry.getKey().equals("ecore"))
 			.findFirst();
-//		Optional<SimpleValue> syntax = dsl
-//			.getAbstractSyntax()
-//			.getValues()
-//			.stream()
-//			.filter(v -> v instanceof SimpleValue)
-//			.map(v -> (SimpleValue) v)
-//			.filter(v -> v.getName().equals("ecore"))
-//			.findFirst();
 		
 		if(syntax.isPresent()) {
 			syntax.get().setValue(syntax.get().getValue() + "," + ecoreURI);
-//			syntax.get().getValues().add(ecoreURI);
 		}
 		else {
 			Entry ecoreEntry = ((DslFactory)DslPackage.eINSTANCE.getEFactoryInstance()).createEntry();
 			ecoreEntry.setKey("ecore");
 			ecoreEntry.setValue(ecoreURI);
 			dsl.getEntries().add(ecoreEntry);
-//			SimpleValue newEcore = ((DslFactory)DslPackage.eINSTANCE.getEFactoryInstance()).createSimpleValue();
-//			newEcore.setName("ecore");
-//			newEcore.getValues().add(ecoreURI);
-//			dsl.getAbstractSyntax().getValues().add(newEcore);
 		}
 		try {
 			res.save(new HashMap());

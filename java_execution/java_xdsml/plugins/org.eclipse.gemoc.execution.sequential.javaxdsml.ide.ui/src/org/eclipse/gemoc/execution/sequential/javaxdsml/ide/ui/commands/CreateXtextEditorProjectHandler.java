@@ -68,29 +68,14 @@ public class CreateXtextEditorProjectHandler extends AbstractDslSelectHandler im
 				.stream()
 				.filter(entry -> entry.getKey().equals("xtext"))
 				.findFirst();
-		
-//		Optional<SimpleValue> sirius = dsl
-//			.getValues()
-//			.stream()
-//			.filter(v -> v instanceof SimpleValue)
-//			.map(v -> (SimpleValue) v)
-//			.filter(v -> v.getName().equals("xtext"))
-//			.findFirst();
-		
 		if(xtext.isPresent()) {
 			xtext.get().setValue(xtextPath);
-//			sirius.get().getValues().clear();
-//			sirius.get().getValues().add(xtextPath);
 		}
 		else {
 			Entry xtextEntry = ((DslFactory)DslPackage.eINSTANCE.getEFactoryInstance()).createEntry();
 			xtextEntry.setKey("xtext");
 			xtextEntry.setValue(xtextPath);
 			dsl.getEntries().add(xtextEntry);
-//			SimpleValue newSirius = ((DslFactory)DslPackage.eINSTANCE.getEFactoryInstance()).createSimpleValue();
-//			newSirius.setName("xtext");
-//			newSirius.getValues().add(xtextPath);
-//			dsl.getValues().add(newSirius);
 		}
 		try {
 			res.save(new HashMap());

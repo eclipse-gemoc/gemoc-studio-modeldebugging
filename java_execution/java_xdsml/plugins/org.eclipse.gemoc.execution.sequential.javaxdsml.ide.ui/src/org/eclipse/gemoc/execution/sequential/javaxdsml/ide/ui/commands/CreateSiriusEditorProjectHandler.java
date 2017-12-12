@@ -67,15 +67,6 @@ public class CreateSiriusEditorProjectHandler extends AbstractDslSelectHandler i
 			.stream()
 			.filter(entry -> entry.getKey().equals("sirius"))
 			.findFirst();
-		
-//		Optional<SimpleValue> sirius = dsl
-//			.getValues()
-//			.stream()
-//			.filter(v -> v instanceof SimpleValue)
-//			.map(v -> (SimpleValue) v)
-//			.filter(v -> v.getName().equals("sirius"))
-//			.findFirst();
-		
 		if(sirius.isPresent()) {
 			sirius.get().setValue(siriusPath);
 		}
@@ -84,10 +75,6 @@ public class CreateSiriusEditorProjectHandler extends AbstractDslSelectHandler i
 			siriusEntry.setKey("sirius");
 			siriusEntry.setValue(siriusPath);
 			dsl.getEntries().add(siriusEntry);
-//			SimpleValue newSirius = ((DslFactory)DslPackage.eINSTANCE.getEFactoryInstance()).createSimpleValue();
-//			newSirius.setName("sirius");
-//			newSirius.getValues().add(siriusPath);
-//			dsl.getValues().add(newSirius);
 		}
 		try {
 			res.save(new HashMap());
