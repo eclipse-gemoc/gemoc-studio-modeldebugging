@@ -560,7 +560,7 @@ public class GenericTraceExtractor
 
 	@Override
 	public void statesAdded(List<State<?, ?>> states) {
-		//updateEquivalenceClasses(states);
+		updateEquivalenceClasses(states);
 		notifyListeners();
 	}
 
