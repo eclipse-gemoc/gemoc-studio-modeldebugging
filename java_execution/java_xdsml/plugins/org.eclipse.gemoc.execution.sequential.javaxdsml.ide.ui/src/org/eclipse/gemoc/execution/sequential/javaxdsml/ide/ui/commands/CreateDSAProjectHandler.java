@@ -30,6 +30,7 @@ import org.eclipse.xtext.resource.XtextResource;
 import org.eclipse.xtext.ui.editor.XtextEditor;
 import org.eclipse.xtext.ui.editor.model.IXtextDocument;
 import org.eclipse.xtext.ui.editor.utils.EditorUtils;
+import org.eclipse.gemoc.execution.sequential.javaxdsml.ide.ui.Activator;
 import org.eclipse.gemoc.execution.sequential.javaxdsml.ide.ui.templates.SequentialSingleLanguageTemplate;
 import org.eclipse.gemoc.execution.sequential.javaxdsml.ide.ui.wizards.CreateDSAWizardContextActionDSAK3;
 import org.eclipse.gemoc.xdsmlframework.ide.ui.commands.AbstractMelangeSelectHandler;
@@ -119,7 +120,7 @@ public class CreateDSAProjectHandler extends AbstractMelangeSelectHandler implem
 			}
 			
 		} catch (IOException e) {
-			e.printStackTrace();
+			Activator.error(e.getMessage(), e);
 		}
 	}
 	
@@ -130,7 +131,7 @@ public class CreateDSAProjectHandler extends AbstractMelangeSelectHandler implem
 				Job.getJobManager().join(ResourcesPlugin.FAMILY_AUTO_BUILD,	null);
 				wasInterrupted = false;
 			} catch (OperationCanceledException e) {
-				e.printStackTrace();
+				Activator.warn(e.getMessage(), e);
 			} catch (InterruptedException e) {
 				wasInterrupted = true;
 			}

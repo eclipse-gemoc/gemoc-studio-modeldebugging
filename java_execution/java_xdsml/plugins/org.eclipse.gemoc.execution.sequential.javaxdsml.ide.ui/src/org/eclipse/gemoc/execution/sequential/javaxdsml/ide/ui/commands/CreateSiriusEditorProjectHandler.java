@@ -22,17 +22,17 @@ import org.eclipse.core.resources.IProject;
 import org.eclipse.core.resources.ResourcesPlugin;
 import org.eclipse.core.runtime.OperationCanceledException;
 import org.eclipse.core.runtime.jobs.Job;
-import org.eclipse.emf.common.util.URI;
 import org.eclipse.emf.ecore.EStructuralFeature;
+import org.eclipse.gemoc.execution.sequential.javaxdsml.ide.ui.Activator;
+import org.eclipse.gemoc.xdsmlframework.ide.ui.commands.AbstractMelangeSelectHandler;
+import org.eclipse.gemoc.xdsmlframework.ide.ui.xdsml.wizards.CreateEditorProjectWizardContextAction;
+import org.eclipse.gemoc.xdsmlframework.ide.ui.xdsml.wizards.CreateEditorProjectWizardContextAction.CreateEditorProjectAction;
 import org.eclipse.xtext.nodemodel.INode;
 import org.eclipse.xtext.nodemodel.util.NodeModelUtils;
 import org.eclipse.xtext.resource.XtextResource;
 import org.eclipse.xtext.ui.editor.XtextEditor;
 import org.eclipse.xtext.ui.editor.model.IXtextDocument;
 import org.eclipse.xtext.ui.editor.utils.EditorUtils;
-import org.eclipse.gemoc.xdsmlframework.ide.ui.commands.AbstractMelangeSelectHandler;
-import org.eclipse.gemoc.xdsmlframework.ide.ui.xdsml.wizards.CreateEditorProjectWizardContextAction;
-import org.eclipse.gemoc.xdsmlframework.ide.ui.xdsml.wizards.CreateEditorProjectWizardContextAction.CreateEditorProjectAction;
 
 import fr.inria.diverse.melange.metamodel.melange.Language;
 
@@ -109,7 +109,6 @@ public class CreateSiriusEditorProjectHandler extends AbstractMelangeSelectHandl
 				try {
 					//Load Melange file
 					String melangeWSLocation = language.eResource().getURI().toPlatformString(true);
-					URI uri = language.eResource().getURI();
 					String melangeLocation = ResourcesPlugin.getWorkspace().getRoot().getLocation().toOSString()+melangeWSLocation;
 					List<String> lines = Files.readAllLines(Paths.get(melangeLocation));
 					
@@ -137,7 +136,7 @@ public class CreateSiriusEditorProjectHandler extends AbstractMelangeSelectHandl
 				Job.getJobManager().join(ResourcesPlugin.FAMILY_AUTO_BUILD,	null);
 				wasInterrupted = false;
 			} catch (OperationCanceledException e) {
-				e.printStackTrace();
+				Activator.warn(e.getMessage(), e);
 			} catch (InterruptedException e) {
 				wasInterrupted = true;
 			}
