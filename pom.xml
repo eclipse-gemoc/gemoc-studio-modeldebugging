@@ -48,7 +48,7 @@
         <repository>
             <id>melange</id>
             <layout>p2</layout>
-            <url>http://melange.inria.fr/updatesite/nightly/update_2017-10-12</url>
+            <url>http://melange.inria.fr/updatesite/nightly/update_2018-01-19/</url>
         </repository>
         <repository>
             <id>elk</id>
@@ -68,7 +68,7 @@
         <repository>
             <id>nebula</id>
             <layout>p2</layout>
-            <url>http://download.eclipse.org/technology/nebula/incubation/snapshot</url>
+            <url>http://download.eclipse.org/nebula/snapshot/</url>
         </repository>
         <repository> <!-- this repo is used to provide jdom and jaxen plugins -->
             <id>app4mc</id>
