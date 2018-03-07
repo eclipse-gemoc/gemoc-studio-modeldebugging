@@ -11,12 +11,8 @@
 package org.eclipse.gemoc.execution.sequential.javaxdsml.ide.ui.commands;
 
 import java.io.IOException;
-import java.util.Arrays;
 import java.util.HashMap;
-import java.util.List;
 import java.util.Optional;
-import java.util.StringJoiner;
-import java.util.stream.Collectors;
 
 import org.eclipse.core.commands.ExecutionEvent;
 import org.eclipse.core.commands.ExecutionException;
@@ -33,11 +29,10 @@ import org.eclipse.gemoc.dsl.Dsl;
 import org.eclipse.gemoc.dsl.DslFactory;
 import org.eclipse.gemoc.dsl.DslPackage;
 import org.eclipse.gemoc.dsl.Entry;
+import org.eclipse.gemoc.execution.sequential.javaxdsml.ide.ui.Activator;
 import org.eclipse.gemoc.xdsmlframework.ide.ui.commands.AbstractDslSelectHandler;
 import org.eclipse.gemoc.xdsmlframework.ide.ui.xdsml.wizards.CreateDomainModelWizardContextAction;
 import org.eclipse.gemoc.xdsmlframework.ide.ui.xdsml.wizards.CreateDomainModelWizardContextAction.CreateDomainModelAction;
-
-import com.google.common.base.Strings;
 
 public class CreateDomainModelProjectHandler extends AbstractDslSelectHandler implements
 		IHandler {
@@ -92,7 +87,7 @@ public class CreateDomainModelProjectHandler extends AbstractDslSelectHandler im
 				Job.getJobManager().join(ResourcesPlugin.FAMILY_AUTO_BUILD,	null);
 				wasInterrupted = false;
 			} catch (OperationCanceledException e) {
-				e.printStackTrace();
+				Activator.warn(e.getMessage(), e);
 			} catch (InterruptedException e) {
 				wasInterrupted = true;
 			}

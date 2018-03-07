@@ -29,6 +29,7 @@ import org.eclipse.gemoc.dsl.Dsl;
 import org.eclipse.gemoc.dsl.DslFactory;
 import org.eclipse.gemoc.dsl.DslPackage;
 import org.eclipse.gemoc.dsl.Entry;
+import org.eclipse.gemoc.execution.sequential.javaxdsml.ide.ui.Activator;
 import org.eclipse.gemoc.xdsmlframework.ide.ui.commands.AbstractDslSelectHandler;
 import org.eclipse.gemoc.xdsmlframework.ide.ui.xdsml.wizards.CreateEditorProjectWizardContextAction;
 import org.eclipse.gemoc.xdsmlframework.ide.ui.xdsml.wizards.CreateEditorProjectWizardContextAction.CreateEditorProjectAction;
@@ -90,7 +91,7 @@ public class CreateSiriusEditorProjectHandler extends AbstractDslSelectHandler i
 				Job.getJobManager().join(ResourcesPlugin.FAMILY_AUTO_BUILD,	null);
 				wasInterrupted = false;
 			} catch (OperationCanceledException e) {
-				e.printStackTrace();
+				Activator.warn(e.getMessage(), e);
 			} catch (InterruptedException e) {
 				wasInterrupted = true;
 			}
