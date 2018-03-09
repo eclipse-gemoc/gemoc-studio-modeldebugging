@@ -21,6 +21,7 @@ public interface IRunConfiguration {
 	public static final String LAUNCH_MODEL_PATH = "GEMOC_LAUNCH_MODEL_PATH";
 	public static final String LAUNCH_DELAY = "GEMOC_ANIMATE_DELAY";
 	public static final String LAUNCH_SELECTED_LANGUAGE = "GEMOC_LAUNCH_SELECTED_LANGUAGE";
+	public static final String LAUNCH_MELANGE_ADAPTATION_QUERY = "GEMOC_LAUNCH_MELANGE_ADAPTATION_QUERY";
 	public static final String LAUNCH_MELANGE_QUERY = "GEMOC_LAUNCH_MELANGE_QUERY";
 	public static final String LAUNCH_MODEL_ENTRY_POINT = "LAUNCH_MODEL_ENTRY_POINT";
 	public static final String LAUNCH_METHOD_ENTRY_POINT = "LAUNCH_METHOD_ENTRY_POINT";
@@ -37,6 +38,8 @@ public interface IRunConfiguration {
 	URI getExecutedModelURI();
 	
 	URI getExecutedModelAsMelangeURI();
+	
+	boolean getUseMelangeAdaptation();
 	
 	String getMelangeQuery();
 	

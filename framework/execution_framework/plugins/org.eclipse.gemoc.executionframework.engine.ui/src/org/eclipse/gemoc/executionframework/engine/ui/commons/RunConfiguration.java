@@ -48,6 +48,7 @@ public class RunConfiguration implements IRunConfiguration {
 		_modelEntryPoint = getAttribute(LAUNCH_MODEL_ENTRY_POINT, "");
 		_modelInitializationMethod = getAttribute(LAUNCH_INITIALIZATION_METHOD, "");
 		_modelInitializationArguments = getAttribute(LAUNCH_INITIALIZATION_ARGUMENTS, "");
+		_useMelangeAdaptation = getAttribute(LAUNCH_MELANGE_ADAPTATION_QUERY, false);
 		_melangeQuery = getAttribute(LAUNCH_MELANGE_QUERY, "");
 
 		for (EngineAddonSpecificationExtension extension : EngineAddonSpecificationExtensionPoint.getSpecifications()) {
@@ -83,6 +84,12 @@ public class RunConfiguration implements IRunConfiguration {
 		return _modelURI;
 	}
 
+	private boolean _useMelangeAdaptation = false;
+	@Override
+	public boolean getUseMelangeAdaptation() {
+		return _useMelangeAdaptation;
+	}
+	
 	private String _melangeQuery = "";
 
 	@Override

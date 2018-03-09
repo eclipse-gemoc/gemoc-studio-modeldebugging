@@ -75,6 +75,7 @@ public class LaunchConfigurationMainTab extends LaunchConfigurationTab {
 	protected Text _siriusRepresentationLocationText;
 	protected Button _animateButton;
 	protected Text _delayText;
+	protected Button _melangeAdaptationQueryButton;
 	protected Text _melangeQueryText;
 	protected Button _animationFirstBreak;
 
@@ -153,6 +154,7 @@ public class LaunchConfigurationMainTab extends LaunchConfigurationTab {
 					.getExecutionEntryPoint());
 			_languageCombo.setText(runConfiguration
 					.getLanguageName());
+			_melangeAdaptationQueryButton.setSelection(runConfiguration.getUseMelangeAdaptation());
 			_modelInitializationArgumentsText.setText(runConfiguration.getModelInitializationArguments());
 
 			_entryPointModelElementLabel.setText("");
@@ -174,6 +176,8 @@ public class LaunchConfigurationMainTab extends LaunchConfigurationTab {
 				Integer.parseInt(_delayText.getText()));
 		configuration.setAttribute(RunConfiguration.LAUNCH_SELECTED_LANGUAGE,
 				_languageCombo.getText());
+		configuration.setAttribute(RunConfiguration.LAUNCH_MELANGE_ADAPTATION_QUERY, 
+				_melangeAdaptationQueryButton.getSelection());
 		configuration.setAttribute(RunConfiguration.LAUNCH_MELANGE_QUERY,
 				_melangeQueryText.getText());
 		configuration.setAttribute(RunConfiguration.LAUNCH_MODEL_ENTRY_POINT,
@@ -352,7 +356,21 @@ public class LaunchConfigurationMainTab extends LaunchConfigurationTab {
 		});
 		createTextLabelLayout(parent, "");
 
-		createTextLabelLayout(parent, "Melange resource adapter query");
+		createTextLabelLayout(parent, "");
+		_melangeAdaptationQueryButton = new Button(parent, SWT.CHECK);
+		_melangeAdaptationQueryButton.setText("Melange adaptation instead of conversion");
+		_melangeAdaptationQueryButton.addSelectionListener(new SelectionAdapter() {
+
+			@Override
+			public void widgetSelected(SelectionEvent event) {
+				updateLaunchConfigurationDialog();
+			}
+		}
+
+		);
+
+		createTextLabelLayout(parent, "");
+		createTextLabelLayout(parent, "Melange resource query");
 		_melangeQueryText = new Text(parent, SWT.SINGLE | SWT.BORDER);
 		_melangeQueryText.setLayoutData(createStandardLayout());
 		_melangeQueryText.setFont(font);
@@ -460,10 +478,19 @@ public class LaunchConfigurationMainTab extends LaunchConfigurationTab {
 			if(!modelNativeLanguages.isEmpty() && !modelNativeLanguages.get(0).equals(languageName)){
 				// TODO this version consider only the first native language, we need to think about models containing elements coming from several languages
 				String languageMT = MelangeHelper.getModelType(languageName);
-				if(languageMT == null){ languageMT = languageName+"MT"; } 
-				
-			//	result="?lang="+languageName+"&mt="+languageMT;
-				result="?lang="+languageName; // we need a simple downcast without adapter
+				if(languageMT == null){ languageMT = languageName+"MT"; }
+				if(_melangeAdaptationQueryButton.getSelection()) {
+					// use adaptation query
+					// ie. keep the original language but use Melange adapter
+					//String nativeLanguageName = modelNativeLanguages.get(0);
+					//result="?lang="+nativeLanguageName+"&mt="+languageMT;
+					//result="?mt="+languageMT;
+					result="?lang="+languageName+"&mt="+languageMT;
+				} else {
+					// use conversion query	
+					// ie. no adapter
+					result="?lang="+languageName; 
+				}
 			}
 		}
 		return result;
