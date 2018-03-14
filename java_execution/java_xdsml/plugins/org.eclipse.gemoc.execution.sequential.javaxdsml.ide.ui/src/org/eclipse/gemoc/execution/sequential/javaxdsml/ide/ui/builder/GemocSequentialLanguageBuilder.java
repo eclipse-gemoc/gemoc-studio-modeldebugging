@@ -14,6 +14,7 @@ import java.io.IOException;
 import java.util.Map;
 
 import org.eclipse.core.resources.IFile;
+import org.eclipse.core.resources.IFolder;
 import org.eclipse.core.resources.IProject;
 import org.eclipse.core.resources.IResource;
 import org.eclipse.core.resources.IResourceDelta;
@@ -21,15 +22,20 @@ import org.eclipse.core.resources.IResourceDeltaVisitor;
 import org.eclipse.core.resources.IResourceVisitor;
 import org.eclipse.core.resources.IncrementalProjectBuilder;
 import org.eclipse.core.runtime.CoreException;
+import org.eclipse.core.runtime.ICoreRunnable;
 import org.eclipse.core.runtime.IProgressMonitor;
+import org.eclipse.core.runtime.jobs.Job;
 import org.eclipse.emf.common.util.URI;
 import org.eclipse.emf.ecore.resource.Resource;
 import org.eclipse.emf.ecore.resource.ResourceSet;
 import org.eclipse.emf.ecore.resource.impl.ResourceSetImpl;
 import org.eclipse.gemoc.commons.eclipse.pde.manifest.ManifestChanger;
 import org.eclipse.gemoc.execution.sequential.javaxdsml.api.extensions.languages.SequentialLanguageDefinitionExtensionPoint;
+import org.eclipse.gemoc.execution.sequential.javaxdsml.ide.ui.Activator;
 import org.eclipse.gemoc.xdsmlframework.api.extensions.languages.LanguageDefinitionExtensionPoint;
 import org.eclipse.gemoc.xdsmlframework.ide.ui.builder.pde.PluginXMLHelper;
+import org.eclipse.jdt.core.IJavaProject;
+import org.eclipse.jdt.core.JavaCore;
 import org.jdom2.Element;
 import org.osgi.framework.BundleException;
 
@@ -67,10 +73,13 @@ public class GemocSequentialLanguageBuilder extends IncrementalProjectBuilder {
 
 	class GemocSequentialLanguageResourceVisitor implements IResourceVisitor {
 		public boolean visit(IResource resource) {
+			
 			updateProjectPluginConfiguration(resource);
 			checkConsistency(resource);
 			//return true to continue visiting children.
-			return true;
+			if (resource instanceof IFolder || resource instanceof IProject) 
+				return true;
+			else return false;
 		}
 	}
 
@@ -107,38 +116,53 @@ public class GemocSequentialLanguageBuilder extends IncrementalProjectBuilder {
 	 * @param resource
 	 */
 	private void updateProjectPluginConfiguration(IResource resource) {
+		
 		if (resource instanceof IFile 
 			&& resource.getFileExtension().equals("melange")) {
+			
 			IFile file = (IFile) resource;
 			IProject project = file.getProject();
-			// try {
+			try {
+				IJavaProject javaProject = (IJavaProject) project.getNature(JavaCore.NATURE_ID);
+				if(javaProject.getOutputLocation().isPrefixOf(file.getFullPath())){
+					// ignore melange files in target folder, we should consider only those outside it (in model or src folders for exmaple)
+					return;
+				};
+			} catch (CoreException e) {
+				Activator.error(e.getMessage(), e);
+			}
 			if (file.exists()) {
-				
-				//Load .melange file
-				URI uri = URI.createPlatformResourceURI(file.getFullPath().toString(), true);
-				ResourceSet rs = new ResourceSetImpl();
-				Resource res = rs.getResource(uri, true);
-				ModelTypingSpace root = (ModelTypingSpace)res.getContents().get(0);
-				String packageName = root.getName();
-				
-				//Browse declared Languages
-				for (fr.inria.diverse.melange.metamodel.melange.Element element : root.getElements()) {
-					if(element instanceof Language){
-						Language language = (Language) element;
-						// update entry in plugin.xml
-						setPluginLanguageNameAndFilePath(project, file, packageName+"."+language.getName());
+				Job job = Job.create("Update GEMOC Project Plugin Configuration of "+project.getName(), (ICoreRunnable) monitor -> {
+					//Load .melange file
+					URI uri = URI.createPlatformResourceURI(file.getFullPath().toString(), true);
+					ResourceSet rs = new ResourceSetImpl();
+					Resource res = rs.getResource(uri, true);
+					ModelTypingSpace root = (ModelTypingSpace)res.getContents().get(0);
+					String packageName = root.getName();
+					
+					//Browse declared Languages
+					for (fr.inria.diverse.melange.metamodel.melange.Element element : root.getElements()) {
+						if(element instanceof Language){
+							Language language = (Language) element;
+							// update entry in plugin.xml
+							setPluginLanguageNameAndFilePath(project, file, packageName+"."+language.getName());
+						}
 					}
-				}
-				
-				//Use default model loader
-				updateModelLoaderClass(project, null);
-				ManifestChanger manifestChanger = new ManifestChanger(project);
-				try {
-					manifestChanger.addPluginDependency(org.eclipse.gemoc.executionframework.extensions.sirius.Activator.PLUGIN_ID);
-					manifestChanger.commit();
-				} catch (BundleException | IOException | CoreException e) {
-					e.printStackTrace();
-				}
+					
+					//Use default model loader
+					updateModelLoaderClass(project, null);
+					ManifestChanger manifestChanger = new ManifestChanger(project);
+					try {
+						manifestChanger.addPluginDependency(org.eclipse.gemoc.executionframework.extensions.sirius.Activator.PLUGIN_ID);
+						manifestChanger.commit();
+					} catch (BundleException | IOException | CoreException e) {
+						Activator.error(e.getMessage(), e);
+					}    
+				});
+				// lock the whole project
+				job.setRule(project);
+				// Start the Job
+				job.schedule(500);
 			}
 		}
 	}
