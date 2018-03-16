@@ -59,7 +59,8 @@ public class CreateNewGemocSequentialLanguageProject extends NewMelangeProjectWi
 				WizardElement wizardElem = (WizardElement) element;
 				String id = wizardElem.getID();
 				if(id.equals("org.eclipse.gemoc.execution.sequential.javaxdsml.ide.ui.templates.projectContent.SequentialSingleLanguage") ||
-				   id.equals("org.eclipse.gemoc.execution.sequential.javaxdsml.ide.ui.templates.projectContent.SequentialExtendedLanguage")		){
+				   id.equals("org.eclipse.gemoc.execution.sequential.javaxdsml.ide.ui.templates.projectContent.SequentialExtendedLanguage") ||
+				   id.equals("org.eclipse.gemoc.execution.sequential.javaxdsml.ide.ui.templates.projectContent.MelangeSequentialSingleLanguage")		){
 					newRes.add(wizardElem);
 				}
 			}
