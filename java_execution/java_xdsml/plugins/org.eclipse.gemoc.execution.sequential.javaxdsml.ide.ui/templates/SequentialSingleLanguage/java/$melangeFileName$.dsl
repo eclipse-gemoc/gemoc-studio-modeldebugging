@@ -1,3 +1,3 @@
 name = $packageName$.$languageName$
-ecore = "platform:/resource/$ecoreFilePath$"
+ecore = platform:/resource/$ecoreFilePath$
 k3 = $listOfAspects$
