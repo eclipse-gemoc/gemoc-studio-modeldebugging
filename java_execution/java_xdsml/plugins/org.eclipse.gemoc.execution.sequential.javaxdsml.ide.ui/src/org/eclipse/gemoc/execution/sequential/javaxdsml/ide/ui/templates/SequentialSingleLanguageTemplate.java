@@ -46,8 +46,6 @@ import org.eclipse.ui.PlatformUI;
 import org.eclipse.xtext.util.Strings;
 import org.osgi.framework.BundleException;
 
-import com.google.common.collect.Lists;
-
 import fr.inria.diverse.melange.ui.wizards.pages.NewMelangeProjectWizardFields;
 
 public class SequentialSingleLanguageTemplate extends JavaxdsmlTemplateSection {
