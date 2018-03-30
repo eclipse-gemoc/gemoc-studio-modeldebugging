@@ -82,12 +82,17 @@ public class SequentialSingleLanguageTemplate extends JavaxdsmlTemplateSection {
 		addOption(KEY_PACKAGE_NAME, WizardTemplateMessages.SequentialSingleLanguageTemplate_packageName,
 				WizardTemplateMessages.SequentialSingleLanguageTemplate_packageNameToolTip, 
 				(String) null, 0);
-		addOption(KEY_MELANGE_FILE_NAME, WizardTemplateMessages.SequentialSingleLanguageTemplate_melangeFileName, 
-				WizardTemplateMessages.SequentialSingleLanguageTemplate_melangeFileNameTooltip, 
-				WizardTemplateMessages.SequentialSingleLanguageTemplate_melangeDefaultFileName, 0);
 		addOption(KEY_LANGUAGE_NAME, WizardTemplateMessages.SequentialSingleLanguageTemplate_melangeMetamodelName,
 				WizardTemplateMessages.SequentialSingleLanguageTemplate_melangeMetamodelNameToolTip, 
 				METAMODEL_NAME, 0);
+		
+
+		addBlankField(0);
+		addOption(KEY_MELANGE_FILE_NAME, WizardTemplateMessages.SequentialSingleLanguageTemplate_melangeFileName, 
+				WizardTemplateMessages.SequentialSingleLanguageTemplate_melangeFileNameTooltip, 
+				WizardTemplateMessages.SequentialSingleLanguageTemplate_melangeDefaultFileName, 0);
+
+		addBlankField(0);
 		TemplateOption ecoreLocationOption  = new AbstractStringWithButtonOption(this, KEY_ECOREFILE_PATH, 
 				WizardTemplateMessages.SequentialSingleLanguageTemplate_ecoreFileLocation,
 				WizardTemplateMessages.SequentialSingleLanguageTemplate_ecoreFileLocationTooltip) {
@@ -191,13 +196,28 @@ public class SequentialSingleLanguageTemplate extends JavaxdsmlTemplateSection {
 	
 	protected void initializeFields(BaseProjectWizardFields data) {
 		final String projectName = ((NewMelangeProjectWizardFields)data).projectName;
-		String packageName = getFormattedPackageName(projectName);
+		String packageName = inferPackageNameFromProjectName(projectName);
 		initializeOption(KEY_PACKAGE_NAME, packageName);
 		_data = (NewMelangeProjectWizardFields) data;
 		String languageName = inferLanguageNameFromProjectName(projectName);
 		updateOptions(packageName, languageName, languageName);
 	}
 
+	/**
+	 * Infers a name for the package based on the project name.
+	 * It uses the dot as separator and avoid xdsml, model, and dsl as name.
+	 * The returned name has it first letter capitalized.
+	 * For example, on org.company.myLanguage.melange, it will return org.company.mylanguage
+	 * @param projectName
+	 * @return
+	 */
+	protected String inferPackageNameFromProjectName(String projectName){
+		String projectNameCandidate = projectName;
+		projectNameCandidate = removePostFix(projectNameCandidate, ".xdsml");
+		projectNameCandidate = removePostFix(projectNameCandidate, ".model");
+		projectNameCandidate = removePostFix(projectNameCandidate, ".dsl");		
+		return getFormattedPackageName(projectNameCandidate);
+	}
 	
 	/**
 	 * Infers a name for the language based on the project name.
@@ -211,6 +231,7 @@ public class SequentialSingleLanguageTemplate extends JavaxdsmlTemplateSection {
 		String projectNameCandidate = projectName;
 		projectNameCandidate = removePostFix(projectNameCandidate, ".xdsml");
 		projectNameCandidate = removePostFix(projectNameCandidate, ".model");
+		projectNameCandidate = removePostFix(projectNameCandidate, ".dsl");
 		if(projectNameCandidate.contains(".") && !projectNameCandidate.endsWith(".")){
 			projectNameCandidate = projectNameCandidate.substring(projectNameCandidate.lastIndexOf(".")+1);
 		}		

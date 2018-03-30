@@ -10,9 +10,12 @@
  *******************************************************************************/
 package org.eclipse.gemoc.execution.sequential.javaxdsml.ide.ui.templates;
 
+import org.eclipse.core.runtime.CoreException;
+import org.eclipse.core.runtime.SubProgressMonitor;
 import org.eclipse.gemoc.commons.eclipse.pde.wizards.pages.pde.ui.BaseProjectWizardFields;
 import org.eclipse.gemoc.commons.eclipse.pde.wizards.pages.pde.ui.templates.ITemplateSection;
 import org.eclipse.gemoc.commons.eclipse.pde.wizards.pages.pde.ui.templates.NewProjectTemplateWizard;
+import org.eclipse.pde.internal.ui.PDEPlugin;
 import org.eclipse.xtext.util.Strings;
 
 public class MelangeSequentialSingleLanguageNewWizard extends NewProjectTemplateWizard{
@@ -24,7 +27,7 @@ public class MelangeSequentialSingleLanguageNewWizard extends NewProjectTemplate
 		
 		try {
 			String project = getData().projectName;
-			String SUFFIX = ".xdsml";
+			String SUFFIX = ".dsl";
 			if(project.endsWith(SUFFIX)){
 				
 				int startSuffix = project.length() - SUFFIX.length();
@@ -45,4 +48,9 @@ public class MelangeSequentialSingleLanguageNewWizard extends NewProjectTemplate
 	public ITemplateSection[] createTemplateSections() {
 		return new ITemplateSection[] {new MelangeSequentialSingleLanguageTemplate()};
 	}
+
+	
+
+	
+	
 }

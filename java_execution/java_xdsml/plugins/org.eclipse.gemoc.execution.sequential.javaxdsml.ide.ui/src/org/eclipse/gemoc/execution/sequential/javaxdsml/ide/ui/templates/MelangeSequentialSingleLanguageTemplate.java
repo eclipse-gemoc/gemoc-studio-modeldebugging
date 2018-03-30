@@ -39,6 +39,7 @@ import org.eclipse.jface.viewers.Viewer;
 import org.eclipse.jface.viewers.ViewerFilter;
 import org.eclipse.jface.wizard.Wizard;
 import org.eclipse.jface.wizard.WizardPage;
+import org.eclipse.osgi.util.NLS;
 import org.eclipse.ui.IWorkbenchWindow;
 import org.eclipse.ui.PlatformUI;
 import org.eclipse.xtext.util.Strings;
@@ -80,12 +81,16 @@ public class MelangeSequentialSingleLanguageTemplate extends JavaxdsmlTemplateSe
 		addOption(KEY_PACKAGE_NAME, WizardTemplateMessages.MelangeSequentialSingleLanguageTemplate_packageName,
 				WizardTemplateMessages.MelangeSequentialSingleLanguageTemplate_packageNameToolTip, 
 				(String) null, 0);
-		addOption(KEY_MELANGE_FILE_NAME, WizardTemplateMessages.MelangeSequentialSingleLanguageTemplate_melangeFileName, 
-				WizardTemplateMessages.MelangeSequentialSingleLanguageTemplate_melangeFileNameTooltip, 
-				WizardTemplateMessages.MelangeSequentialSingleLanguageTemplate_melangeDefaultFileName, 0);
 		addOption(KEY_LANGUAGE_NAME, WizardTemplateMessages.MelangeSequentialSingleLanguageTemplate_melangeMetamodelName,
 				WizardTemplateMessages.MelangeSequentialSingleLanguageTemplate_melangeMetamodelNameToolTip, 
 				METAMODEL_NAME, 0);
+		
+		addBlankField(0);
+		addOption(KEY_MELANGE_FILE_NAME, WizardTemplateMessages.MelangeSequentialSingleLanguageTemplate_melangeFileName, 
+				WizardTemplateMessages.MelangeSequentialSingleLanguageTemplate_melangeFileNameTooltip, 
+				WizardTemplateMessages.MelangeSequentialSingleLanguageTemplate_melangeDefaultFileName, 0);
+
+		addBlankField(0);
 		TemplateOption ecoreLocationOption  = new AbstractStringWithButtonOption(this, KEY_ECOREFILE_PATH, 
 				WizardTemplateMessages.MelangeSequentialSingleLanguageTemplate_ecoreFileLocation,
 				WizardTemplateMessages.MelangeSequentialSingleLanguageTemplate_ecoreFileLocationTooltip) {
@@ -189,17 +194,31 @@ public class MelangeSequentialSingleLanguageTemplate extends JavaxdsmlTemplateSe
 	
 	protected void initializeFields(BaseProjectWizardFields data) {
 		final String projectName = ((NewMelangeProjectWizardFields)data).projectName;
-		String packageName = getFormattedPackageName(projectName);
+		String packageName = inferPackageNameFromProjectName(projectName);
 		initializeOption(KEY_PACKAGE_NAME, packageName);
 		_data = (NewMelangeProjectWizardFields) data;
 		String languageName = inferLanguageNameFromProjectName(projectName);
 		updateOptions(packageName, languageName, languageName);
 	}
-
+	/**
+	 * Infers a name for the package based on the project name.
+	 * It uses the dot as separator and avoid xdsml, model, and melange as name.
+	 * The returned name has it first letter capitalized.
+	 * For example, on org.company.myLanguage.melange, it will return org.company.mylanguage
+	 * @param projectName
+	 * @return
+	 */
+	protected String inferPackageNameFromProjectName(String projectName){
+		String projectNameCandidate = projectName;
+		projectNameCandidate = removePostFix(projectNameCandidate, ".xdsml");
+		projectNameCandidate = removePostFix(projectNameCandidate, ".model");
+		projectNameCandidate = removePostFix(projectNameCandidate, ".melange");		
+		return getFormattedPackageName(projectNameCandidate);
+	}
 	
 	/**
 	 * Infers a name for the language based on the project name.
-	 * It uses the dot as separator and avoid xdsml and model as name.
+	 * It uses the dot as separator and avoid xdsml, model, and melange as name.
 	 * The returned name has it first letter capitalized.
 	 * For example, on org.company.mylanguage, it will return Mylanguage
 	 * @param projectName
@@ -209,6 +228,7 @@ public class MelangeSequentialSingleLanguageTemplate extends JavaxdsmlTemplateSe
 		String projectNameCandidate = projectName;
 		projectNameCandidate = removePostFix(projectNameCandidate, ".xdsml");
 		projectNameCandidate = removePostFix(projectNameCandidate, ".model");
+		projectNameCandidate = removePostFix(projectNameCandidate, ".melange");
 		if(projectNameCandidate.contains(".") && !projectNameCandidate.endsWith(".")){
 			projectNameCandidate = projectNameCandidate.substring(projectNameCandidate.lastIndexOf(".")+1);
 		}		
@@ -334,8 +354,10 @@ public class MelangeSequentialSingleLanguageTemplate extends JavaxdsmlTemplateSe
 		super.execute(project, monitor);
 	}
 	
+	
 	@Override
 	protected void generateFiles(IProgressMonitor monitor) throws CoreException {
+		
 		super.generateFiles(monitor);
 		
 		// now also fix the project configuration
