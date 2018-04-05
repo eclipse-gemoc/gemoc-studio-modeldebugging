@@ -41,5 +41,4 @@ Bundle-RequiredExecutionEnvironment: JavaSE-1.8
 Bundle-ActivationPolicy: lazy
 Bundle-ClassPath:  .
 Export-Package: org.eclipse.gemoc.execution.sequential.javaengine.ui,
- org.eclipse.gemoc.execution.sequential.javaengine.ui.debug,
  org.eclipse.gemoc.execution.sequential.javaengine.ui.launcher

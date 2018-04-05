@@ -8,27 +8,26 @@
  * Contributors:
  *     Inria - initial API and implementation
  *******************************************************************************/
-package org.eclipse.gemoc.execution.sequential.javaengine.ui.handlers;
+package org.eclipse.gemoc.executionframework.debugger.ui.handlers;
 
 import java.util.function.Supplier;
 
 import org.eclipse.core.commands.AbstractHandler;
 import org.eclipse.core.commands.ExecutionEvent;
 import org.eclipse.core.commands.ExecutionException;
-import org.eclipse.gemoc.execution.sequential.javaengine.ui.Activator;
-import org.eclipse.gemoc.execution.sequential.javaengine.ui.debug.OmniscientGenericSequentialModelDebugger;
-
+import org.eclipse.gemoc.executionframework.debugger.Activator;
+import org.eclipse.gemoc.executionframework.debugger.OmniscientGenericSequentialModelDebugger;
 /**
  * Our sample handler extends AbstractHandler, an IHandler base class.
  * @see org.eclipse.core.commands.IHandler
  * @see org.eclipse.core.commands.AbstractHandler
  */
-public class StepBackIntoHandler extends AbstractHandler {
+public class StepBackOverHandler extends AbstractHandler {
 	
 	/**
 	 * The constructor.
 	 */
-	public StepBackIntoHandler() {
+	public StepBackOverHandler() {
 		setBaseEnabled(false);
 	}
 
@@ -41,7 +40,7 @@ public class StepBackIntoHandler extends AbstractHandler {
 		Supplier<OmniscientGenericSequentialModelDebugger> debuggerSupplier = Activator.getDefault().getDebuggerSupplier();
 		if (debuggerSupplier != null) {
 			OmniscientGenericSequentialModelDebugger debugger = debuggerSupplier.get();
-			debugger.stepBackInto();
+			debugger.stepBackOver();
 		}
 		
 		return null;
@@ -54,11 +53,9 @@ public class StepBackIntoHandler extends AbstractHandler {
 		if (debuggerSupplier != null) {
 			OmniscientGenericSequentialModelDebugger debugger = debuggerSupplier.get();
 			if (debugger != null) {
-				result = debugger.canStepBackInto();
+				result = debugger.canStepBackOver();
 			}
 		}
 		return result;
 	}
-	
-	
 }

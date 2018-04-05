@@ -8,8 +8,16 @@
  * Contributors:
  *     Inria - initial API and implementation
  *******************************************************************************/
-package org.eclipse.gemoc.execution.sequential.javaengine.ui.debug;
+package org.eclipse.gemoc.executionframework.debugger;
 
+import java.util.ArrayList
+import java.util.List
+import java.util.function.BiPredicate
+import org.eclipse.core.runtime.IStatus
+import org.eclipse.core.runtime.Status
+import org.eclipse.emf.ecore.EObject
+import org.eclipse.gemoc.dsl.debug.ide.event.IDSLDebugEventProcessor
+import org.eclipse.gemoc.executionframework.engine.core.EngineStoppedException
 import org.eclipse.gemoc.trace.commons.model.trace.Dimension
 import org.eclipse.gemoc.trace.commons.model.trace.MSE
 import org.eclipse.gemoc.trace.commons.model.trace.MSEOccurrence
@@ -20,18 +28,9 @@ import org.eclipse.gemoc.trace.commons.model.trace.Value
 import org.eclipse.gemoc.trace.gemoc.api.IMultiDimensionalTraceAddon
 import org.eclipse.gemoc.trace.gemoc.api.ITraceExplorer
 import org.eclipse.gemoc.trace.gemoc.api.ITraceViewListener
-import org.eclipse.gemoc.dsl.debug.ide.event.IDSLDebugEventProcessor
-import java.util.ArrayList
-import java.util.List
-import java.util.function.BiPredicate
-import org.eclipse.core.runtime.IStatus
-import org.eclipse.core.runtime.Status
-import org.eclipse.emf.ecore.EObject
+import org.eclipse.gemoc.xdsmlframework.api.core.IExecutionEngine
 import org.eclipse.jface.dialogs.ErrorDialog
 import org.eclipse.xtext.naming.QualifiedName
-import org.eclipse.gemoc.execution.sequential.javaengine.ui.Activator
-import org.eclipse.gemoc.executionframework.engine.core.EngineStoppedException
-import org.eclipse.gemoc.xdsmlframework.api.core.IExecutionEngine
 
 public class OmniscientGenericSequentialModelDebugger extends GenericSequentialModelDebugger implements ITraceViewListener {
 
