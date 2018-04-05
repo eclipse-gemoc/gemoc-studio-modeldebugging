@@ -20,17 +20,18 @@ import org.eclipse.debug.ui.ISourcePresentation;
 import org.eclipse.emf.common.util.URI;
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.resource.Resource;
+import org.eclipse.gemoc.dsl.debug.ide.DSLSourceLocator;
+import org.eclipse.gemoc.dsl.debug.ide.adapter.DSLStackFrameAdapter;
+import org.eclipse.gemoc.execution.sequential.javaengine.ui.Activator;
+import org.eclipse.gemoc.trace.commons.model.trace.Step;
 import org.eclipse.ui.IEditorInput;
 import org.eclipse.ui.IFileEditorInput;
 import org.eclipse.ui.part.FileEditorInput;
 import org.eclipse.xtext.resource.XtextResource;
-import org.eclipse.gemoc.execution.sequential.javaengine.ui.Activator;
 
 import fr.inria.diverse.melange.resource.MelangeResourceImpl;
-import org.eclipse.gemoc.trace.commons.model.trace.Step;
-import org.eclipse.gemoc.dsl.debug.ide.DSLSourceLocator;
-import org.eclipse.gemoc.dsl.debug.ide.adapter.DSLStackFrameAdapter;
 
+@SuppressWarnings("restriction")
 public class GemocSourceLocator extends DSLSourceLocator implements ISourcePresentation {
 
 	@Override
@@ -40,7 +41,7 @@ public class GemocSourceLocator extends DSLSourceLocator implements ISourcePrese
 			final DSLStackFrameAdapter eStackFrame = (DSLStackFrameAdapter) stackFrame;
 			final EObject instruction = eStackFrame.getCurrentInstruction();
 			if (instruction instanceof Step) {
-				res = ((Step) instruction).getMseoccurrence().getMse();
+				res = ((Step<?>) instruction).getMseoccurrence().getMse();
 			} else if (instruction != null) {
 				res = instruction;
 			} else {

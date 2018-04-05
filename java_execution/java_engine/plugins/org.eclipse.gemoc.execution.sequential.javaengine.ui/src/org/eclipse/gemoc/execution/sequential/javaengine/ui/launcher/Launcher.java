@@ -65,6 +65,7 @@ public class Launcher extends AbstractSequentialGemocLauncher {
 		return executionEngine;
 	}
 
+	@SuppressWarnings("rawtypes")
 	@Override
 	protected IDSLDebugger getDebugger(ILaunchConfiguration configuration, DSLDebugEventDispatcher dispatcher,
 			EObject firstInstruction, IProgressMonitor monitor) {
