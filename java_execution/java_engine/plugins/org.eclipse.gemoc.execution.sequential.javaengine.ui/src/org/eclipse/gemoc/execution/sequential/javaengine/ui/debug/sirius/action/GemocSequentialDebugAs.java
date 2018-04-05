@@ -8,7 +8,7 @@
  * Contributors:
  *     Inria - initial API and implementation
  *******************************************************************************/
-package org.eclipse.gemoc.execution.sequential.javaengine.ui.debug;
+package org.eclipse.gemoc.execution.sequential.javaengine.ui.debug.sirius.action;
 
 
 import org.eclipse.gemoc.execution.sequential.javaengine.ui.launcher.Launcher;
