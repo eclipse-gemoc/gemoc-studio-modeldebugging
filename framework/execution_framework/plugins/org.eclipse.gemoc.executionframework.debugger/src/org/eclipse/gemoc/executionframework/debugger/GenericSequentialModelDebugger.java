@@ -8,7 +8,7 @@
  * Contributors:
  *     Inria - initial API and implementation
  *******************************************************************************/
-package org.eclipse.gemoc.execution.sequential.javaengine.ui.debug;
+package org.eclipse.gemoc.executionframework.debugger;
 
 import java.util.ArrayDeque;
 import java.util.ArrayList;
@@ -21,9 +21,6 @@ import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.EcorePackage;
 import org.eclipse.emf.ecore.resource.Resource;
 import org.eclipse.gemoc.dsl.debug.ide.event.IDSLDebugEventProcessor;
-import org.eclipse.gemoc.execution.sequential.javaengine.PlainK3ExecutionEngine;
-import org.eclipse.gemoc.executionframework.debugger.AbstractGemocDebugger;
-import org.eclipse.gemoc.executionframework.debugger.GemocBreakpoint;
 import org.eclipse.gemoc.executionframework.engine.core.EngineStoppedException;
 import org.eclipse.gemoc.trace.commons.model.trace.MSE;
 import org.eclipse.gemoc.trace.commons.model.trace.MSEOccurrence;
@@ -231,22 +228,20 @@ public class GenericSequentialModelDebugger extends AbstractGemocDebugger {
 		EObject target = o;
 		// Try to get the original object if 'o' comes from
 		// a downcast resource
-		if (this.engine instanceof PlainK3ExecutionEngine) {
-			Resource res = o.eResource();
-			if (res != null) {
+		Resource res = o.eResource();
+		if (res != null) {
 
-				MelangeResourceImpl mr = null;
-				for (Resource candidate : res.getResourceSet().getResources()) {
-					if (candidate instanceof MelangeResourceImpl) {
-						mr = (MelangeResourceImpl) candidate;
-						break;
-					}
+			MelangeResourceImpl mr = null;
+			for (Resource candidate : res.getResourceSet().getResources()) {
+				if (candidate instanceof MelangeResourceImpl) {
+					mr = (MelangeResourceImpl) candidate;
+					break;
 				}
+			}
 
-				if (mr != null) {
-					String uriFragment = res.getURIFragment(o);
-					target = mr.getWrappedResource().getEObject(uriFragment);
-				}
+			if (mr != null) {
+				String uriFragment = res.getURIFragment(o);
+				target = mr.getWrappedResource().getEObject(uriFragment);
 			}
 		}
 

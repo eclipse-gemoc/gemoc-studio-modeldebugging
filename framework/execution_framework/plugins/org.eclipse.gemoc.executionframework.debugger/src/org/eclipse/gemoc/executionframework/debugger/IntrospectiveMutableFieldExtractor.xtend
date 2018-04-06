@@ -4,11 +4,11 @@
  * are made available under the terms of the Eclipse Public License v1.0
  * which accompanies this distribution, and is available at
  * http://www.eclipse.org/legal/epl-v10.html
- *
+ * 
  * Contributors:
  *     Inria - initial API and implementation
  *******************************************************************************/
- package org.eclipse.gemoc.executionframework.debugger
+package org.eclipse.gemoc.executionframework.debugger
 
 import java.util.ArrayList
 import java.util.Arrays
@@ -38,7 +38,6 @@ class IntrospectiveMutableFieldExtractor implements IMutableFieldExtractor {
 //		c.set(0, Character.toUpperCase(c.get(0)))
 //		return new String(c)
 //	}
-
 	private def String decapitalize(String string) {
 		val c = string.toCharArray()
 		c.set(0, Character.toLowerCase(c.get(0)))
@@ -83,9 +82,9 @@ class IntrospectiveMutableFieldExtractor implements IMutableFieldExtractor {
 
 	private def String findDataName(EObject eObject) {
 		val name = findName(eObject.class, eObject)
-		if (name == null) {
+		if (name === null) {
 			val id = findId(eObject.class, eObject)
-			if (id == null) {
+			if (id === null) {
 				return eObject.toString
 			} else {
 				return decapitalize(eObject.eClass.name) + " " + id
@@ -106,7 +105,7 @@ class IntrospectiveMutableFieldExtractor implements IMutableFieldExtractor {
 				val methods = aspect.methods.filter[m|m.name.equals(f.name)]
 				val getter = methods.findFirst[m|m.parameterCount == 1]
 				val setter = methods.findFirst[m|m.parameterCount == 2]
-				if (getter != null && setter != null) {
+				if (getter !== null && setter !== null) {
 					val data = new MutableField(
 						findDataName(eObject),
 						eObject,
@@ -126,12 +125,13 @@ class IntrospectiveMutableFieldExtractor implements IMutableFieldExtractor {
 			val datas = new ArrayList
 			if (!aspectClasses.containsKey(eObject.eClass)) {
 				val classes = getStaticHelperClasses(eObject)
-				if (classes != null) {
+				if (classes !== null) {
 					val list = new ArrayList
 					classes.forEach [ i, l |
 						l.forEach [ c |
 							try {
-								val properties = MelangeHelper.getMelangeBundle(languageName).loadClass(c.name + i.simpleName + "AspectProperties")
+								val properties = MelangeHelper.getMelangeBundle(languageName).loadClass(
+									c.name + i.simpleName + "AspectProperties")
 								val pair = new Pair(c, properties)
 								list.add(pair)
 								datas.addAll(getMutableFieldsFromAspect(eObject, properties, c))
@@ -166,7 +166,7 @@ class IntrospectiveMutableFieldExtractor implements IMutableFieldExtractor {
 	}
 
 	private def List<Class<?>> getSuperInterfacesOfInterface(Class<?> c) {
-		if (c == null) {
+		if (c === null) {
 			return Collections.EMPTY_LIST
 		}
 		val interfacesFound = new LinkedHashSet<Class<?>>()
@@ -178,7 +178,7 @@ class IntrospectiveMutableFieldExtractor implements IMutableFieldExtractor {
 		val List<Class<?>> possibleInterfaces = new ArrayList
 		val List<Class<?>> interfaces = getAllInterfaces(o.class);
 		val baseInterface = interfaces.findFirst[i|i.simpleName.equals(o.eClass.name)]
-		if (baseInterface != null) {
+		if (baseInterface !== null) {
 			possibleInterfaces.add(baseInterface)
 			possibleInterfaces.addAll(getSuperInterfacesOfInterface(baseInterface))
 		}
@@ -187,7 +187,7 @@ class IntrospectiveMutableFieldExtractor implements IMutableFieldExtractor {
 	}
 
 	private def List<Class<?>> getAllInterfaces(Class<? extends EObject> cls) {
-		if (cls == null) {
+		if (cls === null) {
 			return Collections.EMPTY_LIST
 		}
 		val interfacesFound = new LinkedHashSet<Class<?>>()
@@ -198,7 +198,7 @@ class IntrospectiveMutableFieldExtractor implements IMutableFieldExtractor {
 
 	private def void getAllInterfaces(Class<?> cls, HashSet<Class<?>> interfacesFound) {
 		var currCls = cls;
-		while (currCls != null) {
+		while (currCls !== null) {
 			currCls.getInterfaces().forEach [ i |
 				if (interfacesFound.add(i)) {
 					getAllInterfaces(i, interfacesFound)
@@ -228,20 +228,18 @@ class IntrospectiveMutableFieldExtractor implements IMutableFieldExtractor {
 //			}
 //		}
 //	}
-
 	private def Map<Class<?>, List<Class<?>>> getStaticHelperClasses(EObject target) {
 		val List<Class<?>> allPossibleInterfaces = getInterfacesOfEObject(target)
 
 		val Map<Class<?>, List<Class<?>>> res = new HashMap
 		val allAspects = MelangeHelper.getAspects(languageName)
-		allPossibleInterfaces.forEach[i|
-			val appliedAspects = allAspects.filter[asp | 
+		allPossibleInterfaces.forEach [ i |
+			val appliedAspects = allAspects.filter [ asp |
 				MelangeHelper.getTarget(asp) == i
 			]
 			res.put(i, appliedAspects.toList)
 		]
-		
+
 		return res
 	}
 }
-		
