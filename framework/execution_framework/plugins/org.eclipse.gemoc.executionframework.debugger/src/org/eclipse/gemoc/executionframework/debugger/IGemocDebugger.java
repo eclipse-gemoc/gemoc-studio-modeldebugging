@@ -16,11 +16,12 @@ import org.eclipse.gemoc.xdsmlframework.api.core.IExecutionEngine;
 import org.eclipse.gemoc.xdsmlframework.api.engine_addon.IEngineAddon;
 
 import org.eclipse.gemoc.trace.commons.model.trace.MSEOccurrence;
+import org.eclipse.gemoc.trace.commons.model.trace.Step;
 
 public interface IGemocDebugger extends IEngineAddon {
 
-	public abstract void addPredicateBreak(BiPredicate<IExecutionEngine, MSEOccurrence> predicate);
+	public abstract void addPredicateBreak(BiPredicate<IExecutionEngine, Step<?>> predicate);
 
-	public abstract void addPredicateBreakpoint(BiPredicate<IExecutionEngine, MSEOccurrence> predicate);
+	public abstract void addPredicateBreakpoint(BiPredicate<IExecutionEngine, Step<?>> predicate);
 
 }

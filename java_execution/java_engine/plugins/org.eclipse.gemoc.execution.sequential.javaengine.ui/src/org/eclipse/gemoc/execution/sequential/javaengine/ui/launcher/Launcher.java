@@ -46,6 +46,7 @@ import org.eclipse.gemoc.trace.commons.model.launchconfiguration.LaunchConfigura
 import org.eclipse.gemoc.trace.commons.model.launchconfiguration.LaunchConfigurationParameter;
 import org.eclipse.gemoc.trace.commons.model.launchconfiguration.LaunchconfigurationPackage;
 import org.eclipse.gemoc.trace.commons.model.trace.MSEOccurrence;
+import org.eclipse.gemoc.trace.commons.model.trace.Step;
 import org.eclipse.gemoc.trace.gemoc.api.IMultiDimensionalTraceAddon;
 import org.eclipse.gemoc.dsl.debug.ide.IDSLDebugger;
 import org.eclipse.gemoc.dsl.debug.ide.event.DSLDebugEventDispatcher;
@@ -99,9 +100,9 @@ public class Launcher extends AbstractSequentialGemocLauncher {
 		// we add this dummy break
 		try {
 			if (configuration.getAttribute(RunConfiguration.LAUNCH_BREAK_START, false)) {
-				res.addPredicateBreak(new BiPredicate<IExecutionEngine, MSEOccurrence>() {
+				res.addPredicateBreak(new BiPredicate<IExecutionEngine, Step<?>>() {
 					@Override
-					public boolean test(IExecutionEngine t, MSEOccurrence u) {
+					public boolean test(IExecutionEngine t, Step<?> u) {
 						return true;
 					}
 				});

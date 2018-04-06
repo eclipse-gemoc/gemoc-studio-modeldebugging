@@ -13,11 +13,11 @@ package org.eclipse.gemoc.xdsmlframework.api.core;
 import java.util.Deque;
 import java.util.Set;
 
-import org.eclipse.gemoc.xdsmlframework.api.core.EngineStatus.RunStatus;
-import org.eclipse.gemoc.xdsmlframework.api.engine_addon.IEngineAddon;
-
 import org.eclipse.gemoc.trace.commons.model.launchconfiguration.LaunchConfiguration;
 import org.eclipse.gemoc.trace.commons.model.trace.MSEOccurrence;
+import org.eclipse.gemoc.trace.commons.model.trace.Step;
+import org.eclipse.gemoc.xdsmlframework.api.core.EngineStatus.RunStatus;
+import org.eclipse.gemoc.xdsmlframework.api.engine_addon.IEngineAddon;
 
 /**
  * The interface of the GEMOC Execution Engine. The Execution Engine is an
@@ -35,13 +35,13 @@ public interface IExecutionEngine extends IDisposable {
 	 * In case of nested calls, indicate the current stack of model specific event occurrences.
 	 * @return the current stack of {@link MSEOccurrence}
 	 */
-	Deque<MSEOccurrence> getCurrentStack();
+	Deque<Step<?>> getCurrentStack();
 
 	/**
 	 * Provides the model specific event occurrence of the current step 
 	 * @return the current MSEOccurrence
 	 */
-	MSEOccurrence getCurrentMSEOccurrence();
+	Step<?> getCurrentStep();
 
 	/**
 	 * Starts the {@link IExecutionEngine}.
