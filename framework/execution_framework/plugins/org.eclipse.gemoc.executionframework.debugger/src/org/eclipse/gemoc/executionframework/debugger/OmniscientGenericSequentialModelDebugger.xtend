@@ -4,12 +4,20 @@
  * are made available under the terms of the Eclipse Public License v1.0
  * which accompanies this distribution, and is available at
  * http://www.eclipse.org/legal/epl-v10.html
- *
+ * 
  * Contributors:
  *     Inria - initial API and implementation
  *******************************************************************************/
-package org.eclipse.gemoc.execution.sequential.javaengine.ui.debug;
+package org.eclipse.gemoc.executionframework.debugger;
 
+import java.util.ArrayList
+import java.util.List
+import java.util.function.BiPredicate
+import org.eclipse.core.runtime.IStatus
+import org.eclipse.core.runtime.Status
+import org.eclipse.emf.ecore.EObject
+import org.eclipse.gemoc.dsl.debug.ide.event.IDSLDebugEventProcessor
+import org.eclipse.gemoc.executionframework.engine.core.EngineStoppedException
 import org.eclipse.gemoc.trace.commons.model.trace.Dimension
 import org.eclipse.gemoc.trace.commons.model.trace.MSE
 import org.eclipse.gemoc.trace.commons.model.trace.MSEOccurrence
@@ -20,22 +28,13 @@ import org.eclipse.gemoc.trace.commons.model.trace.Value
 import org.eclipse.gemoc.trace.gemoc.api.IMultiDimensionalTraceAddon
 import org.eclipse.gemoc.trace.gemoc.api.ITraceExplorer
 import org.eclipse.gemoc.trace.gemoc.api.ITraceViewListener
-import org.eclipse.gemoc.dsl.debug.ide.event.IDSLDebugEventProcessor
-import java.util.ArrayList
-import java.util.List
-import java.util.function.BiPredicate
-import org.eclipse.core.runtime.IStatus
-import org.eclipse.core.runtime.Status
-import org.eclipse.emf.ecore.EObject
+import org.eclipse.gemoc.xdsmlframework.api.core.IExecutionEngine
 import org.eclipse.jface.dialogs.ErrorDialog
 import org.eclipse.xtext.naming.QualifiedName
-import org.eclipse.gemoc.execution.sequential.javaengine.ui.Activator
-import org.eclipse.gemoc.executionframework.engine.core.EngineStoppedException
-import org.eclipse.gemoc.xdsmlframework.api.core.IExecutionEngine
 
 public class OmniscientGenericSequentialModelDebugger extends GenericSequentialModelDebugger implements ITraceViewListener {
 
-	private var ITraceExplorer<Step<?>, State<?,?>, TracedObject<?>, Dimension<?>, Value<?>> traceExplorer
+	private var ITraceExplorer<Step<?>, State<?, ?>, TracedObject<?>, Dimension<?>, Value<?>> traceExplorer
 
 	private var steppingOverStackFrameIndex = -1
 
@@ -44,20 +43,21 @@ public class OmniscientGenericSequentialModelDebugger extends GenericSequentialM
 	private val List<EObject> callerStack = new ArrayList
 
 	private val List<Step<?>> previousCallStack = new ArrayList
-	
+
 	new(IDSLDebugEventProcessor target, IExecutionEngine engine) {
 		super(target, engine)
 	}
 
 	def private MSE getMSEFromStep(Step<?> step) {
 		val mseOccurrence = step.mseoccurrence
-		if (mseOccurrence == null) {
+		if (mseOccurrence === null) {
 			val container = step.eContainer
 			if (container instanceof Step<?>) {
 				val parentStep = container as Step<?>
 				val parentMseOccurrence = parentStep.mseoccurrence
-				if (parentMseOccurrence == null) {
-					throw new IllegalStateException("A step without MSEOccurrence cannot be contained in a step without MSEOccurrence")
+				if (parentMseOccurrence === null) {
+					throw new IllegalStateException(
+						"A step without MSEOccurrence cannot be contained in a step without MSEOccurrence")
 				} else {
 					return parentMseOccurrence.mse
 				}
@@ -74,7 +74,11 @@ public class OmniscientGenericSequentialModelDebugger extends GenericSequentialM
 		var EObject caller = mse.caller
 		val QualifiedName qname = nameprovider.getFullyQualifiedName(caller)
 		val String objectName = if(qname !== null) qname.toString() else caller.toString()
-		val String opName = if (step.mseoccurrence == null) {mse.action?.name + "_implicitStep"} else {mse.action?.name}
+		val String opName = if (step.mseoccurrence === null) {
+				mse.action?.name + "_implicitStep"
+			} else {
+				mse.action?.name
+			}
 		val String callerType = caller.eClass().getName()
 		val String prettyName = "(" + callerType + ") " + objectName + " -> " + opName + "()"
 		pushStackFrame(threadName, prettyName, caller, caller)
@@ -85,10 +89,10 @@ public class OmniscientGenericSequentialModelDebugger extends GenericSequentialM
 		super.popStackFrame(threadName)
 		callerStack.remove(0)
 	}
-	
+
 	override void aboutToExecuteStep(IExecutionEngine executionEngine, Step<?> step) {
 		val mseOccurrence = step.mseoccurrence
-		if (mseOccurrence != null) {
+		if (mseOccurrence !== null) {
 			if (!control(threadName, mseOccurrence)) {
 				throw new EngineStoppedException("Debug thread has stopped.");
 			}
@@ -224,7 +228,6 @@ public class OmniscientGenericSequentialModelDebugger extends GenericSequentialM
 //			}
 //		});
 //	}
-
 	override public validateVariableValue(String threadName, String variableName, String value) {
 		if (traceExplorer.inReplayMode) {
 			ErrorDialog.openError(null, "Illegal variable value set",
@@ -258,7 +261,8 @@ public class OmniscientGenericSequentialModelDebugger extends GenericSequentialM
 
 	override updateStack(String threadName, EObject instruction) {
 		var i = 0
-		while (i < previousCallStack.size && i < traceExplorer.callStack.size && previousCallStack.get(i) == traceExplorer.callStack.get(i)) {
+		while (i < previousCallStack.size && i < traceExplorer.callStack.size &&
+			previousCallStack.get(i) == traceExplorer.callStack.get(i)) {
 			i++
 		}
 		for (var j = i; j < previousCallStack.size; j++) {
@@ -275,12 +279,11 @@ public class OmniscientGenericSequentialModelDebugger extends GenericSequentialM
 	}
 
 	override update() {
-		if (executedModelRoot != null) {
+		if (executedModelRoot !== null) {
 			try {
-				if(!callerStack.empty){
+				if (!callerStack.empty) {
 					updateData(threadName, callerStack.findFirst[true])
 				} else {
-					
 				}
 			} catch (IllegalStateException e) {
 				// Shhh

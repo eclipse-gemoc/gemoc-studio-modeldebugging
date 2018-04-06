@@ -4,11 +4,11 @@
  * are made available under the terms of the Eclipse Public License v1.0
  * which accompanies this distribution, and is available at
  * http://www.eclipse.org/legal/epl-v10.html
- *
+ * 
  * Contributors:
  *     Inria - initial API and implementation
  *******************************************************************************/
- package org.eclipse.gemoc.executionframework.debugger
+package org.eclipse.gemoc.executionframework.debugger
 
 import java.text.DecimalFormat
 import java.text.NumberFormat
@@ -27,7 +27,7 @@ import org.eclipse.xtext.naming.DefaultDeclarativeQualifiedNameProvider
 class AnnotationMutableFieldExtractor implements IMutableFieldExtractor {
 
 	private val Map<EClass, Integer> counters = new HashMap
-	
+
 	private val org.eclipse.xtext.naming.DefaultDeclarativeQualifiedNameProvider nameprovider = new DefaultDeclarativeQualifiedNameProvider()
 
 	override extractMutableField(EObject eObject) {
@@ -35,9 +35,9 @@ class AnnotationMutableFieldExtractor implements IMutableFieldExtractor {
 		val List<MutableField> result = new ArrayList<MutableField>()
 
 		val idProp = eObject.eClass.getEIDAttribute
-		val String objectName = if (idProp != null) {
+		val String objectName = if (idProp !== null) {
 				val id = eObject.eGet(idProp);
-				if (id != null) {
+				if (id !== null) {
 					val NumberFormat formatter = new DecimalFormat("00");
 					val String idString = if(id instanceof Integer) formatter.format((id as Integer)) else id.toString;
 					eObject.eClass.name + "_" + idString // "returned" value 
@@ -52,16 +52,16 @@ class AnnotationMutableFieldExtractor implements IMutableFieldExtractor {
 
 			} else {
 				val qname = nameprovider.getFullyQualifiedName(eObject)
-				if(qname == null) 
+				if (qname === null)
 					eObject.toString
-				else 
+				else
 					qname.toString
 			}
-		
+
 		for (prop : eObject.eClass.getEAllStructuralFeatures) {
 			if (DynamicAnnotationHelper.isDynamic(prop)) {
 				val mut = new MutableField(
-					/* name    */ prop.name+" ("+objectName+ " :"+eObject.eClass.getName +")",
+					/* name    */ prop.name + " (" + objectName + " :" + eObject.eClass.getName + ")",
 					/* eObject */ eObject,
 					/* mutProp */ prop,
 					/* getter  */ [eObject.eGet(prop)],
@@ -69,7 +69,7 @@ class AnnotationMutableFieldExtractor implements IMutableFieldExtractor {
 
 						val ed = TransactionUtil.getEditingDomain(eObject.eResource);
 						var RecordingCommand command = new RecordingCommand(ed,
-							"Setting value " + o + " in " + objectName +"."+prop.name+ " from the debugger") {
+							"Setting value " + o + " in " + objectName + "." + prop.name + " from the debugger") {
 							protected override void doExecute() {
 								eObject.eSet(prop, o)
 							}

@@ -51,7 +51,7 @@ public class PlainK3DebugModelPresentation extends GemocDebugModelPresentation {
 			ImageDescriptor descriptor = Activator.imageDescriptorFromPlugin(Activator.PLUGIN_ID, "icons/debugt_obj.png");
 			Image cachedImage = imagesCache.get(descriptor);
 			if (cachedImage == null) {
-				cachedImage = new Image(Display.getDefault(), descriptor.getImageData());
+				cachedImage = new Image(Display.getDefault(), descriptor.getImageData(100));
 				imagesCache.put(descriptor, cachedImage);
 			}
 			return image;

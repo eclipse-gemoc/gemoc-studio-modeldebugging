@@ -22,33 +22,32 @@ import org.eclipse.core.runtime.IProgressMonitor;
 import org.eclipse.debug.core.ILaunchConfiguration;
 import org.eclipse.debug.core.ILaunchConfigurationWorkingCopy;
 import org.eclipse.emf.ecore.EObject;
-import org.eclipse.gemoc.executionframework.debugger.AnnotationMutableFieldExtractor;
-import org.eclipse.gemoc.executionframework.debugger.IntrospectiveMutableFieldExtractor;
+import org.eclipse.gemoc.commons.eclipse.messagingsystem.api.MessagingSystem;
 import org.eclipse.gemoc.commons.eclipse.ui.ViewHelper;
+import org.eclipse.gemoc.dsl.debug.ide.IDSLDebugger;
+import org.eclipse.gemoc.dsl.debug.ide.event.DSLDebugEventDispatcher;
 import org.eclipse.gemoc.execution.sequential.javaengine.PlainK3ExecutionEngine;
 import org.eclipse.gemoc.execution.sequential.javaengine.SequentialModelExecutionContext;
 import org.eclipse.gemoc.execution.sequential.javaengine.ui.Activator;
-import org.eclipse.gemoc.execution.sequential.javaengine.ui.debug.GenericSequentialModelDebugger;
-import org.eclipse.gemoc.execution.sequential.javaengine.ui.debug.OmniscientGenericSequentialModelDebugger;
 import org.eclipse.gemoc.executionframework.debugger.AbstractGemocDebugger;
+import org.eclipse.gemoc.executionframework.debugger.AnnotationMutableFieldExtractor;
+import org.eclipse.gemoc.executionframework.debugger.GenericSequentialModelDebugger;
 import org.eclipse.gemoc.executionframework.debugger.IMutableFieldExtractor;
+import org.eclipse.gemoc.executionframework.debugger.IntrospectiveMutableFieldExtractor;
+import org.eclipse.gemoc.executionframework.debugger.OmniscientGenericSequentialModelDebugger;
 import org.eclipse.gemoc.executionframework.engine.commons.EngineContextException;
 import org.eclipse.gemoc.executionframework.engine.commons.ModelExecutionContext;
 import org.eclipse.gemoc.executionframework.engine.ui.commons.RunConfiguration;
 import org.eclipse.gemoc.executionframework.engine.ui.launcher.AbstractSequentialGemocLauncher;
 import org.eclipse.gemoc.executionframework.ui.views.engine.EnginesStatusView;
-import org.eclipse.gemoc.xdsmlframework.api.core.ExecutionMode;
-import org.eclipse.gemoc.xdsmlframework.api.core.IExecutionEngine;
-import org.eclipse.gemoc.xdsmlframework.api.core.IRunConfiguration;
-
-import org.eclipse.gemoc.commons.eclipse.messagingsystem.api.MessagingSystem;
 import org.eclipse.gemoc.trace.commons.model.launchconfiguration.LaunchConfiguration;
 import org.eclipse.gemoc.trace.commons.model.launchconfiguration.LaunchConfigurationParameter;
 import org.eclipse.gemoc.trace.commons.model.launchconfiguration.LaunchconfigurationPackage;
 import org.eclipse.gemoc.trace.commons.model.trace.MSEOccurrence;
 import org.eclipse.gemoc.trace.gemoc.api.IMultiDimensionalTraceAddon;
-import org.eclipse.gemoc.dsl.debug.ide.IDSLDebugger;
-import org.eclipse.gemoc.dsl.debug.ide.event.DSLDebugEventDispatcher;
+import org.eclipse.gemoc.xdsmlframework.api.core.ExecutionMode;
+import org.eclipse.gemoc.xdsmlframework.api.core.IExecutionEngine;
+import org.eclipse.gemoc.xdsmlframework.api.core.IRunConfiguration;
 
 public class Launcher extends AbstractSequentialGemocLauncher {
 
@@ -66,6 +65,7 @@ public class Launcher extends AbstractSequentialGemocLauncher {
 		return executionEngine;
 	}
 
+	@SuppressWarnings("rawtypes")
 	@Override
 	protected IDSLDebugger getDebugger(ILaunchConfiguration configuration, DSLDebugEventDispatcher dispatcher,
 			EObject firstInstruction, IProgressMonitor monitor) {
