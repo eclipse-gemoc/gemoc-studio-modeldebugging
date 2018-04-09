@@ -35,6 +35,8 @@ public class Activator extends GemocPlugin {
 
 	private Supplier<String> bundleSymbolicNameSupplier;
 
+	private Supplier<OmniscientGenericSequentialModelDebugger> debuggerSupplier;
+
 	public void setHandlerFieldSuppliers(Supplier<IExecutionEngine> engineSupplier,
 			Supplier<String> bundleSymbolicNameSupplier) {
 		this.engineSupplier = engineSupplier;
@@ -104,6 +106,14 @@ public class Activator extends GemocPlugin {
 
 	public Supplier<String> getBundleSymbolicNameSupplier() {
 		return bundleSymbolicNameSupplier;
+	}
+
+	public Supplier<OmniscientGenericSequentialModelDebugger> getDebuggerSupplier() {
+		return debuggerSupplier;
+	}
+
+	public void setDebuggerSupplier(Supplier<OmniscientGenericSequentialModelDebugger> debuggerSupplier) {
+		this.debuggerSupplier = debuggerSupplier;
 	}
 
 }

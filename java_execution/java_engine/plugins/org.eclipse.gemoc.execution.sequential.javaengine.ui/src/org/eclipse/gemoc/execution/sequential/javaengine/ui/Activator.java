@@ -10,17 +10,13 @@
  *******************************************************************************/
 package org.eclipse.gemoc.execution.sequential.javaengine.ui;
 
-import java.util.function.Supplier;
-
 import org.eclipse.core.runtime.Status;
+import org.eclipse.gemoc.commons.eclipse.messagingsystem.api.MessagingSystem;
+import org.eclipse.gemoc.commons.eclipse.messagingsystem.api.MessagingSystemManager;
+import org.eclipse.gemoc.executionframework.extensions.sirius.services.AbstractGemocDebuggerServices;
 import org.eclipse.jface.resource.ImageDescriptor;
 import org.eclipse.ui.plugin.AbstractUIPlugin;
-import org.eclipse.gemoc.execution.sequential.javaengine.ui.debug.OmniscientGenericSequentialModelDebugger;
-import org.eclipse.gemoc.executionframework.extensions.sirius.services.AbstractGemocDebuggerServices;
 import org.osgi.framework.BundleContext;
-
-import org.eclipse.gemoc.commons.eclipse.messagingsystem.api.MessagingSystemManager;
-import org.eclipse.gemoc.commons.eclipse.messagingsystem.api.MessagingSystem;
 
 /**
  * The activator class controls the plug-in life cycle
@@ -36,8 +32,6 @@ public class Activator extends AbstractUIPlugin {
 	private static Activator plugin;
 
 	protected MessagingSystem messaggingSystem = null;
-
-	private Supplier<OmniscientGenericSequentialModelDebugger> debuggerSupplier;
 
 	/**
 	 * The constructor
@@ -109,14 +103,6 @@ public class Activator extends AbstractUIPlugin {
 					"Model Debugger console");
 		}
 		return messaggingSystem;
-	}
-
-	public Supplier<OmniscientGenericSequentialModelDebugger> getDebuggerSupplier() {
-		return debuggerSupplier;
-	}
-
-	public void setDebuggerSupplier(Supplier<OmniscientGenericSequentialModelDebugger> debuggerSupplier) {
-		this.debuggerSupplier = debuggerSupplier;
 	}
 
 }

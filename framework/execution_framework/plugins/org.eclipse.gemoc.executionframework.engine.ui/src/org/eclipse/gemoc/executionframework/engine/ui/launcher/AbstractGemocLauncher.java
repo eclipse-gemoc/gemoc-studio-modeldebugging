@@ -24,16 +24,15 @@ import org.eclipse.emf.ecore.EObject;
 import org.eclipse.gemoc.commons.eclipse.ui.ViewHelper;
 import org.eclipse.gemoc.dsl.debug.ide.IDSLDebugger;
 import org.eclipse.gemoc.dsl.debug.ide.event.DSLDebugEventDispatcher;
-import org.eclipse.gemoc.execution.sequential.javaengine.ui.Activator;
-import org.eclipse.gemoc.execution.sequential.javaengine.ui.debug.GenericSequentialModelDebugger;
-import org.eclipse.gemoc.execution.sequential.javaengine.ui.debug.OmniscientGenericSequentialModelDebugger;
 import org.eclipse.gemoc.executionframework.debugger.AbstractGemocDebugger;
 import org.eclipse.gemoc.executionframework.debugger.AnnotationMutableFieldExtractor;
+import org.eclipse.gemoc.executionframework.debugger.GenericSequentialModelDebugger;
 import org.eclipse.gemoc.executionframework.debugger.IMutableFieldExtractor;
 import org.eclipse.gemoc.executionframework.debugger.IntrospectiveMutableFieldExtractor;
+import org.eclipse.gemoc.executionframework.debugger.OmniscientGenericSequentialModelDebugger;
 import org.eclipse.gemoc.executionframework.engine.ui.commons.RunConfiguration;
 import org.eclipse.gemoc.trace.commons.model.launchconfiguration.LaunchConfiguration;
-import org.eclipse.gemoc.trace.commons.model.trace.MSEOccurrence;
+import org.eclipse.gemoc.trace.commons.model.trace.Step;
 import org.eclipse.gemoc.trace.gemoc.api.IMultiDimensionalTraceAddon;
 import org.eclipse.gemoc.xdsmlframework.api.core.IExecutionEngine;
 import org.eclipse.gemoc.xdsmlframework.api.core.IRunConfiguration;
@@ -61,6 +60,7 @@ abstract public class AbstractGemocLauncher extends org.eclipse.gemoc.dsl.debug.
 	}
 	
 
+	@SuppressWarnings("rawtypes")
 	@Override
 	protected IDSLDebugger getDebugger(ILaunchConfiguration configuration, DSLDebugEventDispatcher dispatcher,
 			EObject firstInstruction, IProgressMonitor monitor) {
@@ -94,15 +94,15 @@ abstract public class AbstractGemocLauncher extends org.eclipse.gemoc.dsl.debug.
 		// we add this dummy break
 		try {
 			if (configuration.getAttribute(RunConfiguration.LAUNCH_BREAK_START, false)) {
-				res.addPredicateBreak(new BiPredicate<IExecutionEngine, MSEOccurrence>() {
+				res.addPredicateBreak(new BiPredicate<IExecutionEngine, Step<?>>() {
 					@Override
-					public boolean test(IExecutionEngine t, MSEOccurrence u) {
+					public boolean test(IExecutionEngine t, Step<?> u) {
 						return true;
 					}
 				});
 			}
 		} catch (CoreException e) {
-			Activator.error(e.getMessage(), e);
+			org.eclipse.gemoc.executionframework.engine.ui.Activator.error(e.getMessage(), e);
 		}
 
 		getExecutionEngine().getExecutionContext().getExecutionPlatform().addEngineAddon(res);

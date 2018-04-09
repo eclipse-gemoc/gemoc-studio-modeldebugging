@@ -50,7 +50,6 @@ public class Launcher extends AbstractSequentialGemocLauncher {
 		return executionEngine;
 	}
 
-
 	@Override
 	protected String getLaunchConfigurationTypeID() {
 		return TYPE_ID;

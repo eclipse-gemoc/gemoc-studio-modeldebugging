@@ -66,7 +66,6 @@ import org.eclipse.gemoc.xdsmlframework.api.core.IRunConfiguration;
 
 import org.eclipse.gemoc.trace.commons.model.launchconfiguration.LaunchConfiguration;
 import org.eclipse.gemoc.trace.commons.model.trace.Dimension;
-import org.eclipse.gemoc.trace.commons.model.trace.MSEOccurrence;
 import org.eclipse.gemoc.trace.commons.model.trace.State;
 import org.eclipse.gemoc.trace.commons.model.trace.Step;
 import org.eclipse.gemoc.trace.commons.model.trace.TracedObject;
@@ -433,10 +432,10 @@ public class MultidimensionalTimelineViewPart extends EngineSelectionDependentVi
 					if (!debuggers.isEmpty()) {
 						debugger = debuggers.stream().findFirst().get();
 						if (breakAtVectorState != null) {
-							BiPredicate<IExecutionEngine, MSEOccurrence> predicate = new BiPredicate<IExecutionEngine, MSEOccurrence>() {
+							BiPredicate<IExecutionEngine, Step<?>> predicate = new BiPredicate<IExecutionEngine, Step<?>>() {
 								final State<?,?> baseState = breakAtVectorState;
 								@Override
-								public boolean test(IExecutionEngine executionEngine, MSEOccurrence mseOccurrence) {
+								public boolean test(IExecutionEngine executionEngine, Step<?> step) {
 									final ITraceExtractor<Step<?>, State<?,?>, TracedObject<?>, Dimension<?>, Value<?>> traceExtractor = traceAddon.getTraceExtractor();
 									final int lastStateIndex = traceExtractor.getStatesTraceLength() - 1;
 									final State<?,?> state = traceExtractor.getState(lastStateIndex);
@@ -447,10 +446,10 @@ public class MultidimensionalTimelineViewPart extends EngineSelectionDependentVi
 							breakAtVectorState = null;
 						}
 						if (breakAtStateIndex != -1) {
-							BiPredicate<IExecutionEngine, MSEOccurrence> predicate = new BiPredicate<IExecutionEngine, MSEOccurrence>() {
+							BiPredicate<IExecutionEngine, Step<?>> predicate = new BiPredicate<IExecutionEngine, Step<?>>() {
 								final int stateToBreakTo = breakAtStateIndex;
 								@Override
-								public boolean test(IExecutionEngine executionEngine, MSEOccurrence mseOccurrence) {
+								public boolean test(IExecutionEngine executionEngine, Step<?> step) {
 									final int traceLength = extractor.getStatesTraceLength();
 									final int stateToBreakTo = this.stateToBreakTo;
 									final boolean result = traceLength == stateToBreakTo + 1;

@@ -8,7 +8,7 @@
  * Contributors:
  *     Inria - initial API and implementation
  *******************************************************************************/
-package org.eclipse.gemoc.execution.sequential.javaengine.ui.debug;
+package org.eclipse.gemoc.executionframework.debugger;
 
 import java.util.ArrayDeque;
 import java.util.ArrayList;
@@ -21,9 +21,6 @@ import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.EcorePackage;
 import org.eclipse.emf.ecore.resource.Resource;
 import org.eclipse.gemoc.dsl.debug.ide.event.IDSLDebugEventProcessor;
-import org.eclipse.gemoc.execution.sequential.javaengine.PlainK3ExecutionEngine;
-import org.eclipse.gemoc.executionframework.debugger.AbstractGemocDebugger;
-import org.eclipse.gemoc.executionframework.debugger.GemocBreakpoint;
 import org.eclipse.gemoc.executionframework.engine.core.EngineStoppedException;
 import org.eclipse.gemoc.trace.commons.model.trace.MSE;
 import org.eclipse.gemoc.trace.commons.model.trace.MSEOccurrence;
@@ -55,8 +52,7 @@ public class GenericSequentialModelDebugger extends AbstractGemocDebugger {
 
 	@Override
 	/*
-	 * This method is eventually called within a new engine thread.
-	 * (non-Javadoc)
+	 * This method is eventually called within a new engine thread. (non-Javadoc)
 	 * 
 	 * @see org.eclipse.gemoc.dsl.debug.ide.IDSLDebugger#start()
 	 */
@@ -71,16 +67,16 @@ public class GenericSequentialModelDebugger extends AbstractGemocDebugger {
 
 	protected void setupStepReturnPredicateBreak() {
 		final IExecutionEngine seqEngine = (IExecutionEngine) engine;
-		final Deque<MSEOccurrence> stack = seqEngine.getCurrentStack();
+		final Deque<Step<?>> stack = seqEngine.getCurrentStack();
 		if (stack.size() > 1) {
-			final Iterator<MSEOccurrence> it = stack.iterator();
+			final Iterator<Step<?>> it = stack.iterator();
 			it.next();
-			addPredicateBreak(new BiPredicate<IExecutionEngine, MSEOccurrence>() {
+			addPredicateBreak(new BiPredicate<IExecutionEngine, Step<?>>() {
 				// The operation we want to step return
-				private MSEOccurrence steppedReturn = it.next();
+				private Step<?> steppedReturn = it.next();
 
 				@Override
-				public boolean test(IExecutionEngine t, MSEOccurrence u) {
+				public boolean test(IExecutionEngine t, Step<?> u) {
 					// We finished stepping over once the mseoccurrence is not
 					// there anymore
 					return !seqEngine.getCurrentStack().contains(steppedReturn);
@@ -98,13 +94,13 @@ public class GenericSequentialModelDebugger extends AbstractGemocDebugger {
 	}
 
 	protected void setupStepOverPredicateBreak() {
-		addPredicateBreak(new BiPredicate<IExecutionEngine, MSEOccurrence>() {
+		addPredicateBreak(new BiPredicate<IExecutionEngine, Step<?>>() {
 			final IExecutionEngine seqEngine = (IExecutionEngine) engine;
 			// The operation we want to step over
-			private MSEOccurrence steppedOver = seqEngine.getCurrentMSEOccurrence();
+			private Step<?> steppedOver = seqEngine.getCurrentStep();
 
 			@Override
-			public boolean test(IExecutionEngine t, MSEOccurrence u) {
+			public boolean test(IExecutionEngine t, Step<?> u) {
 				// We finished stepping over once the mseoccurrence is not there
 				// anymore
 				return !seqEngine.getCurrentStack().contains(steppedOver);
@@ -130,9 +126,9 @@ public class GenericSequentialModelDebugger extends AbstractGemocDebugger {
 		// To send notifications, but probably useless
 		super.steppingInto(threadName);
 		// We add a future break asap
-		addPredicateBreak(new BiPredicate<IExecutionEngine, MSEOccurrence>() {
+		addPredicateBreak(new BiPredicate<IExecutionEngine, Step<?>>() {
 			@Override
-			public boolean test(IExecutionEngine t, MSEOccurrence u) {
+			public boolean test(IExecutionEngine t, Step<?> u) {
 				// We finished stepping as soon as we encounter a new step
 				return true;
 			}
@@ -158,11 +154,11 @@ public class GenericSequentialModelDebugger extends AbstractGemocDebugger {
 		// Catching the stack up with events that occurred since last suspension
 		// We use a virtual stack to replay the last events to avoid pushing
 		// stackframes that would be popped right after.
-		Deque<MSEOccurrence> virtualStack = new ArrayDeque<>();
+		Deque<Step<?>> virtualStack = new ArrayDeque<>();
 		for (ToPushPop m : toPushPop) {
 			if (m.push) {
 				// We push the mse onto the virtual stack.
-				virtualStack.push(m.mseOccurrence);
+				virtualStack.push(m.step);
 			} else {
 				if (virtualStack.isEmpty()) {
 					// The virtual stack is empty, we pop the top stackframe off
@@ -177,17 +173,17 @@ public class GenericSequentialModelDebugger extends AbstractGemocDebugger {
 		}
 
 		// We then push the missing stackframes onto the real stack.
-		Iterator<MSEOccurrence> iterator = virtualStack.descendingIterator();
+		Iterator<Step<?>> iterator = virtualStack.descendingIterator();
 		while (iterator.hasNext()) {
-			MSEOccurrence mseOccurrence = iterator.next();
-			EObject caller = mseOccurrence.getMse().getCaller();
+			Step<?> step = iterator.next();
+			EObject caller = step.getMseoccurrence().getMse().getCaller();
 			QualifiedName qname = nameprovider.getFullyQualifiedName(caller);
 			String objectName = "";
 			if (qname != null)
 				objectName = qname.toString();
 			else
 				objectName = caller.toString();
-			String opName = mseOccurrence.getMse().getAction().getName();
+			String opName = step.getMseoccurrence().getMse().getAction().getName();
 			String callerType = caller.eClass().getName();
 			String prettyName = "(" + callerType + ") " + objectName + " -> " + opName + "()";
 			pushStackFrame(threadName, prettyName, caller, caller);
@@ -218,8 +214,8 @@ public class GenericSequentialModelDebugger extends AbstractGemocDebugger {
 
 	@Override
 	public boolean shouldBreak(EObject instruction) {
-		if (instruction instanceof MSEOccurrence) {
-			return shouldBreakMSEOccurence((MSEOccurrence) instruction);
+		if (instruction instanceof Step<?>) {
+			return shouldBreakStep((Step<?>) instruction);
 		} else if (instruction == FAKE_INSTRUCTION) {
 			// Part of the breakpoint simulation to suspend the execution once
 			// the end has been reached.
@@ -227,47 +223,46 @@ public class GenericSequentialModelDebugger extends AbstractGemocDebugger {
 		}
 		return false;
 	}
-	
+
 	private boolean hasRegularBreakpointTrue(EObject o) {
 		EObject target = o;
-		// Try to get the original object if 'o' comes from 
+		// Try to get the original object if 'o' comes from
 		// a downcast resource
-		if(this.engine instanceof PlainK3ExecutionEngine){
-			Resource res = o.eResource();
-			if(res != null) {
-				
-				MelangeResourceImpl mr = null;
-				for(Resource candidate : res.getResourceSet().getResources()) {
-					if(candidate instanceof MelangeResourceImpl) {
-						mr = (MelangeResourceImpl) candidate;
-						break;
-					}
-				}
-				
-				if(mr != null) {
-					String uriFragment = res.getURIFragment(o);
-					target = mr.getWrappedResource().getEObject(uriFragment);
+		Resource res = o.eResource();
+		if (res != null) {
+
+			MelangeResourceImpl mr = null;
+			for (Resource candidate : res.getResourceSet().getResources()) {
+				if (candidate instanceof MelangeResourceImpl) {
+					mr = (MelangeResourceImpl) candidate;
+					break;
 				}
 			}
+
+			if (mr != null) {
+				String uriFragment = res.getURIFragment(o);
+				target = mr.getWrappedResource().getEObject(uriFragment);
+			}
 		}
-		
-		return super.shouldBreak(target)
-				&& (Boolean.valueOf((String) getBreakpointAttributes(target, GemocBreakpoint.BREAK_ON_LOGICAL_STEP)) || Boolean
-						.valueOf((String) getBreakpointAttributes(target, GemocBreakpoint.BREAK_ON_MSE_OCCURRENCE)))
-//				&& checkBreakpointProperty(target, o)
-				;
+
+		return super.shouldBreak(target) && (Boolean
+				.valueOf((String) getBreakpointAttributes(target, GemocBreakpoint.BREAK_ON_LOGICAL_STEP))
+				|| Boolean.valueOf((String) getBreakpointAttributes(target, GemocBreakpoint.BREAK_ON_MSE_OCCURRENCE)))
+		// && checkBreakpointProperty(target, o)
+		;
+
 	}
 
-	private boolean shouldBreakMSEOccurence(MSEOccurrence mseOccurrence) {
-		if (shouldBreakPredicates(engine, mseOccurrence))
+	private boolean shouldBreakStep(Step<?> step) {
+		if (shouldBreakPredicates(engine, step))
 			return true;
 		// If still no break yet, we look at regular breakpoints on MSE
-		MSE mse = mseOccurrence.getMse();
+		MSE mse = step.getMseoccurrence().getMse();
 		if (hasRegularBreakpointTrue(mse)) {
 			return true;
 		}
 		// If still no break yet, we look at regular breakpoints on MSE's caller
-		EObject caller = mseOccurrence.getMse().getCaller();
+		EObject caller = mse.getCaller();
 		if (hasRegularBreakpointTrue(caller)) {
 			return true;
 		}
@@ -295,11 +290,11 @@ public class GenericSequentialModelDebugger extends AbstractGemocDebugger {
 
 	@Override
 	public void aboutToExecuteStep(IExecutionEngine executionEngine, Step<?> step) {
-		MSEOccurrence mseOccurrence = step.getMseoccurrence();
-		if (mseOccurrence != null) {
-			ToPushPop stackModification = new ToPushPop(mseOccurrence, true);
+		if (step.getMseoccurrence() != null && step.getMseoccurrence().getMse() != null) {
+			ToPushPop stackModification = new ToPushPop(step, true);
 			toPushPop.add(stackModification);
-			if (!control(threadName, mseOccurrence)) {
+			boolean shallcontinue = control(threadName, step);
+			if (!shallcontinue) {
 				throw new EngineStoppedException("Debug thread has stopped.");
 			}
 		}
@@ -307,9 +302,8 @@ public class GenericSequentialModelDebugger extends AbstractGemocDebugger {
 
 	@Override
 	public void stepExecuted(IExecutionEngine engine, Step<?> step) {
-		MSEOccurrence mseOccurrence = step.getMseoccurrence();
-		if (mseOccurrence != null) {
-			ToPushPop stackModification = new ToPushPop(mseOccurrence, false);
+		if (step.getMseoccurrence() != null && step.getMseoccurrence().getMse() != null) {
+			ToPushPop stackModification = new ToPushPop(step, false);
 			toPushPop.add(stackModification);
 		}
 	}
@@ -331,11 +325,11 @@ public class GenericSequentialModelDebugger extends AbstractGemocDebugger {
 	}
 
 	private static class ToPushPop {
-		public MSEOccurrence mseOccurrence;
+		public Step<?> step;
 		public boolean push;
 
-		ToPushPop(MSEOccurrence mseOccurrence, boolean push) {
-			this.mseOccurrence = mseOccurrence;
+		ToPushPop(Step<?> step, boolean push) {
+			this.step = step;
 			this.push = push;
 		}
 	}
