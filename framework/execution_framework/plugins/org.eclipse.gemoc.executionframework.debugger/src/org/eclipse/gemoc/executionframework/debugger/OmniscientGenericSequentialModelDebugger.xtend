@@ -20,7 +20,6 @@ import org.eclipse.gemoc.dsl.debug.ide.event.IDSLDebugEventProcessor
 import org.eclipse.gemoc.executionframework.engine.core.EngineStoppedException
 import org.eclipse.gemoc.trace.commons.model.trace.Dimension
 import org.eclipse.gemoc.trace.commons.model.trace.MSE
-import org.eclipse.gemoc.trace.commons.model.trace.MSEOccurrence
 import org.eclipse.gemoc.trace.commons.model.trace.State
 import org.eclipse.gemoc.trace.commons.model.trace.Step
 import org.eclipse.gemoc.trace.commons.model.trace.TracedObject
@@ -93,7 +92,8 @@ public class OmniscientGenericSequentialModelDebugger extends GenericSequentialM
 	override void aboutToExecuteStep(IExecutionEngine executionEngine, Step<?> step) {
 		val mseOccurrence = step.mseoccurrence
 		if (mseOccurrence !== null) {
-			if (!control(threadName, mseOccurrence)) {
+			val boolean shallContinue = control(threadName, step)
+			if (! shallContinue) {
 				throw new EngineStoppedException("Debug thread has stopped.");
 			}
 		}
@@ -128,11 +128,11 @@ public class OmniscientGenericSequentialModelDebugger extends GenericSequentialM
 			val stack = traceExplorer.callStack
 			val idx = stack.size - steppingOverStackFrameIndex - 1
 			// We add a future break as soon as the step is over
-			addPredicateBreak(new BiPredicate<IExecutionEngine, MSEOccurrence>() {
+			addPredicateBreak(new BiPredicate<IExecutionEngine, Step<?>>() {
 				// The operation we want to step over
-				private MSEOccurrence steppedOver = stack.get(idx).mseoccurrence
+				private Step<?> steppedOver = stack.get(idx)
 
-				override test(IExecutionEngine t, MSEOccurrence u) {
+				override test(IExecutionEngine t, Step<?> u) {
 					return !seqEngine.getCurrentStack().contains(steppedOver)
 				}
 			})
@@ -170,10 +170,10 @@ public class OmniscientGenericSequentialModelDebugger extends GenericSequentialM
 			val seqEngine = engine as IExecutionEngine
 			val stack = traceExplorer.callStack
 			val idx = stack.size - steppingReturnStackFrameIndex - 1
-			addPredicateBreak(new BiPredicate<IExecutionEngine, MSEOccurrence>() {
-				private MSEOccurrence steppedReturn = stack.get(idx).mseoccurrence
+			addPredicateBreak(new BiPredicate<IExecutionEngine, Step<?>>() {
+				private Step<?> steppedReturn = stack.get(idx)
 
-				override test(IExecutionEngine t, MSEOccurrence u) {
+				override test(IExecutionEngine t, Step<?> u) {
 					return !seqEngine.getCurrentStack().contains(steppedReturn)
 				}
 			})
