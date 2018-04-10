@@ -224,19 +224,19 @@
          </category>
          <command
                categoryId="org.eclipse.gemoc.execution.sequential.javaengine.ui.commands.category"
-               defaultHandler="org.eclipse.gemoc.execution.sequential.javaengine.ui.handlers.StepBackIntoHandler"
+               defaultHandler="org.eclipse.gemoc.executionframework.debugger.ui.handlers.StepBackIntoHandler"
                id="org.eclipse.gemoc.execution.sequential.javaengine.ui.commands.stepBackInto"
                name="Step Back Into">
          </command>
          <command
                categoryId="org.eclipse.gemoc.execution.sequential.javaengine.ui.commands.category"
-               defaultHandler="org.eclipse.gemoc.execution.sequential.javaengine.ui.handlers.StepBackOverHandler"
+               defaultHandler="org.eclipse.gemoc.executionframework.debugger.ui.handlers.StepBackOverHandler"
                id="org.eclipse.gemoc.execution.sequential.javaengine.ui.commands.stepBackOver"
                name="Step Back Over">
          </command>
          <command
                categoryId="org.eclipse.gemoc.execution.sequential.javaengine.ui.commands.category"
-               defaultHandler="org.eclipse.gemoc.execution.sequential.javaengine.ui.handlers.StepBackOutHandler"
+               defaultHandler="org.eclipse.gemoc.executionframework.debugger.ui.handlers.StepBackOutHandler"
                id="org.eclipse.gemoc.execution.sequential.javaengine.ui.commands.stepBackOut"
                name="Step Back Out">
          </command>

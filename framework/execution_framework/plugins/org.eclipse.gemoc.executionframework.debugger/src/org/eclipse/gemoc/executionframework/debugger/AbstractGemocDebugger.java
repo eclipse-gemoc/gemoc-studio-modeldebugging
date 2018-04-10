@@ -39,6 +39,7 @@ import org.eclipse.gemoc.dsl.debug.ide.AbstractDSLDebugger;
 import org.eclipse.gemoc.dsl.debug.ide.adapter.DSLStackFrameAdapter;
 import org.eclipse.gemoc.dsl.debug.ide.event.IDSLDebugEventProcessor;
 import org.eclipse.gemoc.trace.commons.model.trace.MSEOccurrence;
+import org.eclipse.gemoc.trace.commons.model.trace.Step;
 import org.eclipse.gemoc.xdsmlframework.api.core.IExecutionEngine;
 import org.eclipse.gemoc.xdsmlframework.api.engine_addon.modelchangelistener.FieldChange;
 import org.eclipse.gemoc.xdsmlframework.api.engine_addon.modelchangelistener.IModelChangeListenerAddon;
@@ -98,7 +99,7 @@ public abstract class AbstractGemocDebugger extends AbstractDSLDebugger implemen
 
 		Activator openSourceActivator = Activator.getDefault();
 		openSourceActivator.setHandlerFieldSuppliers(() -> this.engine, () -> this.bundleSymbolicName);
-		
+
 	}
 
 	protected void registerModelChangeListener() {
@@ -115,14 +116,15 @@ public abstract class AbstractGemocDebugger extends AbstractDSLDebugger implemen
 		this.mutableFieldExtractors = mutableFieldExtractors;
 	}
 
-	private Set<BiPredicate<IExecutionEngine, MSEOccurrence>> predicateBreakPoints = new HashSet<BiPredicate<IExecutionEngine, MSEOccurrence>>();
-	private Set<BiPredicate<IExecutionEngine, MSEOccurrence>> predicateBreaks = new HashSet<BiPredicate<IExecutionEngine, MSEOccurrence>>();
+	private Set<BiPredicate<IExecutionEngine, Step<?>>> predicateBreakPoints = new HashSet<BiPredicate<IExecutionEngine, Step<?>>>();
+	private Set<BiPredicate<IExecutionEngine, Step<?>>> predicateBreaks = new HashSet<BiPredicate<IExecutionEngine, Step<?>>>();
 
 	@Override
 	/**
-	 * Breakpoints are persistent, and can trigger pauses as long as they are not removed.
+	 * Breakpoints are persistent, and can trigger pauses as long as they are not
+	 * removed.
 	 */
-	public void addPredicateBreakpoint(BiPredicate<IExecutionEngine, MSEOccurrence> predicate) {
+	public void addPredicateBreakpoint(BiPredicate<IExecutionEngine, Step<?>> predicate) {
 		predicateBreakPoints.add(predicate);
 	}
 
@@ -130,17 +132,17 @@ public abstract class AbstractGemocDebugger extends AbstractDSLDebugger implemen
 	/**
 	 * A Break only trigger a single pause, then is removed.
 	 */
-	public void addPredicateBreak(BiPredicate<IExecutionEngine, MSEOccurrence> predicate) {
+	public void addPredicateBreak(BiPredicate<IExecutionEngine, Step<?>> predicate) {
 		predicateBreaks.add(predicate);
 	}
 
-	protected boolean shouldBreakPredicates(IExecutionEngine engine, MSEOccurrence mseOccurrence) {
+	protected boolean shouldBreakPredicates(IExecutionEngine engine, Step<?> step) {
 
 		// We look at predicate breaks to remove the ones that are true
 		boolean shouldBreak = false;
-		Set<BiPredicate<IExecutionEngine, MSEOccurrence>> toRemove = new HashSet<BiPredicate<IExecutionEngine, MSEOccurrence>>();
-		for (BiPredicate<IExecutionEngine, MSEOccurrence> pred : predicateBreaks) {
-			if (pred.test(engine, mseOccurrence)) {
+		Set<BiPredicate<IExecutionEngine, Step<?>>> toRemove = new HashSet<BiPredicate<IExecutionEngine, Step<?>>>();
+		for (BiPredicate<IExecutionEngine, Step<?>> pred : predicateBreaks) {
+			if (pred.test(engine, step)) {
 				shouldBreak = true;
 				toRemove.add(pred);
 			}
@@ -150,8 +152,8 @@ public abstract class AbstractGemocDebugger extends AbstractDSLDebugger implemen
 			return true;
 
 		// If no break yet, we look at predicate breakpoints
-		for (BiPredicate<IExecutionEngine, MSEOccurrence> pred : predicateBreakPoints) {
-			if (pred.test(engine, mseOccurrence)) {
+		for (BiPredicate<IExecutionEngine, Step<?>> pred : predicateBreakPoints) {
+			if (pred.test(engine, step)) {
 				return true;
 			}
 		}
@@ -186,7 +188,8 @@ public abstract class AbstractGemocDebugger extends AbstractDSLDebugger implemen
 		// We fetch all resources concerned by the execution,
 		// since they may contain mutable fields
 		Resource executedResource = executedModelRoot.eResource();
-		Set<Resource> allResources = org.eclipse.gemoc.commons.eclipse.emf.EMFResource.getRelatedResources(executedResource);
+		Set<Resource> allResources = org.eclipse.gemoc.commons.eclipse.emf.EMFResource
+				.getRelatedResources(executedResource);
 		allResources.add(executedResource);
 		allResources.removeIf(r -> r == null);
 
@@ -240,7 +243,7 @@ public abstract class AbstractGemocDebugger extends AbstractDSLDebugger implemen
 	}
 
 	abstract protected void updateStack(String threadName, EObject instruction);
-	
+
 	protected void updateVariables(String threadName) {
 		List<FieldChange> changes = modelChangeListenerAddon.getChanges(this);
 		for (FieldChange change : changes) {
@@ -304,8 +307,8 @@ public abstract class AbstractGemocDebugger extends AbstractDSLDebugger implemen
 	}
 
 	/*
-	 * Checks if the given string can be interpreted as a valid value for the
-	 * given variable.
+	 * Checks if the given string can be interpreted as a valid value for the given
+	 * variable.
 	 */
 	@Override
 	public boolean validateVariableValue(String threadName, String variableName, String value) {
@@ -350,18 +353,18 @@ public abstract class AbstractGemocDebugger extends AbstractDSLDebugger implemen
 	}
 
 	private Deque<String> stackFrameNames = new ArrayDeque<>();
-	
+
 	@Override
 	public void pushStackFrame(String threadName, String frameName, EObject context, EObject instruction) {
 		super.pushStackFrame(threadName, frameName, context, instruction);
 		stackFrameNames.push(frameName);
 		for (MutableField m : mutableFields) {
-//			if (m.geteObject().eContainer() == context) {
-				variable(threadName, frameName, "mutable data", m.getName(), m.getValue(), true);
-//			}
+			// if (m.geteObject().eContainer() == context) {
+			variable(threadName, frameName, "mutable data", m.getName(), m.getValue(), true);
+			// }
 		}
 	}
-	
+
 	@Override
 	public void popStackFrame(String threadName) {
 		super.popStackFrame(threadName);
@@ -420,45 +423,40 @@ public abstract class AbstractGemocDebugger extends AbstractDSLDebugger implemen
 
 	private void selectLastStackframe() {
 		final IWorkbench workbench = PlatformUI.getWorkbench();
-		workbench
-				.getDisplay()
-				.asyncExec(
-						() -> {
-							final IWorkbenchPage workbenchPage = workbench.getActiveWorkbenchWindow().getActivePage();
-							final IViewPart view = workbenchPage.findView("org.eclipse.debug.ui.DebugView");
-							if(view == null){
-								Activator.getDefault().debug("Cannot find view org.eclipse.debug.ui.DebugView (may be not opened yet), => not updating the debug stack. ");
-								return;
-							}
-							view.setFocus();
-							final ISelectionProvider selectionProvider = view.getSite().getSelectionProvider();
-							selectionProvider.setSelection(StructuredSelection.EMPTY);
-							if (view instanceof LaunchView) {
-								final LaunchView launchView = (LaunchView) view;
-								final Viewer viewer = launchView.getViewer();
-								final Tree tree = ((TreeModelViewer) viewer).getTree();
-								final TreeItem[] items = tree.getItems();
-								final List<TreeItem> allItems = flatten(Arrays.asList(items),
-										t -> Arrays.asList(t.getItems()));
-								final List<TreeItem> leafItems = allItems
-										.stream()
-										.filter(i -> i.getData() instanceof DSLStackFrameAdapter)
-										.filter(i -> ((DSLStackFrameAdapter) i.getData()).getTarget() instanceof StackFrame)
-										.collect(Collectors.toList());
-								for (TreeItem item : leafItems) {
-									final DSLStackFrameAdapter stackFrameAdapter = (DSLStackFrameAdapter) item
-											.getData();
-									final StackFrame s = (StackFrame) stackFrameAdapter.getTarget();
-									if (s.getName().startsWith("Global context :")) {
-										tree.showItem(item);
-										tree.select(item);
-										final TreeSelection selection = (TreeSelection) viewer.getSelection();
-										final TreePath[] paths = selection.getPathsFor(stackFrameAdapter);
-										selectionProvider.setSelection(new TreeSelection(paths));
-										break;
-									}
-								}
-							}
-						});
+		workbench.getDisplay().asyncExec(() -> {
+			final IWorkbenchPage workbenchPage = workbench.getActiveWorkbenchWindow().getActivePage();
+			final IViewPart view = workbenchPage.findView("org.eclipse.debug.ui.DebugView");
+			if (view == null) {
+				Activator.getDefault().debug(
+						"Cannot find view org.eclipse.debug.ui.DebugView (may be not opened yet), => not updating the debug stack. ");
+				return;
+			}
+			view.setFocus();
+			final ISelectionProvider selectionProvider = view.getSite().getSelectionProvider();
+			selectionProvider.setSelection(StructuredSelection.EMPTY);
+			if (view instanceof LaunchView) {
+				final LaunchView launchView = (LaunchView) view;
+				final Viewer viewer = launchView.getViewer();
+				final Tree tree = ((TreeModelViewer) viewer).getTree();
+				final TreeItem[] items = tree.getItems();
+				final List<TreeItem> allItems = flatten(Arrays.asList(items), t -> Arrays.asList(t.getItems()));
+				final List<TreeItem> leafItems = allItems.stream()
+						.filter(i -> i.getData() instanceof DSLStackFrameAdapter)
+						.filter(i -> ((DSLStackFrameAdapter) i.getData()).getTarget() instanceof StackFrame)
+						.collect(Collectors.toList());
+				for (TreeItem item : leafItems) {
+					final DSLStackFrameAdapter stackFrameAdapter = (DSLStackFrameAdapter) item.getData();
+					final StackFrame s = (StackFrame) stackFrameAdapter.getTarget();
+					if (s.getName().startsWith("Global context :")) {
+						tree.showItem(item);
+						tree.select(item);
+						final TreeSelection selection = (TreeSelection) viewer.getSelection();
+						final TreePath[] paths = selection.getPathsFor(stackFrameAdapter);
+						selectionProvider.setSelection(new TreeSelection(paths));
+						break;
+					}
+				}
+			}
+		});
 	}
 }
