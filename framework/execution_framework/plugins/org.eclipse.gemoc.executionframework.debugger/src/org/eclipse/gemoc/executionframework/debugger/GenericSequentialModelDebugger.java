@@ -24,6 +24,7 @@ import org.eclipse.gemoc.dsl.debug.ide.event.IDSLDebugEventProcessor;
 import org.eclipse.gemoc.executionframework.engine.core.EngineStoppedException;
 import org.eclipse.gemoc.trace.commons.model.trace.MSE;
 import org.eclipse.gemoc.trace.commons.model.trace.MSEOccurrence;
+import org.eclipse.gemoc.trace.commons.model.trace.ParallelStep;
 import org.eclipse.gemoc.trace.commons.model.trace.Step;
 import org.eclipse.gemoc.xdsmlframework.api.core.IExecutionEngine;
 import org.eclipse.xtext.naming.DefaultDeclarativeQualifiedNameProvider;
@@ -118,7 +119,11 @@ public class GenericSequentialModelDebugger extends AbstractGemocDebugger {
 
 	@Override
 	public boolean canStepInto(String threadName, EObject instruction) {
-		return currentInstructions.get(threadName) == instruction;
+		EObject currentInstruction = currentInstructions.get(threadName);
+		Step currentStep = engine.getCurrentStep();
+		boolean correctObject = currentInstruction == instruction;
+		boolean canStepInto = !(currentStep instanceof ParallelStep);
+		return correctObject && canStepInto;
 	}
 
 	@Override
