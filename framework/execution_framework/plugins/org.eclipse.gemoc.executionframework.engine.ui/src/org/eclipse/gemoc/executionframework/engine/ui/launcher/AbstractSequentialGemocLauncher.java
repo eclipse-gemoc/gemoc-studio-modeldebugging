@@ -50,10 +50,12 @@ abstract public class AbstractSequentialGemocLauncher extends AbstractGemocLaunc
 	// warning this MODEL_ID must be the same as the one in the ModelLoader in order to enable correctly the breakpoints
 	public final static String MODEL_ID = org.eclipse.gemoc.executionframework.extensions.sirius.Activator.PLUGIN_ID + ".debugModel";
 
-	protected IExecutionEngine _executionEngine;
 	
 	// progress monitor used during launch; useful for operations that wish to contribute to the progress bar
 	protected IProgressMonitor launchProgressMonitor = null;
+
+
+	private IExecutionEngine _executionEngine;
 	
 
 	protected final static String executionStartedMessage = "Execution started successfully.";
@@ -108,6 +110,7 @@ abstract public class AbstractSequentialGemocLauncher extends AbstractGemocLaunc
 
 			// And we start it within a dedicated job
 			Job job = new Job(getDebugJobName(configuration, getFirstInstruction(configuration))) {
+
 				@Override
 				protected IStatus run(IProgressMonitor monitor) {
 					// If we are debugging, we add the animator and we start
@@ -255,6 +258,12 @@ abstract public class AbstractSequentialGemocLauncher extends AbstractGemocLaunc
 		}
 		return launchConfigs;
 
+	}
+	
+
+	@Override
+	public IExecutionEngine getExecutionEngine() {
+		return _executionEngine;
 	}
 
 }
