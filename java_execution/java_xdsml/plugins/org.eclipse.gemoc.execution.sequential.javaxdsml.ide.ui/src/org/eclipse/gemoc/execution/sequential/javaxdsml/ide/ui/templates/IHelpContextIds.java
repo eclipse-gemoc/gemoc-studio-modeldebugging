@@ -13,6 +13,7 @@ package org.eclipse.gemoc.execution.sequential.javaxdsml.ide.ui.templates;
 public interface IHelpContextIds {
 
 	public static final String PREFIX = "org.eclipse.pde.doc.user."; //$NON-NLS-1$	
+	public static final String TEMPLATE_MELANGE_SEQUENTIAL_SINGLE_LANGUAGE = PREFIX + "template_simple_melange_sequential_language"; //$NON-NLS-1$
 	public static final String TEMPLATE_SEQUENTIAL_SINGLE_LANGUAGE = PREFIX + "template_sequential_single_language"; //$NON-NLS-1$
 	public static final String TEMPLATE_SEQUENTIAL_EXTENDED_LANGUAGE = PREFIX + "template_sequential_extended_language"; //$NON-NLS-1$
 

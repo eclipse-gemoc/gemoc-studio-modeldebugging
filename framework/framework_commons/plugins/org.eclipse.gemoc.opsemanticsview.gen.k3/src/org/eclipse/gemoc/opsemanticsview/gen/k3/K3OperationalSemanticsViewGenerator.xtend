@@ -10,42 +10,37 @@
  *******************************************************************************/
  package org.eclipse.gemoc.opsemanticsview.gen.k3
 
-import org.eclipse.gemoc.opsemanticsview.gen.OperationalSemanticsViewGenerator
-import fr.inria.diverse.melange.metamodel.melange.Language
 import java.util.Set
-import org.eclipse.jdt.core.IType
-import org.eclipse.jdt.core.IJavaProject
-import org.eclipse.jdt.core.JavaCore
-import org.eclipse.core.resources.IProject
 import opsemanticsview.OpsemanticsviewFactory
-import org.eclipse.emf.ecore.resource.impl.ResourceSetImpl
+import org.eclipse.core.resources.IProject
 import org.eclipse.emf.common.util.URI
 import org.eclipse.emf.ecore.EPackage
-import fr.inria.diverse.melange.metamodel.melange.Inheritance
-import fr.inria.diverse.melange.metamodel.melange.LanguageOperator
-
+import org.eclipse.emf.ecore.resource.impl.ResourceSetImpl
+import org.eclipse.gemoc.dsl.Dsl
+import org.eclipse.gemoc.opsemanticsview.gen.OperationalSemanticsViewGenerator
+import org.eclipse.jdt.core.IJavaProject
+import org.eclipse.jdt.core.IType
+import org.eclipse.jdt.core.JavaCore
 
 class K3OperationalSemanticsViewGenerator implements OperationalSemanticsViewGenerator {
 
-	override generate(Language language, IProject melangeProject) {
+	override generate(Dsl language, IProject melangeProject) {
 		val aspectClasses = findAspects(language, melangeProject)
 		
 		val result = OpsemanticsviewFactory.eINSTANCE.createOperationalSemanticsView
 
 		val selectedLanguage = language.name
+		val ecoreUri = 
+			language
+			.entries
+			.filter[entry | entry.key == "ecore"]			
+			.map[entry | entry.value.split(",").head]
+			.head
 		val rs = new ResourceSetImpl
-		val executionMetamodelResource = rs.getResource(URI.createURI(language.syntax.ecoreUri), true)
+		val executionMetamodelResource = rs.getResource(URI.createURI(ecoreUri), true)
 		val executionMetamodel = executionMetamodelResource.contents.filter(EPackage).head
 		
-		
-		val LanguageOperator inheritance = language.operators.filter(Inheritance).head
-		val abstractSyntax = if (inheritance != null) {
-			val asURI = URI.createURI(inheritance.getTargetLanguage().syntax.ecoreUri)
-			val asResource = rs.getResource(asURI,true)
-			asResource.contents.filter(EPackage).head
-		} else {
-			null
-		}
+		val abstractSyntax = null //FIXME: check where it is used
 		
 		val K3DynamicElementsFinder dynFinder = new K3DynamicElementsFinder(abstractSyntax, executionMetamodel, result);
 		dynFinder.find();
@@ -60,16 +55,28 @@ class K3OperationalSemanticsViewGenerator implements OperationalSemanticsViewGen
 		return result
 	}
 
-	private static def Set<IType> findAspects(Language language, IProject melangeProject) {
-		val aspectNames = language.semantics.map[aspectTypeRef.type.qualifiedName].toList
-		val IJavaProject javaProject = JavaCore.create(melangeProject);
-		val aspectClasses = aspectNames.map[it|javaProject.findType(it)].toSet
-		return aspectClasses
-
+	private static def Set<IType> findAspects(Dsl language, IProject melangeProject) {
+		val semantics = 
+			language
+			.entries
+			.filter[entry | entry.key == "k3"]			
+			.head
+		if(semantics !== null) {
+			val aspectNames = semantics.value.split(",").map[asp | asp.trim]
+			val IJavaProject javaProject = JavaCore.create(melangeProject);
+			val aspectClasses = aspectNames.map[it|javaProject.findType(it)].toSet
+			return aspectClasses
+		}
+		return newHashSet()
 	}
 
-	override canHandle(Language language, IProject melangeProject) {
-		!language.semantics.empty
+	override canHandle(Dsl language, IProject melangeProject) {
+		val semantics = 
+			language
+			.entries
+			.filter[entry | entry.key == "k3"]			
+			.head
+		return semantics !== null && !semantics.value.isEmpty
 	}
 
 }

@@ -16,12 +16,15 @@ import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.LinkedHashSet;
 import java.util.List;
+import java.util.Optional;
 import java.util.Set;
 
 import org.eclipse.core.runtime.IConfigurationElement;
 import org.eclipse.core.runtime.Platform;
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.resource.Resource;
+import org.eclipse.gemoc.dsl.Dsl;
+import org.eclipse.gemoc.dsl.Entry;
 import org.osgi.framework.Bundle;
 
 import fr.inria.diverse.k3.al.annotationprocessor.Aspect;
@@ -134,33 +137,25 @@ public class MelangeHelper {
 	/**
 	 * @return Aspects defined in 'languageName'
 	 */
-	public static Set<Class<?>> getAspects(String languageName){
+	public static Set<Class<?>> getAspects(String languageName) {
 		Set<Class<?>> res = new HashSet<Class<?>>();
 		
-		IConfigurationElement[] melangeLanguages = Platform
-				.getExtensionRegistry().getConfigurationElementsFor(
-						"fr.inria.diverse.melange.language");
-		
-		String serializedAspects = "";
-		for (IConfigurationElement lang : melangeLanguages) {
-			if (lang.getAttribute("id").equals(languageName)) {
-				serializedAspects = lang.getAttribute("aspects");
-				break;
+		Dsl dsl = DslHelper.load(languageName);
+		if(dsl != null) {
+			
+			Optional<Entry> semantics = dsl.getEntries()
+				.stream()
+				.filter(entry -> entry.getKey().equals("k3"))
+				.findFirst();
+			if(semantics.isPresent()) {
+				String[] classNames = semantics.get().getValue().split(",");
+				for (String asp : classNames) {
+					Class<?> cls = loadAspect(languageName, asp.trim());
+					if(cls != null) {
+						res.add(cls);
+					}
+				}
 			}
-		}
-		if(serializedAspects.isEmpty()) return res;
-		Set<String> classNames = new HashSet<String>();
-		//serializedAspects is a list of pairs (target : aspects)
-		for (String rawPair : serializedAspects.split(";")) { // ; is the separator between pairs
-			String[] pair = rawPair.split(":"); // : the separator between target & aspects
-			String[] weavedAsp = pair[1].split(","); // , the separator between aspects
-			for (String asp : weavedAsp) {
-				classNames.add(asp);
-			}
-		}
-		for (String asp : classNames) {
-			Class<?> cls = loadAspect(languageName, asp);
-			res.add(cls);
 		}
 		
 		return res;
@@ -207,7 +202,7 @@ public class MelangeHelper {
 	 */
 	public static Class<?> loadAspect(String languageName, String aspectName){
 		try {
-			return getMelangeBundle(languageName).loadClass(aspectName);
+			return DslHelper.getDslBundle(languageName).loadClass(aspectName);
 		} catch (ClassNotFoundException e) {
 			e.printStackTrace();
 		}

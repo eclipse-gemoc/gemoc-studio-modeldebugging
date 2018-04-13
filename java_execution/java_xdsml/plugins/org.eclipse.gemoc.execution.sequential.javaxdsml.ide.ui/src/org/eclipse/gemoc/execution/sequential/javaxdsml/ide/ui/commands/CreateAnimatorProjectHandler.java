@@ -14,18 +14,16 @@ import org.eclipse.core.commands.ExecutionEvent;
 import org.eclipse.core.commands.ExecutionException;
 import org.eclipse.core.commands.IHandler;
 import org.eclipse.core.resources.IProject;
-import org.eclipse.gemoc.xdsmlframework.ide.ui.commands.AbstractMelangeSelectHandler;
+import org.eclipse.gemoc.xdsmlframework.ide.ui.commands.AbstractDslSelectHandler;
 import org.eclipse.gemoc.xdsmlframework.ide.ui.xdsml.wizards.CreateAnimatorProjectWizardContextAction;
 import org.eclipse.gemoc.xdsmlframework.ide.ui.xdsml.wizards.CreateAnimatorProjectWizardContextAction.CreateAnimatorProjectAction;
 
-import fr.inria.diverse.melange.metamodel.melange.Language;
-
-public class CreateAnimatorProjectHandler extends AbstractMelangeSelectHandler implements
+public class CreateAnimatorProjectHandler extends AbstractDslSelectHandler implements
 		IHandler {
 	
 	@Override
 	public Object executeForSelectedLanguage(ExecutionEvent event,
-			IProject updatedGemocLanguageProject, Language language)
+			IProject updatedGemocLanguageProject, String language)
 			throws ExecutionException {
 		CreateAnimatorProjectWizardContextAction action = new CreateAnimatorProjectWizardContextAction(
 				updatedGemocLanguageProject, language);

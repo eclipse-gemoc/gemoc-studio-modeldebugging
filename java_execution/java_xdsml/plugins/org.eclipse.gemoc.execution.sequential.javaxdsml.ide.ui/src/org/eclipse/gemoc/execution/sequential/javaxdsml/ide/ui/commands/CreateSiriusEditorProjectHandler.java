@@ -11,37 +11,35 @@
 package org.eclipse.gemoc.execution.sequential.javaxdsml.ide.ui.commands;
 
 import java.io.IOException;
-import java.nio.file.Files;
-import java.nio.file.Paths;
-import java.util.List;
+import java.util.HashMap;
+import java.util.Optional;
 
 import org.eclipse.core.commands.ExecutionEvent;
 import org.eclipse.core.commands.ExecutionException;
 import org.eclipse.core.commands.IHandler;
+import org.eclipse.core.resources.IFile;
 import org.eclipse.core.resources.IProject;
 import org.eclipse.core.resources.ResourcesPlugin;
 import org.eclipse.core.runtime.OperationCanceledException;
 import org.eclipse.core.runtime.jobs.Job;
-import org.eclipse.emf.ecore.EStructuralFeature;
+import org.eclipse.emf.common.util.URI;
+import org.eclipse.emf.ecore.resource.Resource;
+import org.eclipse.emf.ecore.resource.impl.ResourceSetImpl;
+import org.eclipse.gemoc.dsl.Dsl;
+import org.eclipse.gemoc.dsl.DslFactory;
+import org.eclipse.gemoc.dsl.DslPackage;
+import org.eclipse.gemoc.dsl.Entry;
 import org.eclipse.gemoc.execution.sequential.javaxdsml.ide.ui.Activator;
-import org.eclipse.gemoc.xdsmlframework.ide.ui.commands.AbstractMelangeSelectHandler;
+import org.eclipse.gemoc.xdsmlframework.ide.ui.commands.AbstractDslSelectHandler;
 import org.eclipse.gemoc.xdsmlframework.ide.ui.xdsml.wizards.CreateEditorProjectWizardContextAction;
 import org.eclipse.gemoc.xdsmlframework.ide.ui.xdsml.wizards.CreateEditorProjectWizardContextAction.CreateEditorProjectAction;
-import org.eclipse.xtext.nodemodel.INode;
-import org.eclipse.xtext.nodemodel.util.NodeModelUtils;
-import org.eclipse.xtext.resource.XtextResource;
-import org.eclipse.xtext.ui.editor.XtextEditor;
-import org.eclipse.xtext.ui.editor.model.IXtextDocument;
-import org.eclipse.xtext.ui.editor.utils.EditorUtils;
 
-import fr.inria.diverse.melange.metamodel.melange.Language;
-
-public class CreateSiriusEditorProjectHandler extends AbstractMelangeSelectHandler implements
+public class CreateSiriusEditorProjectHandler extends AbstractDslSelectHandler implements
 		IHandler {
 	
 	@Override
 	public Object executeForSelectedLanguage(ExecutionEvent event,
-			IProject updatedGemocLanguageProject, Language language)
+			IProject updatedGemocLanguageProject, String language)
 			throws ExecutionException {
 		CreateEditorProjectWizardContextAction action = new CreateEditorProjectWizardContextAction(updatedGemocLanguageProject);
 		action.actionToExecute = CreateEditorProjectAction.CREATE_NEW_SIRIUS_PROJECT;
@@ -49,7 +47,7 @@ public class CreateSiriusEditorProjectHandler extends AbstractMelangeSelectHandl
 		
 		if(action.getSiriusPath() != null){
 			waitForAutoBuild();
-			updateMelange(event,language,action.getSiriusPath());
+			updateDsl(event,updatedGemocLanguageProject,language,action.getSiriusPath());
 		}
 		
 		return null;
@@ -60,75 +58,32 @@ public class CreateSiriusEditorProjectHandler extends AbstractMelangeSelectHandl
 		return "Select Melange language that will be used to initialize the new Sirius project";
 	}
 
-	protected void updateMelange(ExecutionEvent event, Language language, String siriusPath){
-		// Compute offset & new string
-		int startOffset = -1;
-		int length = -1;
-		String newRegion = null;
+	protected void updateDsl(ExecutionEvent event, IProject project, String language, String siriusPath){
 		
-		EStructuralFeature sirius = language.eClass().getEStructuralFeature("sirius");
-		List<INode> nodesSirius = NodeModelUtils.findNodesForFeature(language, sirius);
+		IFile dslFile = getDslFileFromProject(project);
+		Resource res = (new ResourceSetImpl()).getResource(URI.createURI(dslFile.getFullPath().toOSString()), true);
+		Dsl dsl = (Dsl) res.getContents().get(0);
 		
-		if(!nodesSirius.isEmpty()){
-			INode nodeSirius = nodesSirius.get(0);
-			startOffset = nodeSirius.getOffset();
-			length = nodeSirius.getLength();
-			newRegion = "\""+siriusPath+"\"";
+		Optional<Entry> sirius = dsl.getEntries()
+			.stream()
+			.filter(entry -> entry.getKey().equals("sirius"))
+			.findFirst();
+		if(sirius.isPresent()) {
+			sirius.get().setValue(siriusPath);
 		}
-		else{//insert after operators
-			EStructuralFeature operators = language.eClass().getEStructuralFeature("operators");
-			List<INode> nodesOp = NodeModelUtils.findNodesForFeature(language, operators);
-			int lastOffset = -1;
-			for(INode node : nodesOp){
-				if(node.getEndOffset() > lastOffset) lastOffset = node.getEndOffset();
-			}
-			if(lastOffset != -1){
-				
-					startOffset = lastOffset;
-					length = 0;
-					newRegion = "\n\n\tsirius \""+siriusPath+"\"";
-				
-			}
+		else {
+			Entry siriusEntry = ((DslFactory)DslPackage.eINSTANCE.getEFactoryInstance()).createEntry();
+			siriusEntry.setKey("sirius");
+			siriusEntry.setValue(siriusPath);
+			dsl.getEntries().add(siriusEntry);
 		}
-		
-		// Replace in document or Melange file
-		if(startOffset != -1 && length != -1 && newRegion != null){
-			int _startOffset = startOffset;
-			int _length = length;
-			String _newRegion = newRegion;
-			XtextEditor editor = EditorUtils.getActiveXtextEditor();
-			if (editor != null && editor.getLanguageName().equals(MELANGE_EDITOR)) { //Update the editor content
-				IXtextDocument document = editor.getDocument();
-				document.modify((XtextResource it) -> {
-					document.replace(_startOffset,_length, _newRegion);
-					return null; // no computed value
-				});
-			}
-			else{ //Update the Melange file content
-				
-				try {
-					//Load Melange file
-					String melangeWSLocation = language.eResource().getURI().toPlatformString(true);
-					String melangeLocation = ResourcesPlugin.getWorkspace().getRoot().getLocation().toOSString()+melangeWSLocation;
-					List<String> lines = Files.readAllLines(Paths.get(melangeLocation));
-					
-					StringBuffer newContent = new StringBuffer();
-					lines.forEach(
-							line -> newContent.append(line+"\n")
-							);
-					
-					newContent.replace(startOffset,startOffset+length, newRegion);
-					
-					//Write new content
-					Files.write(Paths.get(melangeLocation), newContent.toString().getBytes());
-				} catch (IOException e) {
-					e.printStackTrace();
-				}
-			}
-			
+		try {
+			res.save(new HashMap());
+		} catch (IOException e) {
+			e.printStackTrace();
 		}
 	}
-
+	
 	protected void waitForAutoBuild() {
 		boolean wasInterrupted = false;
 		do {
