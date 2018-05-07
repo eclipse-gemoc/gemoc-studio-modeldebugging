@@ -19,7 +19,6 @@ import org.eclipse.emf.ecore.EObject
 import org.eclipse.gemoc.dsl.debug.ide.event.IDSLDebugEventProcessor
 import org.eclipse.gemoc.executionframework.engine.core.EngineStoppedException
 import org.eclipse.gemoc.trace.commons.model.trace.Dimension
-import org.eclipse.gemoc.trace.commons.model.trace.MSE
 import org.eclipse.gemoc.trace.commons.model.trace.State
 import org.eclipse.gemoc.trace.commons.model.trace.Step
 import org.eclipse.gemoc.trace.commons.model.trace.TracedObject
@@ -29,7 +28,6 @@ import org.eclipse.gemoc.trace.gemoc.api.ITraceExplorer
 import org.eclipse.gemoc.trace.gemoc.api.ITraceViewListener
 import org.eclipse.gemoc.xdsmlframework.api.core.IExecutionEngine
 import org.eclipse.jface.dialogs.ErrorDialog
-import org.eclipse.xtext.naming.QualifiedName
 
 public class OmniscientGenericSequentialModelDebugger extends GenericSequentialModelDebugger implements ITraceViewListener {
 
@@ -47,41 +45,10 @@ public class OmniscientGenericSequentialModelDebugger extends GenericSequentialM
 		super(target, engine)
 	}
 
-	def private MSE getMSEFromStep(Step<?> step) {
-		val mseOccurrence = step.mseoccurrence
-		if (mseOccurrence === null) {
-			val container = step.eContainer
-			if (container instanceof Step<?>) {
-				val parentStep = container as Step<?>
-				val parentMseOccurrence = parentStep.mseoccurrence
-				if (parentMseOccurrence === null) {
-					throw new IllegalStateException(
-						"A step without MSEOccurrence cannot be contained in a step without MSEOccurrence")
-				} else {
-					return parentMseOccurrence.mse
-				}
-			} else {
-				throw new IllegalStateException("A step without MSEOccurrence has to be contained in a step")
-			}
-		} else {
-			return mseOccurrence.mse
-		}
-	}
-
 	def private void pushStackFrame(String threadName, Step<?> step) {
-		var MSE mse = getMSEFromStep(step)
-		var EObject caller = mse.caller
-		val QualifiedName qname = nameprovider.getFullyQualifiedName(caller)
-		val String objectName = if(qname !== null) qname.toString() else caller.toString()
-		val String opName = if (step.mseoccurrence === null) {
-				mse.action?.name + "_implicitStep"
-			} else {
-				mse.action?.name
-			}
-		val String callerType = caller.eClass().getName()
-		val String prettyName = "(" + callerType + ") " + objectName + " -> " + opName + "()"
-		pushStackFrame(threadName, prettyName, caller, caller)
-		callerStack.add(0, caller)
+		val info = getMSEFrameInformation(step);
+		pushStackFrame(threadName, info.prettyLabel, info.caller, info.caller)
+		callerStack.add(0, info.caller)
 	}
 
 	override void popStackFrame(String threadName) {
