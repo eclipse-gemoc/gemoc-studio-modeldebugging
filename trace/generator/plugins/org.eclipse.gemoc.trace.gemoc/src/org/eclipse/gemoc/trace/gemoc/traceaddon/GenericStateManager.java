@@ -12,6 +12,7 @@ package org.eclipse.gemoc.trace.gemoc.traceaddon;
 
 import java.util.List;
 import java.util.Map;
+import java.util.Optional;
 import java.util.stream.Collectors;
 
 import org.eclipse.emf.common.util.BasicEList;
@@ -20,6 +21,8 @@ import org.eclipse.emf.ecore.resource.Resource;
 import org.eclipse.emf.transaction.RecordingCommand;
 import org.eclipse.emf.transaction.TransactionalEditingDomain;
 import org.eclipse.emf.transaction.util.TransactionUtil;
+import org.eclipse.gemoc.executionframework.debugger.IMutableFieldExtractor;
+import org.eclipse.gemoc.executionframework.debugger.MutableField;
 import org.eclipse.gemoc.executionframework.engine.core.CommandExecution;
 
 import org.eclipse.gemoc.trace.commons.model.generictrace.BooleanAttributeValue;
@@ -41,9 +44,12 @@ public class GenericStateManager implements IStateManager<State<?, ?>> {
 	
 	private final Map<TracedObject<?>, EObject> tracedToExe;
 	
-	public GenericStateManager(Resource modelResource, Map<TracedObject<?>, EObject> tracedToExe) {
+	IMutableFieldExtractor fieldExtractor;
+	
+	public GenericStateManager(Resource modelResource, Map<TracedObject<?>, EObject> tracedToExe, IMutableFieldExtractor fieldExtractor) {
 		this.modelResource = modelResource;
 		this.tracedToExe = tracedToExe;
+		this.fieldExtractor = fieldExtractor;
 	}
 	
 	@Override
@@ -71,25 +77,32 @@ public class GenericStateManager implements IStateManager<State<?, ?>> {
 			GenericDimension dimension = (GenericDimension) v.eContainer();
 			GenericTracedObject tracedObject = (GenericTracedObject) dimension.eContainer();
 			EObject originalObject = tracedObject.getOriginalObject();
+			List<MutableField> fields = fieldExtractor.extractMutableField(originalObject);
+			Optional<MutableField> dynamicProperty = fields.stream().filter(field -> field.getMutableProperty().getName().equals(dimension.getDynamicProperty().getName())).findFirst();
 			if (originalObject == null) {
 				originalObject = tracedToExe.get(tracedObject);
 			}
 			if (v instanceof GenericAttributeValue) {
 				if (v instanceof IntegerAttributeValue) {
-					originalObject.eSet(dimension.getDynamicProperty(), ((IntegerAttributeValue) v).getAttributeValue());
+					if(dynamicProperty.isPresent())
+						dynamicProperty.get().setValue(((IntegerAttributeValue) v).getAttributeValue());
 				} else if (v instanceof BooleanAttributeValue) {
-					originalObject.eSet(dimension.getDynamicProperty(), ((BooleanAttributeValue) v).isAttributeValue());
+					if(dynamicProperty.isPresent())
+						dynamicProperty.get().setValue(((BooleanAttributeValue) v).isAttributeValue());
 				} else {
-					originalObject.eSet(dimension.getDynamicProperty(), ((StringAttributeValue) v).getAttributeValue());
+					if(dynamicProperty.isPresent())
+						dynamicProperty.get().setValue(((StringAttributeValue) v).getAttributeValue());
 				}
 			} else {
 				if (v instanceof SingleReferenceValue) {
 					final EObject refVal = ((SingleReferenceValue) v).getReferenceValue();
 					if (refVal instanceof GenericTracedObject) {
 						final EObject exe = tracedToExe.get(refVal);
-						originalObject.eSet(dimension.getDynamicProperty(), exe);
+						if(dynamicProperty.isPresent())
+							dynamicProperty.get().setValue(exe);
 					} else {
-						originalObject.eSet(dimension.getDynamicProperty(), refVal);
+						if(dynamicProperty.isPresent())
+							dynamicProperty.get().setValue(refVal);
 					}
 				} else {
 					final List<EObject> values = new BasicEList<EObject>();
@@ -100,7 +113,8 @@ public class GenericStateManager implements IStateManager<State<?, ?>> {
 							return refVal;
 						}
 					}).collect(Collectors.toList()));
-					originalObject.eSet(dimension.getDynamicProperty(), values);
+					if(dynamicProperty.isPresent())
+						dynamicProperty.get().setValue(values);
 				}
 			}
 		});
