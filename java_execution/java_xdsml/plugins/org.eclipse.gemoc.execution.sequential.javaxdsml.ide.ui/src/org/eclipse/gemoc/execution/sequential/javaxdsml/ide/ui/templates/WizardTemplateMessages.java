@@ -21,6 +21,25 @@ public class WizardTemplateMessages extends NLS {
 	}
 		
 	public static String FirstCharUpperError;
+
+	// MelangeSequentialSingleLanguage constants
+	public static String MelangeSequentialSingleLanguageTemplate_packageName;
+	public static String MelangeSequentialSingleLanguageTemplate_packageNameToolTip;
+	public static String MelangeSequentialSingleLanguageTemplate_melangeProjectName;
+	public static String MelangeSequentialSingleLanguageTemplate_melangeProjectNameTooltip;
+	public static String MelangeSequentialSingleLanguageTemplate_melangeDefaultProjectName;
+	public static String MelangeSequentialSingleLanguageTemplate_melangeFileName;
+	public static String MelangeSequentialSingleLanguageTemplate_melangeFileNameTooltip;
+	public static String MelangeSequentialSingleLanguageTemplate_melangeDefaultFileName;
+	public static String MelangeSequentialSingleLanguageTemplate_melangeMetamodelName;
+	public static String MelangeSequentialSingleLanguageTemplate_melangeMetamodelNameToolTip;
+	public static String MelangeSequentialSingleLanguageTemplate_ecoreFileLocation;
+	public static String MelangeSequentialSingleLanguageTemplate_ecoreFileLocationTooltip;
+	public static String MelangeSequentialSingleLanguageTemplate_dsaProjectName;
+	public static String MelangeSequentialSingleLanguageTemplate_dsaProjectNameTooltip;
+	public static String MelangeSequentialSingleLanguageTemplate_title;
+	public static String MelangeSequentialSingleLanguageTemplate_desc;
+	public static String MelangeSequentialSingleLanguageTemplate_wtitle;
 	
 	// SequentialSingleLanguage constants
 	public static String SequentialSingleLanguageTemplate_packageName;
@@ -38,7 +57,7 @@ public class WizardTemplateMessages extends NLS {
 	public static String SequentialSingleLanguageTemplate_desc;
 	public static String SequentialSingleLanguageTemplate_wtitle;
 	
-	// SequentialSingleLanguage constants
+	// SequentialExtendedLanguage constants
 	public static String SequentialExtendedLanguageTemplate_packageName;
 	public static String SequentialExtendedLanguageTemplate_packageNameToolTip;
 	public static String SequentialExtendedLanguageTemplate_melangeFileName;

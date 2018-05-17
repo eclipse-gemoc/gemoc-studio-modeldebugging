@@ -349,7 +349,7 @@ public class PlainK3ExecutionEngine extends AbstractCommandBasedSequentialExecut
 		} else {
 			// the main isn't visible directly from the workspace, try another
 			// method
-			bundle = _executionContext.getMelangeBundle();
+			bundle = _executionContext.getDslBundle();
 		}
 
 		return bundle;
