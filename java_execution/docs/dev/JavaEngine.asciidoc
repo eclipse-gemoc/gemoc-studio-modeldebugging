@@ -1,0 +1,21 @@
+////////////////////////////////////////////////////////////////
+//	Reproduce title only if not included in master documentation
+////////////////////////////////////////////////////////////////
+ifndef::includedInMaster[]
+
+= Developer Guide
+== Components Overview
+=== Execution engines
+==== Java execution
+
+endif::[]
+
+===== Java Engine 
+
+The  engine provides the class /org.eclipse.gemoc.execution.sequential.javaengine/src/org/eclipse/gemoc/execution/sequential/javaengine/PlainK3ExecutionEngine.java as a base implementation for the AbstractCommandBasedSequentialExecutionEngine.java class.
+
+
+[[img-PlainK3ExecutionEngine_CD-devguide]]
+.PlainK3ExecutionEngine overview
+image::images/dev/PlainK3ExecutionEngine_CD.png["PlainK3ExecutionEngine overview"]
+

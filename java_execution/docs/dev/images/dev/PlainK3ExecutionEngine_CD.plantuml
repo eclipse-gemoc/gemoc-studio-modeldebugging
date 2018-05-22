@@ -1,0 +1,24 @@
+@startuml
+skinparam class {
+	BackgroundColor White
+	ArrowColor Black
+	BorderColor Black
+}
+
+scale max 1024 width
+scale max 800 height
+
+class PlainK3ExecutionEngine #beige {
+}  
+
+interface IDisposable
+interface IExecutionEngine
+interface IStepManager
+
+IDisposable <|.. AbstractSequentialExecutionEngine 
+IExecutionEngine <|.. AbstractSequentialExecutionEngine 
+AbstractSequentialExecutionEngine <|-- AbstractCommandBasedSequentialExecutionEngine
+AbstractCommandBasedSequentialExecutionEngine <|-- PlainK3ExecutionEngine
+IStepManager <|.. PlainK3ExecutionEngine
+
+@enduml
