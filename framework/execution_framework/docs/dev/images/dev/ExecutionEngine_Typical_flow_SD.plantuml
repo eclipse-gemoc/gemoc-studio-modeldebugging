@@ -1,0 +1,66 @@
+
+
+@startuml
+skinparam class {
+	BackgroundColor White
+	ArrowColor Black
+	BorderColor Black
+}
+
+scale max 1024 width
+scale max 800 height
+
+participant Launcher
+participant PlainK3ExecutionEngine as Engine
+participant StepManagerRegistry
+participant CodeExecutor
+participant addon
+
+
+Launcher -> Engine : create and initialize
+activate Engine
+
+activate Launcher
+Launcher -> Launcher : 
+activate Launcher
+note right
+	todo: detail of creation of addons
+end note
+
+note left
+	todo: detail internal start 
+	and registration 
+	(breakpoint, step listener, 
+	modeldebugger and command)
+	in simulationmodelanimation
+end note
+Launcher -> Engine : start
+
+deactivate Launcher
+
+deactivate Launcher
+
+Engine --> addon : notifyEngineAboutToStart
+Engine -> Engine : beforeStart
+Engine --> addon : notifyEngineStarted
+Engine -> Engine : performStart
+activate Engine 
+
+Engine -> Engine: initializeModel
+Engine --> addon: notifyEngineInitialized
+Engine -> Engine: executeEntryPoint
+
+Engine -> StepManagerRegistry: registerManager(this);
+ 
+group Step aware sequential execution
+Engine -> Engine: entryPointMethod.invoke(null, entryPointMethodParameters.get(0))
+end 
+deactivate Engine
+Engine -> Engine : stop
+activate Engine
+Engine --> addon : notifyAboutToStop
+Engine -> Engine : performStop
+Engine --> addon : notifyEngineStopped
+deactivate Engine
+
+@enduml
