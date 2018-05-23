@@ -82,28 +82,24 @@ public class GenericStateManager implements IStateManager<State<?, ?>> {
 			if (originalObject == null) {
 				originalObject = tracedToExe.get(tracedObject);
 			}
-			if (v instanceof GenericAttributeValue) {
-				if (v instanceof IntegerAttributeValue) {
-					if(dynamicProperty.isPresent())
+			
+			if(dynamicProperty.isPresent()) {
+				if (v instanceof GenericAttributeValue) {
+					if (v instanceof IntegerAttributeValue) {
 						dynamicProperty.get().setValue(((IntegerAttributeValue) v).getAttributeValue());
-				} else if (v instanceof BooleanAttributeValue) {
-					if(dynamicProperty.isPresent())
+					} else if (v instanceof BooleanAttributeValue) {
 						dynamicProperty.get().setValue(((BooleanAttributeValue) v).isAttributeValue());
-				} else {
-					if(dynamicProperty.isPresent())
-						dynamicProperty.get().setValue(((StringAttributeValue) v).getAttributeValue());
-				}
-			} else {
-				if (v instanceof SingleReferenceValue) {
-					final EObject refVal = ((SingleReferenceValue) v).getReferenceValue();
-					if (refVal instanceof GenericTracedObject) {
-						final EObject exe = tracedToExe.get(refVal);
-						if(dynamicProperty.isPresent())
-							dynamicProperty.get().setValue(exe);
 					} else {
-						if(dynamicProperty.isPresent())
-							dynamicProperty.get().setValue(refVal);
+						dynamicProperty.get().setValue(((StringAttributeValue) v).getAttributeValue());
 					}
+				} else if (v instanceof SingleReferenceValue) {
+						final EObject refVal = ((SingleReferenceValue) v).getReferenceValue();
+						if (refVal instanceof GenericTracedObject) {
+							final EObject exe = tracedToExe.get(refVal);
+							dynamicProperty.get().setValue(exe);
+						} else {
+							dynamicProperty.get().setValue(refVal);
+						}
 				} else {
 					final List<EObject> values = new BasicEList<EObject>();
 					values.addAll(((ManyReferenceValue) v).getReferenceValues().stream().map(refVal -> {
@@ -113,8 +109,7 @@ public class GenericStateManager implements IStateManager<State<?, ?>> {
 							return refVal;
 						}
 					}).collect(Collectors.toList()));
-					if(dynamicProperty.isPresent())
-						dynamicProperty.get().setValue(values);
+					dynamicProperty.get().setValue(values);
 				}
 			}
 		});
