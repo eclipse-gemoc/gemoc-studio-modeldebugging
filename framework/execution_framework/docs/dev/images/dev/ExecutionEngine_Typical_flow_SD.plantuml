@@ -50,11 +50,15 @@ Engine -> Engine: initializeModel
 Engine --> addon: notifyEngineInitialized
 Engine -> Engine: executeEntryPoint
 
+activate Engine
 Engine -> StepManagerRegistry: registerManager(this);
  
 group Step aware sequential execution
 Engine -> Engine: entryPointMethod.invoke(null, entryPointMethodParameters.get(0))
-end 
+end
+Engine -> StepManagerRegistry: unregisterManager(this);
+ 
+deactivate Engine
 deactivate Engine
 Engine -> Engine : stop
 activate Engine

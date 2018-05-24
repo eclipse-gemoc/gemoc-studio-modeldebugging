@@ -14,6 +14,9 @@ endif::[]
 footnote:[asciidoc source of this page:  https://github.com/eclipse/gemoc-studio-modeldebugging/tree/master/execution_framework/execution_framework/docs/dev/ExecutionFramework.asciidoc.]
 
 
+<<img-ExecutionEngine-overview-CD-devguide>> and <<img-ExecutionEngine-typical-flow-SD-devguide>> show a typical execution flow of an Engine. In this diagram, we use the concrete classes coming from the JavaEngine (see <<execution-engines-java-execution>>).
+
+Calls to _addon_ is actually a call to the corresponding method to all registered addons (class implementing _IEngineAddon_) for the current execution context. 
 
 [[img-ExecutionEngine-overview-CD-devguide]]
 .ExecutionEngine overview
