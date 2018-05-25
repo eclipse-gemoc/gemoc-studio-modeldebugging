@@ -14,7 +14,9 @@ endif::[]
 footnote:[asciidoc source of this page:  https://github.com/eclipse/gemoc-studio-modeldebugging/tree/master/execution_framework/execution_framework/docs/dev/ExecutionFramework.asciidoc.]
 
 
-<<img-ExecutionEngine-overview-CD-devguide>> and <<img-ExecutionEngine-typical-flow-SD-devguide>> show a typical execution flow of an Engine. In this diagram, we use the concrete classes coming from the JavaEngine (see <<execution-engines-java-execution>>).
+<<img-ExecutionEngine-overview-CD-devguide>> show a typical concrete engine implementation. 
+<<img-ExecutionEngine-typical-flow-SD-devguide>> show a typical execution flow of the Engine. In this diagram, we use the concrete classes coming from the JavaEngine (see <<execution-engines-java-execution>>).
+Where the PlainK3ExecutionEngine  is able to correctly deal with the step notifications to the _IEngineAddon_s thanks to a StepManager implementation in K3. 
 
 Calls to _addon_ is actually a call to the corresponding method to all registered addons (class implementing _IEngineAddon_) for the current execution context. 
 

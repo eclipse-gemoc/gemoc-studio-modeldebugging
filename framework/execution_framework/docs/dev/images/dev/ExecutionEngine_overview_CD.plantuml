@@ -8,17 +8,28 @@ skinparam class {
 scale max 1024 width
 scale max 800 height
 
-class PlainK3ExecutionEngine #beige {
-}  
+package java_execution <<Node>> {
+	class PlainK3ExecutionEngine #beige {
+	}  
+	
+	class Launcher #beige {
+	}  
+}
 
-
-class Launcher #beige {
-}  
+package K3 <<Node>> {
+	interface IStepManager
+}
 
 interface IDisposable
 interface IExecutionEngine
-interface IStepManager
 interface ILaunchConfigurationDelegate
+
+abstract class AbstractSequentialExecutionEngine
+abstract class AbstractCommandBasedSequentialExecutionEngine
+abstract class AbstractDSLLaunchConfigurationDelegate
+abstract class AbstractDSLLaunchConfigurationDelegateUI
+abstract class AbstractDSLLaunchConfigurationDelegateSiriusUI
+abstract class AbstractSequentialGemocLauncher
 
 IDisposable <|.. AbstractSequentialExecutionEngine 
 IExecutionEngine <|.. AbstractSequentialExecutionEngine 
