@@ -19,3 +19,7 @@ The  engine provides the class /org.eclipse.gemoc.execution.sequential.javaengin
 .PlainK3ExecutionEngine overview
 image::images/dev/PlainK3ExecutionEngine_CD.png["PlainK3ExecutionEngine overview"]
 
+
+[[img-PlainK3ExecutionEngine-typical-flow-SD-devguide]]
+.ExecutionEngine typical flow
+image::images/dev/PlainK3ExecutionEngine_Typical_flow_SD.png["PlainK3ExecutionEngine typical flow"]
