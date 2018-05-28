@@ -9,17 +9,12 @@ ifndef::includedInMaster[]
 
 endif::[]
 
+[[devguide-xdsmlframework]]
 ==== XDSML Framework 
 
-footnote:[asciidoc source of this page:  https://github.com/eclipse/gemoc-studio-modeldebugging/tree/master/execution_framework/xdsml_framework/docs/dev/ExecutionFramework.asciidoc.]
+footnote:[asciidoc source of this page:  https://github.com/eclipse/gemoc-studio-modeldebugging/tree/master/execution_framework/xdsml_framework/docs/dev/XdsmlFramework.asciidoc.]
 
+The XDSML framework relies on the <<devguide-frameworkcommons>> and offers some base classes for implementing the Language workbench UI.
 
-<<img-XdsmlFramework-overview-CD-devguide>> shows some of the major interfaces of the XDSML framework API. 
-Most notably, the _IEngineAddon_ and _IExecutionEngine_ interfaces that are the entry points when implementing an Addon for GEMOC. 
-
-
-[[img-XdsmlFramework-overview-CD-devguide]]
-.XDSML Framework API Interfaces overview
-image::images/dev/xdsmlframework_api_overview_CD.png["XDSML Framework API Interfaces overview"]
 
 

@@ -15,7 +15,7 @@ participant PlainK3ExecutionEngine as Engine
 participant DSLAspect
 participant StepManagerRegistry
 participant CodeExecutor
-participant Addons as addon 
+collections Addons as addon 
 
 
 Launcher -> Engine : create and initialize

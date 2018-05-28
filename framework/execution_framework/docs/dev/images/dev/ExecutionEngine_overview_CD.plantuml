@@ -8,7 +8,7 @@ skinparam class {
 scale max 1024 width
 scale max 800 height
 
-package java_execution <<Node>> {
+package "Java Execution / Java Engine" as java_execution <<Node>> {
 	class PlainK3ExecutionEngine #beige {
 	}  
 	
@@ -20,16 +20,27 @@ package K3 <<Node>> {
 	interface IStepManager
 }
 
-interface IDisposable
-interface IExecutionEngine
-interface ILaunchConfigurationDelegate
+package "GEMOC Framework / Framework Commons" as framework_commons <<Node>> {
+	interface IDisposable
+	interface IExecutionEngine
+}
+package eclipse.debug {
+	interface ILaunchConfigurationDelegate
+	interface ILaunchShortcut
+}
 
-abstract class AbstractSequentialExecutionEngine
-abstract class AbstractCommandBasedSequentialExecutionEngine
-abstract class AbstractDSLLaunchConfigurationDelegate
-abstract class AbstractDSLLaunchConfigurationDelegateUI
-abstract class AbstractDSLLaunchConfigurationDelegateSiriusUI
-abstract class AbstractSequentialGemocLauncher
+package "GEMOC Framework / Execution Framework" as execution_framework <<Node>> {
+	abstract class AbstractSequentialExecutionEngine
+	abstract class AbstractCommandBasedSequentialExecutionEngine	
+	abstract class AbstractSequentialGemocLauncher
+	abstract class AbstractGemocLauncher
+}
+package "Simulation and Model Animation" as simulation_model_animation <<Node>> {
+	abstract class AbstractDSLLaunchConfigurationDelegate
+	abstract class AbstractDSLLaunchConfigurationDelegateUI
+	abstract class AbstractDSLLaunchConfigurationDelegateSiriusUI
+}
+
 
 IDisposable <|.. AbstractSequentialExecutionEngine 
 IExecutionEngine <|.. AbstractSequentialExecutionEngine 
@@ -38,9 +49,11 @@ AbstractCommandBasedSequentialExecutionEngine <|-- PlainK3ExecutionEngine
 IStepManager <|.. PlainK3ExecutionEngine
 
 ILaunchConfigurationDelegate <|.. AbstractDSLLaunchConfigurationDelegate
+ILaunchShortcut <|.. AbstractDSLLaunchConfigurationDelegateUI
 AbstractDSLLaunchConfigurationDelegate <|-- AbstractDSLLaunchConfigurationDelegateUI 
 AbstractDSLLaunchConfigurationDelegateUI <|-- AbstractDSLLaunchConfigurationDelegateSiriusUI
-AbstractDSLLaunchConfigurationDelegateSiriusUI <|-- AbstractSequentialGemocLauncher
+AbstractDSLLaunchConfigurationDelegateSiriusUI <|-- AbstractGemocLauncher
+AbstractGemocLauncher <|-- AbstractSequentialGemocLauncher
 AbstractSequentialGemocLauncher <|-- Launcher
 
 @enduml
