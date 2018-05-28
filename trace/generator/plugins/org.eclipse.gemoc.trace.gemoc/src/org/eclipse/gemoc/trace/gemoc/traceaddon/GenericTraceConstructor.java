@@ -36,6 +36,7 @@ import org.eclipse.gemoc.xdsmlframework.api.engine_addon.modelchangelistener.Non
 import org.eclipse.gemoc.xdsmlframework.api.engine_addon.modelchangelistener.PotentialCollectionFieldModelChange;
 import org.eclipse.gemoc.xdsmlframework.api.engine_addon.modelchangelistener.RemovedObjectModelChange;
 import org.eclipse.gemoc.xdsmlframework.commons.DynamicAnnotationHelper;
+import org.eclipse.gemoc.executionframework.debugger.IDynamicPartAccessor;
 import org.eclipse.gemoc.executionframework.debugger.IMutableFieldExtractor;
 import org.eclipse.gemoc.executionframework.debugger.MutableField;
 import org.eclipse.gemoc.trace.commons.model.generictrace.BooleanAttributeValue;
@@ -70,13 +71,13 @@ public class GenericTraceConstructor implements ITraceConstructor {
 	private final Deque<GenericSequentialStep> context = new LinkedList<>();
 	private GenericState lastState;
 	
-	IMutableFieldExtractor fieldExtractor;
+	IDynamicPartAccessor dynamicPartAccessor;
 	
-	public GenericTraceConstructor(Resource executedModel, Resource traceResource, Map<EObject, TracedObject<?>> exeToTraced, IMutableFieldExtractor fieldExtractor) {
+	public GenericTraceConstructor(Resource executedModel, Resource traceResource, Map<EObject, TracedObject<?>> exeToTraced, IDynamicPartAccessor dynamicPartAccessor) {
 		this.executedModel = executedModel;
 		this.traceResource = traceResource;
 		this.exeToTraced = exeToTraced;
-		this.fieldExtractor = fieldExtractor;
+		this.dynamicPartAccessor = dynamicPartAccessor;
 	}
 	
 	private Set<Resource> getAllExecutedModelResources() {
@@ -89,11 +90,11 @@ public class GenericTraceConstructor implements ITraceConstructor {
 
 	private boolean addNewObjectToStateIfDynamic(EObject object, GenericState state) {
 		final EClass c = object.eClass();
-		List<MutableField> fields = fieldExtractor.extractMutableField(object);
+		List<MutableField> fields = dynamicPartAccessor.extractMutableField(object);
 		final List<EStructuralFeature> mutableProperties = fields.stream()
 				.map(f -> f.getMutableProperty())
 				.collect(Collectors.toList());
-		if (!fields.isEmpty()) {
+		if (dynamicPartAccessor.isDynamic(object) || !fields.isEmpty()) {
 			return addNewObjectToState(object, mutableProperties, lastState);
 		}
 		return true;
@@ -102,7 +103,7 @@ public class GenericTraceConstructor implements ITraceConstructor {
 	@SuppressWarnings("unchecked")
 	private GenericValue getGenericValue(EObject object, EStructuralFeature mutableProperty, GenericState state) {
 		GenericValue result = null;
-		List<MutableField> fields = fieldExtractor.extractMutableField(object);
+		List<MutableField> fields = dynamicPartAccessor.extractMutableField(object);
 		Optional<MutableField> dynamicProperty = fields.stream().filter(field -> field.getMutableProperty().getName().equals(mutableProperty.getName())).findFirst();
 		if (mutableProperty instanceof EAttribute) {
 			final EClassifier eType = mutableProperty.getEType();
@@ -139,8 +140,7 @@ public class GenericTraceConstructor implements ITraceConstructor {
 				}
 				final ManyReferenceValue value = GenerictraceFactory.eINSTANCE.createManyReferenceValue();
 				for (EObject o : modelElements) {
-					boolean isODynamic = !fieldExtractor.extractMutableField(o).isEmpty();
-					if (isODynamic) {
+					if (dynamicPartAccessor.isDynamic(o) || !fields.isEmpty()) {
 						value.getReferenceValues().add(exeToTraced.get(o));
 					} else {
 						value.getReferenceValues().add(o);
@@ -153,8 +153,7 @@ public class GenericTraceConstructor implements ITraceConstructor {
 					o = (EObject) dynamicProperty.get().getValue();
 				}
 				final SingleReferenceValue value = GenerictraceFactory.eINSTANCE.createSingleReferenceValue();
-				boolean isODynamic = o != null && !fieldExtractor.extractMutableField(o).isEmpty();
-				if (isODynamic) {
+				if (o != null  && dynamicPartAccessor.isDynamic(o)) {
 					value.setReferenceValue(exeToTraced.get(o));
 				} else {
 					value.setReferenceValue(o);
@@ -169,9 +168,9 @@ public class GenericTraceConstructor implements ITraceConstructor {
 	private boolean addNewObjectToState(EObject object, List<EStructuralFeature> mutableProperties, GenericState state) {
 		boolean added = false;
 		if (!exeToTraced.containsKey(object)) {
-			List<MutableField> fields = fieldExtractor.extractMutableField(object);
+			List<MutableField> fields = dynamicPartAccessor.extractMutableField(object);
 			final GenericTracedObject tracedObject = GenerictraceFactory.eINSTANCE.createGenericTracedObject();
-			if (!fields.isEmpty()) {
+			if (dynamicPartAccessor.isDynamic(object) || !fields.isEmpty()) {
 				tracedObject.setOriginalObject(object);
 			}
 			exeToTraced.put(object, tracedObject);
@@ -276,7 +275,7 @@ public class GenericTraceConstructor implements ITraceConstructor {
 			GenericState newState = copyState(lastState);
 			for (ModelChange modelChange : modelChanges) {
 				EObject o = modelChange.getChangedObject();
-				List<MutableField> fields = fieldExtractor.extractMutableField(o);
+				List<MutableField> fields = dynamicPartAccessor.extractMutableField(o);
 				// We only look at constructable objects that have mutable fields
 				// Here we have nothing to rollback, just a new object to add
 				if (modelChange instanceof NewObjectModelChange) {

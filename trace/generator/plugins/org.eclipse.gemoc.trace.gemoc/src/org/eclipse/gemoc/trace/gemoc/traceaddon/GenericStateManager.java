@@ -21,6 +21,7 @@ import org.eclipse.emf.ecore.resource.Resource;
 import org.eclipse.emf.transaction.RecordingCommand;
 import org.eclipse.emf.transaction.TransactionalEditingDomain;
 import org.eclipse.emf.transaction.util.TransactionUtil;
+import org.eclipse.gemoc.executionframework.debugger.IDynamicPartAccessor;
 import org.eclipse.gemoc.executionframework.debugger.IMutableFieldExtractor;
 import org.eclipse.gemoc.executionframework.debugger.MutableField;
 import org.eclipse.gemoc.executionframework.engine.core.CommandExecution;
@@ -44,12 +45,12 @@ public class GenericStateManager implements IStateManager<State<?, ?>> {
 	
 	private final Map<TracedObject<?>, EObject> tracedToExe;
 	
-	IMutableFieldExtractor fieldExtractor;
+	IDynamicPartAccessor dynamicPartAccessor;
 	
-	public GenericStateManager(Resource modelResource, Map<TracedObject<?>, EObject> tracedToExe, IMutableFieldExtractor fieldExtractor) {
+	public GenericStateManager(Resource modelResource, Map<TracedObject<?>, EObject> tracedToExe, IDynamicPartAccessor dynamicPartAccessor) {
 		this.modelResource = modelResource;
 		this.tracedToExe = tracedToExe;
-		this.fieldExtractor = fieldExtractor;
+		this.dynamicPartAccessor = dynamicPartAccessor;
 	}
 	
 	@Override
@@ -77,7 +78,7 @@ public class GenericStateManager implements IStateManager<State<?, ?>> {
 			GenericDimension dimension = (GenericDimension) v.eContainer();
 			GenericTracedObject tracedObject = (GenericTracedObject) dimension.eContainer();
 			EObject originalObject = tracedObject.getOriginalObject();
-			List<MutableField> fields = fieldExtractor.extractMutableField(originalObject);
+			List<MutableField> fields = dynamicPartAccessor.extractMutableField(originalObject);
 			Optional<MutableField> dynamicProperty = fields.stream().filter(field -> field.getMutableProperty().getName().equals(dimension.getDynamicProperty().getName())).findFirst();
 			if (originalObject == null) {
 				originalObject = tracedToExe.get(tracedObject);
