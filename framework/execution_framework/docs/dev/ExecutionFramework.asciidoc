@@ -16,16 +16,16 @@ footnote:[asciidoc source of this page:  https://github.com/eclipse/gemoc-studio
 
 
 <<img-ExecutionEngine-overview-CD-devguide>> shows a typical concrete engine implementation. In this diagram, we use the concrete classes coming from the JavaEngine (see <<execution-engines-java-execution>>).
-Where the PlainK3ExecutionEngine  is able to correctly deal with the step notifications to the _IEngineAddon_ thanks to an IStepManager implementation in K3. this management of the Step notification may differ depending on the Engine and the technology used to implement the DSL behavior (mocml, ALE, XMOF, ...). 
+Where the PlainK3ExecutionEngine  is able to correctly deal with the step notifications to the _IEngineAddon_ thanks to an IStepManager implementation in K3. This management of the Step notification may differ depending on the Engine and the technology used to implement the DSL behavior (mocml, ALE, XMOF, ...). 
 
 [[img-ExecutionEngine-overview-CD-devguide]]
 .ExecutionEngine overview
 image::images/dev/ExecutionEngine_overview_CD.png["ExecutionEngine overview"]
 
 
-<<img-ExecutionEngine-typical-flow-SD-devguide>> shows a typical execution flow of the Engine. 
+<<img-ExecutionEngine-typical-flow-SD-devguide>> shows a typical execution flow of the Engine. The couple Engine and  execution transformation must implement the _IExecutionEngine_ interface (cf. <<img-FrameworkCommons-overview-CD-devguide>>) and are in charge of calling the methods of _IengineAddon_ during the model execution.
 
-Calls to _addon_ are actually a call to the corresponding method to all registered addons (class implementing _IEngineAddon_) for the current execution context. 
+In this sequence diagram, calls to _Addons_ are actually a call to the corresponding method to all registered classes implementing _IEngineAddon_ for the current execution context. 
 
 
 [[img-ExecutionEngine-typical-flow-SD-devguide]]
@@ -39,7 +39,7 @@ Addons registered via extension points can be enabled or disabled by the end use
 
 Addons registered on `org.eclipse.gemoc.gemoc_language_workbench.engine_addon` extension point are supposed language agnostic and should apply to any DSL. However they may be engine dependent. They are typically designed by GEMOC contributors who wish to extend GEMOC features.
 
-Addons registered on `org.eclipse.gemoc.gemoc_language_workbench.xdsml` extension point are supposed language specific and should apply to a single DSL. They are typically designed by a Language design who which to offer a specific feature for the language he is developing.
+Addons registered on `org.eclipse.gemoc.gemoc_language_workbench.xdsml` extension point are supposed language specific and should apply to a single DSL. They are typically designed by a Language designer who which to offer a specific feature for the language he is developing.
 
 
 Mandatory addons do not need to be declared as extension point, they are directly handled by the engine/launcher implementation. (search for a call to `addEngineAddon` in order to find addons that are programmatically added to the execution.

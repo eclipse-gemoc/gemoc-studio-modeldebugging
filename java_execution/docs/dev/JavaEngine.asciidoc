@@ -12,7 +12,13 @@ endif::[]
 
 ===== Java Engine 
 
-The  engine provides the class /org.eclipse.gemoc.execution.sequential.javaengine/src/org/eclipse/gemoc/execution/sequential/javaengine/PlainK3ExecutionEngine.java as a base implementation for the AbstractCommandBasedSequentialExecutionEngine.java class.
+footnote:[asciidoc source of this page:  https://github.com/eclipse/gemoc-studio-modeldebugging/tree/master/java_execution/docs/dev/JavaEngine.asciidoc.]
+
+This component implements the services  and user interface modeling workbench dedicated to the case of the JavaEngine. As seen in <<img-ComponentsOverview-devguide>>, it is based on the Execution Framework from GEMOC Framewok. 
+
+The  engine provides the class `org.eclipse.gemoc.execution.sequential.javaengine/src/org/eclipse/gemoc/execution/sequential/javaengine/PlainK3ExecutionEngine.java` as a base implementation for the `AbstractCommandBasedSequentialExecutionEngine.java` class.
+
+It relies on `IStepManager` and `StepManagerRegistry` provided by K3 in order to correctly do the notification calls to the Addons for each of the method that have been annotated with the *@Step* annotation.
 
 
 [[img-PlainK3ExecutionEngine_CD-devguide]]
