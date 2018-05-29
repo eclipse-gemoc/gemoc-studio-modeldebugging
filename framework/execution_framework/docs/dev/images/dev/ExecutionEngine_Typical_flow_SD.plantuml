@@ -1,0 +1,79 @@
+
+
+@startuml
+skinparam class {
+	BackgroundColor White
+	ArrowColor Black
+	BorderColor Black
+}
+
+scale max 1024 width
+scale max 800 height
+
+participant Launcher
+participant "Concrete ExecutionEngine" as Engine
+participant ExecutionTransformation
+collections Addons as addon
+
+
+Launcher -> Engine : create and initialize
+activate Engine
+
+note right
+	load models (with possible convertion)
+	register relevant addons for the execution context
+end note
+
+activate Launcher
+Launcher -> Launcher : 
+activate Launcher
+
+Launcher -> Engine : start
+
+deactivate Launcher
+
+deactivate Launcher
+
+Engine --> addon : engineAboutToStart
+Engine -> Engine : beforeStart
+Engine --> addon : engineStarted
+Engine -> Engine : performStart
+activate Engine 
+
+Engine -> Engine: initializeModel
+Engine --> addon: engineInitialized
+Engine -> Engine: executeEntryPoint
+
+activate Engine
+ 
+group Step aware execution
+	Engine -> ExecutionTransformation: execute entry point rule
+	activate ExecutionTransformation
+	note over Engine, ExecutionTransformation
+		Depending on implementation, engine and 
+		transformation may collaborate for implementing
+		the step scheduling strategy.
+	end note
+	group step
+	ExecutionTransformation -> addon: aboutToExecuteStep
+	ExecutionTransformation --> ExecutionTransformation : do work 
+		note right
+			Do work by mofifying the runtime data and 
+			proceed nested steps
+		end note
+	ExecutionTransformation -> addon: stepExecuted
+	end group
+	ExecutionTransformation --> Engine: 
+	deactivate ExecutionTransformation
+end
+ 
+deactivate Engine
+deactivate Engine
+Engine -> Engine : stop
+activate Engine
+Engine --> addon : aboutToStop
+Engine -> Engine : performStop
+Engine --> addon : engineStopped
+deactivate Engine
+
+@enduml

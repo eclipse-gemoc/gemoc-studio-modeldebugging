@@ -1,0 +1,20 @@
+////////////////////////////////////////////////////////////////
+//	Reproduce title only if not included in master documentation
+////////////////////////////////////////////////////////////////
+ifndef::includedInMaster[]
+
+= Developer Guide
+== Components Overview
+=== GEMOC Framework
+
+endif::[]
+
+[[devguide-xdsmlframework]]
+==== XDSML Framework 
+
+footnote:[asciidoc source of this page:  https://github.com/eclipse/gemoc-studio-modeldebugging/tree/master/execution_framework/xdsml_framework/docs/dev/XdsmlFramework.asciidoc.]
+
+The XDSML framework relies on the <<devguide-frameworkcommons>> and offers some base classes for implementing the Language workbench UI.
+
+
+

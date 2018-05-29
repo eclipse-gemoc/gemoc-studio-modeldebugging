@@ -1,0 +1,111 @@
+
+
+@startuml
+skinparam class {
+	BackgroundColor White
+	ArrowColor Black
+	BorderColor Black
+}
+
+scale max 1024 width
+scale max 800 height
+
+participant Launcher
+participant PlainK3ExecutionEngine as Engine
+participant DSLAspect
+participant StepManagerRegistry
+participant CodeExecutor
+collections Addons as addon 
+
+
+Launcher -> Engine : create and initialize
+activate Engine
+
+activate Launcher
+Launcher -> Launcher : 
+activate Launcher
+note right
+	todo: detail of creation of addons
+end note
+
+note left
+	todo: detail internal start 
+	and registration 
+	(breakpoint, step listener, 
+	modeldebugger and command)
+	in simulationmodelanimation
+end note
+Launcher -> Engine : start
+
+deactivate Launcher
+
+deactivate Launcher
+
+Engine -> Engine : notifyEngineAboutToStart
+activate Engine
+Engine -> addon : engineAboutToStart
+deactivate Engine
+
+Engine -> Engine : beforeStart
+
+Engine -> Engine : notifyEngineStarted
+activate Engine
+Engine -> addon : engineStarted
+deactivate Engine
+
+Engine -> Engine : performStart
+activate Engine 
+
+Engine -> Engine: initializeModel
+
+Engine -> Engine: notifyEngineInitialized
+activate Engine
+Engine -> addon: engineInitialized
+deactivate Engine
+
+
+Engine -> Engine: executeEntryPoint
+
+activate Engine
+
+group Step aware sequential execution
+	Engine -> StepManagerRegistry: registerManager(this);
+	Engine -> DSLAspect: entryPointMethod.invoke(null, entryPointMethodParameters.get(0))
+	
+	activate DSLAspect
+	group step
+		DSLAspect -> addon: aboutToExecuteStep
+		DSLAspect --> DSLAspect : do work 
+		note right
+			Do work by mofifying the runtime data and 
+			proceed nested calls to steps (not detailed here)
+		end note
+		DSLAspect -> addon: stepExecuted
+	end
+	deactivate DSLAspect
+	
+	Engine -> StepManagerRegistry: unregisterManager(this);
+end 
+
+deactivate Engine
+deactivate Engine
+Engine -> Engine : stop
+activate Engine
+
+Engine -> Engine : notifyAboutToStop
+activate Engine
+Engine -> addon : aboutToStop
+deactivate Engine
+
+
+Engine -> Engine : performStop
+
+Engine -> Engine : notifyEngineStopped
+activate Engine
+Engine -> addon : engineStopped
+deactivate Engine
+
+
+deactivate Engine
+
+@enduml

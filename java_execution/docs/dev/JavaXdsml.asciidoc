@@ -1,0 +1,18 @@
+////////////////////////////////////////////////////////////////
+//	Reproduce title only if not included in master documentation
+////////////////////////////////////////////////////////////////
+ifndef::includedInMaster[]
+
+= Developer Guide
+== Components Overview
+=== Execution engines
+==== Java Execution 
+
+endif::[]
+
+
+===== Java XDSML
+
+footnote:[asciidoc source of this page:  https://github.com/eclipse/gemoc-studio-modeldebugging/tree/master/java_execution/java_engine/docs/dev/JavaXdsml.asciidoc.]
+
+This component implements the user interface and services for the language workbench dedicated to the case of the JavaEngine. As seen in <<img-ComponentsOverview-devguide>>, it is based on the XDSML Framework from GEMOC Framewok.

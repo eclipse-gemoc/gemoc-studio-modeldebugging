@@ -1,0 +1,24 @@
+////////////////////////////////////////////////////////////////
+//	Reproduce title only if not included in master documentation
+////////////////////////////////////////////////////////////////
+ifndef::includedInMaster[]
+
+= Developer Guide
+== Components Overview
+=== Execution engines
+
+endif::[]
+
+[[execution-engines-java-execution]]
+==== Java Execution 
+
+footnote:[asciidoc source of this page:  https://github.com/eclipse/gemoc-studio-modeldebugging/tree/master/java_execution/java_engine/docs/dev/JavaExecution.asciidoc.]
+
+The Java execution offers a way to express sequential behavior using Java and compatible languages such as xtend+K3.
+
+As usual in the studio, the code is split between part dedicated to the Language Workbench or to the Modeling Workbench.
+Th code for the Language workbench is located in the _java_xdsml_ folder, the code for the modeling workbench is in _java_engine_.
+
+include::JavaXdsml.asciidoc[]
+
+include::JavaEngine.asciidoc[]

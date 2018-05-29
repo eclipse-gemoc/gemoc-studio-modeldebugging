@@ -1,0 +1,22 @@
+////////////////////////////////////////////////////////////////
+//	Reproduce title only if not included in master documentation
+////////////////////////////////////////////////////////////////
+ifndef::includedInMaster[]
+
+= Developer Guide
+== Components Overview
+=== Simulation Model Animation Framework 
+
+endif::[]
+
+footnote:[asciidoc source of this page:  https://github.com/eclipse/gemoc-studio-modeldebugging/tree/master/simulationmodelanimation/docs/dev/SimulationModelAnimation.asciidoc.]
+
+[NOTE]
+====
+The initial design of this component comes from GEMOC ANR project. Some relevant architecture information may be found in http://gemoc.irisa.fr/ins-pub/m30/gemoc-anr-d4.3.1-v1.0.pdf
+====
+
+[TIP]
+====
+The content of this framework can be used standalone in order to use only basic animation and debug services. The concrete implementation then has to create its own engine and launcher architecture (Ie. reproduce the other parts of the GEMOC framework in order to integrate the DSL in the IDE UI). An example of such implementation can be found with the Arduino Designer demo https://github.com/mbats/arduino
+====

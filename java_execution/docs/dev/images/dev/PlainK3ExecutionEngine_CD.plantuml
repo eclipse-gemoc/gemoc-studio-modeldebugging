@@ -1,0 +1,35 @@
+@startuml
+skinparam class {
+	BackgroundColor White
+	ArrowColor Black
+	BorderColor Black
+}
+
+scale max 1024 width
+scale max 800 height
+
+class PlainK3ExecutionEngine #beige {
+}  
+
+
+class Launcher #beige {
+}  
+
+interface IDisposable
+interface IExecutionEngine
+interface IStepManager
+interface ILaunchConfigurationDelegate
+
+IDisposable <|.. AbstractSequentialExecutionEngine 
+IExecutionEngine <|.. AbstractSequentialExecutionEngine 
+AbstractSequentialExecutionEngine <|-- AbstractCommandBasedSequentialExecutionEngine
+AbstractCommandBasedSequentialExecutionEngine <|-- PlainK3ExecutionEngine
+IStepManager <|.. PlainK3ExecutionEngine
+
+ILaunchConfigurationDelegate <|.. AbstractDSLLaunchConfigurationDelegate
+AbstractDSLLaunchConfigurationDelegate <|-- AbstractDSLLaunchConfigurationDelegateUI 
+AbstractDSLLaunchConfigurationDelegateUI <|-- AbstractDSLLaunchConfigurationDelegateSiriusUI
+AbstractDSLLaunchConfigurationDelegateSiriusUI <|-- AbstractSequentialGemocLauncher
+AbstractSequentialGemocLauncher <|-- Launcher
+
+@enduml

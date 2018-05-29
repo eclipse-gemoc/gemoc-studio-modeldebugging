@@ -1,0 +1,50 @@
+////////////////////////////////////////////////////////////////
+//	Reproduce title only if not included in master documentation
+////////////////////////////////////////////////////////////////
+ifndef::includedInMaster[]
+
+= Developer Guide
+== Components Overview
+=== GEMOC Framework
+
+endif::[]
+
+[[devguide-executionframework]]
+==== Execution Framework 
+
+footnote:[asciidoc source of this page:  https://github.com/eclipse/gemoc-studio-modeldebugging/tree/master/execution_framework/execution_framework/docs/dev/ExecutionFramework.asciidoc.]
+
+
+<<img-ExecutionEngine-overview-CD-devguide>> shows a typical concrete engine implementation. In this diagram, we use the concrete classes coming from the JavaEngine (see <<execution-engines-java-execution>>).
+Where the PlainK3ExecutionEngine  is able to correctly deal with the step notifications to the _IEngineAddon_ thanks to an IStepManager implementation in K3. This management of the Step notification may differ depending on the Engine and the technology used to implement the DSL behavior (mocml, ALE, XMOF, ...). 
+
+[[img-ExecutionEngine-overview-CD-devguide]]
+.ExecutionEngine overview
+image::images/dev/ExecutionEngine_overview_CD.png["ExecutionEngine overview"]
+
+
+<<img-ExecutionEngine-typical-flow-SD-devguide>> shows a typical execution flow of the Engine. The couple Engine and  execution transformation must implement the _IExecutionEngine_ interface (cf. <<img-FrameworkCommons-overview-CD-devguide>>) and are in charge of calling the methods of _IengineAddon_ during the model execution.
+
+In this sequence diagram, calls to _Addons_ are actually a call to the corresponding method to all registered classes implementing _IEngineAddon_ for the current execution context. 
+
+
+[[img-ExecutionEngine-typical-flow-SD-devguide]]
+.ExecutionEngine typical flow
+image::images/dev/ExecutionEngine_Typical_flow_SD.png["ExecutionEngine typical flow"]
+
+
+In most situation, the registration of addons is done using the `org.eclipse.gemoc.gemoc_language_workbench.engine_addon` or the  `org.eclipse.gemoc.gemoc_language_workbench.xdsml` plugin extension points.
+Addons registered via extension points can be enabled or disabled by the end user in the launch configuration tab. (see <<userguide-sequential-launch-conf>> and <<userguide-concurrent-launch-conf>> in the Modeling Workbench User Guide)
+
+
+Addons registered on `org.eclipse.gemoc.gemoc_language_workbench.engine_addon` extension point are supposed language agnostic and should apply to any DSL. However they may be engine dependent. They are typically designed by GEMOC contributors who wish to extend GEMOC features.
+
+Addons registered on `org.eclipse.gemoc.gemoc_language_workbench.xdsml` extension point are supposed language specific and should apply to a single DSL. They are typically designed by a Language designer who which to offer a specific feature for the language he is developing.
+
+
+Mandatory addons do not need to be declared as extension point, they are directly handled by the engine/launcher implementation. (search for a call to `addEngineAddon` in order to find addons that are programmatically added to the execution.
+
+Two main examples for mandatory addons are:
+
+- the Sirius animation used by Sirius services is registered in `AbstractSequentialGemocLauncher.launch`  
+- the debugger itself is registered in `AbstractGemocLauncher.getDebugger`. As it is responsible for pausing the execution flow on steps according to the breakpoints, it listens the calls to the engine events. 

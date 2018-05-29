@@ -1,0 +1,85 @@
+@startuml
+skinparam class {
+	BackgroundColor White
+	ArrowColor Black
+	BorderColor Black
+}
+
+scale max 1024 width
+scale max 800 height
+
+package xdsmlframework.api.engine_addon {
+	interface IEngineAddon #beige {
+		void engineAboutToStart(IExecutionEngine engine)
+		void engineStarted(IExecutionEngine executionEngine)
+		void engineInitialized(IExecutionEngine executionEngine)
+		void engineAboutToStop(IExecutionEngine engine)
+		void engineStopped(IExecutionEngine engine)
+		void engineAboutToDispose(IExecutionEngine engine)
+		void aboutToSelectStep(IExecutionEngine engine, Collection<trace.commons.model.trace.Step<?>> steps)
+		void proposedStepsChanged(IExecutionEngine engine, Collection<trace.commons.model.trace.Step<?>> steps)
+		void stepSelected(IExecutionEngine engine, trace.commons.model.trace.Step<?> selectedStep)
+		void aboutToExecuteStep(IExecutionEngine engine, trace.commons.model.trace.Step<?> stepToExecute)
+		void stepExecuted(IExecutionEngine engine, trace.commons.model.trace.Step<?> stepExecuted)
+		void engineStatusChanged(IExecutionEngine engine, EngineStatus.RunStatus newStatus)
+		List<String> validate(List<engine_addon.IEngineAddon> otherAddons)
+	}
+}
+
+package xdsmlframework.api.core {
+	interface IExecutionEngine #beige {
+		Deque<trace.commons.model.trace.Step<?>> getCurrentStack()
+		trace.commons.model.trace.Step<?> getCurrentStep()
+		void start()
+		void stop()
+		EngineStatus getEngineStatus()
+		void setEngineStatus(EngineStatus.RunStatus status)
+		boolean hasAddon(Class<T> type)
+		T getAddon(Class<T> type)
+		IExecutionContext getExecutionContext()
+		EngineStatus.RunStatus getRunningStatus()
+		Set<T> getAddonsTypedBy(Class<T> type)
+		void initialize(IExecutionContext executionContext)
+		trace.commons.model.launchconfiguration.LaunchConfiguration extractLaunchConfiguration()
+		String engineKindName()
+		String getName()
+		void startSynchronous()
+	}
+	interface IExecutionContext {
+		void initializeResourceModel()
+		org.eclipse.gemoc.xdsmlframework.api.extensions.languages.LanguageDefinitionExtension getLanguageDefinitionExtension()
+		IExecutionWorkspace getWorkspace()
+		IExecutionPlatform getExecutionPlatform()
+		IRunConfiguration getRunConfiguration()
+		Resource getResourceModel()
+		ExecutionMode getExecutionMode()
+		org.eclipse.gemoc.trace.commons.model.trace.MSEModel getMSEModel()
+		org.osgi.framework.Bundle getDslBundle()
+	}
+	interface "IDisposable" as org_eclipse_gemoc_xdsmlframework_api_core_IDisposable {		
+		void dispose()
+	}
+	interface IExecutionWorkspace {
+		IPath getProjectPath()
+		IPath getModelPath()
+		IPath getMoCPath()
+		IPath getMSEModelPath()
+		IPath getExecutionPath()
+		void copyFileToExecutionFolder(IPath filePath)
+	}
+	interface IExecutionPlatform {
+		IModelLoader getModelLoader()
+		void addEngineAddon(IEngineAddon addon)
+		void removeEngineAddon(IEngineAddon addon)
+		Iterable<IEngineAddon> getEngineAddons()
+	}
+	interface IModelLoader {
+		Resource loadModel(IExecutionContext context)
+		Resource loadModelForAnimation(IExecutionContext context)
+		void setProgressMonitor(IProgressMonitor progressMonitor)
+	}
+	org_eclipse_gemoc_xdsmlframework_api_core_IDisposable <|-- IExecutionEngine
+	org_eclipse_gemoc_xdsmlframework_api_core_IDisposable <|-- IExecutionContext
+	org_eclipse_gemoc_xdsmlframework_api_core_IDisposable <|-- IExecutionPlatform
+}
+@enduml
