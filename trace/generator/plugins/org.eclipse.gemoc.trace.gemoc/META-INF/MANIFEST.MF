@@ -17,4 +17,5 @@ Require-Bundle: org.eclipse.gemoc.timeline;bundle-version="1.0.0",
  org.eclipse.gemoc.xdsmlframework.commons
 Export-Package: org.eclipse.gemoc.trace.gemoc.traceaddon
 Bundle-ActivationPolicy: lazy
+Import-Package: org.eclipse.gemoc.executionframework.debugger
 
