@@ -12,7 +12,7 @@ package org.eclipse.gemoc.execution.sequential.javaengine.ui.launcher;
 
 import org.eclipse.core.runtime.CoreException;
 import org.eclipse.debug.core.ILaunchConfiguration;
-import org.eclipse.gemoc.executionframework.engine.ui.commons.RunConfiguration;
+import org.eclipse.gemoc.executionframework.engine.core.RunConfiguration;
 
 public class SequentialRunConfiguration extends RunConfiguration {
 

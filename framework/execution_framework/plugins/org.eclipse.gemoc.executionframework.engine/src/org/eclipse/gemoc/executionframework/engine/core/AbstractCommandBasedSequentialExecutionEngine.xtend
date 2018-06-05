@@ -11,8 +11,10 @@
  package org.eclipse.gemoc.executionframework.engine.core
 
 import org.eclipse.emf.transaction.RecordingCommand
+import org.eclipse.gemoc.xdsmlframework.api.core.IRunConfiguration
+import org.eclipse.gemoc.xdsmlframework.api.core.IExecutionContext
 
-abstract class AbstractCommandBasedSequentialExecutionEngine extends AbstractSequentialExecutionEngine {
+abstract class AbstractCommandBasedSequentialExecutionEngine<C extends IExecutionContext<R, ?, ?>, R extends IRunConfiguration> extends AbstractSequentialExecutionEngine<C, R> {
 
 	/**
 	 * Must be called in a callback from the executed code from the operational

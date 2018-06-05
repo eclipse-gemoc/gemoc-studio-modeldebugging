@@ -28,7 +28,7 @@ import org.eclipse.gemoc.xdsmlframework.api.engine_addon.IEngineAddon;
 public class SimpleModelChangeListenerAddon implements IEngineAddon, IModelChangeListenerAddon {
 
 	private EContentAdapter adapter;
-	private IExecutionEngine engine;
+	private IExecutionEngine<?> engine;
 	private Map<IEngineAddon, List<FieldChange>> changes;
 	private Set<IEngineAddon> registeredAddons;
 
@@ -39,7 +39,7 @@ public class SimpleModelChangeListenerAddon implements IEngineAddon, IModelChang
 				addon -> changes.get(addon).add(new FieldChange(feature, eObject, value, changeType)));
 	}
 
-	public SimpleModelChangeListenerAddon(final IExecutionEngine engine) {
+	public SimpleModelChangeListenerAddon(final IExecutionEngine<?> engine) {
 		this.engine = engine;
 		changes = new HashMap<>();
 		registeredAddons = new HashSet<>();
@@ -103,7 +103,7 @@ public class SimpleModelChangeListenerAddon implements IEngineAddon, IModelChang
 	}
 
 	@Override
-	public void engineAboutToStop(IExecutionEngine engine) {
+	public void engineAboutToStop(IExecutionEngine<?> engine) {
 		Set<Resource> allResources = org.eclipse.gemoc.commons.eclipse.emf.EMFResource.getRelatedResources(this.engine
 				.getExecutionContext().getResourceModel());
 		allResources.stream().forEach(r -> {

@@ -38,7 +38,6 @@ import org.eclipse.gemoc.dsl.debug.StackFrame;
 import org.eclipse.gemoc.dsl.debug.ide.AbstractDSLDebugger;
 import org.eclipse.gemoc.dsl.debug.ide.adapter.DSLStackFrameAdapter;
 import org.eclipse.gemoc.dsl.debug.ide.event.IDSLDebugEventProcessor;
-import org.eclipse.gemoc.trace.commons.model.trace.MSEOccurrence;
 import org.eclipse.gemoc.trace.commons.model.trace.Step;
 import org.eclipse.gemoc.xdsmlframework.api.core.IExecutionEngine;
 import org.eclipse.gemoc.xdsmlframework.api.engine_addon.modelchangelistener.FieldChange;
@@ -78,13 +77,13 @@ public abstract class AbstractGemocDebugger extends AbstractDSLDebugger implemen
 
 	protected EObject executedModelRoot = null;
 
-	protected final IExecutionEngine engine;
+	protected final IExecutionEngine<?> engine;
 
 	private String bundleSymbolicName;
 
 	private List<IMutableFieldExtractor> mutableFieldExtractors = new ArrayList<>();
 
-	public AbstractGemocDebugger(IDSLDebugEventProcessor target, IExecutionEngine engine) {
+	public AbstractGemocDebugger(IDSLDebugEventProcessor target, IExecutionEngine<?> engine) {
 		super(target);
 		this.engine = engine;
 
@@ -116,15 +115,15 @@ public abstract class AbstractGemocDebugger extends AbstractDSLDebugger implemen
 		this.mutableFieldExtractors = mutableFieldExtractors;
 	}
 
-	private Set<BiPredicate<IExecutionEngine, Step<?>>> predicateBreakPoints = new HashSet<BiPredicate<IExecutionEngine, Step<?>>>();
-	private Set<BiPredicate<IExecutionEngine, Step<?>>> predicateBreaks = new HashSet<BiPredicate<IExecutionEngine, Step<?>>>();
+	private Set<BiPredicate<IExecutionEngine<?>, Step<?>>> predicateBreakPoints = new HashSet<BiPredicate<IExecutionEngine<?>, Step<?>>>();
+	private Set<BiPredicate<IExecutionEngine<?>, Step<?>>> predicateBreaks = new HashSet<BiPredicate<IExecutionEngine<?>, Step<?>>>();
 
 	@Override
 	/**
 	 * Breakpoints are persistent, and can trigger pauses as long as they are not
 	 * removed.
 	 */
-	public void addPredicateBreakpoint(BiPredicate<IExecutionEngine, Step<?>> predicate) {
+	public void addPredicateBreakpoint(BiPredicate<IExecutionEngine<?>, Step<?>> predicate) {
 		predicateBreakPoints.add(predicate);
 	}
 
@@ -132,16 +131,16 @@ public abstract class AbstractGemocDebugger extends AbstractDSLDebugger implemen
 	/**
 	 * A Break only trigger a single pause, then is removed.
 	 */
-	public void addPredicateBreak(BiPredicate<IExecutionEngine, Step<?>> predicate) {
+	public void addPredicateBreak(BiPredicate<IExecutionEngine<?>, Step<?>> predicate) {
 		predicateBreaks.add(predicate);
 	}
 
-	protected boolean shouldBreakPredicates(IExecutionEngine engine, Step<?> step) {
+	protected boolean shouldBreakPredicates(IExecutionEngine<?> engine, Step<?> step) {
 
 		// We look at predicate breaks to remove the ones that are true
 		boolean shouldBreak = false;
-		Set<BiPredicate<IExecutionEngine, Step<?>>> toRemove = new HashSet<BiPredicate<IExecutionEngine, Step<?>>>();
-		for (BiPredicate<IExecutionEngine, Step<?>> pred : predicateBreaks) {
+		Set<BiPredicate<IExecutionEngine<?>, Step<?>>> toRemove = new HashSet<BiPredicate<IExecutionEngine<?>, Step<?>>>();
+		for (BiPredicate<IExecutionEngine<?>, Step<?>> pred : predicateBreaks) {
 			if (pred.test(engine, step)) {
 				shouldBreak = true;
 				toRemove.add(pred);
@@ -152,7 +151,7 @@ public abstract class AbstractGemocDebugger extends AbstractDSLDebugger implemen
 			return true;
 
 		// If no break yet, we look at predicate breakpoints
-		for (BiPredicate<IExecutionEngine, Step<?>> pred : predicateBreakPoints) {
+		for (BiPredicate<IExecutionEngine<?>, Step<?>> pred : predicateBreakPoints) {
 			if (pred.test(engine, step)) {
 				return true;
 			}

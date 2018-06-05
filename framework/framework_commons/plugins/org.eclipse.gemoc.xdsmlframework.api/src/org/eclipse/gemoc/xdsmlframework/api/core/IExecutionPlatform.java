@@ -12,10 +12,7 @@ package org.eclipse.gemoc.xdsmlframework.api.core;
 
 import org.eclipse.gemoc.xdsmlframework.api.engine_addon.IEngineAddon;
 
-public interface IExecutionPlatform extends IDisposable
-{
-
-	
+public interface IExecutionPlatform extends IDisposable {
 
 	/**
 	 * @return The model loader used to load the model to be executed.
@@ -23,8 +20,9 @@ public interface IExecutionPlatform extends IDisposable
 	IModelLoader getModelLoader();
 
 	void addEngineAddon(IEngineAddon addon);
+
 	void removeEngineAddon(IEngineAddon addon);
+
 	Iterable<IEngineAddon> getEngineAddons();
-	
 
 }

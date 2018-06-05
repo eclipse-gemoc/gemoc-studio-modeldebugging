@@ -10,13 +10,6 @@
  *******************************************************************************/
 package org.eclipse.gemoc.execution.sequential.javaxdsml.ide.ui.menu
 
-import java.util.List
-import java.util.Set
-import org.eclipse.core.commands.ExecutionEvent
-import org.eclipse.emf.ecore.EStructuralFeature
-import org.eclipse.xtext.nodemodel.INode
-import org.eclipse.xtext.nodemodel.util.NodeModelUtils
-import org.eclipse.xtext.ui.editor.utils.EditorUtils
 import org.eclipse.gemoc.execution.sequential.javaxdsml.ide.ui.commands.CreateDSAProjectHandler
 
 class AddDSA extends CreateDSAProjectHandler {

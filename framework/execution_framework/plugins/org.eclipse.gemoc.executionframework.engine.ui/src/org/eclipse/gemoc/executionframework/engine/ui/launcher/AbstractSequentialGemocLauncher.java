@@ -28,51 +28,51 @@ import org.eclipse.debug.ui.ILaunchGroup;
 import org.eclipse.emf.common.util.URI;
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.EcorePackage;
+import org.eclipse.gemoc.commons.eclipse.messagingsystem.api.MessagingSystem;
+import org.eclipse.gemoc.dsl.debug.ide.adapter.IDSLCurrentInstructionListener;
+import org.eclipse.gemoc.executionframework.engine.commons.EngineContextException;
+import org.eclipse.gemoc.executionframework.engine.core.RunConfiguration;
+import org.eclipse.gemoc.executionframework.extensions.sirius.services.AbstractGemocAnimatorServices;
+import org.eclipse.gemoc.executionframework.extensions.sirius.services.AbstractGemocDebuggerServices;
+import org.eclipse.gemoc.xdsmlframework.api.core.EngineStatus.RunStatus;
+import org.eclipse.gemoc.xdsmlframework.api.core.ExecutionMode;
+import org.eclipse.gemoc.xdsmlframework.api.core.IExecutionContext;
+import org.eclipse.gemoc.xdsmlframework.api.core.IExecutionEngine;
+import org.eclipse.gemoc.xdsmlframework.api.core.IRunConfiguration;
+import org.eclipse.gemoc.xdsmlframework.api.engine_addon.IEngineAddon;
 import org.eclipse.jface.dialogs.MessageDialog;
 import org.eclipse.jface.viewers.ISelection;
 import org.eclipse.jface.viewers.StructuredSelection;
 import org.eclipse.ui.IEditorPart;
 import org.eclipse.ui.PlatformUI;
-import org.eclipse.gemoc.executionframework.engine.commons.EngineContextException;
-import org.eclipse.gemoc.executionframework.engine.ui.commons.RunConfiguration;
-import org.eclipse.gemoc.executionframework.extensions.sirius.services.AbstractGemocAnimatorServices;
-import org.eclipse.gemoc.executionframework.extensions.sirius.services.AbstractGemocDebuggerServices;
-import org.eclipse.gemoc.xdsmlframework.api.core.EngineStatus.RunStatus;
-import org.eclipse.gemoc.xdsmlframework.api.core.ExecutionMode;
-import org.eclipse.gemoc.xdsmlframework.api.core.IExecutionEngine;
-import org.eclipse.gemoc.xdsmlframework.api.engine_addon.IEngineAddon;
 
-import org.eclipse.gemoc.commons.eclipse.messagingsystem.api.MessagingSystem;
-import org.eclipse.gemoc.dsl.debug.ide.adapter.IDSLCurrentInstructionListener;
+abstract public class AbstractSequentialGemocLauncher<C extends IExecutionContext<R, ?, ?>, R extends IRunConfiguration>
+		extends AbstractGemocLauncher<C> {
 
-abstract public class AbstractSequentialGemocLauncher extends AbstractGemocLauncher {
+	// warning this MODEL_ID must be the same as the one in the ModelLoader in order
+	// to enable correctly the breakpoints
+	public final static String MODEL_ID = org.eclipse.gemoc.executionframework.extensions.sirius.Activator.PLUGIN_ID
+			+ ".debugModel";
 
-	// warning this MODEL_ID must be the same as the one in the ModelLoader in order to enable correctly the breakpoints
-	public final static String MODEL_ID = org.eclipse.gemoc.executionframework.extensions.sirius.Activator.PLUGIN_ID + ".debugModel";
-
-	
-	// progress monitor used during launch; useful for operations that wish to contribute to the progress bar
+	// progress monitor used during launch; useful for operations that wish to
+	// contribute to the progress bar
 	protected IProgressMonitor launchProgressMonitor = null;
 
-
-	private IExecutionEngine _executionEngine;
-	
+	private IExecutionEngine<C> _executionEngine;
 
 	protected final static String executionStartedMessage = "Execution started successfully.";
-	
-	protected abstract IExecutionEngine createExecutionEngine(RunConfiguration runConfiguration,
-			ExecutionMode executionMode) throws CoreException, EngineContextException;
+
+	protected abstract IExecutionEngine<C> createExecutionEngine(R runConfiguration, ExecutionMode executionMode)
+			throws CoreException, EngineContextException;
 
 	protected abstract void prepareViews();
 
-	protected abstract RunConfiguration parseLaunchConfiguration(ILaunchConfiguration configuration)
-			throws CoreException;
+	protected abstract R parseLaunchConfiguration(ILaunchConfiguration configuration) throws CoreException;
 
 	protected abstract MessagingSystem getMessagingSystem();
-	
 
 	protected abstract void error(final String message, Exception e);
-	
+
 	protected abstract void setDefaultsLaunchConfiguration(ILaunchConfigurationWorkingCopy configuration);
 
 	@Override
@@ -81,7 +81,7 @@ abstract public class AbstractSequentialGemocLauncher extends AbstractGemocLaunc
 		try {
 
 			debug("About to initialize and run the GEMOC Execution Engine...");
-			launchProgressMonitor =  monitor;
+			launchProgressMonitor = monitor;
 
 			// make sure to have the engine view when starting the engine
 			PlatformUI.getWorkbench().getDisplay().syncExec(new Runnable() {
@@ -90,7 +90,7 @@ abstract public class AbstractSequentialGemocLauncher extends AbstractGemocLaunc
 					prepareViews();
 				}
 			});
-			RunConfiguration runConfiguration = parseLaunchConfiguration(configuration);
+			R runConfiguration = parseLaunchConfiguration(configuration);
 
 			// We detect if we are running in debug mode or not
 			ExecutionMode executionMode = null;
@@ -152,15 +152,13 @@ abstract public class AbstractSequentialGemocLauncher extends AbstractGemocLaunc
 
 	}
 
-
 	private boolean isEngineAlreadyRunning(URI launchedModelURI) throws CoreException {
 		// make sure there is no other running engine on this model
-		Collection<IExecutionEngine> engines = org.eclipse.gemoc.executionframework.engine.Activator.getDefault().gemocRunningEngineRegistry
-				.getRunningEngines().values();
-		for (IExecutionEngine engine : engines) {
-			IExecutionEngine observable = (IExecutionEngine) engine;
-			if (observable.getRunningStatus() != RunStatus.Stopped
-					&& observable.getExecutionContext().getResourceModel().getURI().equals(launchedModelURI)) {
+		Collection<IExecutionEngine<?>> engines = org.eclipse.gemoc.executionframework.engine.Activator
+				.getDefault().gemocRunningEngineRegistry.getRunningEngines().values();
+		for (IExecutionEngine<?> engine : engines) {
+			if (engine.getRunningStatus() != RunStatus.Stopped
+					&& engine.getExecutionContext().getResourceModel().getURI().equals(launchedModelURI)) {
 				String message = "An engine is already running on this model, please stop it first";
 				warn(message);
 				return true;
@@ -209,7 +207,6 @@ abstract public class AbstractSequentialGemocLauncher extends AbstractGemocLaunc
 		return result;
 	}
 
-
 	@Override
 	protected final EObject getFirstInstruction(ISelection selection) {
 		return EcorePackage.eINSTANCE;
@@ -226,8 +223,8 @@ abstract public class AbstractSequentialGemocLauncher extends AbstractGemocLaunc
 	}
 
 	@Override
-	protected final ILaunchConfiguration[] createLaunchConfiguration(IResource file, EObject firstInstruction, String mode)
-			throws CoreException {
+	protected final ILaunchConfiguration[] createLaunchConfiguration(IResource file, EObject firstInstruction,
+			String mode) throws CoreException {
 		ILaunchConfiguration[] launchConfigs = super.createLaunchConfiguration(file, firstInstruction, mode);
 
 		if (launchConfigs.length == 1) {
@@ -246,9 +243,9 @@ abstract public class AbstractSequentialGemocLauncher extends AbstractGemocLaunc
 					if (group != null) {
 						ILaunchConfiguration savedLaunchConfig = configuration.doSave();
 						// open configuration for user validation and inputs
-						DebugUITools.openLaunchConfigurationDialogOnGroup(PlatformUI.getWorkbench()
-								.getActiveWorkbenchWindow().getShell(), new StructuredSelection(savedLaunchConfig),
-								group.getIdentifier(), null);
+						DebugUITools.openLaunchConfigurationDialogOnGroup(
+								PlatformUI.getWorkbench().getActiveWorkbenchWindow().getShell(),
+								new StructuredSelection(savedLaunchConfig), group.getIdentifier(), null);
 						// DebugUITools.openLaunchConfigurationDialog(PlatformUI.getWorkbench()
 						// .getActiveWorkbenchWindow().getShell(),
 						// savedLaunchConfig, group.getIdentifier(), null);
@@ -259,10 +256,9 @@ abstract public class AbstractSequentialGemocLauncher extends AbstractGemocLaunc
 		return launchConfigs;
 
 	}
-	
 
 	@Override
-	public IExecutionEngine getExecutionEngine() {
+	public IExecutionEngine<C> getExecutionEngine() {
 		return _executionEngine;
 	}
 

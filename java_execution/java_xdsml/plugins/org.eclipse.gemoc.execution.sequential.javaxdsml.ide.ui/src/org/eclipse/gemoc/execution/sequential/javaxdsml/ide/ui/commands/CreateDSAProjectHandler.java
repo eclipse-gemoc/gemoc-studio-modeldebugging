@@ -11,7 +11,7 @@
 package org.eclipse.gemoc.execution.sequential.javaxdsml.ide.ui.commands;
 
 import java.io.IOException;
-import java.util.HashMap;
+import java.util.Collections;
 import java.util.List;
 import java.util.Optional;
 import java.util.Set;
@@ -85,7 +85,7 @@ public class CreateDSAProjectHandler extends AbstractDslSelectHandler implements
 			dsl.getEntries().add(k3Entry);
 		}
 		try {
-			res.save(new HashMap());
+			res.save(Collections.emptyMap());
 		} catch (IOException e) {
 			Activator.error(e.getMessage(), e);
 		}

@@ -10,9 +10,8 @@
  *******************************************************************************/
  package org.eclipse.gemoc.executionframework.engine.core;
 
-import org.eclipse.gemoc.trace.commons.model.trace.MSEOccurrence
-import org.eclipse.gemoc.trace.commons.model.trace.Step
 import org.eclipse.emf.transaction.RollbackException
+import org.eclipse.gemoc.trace.commons.model.trace.Step
 
 /**
  * An exception that is caused by anything thrown from the execution of

@@ -11,16 +11,12 @@
 package org.eclipse.gemoc.addon.multidimensional.timeline.views;
 
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.Collection;
 import java.util.Collections;
 import java.util.List;
 import java.util.Map;
-import java.util.Optional;
 import java.util.Set;
 import java.util.function.BiPredicate;
-import java.util.function.Consumer;
-import java.util.function.Supplier;
 
 import org.eclipse.core.runtime.CoreException;
 import org.eclipse.core.runtime.IConfigurationElement;
@@ -28,10 +24,6 @@ import org.eclipse.core.runtime.IExtension;
 import org.eclipse.core.runtime.IExtensionPoint;
 import org.eclipse.core.runtime.IExtensionRegistry;
 import org.eclipse.core.runtime.Platform;
-import org.eclipse.debug.core.DebugPlugin;
-import org.eclipse.debug.core.ILaunchConfigurationType;
-import org.eclipse.debug.core.ILaunchConfigurationWorkingCopy;
-import org.eclipse.debug.core.ILaunchManager;
 import org.eclipse.emf.common.util.URI;
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.resource.Resource;
@@ -39,32 +31,10 @@ import org.eclipse.emf.ecore.resource.ResourceSet;
 import org.eclipse.emf.ecore.resource.impl.ResourceSetImpl;
 import org.eclipse.emf.ecore.util.EcoreUtil;
 import org.eclipse.emf.ecore.xmi.impl.XMIResourceFactoryImpl;
-import org.eclipse.jface.action.Action;
-import org.eclipse.jface.action.IToolBarManager;
-import org.eclipse.jface.dialogs.InputDialog;
-import org.eclipse.jface.resource.ImageDescriptor;
-import org.eclipse.jface.window.Window;
-import org.eclipse.swt.SWT;
-import org.eclipse.swt.events.SelectionAdapter;
-import org.eclipse.swt.events.SelectionEvent;
-import org.eclipse.swt.widgets.Composite;
-import org.eclipse.swt.widgets.Event;
-import org.eclipse.swt.widgets.FileDialog;
-import org.eclipse.swt.widgets.Menu;
-import org.eclipse.swt.widgets.MenuItem;
-import org.eclipse.swt.widgets.Shell;
-import org.eclipse.ui.IActionBars;
+import org.eclipse.gemoc.addon.multidimensional.timeline.Activator;
 import org.eclipse.gemoc.executionframework.debugger.AbstractGemocDebugger;
-import org.eclipse.gemoc.executionframework.engine.ui.launcher.AbstractGemocLauncher;
 import org.eclipse.gemoc.executionframework.ui.views.engine.EngineSelectionDependentViewPart;
 import org.eclipse.gemoc.executionframework.ui.views.engine.actions.AbstractEngineAction;
-import org.eclipse.gemoc.addon.multidimensional.timeline.Activator;
-import org.eclipse.gemoc.xdsmlframework.api.core.EngineStatus.RunStatus;
-import org.eclipse.gemoc.xdsmlframework.api.core.ExecutionMode;
-import org.eclipse.gemoc.xdsmlframework.api.core.IExecutionEngine;
-import org.eclipse.gemoc.xdsmlframework.api.core.IRunConfiguration;
-
-import org.eclipse.gemoc.trace.commons.model.launchconfiguration.LaunchConfiguration;
 import org.eclipse.gemoc.trace.commons.model.trace.Dimension;
 import org.eclipse.gemoc.trace.commons.model.trace.State;
 import org.eclipse.gemoc.trace.commons.model.trace.Step;
@@ -73,6 +43,20 @@ import org.eclipse.gemoc.trace.commons.model.trace.Value;
 import org.eclipse.gemoc.trace.gemoc.api.IMultiDimensionalTraceAddon;
 import org.eclipse.gemoc.trace.gemoc.api.ITraceExtractor;
 import org.eclipse.gemoc.trace.gemoc.traceaddon.AbstractTraceAddon;
+import org.eclipse.gemoc.xdsmlframework.api.core.EngineStatus.RunStatus;
+import org.eclipse.gemoc.xdsmlframework.api.core.ExecutionMode;
+import org.eclipse.gemoc.xdsmlframework.api.core.IExecutionEngine;
+import org.eclipse.jface.action.Action;
+import org.eclipse.jface.action.IToolBarManager;
+import org.eclipse.jface.dialogs.InputDialog;
+import org.eclipse.jface.resource.ImageDescriptor;
+import org.eclipse.jface.window.Window;
+import org.eclipse.swt.SWT;
+import org.eclipse.swt.widgets.Composite;
+import org.eclipse.swt.widgets.FileDialog;
+import org.eclipse.swt.widgets.Shell;
+import org.eclipse.ui.IActionBars;
+
 import javafx.embed.swt.FXCanvas;
 import javafx.scene.Scene;
 
@@ -90,7 +74,7 @@ public class MultidimensionalTimelineViewPart extends EngineSelectionDependentVi
 	
 	private AbstractGemocDebugger debugger = null;
 	
-	private IExecutionEngine engine = null;
+//	private IExecutionEngine<?> engine = null;
 
 	public List<EObject> getStatesToBreakTo() {
 		return Collections.unmodifiableList(statesToBreakTo);
@@ -114,58 +98,58 @@ public class MultidimensionalTimelineViewPart extends EngineSelectionDependentVi
 		});
 		buildMenu(parent.getShell());
 
-		final Supplier<Integer> getLastClickedState = timelineRenderer.getLastClickedStateSupplier();
-
-		final Menu menu = new Menu(fxCanvas);
-		MenuItem launchAndBreakAtStateMenuItem = new MenuItem(menu, SWT.NONE);
-		launchAndBreakAtStateMenuItem.setText("Relaunch and break at this state");
-		launchAndBreakAtStateMenuItem.addSelectionListener(new SelectionAdapter() {
-			@Override
-			public void widgetSelected(SelectionEvent evt) {
-				breakAtStateIndex = getLastClickedState.get();
-				if (debugger != null && !debugger.isTerminated()) {
-					debugger.terminate();
-				}
-				if (engine != null) {
-					engine.stop();
-				}
-				launchConfigFromTrace();
-			}
-		});
-		MenuItem launchAndBreakAtVectorMenuItem = new MenuItem(menu, SWT.NONE);
-		launchAndBreakAtVectorMenuItem.setText("Relaunch and break at this value vector");
-		launchAndBreakAtVectorMenuItem.addSelectionListener(new SelectionAdapter() {
-			@Override
-			public void widgetSelected(SelectionEvent evt) {
-				final State<?,?> state = traceAddon.getTraceExtractor().getState(getLastClickedState.get());
-				breakAtVectorState = state;
-				if (debugger != null && !debugger.isTerminated()) {
-					debugger.terminate();
-				}
-				if (engine != null) {
-					engine.stop();
-				}
-				launchConfigFromTrace();
-			}
-		});
-
-		menu.addListener(SWT.Show, (event) -> {
-			menu.setVisible(true);
-		});
-		
-		Consumer<List<Boolean>> displayMenu = (l) -> {
-			int i = 0;
-			for (boolean b : l) {
-				menu.getItem(i).setEnabled(b);
-				i++;
-			}
-			Event event = new Event();
-			event.type = SWT.Show;
-			event.button = SWT.BUTTON2;
-			menu.notifyListeners(SWT.Show, event);
-		};
-
-		timelineRenderer.setMenuDisplayer(displayMenu);
+//		final Supplier<Integer> getLastClickedState = timelineRenderer.getLastClickedStateSupplier();
+//
+//		final Menu menu = new Menu(fxCanvas);
+//		MenuItem launchAndBreakAtStateMenuItem = new MenuItem(menu, SWT.NONE);
+//		launchAndBreakAtStateMenuItem.setText("Relaunch and break at this state");
+//		launchAndBreakAtStateMenuItem.addSelectionListener(new SelectionAdapter() {
+//			@Override
+//			public void widgetSelected(SelectionEvent evt) {
+//				breakAtStateIndex = getLastClickedState.get();
+//				if (debugger != null && !debugger.isTerminated()) {
+//					debugger.terminate();
+//				}
+//				if (engine != null) {
+//					engine.stop();
+//				}
+//				launchConfigFromTrace();
+//			}
+//		});
+//		MenuItem launchAndBreakAtVectorMenuItem = new MenuItem(menu, SWT.NONE);
+//		launchAndBreakAtVectorMenuItem.setText("Relaunch and break at this value vector");
+//		launchAndBreakAtVectorMenuItem.addSelectionListener(new SelectionAdapter() {
+//			@Override
+//			public void widgetSelected(SelectionEvent evt) {
+//				final State<?,?> state = traceAddon.getTraceExtractor().getState(getLastClickedState.get());
+//				breakAtVectorState = state;
+//				if (debugger != null && !debugger.isTerminated()) {
+//					debugger.terminate();
+//				}
+//				if (engine != null) {
+//					engine.stop();
+//				}
+//				launchConfigFromTrace();
+//			}
+//		});
+//
+//		menu.addListener(SWT.Show, (event) -> {
+//			menu.setVisible(true);
+//		});
+//		
+//		Consumer<List<Boolean>> displayMenu = (l) -> {
+//			int i = 0;
+//			for (boolean b : l) {
+//				menu.getItem(i).setEnabled(b);
+//				i++;
+//			}
+//			Event event = new Event();
+//			event.type = SWT.Show;
+//			event.button = SWT.BUTTON2;
+//			menu.notifyListeners(SWT.Show, event);
+//		};
+//
+//		timelineRenderer.setMenuDisplayer(displayMenu);
 	}
 
 	private void buildMenu(Shell shell) {
@@ -189,7 +173,7 @@ public class MultidimensionalTimelineViewPart extends EngineSelectionDependentVi
 			}
 
 			@Override
-			public void engineSelectionChanged(IExecutionEngine engine) {
+			public void engineSelectionChanged(IExecutionEngine<?> engine) {
 			}
 
 			@Override
@@ -215,7 +199,7 @@ public class MultidimensionalTimelineViewPart extends EngineSelectionDependentVi
 			}
 
 			@Override
-			public void engineSelectionChanged(IExecutionEngine engine) {
+			public void engineSelectionChanged(IExecutionEngine<?> engine) {
 			}
 
 			@Override
@@ -244,7 +228,7 @@ public class MultidimensionalTimelineViewPart extends EngineSelectionDependentVi
 			}
 
 			@Override
-			public void engineSelectionChanged(IExecutionEngine engine) {
+			public void engineSelectionChanged(IExecutionEngine<?> engine) {
 			}
 
 			@Override
@@ -314,7 +298,7 @@ public class MultidimensionalTimelineViewPart extends EngineSelectionDependentVi
 			}
 
 			@Override
-			public void engineSelectionChanged(IExecutionEngine engine) {
+			public void engineSelectionChanged(IExecutionEngine<?> engine) {
 			}
 
 			@Override
@@ -335,7 +319,7 @@ public class MultidimensionalTimelineViewPart extends EngineSelectionDependentVi
 			}
 
 			@Override
-			public void engineSelectionChanged(IExecutionEngine engine) {
+			public void engineSelectionChanged(IExecutionEngine<?> engine) {
 			}
 
 			@Override
@@ -375,7 +359,7 @@ public class MultidimensionalTimelineViewPart extends EngineSelectionDependentVi
 			}
 
 			@Override
-			public void engineSelectionChanged(IExecutionEngine engine) {
+			public void engineSelectionChanged(IExecutionEngine<?> engine) {
 			}
 
 			@Override
@@ -402,7 +386,7 @@ public class MultidimensionalTimelineViewPart extends EngineSelectionDependentVi
 		}
 	}
 
-	private boolean canDisplayTimeline(IExecutionEngine engine) {
+	private boolean canDisplayTimeline(IExecutionEngine<?> engine) {
 		if (engine.getExecutionContext().getExecutionMode().equals(ExecutionMode.Run)
 				&& engine.getRunningStatus().equals(RunStatus.Stopped)) {
 			return true;
@@ -417,9 +401,9 @@ public class MultidimensionalTimelineViewPart extends EngineSelectionDependentVi
 	private int breakAtStateIndex = -1;
 	
 	@Override
-	public void engineSelectionChanged(IExecutionEngine engine) {
+	public void engineSelectionChanged(IExecutionEngine<?> engine) {
 		if (engine != null) {
-			this.engine = engine;
+//			this.engine = engine;
 			if (canDisplayTimeline(engine)) {
 				@SuppressWarnings("rawtypes")
 				Set<IMultiDimensionalTraceAddon> traceAddons = engine
@@ -432,10 +416,10 @@ public class MultidimensionalTimelineViewPart extends EngineSelectionDependentVi
 					if (!debuggers.isEmpty()) {
 						debugger = debuggers.stream().findFirst().get();
 						if (breakAtVectorState != null) {
-							BiPredicate<IExecutionEngine, Step<?>> predicate = new BiPredicate<IExecutionEngine, Step<?>>() {
+							BiPredicate<IExecutionEngine<?>, Step<?>> predicate = new BiPredicate<IExecutionEngine<?>, Step<?>>() {
 								final State<?,?> baseState = breakAtVectorState;
 								@Override
-								public boolean test(IExecutionEngine executionEngine, Step<?> step) {
+								public boolean test(IExecutionEngine<?> executionEngine, Step<?> step) {
 									final ITraceExtractor<Step<?>, State<?,?>, TracedObject<?>, Dimension<?>, Value<?>> traceExtractor = traceAddon.getTraceExtractor();
 									final int lastStateIndex = traceExtractor.getStatesTraceLength() - 1;
 									final State<?,?> state = traceExtractor.getState(lastStateIndex);
@@ -446,10 +430,10 @@ public class MultidimensionalTimelineViewPart extends EngineSelectionDependentVi
 							breakAtVectorState = null;
 						}
 						if (breakAtStateIndex != -1) {
-							BiPredicate<IExecutionEngine, Step<?>> predicate = new BiPredicate<IExecutionEngine, Step<?>>() {
+							BiPredicate<IExecutionEngine<?>, Step<?>> predicate = new BiPredicate<IExecutionEngine<?>, Step<?>>() {
 								final int stateToBreakTo = breakAtStateIndex;
 								@Override
-								public boolean test(IExecutionEngine executionEngine, Step<?> step) {
+								public boolean test(IExecutionEngine<?> executionEngine, Step<?> step) {
 									final int traceLength = extractor.getStatesTraceLength();
 									final int stateToBreakTo = this.stateToBreakTo;
 									final boolean result = traceLength == stateToBreakTo + 1;
@@ -470,34 +454,34 @@ public class MultidimensionalTimelineViewPart extends EngineSelectionDependentVi
 		}
 	}
 	
-	private void launchConfigFromTrace() {
-		final LaunchConfiguration launchConfiguration = traceAddon.getTraceExtractor().getLaunchConfiguration();
-		final String launchConfigurationType = launchConfiguration.getType();
-		final IConfigurationElement[] elements = Platform.getExtensionRegistry()
-				.getConfigurationElementsFor("org.eclipse.debug.core.launchConfigurationTypes");
-		final Optional<IConfigurationElement> optElt = Arrays.asList(elements)
-				.stream().filter(e->e.getAttribute("id").equals(launchConfigurationType)).findFirst();
-		if (optElt.isPresent()) {
-			final IConfigurationElement elt = optElt.get();
-			try {
-				final Object obj = elt.createExecutableExtension("delegate");
-				final AbstractGemocLauncher launcher = (AbstractGemocLauncher) obj;
-				final Map<String,Object> parameters = launcher.parseLaunchConfiguration(launchConfiguration);
-				final ILaunchManager manager = DebugPlugin.getDefault().getLaunchManager();
-				final String launchName = manager.generateLaunchConfigurationName((String) parameters
-						.get(IRunConfiguration.LAUNCH_SELECTED_LANGUAGE));
-				final ILaunchConfigurationType type = manager
-						.getLaunchConfigurationType(launchConfigurationType);
-				try {
-					final ILaunchConfigurationWorkingCopy workingCopy = type.newInstance(null, launchName);
-					workingCopy.setAttributes(parameters);
-					workingCopy.launch("debug", null, false, true);
-				} catch (CoreException e) {
-					Activator.error(e.getMessage(), e);
-				}
-			} catch (CoreException e1) {
-				Activator.error(e1.getMessage(), e1);
-			}
-		}
-	}
+//	private void launchConfigFromTrace() {
+//		final LaunchConfiguration launchConfiguration = traceAddon.getTraceExtractor().getLaunchConfiguration();
+//		final String launchConfigurationType = launchConfiguration.getType();
+//		final IConfigurationElement[] elements = Platform.getExtensionRegistry()
+//				.getConfigurationElementsFor("org.eclipse.debug.core.launchConfigurationTypes");
+//		final Optional<IConfigurationElement> optElt = Arrays.asList(elements)
+//				.stream().filter(e->e.getAttribute("id").equals(launchConfigurationType)).findFirst();
+//		if (optElt.isPresent()) {
+//			final IConfigurationElement elt = optElt.get();
+//			try {
+//				final Object obj = elt.createExecutableExtension("delegate");
+//				final AbstractGemocLauncher<?> launcher = (AbstractGemocLauncher<?>) obj;
+//				final Map<String,Object> parameters = launcher.parseLaunchConfiguration(launchConfiguration);
+//				final ILaunchManager manager = DebugPlugin.getDefault().getLaunchManager();
+//				final String launchName = manager.generateLaunchConfigurationName((String) parameters
+//						.get(IRunConfiguration.LAUNCH_SELECTED_LANGUAGE));
+//				final ILaunchConfigurationType type = manager
+//						.getLaunchConfigurationType(launchConfigurationType);
+//				try {
+//					final ILaunchConfigurationWorkingCopy workingCopy = type.newInstance(null, launchName);
+//					workingCopy.setAttributes(parameters);
+//					workingCopy.launch("debug", null, false, true);
+//				} catch (CoreException e) {
+//					Activator.error(e.getMessage(), e);
+//				}
+//			} catch (CoreException e1) {
+//				Activator.error(e1.getMessage(), e1);
+//			}
+//		}
+//	}
 }

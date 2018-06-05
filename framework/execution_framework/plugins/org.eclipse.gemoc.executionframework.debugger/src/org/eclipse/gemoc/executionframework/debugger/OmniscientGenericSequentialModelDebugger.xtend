@@ -41,7 +41,7 @@ public class OmniscientGenericSequentialModelDebugger extends GenericSequentialM
 
 	private val List<Step<?>> previousCallStack = new ArrayList
 
-	new(IDSLDebugEventProcessor target, IExecutionEngine engine) {
+	new(IDSLDebugEventProcessor target, IExecutionEngine<?> engine) {
 		super(target, engine)
 	}
 
@@ -56,7 +56,7 @@ public class OmniscientGenericSequentialModelDebugger extends GenericSequentialM
 		callerStack.remove(0)
 	}
 
-	override void aboutToExecuteStep(IExecutionEngine executionEngine, Step<?> step) {
+	override void aboutToExecuteStep(IExecutionEngine<?> executionEngine, Step<?> step) {
 		val mseOccurrence = step.mseoccurrence
 		if (mseOccurrence !== null) {
 			val boolean shallContinue = control(threadName, step)
@@ -91,15 +91,15 @@ public class OmniscientGenericSequentialModelDebugger extends GenericSequentialM
 
 	override protected void setupStepOverPredicateBreak() {
 		if (steppingOverStackFrameIndex != -1) {
-			val seqEngine = engine as IExecutionEngine
+			val seqEngine = engine as IExecutionEngine<?>
 			val stack = traceExplorer.callStack
 			val idx = stack.size - steppingOverStackFrameIndex - 1
 			// We add a future break as soon as the step is over
-			addPredicateBreak(new BiPredicate<IExecutionEngine, Step<?>>() {
+			addPredicateBreak(new BiPredicate<IExecutionEngine<?>, Step<?>>() {
 				// The operation we want to step over
 				private Step<?> steppedOver = stack.get(idx)
 
-				override test(IExecutionEngine t, Step<?> u) {
+				override test(IExecutionEngine<?> t, Step<?> u) {
 					return !seqEngine.getCurrentStack().contains(steppedOver)
 				}
 			})
@@ -134,13 +134,13 @@ public class OmniscientGenericSequentialModelDebugger extends GenericSequentialM
 
 	override protected void setupStepReturnPredicateBreak() {
 		if (steppingReturnStackFrameIndex != -1) {
-			val seqEngine = engine as IExecutionEngine
+			val seqEngine = engine as IExecutionEngine<?>
 			val stack = traceExplorer.callStack
 			val idx = stack.size - steppingReturnStackFrameIndex - 1
-			addPredicateBreak(new BiPredicate<IExecutionEngine, Step<?>>() {
+			addPredicateBreak(new BiPredicate<IExecutionEngine<?>, Step<?>>() {
 				private Step<?> steppedReturn = stack.get(idx)
 
-				override test(IExecutionEngine t, Step<?> u) {
+				override test(IExecutionEngine<?> t, Step<?> u) {
 					return !seqEngine.getCurrentStack().contains(steppedReturn)
 				}
 			})
@@ -205,7 +205,7 @@ public class OmniscientGenericSequentialModelDebugger extends GenericSequentialM
 		return super.validateVariableValue(threadName, variableName, value)
 	}
 
-	override void engineStarted(IExecutionEngine executionEngine) {
+	override void engineStarted(IExecutionEngine<?> executionEngine) {
 		val Activator activator = Activator.getDefault()
 		activator.debuggerSupplier = [this]
 		super.engineStarted(executionEngine)
@@ -215,12 +215,12 @@ public class OmniscientGenericSequentialModelDebugger extends GenericSequentialM
 		traceExplorer.registerCommand(this, [|update])
 	}
 
-	override void engineAboutToStop(IExecutionEngine engine) {
+	override void engineAboutToStop(IExecutionEngine<?> engine) {
 		traceExplorer.loadLastState
 		super.engineAboutToStop(engine)
 	}
 
-	override void engineStopped(IExecutionEngine executionEngine) {
+	override void engineStopped(IExecutionEngine<?> executionEngine) {
 		val Activator activator = Activator.getDefault()
 		activator.debuggerSupplier = null
 		super.engineStopped(executionEngine)

@@ -4,7 +4,7 @@
  * are made available under the terms of the Eclipse Public License v1.0
  * which accompanies this distribution, and is available at
  * http://www.eclipse.org/legal/epl-v10.html
- *
+ * 
  * Contributors:
  *     Inria - initial API and implementation
  *******************************************************************************/
@@ -33,7 +33,7 @@ class EcoreCraftingUtil {
 	}
 
 	public static def EReference addReferenceToClass(EClass clazz, String refName, EClass refType) {
-		if (clazz != null && refName != null && refName != "" && refType != null) {
+		if (clazz !== null && refName !== null && refName != "" && refType !== null) {
 			val res = EcoreFactory.eINSTANCE.createEReference
 			res.name = refName
 			res.EType = refType
@@ -42,7 +42,6 @@ class EcoreCraftingUtil {
 		} else {
 			return null
 		}
-
 	}
 
 	public static def String getBaseFQN(EOperation o) {
@@ -72,7 +71,7 @@ class EcoreCraftingUtil {
 
 	public static def String getFQN(EClassifier c, String separator) {
 		val EPackage p = c.getEPackage
-		if (p != null) {
+		if (p !== null) {
 			return getEPackageFQN(p, separator) + separator + c.name
 		} else {
 			return c.name
@@ -81,7 +80,7 @@ class EcoreCraftingUtil {
 
 	public static def String getEPackageFQN(EPackage p, String separator) {
 		val EPackage superP = p.getESuperPackage
-		if (superP != null) {
+		if (superP !== null) {
 			return getEPackageFQN(superP, separator) + separator + p.name
 		} else {
 			return p.name
@@ -89,9 +88,9 @@ class EcoreCraftingUtil {
 	}
 
 	public static def String getBaseFQN(EClassifier c) {
-		if (c != null) {
+		if (c !== null) {
 			val EPackage p = c.getEPackage
-			if (p != null) {
+			if (p !== null) {
 				return getBaseFQN(p) + "." + c.name
 			} else {
 				return c.name
@@ -108,7 +107,7 @@ class EcoreCraftingUtil {
 	public static def String getJavaFQN(EClassifier c, Set<GenPackage> refGenPackages,
 		boolean enforcePrimitiveJavaClasses) {
 
-		if (c.instanceClass != null) {
+		if (c.instanceClass !== null) {
 			if (enforcePrimitiveJavaClasses) {
 				switch (c.instanceClass.canonicalName) {
 					case "int": return "java.lang.Integer"
@@ -120,13 +119,13 @@ class EcoreCraftingUtil {
 
 		}
 
-		if (c.instanceClassName != null && c.instanceClassName != "")
+		if (c.instanceClassName !== null && c.instanceClassName != "")
 			return c.instanceClassName
 
 		var String base = ""
 		val gc = getGenClassifier(c, refGenPackages)
 
-		if (gc != null && gc.genPackage != null) {
+		if (gc !== null && gc.genPackage !== null) {
 			base = getBase(gc.genPackage)
 		}
 		return base + getBaseFQN(c);
@@ -134,7 +133,7 @@ class EcoreCraftingUtil {
 
 	private static def String getBase(GenPackage gp) {
 		var String base = ""
-		if (gp.basePackage != null && gp.superGenPackage == null) {
+		if (gp.basePackage !== null && gp.superGenPackage === null) {
 			base = gp.basePackage + "."
 		}
 		return base
@@ -142,7 +141,7 @@ class EcoreCraftingUtil {
 
 	public static def String getBaseFQN(EPackage p) {
 		val EPackage superP = p.getESuperPackage
-		if (superP != null) {
+		if (superP !== null) {
 			return getBaseFQN(superP) + "." + p.name
 		} else {
 			return p.name
@@ -153,21 +152,21 @@ class EcoreCraftingUtil {
 
 		var String base = ""
 		val gp = getGenPackage(p, refGenPackages)
-		if (gp != null) {
+		if (gp !== null) {
 			base = getBase(gp)
 		}
 		return base + getBaseFQN(p);
 	}
 
 	public static def GenClassifier getGenClassifier(EClassifier c, Set<GenPackage> refGenPackages) {
-		if (c != null) {
+		if (c !== null) {
 			for (gp : refGenPackages) {
 				for (gc : gp.eAllContents.filter(GenClassifier).toSet) {
 					val ecoreClass = gc.ecoreClassifier
-					if (ecoreClass != null) {
+					if (ecoreClass !== null) {
 						val s1 = getBaseFQN(ecoreClass)
 						val s2 = getBaseFQN(c)
-						if (s1 != null && s2 != null && s1.equalsIgnoreCase(s2)) {
+						if (s1 !== null && s2 !== null && s1.equalsIgnoreCase(s2)) {
 							return gc
 						}
 					}
@@ -179,13 +178,13 @@ class EcoreCraftingUtil {
 	}
 
 	public static def GenPackage getGenPackage(EPackage p, Set<GenPackage> refGenPackages) {
-		if (p != null) {
+		if (p !== null) {
 			for (gp : refGenPackages) {
 				val packageInGenpackage = gp.getEcorePackage
-				if (packageInGenpackage != null) {
+				if (packageInGenpackage !== null) {
 					val s1 = getBaseFQN(p)
 					val s2 = getBaseFQN(packageInGenpackage)
-					if (s1 != null && s2 != null && s1.equalsIgnoreCase(s2)) {
+					if (s1 !== null && s2 !== null && s1.equalsIgnoreCase(s2)) {
 						return gp
 					}
 				}

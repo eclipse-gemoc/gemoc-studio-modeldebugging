@@ -22,7 +22,7 @@ public class GemocRunningEnginesRegistry {
 	/**
 	 * List of engines that have registered to be running in this eclipse
 	 */
-	protected HashMap<String, IExecutionEngine> runningEngines = new HashMap<String, IExecutionEngine>();
+	protected HashMap<String, IExecutionEngine<?>> runningEngines = new HashMap<String, IExecutionEngine<?>>();
 	
 	
 	/**
@@ -31,7 +31,7 @@ public class GemocRunningEnginesRegistry {
 	 * @param engine to add
 	 * @return the unique name really used for this engine
 	 */
-	 public synchronized String registerEngine(String baseName, IExecutionEngine engine){
+	 public synchronized String registerEngine(String baseName, IExecutionEngine<?> engine){
 		int uniqueInstance = 0;
 		String engineName = Thread.currentThread().getName() + " ("+uniqueInstance+")";
 		synchronized(runningEngines)
@@ -50,7 +50,7 @@ public class GemocRunningEnginesRegistry {
 	{
 		synchronized(runningEngines)
 		{
-			IExecutionEngine engine = runningEngines.get(engineName);
+			IExecutionEngine<?> engine = runningEngines.get(engineName);
 			if (engine != null)
 			{
 				runningEngines.remove(engineName);
@@ -59,17 +59,17 @@ public class GemocRunningEnginesRegistry {
 		}
 	}
 
-	public HashMap<String, IExecutionEngine> getRunningEngines() {
+	public HashMap<String, IExecutionEngine<?>> getRunningEngines() {
 		synchronized(runningEngines)
 		{
-			return new HashMap<String, IExecutionEngine>(runningEngines);			
+			return new HashMap<String, IExecutionEngine<?>>(runningEngines);			
 		}
 	}
 	
 	
 	private List<IEngineRegistrationListener> _engineRegistrationListeners = new ArrayList<IEngineRegistrationListener>();
 	
-	private void notifyEngineRegistered(IExecutionEngine engine) {
+	private void notifyEngineRegistered(IExecutionEngine<?> engine) {
 		synchronized (_engineRegistrationListeners) {
 			for (IEngineRegistrationListener l : _engineRegistrationListeners)
 			{
@@ -78,7 +78,7 @@ public class GemocRunningEnginesRegistry {
 		}
 	}
 	
-	private void notifyEngineUnregistered(IExecutionEngine engine) {
+	private void notifyEngineUnregistered(IExecutionEngine<?> engine) {
 		synchronized (_engineRegistrationListeners) {
 			for (IEngineRegistrationListener l : _engineRegistrationListeners)
 			{

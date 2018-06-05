@@ -61,7 +61,7 @@ public class BatchModelChangeListener {
 		observedResources.addAll(resources)
 
 		observedResources.forEach [ r |
-			if (r != null) {
+			if (r !== null) {
 				r.eAdapters().add(adapter);
 			}
 		]
@@ -145,16 +145,16 @@ public class BatchModelChangeListener {
 
 							// Register potentially new or removed object
 							if ((feature as EReference).containment) {
-								if (previousValue != null && previousValue instanceof EObject)
+								if (previousValue !== null && previousValue instanceof EObject)
 									addToRemovedObjects(eventuallyRemoved, removedObjects, newObjects,
 										previousValue as EObject)
-								if (newValue != null && newValue instanceof EObject)
+								if (newValue !== null && newValue instanceof EObject)
 									addToNewObjects(eventuallyRemoved, removedObjects, newObjects, newValue as EObject)
 							}
 						}
 					} // Case data types: we compare values
-					else if (if (previousValue == null) {
-						newValue != null
+					else if (if (previousValue === null) {
+						newValue !== null
 					} else {
 						!previousValue.equals(newValue)
 					}) {
@@ -221,7 +221,7 @@ public class BatchModelChangeListener {
 	private static def void addToNewObjects(Collection<EObject> eventuallyRemoved, Collection<EObject> removedObjects,
 		Collection<EObject> newObjects, EObject object) {
 		eventuallyRemoved.remove(object)
-		if (object != null) {
+		if (object !== null) {
 			val hasMoved = removedObjects.remove(object)
 			if (!hasMoved) {
 				newObjects.add(object)
@@ -233,7 +233,7 @@ public class BatchModelChangeListener {
 	private static def void addToRemovedObjects(Collection<EObject> eventuallyRemoved,
 		Collection<EObject> removedObjects, Collection<EObject> newObjects, EObject object) {
 		eventuallyRemoved.add(object)
-		if (object != null) {
+		if (object !== null) {
 			val hasMoved = newObjects.remove(object)
 			if (!hasMoved)
 				removedObjects.add(object)
@@ -258,7 +258,7 @@ public class BatchModelChangeListener {
 	}
 
 	public def void cleanUp() {
-		for (r : observedResources.filter[r|r != null]) {
+		for (r : observedResources.filter[r|r !== null]) {
 			r.eAdapters().remove(adapter);
 		}
 	}

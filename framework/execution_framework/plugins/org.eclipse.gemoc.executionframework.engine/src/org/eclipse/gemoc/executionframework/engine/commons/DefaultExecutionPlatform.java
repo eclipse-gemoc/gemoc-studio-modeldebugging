@@ -23,64 +23,53 @@ import org.eclipse.gemoc.xdsmlframework.api.extensions.engine_addon.EngineAddonS
 import org.eclipse.gemoc.xdsmlframework.api.extensions.languages.LanguageDefinitionExtension;
 
 public class DefaultExecutionPlatform implements IExecutionPlatform {
-	
+
 	protected IModelLoader _modelLoader;
 	protected Collection<IEngineAddon> _addons;
-	
-	public DefaultExecutionPlatform(LanguageDefinitionExtension _languageDefinition, IRunConfiguration runConfiguration) throws CoreException 
-	{
+
+	public DefaultExecutionPlatform(LanguageDefinitionExtension _languageDefinition, IRunConfiguration runConfiguration) throws CoreException {
 		_modelLoader = _languageDefinition.instanciateModelLoader();
 		_addons = _languageDefinition.instanciateEngineAddons();
-		
-		for (EngineAddonSpecificationExtension extension : runConfiguration.getEngineAddonExtensions())
-		{
+
+		for (EngineAddonSpecificationExtension extension : runConfiguration.getEngineAddonExtensions()) {
 			addEngineAddon(extension.instanciateComponent());
 		}
-		for (IEngineAddon addon : _languageDefinition.instanciateEngineAddons())
-		{
-			addEngineAddon(addon);			
+		for (IEngineAddon addon : _languageDefinition.instanciateEngineAddons()) {
+			addEngineAddon(addon);
 		}
 	}
 
 	@Override
-	public IModelLoader getModelLoader() 
-	{
+	public IModelLoader getModelLoader() {
 		return _modelLoader;
 	}
 
 	@Override
-	public Iterable<IEngineAddon> getEngineAddons() 
-	{
-		synchronized(_addonLock)
-		{
+	public Iterable<IEngineAddon> getEngineAddons() {
+		synchronized (_addonLock) {
 			return Collections.unmodifiableCollection(new ArrayList<IEngineAddon>(_addons));
 		}
 	}
 
 	@Override
-	public void dispose() 
-	{
+	public void dispose() {
 		_addons.clear();
 	}
 
 	private Object _addonLock = new Object();
-	
+
 	@Override
-	public void addEngineAddon(IEngineAddon addon) 
-	{
-		synchronized (_addonLock) 
-		{
+	public void addEngineAddon(IEngineAddon addon) {
+		synchronized (_addonLock) {
 			_addons.add(addon);
 		}
 	}
 
 	@Override
-	public void removeEngineAddon(IEngineAddon addon) 
-	{
-		synchronized (_addonLock) 
-		{
+	public void removeEngineAddon(IEngineAddon addon) {
+		synchronized (_addonLock) {
 			_addons.remove(addon);
 		}
 	}
-	
+
 }

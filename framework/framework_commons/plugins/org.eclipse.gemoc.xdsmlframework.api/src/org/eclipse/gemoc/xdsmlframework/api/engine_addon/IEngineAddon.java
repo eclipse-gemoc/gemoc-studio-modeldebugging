@@ -24,57 +24,57 @@ public interface IEngineAddon {
 	/**
 	 * Operation called before the engine starts
 	 */
-	default public void engineAboutToStart(IExecutionEngine engine) {
+	default public void engineAboutToStart(IExecutionEngine<?> engine) {
 	};
 
 	/**
 	 * Operation called after the engine have started
 	 */
-	default public void engineStarted(IExecutionEngine executionEngine) {
+	default public void engineStarted(IExecutionEngine<?> executionEngine) {
 	};
 
-	default public void engineInitialized(IExecutionEngine executionEngine) {
+	default public void engineInitialized(IExecutionEngine<?> executionEngine) {
 	};
 
-	default public void engineAboutToStop(IExecutionEngine engine) {
+	default public void engineAboutToStop(IExecutionEngine<?> engine) {
 	};
 
 	/**
 	 * Operation called after the engine has been stopped
 	 */
-	default public void engineStopped(IExecutionEngine engine) {
+	default public void engineStopped(IExecutionEngine<?> engine) {
 	};
 
 	/**
 	 * Operation before the engine has been disposed (and after the engine has
 	 * been stopped)
 	 */
-	default public void engineAboutToDispose(IExecutionEngine engine) {
+	default public void engineAboutToDispose(IExecutionEngine<?> engine) {
 	};
 
 	/**
 	 * Operation called before the Step has been chosen
 	 */
-	default public void aboutToSelectStep(IExecutionEngine engine, Collection<Step<?>> steps) {
+	default public void aboutToSelectStep(IExecutionEngine<?> engine, Collection<Step<?>> steps) {
 	};
 
-	default public void proposedStepsChanged(IExecutionEngine engine, Collection<Step<?>> steps) {
+	default public void proposedStepsChanged(IExecutionEngine<?> engine, Collection<Step<?>> steps) {
 	};
 
 	/**
 	 * Operation called after the Step has been chosen It also returns the
 	 * chosen Step
 	 */
-	default public void stepSelected(IExecutionEngine engine, Step<?> selectedStep) {
+	default public void stepSelected(IExecutionEngine<?> engine, Step<?> selectedStep) {
 	};
 
-	default public void aboutToExecuteStep(IExecutionEngine engine, Step<?> stepToExecute) {
+	default public void aboutToExecuteStep(IExecutionEngine<?> engine, Step<?> stepToExecute) {
 	};
 
-	default public void stepExecuted(IExecutionEngine engine, Step<?> stepExecuted) {
+	default public void stepExecuted(IExecutionEngine<?> engine, Step<?> stepExecuted) {
 	};
 
-	default public void engineStatusChanged(IExecutionEngine engine, RunStatus newStatus) {
+	default public void engineStatusChanged(IExecutionEngine<?> engine, RunStatus newStatus) {
 	};
 
 	/**

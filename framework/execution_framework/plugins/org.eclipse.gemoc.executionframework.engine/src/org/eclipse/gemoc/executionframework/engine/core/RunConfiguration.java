@@ -8,7 +8,7 @@
  * Contributors:
  *     Inria - initial API and implementation
  *******************************************************************************/
-package org.eclipse.gemoc.executionframework.engine.ui.commons;
+package org.eclipse.gemoc.executionframework.engine.core;
 
 import java.util.ArrayList;
 import java.util.Collection;
@@ -18,11 +18,10 @@ import java.util.Map.Entry;
 import org.eclipse.core.runtime.CoreException;
 import org.eclipse.debug.core.ILaunchConfiguration;
 import org.eclipse.emf.common.util.URI;
+import org.eclipse.gemoc.dsl.debug.ide.launch.AbstractDSLLaunchConfigurationDelegate;
 import org.eclipse.gemoc.xdsmlframework.api.core.IRunConfiguration;
 import org.eclipse.gemoc.xdsmlframework.api.extensions.engine_addon.EngineAddonSpecificationExtension;
 import org.eclipse.gemoc.xdsmlframework.api.extensions.engine_addon.EngineAddonSpecificationExtensionPoint;
-
-import org.eclipse.gemoc.dsl.debug.ide.launch.AbstractDSLLaunchConfigurationDelegate;
 
 public class RunConfiguration implements IRunConfiguration {
 
@@ -31,23 +30,18 @@ public class RunConfiguration implements IRunConfiguration {
 	public RunConfiguration(ILaunchConfiguration launchConfiguration) throws CoreException {
 		_launchConfiguration = launchConfiguration;
 		extractInformation();
-
 	}
 
 	protected void extractInformation() throws CoreException {
 		_languageName = getAttribute(LAUNCH_SELECTED_LANGUAGE, "");
-		_modelURI = URI.createPlatformResourceURI(getAttribute(AbstractDSLLaunchConfigurationDelegate.RESOURCE_URI, ""),
-				true);
+		_modelURI = URI.createPlatformResourceURI(getAttribute(AbstractDSLLaunchConfigurationDelegate.RESOURCE_URI, ""), true);
 		String animatorURIAsString = getAttribute("airdResource", "");
 		if (animatorURIAsString != null && !animatorURIAsString.equals("")) {
 			_animatorURI = URI.createPlatformResourceURI(animatorURIAsString, true);
 			_animationDelay = getAttribute(LAUNCH_DELAY, 0);
 		}
-		_deadlockDetectionDepth = getAttribute(LAUNCH_DEADLOCK_DETECTION_DEPTH, 10);
-		_methodEntryPoint = getAttribute(LAUNCH_METHOD_ENTRY_POINT, "");
-		_modelEntryPoint = getAttribute(LAUNCH_MODEL_ENTRY_POINT, "");
-		_modelInitializationMethod = getAttribute(LAUNCH_INITIALIZATION_METHOD, "");
-		_modelInitializationArguments = getAttribute(LAUNCH_INITIALIZATION_ARGUMENTS, "");
+		// TODO
+		// _deadlockDetectionDepth = getAttribute(LAUNCH_DEADLOCK_DETECTION_DEPTH, 10);
 		_melangeQuery = getAttribute(LAUNCH_MELANGE_QUERY, "");
 
 		for (EngineAddonSpecificationExtension extension : EngineAddonSpecificationExtensionPoint.getSpecifications()) {
@@ -105,13 +99,6 @@ public class RunConfiguration implements IRunConfiguration {
 		return _animatorURI;
 	}
 
-	private int _deadlockDetectionDepth = 0;
-
-	@Override
-	public int getDeadlockDetectionDepth() {
-		return _deadlockDetectionDepth;
-	}
-
 	private HashMap<EngineAddonSpecificationExtension, Boolean> _engineAddonExtensions = new HashMap<>();
 
 	@Override
@@ -124,38 +111,20 @@ public class RunConfiguration implements IRunConfiguration {
 		return result;
 	}
 
-	private String _methodEntryPoint;
-	private String _modelEntryPoint;
 	private String _languageName;
-
-	@Override
-	public String getExecutionEntryPoint() {
-		return _methodEntryPoint;
-	}
-
-	@Override
-	public String getModelEntryPoint() {
-		return _modelEntryPoint;
-	}
 
 	@Override
 	public String getLanguageName() {
 		return _languageName;
 	}
 
-	private String _modelInitializationMethod;
+	// TODO
+	// private int _deadlockDetectionDepth = 0;
 
-	@Override
-	public String getModelInitializationMethod() {
-		return _modelInitializationMethod;
-	}
-
-	private String _modelInitializationArguments;
-
-	@Override
-	public String getModelInitializationArguments() {
-		return _modelInitializationArguments;
-	}
+	// @Override
+	// public int getDeadlockDetectionDepth() {
+	// return _deadlockDetectionDepth;
+	// }
 
 	private boolean _breakStart;
 

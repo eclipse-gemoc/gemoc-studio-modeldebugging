@@ -10,36 +10,30 @@
  *******************************************************************************/
 package org.eclipse.gemoc.execution.sequential.javaengine;
 
+import org.eclipse.core.runtime.CoreException;
 import org.eclipse.gemoc.execution.sequential.javaxdsml.api.extensions.languages.SequentialLanguageDefinitionExtension;
 import org.eclipse.gemoc.execution.sequential.javaxdsml.api.extensions.languages.SequentialLanguageDefinitionExtensionPoint;
+import org.eclipse.gemoc.executionframework.engine.commons.DefaultExecutionPlatform;
 import org.eclipse.gemoc.executionframework.engine.commons.EngineContextException;
-import org.eclipse.gemoc.executionframework.engine.commons.ModelExecutionContext;
+import org.eclipse.gemoc.executionframework.engine.commons.AbstractModelExecutionContext;
+import org.eclipse.gemoc.trace.commons.model.trace.MSEModel;
 import org.eclipse.gemoc.xdsmlframework.api.core.ExecutionMode;
 import org.eclipse.gemoc.xdsmlframework.api.core.IRunConfiguration;
-import org.eclipse.gemoc.xdsmlframework.api.extensions.languages.LanguageDefinitionExtension;
 
-import org.eclipse.gemoc.trace.commons.model.trace.MSEModel;
+public class SequentialModelExecutionContext<T extends IRunConfiguration> extends AbstractModelExecutionContext<T, DefaultExecutionPlatform, SequentialLanguageDefinitionExtension> {
 
-public class SequentialModelExecutionContext extends ModelExecutionContext 
-{
-
-	
-	public SequentialModelExecutionContext(IRunConfiguration runConfiguration, ExecutionMode executionMode)
-			throws EngineContextException
-	{
+	public SequentialModelExecutionContext(T runConfiguration, ExecutionMode executionMode)
+			throws EngineContextException {
 		super(runConfiguration, executionMode);
-		
 	}
-	
+
 	@Override
-	protected LanguageDefinitionExtension getLanguageDefinition(String languageName) throws EngineContextException
-	{
+	protected SequentialLanguageDefinitionExtension getLanguageDefinition(String languageName) throws EngineContextException {
 		SequentialLanguageDefinitionExtension languageDefinition = SequentialLanguageDefinitionExtensionPoint
 				.findDefinition(_runConfiguration.getLanguageName());
-		if (languageDefinition == null)
-		{
-			String message = "Cannot find sequential xdsml definition for the language " + _runConfiguration.getLanguageName()
-					+ ", please verify that is is correctly deployed.";
+		if (languageDefinition == null) {
+			String message = "Cannot find sequential xdsml definition for the language "
+					+ _runConfiguration.getLanguageName() + ", please verify that is is correctly deployed.";
 			EngineContextException exception = new EngineContextException(message);
 			throw exception;
 		}
@@ -48,9 +42,12 @@ public class SequentialModelExecutionContext extends ModelExecutionContext
 
 	@Override
 	public MSEModel getMSEModel() {
-		// TODO Auto-generated method stub
 		return null;
 	}
 
-	
+	@Override
+	protected DefaultExecutionPlatform createExecutionPlatform() throws CoreException {
+		return new DefaultExecutionPlatform(_languageDefinition, _runConfiguration);
+	}
+
 }

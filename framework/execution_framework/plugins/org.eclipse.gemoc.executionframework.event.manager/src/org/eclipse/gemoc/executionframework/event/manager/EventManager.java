@@ -80,7 +80,7 @@ public class EventManager implements IEventManager {
 	}
 
 	@Override
-	public void engineAboutToStart(IExecutionEngine engine) {
+	public void engineAboutToStart(IExecutionEngine<?> engine) {
 		final Set<IBehavioralAPI> apis = engine.getAddonsTypedBy(IBehavioralAPI.class);
 		if (!apis.isEmpty()) {
 			api = apis.iterator().next();

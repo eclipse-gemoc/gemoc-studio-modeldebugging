@@ -47,7 +47,7 @@ public class GenericSequentialModelDebugger extends AbstractGemocDebugger {
 
 	protected boolean executionTerminated = false;
 
-	new(IDSLDebugEventProcessor target, IExecutionEngine engine) {
+	new(IDSLDebugEventProcessor target, IExecutionEngine<?> engine) {
 		super(target, engine);
 	}
 
@@ -65,16 +65,16 @@ public class GenericSequentialModelDebugger extends AbstractGemocDebugger {
 	}
 
 	protected def void setupStepReturnPredicateBreak() {
-		val IExecutionEngine seqEngine = engine as IExecutionEngine;
+		val IExecutionEngine<?> seqEngine = engine as IExecutionEngine<?>;
 		val Deque<Step<?>> stack = seqEngine.getCurrentStack();
 		if (stack.size() > 1) {
 			val Iterator<Step<?>> it = stack.iterator();
 			it.next();
-			addPredicateBreak(new BiPredicate<IExecutionEngine, Step<?>>() {
+			addPredicateBreak(new BiPredicate<IExecutionEngine<?>, Step<?>>() {
 				// The operation we want to step return
 				private Step<?> steppedReturn = it.next();
 
-				override test(IExecutionEngine t, Step<?> u) {
+				override test(IExecutionEngine<?> t, Step<?> u) {
 					// We finished stepping over once the step is not
 					// there anymore
 					return !seqEngine.getCurrentStack().contains(steppedReturn);
@@ -91,12 +91,12 @@ public class GenericSequentialModelDebugger extends AbstractGemocDebugger {
 	}
 
 	def protected setupStepOverPredicateBreak() {
-		addPredicateBreak(new BiPredicate<IExecutionEngine, Step<?>>() {
-			val IExecutionEngine seqEngine = engine as IExecutionEngine;
+		addPredicateBreak(new BiPredicate<IExecutionEngine<?>, Step<?>>() {
+			val IExecutionEngine<?> seqEngine = engine as IExecutionEngine<?>;
 			// The operation we want to step over
 			private Step<?> steppedOver = seqEngine.getCurrentStep();
 
-			override test(IExecutionEngine t, Step<?> u) {
+			override test(IExecutionEngine<?> t, Step<?> u) {
 				// We finished stepping over once the step is not there
 				// anymore
 				return !seqEngine.getCurrentStack().contains(steppedOver);
@@ -123,8 +123,8 @@ public class GenericSequentialModelDebugger extends AbstractGemocDebugger {
 		// To send notifications, but probably useless
 		super.steppingInto(threadName);
 		// We add a future break asap
-		addPredicateBreak(new BiPredicate<IExecutionEngine, Step<?>>() {
-			override test(IExecutionEngine t, Step<?> u) {
+		addPredicateBreak(new BiPredicate<IExecutionEngine<?>, Step<?>>() {
+			override test(IExecutionEngine<?> t, Step<?> u) {
 				// We finished stepping as soon as we encounter a new step
 				return true;
 			}
@@ -310,17 +310,17 @@ public class GenericSequentialModelDebugger extends AbstractGemocDebugger {
 		return FAKE_INSTRUCTION;
 	}
 
-	override engineStarted(IExecutionEngine executionEngine) {
+	override engineStarted(IExecutionEngine<?> executionEngine) {
 		spawnRunningThread(threadName, engine.getExecutionContext().getResourceModel().getContents().get(0));
 	}
 
-	override engineStopped(IExecutionEngine engine) {
+	override engineStopped(IExecutionEngine<?> engine) {
 		if (!isTerminated(threadName)) {
 			terminated(threadName);
 		}
 	}
 
-	override aboutToExecuteStep(IExecutionEngine executionEngine, Step<?> step) {
+	override aboutToExecuteStep(IExecutionEngine<?> executionEngine, Step<?> step) {
 		val ToPushPop stackModification = new ToPushPop(step, true);
 		toPushPop.add(stackModification);
 		val boolean shallcontinue = control(threadName, step);
@@ -329,12 +329,12 @@ public class GenericSequentialModelDebugger extends AbstractGemocDebugger {
 		}
 	}
 
-	override stepExecuted(IExecutionEngine engine, Step<?> step) {
+	override stepExecuted(IExecutionEngine<?> engine, Step<?> step) {
 		val ToPushPop stackModification = new ToPushPop(step, false);
 		toPushPop.add(stackModification);
 	}
 
-	override engineAboutToStop(IExecutionEngine engine) {
+	override engineAboutToStop(IExecutionEngine<?> engine) {
 		// Simulating breakpoint
 		// TODO maybe display a warning informing the user the execution has
 		// ended, as resuming execution will prevent further interactions with the
