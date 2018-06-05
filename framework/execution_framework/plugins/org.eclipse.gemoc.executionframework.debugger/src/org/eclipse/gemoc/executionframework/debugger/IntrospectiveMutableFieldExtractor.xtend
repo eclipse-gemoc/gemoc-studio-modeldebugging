@@ -22,6 +22,7 @@ import org.eclipse.emf.ecore.EClass
 import org.eclipse.emf.ecore.EObject
 import org.eclipse.emf.ecore.impl.EObjectImpl
 import org.eclipse.gemoc.executionframework.engine.commons.MelangeHelper
+import org.eclipse.gemoc.executionframework.engine.commons.DslHelper
 
 class IntrospectiveMutableFieldExtractor implements IMutableFieldExtractor {
 
@@ -130,7 +131,7 @@ class IntrospectiveMutableFieldExtractor implements IMutableFieldExtractor {
 					classes.forEach [ i, l |
 						l.forEach [ c |
 							try {
-								val properties = MelangeHelper.getMelangeBundle(languageName).loadClass(
+								val properties = DslHelper.getDslBundle(languageName).loadClass(
 									c.name + i.simpleName + "AspectProperties")
 								val pair = new Pair(c, properties)
 								list.add(pair)
