@@ -14,7 +14,9 @@ import java.util.Map;
 
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.resource.Resource;
-
+import org.eclipse.gemoc.executionframework.debugger.DefaultDynamicPartAccessor;
+import org.eclipse.gemoc.executionframework.debugger.IDynamicPartAccessor;
+import org.eclipse.gemoc.executionframework.debugger.IMutableFieldExtractor;
 import org.eclipse.gemoc.trace.commons.model.trace.State;
 import org.eclipse.gemoc.trace.commons.model.trace.Trace;
 import org.eclipse.gemoc.trace.commons.model.trace.TracedObject;
@@ -25,6 +27,7 @@ import org.eclipse.gemoc.trace.gemoc.api.ITraceConstructor;
 public class GenericTraceEngineAddon extends AbstractTraceAddon {
 
 	private GenericTraceStepFactory factory = null;
+	IDynamicPartAccessor dynamicPartAccessor = new DefaultDynamicPartAccessor();
 	
 	@Override
 	public IStepFactory getFactory() {
@@ -37,7 +40,7 @@ public class GenericTraceEngineAddon extends AbstractTraceAddon {
 	@Override
 	public ITraceConstructor constructTraceConstructor(Resource modelResource,
 			Resource traceResource, Map<EObject, TracedObject<?>> exeToTraced) {
-		return new GenericTraceConstructor(modelResource, traceResource, exeToTraced);
+		return new GenericTraceConstructor(modelResource, traceResource, exeToTraced, dynamicPartAccessor);
 	}
 
 	@Override
@@ -47,7 +50,11 @@ public class GenericTraceEngineAddon extends AbstractTraceAddon {
 
 	@Override
 	public IStateManager<State<?, ?>> constructStateManager(Resource modelResource, Map<TracedObject<?>, EObject> tracedToExe) {
-		return new GenericStateManager(modelResource, tracedToExe);
+		return new GenericStateManager(modelResource, tracedToExe, dynamicPartAccessor);
+	}
+	
+	public void setDynamicPartAccessor(IDynamicPartAccessor dynamicPartAccessor) {
+		this.dynamicPartAccessor = dynamicPartAccessor;
 	}
 
 }
