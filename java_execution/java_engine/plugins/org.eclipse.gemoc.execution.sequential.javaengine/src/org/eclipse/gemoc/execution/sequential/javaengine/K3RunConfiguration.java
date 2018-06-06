@@ -18,7 +18,6 @@ public class K3RunConfiguration extends RunConfiguration implements IK3RunConfig
 
 	public K3RunConfiguration(ILaunchConfiguration launchConfiguration) throws CoreException {
 		super(launchConfiguration);
-		extractInformation();
 	}
 
 	protected void extractInformation() throws CoreException {
