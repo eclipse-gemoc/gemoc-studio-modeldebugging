@@ -241,6 +241,9 @@ public class GenericTraceExplorer implements ITraceExplorer<Step<?>, State<?,?>,
 
 		callStack.clear();
 		callStack.addAll(stepPath);
+
+		canBackValueCache.clear();
+		canStepValueCache.clear();
 	}
 	
 	private void goTo(State<?,?> state) {
