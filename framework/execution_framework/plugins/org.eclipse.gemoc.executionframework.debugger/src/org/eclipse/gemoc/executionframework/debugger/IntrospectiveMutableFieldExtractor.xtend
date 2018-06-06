@@ -21,8 +21,8 @@ import java.util.Map
 import org.eclipse.emf.ecore.EClass
 import org.eclipse.emf.ecore.EObject
 import org.eclipse.emf.ecore.impl.EObjectImpl
-import org.eclipse.gemoc.executionframework.engine.commons.MelangeHelper
 import org.eclipse.gemoc.executionframework.engine.commons.DslHelper
+import org.eclipse.gemoc.executionframework.engine.commons.K3DslHelper
 
 class IntrospectiveMutableFieldExtractor implements IMutableFieldExtractor {
 
@@ -233,10 +233,10 @@ class IntrospectiveMutableFieldExtractor implements IMutableFieldExtractor {
 		val List<Class<?>> allPossibleInterfaces = getInterfacesOfEObject(target)
 
 		val Map<Class<?>, List<Class<?>>> res = new HashMap
-		val allAspects = MelangeHelper.getAspects(languageName)
+		val allAspects = K3DslHelper.getAspects(languageName)
 		allPossibleInterfaces.forEach [ i |
 			val appliedAspects = allAspects.filter [ asp |
-				MelangeHelper.getTarget(asp) == i
+				K3DslHelper.getTarget(asp) == i
 			]
 			res.put(i, appliedAspects.toList)
 		]

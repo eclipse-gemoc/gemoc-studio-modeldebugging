@@ -26,7 +26,7 @@ import org.eclipse.emf.ecore.resource.ResourceSet;
 import org.eclipse.emf.ecore.resource.impl.ResourceSetImpl;
 import org.eclipse.emf.transaction.TransactionalEditingDomain;
 import org.eclipse.emf.transaction.impl.InternalTransactionalEditingDomain;
-import org.eclipse.gemoc.executionframework.engine.commons.MelangeHelper;
+import org.eclipse.gemoc.executionframework.engine.commons.K3DslHelper;
 import org.eclipse.gemoc.executionframework.engine.core.AbstractCommandBasedSequentialExecutionEngine;
 import org.eclipse.gemoc.executionframework.engine.core.EngineStoppedException;
 import org.eclipse.gemoc.trace.commons.model.launchconfiguration.AddonExtensionParameter;
@@ -129,7 +129,7 @@ public class PlainK3ExecutionEngine extends AbstractCommandBasedSequentialExecut
 			entryPointMethodParameters.add(root);
 		}
 		try {
-			this.entryPointMethod = MelangeHelper.findMethod(entryPointClass, root, methodName);
+			this.entryPointMethod = K3DslHelper.findMethod(entryPointClass, root, methodName);
 		} catch (Exception e) {
 			String msg = "There is no \"" + methodName + "\" method in " + entryPointClass.getName()
 					+ " with first parameter able to handle " + entryPointMethodParameters.get(0).toString();

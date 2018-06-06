@@ -1,3 +1,13 @@
+/*******************************************************************************
+ * Copyright (c) 2016 Inria and others.
+ * All rights reserved. This program and the accompanying materials
+ * are made available under the terms of the Eclipse Public License v1.0
+ * which accompanies this distribution, and is available at
+ * http://www.eclipse.org/legal/epl-v10.html
+ *
+ * Contributors:
+ *     Inria - initial API and implementation
+ *******************************************************************************/
 package org.eclipse.gemoc.executionframework.engine.commons;
 
 import java.util.ArrayList;
@@ -11,6 +21,10 @@ import org.eclipse.emf.ecore.resource.impl.ResourceSetImpl;
 import org.eclipse.gemoc.dsl.Dsl;
 import org.osgi.framework.Bundle;
 
+/**
+ * General helper for dsl file
+ * 
+ */
 public class DslHelper {
 	
 	/**
@@ -55,5 +69,17 @@ public class DslHelper {
 			}
 		}
 		return null;
+	}
+	
+	/**
+	 * Return the substring after the last '.' or the whole 'qualifiedName' if
+	 * no dot character.
+	 */
+	public static String lastSegment(String qualifiedName){
+		if(qualifiedName.contains(".")) {
+			return qualifiedName.substring(qualifiedName.lastIndexOf(".")+1);
+		} else {
+			return qualifiedName;
+		}
 	}
 }
