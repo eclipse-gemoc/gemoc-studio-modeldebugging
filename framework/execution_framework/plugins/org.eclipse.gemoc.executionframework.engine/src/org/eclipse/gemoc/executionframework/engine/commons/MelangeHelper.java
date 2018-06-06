@@ -24,7 +24,7 @@ import org.osgi.framework.Bundle;
  * Helper class to get informations about languages defined in Melange
  * 
  */
-public class MelangeHelper extends K3DslHelper{
+public class MelangeHelper {
 
 	/**
 	 * Return a bundle with a .melange declaring 'language'

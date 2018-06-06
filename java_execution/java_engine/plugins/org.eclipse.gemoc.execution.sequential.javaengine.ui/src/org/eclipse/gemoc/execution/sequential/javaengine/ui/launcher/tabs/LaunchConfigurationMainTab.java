@@ -417,7 +417,7 @@ public class LaunchConfigurationMainTab extends LaunchConfigurationTab {
 						protected boolean select(EObject obj) {
 							String methodSignature = _entryPointMethodText.getText();
 							String firstParamType = K3DslHelper.getParametersTypeFromMethodSignature(methodSignature)[0];
-							String simpleParamType =  K3DslHelper.lastSegment(firstParamType);
+							String simpleParamType =  DslHelper.lastSegment(firstParamType);
 							return obj.eClass().getName().equals(simpleParamType);
 						}
 					};

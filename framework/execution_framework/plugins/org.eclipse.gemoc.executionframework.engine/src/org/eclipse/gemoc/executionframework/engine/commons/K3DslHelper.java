@@ -28,7 +28,7 @@ import fr.inria.diverse.k3.al.annotationprocessor.Aspect;
  * Helper for dsl file that contains K3 aspects
  *
  */
-public class K3DslHelper extends DslHelper {
+public class K3DslHelper{
 
 	/**
 	 * Search in 'aspect' for a method named 'calledMethodName' and with one parameter.
@@ -135,7 +135,7 @@ public class K3DslHelper extends DslHelper {
 	 */
 	public static Class<?> loadAspect(String languageName, String aspectName){
 		try {
-			return getDslBundle(languageName).loadClass(aspectName);
+			return DslHelper.getDslBundle(languageName).loadClass(aspectName);
 		} catch (ClassNotFoundException e) {
 			e.printStackTrace();
 		}
