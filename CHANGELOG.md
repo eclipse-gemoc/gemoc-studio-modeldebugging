@@ -1,5 +1,35 @@
 # Changelog
 
+## v3.0.0-rc3 (07/06/2018)
+
+#### Enhancements:
+
+- [**enhancement**][**refactoring**] Avoid direct model accesses in runtime services [#42](https://github.com/eclipse/gemoc-studio-modeldebugging/pull/42)
+- [**enhancement**][**refactoring**] Manage parallel steps in debuggers + refactoring [#39](https://github.com/eclipse/gemoc-studio-modeldebugging/pull/39)
+- [**enhancement**][**refactoring**] [Debug/Engine] Replace MSEOccurence" with "Step" when possible [#34](https://github.com/eclipse/gemoc-studio-modeldebugging/pull/34)
+
+#### Bug Fixes:
+
+- [**bug**] Fix timeline dimensions arrows wrongly disabled [#54](https://github.com/eclipse/gemoc-studio-modeldebugging/pull/54)
+- [**bug**][**refactoring**] Patch mutable field extractor for pure k3 project + helper refactoring [#52](https://github.com/eclipse/gemoc-studio-modeldebugging/pull/52)
+- [**bug**] Fix nullpointer trace constructor [#28](https://github.com/eclipse/gemoc-studio-modeldebugging/pull/28)
+
+#### Refactorings
+
+- [**refactoring**] Move creation of generic debugger in common execution engine code [#36](https://github.com/eclipse/gemoc-studio-modeldebugging/pull/36)
+- [**refactoring**] Move debuggers from java engine plugins to execution framework plugins [#31](https://github.com/eclipse/gemoc-studio-modeldebugging/pull/31)
+
+#### Version upgrades
+
+- [**bump**] Upgrade Melange to version 2018-04-11 [#37](https://github.com/eclipse/gemoc-studio-modeldebugging/pull/37)
+- [**bump**] Upgrade Melange version to 2018-01-29 [#26](https://github.com/eclipse/gemoc-studio-modeldebugging/pull/26)
+
+#### Release Engineering
+
+- [**releng**] Use Gren for release note management [#38](https://github.com/eclipse/gemoc-studio-modeldebugging/pull/38)
+
+---
+
 ## v3.0.0-rc2 (10/04/2018)
 
 #### Enhancements:
