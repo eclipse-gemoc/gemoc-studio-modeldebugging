@@ -30,7 +30,6 @@ import org.eclipse.gemoc.trace.commons.model.trace.ParallelStep
 import org.eclipse.gemoc.trace.commons.model.trace.Step
 import org.eclipse.gemoc.xdsmlframework.api.core.IExecutionEngine
 import org.eclipse.xtext.naming.DefaultDeclarativeQualifiedNameProvider
-import org.eclipse.xtext.naming.QualifiedName
 
 public class GenericSequentialModelDebugger extends AbstractGemocDebugger {
 
@@ -143,18 +142,39 @@ public class GenericSequentialModelDebugger extends AbstractGemocDebugger {
 
 	protected val DefaultDeclarativeQualifiedNameProvider nameprovider = new DefaultDeclarativeQualifiedNameProvider();
 
+	private def String prettyObjectName(Object o) {
+		switch (o) {
+			EObject:prettyObjectName(o)
+			String: '''"«o»"'''
+			default:
+				o.toString
+		}
+	}
+	
+	private def String prettyObjectName(EObject o) {
+		val typeName = o.eClass().getName()
+		val objectName = nameprovider.getFullyQualifiedName(o)?.toString ?: o.toString()
+		return '''[«typeName»] «objectName»'''
+	}
+
+	protected def String prettyFrameName(MSEOccurrence mseoccurrence, boolean implicit) {
+		if (mseoccurrence !== null) {
+			val mse = mseoccurrence.mse
+			val String args = mseoccurrence.parameters.map[prettyObjectName].join(", ")
+			return prettyFrameName(mse, implicit) + "(" + args + ")"
+		}
+	}
+
 	protected def String prettyFrameName(MSE mse, boolean implicit) {
 		if (mse !== null) {
 			var EObject caller = mse.caller
-			val QualifiedName qname = nameprovider.getFullyQualifiedName(caller)
-			val String objectName = if(qname !== null) qname.toString() else caller.toString()
+			val String objectName = prettyObjectName(caller)
 			val String opName = if (implicit) {
 					mse.action?.name + "_implicitStep"
 				} else {
 					mse.action?.name
 				}
-			val String callerType = caller.eClass().getName()
-			val String prettyName = "(" + callerType + ") " + objectName + " -> " + opName + "()"
+			val String prettyName = objectName + " -> " + opName
 			return prettyName
 		}
 	}
@@ -177,12 +197,12 @@ public class GenericSequentialModelDebugger extends AbstractGemocDebugger {
 		// If there is an MSE Occurrence, we show its info
 		if (mseOccurrence !== null) {
 			caller = mseOccurrence.mse.caller
-			prettyName = prettyFrameName(mseOccurrence.mse, false)
+			prettyName = prettyFrameName(mseOccurrence, false)
 		} // If the step is contained in a step with an MSE, we show the parent MSE info + "implicit"
 		else if (container !== null && container instanceof Step<?> && (container as Step<?>).mseoccurrence !== null) {
 			val parentMSE = (container as Step<?>).mseoccurrence.mse
 			caller = parentMSE.caller
-			prettyName = prettyFrameName(parentMSE, true)
+			prettyName = prettyFrameName(parentMSE, true) + "()"
 		} // If this is a ParallelStep, we show its internal steps in the label
 		else if (step instanceof ParallelStep<?, ?>) {
 			caller = step

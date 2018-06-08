@@ -10,9 +10,10 @@
  *******************************************************************************/
 package org.eclipse.gemoc.executionframework.engine.core;
 
-
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Collections;
+import java.util.List;
 import java.util.Set;
 
 import org.eclipse.emf.ecore.EClass;
@@ -56,8 +57,11 @@ public abstract class AbstractSequentialExecutionEngine extends AbstractExecutio
 	protected abstract void initializeModel();
 
 	/**
-	 * search for an applicable entry point for the simulation, this is typically a method having the @Main annotation
-	 * @param executionContext the execution context of the simulation
+	 * search for an applicable entry point for the simulation, this is typically a
+	 * method having the @Main annotation
+	 * 
+	 * @param executionContext
+	 *            the execution context of the simulation
 	 */
 	protected abstract void prepareEntryPoint(IExecutionContext executionContext);
 
@@ -103,6 +107,10 @@ public abstract class AbstractSequentialExecutionEngine extends AbstractExecutio
 	 * To be called just before each execution step by an implementing engine.
 	 */
 	protected final void beforeExecutionStep(Object caller, String className, String operationName) {
+		beforeExecutionStep(caller, className, operationName, Collections.emptyList());
+	}
+
+	protected final void beforeExecutionStep(Object caller, String className, String operationName, List<Object> args) {
 		// We will trick the transaction with an empty command. This most
 		// probably make rollbacks impossible, but at least we can manage
 		// transactions the way we want.
@@ -112,20 +120,24 @@ public abstract class AbstractSequentialExecutionEngine extends AbstractExecutio
 			}
 		};
 
-		beforeExecutionStep(caller, className, operationName, rc);
+		beforeExecutionStep(caller, className, operationName, rc, args);
 		rc.execute();
 	}
 
-	/**
-	 * To be called just after each execution step by an implementing engine. If
-	 * the step was done through a RecordingCommand, it can be given.
-	 */
 	protected final void beforeExecutionStep(Object caller, String className, String operationName, RecordingCommand rc) {
+		beforeExecutionStep(caller, className, operationName, rc, Collections.emptyList());
+	}
+
+	/**
+	 * To be called just after each execution step by an implementing engine. If the
+	 * step was done through a RecordingCommand, it can be given.
+	 */
+	protected final void beforeExecutionStep(Object caller, String className, String operationName, RecordingCommand rc, List<Object> args) {
 		if (caller != null && caller instanceof EObject && editingDomain != null) {
 			// Call expected to be done from an EMF model, hence EObjects
 			EObject callerCast = (EObject) caller;
 			// We create a step
-			Step<?> step = createStep(callerCast, className, operationName);
+			Step<?> step = createStep(callerCast, className, operationName, args);
 
 			manageEvents();
 
@@ -133,13 +145,15 @@ public abstract class AbstractSequentialExecutionEngine extends AbstractExecutio
 		}
 	}
 
-	private Step<?> createStep(EObject caller, String className, String methodName) {
+	private Step<?> createStep(EObject caller, String className, String methodName, List<Object> args) {
 		MSE mse = findOrCreateMSE(caller, className, methodName);
 		Step<?> result;
 		if (traceAddon == null) {
 			GenericSequentialStep step = GenerictraceFactory.eINSTANCE.createGenericSequentialStep();
-			MSEOccurrence occurrence = null;
-			occurrence = TraceFactory.eINSTANCE.createMSEOccurrence();
+			MSEOccurrence occurrence = TraceFactory.eINSTANCE.createMSEOccurrence();
+			for (Object arg : args) {
+				occurrence.getParameters().add(arg);
+			}
 			step.setMseoccurrence(occurrence);
 			occurrence.setMse(mse);
 			result = step;
@@ -184,11 +198,16 @@ public abstract class AbstractSequentialExecutionEngine extends AbstractExecutio
 	}
 
 	/**
-	 * Find the MSE element for the triplet caller/className/MethodName in the model of precalculated possible MSE.
-	 * If it doesn't exist yet, create one and add it to the model.
-	 * @param caller the caller object
-	 * @param className the class containing the method
-	 * @param methodName the name of the method
+	 * Find the MSE element for the triplet caller/className/MethodName in the model
+	 * of precalculated possible MSE. If it doesn't exist yet, create one and add it
+	 * to the model.
+	 * 
+	 * @param caller
+	 *            the caller object
+	 * @param className
+	 *            the class containing the method
+	 * @param methodName
+	 *            the name of the method
 	 * @return the retrieved or created MSE
 	 */
 	public final MSE findOrCreateMSE(EObject caller, String className, String methodName) {
@@ -242,16 +261,16 @@ public abstract class AbstractSequentialExecutionEngine extends AbstractExecutio
 
 	@Override
 	protected void beforeStart() {
-		
+
 	}
 
 	@Override
 	protected void performStop() {
-		
+
 	}
 
 	@Override
 	protected void finishDispose() {
-		
+
 	}
 }
