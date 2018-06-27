@@ -19,7 +19,7 @@ class JavaEngineWrapper implements IEngineWrapper {
 	override run() {
 		engine.start();
 		engine.joinThread();
-		if (engine.error != null)
+		if (engine.error !== null)
 			throw engine.error
 	}
 

@@ -98,7 +98,7 @@ class TestHelper {
 		}
 		job.schedule
 		TestUtil::waitForJobs
-		if (job.result != null && job.result.exception != null) {
+		if (job.result !== null && job.result.exception !== null) {
 			throw job.result.exception
 		}
 		return out.head
