@@ -12,7 +12,7 @@
 <feature
       id="org.eclipse.gemoc.trace.commons.feature"
       label="Domain Specific Trace Commons"
-      version="3.0.0.qualifier"
+      version="3.0.1.qualifier"
       image="gemocstudio32.png">
 
    <description url="http://www.example.com/description">

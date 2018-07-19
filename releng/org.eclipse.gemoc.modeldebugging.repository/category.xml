@@ -1,75 +1,75 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <site>
-   <feature url="features/org.eclipse.gemoc.trace.commons.feature_3.0.0.qualifier.jar" id="org.eclipse.gemoc.trace.commons.feature" version="3.0.0.qualifier">
+   <feature url="features/org.eclipse.gemoc.trace.commons.feature_3.0.1.qualifier.jar" id="org.eclipse.gemoc.trace.commons.feature" version="3.0.1.qualifier">
       <category name="org.eclipse.gemoc.trace"/>
    </feature>
-   <feature url="features/org.eclipse.gemoc.trace.commons.feature_3.0.0.qualifier-sources-feature.jar" id="org.eclipse.gemoc.trace.commons.feature.source" version="3.0.0.qualifier">
+   <feature url="features/org.eclipse.gemoc.trace.commons.feature_3.0.1.qualifier-sources-feature.jar" id="org.eclipse.gemoc.trace.commons.feature.source" version="3.0.1.qualifier">
       <category name="org.eclipse.gemoc.trace.source"/>
    </feature>
-   <feature url="features/org.eclipse.gemoc.trace.generator.feature_3.0.0.qualifier.jar" id="org.eclipse.gemoc.trace.generator.feature" version="3.0.0.qualifier">
+   <feature url="features/org.eclipse.gemoc.trace.generator.feature_3.0.1.qualifier.jar" id="org.eclipse.gemoc.trace.generator.feature" version="3.0.1.qualifier">
       <category name="org.eclipse.gemoc.trace"/>
    </feature>
-   <feature url="features/org.eclipse.gemoc.trace.generator.feature_3.0.0.qualifier-sources-feature.jar" id="org.eclipse.gemoc.trace.generator.feature.source" version="3.0.0.qualifier">
+   <feature url="features/org.eclipse.gemoc.trace.generator.feature_3.0.1.qualifier-sources-feature.jar" id="org.eclipse.gemoc.trace.generator.feature.source" version="3.0.1.qualifier">
       <category name="org.eclipse.gemoc.trace.source"/>
    </feature>
-   <feature url="features/org.eclipse.gemoc.trace.manager.feature_3.0.0.qualifier.jar" id="org.eclipse.gemoc.trace.manager.feature" version="3.0.0.qualifier">
+   <feature url="features/org.eclipse.gemoc.trace.manager.feature_3.0.1.qualifier.jar" id="org.eclipse.gemoc.trace.manager.feature" version="3.0.1.qualifier">
       <category name="org.eclipse.gemoc.trace"/>
    </feature>
-   <feature url="features/org.eclipse.gemoc.trace.manager.feature_3.0.0.qualifier-sources-feature.jar" id="org.eclipse.gemoc.trace.manager.feature.source" version="3.0.0.qualifier">
+   <feature url="features/org.eclipse.gemoc.trace.manager.feature_3.0.1.qualifier-sources-feature.jar" id="org.eclipse.gemoc.trace.manager.feature.source" version="3.0.1.qualifier">
       <category name="org.eclipse.gemoc.trace.source"/>
    </feature>
-   <feature url="features/org.eclipse.gemoc.xdsmlframework.feature_3.0.0.qualifier.jar" id="org.eclipse.gemoc.xdsmlframework.feature" version="3.0.0.qualifier">
+   <feature url="features/org.eclipse.gemoc.xdsmlframework.feature_4.0.0.qualifier.jar" id="org.eclipse.gemoc.xdsmlframework.feature" version="4.0.0.qualifier">
       <category name="ModelDebuggingFramework"/>
    </feature>
-   <feature url="features/org.eclipse.gemoc.xdsmlframework.feature.source_3.0.0.qualifier.jar" id="org.eclipse.gemoc.xdsmlframework.feature.source" version="3.0.0.qualifier">
+   <feature url="features/org.eclipse.gemoc.xdsmlframework.feature.source_4.0.0.qualifier.jar" id="org.eclipse.gemoc.xdsmlframework.feature.source" version="4.0.0.qualifier">
       <category name="ModelDebuggingFramework"/>
    </feature>
-   <feature url="features/org.eclipse.gemoc.executionframework.feature_3.0.0.qualifier.jar" id="org.eclipse.gemoc.executionframework.feature" version="3.0.0.qualifier">
+   <feature url="features/org.eclipse.gemoc.executionframework.feature_4.0.0.qualifier.jar" id="org.eclipse.gemoc.executionframework.feature" version="4.0.0.qualifier">
       <category name="ModelDebuggingFramework"/>
    </feature>
-   <feature url="features/org.eclipse.gemoc.executionframework.feature.source_3.0.0.qualifier.jar" id="org.eclipse.gemoc.executionframework.feature.source" version="3.0.0.qualifier">
+   <feature url="features/org.eclipse.gemoc.executionframework.feature.source_4.0.0.qualifier.jar" id="org.eclipse.gemoc.executionframework.feature.source" version="4.0.0.qualifier">
       <category name="ModelDebuggingFramework"/>
    </feature>
-   <feature url="features/org.eclipse.gemoc.modeldebugging.framework.commons.feature_3.0.0.qualifier.jar" id="org.eclipse.gemoc.modeldebugging.framework.commons.feature" version="3.0.0.qualifier">
+   <feature url="features/org.eclipse.gemoc.modeldebugging.framework.commons.feature_4.0.0.qualifier.jar" id="org.eclipse.gemoc.modeldebugging.framework.commons.feature" version="4.0.0.qualifier">
       <category name="ModelDebuggingFramework"/>
    </feature>
-   <feature url="features/org.eclipse.gemoc.modeldebugging.framework.commons.feature.source_3.0.0.qualifier.jar" id="org.eclipse.gemoc.modeldebugging.framework.commons.feature.source" version="3.0.0.qualifier">
+   <feature url="features/org.eclipse.gemoc.modeldebugging.framework.commons.feature.source_4.0.0.qualifier.jar" id="org.eclipse.gemoc.modeldebugging.framework.commons.feature.source" version="4.0.0.qualifier">
       <category name="ModelDebuggingFramework"/>
    </feature>
-   <feature url="features/org.eclipse.gemoc.execution.sequential.javaxdsml.feature_3.0.0.qualifier.jar" id="org.eclipse.gemoc.execution.sequential.javaxdsml.feature" version="3.0.0.qualifier">
+   <feature url="features/org.eclipse.gemoc.execution.sequential.javaxdsml.feature_4.0.0.qualifier.jar" id="org.eclipse.gemoc.execution.sequential.javaxdsml.feature" version="4.0.0.qualifier">
       <category name="executionengine.java"/>
    </feature>
-   <feature url="features/org.eclipse.gemoc.execution.sequential.javaxdsml.feature.source_3.0.0.qualifier.jar" id="org.eclipse.gemoc.execution.sequential.javaxdsml.feature.source" version="3.0.0.qualifier">
+   <feature url="features/org.eclipse.gemoc.execution.sequential.javaxdsml.feature.source_4.0.0.qualifier.jar" id="org.eclipse.gemoc.execution.sequential.javaxdsml.feature.source" version="4.0.0.qualifier">
       <category name="executionengine.java"/>
    </feature>
-   <feature url="features/org.eclipse.gemoc.execution.sequential.javaengine.feature_3.0.0.qualifier.jar" id="org.eclipse.gemoc.execution.sequential.javaengine.feature" version="3.0.0.qualifier">
+   <feature url="features/org.eclipse.gemoc.execution.sequential.javaengine.feature_4.0.0.qualifier.jar" id="org.eclipse.gemoc.execution.sequential.javaengine.feature" version="4.0.0.qualifier">
       <category name="executionengine.java"/>
    </feature>
-   <feature url="features/org.eclipse.gemoc.execution.sequential.javaengine.feature.source_3.0.0.qualifier.jar" id="org.eclipse.gemoc.execution.sequential.javaengine.feature.source" version="3.0.0.qualifier">
+   <feature url="features/org.eclipse.gemoc.execution.sequential.javaengine.feature.source_4.0.0.qualifier.jar" id="org.eclipse.gemoc.execution.sequential.javaengine.feature.source" version="4.0.0.qualifier">
       <category name="executionengine.java"/>
    </feature>
-   <feature url="features/org.eclipse.gemoc.execution.sequential.javaengine.ui.feature_3.0.0.qualifier.jar" id="org.eclipse.gemoc.execution.sequential.javaengine.ui.feature" version="3.0.0.qualifier">
+   <feature url="features/org.eclipse.gemoc.execution.sequential.javaengine.ui.feature_4.0.0.qualifier.jar" id="org.eclipse.gemoc.execution.sequential.javaengine.ui.feature" version="4.0.0.qualifier">
       <category name="executionengine.java"/>
    </feature>
-   <feature url="features/org.eclipse.gemoc.execution.sequential.javaengine.ui.feature.source_3.0.0.qualifier.jar" id="org.eclipse.gemoc.execution.sequential.javaengine.ui.feature.source" version="3.0.0.qualifier">
+   <feature url="features/org.eclipse.gemoc.execution.sequential.javaengine.ui.feature.source_4.0.0.qualifier.jar" id="org.eclipse.gemoc.execution.sequential.javaengine.ui.feature.source" version="4.0.0.qualifier">
       <category name="executionengine.java"/>
    </feature>
-   <feature url="features/org.eclipse.gemoc.dsl.debug.feature_3.0.0.qualifier.jar" id="org.eclipse.gemoc.dsl.debug.feature" version="3.0.0.qualifier">
+   <feature url="features/org.eclipse.gemoc.dsl.debug.feature_3.0.1.qualifier.jar" id="org.eclipse.gemoc.dsl.debug.feature" version="3.0.1.qualifier">
       <category name="SimulationModelAnimation"/>
    </feature>
-   <feature url="features/org.eclipse.gemoc.dsl.debug.feature.source_3.0.0.qualifier.jar" id="org.eclipse.gemoc.dsl.debug.feature.source" version="3.0.0.qualifier">
+   <feature url="features/org.eclipse.gemoc.dsl.debug.feature.source_3.0.1.qualifier.jar" id="org.eclipse.gemoc.dsl.debug.feature.source" version="3.0.1.qualifier">
       <category name="SimulationModelAnimation"/>
    </feature>
-   <feature url="features/org.eclipse.gemoc.dsl.debug.ui.feature_3.0.0.qualifier.jar" id="org.eclipse.gemoc.dsl.debug.ui.feature" version="3.0.0.qualifier">
+   <feature url="features/org.eclipse.gemoc.dsl.debug.ui.feature_3.0.1.qualifier.jar" id="org.eclipse.gemoc.dsl.debug.ui.feature" version="3.0.1.qualifier">
       <category name="SimulationModelAnimation"/>
    </feature>
-   <feature url="features/org.eclipse.gemoc.dsl.debug.ui.feature.source_3.0.0.qualifier.jar" id="org.eclipse.gemoc.dsl.debug.ui.feature.source" version="3.0.0.qualifier">
+   <feature url="features/org.eclipse.gemoc.dsl.debug.ui.feature.source_3.0.1.qualifier.jar" id="org.eclipse.gemoc.dsl.debug.ui.feature.source" version="3.0.1.qualifier">
       <category name="SimulationModelAnimation"/>
    </feature>
-   <feature url="features/org.eclipse.gemoc.dsl.debug.sirius.ui.feature_3.0.0.qualifier.jar" id="org.eclipse.gemoc.dsl.debug.sirius.ui.feature" version="3.0.0.qualifier">
+   <feature url="features/org.eclipse.gemoc.dsl.debug.sirius.ui.feature_3.0.1.qualifier.jar" id="org.eclipse.gemoc.dsl.debug.sirius.ui.feature" version="3.0.1.qualifier">
       <category name="SimulationModelAnimation"/>
    </feature>
-   <feature url="features/org.eclipse.gemoc.dsl.debug.sirius.ui.feature.source_3.0.0.qualifier.jar" id="org.eclipse.gemoc.dsl.debug.sirius.ui.feature.source" version="3.0.0.qualifier">
+   <feature url="features/org.eclipse.gemoc.dsl.debug.sirius.ui.feature.source_3.0.1.qualifier.jar" id="org.eclipse.gemoc.dsl.debug.sirius.ui.feature.source" version="3.0.1.qualifier">
       <category name="SimulationModelAnimation"/>
    </feature>
    <category-def name="org.eclipse.gemoc.trace" label="Multidimensional Domain-specific Trace Management Facilities">

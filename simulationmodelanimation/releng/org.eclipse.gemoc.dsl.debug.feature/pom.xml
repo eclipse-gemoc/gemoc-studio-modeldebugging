@@ -15,12 +15,12 @@ Contributors:
   <parent>
   	<artifactId>org.eclipse.gemoc.dsl.debug.parent</artifactId>
   	<groupId>DSLDebugger</groupId>
-  	<version>3.0.0-SNAPSHOT</version>	
+  	<version>3.0.1-SNAPSHOT</version>	
   	<relativePath>../../</relativePath>
   </parent>
   <groupId>DSLDebugger</groupId>
   <artifactId>org.eclipse.gemoc.dsl.debug.feature</artifactId>
-  <version>3.0.0-SNAPSHOT</version>
+  <version>3.0.1-SNAPSHOT</version>
   <packaging>eclipse-feature</packaging>
 
   <name>DSL Debugger Feature</name>

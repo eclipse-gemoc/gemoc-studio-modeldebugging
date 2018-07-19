@@ -15,11 +15,11 @@ Contributors:
   <parent>
   	<artifactId>org.eclipse.gemoc.dsl.debug.parent</artifactId>
   	<groupId>DSLDebugger</groupId>
-  	<version>3.0.0-SNAPSHOT</version>	
+  	<version>3.0.1-SNAPSHOT</version>	
   	<relativePath>../../</relativePath>
   </parent>
   <groupId>DSLDebugger</groupId>
   <artifactId>org.eclipse.gemoc.dsl.debug.ide.ui</artifactId>
-  <version>3.0.0-SNAPSHOT</version>
+  <version>3.0.1-SNAPSHOT</version>
   <packaging>eclipse-plugin</packaging>
 </project>
