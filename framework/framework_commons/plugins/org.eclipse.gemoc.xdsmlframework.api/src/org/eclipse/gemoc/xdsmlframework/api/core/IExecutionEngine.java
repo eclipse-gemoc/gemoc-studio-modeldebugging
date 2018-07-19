@@ -29,7 +29,7 @@ import org.eclipse.gemoc.xdsmlframework.api.engine_addon.IEngineAddon;
  * @author Didier Vojtisek<didier.vojtisek@inria.fr>
  * 
  */
-public interface IExecutionEngine extends IDisposable {
+public interface IExecutionEngine<U extends IExecutionContext<?, ?, ?>> extends IDisposable {
 	
 	/**
 	 * In case of nested calls, indicate the current stack of model specific event occurrences.
@@ -83,7 +83,7 @@ public interface IExecutionEngine extends IDisposable {
 	 * get the execution context
 	 * @return the {@link IExecutionContext}
 	 */
-	IExecutionContext getExecutionContext();
+	U getExecutionContext();
 
 	/**
 	 * get the run status
@@ -102,7 +102,7 @@ public interface IExecutionEngine extends IDisposable {
 	 * Ask the engine to initialize
 	 * @param executionContext the {@link IExecutionContext}
 	 */
-	void initialize(IExecutionContext executionContext);
+	void initialize(U executionContext);
 	
 	/**
 	 * Create a {@link LaunchConfiguration} for the Trace based on the engine RunConfiguration.

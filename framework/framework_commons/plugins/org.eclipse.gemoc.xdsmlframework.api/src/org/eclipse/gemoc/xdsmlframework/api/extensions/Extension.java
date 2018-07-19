@@ -15,13 +15,11 @@ import org.eclipse.core.runtime.IConfigurationElement;
 import org.eclipse.core.runtime.Status;
 import org.eclipse.gemoc.xdsmlframework.api.Activator;
 
-public class Extension 
-{
+public class Extension {
 
 	protected IConfigurationElement _configurationElement;
 
-	void setSpecification(IConfigurationElement configurationElement) 
-	{
+	void setSpecification(IConfigurationElement configurationElement) {
 		_configurationElement = configurationElement;
 	}
 
@@ -30,13 +28,11 @@ public class Extension
 	}
 
 	protected Object instanciate(String attributeName) throws CoreException {
-		try
-		{
+		try {
 			return _configurationElement.createExecutableExtension(attributeName);
-		}
-		catch(CoreException e)
-		{
-			String message = "Instanciation of one agent failed: " + e.getMessage() + " (see inner exception for more detail).";
+		} catch (CoreException e) {
+			String message = "Instanciation of one agent failed: " + e.getMessage()
+					+ " (see inner exception for more detail).";
 			CoreException exception = new CoreException(new Status(Status.ERROR, Activator.PLUGIN_ID, message, e));
 			throw exception;
 		}
@@ -47,6 +43,5 @@ public class Extension
 		CoreException exception = new CoreException(new Status(Status.ERROR, Activator.PLUGIN_ID, message));
 		throw exception;
 	}
-
 
 }

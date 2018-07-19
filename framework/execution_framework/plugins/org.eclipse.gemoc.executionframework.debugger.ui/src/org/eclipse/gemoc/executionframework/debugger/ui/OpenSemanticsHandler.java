@@ -36,7 +36,7 @@ import org.eclipse.gemoc.dsl.debug.ide.adapter.DSLThreadAdapter;
 
 public class OpenSemanticsHandler extends AbstractHandler {
 
-	private IExecutionEngine engine;
+	private IExecutionEngine<?> engine;
 
 	private String bundleSymbolicName;
 
@@ -67,7 +67,7 @@ public class OpenSemanticsHandler extends AbstractHandler {
 			}
 		}
 
-		Thread thread = ((AbstractExecutionEngine) engine).thread;
+		Thread thread = ((AbstractExecutionEngine<?, ?>) engine).thread;
 		StackTraceElement[] stackTrace = thread.getStackTrace();
 		String className = engine.getClass().getName();
 		String methodName = "executeStep";
@@ -102,7 +102,7 @@ public class OpenSemanticsHandler extends AbstractHandler {
 	}
 
 	public Object execute(ExecutionEvent event) throws ExecutionException {
-		Supplier<IExecutionEngine> engineSupplier = org.eclipse.gemoc.executionframework.debugger.Activator.getDefault().getEngineSupplier();
+		Supplier<IExecutionEngine<?>> engineSupplier = org.eclipse.gemoc.executionframework.debugger.Activator.getDefault().getEngineSupplier();
 		Supplier<String> bundleSupplier = org.eclipse.gemoc.executionframework.debugger.Activator.getDefault().getBundleSymbolicNameSupplier();
 		if (engineSupplier != null) {
 			this.engine = engineSupplier.get();
@@ -120,7 +120,7 @@ public class OpenSemanticsHandler extends AbstractHandler {
 		this.bundleSymbolicName = bundleSymbolicName;
 	}
 
-	public void setEngine(IExecutionEngine engine) {
+	public void setEngine(IExecutionEngine<?> engine) {
 		this.engine = engine;
 	}
 }

@@ -11,7 +11,7 @@
 package org.eclipse.gemoc.execution.sequential.javaxdsml.ide.ui.commands;
 
 import java.io.IOException;
-import java.util.HashMap;
+import java.util.Collections;
 import java.util.Optional;
 
 import org.eclipse.core.commands.ExecutionEvent;
@@ -74,7 +74,7 @@ public class CreateDomainModelProjectHandler extends AbstractDslSelectHandler im
 			dsl.getEntries().add(ecoreEntry);
 		}
 		try {
-			res.save(new HashMap());
+			res.save(Collections.emptyMap());
 		} catch (IOException e) {
 			e.printStackTrace();
 		}

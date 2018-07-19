@@ -10,14 +10,6 @@
  *******************************************************************************/
 package org.eclipse.gemoc.dsl.debug.ide.sirius.ui.services;
 
-import org.eclipse.gemoc.trace.commons.model.trace.MSEOccurrence;
-import org.eclipse.gemoc.trace.commons.model.trace.ParallelStep;
-import org.eclipse.gemoc.trace.commons.model.trace.Step;
-import org.eclipse.gemoc.dsl.debug.StackFrame;
-import org.eclipse.gemoc.dsl.debug.ide.DSLBreakpoint;
-import org.eclipse.gemoc.dsl.debug.ide.adapter.IDSLCurrentInstructionListener;
-import org.eclipse.gemoc.dsl.debug.ide.sirius.ui.DebugSiriusIdeUiPlugin;
-
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.HashSet;
@@ -42,6 +34,13 @@ import org.eclipse.emf.ecore.util.EcoreUtil;
 import org.eclipse.emf.transaction.ExceptionHandler;
 import org.eclipse.emf.transaction.TransactionalEditingDomain;
 import org.eclipse.emf.transaction.impl.AbstractTransactionalCommandStack;
+import org.eclipse.gemoc.dsl.debug.StackFrame;
+import org.eclipse.gemoc.dsl.debug.ide.DSLBreakpoint;
+import org.eclipse.gemoc.dsl.debug.ide.adapter.IDSLCurrentInstructionListener;
+import org.eclipse.gemoc.dsl.debug.ide.sirius.ui.DebugSiriusIdeUiPlugin;
+import org.eclipse.gemoc.trace.commons.model.trace.MSEOccurrence;
+import org.eclipse.gemoc.trace.commons.model.trace.ParallelStep;
+import org.eclipse.gemoc.trace.commons.model.trace.Step;
 import org.eclipse.sirius.business.api.dialect.DialectManager;
 import org.eclipse.sirius.business.api.dialect.command.RefreshRepresentationsCommand;
 import org.eclipse.sirius.diagram.DDiagram;
@@ -446,14 +445,14 @@ public abstract class AbstractDSLDebuggerServices {
 			if (currentInstruction instanceof ParallelStep) {
 				addMseOccurenceAndCallerToInstructionsURIs(instructionURIs,
 						((ParallelStep<?, ?>)currentInstruction).getMseoccurrence());
-				for (Step step : ((ParallelStep<?, ?>)currentInstruction).getSubSteps()) {
+				for (Step<?> step : ((ParallelStep<?, ?>)currentInstruction).getSubSteps()) {
 					addMseOccurenceAndCallerToInstructionsURIs(instructionURIs, step.getMseoccurrence());
 				}
 			} else if (currentInstruction instanceof Step) {
 				if (!(currentInstruction.eContainer() instanceof ParallelStep)) {
 					// do not show internal step of parallel step, because they are already shown as a
 					// parallel
-					addMseOccurenceAndCallerToInstructionsURIs(instructionURIs, ((Step)currentInstruction)
+					addMseOccurenceAndCallerToInstructionsURIs(instructionURIs, ((Step<?>)currentInstruction)
 							.getMseoccurrence());
 				}
 			} else {

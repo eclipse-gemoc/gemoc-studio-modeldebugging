@@ -29,13 +29,13 @@ import org.eclipse.gemoc.commons.eclipse.emf.URIHelper;
 import org.eclipse.gemoc.commons.eclipse.ui.dialogs.SelectAnyIFileDialog;
 import org.eclipse.gemoc.dsl.debug.ide.launch.AbstractDSLLaunchConfigurationDelegate;
 import org.eclipse.gemoc.dsl.debug.ide.sirius.ui.launch.AbstractDSLLaunchConfigurationDelegateSiriusUI;
+import org.eclipse.gemoc.execution.sequential.javaengine.K3RunConfiguration;
 import org.eclipse.gemoc.execution.sequential.javaengine.PlainK3ExecutionEngine;
 import org.eclipse.gemoc.execution.sequential.javaengine.ui.Activator;
 import org.eclipse.gemoc.execution.sequential.javaengine.ui.launcher.LauncherMessages;
 import org.eclipse.gemoc.executionframework.engine.commons.DslHelper;
 import org.eclipse.gemoc.executionframework.engine.commons.K3DslHelper;
 import org.eclipse.gemoc.executionframework.engine.commons.MelangeHelper;
-import org.eclipse.gemoc.executionframework.engine.ui.commons.RunConfiguration;
 import org.eclipse.gemoc.executionframework.ui.utils.ENamedElementQualifiedNameLabelProvider;
 import org.eclipse.gemoc.xdsmlframework.ui.utils.dialogs.SelectAIRDIFileDialog;
 import org.eclipse.gemoc.xdsmlframework.ui.utils.dialogs.SelectAnyEObjectDialog;
@@ -122,16 +122,16 @@ public class LaunchConfigurationMainTab extends LaunchConfigurationTab {
 
 	@Override
 	public void setDefaults(ILaunchConfigurationWorkingCopy configuration) {
-		configuration.setAttribute(RunConfiguration.LAUNCH_DELAY, 1000);
-		configuration.setAttribute(RunConfiguration.LAUNCH_MODEL_ENTRY_POINT, "");
-		configuration.setAttribute(RunConfiguration.LAUNCH_METHOD_ENTRY_POINT, "");
-		configuration.setAttribute(RunConfiguration.LAUNCH_SELECTED_LANGUAGE, "");
+		configuration.setAttribute(K3RunConfiguration.LAUNCH_DELAY, 1000);
+		configuration.setAttribute(K3RunConfiguration.LAUNCH_MODEL_ENTRY_POINT, "");
+		configuration.setAttribute(K3RunConfiguration.LAUNCH_METHOD_ENTRY_POINT, "");
+		configuration.setAttribute(K3RunConfiguration.LAUNCH_SELECTED_LANGUAGE, "");
 	}
 
 	@Override
 	public void initializeFrom(ILaunchConfiguration configuration) {
 		try {
-			RunConfiguration runConfiguration = new RunConfiguration(
+			K3RunConfiguration runConfiguration = new K3RunConfiguration(
 					configuration);
 			_modelLocationText.setText(URIHelper
 					.removePlatformScheme(runConfiguration
@@ -172,24 +172,24 @@ public class LaunchConfigurationMainTab extends LaunchConfigurationTab {
 		configuration.setAttribute(
 				AbstractDSLLaunchConfigurationDelegateSiriusUI.SIRIUS_RESOURCE_URI,
 				this._siriusRepresentationLocationText.getText());
-		configuration.setAttribute(RunConfiguration.LAUNCH_DELAY,
+		configuration.setAttribute(K3RunConfiguration.LAUNCH_DELAY,
 				Integer.parseInt(_delayText.getText()));
-		configuration.setAttribute(RunConfiguration.LAUNCH_SELECTED_LANGUAGE,
+		configuration.setAttribute(K3RunConfiguration.LAUNCH_SELECTED_LANGUAGE,
 				_languageCombo.getText());
-		configuration.setAttribute(RunConfiguration.LAUNCH_MELANGE_QUERY,
+		configuration.setAttribute(K3RunConfiguration.LAUNCH_MELANGE_QUERY,
 				_melangeQueryText.getText());
-		configuration.setAttribute(RunConfiguration.LAUNCH_MODEL_ENTRY_POINT,
+		configuration.setAttribute(K3RunConfiguration.LAUNCH_MODEL_ENTRY_POINT,
 				_entryPointModelElementText.getText());
-		configuration.setAttribute(RunConfiguration.LAUNCH_METHOD_ENTRY_POINT,
+		configuration.setAttribute(K3RunConfiguration.LAUNCH_METHOD_ENTRY_POINT,
 				_entryPointMethodText.getText());
-		configuration.setAttribute(RunConfiguration.LAUNCH_INITIALIZATION_METHOD,
+		configuration.setAttribute(K3RunConfiguration.LAUNCH_INITIALIZATION_METHOD,
 				_modelInitializationMethodText.getText());
-		configuration.setAttribute(RunConfiguration.LAUNCH_INITIALIZATION_ARGUMENTS,
+		configuration.setAttribute(K3RunConfiguration.LAUNCH_INITIALIZATION_ARGUMENTS,
 				_modelInitializationArgumentsText.getText());
-		configuration.setAttribute(RunConfiguration.LAUNCH_BREAK_START,
+		configuration.setAttribute(K3RunConfiguration.LAUNCH_BREAK_START,
 				_animationFirstBreak.getSelection());
 		// DebugModelID for sequential engine
-		configuration.setAttribute(RunConfiguration.DEBUG_MODEL_ID, Activator.DEBUG_MODEL_ID);
+		configuration.setAttribute(K3RunConfiguration.DEBUG_MODEL_ID, Activator.DEBUG_MODEL_ID);
 	}
 
 	@Override

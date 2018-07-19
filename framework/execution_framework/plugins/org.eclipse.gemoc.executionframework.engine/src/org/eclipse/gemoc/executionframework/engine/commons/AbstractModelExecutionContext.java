@@ -25,19 +25,24 @@ import org.eclipse.gemoc.xdsmlframework.api.core.IRunConfiguration;
 import org.eclipse.gemoc.xdsmlframework.api.extensions.languages.LanguageDefinitionExtension;
 import org.osgi.framework.Bundle;
 
-public abstract class ModelExecutionContext implements IExecutionContext {
+public abstract class AbstractModelExecutionContext<R extends IRunConfiguration, P extends IExecutionPlatform, L extends LanguageDefinitionExtension> implements
+		IExecutionContext<R, P, L> {
 
-	protected IRunConfiguration _runConfiguration;
+	protected R _runConfiguration;
+
+	protected P _executionPlatform;
+
+	protected L _languageDefinition;
 
 	protected Resource _resourceModel;
 
 	protected ExecutionMode _executionMode;
 
-	protected LanguageDefinitionExtension _languageDefinition;
-	
 	protected Bundle _dslBundle;
 
-	public ModelExecutionContext(IRunConfiguration runConfiguration, ExecutionMode executionMode) throws EngineContextException {
+	private IExecutionWorkspace _executionWorkspace;
+
+	public AbstractModelExecutionContext(R runConfiguration, ExecutionMode executionMode) throws EngineContextException {
 		_runConfiguration = runConfiguration;
 		_executionMode = executionMode;
 		try {
@@ -59,6 +64,25 @@ public abstract class ModelExecutionContext implements IExecutionContext {
 		}
 	}
 
+	protected abstract P createExecutionPlatform() throws CoreException;
+
+	protected abstract L getLanguageDefinition(String languageName) throws EngineContextException;
+
+	@Override
+	public R getRunConfiguration() {
+		return _runConfiguration;
+	}
+
+	@Override
+	public P getExecutionPlatform() {
+		return _executionPlatform;
+	}
+
+	@Override
+	public L getLanguageDefinitionExtension() {
+		return _languageDefinition;
+	}
+
 	@Override
 	public void initializeResourceModel() {
 		if (_runConfiguration.getAnimatorURI() != null) // TODO maybe add a
@@ -75,11 +99,36 @@ public abstract class ModelExecutionContext implements IExecutionContext {
 
 		setUpEditingDomain();
 
-		//checkResourceSetContent();
+		// checkResourceSetContent();
 
 	}
-	
-	protected void checkResourceSetContent(){
+
+	@Override
+	public Resource getResourceModel() {
+		return _resourceModel;
+	}
+
+	@Override
+	public void dispose() {
+		_executionPlatform.dispose();
+	}
+
+	@Override
+	public IExecutionWorkspace getWorkspace() {
+		return _executionWorkspace;
+	}
+
+	@Override
+	public ExecutionMode getExecutionMode() {
+		return _executionMode;
+	}
+
+	@Override
+	public Bundle getDslBundle() {
+		return _dslBundle;
+	}
+
+	protected void checkResourceSetContent() {
 		// check that the initial resource hasn't been loaded more than once
 		// (e.g. via melange)
 		// pure debug code: has no side effect on anything
@@ -99,12 +148,6 @@ public abstract class ModelExecutionContext implements IExecutionContext {
 		}
 	}
 
-	protected IExecutionPlatform createExecutionPlatform() throws CoreException {
-		return new DefaultExecutionPlatform(_languageDefinition, _runConfiguration);
-	}
-
-	protected abstract LanguageDefinitionExtension getLanguageDefinition(String languageName) throws EngineContextException;
-
 	private ResourceSet getResourceSet() {
 		return _resourceModel.getResourceSet();
 	}
@@ -114,50 +157,5 @@ public abstract class ModelExecutionContext implements IExecutionContext {
 		if (editingDomain == null) {
 			editingDomain = TransactionalEditingDomain.Factory.INSTANCE.createEditingDomain(getResourceSet());
 		}
-	}
-
-	@Override
-	public IRunConfiguration getRunConfiguration() {
-		return _runConfiguration;
-	}
-
-	@Override
-	public Resource getResourceModel() {
-		return _resourceModel;
-	}
-
-	@Override
-	public void dispose() {
-		_executionPlatform.dispose();
-		//
-	}
-
-	private IExecutionWorkspace _executionWorkspace;
-
-	@Override
-	public IExecutionWorkspace getWorkspace() {
-		return _executionWorkspace;
-	}
-
-	@Override
-	public ExecutionMode getExecutionMode() {
-		return _executionMode;
-	}
-
-	protected IExecutionPlatform _executionPlatform;
-
-	@Override
-	public IExecutionPlatform getExecutionPlatform() {
-		return _executionPlatform;
-	}
-
-	@Override
-	public LanguageDefinitionExtension getLanguageDefinitionExtension() {
-		return _languageDefinition;
-	}
-
-	@Override
-	public Bundle getDslBundle(){
-		return _dslBundle;
 	}
 }

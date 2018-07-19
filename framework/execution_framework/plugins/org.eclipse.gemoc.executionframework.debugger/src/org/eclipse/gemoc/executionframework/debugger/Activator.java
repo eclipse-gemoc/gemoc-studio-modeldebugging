@@ -31,13 +31,13 @@ public class Activator extends GemocPlugin {
 	// The shared instance
 	private static Activator plugin;
 
-	private Supplier<IExecutionEngine> engineSupplier;
+	private Supplier<IExecutionEngine<?>> engineSupplier;
 
 	private Supplier<String> bundleSymbolicNameSupplier;
 
 	private Supplier<OmniscientGenericSequentialModelDebugger> debuggerSupplier;
 
-	public void setHandlerFieldSuppliers(Supplier<IExecutionEngine> engineSupplier,
+	public void setHandlerFieldSuppliers(Supplier<IExecutionEngine<?>> engineSupplier,
 			Supplier<String> bundleSymbolicNameSupplier) {
 		this.engineSupplier = engineSupplier;
 		this.bundleSymbolicNameSupplier = bundleSymbolicNameSupplier;
@@ -100,7 +100,7 @@ public class Activator extends GemocPlugin {
 		return _loggingBackend;
 	}
 
-	public Supplier<IExecutionEngine> getEngineSupplier() {
+	public Supplier<IExecutionEngine<?>> getEngineSupplier() {
 		return engineSupplier;
 	}
 

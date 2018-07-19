@@ -18,6 +18,6 @@ public interface IEngineSelectionListener {
 	 * Notify when engine is selected by user.
 	 * @param engine The selected engine.
 	 */
-	public void engineSelectionChanged(IExecutionEngine engine);
+	public void engineSelectionChanged(IExecutionEngine<?> engine);
 	
 }

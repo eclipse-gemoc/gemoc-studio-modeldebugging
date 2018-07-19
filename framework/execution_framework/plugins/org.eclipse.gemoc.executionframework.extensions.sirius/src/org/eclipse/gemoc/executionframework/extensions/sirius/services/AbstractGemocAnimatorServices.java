@@ -318,24 +318,24 @@ public abstract class AbstractGemocAnimatorServices {
 		}
 
 		@Override
-		public void engineAboutToStart(IExecutionEngine engine) {
+		public void engineAboutToStart(IExecutionEngine<?> engine) {
 		}
 
 		@Override
-		public void engineStarted(IExecutionEngine executionEngine) {
+		public void engineStarted(IExecutionEngine<?> executionEngine) {
 		}
 
 		@Override
-		public void engineAboutToStop(IExecutionEngine engine) {
+		public void engineAboutToStop(IExecutionEngine<?> engine) {
 		}
 
 		@Override
-		public void engineStopped(IExecutionEngine engine) {
+		public void engineStopped(IExecutionEngine<?> engine) {
 			clear(engine);
 		}
 
 		@Override
-		public void engineStatusChanged(IExecutionEngine engine, RunStatus newStatus) {
+		public void engineStatusChanged(IExecutionEngine<?> engine, RunStatus newStatus) {
 		}
 
 		/**
@@ -363,11 +363,11 @@ public abstract class AbstractGemocAnimatorServices {
 		}
 
 		@Override
-		public void proposedStepsChanged(IExecutionEngine engine, Collection<Step<?>> logicalSteps) {
+		public void proposedStepsChanged(IExecutionEngine<?> engine, Collection<Step<?>> logicalSteps) {
 		}
 
 		@Override
-		public void engineAboutToDispose(IExecutionEngine engine) {
+		public void engineAboutToDispose(IExecutionEngine<?> engine) {
 			if (engine.getExecutionContext().getRunConfiguration()
 					.getAnimatorURI() != null) {
 				Session session = SessionManager.INSTANCE.getSession(engine
@@ -384,22 +384,22 @@ public abstract class AbstractGemocAnimatorServices {
 		}
 
 		@Override
-		public void aboutToSelectStep(IExecutionEngine engine, Collection<Step<?>> logicalSteps) {
+		public void aboutToSelectStep(IExecutionEngine<?> engine, Collection<Step<?>> logicalSteps) {
 		}
 
 		@Override
-		public void stepSelected(IExecutionEngine engine, Step<?> selectedLogicalStep) {
+		public void stepSelected(IExecutionEngine<?> engine, Step<?> selectedLogicalStep) {
 		}
 
 		@Override
-		public void aboutToExecuteStep(IExecutionEngine engine, Step<?> stepToExecute) {
+		public void aboutToExecuteStep(IExecutionEngine<?> engine, Step<?> stepToExecute) {
 			if(!(stepToExecute.eContainer() instanceof ParallelStep)){
 				activate(engine, stepToExecute);
 			}
 		}
 
 		@Override
-		public void stepExecuted(IExecutionEngine engine, Step<?> stepExecuted) {
+		public void stepExecuted(IExecutionEngine<?> engine, Step<?> stepExecuted) {
 		}
 	}
 

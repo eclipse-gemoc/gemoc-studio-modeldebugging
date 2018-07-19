@@ -28,7 +28,6 @@ import org.eclipse.jface.viewers.IStructuredSelection;
 import org.eclipse.jface.wizard.Wizard;
 import org.eclipse.jface.wizard.WizardPage;
 import org.eclipse.sirius.editor.editorPlugin.SiriusEditorPlugin;
-import org.eclipse.sirius.editor.tools.internal.wizards.ViewpointSpecificationProjectWizard;
 import org.eclipse.sirius.ui.tools.api.project.ViewpointSpecificationProject;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.events.ModifyEvent;

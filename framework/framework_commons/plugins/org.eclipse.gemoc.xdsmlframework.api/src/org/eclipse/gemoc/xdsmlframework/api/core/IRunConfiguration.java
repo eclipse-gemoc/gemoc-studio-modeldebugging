@@ -22,13 +22,9 @@ public interface IRunConfiguration {
 	public static final String LAUNCH_DELAY = "GEMOC_ANIMATE_DELAY";
 	public static final String LAUNCH_SELECTED_LANGUAGE = "GEMOC_LAUNCH_SELECTED_LANGUAGE";
 	public static final String LAUNCH_MELANGE_QUERY = "GEMOC_LAUNCH_MELANGE_QUERY";
-	public static final String LAUNCH_MODEL_ENTRY_POINT = "LAUNCH_MODEL_ENTRY_POINT";
-	public static final String LAUNCH_METHOD_ENTRY_POINT = "LAUNCH_METHOD_ENTRY_POINT";
-	public static final String LAUNCH_INITIALIZATION_METHOD = "GEMOC_LAUNCH_INITIALIZATION_METHOD";
-	public static final String LAUNCH_INITIALIZATION_ARGUMENTS = "GEMOC_LAUNCH_INITIALIZATION_ARGUMENTS";
 	public static final String LAUNCH_BREAK_START = "GEMOC_LAUNCH_BREAK_START";
 	public static final String DEBUG_MODEL_ID = "GEMOC_DEBUG_MODEL_ID";
-
+	
 	// parameters that should be derived from the language in future version
 	public static final String LAUNCH_DEADLOCK_DETECTION_DEPTH = "GEMOC_LAUNCH_DEADLOCK_DETECTION_DEPTH";
 
@@ -44,18 +40,8 @@ public interface IRunConfiguration {
 
 	int getAnimationDelay();
 	
-	int getDeadlockDetectionDepth();
-
 	Collection<EngineAddonSpecificationExtension> getEngineAddonExtensions();
 		
-	String getExecutionEntryPoint();
-	
-	String getModelEntryPoint();
-
-	String getModelInitializationMethod();
-	
-	String getModelInitializationArguments();
-	
 	String getDebugModelID();
 
 	boolean getBreakStart();

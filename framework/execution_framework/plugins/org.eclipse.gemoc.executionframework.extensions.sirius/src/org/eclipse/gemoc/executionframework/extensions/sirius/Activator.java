@@ -48,11 +48,11 @@ public class Activator extends AbstractUIPlugin {
 				// activePage.closeEditors(activePage.getEditorReferences(), false);
 				
 				// try to close only Sirius sessions related to engines
-				for (Entry<String, IExecutionEngine> engineEntry : org.eclipse.gemoc.executionframework.engine.Activator.getDefault().gemocRunningEngineRegistry.getRunningEngines().entrySet())
+				for (Entry<String, IExecutionEngine<?>> engineEntry : org.eclipse.gemoc.executionframework.engine.Activator.getDefault().gemocRunningEngineRegistry.getRunningEngines().entrySet())
 			    {	
 					try{
 						// stop any running engine
-						IExecutionEngine engine = engineEntry.getValue();
+						IExecutionEngine<?> engine = engineEntry.getValue();
 						if(engine.getRunningStatus() != RunStatus.Stopped){
 							
 							engine.dispose();

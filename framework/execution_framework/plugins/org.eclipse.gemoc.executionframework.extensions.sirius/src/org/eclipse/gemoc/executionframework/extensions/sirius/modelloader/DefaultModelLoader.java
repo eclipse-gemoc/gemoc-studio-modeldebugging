@@ -110,7 +110,7 @@ public class DefaultModelLoader implements IModelLoader {
 	 * @throws RuntimeException
 	 *             if anything goes wrong (eg. the model cannot be found).
 	 */
-	public Resource loadModel(IExecutionContext context) throws RuntimeException {
+	public Resource loadModel(IExecutionContext<?, ?, ?> context) throws RuntimeException {
 		return loadModel(context, false, progressMonitor);
 	}
 
@@ -124,7 +124,7 @@ public class DefaultModelLoader implements IModelLoader {
 	 * @throws RuntimeException
 	 *             if anything goes wrong (eg. the model cannot be found)
 	 */
-	public Resource loadModelForAnimation(IExecutionContext context) throws RuntimeException {
+	public Resource loadModelForAnimation(IExecutionContext<?, ?, ?> context) throws RuntimeException {
 		return loadModel(context, true, progressMonitor);
 	}
 
@@ -141,7 +141,7 @@ public class DefaultModelLoader implements IModelLoader {
 	 * @throws RuntimeException
 	 *             if anything goes wrong (eg. the model cannot be found)
 	 */
-	private static Resource loadModel(IExecutionContext context, boolean withAnimation, IProgressMonitor progressMonitor) throws RuntimeException {
+	private static Resource loadModel(IExecutionContext<?, ?, ?> context, boolean withAnimation, IProgressMonitor progressMonitor) throws RuntimeException {
 
 		// Common part: preparing URI + resource set
 		SubMonitor subMonitor = SubMonitor.convert(progressMonitor, 10);
@@ -224,7 +224,7 @@ public class DefaultModelLoader implements IModelLoader {
 		}
 	}
 
-	private static Session openNewSiriusSession(final IExecutionContext context, URI sessionResourceURI, ResourceSet rs,
+	private static Session openNewSiriusSession(final IExecutionContext<?, ?, ?> context, URI sessionResourceURI, ResourceSet rs,
 			URI modelURI, SubMonitor subMonitor, HashMap<String, String> nsURIMapping) throws CoreException {
 
 		subMonitor.subTask("Loading model");
@@ -407,7 +407,7 @@ public class DefaultModelLoader implements IModelLoader {
 
 	// TODO must be extended to support more complex mappings, currently use
 	// only the first package in the genmodel
-	protected static HashMap<String, String> getnsURIMapping(IExecutionContext context) {
+	protected static HashMap<String, String> getnsURIMapping(IExecutionContext<?, ?, ?> context) {
 		HashMap<String, String> nsURIMapping = new HashMap<String, String>();
 
 		final String langQuery = "lang=";

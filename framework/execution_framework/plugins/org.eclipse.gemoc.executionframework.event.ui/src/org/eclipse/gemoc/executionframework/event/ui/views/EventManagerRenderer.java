@@ -190,12 +190,12 @@ public class EventManagerRenderer extends Pane implements IEngineAddon {
 	}
 
 	@Override
-	public void engineStarted(IExecutionEngine executionEngine) {
+	public void engineStarted(IExecutionEngine<?> executionEngine) {
 		executedModel = executionEngine.getExecutionContext().getResourceModel();
 	}
 
 	@Override
-	public void engineInitialized(IExecutionEngine executionEngine) {
+	public void engineInitialized(IExecutionEngine<?> executionEngine) {
 		Set<IEventManager> eventManagers = executionEngine.getAddonsTypedBy(IEventManager.class);
 		if (!eventManagers.isEmpty()) {
 			setEventInterpreter(eventManagers.iterator().next());
@@ -203,7 +203,7 @@ public class EventManagerRenderer extends Pane implements IEngineAddon {
 	}
 
 	@Override
-	public void engineStopped(IExecutionEngine engine) {
+	public void engineStopped(IExecutionEngine<?> engine) {
 		executedModel = null;
 		eventTypeToEventTableView.clear();
 		Platform.runLater(() -> {
@@ -213,12 +213,12 @@ public class EventManagerRenderer extends Pane implements IEngineAddon {
 	}
 
 	@Override
-	public void aboutToExecuteStep(IExecutionEngine engine, Step<?> stepToExecute) {
+	public void aboutToExecuteStep(IExecutionEngine<?> engine, Step<?> stepToExecute) {
 		refreshEvents();
 	}
 
 	@Override
-	public void stepExecuted(IExecutionEngine engine, Step<?> stepExecuted) {
+	public void stepExecuted(IExecutionEngine<?> engine, Step<?> stepExecuted) {
 		refreshEvents();
 	}
 }

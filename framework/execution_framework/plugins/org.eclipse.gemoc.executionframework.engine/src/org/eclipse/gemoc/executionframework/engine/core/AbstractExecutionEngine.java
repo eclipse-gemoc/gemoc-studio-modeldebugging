@@ -24,15 +24,14 @@ import org.eclipse.emf.transaction.TransactionalEditingDomain;
 import org.eclipse.emf.transaction.impl.EMFCommandTransaction;
 import org.eclipse.emf.transaction.impl.InternalTransactionalEditingDomain;
 import org.eclipse.gemoc.executionframework.engine.Activator;
+import org.eclipse.gemoc.trace.commons.model.trace.Step;
 import org.eclipse.gemoc.xdsmlframework.api.core.EngineStatus;
 import org.eclipse.gemoc.xdsmlframework.api.core.EngineStatus.RunStatus;
 import org.eclipse.gemoc.xdsmlframework.api.core.IDisposable;
 import org.eclipse.gemoc.xdsmlframework.api.core.IExecutionContext;
 import org.eclipse.gemoc.xdsmlframework.api.core.IExecutionEngine;
+import org.eclipse.gemoc.xdsmlframework.api.core.IRunConfiguration;
 import org.eclipse.gemoc.xdsmlframework.api.engine_addon.IEngineAddon;
-
-import org.eclipse.gemoc.trace.commons.model.trace.MSEOccurrence;
-import org.eclipse.gemoc.trace.commons.model.trace.Step;
 
 /**
  * Common implementation of {@link IExecutionEngine}. It provides the following
@@ -48,13 +47,13 @@ import org.eclipse.gemoc.trace.commons.model.trace.Step;
  * @author Didier Vojtisek<didier.vojtisek@inria.fr>
  *
  */
-public abstract class AbstractExecutionEngine implements IExecutionEngine, IDisposable {
+public abstract class AbstractExecutionEngine<C extends IExecutionContext<R, ?, ?>, R extends IRunConfiguration> implements IExecutionEngine<C>, IDisposable {
 
 	private RunStatus _runningStatus = RunStatus.Initializing;
 
 	protected EngineStatus engineStatus = new EngineStatus();
 
-	protected IExecutionContext _executionContext;
+	protected C _executionContext;
 
 	protected boolean _started = false;
 	protected boolean _isStopped = false;
@@ -70,14 +69,14 @@ public abstract class AbstractExecutionEngine implements IExecutionEngine, IDisp
 
 	abstract protected void performStop();
 
-	abstract protected void performInitialize(IExecutionContext executionContext);
+	abstract protected void performInitialize(C executionContext);
 
 	abstract protected void beforeStart();
 
 	abstract protected void finishDispose();
 
 	@Override
-	public final void initialize(IExecutionContext executionContext) {
+	public final void initialize(C executionContext) {
 		if (executionContext == null)
 			throw new IllegalArgumentException("executionContext");
 		_executionContext = executionContext;
@@ -93,7 +92,7 @@ public abstract class AbstractExecutionEngine implements IExecutionEngine, IDisp
 	 * getExecutionContext()
 	 */
 	@Override
-	public final IExecutionContext getExecutionContext() {
+	public final C getExecutionContext() {
 		return _executionContext;
 	}
 

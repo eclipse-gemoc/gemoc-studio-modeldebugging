@@ -24,12 +24,12 @@ public interface IEngineRegistrationListener {
 	 * method called by the registry when an engine is registered
 	 * @param engine the registered engine
 	 */
-	void engineRegistered(IExecutionEngine engine);
+	void engineRegistered(IExecutionEngine<?> engine);
 
 	/**
 	 * method called by the registry when an engine is unregistered
 	 * @param engine the unregistered engine
 	 */
-	void engineUnregistered(IExecutionEngine engine);
+	void engineUnregistered(IExecutionEngine<?> engine);
 	
 }

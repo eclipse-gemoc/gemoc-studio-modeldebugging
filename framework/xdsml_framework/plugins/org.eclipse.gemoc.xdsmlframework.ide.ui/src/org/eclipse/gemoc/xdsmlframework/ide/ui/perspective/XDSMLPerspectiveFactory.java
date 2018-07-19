@@ -12,7 +12,6 @@ package org.eclipse.gemoc.xdsmlframework.ide.ui.perspective;
 
 import org.eclipse.debug.ui.IDebugUIConstants;
 import org.eclipse.jdt.ui.JavaUI;
-import org.eclipse.pde.internal.launching.IPDEConstants;
 import org.eclipse.pde.internal.ui.IPDEUIConstants;
 import org.eclipse.pde.internal.ui.views.target.TargetStateView;
 import org.eclipse.sirius.ui.tools.api.views.modelexplorerview.IModelExplorerView;

@@ -47,7 +47,7 @@ import org.eclipse.gemoc.xdsmlframework.api.extensions.engine_addon.EngineAddonS
 
 abstract class AbstractTraceAddon implements IEngineAddon, IMultiDimensionalTraceAddon<Step<?>, State<?, ?>, TracedObject<?>, Dimension<?>, Value<?>> {
 
-	private IExecutionContext _executionContext
+	private IExecutionContext<?, ?, ?> _executionContext
 	private ITraceExplorer<Step<?>, State<?, ?>, TracedObject<?>, Dimension<?>, Value<?>> traceExplorer
 	private ITraceExtractor<Step<?>, State<?, ?>, TracedObject<?>, Dimension<?>, Value<?>> traceExtractor
 	private ITraceConstructor traceConstructor
@@ -93,23 +93,23 @@ abstract class AbstractTraceAddon implements IEngineAddon, IMultiDimensionalTrac
 
 	private static def String getEPackageFQN(EPackage p, String separator) {
 		val EPackage superP = p.getESuperPackage
-		if (superP != null) {
+		if (superP !== null) {
 			return getEPackageFQN(superP, separator) + separator + p.name
 		} else {
 			return p.name.toFirstUpper
 		}
 	}
 
-	override aboutToExecuteStep(IExecutionEngine executionEngine, Step<?> step) {
+	override aboutToExecuteStep(IExecutionEngine<?> executionEngine, Step<?> step) {
 		manageStep(step, true)
 	}
 
-	override stepExecuted(IExecutionEngine engine, Step<?> step) {
+	override stepExecuted(IExecutionEngine<?> engine, Step<?> step) {
 		manageStep(step, false)
 	}
 
 	private def manageStep(Step<?> step, boolean add) {
-		if (step != null) {
+		if (step !== null) {
 			modifyTrace([
 				traceConstructor.addState(listenerAddon.getChanges(this))
 				if (add) {
@@ -135,8 +135,8 @@ abstract class AbstractTraceAddon implements IEngineAddon, IMultiDimensionalTrac
 	/**
 	 * To construct the trace manager
 	 */
-	override engineAboutToStart(IExecutionEngine engine) {
-		if (_executionContext == null) {
+	override engineAboutToStart(IExecutionEngine<?> engine) {
+		if (_executionContext === null) {
 			_executionContext = engine.executionContext
 
 			val modelResource = _executionContext.resourceModel
@@ -147,7 +147,7 @@ abstract class AbstractTraceAddon implements IEngineAddon, IMultiDimensionalTrac
 
 			// We check whether or not we need transactions
 			val ed = TransactionUtil.getEditingDomain(rs)
-			needTransaction = ed != null
+			needTransaction = ed !== null
 
 			val URI traceModelURI = URI.createPlatformResourceURI(
 				_executionContext.getWorkspace().getExecutionPath().toString() + "/execution.trace", false)

@@ -16,25 +16,25 @@ import org.osgi.framework.Bundle;
 
 import org.eclipse.gemoc.trace.commons.model.trace.MSEModel;
 
-public interface IExecutionContext extends IDisposable
-{
+public interface IExecutionContext<R extends IRunConfiguration, P extends IExecutionPlatform, L extends LanguageDefinitionExtension>
+		extends IDisposable {
 
 	void initializeResourceModel();
-	
-	LanguageDefinitionExtension getLanguageDefinitionExtension();
-	
-	IExecutionWorkspace getWorkspace();
 
-	IExecutionPlatform getExecutionPlatform();
-	
-	IRunConfiguration getRunConfiguration();
+	IExecutionWorkspace getWorkspace();
 
 	Resource getResourceModel();
 
 	ExecutionMode getExecutionMode();
 
 	MSEModel getMSEModel();
-	
+
 	Bundle getDslBundle();
-	 
+
+	L getLanguageDefinitionExtension();
+
+	P getExecutionPlatform();
+
+	R getRunConfiguration();
+
 }

@@ -10,40 +10,32 @@
  *******************************************************************************/
 package org.eclipse.gemoc.execution.sequential.javaengine.ui.launcher;
 
-import java.util.HashMap;
-import java.util.Map;
-
 import org.eclipse.core.runtime.CoreException;
 import org.eclipse.debug.core.ILaunchConfiguration;
 import org.eclipse.debug.core.ILaunchConfigurationWorkingCopy;
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.gemoc.commons.eclipse.messagingsystem.api.MessagingSystem;
 import org.eclipse.gemoc.commons.eclipse.ui.ViewHelper;
+import org.eclipse.gemoc.execution.sequential.javaengine.K3RunConfiguration;
 import org.eclipse.gemoc.execution.sequential.javaengine.PlainK3ExecutionEngine;
 import org.eclipse.gemoc.execution.sequential.javaengine.SequentialModelExecutionContext;
 import org.eclipse.gemoc.execution.sequential.javaengine.ui.Activator;
 import org.eclipse.gemoc.executionframework.engine.commons.EngineContextException;
-import org.eclipse.gemoc.executionframework.engine.commons.ModelExecutionContext;
-import org.eclipse.gemoc.executionframework.engine.ui.commons.RunConfiguration;
 import org.eclipse.gemoc.executionframework.engine.ui.launcher.AbstractSequentialGemocLauncher;
 import org.eclipse.gemoc.executionframework.ui.views.engine.EnginesStatusView;
-import org.eclipse.gemoc.trace.commons.model.launchconfiguration.LaunchConfiguration;
-import org.eclipse.gemoc.trace.commons.model.launchconfiguration.LaunchConfigurationParameter;
-import org.eclipse.gemoc.trace.commons.model.launchconfiguration.LaunchconfigurationPackage;
 import org.eclipse.gemoc.xdsmlframework.api.core.ExecutionMode;
-import org.eclipse.gemoc.xdsmlframework.api.core.IExecutionEngine;
-import org.eclipse.gemoc.xdsmlframework.api.core.IRunConfiguration;
 
-public class Launcher extends AbstractSequentialGemocLauncher {
+public class Launcher extends AbstractSequentialGemocLauncher<SequentialModelExecutionContext<K3RunConfiguration>, K3RunConfiguration> {
 
 	public final static String TYPE_ID = Activator.PLUGIN_ID + ".launcher";
 
 	@Override
-	protected IExecutionEngine createExecutionEngine(RunConfiguration runConfiguration, ExecutionMode executionMode)
-			throws CoreException, EngineContextException {
+	protected PlainK3ExecutionEngine createExecutionEngine(K3RunConfiguration runConfiguration,
+			ExecutionMode executionMode) throws CoreException, EngineContextException {
 		// create and initialize engine
-		IExecutionEngine executionEngine = new PlainK3ExecutionEngine();
-		ModelExecutionContext executioncontext = new SequentialModelExecutionContext(runConfiguration, executionMode);
+		PlainK3ExecutionEngine executionEngine = new PlainK3ExecutionEngine();
+		SequentialModelExecutionContext<K3RunConfiguration> executioncontext = new SequentialModelExecutionContext<K3RunConfiguration>(
+				runConfiguration, executionMode);
 		executioncontext.getExecutionPlatform().getModelLoader().setProgressMonitor(this.launchProgressMonitor);
 		executioncontext.initializeResourceModel();
 		executionEngine.initialize(executioncontext);
@@ -76,8 +68,8 @@ public class Launcher extends AbstractSequentialGemocLauncher {
 	}
 
 	@Override
-	protected RunConfiguration parseLaunchConfiguration(ILaunchConfiguration configuration) throws CoreException {
-		return new RunConfiguration(configuration);
+	protected K3RunConfiguration parseLaunchConfiguration(ILaunchConfiguration configuration) throws CoreException {
+		return new K3RunConfiguration(configuration);
 	}
 
 	@Override
@@ -94,40 +86,4 @@ public class Launcher extends AbstractSequentialGemocLauncher {
 	protected void setDefaultsLaunchConfiguration(ILaunchConfigurationWorkingCopy configuration) {
 
 	}
-	
-	@Override
-	public Map<String, Object> parseLaunchConfiguration(LaunchConfiguration launchConfiguration) {
-		Map<String, Object> attributes = new HashMap<>();
-		for (LaunchConfigurationParameter param : launchConfiguration.getParameters()) {
-			switch (param.eClass().getClassifierID()) {
-				case LaunchconfigurationPackage.LANGUAGE_NAME_PARAMETER: {
-					attributes.put(IRunConfiguration.LAUNCH_SELECTED_LANGUAGE, param.getValue());
-				}
-				case LaunchconfigurationPackage.MODEL_URI_PARAMETER: {
-					attributes.put("Resource", param.getValue());
-				}
-				case LaunchconfigurationPackage.ANIMATOR_URI_PARAMETER: {
-					attributes.put("airdResource", param.getValue());
-				}
-				case LaunchconfigurationPackage.ENTRY_POINT_PARAMETER: {
-					attributes.put(IRunConfiguration.LAUNCH_METHOD_ENTRY_POINT, param.getValue());
-				}
-				case LaunchconfigurationPackage.MODEL_ROOT_PARAMETER: {
-					attributes.put(IRunConfiguration.LAUNCH_MODEL_ENTRY_POINT, param.getValue());
-				}
-				case LaunchconfigurationPackage.INITIALIZATION_METHOD_PARAMETER: {
-					attributes.put(IRunConfiguration.LAUNCH_INITIALIZATION_METHOD, param.getValue());
-				}
-				case LaunchconfigurationPackage.INITIALIZATION_ARGUMENTS_PARAMETER: {
-					attributes.put(IRunConfiguration.LAUNCH_INITIALIZATION_ARGUMENTS, param.getValue());
-				}
-				case LaunchconfigurationPackage.ADDON_EXTENSION_PARAMETER: {
-					attributes.put(param.getValue(), true);
-				}
-			}
-		}
-		return attributes;
-	}
-
-
 }

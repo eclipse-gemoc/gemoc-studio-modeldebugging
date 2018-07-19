@@ -29,18 +29,6 @@ import org.eclipse.emf.transaction.impl.InternalTransactionalEditingDomain;
 import org.eclipse.gemoc.executionframework.engine.commons.K3DslHelper;
 import org.eclipse.gemoc.executionframework.engine.core.AbstractCommandBasedSequentialExecutionEngine;
 import org.eclipse.gemoc.executionframework.engine.core.EngineStoppedException;
-import org.eclipse.gemoc.trace.commons.model.launchconfiguration.AddonExtensionParameter;
-import org.eclipse.gemoc.trace.commons.model.launchconfiguration.AnimatorURIParameter;
-import org.eclipse.gemoc.trace.commons.model.launchconfiguration.EntryPointParameter;
-import org.eclipse.gemoc.trace.commons.model.launchconfiguration.InitializationArgumentsParameter;
-import org.eclipse.gemoc.trace.commons.model.launchconfiguration.InitializationMethodParameter;
-import org.eclipse.gemoc.trace.commons.model.launchconfiguration.LanguageNameParameter;
-import org.eclipse.gemoc.trace.commons.model.launchconfiguration.LaunchConfiguration;
-import org.eclipse.gemoc.trace.commons.model.launchconfiguration.LaunchconfigurationFactory;
-import org.eclipse.gemoc.trace.commons.model.launchconfiguration.ModelRootParameter;
-import org.eclipse.gemoc.trace.commons.model.launchconfiguration.ModelURIParameter;
-import org.eclipse.gemoc.xdsmlframework.api.core.IExecutionContext;
-import org.eclipse.gemoc.xdsmlframework.api.core.IRunConfiguration;
 import org.eclipse.jdt.core.IPackageFragmentRoot;
 import org.eclipse.jdt.core.IType;
 import org.eclipse.jdt.core.search.IJavaSearchConstants;
@@ -58,20 +46,20 @@ import fr.inria.diverse.k3.al.annotationprocessor.stepmanager.StepManagerRegistr
 import fr.inria.diverse.melange.adapters.EObjectAdapter;
 
 /**
- * Implementation of the GEMOC Execution engine dedicated to run Kermeta 3 operational semantic
+ * Implementation of the GEMOC Execution engine dedicated to run Kermeta 3
+ * operational semantic
  * 
  * @author Didier Vojtisek<didier.vojtisek@inria.fr>
  *
  */
-public class PlainK3ExecutionEngine extends AbstractCommandBasedSequentialExecutionEngine implements IStepManager {
+public class PlainK3ExecutionEngine extends AbstractCommandBasedSequentialExecutionEngine<SequentialModelExecutionContext<K3RunConfiguration>, K3RunConfiguration>
+		implements IStepManager {
 
 	private Method initializeMethod;
 	private List<Object> initializeMethodParameters;
 	private Method entryPointMethod;
 	private List<Object> entryPointMethodParameters;
 	private Class<?> entryPointClass;
-
-	private static final String LAUNCH_CONFIGURATION_TYPE = "org.eclipse.gemoc.execution.sequential.javaengine.ui.launcher";
 
 	@Override
 	public String engineKindName() {
@@ -80,13 +68,13 @@ public class PlainK3ExecutionEngine extends AbstractCommandBasedSequentialExecut
 
 	/**
 	 * Constructs a PlainK3 execution engine using an entry point (~ a main
-	 * operation) The entrypoint will register itself as a StepManager into the
-	 * K3 step manager registry, and unregister itself at the end. As a
-	 * StepManager, the PlainK3ExecutionEngine will receive callbacks through
-	 * its "executeStep" operation.
+	 * operation) The entrypoint will register itself as a StepManager into the K3
+	 * step manager registry, and unregister itself at the end. As a StepManager,
+	 * the PlainK3ExecutionEngine will receive callbacks through its "executeStep"
+	 * operation.
 	 */
 	@Override
-	protected void prepareEntryPoint(IExecutionContext executionContext) {
+	protected void prepareEntryPoint(SequentialModelExecutionContext<K3RunConfiguration> executionContext) {
 		/*
 		 * Get info from the RunConfiguration
 		 */
@@ -140,7 +128,7 @@ public class PlainK3ExecutionEngine extends AbstractCommandBasedSequentialExecut
 	}
 
 	@Override
-	protected void prepareInitializeModel(IExecutionContext executionContext) {
+	protected void prepareInitializeModel(SequentialModelExecutionContext<K3RunConfiguration> executionContext) {
 
 		// try to get the initializeModelRunnable
 		String modelInitializationMethodQName = executionContext.getRunConfiguration().getModelInitializationMethod();
@@ -244,8 +232,9 @@ public class PlainK3ExecutionEngine extends AbstractCommandBasedSequentialExecut
 		if (initializeMethod != null) {
 			StepManagerRegistry.getInstance().registerManager(PlainK3ExecutionEngine.this);
 			try {
-				final boolean isStepMethod =	initializeMethod.isAnnotationPresent(fr.inria.diverse.k3.al.annotationprocessor.Step.class);
-				if(!isStepMethod){
+				final boolean isStepMethod = initializeMethod
+						.isAnnotationPresent(fr.inria.diverse.k3.al.annotationprocessor.Step.class);
+				if (!isStepMethod) {
 					fr.inria.diverse.k3.al.annotationprocessor.stepmanager.StepCommand command = new fr.inria.diverse.k3.al.annotationprocessor.stepmanager.StepCommand() {
 						@Override
 						public void execute() {
@@ -253,7 +242,8 @@ public class PlainK3ExecutionEngine extends AbstractCommandBasedSequentialExecut
 						}
 					};
 					fr.inria.diverse.k3.al.annotationprocessor.stepmanager.IStepManager stepManager = PlainK3ExecutionEngine.this;
-					stepManager.executeStep(entryPointMethodParameters.get(0), command, entryPointClass.getName(), initializeMethod.getName());
+					stepManager.executeStep(entryPointMethodParameters.get(0), command, entryPointClass.getName(),
+							initializeMethod.getName());
 				} else {
 					callInitializeModel();
 				}
@@ -288,8 +278,8 @@ public class PlainK3ExecutionEngine extends AbstractCommandBasedSequentialExecut
 
 	@Override
 	/*
-	 * This is the operation called from K3 code. We use this callback to pass
-	 * the command to the generic executeOperation operation. (non-Javadoc)
+	 * This is the operation called from K3 code. We use this callback to pass the
+	 * command to the generic executeOperation operation. (non-Javadoc)
 	 * 
 	 * @see fr.inria.diverse.k3.al.annotationprocessor.stepmanager.IStepManager#
 	 * executeStep(java.lang.Object,
@@ -307,8 +297,8 @@ public class PlainK3ExecutionEngine extends AbstractCommandBasedSequentialExecut
 
 	@Override
 	/*
-	 * This is the operation used to act as a StepManager in K3. We return true
-	 * if we have the same editing domain as the object. (non-Javadoc)
+	 * This is the operation used to act as a StepManager in K3. We return true if
+	 * we have the same editing domain as the object. (non-Javadoc)
 	 * 
 	 * @see fr.inria.diverse.k3.al.annotationprocessor.stepmanager.IStepManager#
 	 * canHandle (java.lang.Object)
@@ -328,7 +318,7 @@ public class PlainK3ExecutionEngine extends AbstractCommandBasedSequentialExecut
 	 * 
 	 * Return null if not found.
 	 */
-	private Bundle findBundle(final IExecutionContext executionContext, String aspectClassName) {
+	private Bundle findBundle(final SequentialModelExecutionContext<K3RunConfiguration> executionContext, String aspectClassName) {
 
 		// Look using JavaWorkspaceScope as this is safer and will look in
 		// dependencies
@@ -357,11 +347,10 @@ public class PlainK3ExecutionEngine extends AbstractCommandBasedSequentialExecut
 
 	/**
 	 * search the bundle that contains the Main class. The search is done in the
-	 * workspace scope (ie. if it is defined in the current workspace it will
-	 * find it
+	 * workspace scope (ie. if it is defined in the current workspace it will find
+	 * it
 	 * 
-	 * @return the name of the bundle containing the Main class or null if not
-	 *         found
+	 * @return the name of the bundle containing the Main class or null if not found
 	 */
 	private IType getITypeMainByWorkspaceScope(String className) {
 		SearchPattern pattern = SearchPattern.createPattern(className, IJavaSearchConstants.CLASS,
@@ -404,7 +393,9 @@ public class PlainK3ExecutionEngine extends AbstractCommandBasedSequentialExecut
 
 	/**
 	 * Load the model for the given URI
-	 * @param modelURI to load
+	 * 
+	 * @param modelURI
+	 *            to load
 	 * @return the loaded resource
 	 */
 	public static Resource loadModel(URI modelURI) {
@@ -418,60 +409,5 @@ public class PlainK3ExecutionEngine extends AbstractCommandBasedSequentialExecut
 			// chut
 		}
 		return resource;
-	}
-
-	@Override
-	public LaunchConfiguration extractLaunchConfiguration() {
-		final IRunConfiguration configuration = getExecutionContext().getRunConfiguration();
-		final LaunchConfiguration launchConfiguration = LaunchconfigurationFactory.eINSTANCE
-				.createLaunchConfiguration();
-		launchConfiguration.setType(LAUNCH_CONFIGURATION_TYPE);
-		if (configuration.getLanguageName() != "") {
-			final LanguageNameParameter languageNameParam = LaunchconfigurationFactory.eINSTANCE.createLanguageNameParameter();
-			languageNameParam.setValue(configuration.getLanguageName());
-			launchConfiguration.getParameters().add(languageNameParam);
-		}
-		final URI modelURI = configuration.getExecutedModelURI();
-		if (modelURI != null) {
-			final String scheme = modelURI.scheme() + ":/resource";
-			final ModelURIParameter modelURIParam = LaunchconfigurationFactory.eINSTANCE.createModelURIParameter();
-			modelURIParam.setValue(modelURI.toString().substring(scheme.length()));
-			launchConfiguration.getParameters().add(modelURIParam);
-		}
-		final URI animatorURI = configuration.getAnimatorURI();
-		if (configuration.getAnimatorURI() != null) {
-			final String scheme = animatorURI.scheme() + ":/resource";
-			final AnimatorURIParameter animatorURIParam = LaunchconfigurationFactory.eINSTANCE.createAnimatorURIParameter();
-			animatorURIParam.setValue(animatorURI.toString().substring(scheme.length()));
-			launchConfiguration.getParameters().add(animatorURIParam);
-		}
-		if (configuration.getExecutionEntryPoint() != null) {
-			final EntryPointParameter entryPointParam = LaunchconfigurationFactory.eINSTANCE.createEntryPointParameter();
-			entryPointParam.setValue(configuration.getExecutionEntryPoint());
-			launchConfiguration.getParameters().add(entryPointParam);
-		}
-		if (configuration.getModelEntryPoint() != null) {
-			final ModelRootParameter modelRootParam = LaunchconfigurationFactory.eINSTANCE.createModelRootParameter();
-			modelRootParam.setValue(configuration.getModelEntryPoint());
-			launchConfiguration.getParameters().add(modelRootParam);
-		}
-		if (configuration.getModelInitializationMethod() != null) {
-			final InitializationMethodParameter initializationMethodParam = LaunchconfigurationFactory.eINSTANCE
-					.createInitializationMethodParameter();
-			initializationMethodParam.setValue(configuration.getModelInitializationMethod());
-			launchConfiguration.getParameters().add(initializationMethodParam);
-		}
-		if (configuration.getModelInitializationArguments() != null) {
-			final InitializationArgumentsParameter initializationArgumentsParam = LaunchconfigurationFactory.eINSTANCE
-					.createInitializationArgumentsParameter();
-			initializationArgumentsParam.setValue(configuration.getModelInitializationArguments());
-			launchConfiguration.getParameters().add(initializationArgumentsParam);
-		}
-		configuration.getEngineAddonExtensions().forEach(extensionPoint -> {
-			final AddonExtensionParameter addonExtensionParam = LaunchconfigurationFactory.eINSTANCE.createAddonExtensionParameter();
-			addonExtensionParam.setValue(extensionPoint.getName());
-			launchConfiguration.getParameters().add(addonExtensionParam);
-		});
-		return launchConfiguration;
 	}
 }

@@ -10,11 +10,11 @@
  *******************************************************************************/
 package org.eclipse.gemoc.executionframework.ui.views.engine;
 
+import org.eclipse.gemoc.commons.eclipse.ui.ViewHelper;
+import org.eclipse.gemoc.executionframework.ui.Activator;
 import org.eclipse.ui.IViewSite;
 import org.eclipse.ui.PartInitException;
 import org.eclipse.ui.part.ViewPart;
-import org.eclipse.gemoc.commons.eclipse.ui.ViewHelper;
-import org.eclipse.gemoc.executionframework.ui.Activator;
 
 /**
  * Views that are dependent on the engine selection in the EnginesStatusView may subclass this to get registered to it

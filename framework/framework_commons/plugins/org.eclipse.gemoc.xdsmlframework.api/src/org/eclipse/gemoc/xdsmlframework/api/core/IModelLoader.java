@@ -22,9 +22,11 @@ import org.eclipse.emf.ecore.resource.Resource;
 public interface IModelLoader {
 
 	/** load Model when running in normal mode */
-	Resource loadModel(IExecutionContext context);
+	Resource loadModel(IExecutionContext<?, ?, ?> context);
+
 	/** load model when running in animation mode */
-	Resource loadModelForAnimation(IExecutionContext context);
+	Resource loadModelForAnimation(IExecutionContext<?, ?, ?> context);
+
 	/** if not null, the progress monitor used to report load progress */
 	void setProgressMonitor(IProgressMonitor progressMonitor);
 

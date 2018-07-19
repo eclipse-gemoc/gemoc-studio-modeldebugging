@@ -66,13 +66,13 @@ public abstract class AbstractEngineAction extends Action  implements IMenuCreat
 	}
 	
 	
-	protected IExecutionEngine _currentSelectedEngine;
-	public IExecutionEngine getCurrentSelectedEngine(){
+	protected IExecutionEngine<?> _currentSelectedEngine;
+	public IExecutionEngine<?> getCurrentSelectedEngine(){
 		return _currentSelectedEngine;
 	}
 	
 	@Override
-	public void engineSelectionChanged(IExecutionEngine engine) 
+	public void engineSelectionChanged(IExecutionEngine<?> engine) 
 	{
 		_currentSelectedEngine = engine;
 		

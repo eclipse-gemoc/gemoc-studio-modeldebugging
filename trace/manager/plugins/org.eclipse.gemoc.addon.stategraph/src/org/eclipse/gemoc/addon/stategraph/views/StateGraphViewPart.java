@@ -77,18 +77,18 @@ public class StateGraphViewPart extends EngineSelectionDependentViewPart {
 	}
 
 	@Override
-	public void engineSelectionChanged(IExecutionEngine engine) {
+	public void engineSelectionChanged(IExecutionEngine<?> engine) {
 		if (engine != null) {
-			Set<IMultiDimensionalTraceAddon> traceAddons = engine.getAddonsTypedBy(IMultiDimensionalTraceAddon.class);
-			if (!traceAddons.isEmpty()) {
-				final IMultiDimensionalTraceAddon<Step<?>, State<?,?>, TracedObject<?>, Dimension<?>, Value<?>> traceAddon = traceAddons.iterator().next();
+			engine.getAddonsTypedBy(IMultiDimensionalTraceAddon.class).stream().findFirst().ifPresent(addon -> {
+				@SuppressWarnings("unchecked")
+				final IMultiDimensionalTraceAddon<Step<?>, State<?,?>, TracedObject<?>, Dimension<?>, Value<?>> traceAddon = addon;
 				stateGraph = new StateGraph();
 				stateGraph.setTraceExtractor(traceAddon.getTraceExtractor());
 				stateGraph.setTraceExplorer(traceAddon.getTraceExplorer());
 				traceAddon.getTraceNotifier().addListener(stateGraph);
 				renderer.setStateGraph(stateGraph);
 				stateGraph.update();
-			}
+			});
 		}
 	}
 
@@ -150,7 +150,7 @@ public class StateGraphViewPart extends EngineSelectionDependentViewPart {
 			}
 
 			@Override
-			public void engineSelectionChanged(IExecutionEngine engine) {
+			public void engineSelectionChanged(IExecutionEngine<?> engine) {
 			}
 
 			@Override
@@ -172,7 +172,7 @@ public class StateGraphViewPart extends EngineSelectionDependentViewPart {
 			}
 
 			@Override
-			public void engineSelectionChanged(IExecutionEngine engine) {
+			public void engineSelectionChanged(IExecutionEngine<?> engine) {
 			}
 
 			@Override
@@ -199,7 +199,7 @@ public class StateGraphViewPart extends EngineSelectionDependentViewPart {
 			}
 
 			@Override
-			public void engineSelectionChanged(IExecutionEngine engine) {
+			public void engineSelectionChanged(IExecutionEngine<?> engine) {
 			}
 
 			@Override

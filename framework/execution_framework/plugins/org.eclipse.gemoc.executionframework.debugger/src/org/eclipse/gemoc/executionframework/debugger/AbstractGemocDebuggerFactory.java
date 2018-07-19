@@ -16,9 +16,9 @@ import org.eclipse.gemoc.dsl.debug.ide.event.IDSLDebugEventProcessor;
 
 public abstract class AbstractGemocDebuggerFactory {
 
-	public AbstractGemocDebuggerFactory(){
-		
+	public AbstractGemocDebuggerFactory() {
+
 	}
-	
-	public abstract AbstractGemocDebugger createDebugger(IDSLDebugEventProcessor target, IExecutionEngine engine); 
+
+	public abstract AbstractGemocDebugger createDebugger(IDSLDebugEventProcessor target, IExecutionEngine<?> engine);
 }
