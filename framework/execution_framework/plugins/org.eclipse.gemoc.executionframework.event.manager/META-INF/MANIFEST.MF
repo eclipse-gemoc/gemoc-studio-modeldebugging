@@ -2,7 +2,7 @@ Manifest-Version: 1.0
 Bundle-SymbolicName: org.eclipse.gemoc.executionframework.event.manager;singleton:=true
 Export-Package: org.eclipse.gemoc.executionframework.event.manager
 Bundle-Name: org.eclipse.gemoc.executionframework.event.manager
-Bundle-Version: 3.0.0.qualifier
+Bundle-Version: 4.0.0.qualifier
 Bundle-ClassPath: .
 Require-Bundle: fr.inria.diverse.k3.al.annotationprocessor.plugin;bundle-version="3.0.0";visibility:=reexport,
  org.eclipse.xtend.lib;bundle-version="2.6.0";visibility:=private,

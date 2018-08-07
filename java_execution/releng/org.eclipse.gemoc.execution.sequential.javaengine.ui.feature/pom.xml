@@ -17,7 +17,7 @@
     <relativePath>../../pom.xml</relativePath>
     <groupId>org.eclipse.gemoc.execution.sequential.java</groupId>
     <artifactId>org.eclipse.gemoc.execution.sequential.java.root</artifactId>
-    <version>3.0.0-SNAPSHOT</version>
+    <version>4.0.0-SNAPSHOT</version>
   </parent>
 
   <artifactId>org.eclipse.gemoc.execution.sequential.javaengine.ui.feature</artifactId>

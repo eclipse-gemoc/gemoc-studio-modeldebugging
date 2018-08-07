@@ -3,13 +3,13 @@
     <modelVersion>4.0.0</modelVersion>
     <groupId>org.eclipse.gemoc.modeldebugging.executionframework</groupId>
     <artifactId>org.eclipse.gemoc.modeldebugging.executionframework.root</artifactId>
-    <version>3.0.0-SNAPSHOT</version>
+    <version>4.0.0-SNAPSHOT</version>
     <packaging>pom</packaging>    
 	<parent>
-		<groupId>org.eclipse.gemoc</groupId>
-		<artifactId>org.eclipse.gemoc.modeldebugging.root</artifactId>
-    	<version>3.0.0-SNAPSHOT</version>
-		<relativePath>../..</relativePath>
+		<groupId>org.eclipse.gemoc.modeldebugging.framework</groupId>
+		<artifactId>org.eclipse.gemoc.modeldebugging.framework.root</artifactId>
+    	<version>4.0.0-SNAPSHOT</version>
+		<relativePath>..</relativePath>
 	</parent>
     <modules>
         <!-- plugins -->

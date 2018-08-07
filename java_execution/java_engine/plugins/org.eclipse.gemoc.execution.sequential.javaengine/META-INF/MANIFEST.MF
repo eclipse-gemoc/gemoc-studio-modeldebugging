@@ -2,7 +2,7 @@ Manifest-Version: 1.0
 Bundle-ManifestVersion: 2
 Bundle-Name: Gemoc Sequential Language Api
 Bundle-SymbolicName: org.eclipse.gemoc.execution.sequential.javaengine;singleton:=true
-Bundle-Version: 3.0.0.qualifier
+Bundle-Version: 4.0.0.qualifier
 Require-Bundle: org.eclipse.gemoc.xdsmlframework.api,
  org.eclipse.gemoc.execution.sequential.javaxdsml.api,
  org.eclipse.gemoc.executionframework.engine,

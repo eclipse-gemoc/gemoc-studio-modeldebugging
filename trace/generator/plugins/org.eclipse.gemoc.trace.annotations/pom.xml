@@ -16,13 +16,13 @@
 	<modelVersion>4.0.0</modelVersion>
 	<groupId>org.eclipse.gemoc.multidimensional_trace_management</groupId>
 	<artifactId>org.eclipse.gemoc.trace.annotations</artifactId>
-	<version>3.0.0-SNAPSHOT</version>
+	<version>3.0.1-SNAPSHOT</version>
 	<packaging>eclipse-plugin</packaging>
 
 	<parent>
 		<groupId>org.eclipse.gemoc.trace.generator</groupId>
 		<artifactId>org.eclipse.gemoc.trace.generator.root</artifactId>
-		<version>3.0.0-SNAPSHOT</version>
+		<version>3.0.1-SNAPSHOT</version>
 		<relativePath>../..</relativePath>
 	</parent>
 
