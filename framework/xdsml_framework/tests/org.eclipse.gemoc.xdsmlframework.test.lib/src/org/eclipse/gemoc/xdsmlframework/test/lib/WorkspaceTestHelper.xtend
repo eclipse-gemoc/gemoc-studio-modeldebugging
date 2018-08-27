@@ -73,6 +73,12 @@ class WorkspaceTestHelper {
 	 * we should increase this value up to the value where we don't have any false failed tests
 	 */ 
 	public static final int SWTBotPreferencesTIMEOUT_4_GEMOC = 8000;
+		/**
+	 * Value to use by default for SWTBotPreferences.PLAYBACK_DELAY 
+	 * It must be used for any GEMOC test using swtbot 
+	 * we should increase this value up to the value where we don't have any false failed tests
+	 */
+	public static final int SWTBotPreferencesPLAYBACK_DELAY_4_GEMOC = 100;
 	
 	def void init() {
 		
