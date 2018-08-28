@@ -162,9 +162,9 @@ When an execution is paused, this view presents a stack containing all ongoing s
 At the bottom of the stack is a particular stackframe named `Global context`.
 When selected, this stackframe displays the runtime data in the <<mw-executing-sequential-model-variable-view-section,Variable View>>. 
 
-When paused, the usual debugging tools (step into, step over and step return) can be used to control the execution step by step. With the multidimentional trace enabled, the execution can be controlled backward using the image:Guide/images/workbench/ui_icons/stepbackinto_co.png[stepbackinto] _StepBack Into_, 
- image:images/workbench/ui_icons/stepbackout_co.png[stepbackout] _StepBack Out_ and
- image:images/workbench/ui_icons/stepbackover_co.png[stepbackover] _StepBack Over_ commands.
+When paused, the usual debugging tools (step into, step over and step return) can be used to control the execution step by step. With the multidimentional trace enabled, the execution can be controlled backward using the image:images/workbench/modeling/ui_icons/stepbackinto_co.png[stepbackinto] _StepBack Into_, 
+ image:images/workbench/modeling/ui_icons/stepbackout_co.png[stepbackout] _StepBack Out_ and
+ image:images/workbench/modeling/ui_icons/stepbackover_co.png[stepbackover] _StepBack Over_ commands.
 
 [[mw-debug-variable-sequential-view-figure]]
 .Debug and Variable views with the sequential engine
