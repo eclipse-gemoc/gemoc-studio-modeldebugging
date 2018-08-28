@@ -131,7 +131,7 @@ public class GemocSequentialLanguageBuilder extends IncrementalProjectBuilder {
 			}
 			if (file.exists()) {
 				Job job = Job.create("Update GEMOC Project Plugin Configuration of "+project.getName(), (ICoreRunnable) monitor -> {
-					Resource res = (new ResourceSetImpl()).getResource(URI.createURI(file.getFullPath().toOSString()), true);
+					Resource res = (new ResourceSetImpl()).getResource(URI.createPlatformResourceURI(file.getFullPath().toString(),true), true);
 					if(res != null && res.getContents().size() > 0 && res.getContents().get(0) instanceof Dsl) {
 						Dsl dsl = (Dsl) res.getContents().get(0);
 						String languageName = dsl.getName();
