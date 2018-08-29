@@ -1,10 +1,35 @@
-footnote:[asciidoc source of this page:  https://github.com/eclipse/gemoc-studio-modeldebugging/tree/master/simulationmodelanimation/plugins/org.eclipse.gemoc.dsl.debug.ide.sirius.ui/docs/asciidoc/user_lw_DefineSiriusDebug.asciidoc.]
+////////////////////////////////////////////////////////////////
+//	Reproduce title only if not included in master documentation
+////////////////////////////////////////////////////////////////
+ifndef::includedInMaster[]
+= Language workbench user guide
+
+== Provide language with tools
+
+=== Define editor specific debug support
+endif::[]
 
 [[defining-a-debug-representation-section]]
-=== Define a debug representation for Sirius
-The debug layer is an extension on top of a graphical editor defined with ((Sirius)) which represents runtime data and the current instruction. See <<defining-a-concrete-syntax-with-sirius-section>> for more details about ((Sirius)). This section covers the debug representation creation wizard and the technical implementation details. Technical implementation details are only useful for advanced use case and troubleshooting.
+==== Define a debug representation for Sirius
 
-==== The debug representation wizard
+footnote:[asciidoc source of this page:  https://github.com/eclipse/gemoc-studio-modeldebugging/tree/master/simulationmodelanimation/plugins/org.eclipse.gemoc.dsl.debug.ide.sirius.ui/docs/asciidoc/user_lw_DefineSiriusDebug.asciidoc.]
+
+The debug layer is an extension on top of a graphical editor defined with ((Sirius))
+(See <<defining-a-concrete-syntax-with-sirius-section>> for more details about ((Sirius)).) which represents 
+the current instruction and provides commands to enable/disable breakpoints.
+This layer is activated when the model is executed in *Debug mode*.
+
+NOTE: The Debug layer role is similar to the services of a text editor that highlights the current line of the selected Step 
+in the stack frame and offer to toggle breakpoints.
+
+TIP: Additionally, the editor may also present the RunTime Data in this layer, but usually, a better design would separate the task of  
+RTD presentation in another Animation layer as the animation is supposed to be also displayed in Run mode. 
+(See <<define-sirus-animation-representation-section>>) 
+
+  
+This section covers the debug representation creation wizard and the technical implementation details. Technical implementation details are only useful for advanced use case and troubleshooting.
+
+===== The debug representation wizard
 This wizard creates a layer to represent the current instruction and add commands in order to manage breakpoints and launch a simulation in debug mode. This is a default implementation, it can be customized to represent runtime data for instance. The customization uses the ((Sirius)) description definition, see the http://www.eclipse.org/sirius/doc/specifier/Sirius%20Specifier%20Manual.html[Sirius Specifier Manual] for more details.
 The wizard presents three ways to implement this layer:
 
@@ -14,14 +39,14 @@ The wizard presents three ways to implement this layer:
 
 image::images/workbench/language/debug_representation_wizard/wizard.png[Debug representation wizard]
 
-===== Create a debug diagram description
+====== Create a debug diagram description
 It creates a diagram representation with a default debug layer. The representation does not depend on another representation. A typical use case is a language where the runtime data representation is too far from the language graphical syntax.
 
 image::images/workbench/language/debug_representation_wizard/create/1.png[Debug representation wizard]
 
 image::images/workbench/language/debug_representation_wizard/create/2.png[Debug representation wizard]
 
-===== Extend an existing diagram description
+====== Extend an existing diagram description
 It creates a diagram representation with a default debug layer that extends an existing representation. This allows to have a debug layer based on the representation of the language concrete syntax. The language concrete syntax can be deployed without the debug representation. A typical use case is the reuse of an existing diagram definition that you cannot modify by yourself. For instance if you want to use http://eclipse.org/modeling/mdt/?project=uml2[UML], you can reuse the http://www.umldesigner.org/[UML Designer].
 
 You can select any diagram description.
@@ -34,7 +59,7 @@ image::images/workbench/language/debug_representation_wizard/extend/2.png[Debug 
 
 image::images/workbench/language/debug_representation_wizard/extend/3.png[Debug representation wizard]
 
-===== Add a debug layer to an existing diagram description
+====== Add a debug layer to an existing diagram description
 It creates a default debug layer in an existing diagram representation. This should be used if you are also in charge of the language concrete syntax.
 
 In this case, you can only select a diagram description from the workspace.
@@ -43,15 +68,15 @@ image::images/workbench/language/debug_representation_wizard/add/1.png[Debug rep
 
 image::images/workbench/language/debug_representation_wizard/add/2.png[Debug representation wizard]
 
-==== Implementation details
+===== Implementation details
 Implementation details are for advanced use and troubleshooting. It explains how the implementation works behind the scene. There are two main elements covered here : the debugger services class and the debug layer itself.
 
-===== Debugger services
+====== Debugger services
 The debugger services class is use to tell which representations should be activated and refreshed during debug (see the getRepresentationRefreshList() method). It also provides a method to know if an element of the diagram is the current instruction. This is provided by the isCurrentInstruction() method.
 
 image::images/workbench/language/debug_services.png[Debug services]
 
-===== Debug layer
+====== Debug layer
 The default debug layer adds action to start the simulation in debug mode and to toggle breakpoints (1). When a breakpoint exists for an element of the diagram, a visual feedback is displayed according to the breakpoint state (2). The current instruction is also highlighted in yellow by default (3).
 
 image::images/workbench/language/debug_layer.png[Debug layer]
