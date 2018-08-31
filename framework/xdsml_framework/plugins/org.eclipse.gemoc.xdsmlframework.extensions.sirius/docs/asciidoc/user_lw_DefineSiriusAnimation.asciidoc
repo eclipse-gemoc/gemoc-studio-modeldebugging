@@ -12,7 +12,7 @@ endif::[]
 
 [[define-sirus-animation-representation-section]]
 ==== Define an animation representation for Sirius
-footnote:[asciidoc source of this page:  https://github.com/eclipse/gemoc-studio-modeldebugging/framework/xdsml_framework/plugins/org.eclipse.gemoc.xdsmlframework.extensions.sirius/docs/asciidoc/user_lw_DefineSiriusAnimation.asciidoc.]
+footnote:[asciidoc source of this page:  https://github.com/eclipse/gemoc-studio-modeldebugging/tree/master/framework/xdsml_framework/plugins/org.eclipse.gemoc.xdsmlframework.extensions.sirius/docs/asciidoc/user_lw_DefineSiriusAnimation.asciidoc.]
 
 The Sirius editor defined  <<defining-a-concrete-syntax-with-sirius-section>> can also be extended
 in order to present the RunTime Data during a model execution.
