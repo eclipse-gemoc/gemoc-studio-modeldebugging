@@ -1,0 +1,45 @@
+////////////////////////////////////////////////////////////////
+//	Reproduce title only if not included in master documentation
+////////////////////////////////////////////////////////////////
+ifndef::includedInMaster[]
+= GEMOC Modeling workbench User guide
+
+== Execute, animate and debug models
+
+=== Execute a model
+
+==== Control engine execution
+endif::[]
+
+
+[[userguide-mw-control-engine-execution-engine-view]]
+===== Engine View
+
+footnote:[asciidoc source of this page:  https://github.com/eclipse/gemoc-studio-modeldebugging/framework/execution_framework/plugins/org.eclipse.gemoc.executionframework.ui/docs/asciidoc/user_mw_EngineView.asciidoc.]
+
+
+The engine view displays a list of execution engines and their status:
+
+* current running status (Green = Running, Red = Stopped),
+* number of steps that have been executed.
+
+[[img-simple-engine-view]]
+.Engine View
+image:images/workbench/modeling/simple_engine_view.png[Engine View, 400]
+
+NOTE: The number of executed step shows only the steps that have finished. Ie. It is increased on step end. This 
+means that in case of *Step into* nested calls, this number will increases only when it has finished the inner step. 
+
+NOTE: <<userguide-mw-timelines-view, Timelines>> may choose to use they own step numbering and it may not be the same as the 
+_number of steps_ of this Engine view. 
+
+In <<img-simple-engine-view>>, the buttons available on the top right of this view respectively allow to:
+
+* Stop the selected engine (red square button)
+* Remove/dispose the selected engine  from the view (cross button) (the engine must be stopped)
+* Remove/dispose all previously stopped engines from the view (crosses button)
+
+NOTE: The Sirius diagram are not closed when the execution ends, they are closed only when the engine is disposed.
+
+
+
