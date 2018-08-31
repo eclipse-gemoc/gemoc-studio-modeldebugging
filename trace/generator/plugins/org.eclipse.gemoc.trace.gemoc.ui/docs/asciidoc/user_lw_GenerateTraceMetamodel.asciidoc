@@ -11,5 +11,9 @@ This feature can be enabled by using the generator on top of the xdsml project a
 
 .TODO
 *****
-complete this section.
+Develop this section.
+
+* explain purpose
+* UI commands
+* comparison with generic trace support
 *****

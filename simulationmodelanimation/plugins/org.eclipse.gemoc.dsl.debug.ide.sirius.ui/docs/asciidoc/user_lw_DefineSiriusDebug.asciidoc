@@ -10,7 +10,7 @@ ifndef::includedInMaster[]
 endif::[]
 
 [[defining-a-debug-representation-section]]
-==== Define a debug representation for Sirius
+==== Define a debug representation and commands for Sirius
 
 footnote:[asciidoc source of this page:  https://github.com/eclipse/gemoc-studio-modeldebugging/tree/master/simulationmodelanimation/plugins/org.eclipse.gemoc.dsl.debug.ide.sirius.ui/docs/asciidoc/user_lw_DefineSiriusDebug.asciidoc.]
 
