@@ -1,0 +1,32 @@
+////////////////////////////////////////////////////////////////
+//	Reproduce title only if not included in master documentation
+////////////////////////////////////////////////////////////////
+ifndef::includedInMaster[]
+= GEMOC Modeling workbench User guide
+
+== Execute, animate and debug models
+
+=== Debug a model
+
+endif::[]
+
+[[userguide-mw-debug-commands]]
+==== Debug commands
+
+footnote:[asciidoc source of this page:  https://github.com/eclipse/gemoc-studio-modeldebugging/tree/master/framework/execution_framework/plugins/org.eclipse.gemoc.executionframework.debugger.ui/docs/acsiidoc/user_mw_DebugModel_DebugCommands.asciidoc.]
+
+GEMOC framework allows to use the classic debug commands _Resume_, _Suspend_, _Terminate_, 
+_Step into_, _Step over_, and _Step return_ in order to execute the model. 
+
+When paused, the usual debugging tools (step into, step over and step return) can be used to control the execution step by step. 
+
+In addition to these commands, if the trace support has been enabled, the execution can also be controlled backward using the image:images/workbench/modeling/ui_icons/stepbackinto_co.png[stepbackinto] _StepBack Into_, 
+ image:images/workbench/modeling/ui_icons/stepbackout_co.png[stepbackout] _StepBack Out_ and
+ image:images/workbench/modeling/ui_icons/stepbackover_co.png[stepbackover] _StepBack Over_ commands.
+
+[[mw-debug-commands-figure]]
+.Omniscient debug commands overview
+image::images/workbench/modeling/omniscient_debug_commands_overview.png[Omniscient debug commands overview]
+
+When navigating forward and backward, the <<userguide-mw-timelines-view>> will be useful too.
+
