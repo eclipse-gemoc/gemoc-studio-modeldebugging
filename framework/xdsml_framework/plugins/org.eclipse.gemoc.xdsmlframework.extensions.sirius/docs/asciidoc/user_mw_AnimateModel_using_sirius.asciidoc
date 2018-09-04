@@ -33,4 +33,12 @@ drop down command as shown in <<img-manual_enabling_of_sirius_layer>>.
 .Manual activation/deactivation of a Sirius animation layer 
 image::images/workbench/modeling/manual_enabling_of_sirius_layer.png["Manual activation/deactivation of a Sirius animation layer"]
 
+When running, a typical animated visualization of the execution data could be as in 
+<<img_fsm-simple-sirius-animation>>. In this FSM language, 
+the current state is decorated with a green arrow and a new box shows the buffer content
+ as defined by the language designer in <<defining-a-debug-representation-section>>.
+
+[[img_fsm-simple-sirius-animation]]
+.Example of Sirius animation on a FSM DSL.
+image::images/workbench/modeling/execution_data_animation.png[Example of Sirius animation on a FSM DSL]
 
