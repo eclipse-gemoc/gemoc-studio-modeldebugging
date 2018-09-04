@@ -1,0 +1,37 @@
+////////////////////////////////////////////////////////////////
+//	Reproduce title only if not included in master documentation
+////////////////////////////////////////////////////////////////
+ifndef::includedInMaster[]
+= GEMOC Modeling workbench User guide
+
+== Execute, animate and debug models
+
+=== Debug a model
+
+==== Timelines
+
+===== Multibranch timeline view
+endif::[]
+
+
+====== Java engine specific support for multibranch timeline
+
+footnote:[asciidoc source of this page:  https://github.com/eclipse/gemoc-studio-modeldebugging/tree/master/java_execution/java_engine/plugins/org.eclipse.gemoc.execution.sequential.javaengine.ui/docs/asciidoc/user_mw_DebugModel_MultiDimentionalTimeline_javaengine.asciidoc.]
+
+As the Java engine doesn't offer execution branches (no possible concurrent actions), 
+all commands related to branches are disabled  and the timeline will allow to display 
+only a straight line.
+
+[[img-multibranch-timeline-java-engine]]
+.Multibranch timeline with Java engine
+image::images/workbench/modeling/timeline/sequential_model_multibranch_timeline.png[Multibranch timeline with Java engine]
+
+
+[WARNING]
+====
+When going backward then forward again using the <<userguide-sequential-launch-conf , Java Engine>>, 
+the execution is a kind of `replay` where only the model is updated. The DSA 
+operations are *not* run.  
+The DSA will run again normally when the engine will try to run the last recorded 
+Step in the timeline.
+====

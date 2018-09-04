@@ -1,0 +1,30 @@
+////////////////////////////////////////////////////////////////
+//	Reproduce title only if not included in master documentation
+////////////////////////////////////////////////////////////////
+ifndef::includedInMaster[]
+= GEMOC Modeling workbench User guide
+
+== Execute, animate and debug models
+
+=== Debug a model
+
+==== Timelines
+endif::[]
+
+[[userguide-mw-timeline-state-graph-view]]
+===== Timeline diff view
+
+footnote:[asciidoc source of this page:  https://github.com/eclipse/gemoc-studio-modeldebugging/tree/master/trace/manager/plugins/org.eclipse.gemoc.addon.stategraph/docs/asciidoc/user_mw_DebugModel_Timeline_state_graph_view.asciidoc.]
+
+
+This view allows to search for cycles in the current trace.
+
+This view is synchronized with the <<userguide-mw-multidimentional-timeline-view>> 
+and uses the hide/show dimension checkboxes information in order to display the state graph
+only for visible data.
+
+.TODO
+*****
+provide screenshot and more details
+*****
+

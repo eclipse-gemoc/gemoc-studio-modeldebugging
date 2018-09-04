@@ -28,5 +28,5 @@ In addition to these commands, if the trace support has been enabled, the execut
 .Omniscient debug commands overview
 image::images/workbench/modeling/omniscient_debug_commands_overview.png[Omniscient debug commands overview]
 
-When navigating forward and backward, the <<userguide-mw-timelines-view>> will be useful too.
+When navigating forward and backward, the jump commands offered by the <<userguide-mw-timelines-view>> will be useful too.
 
