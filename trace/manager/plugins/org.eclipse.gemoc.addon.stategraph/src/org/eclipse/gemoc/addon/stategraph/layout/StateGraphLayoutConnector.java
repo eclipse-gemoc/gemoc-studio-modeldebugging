@@ -19,17 +19,17 @@ import java.util.Optional;
 import java.util.Set;
 import java.util.stream.Collectors;
 
-import org.eclipse.elk.core.klayoutdata.KShapeLayout;
 import org.eclipse.elk.core.math.KVector;
 import org.eclipse.elk.core.options.CoreOptions;
 import org.eclipse.elk.core.service.IDiagramLayoutConnector;
 import org.eclipse.elk.core.service.LayoutMapping;
 import org.eclipse.elk.core.util.ElkUtil;
-import org.eclipse.elk.graph.KEdge;
-import org.eclipse.elk.graph.KGraphElement;
-import org.eclipse.elk.graph.KNode;
+import org.eclipse.elk.graph.ElkEdge;
+import org.eclipse.elk.graph.ElkGraphElement;
+import org.eclipse.elk.graph.ElkNode;
 import org.eclipse.elk.graph.properties.IPropertyHolder;
 import org.eclipse.elk.graph.properties.Property;
+import org.eclipse.elk.graph.util.ElkGraphUtil;
 import org.eclipse.ui.IWorkbenchPart;
 import org.eclipse.gemoc.addon.stategraph.logic.DirectedGraph;
 import org.eclipse.gemoc.addon.stategraph.logic.StateGraph;
@@ -53,7 +53,7 @@ public class StateGraphLayoutConnector implements IDiagramLayoutConnector {
 		LayoutMapping mapping = new LayoutMapping(workbenchPart);
 		mapping.setParentElement(layoutRootPart);
 
-		KNode topNode = ElkUtil.createInitializedNode();
+		ElkNode topNode = ElkGraphUtil.createNode(null);
 		mapping.getGraphMap().put(topNode, layoutRootPart);
 		mapping.setLayoutGraph(topNode);
 
@@ -63,7 +63,7 @@ public class StateGraphLayoutConnector implements IDiagramLayoutConnector {
 		vertice.removeAll(movedVertice);
 
 		for (StateVertex vertex : vertice) {
-			KNode node = createNode(mapping, vertex, topNode);
+			ElkNode node = createNode(mapping, vertex, topNode);
 			mapping.getGraphMap().put(node, vertex);
 		}
 
@@ -72,28 +72,28 @@ public class StateGraphLayoutConnector implements IDiagramLayoutConnector {
 				.collect(Collectors.toList());
 
 		for (DirectedGraph.Edge<StateVertex> edge : edges) {
-			KEdge kEdge = createEdge(mapping, edge);
+			ElkEdge kEdge = createEdge(mapping, edge);
 			mapping.getGraphMap().put(kEdge, edge);
 		}
 
 		return mapping;
 	}
 
-	private KNode createNode(final LayoutMapping mapping, final StateVertex nodeStateVertex, final KNode rootNode) {
-		KNode childLayoutNode = ElkUtil.createInitializedNode();
+	private ElkNode createNode(final LayoutMapping mapping, final StateVertex nodeStateVertex, final ElkNode rootNode) {
+		ElkNode childLayoutNode = ElkGraphUtil.createNode(null);
 		rootNode.getChildren().add(childLayoutNode);
-		KShapeLayout nodeLayout = childLayoutNode.getData(KShapeLayout.class);
+		/* KShapeLayout nodeLayout = childLayoutNode.getData(KShapeLayout.class);
 		nodeLayout.setSize(24, 24);
 		((KShapeLayout) nodeLayout).resetModificationFlag();
-		nodeLayout.setProperty(CoreOptions.NODE_SIZE_MINIMUM, new KVector(24, 24));
+		nodeLayout.setProperty(CoreOptions.NODE_SIZE_MINIMUM, new KVector(24, 24)); */
 		mapping.getGraphMap().put(childLayoutNode, nodeStateVertex);
 		return childLayoutNode;
 	}
 
-	private KEdge createEdge(final LayoutMapping mapping, final DirectedGraph.Edge<StateVertex> edge) {
-		KEdge layoutEdge = ElkUtil.createInitializedEdge();
-		layoutEdge.setSource((KNode) mapping.getGraphMap().inverse().get(edge.getSource()));
-		layoutEdge.setTarget((KNode) mapping.getGraphMap().inverse().get(edge.getTarget()));
+	private ElkEdge createEdge(final LayoutMapping mapping, final DirectedGraph.Edge<StateVertex> edge) {
+		ElkEdge layoutEdge = ElkGraphUtil.createEdge(null);
+		layoutEdge.getSources().add((ElkNode) mapping.getGraphMap().inverse().get(edge.getSource()));
+		layoutEdge.getTargets().add((ElkNode) mapping.getGraphMap().inverse().get(edge.getTarget()));
 		mapping.getGraphMap().put(layoutEdge, edge);
 		return layoutEdge;
 	}
@@ -103,8 +103,8 @@ public class StateGraphLayoutConnector implements IDiagramLayoutConnector {
 
 	@Override
 	public void applyLayout(LayoutMapping layoutMapping, IPropertyHolder propertyHolder) {
-		for (Entry<KGraphElement, Object> entry : layoutMapping.getGraphMap().entrySet()) {
-			final KShapeLayout layout = entry.getKey().getData(KShapeLayout.class);
+		for (Entry<ElkGraphElement, Object> entry : layoutMapping.getGraphMap().entrySet()) {
+			/* final KShapeLayout layout = entry.getKey().getData(KShapeLayout.class);
 			if (layout != null) {
 				final double xPos = layout.getXpos();
 				final double yPos = layout.getYpos();
@@ -113,7 +113,7 @@ public class StateGraphLayoutConnector implements IDiagramLayoutConnector {
 					v.setTranslateX(xPos);
 					v.setTranslateY(yPos);
 				});
-			}
+			} */
 		}
 	}
 }
