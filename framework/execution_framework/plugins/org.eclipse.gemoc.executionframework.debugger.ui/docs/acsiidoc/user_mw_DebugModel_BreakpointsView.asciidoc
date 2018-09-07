@@ -1,0 +1,30 @@
+////////////////////////////////////////////////////////////////
+//	Reproduce title only if not included in master documentation
+////////////////////////////////////////////////////////////////
+ifndef::includedInMaster[]
+= GEMOC Modeling workbench User guide
+
+== Execute, animate and debug models
+
+=== Debug a model
+
+endif::[]
+
+[[userguide-mw-breakpoints-view]]
+==== Breakpoints view
+
+footnote:[asciidoc source of this page:  https://github.com/eclipse/gemoc-studio-modeldebugging/tree/master/framework/execution_framework/plugins/org.eclipse.gemoc.executionframework.debugger.ui/docs/acsiidoc/user_mw_DebugModel_BreakpointsView.asciidoc.]
+
+This view is available on the Debug perspective.
+
+It displays all the breakpoints that have been set for the current execution.
+
+[[c]]
+.Breakpoints view
+image::images/workbench/modeling/breakpoints_on_k3fsm_example.png[Breakpoints view]
+
+In <<mw-debug-view-figure>>, the breakpoints listed are ModelElement breakpoints that are linked to model elements in the model 
+(2 States and 1 Transition from <<K3FSM-example, K3FSM example>>).
+During a model execution in Debug mode, if a DSA is called on one of the elements listed here, then the execution will be suspended.
+
+Note that setting the breakpoints is usually done using <<userguide-mw-editor-debug-integration>>.

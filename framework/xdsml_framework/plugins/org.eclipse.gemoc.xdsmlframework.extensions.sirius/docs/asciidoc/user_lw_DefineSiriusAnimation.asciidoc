@@ -1,0 +1,38 @@
+////////////////////////////////////////////////////////////////
+//	Reproduce title only if not included in master documentation
+////////////////////////////////////////////////////////////////
+ifndef::includedInMaster[]
+= Language workbench user guide
+
+== Provide language with tools
+
+=== Define model animation
+endif::[]
+
+
+[[define-sirus-animation-representation-section]]
+==== Define an animation representation for Sirius
+footnote:[asciidoc source of this page:  https://github.com/eclipse/gemoc-studio-modeldebugging/tree/master/framework/xdsml_framework/plugins/org.eclipse.gemoc.xdsmlframework.extensions.sirius/docs/asciidoc/user_lw_DefineSiriusAnimation.asciidoc.]
+
+The Sirius editor defined  <<defining-a-concrete-syntax-with-sirius-section>> can also be extended
+in order to present the RunTime Data during a model execution.
+
+A good design consists in creating a dedicated layer that would be enabled on every execution in both 
+*Debug mode* and *Run mode*. 
+
+The design principles are similar to the one used in <<defining-a-debug-representation-section>>. 
+It can add either new diagram or new layers on top of existing diagrams in order to display the 
+domain specific RunTime Data.
+Additionally, a service is registered in order to activate the layer when starting the execution and trigger 
+refresh event during the execution. 
+
+NOTE: Even if very similar, an animation layer is slightly different from a Debug layer of <<defining-a-debug-representation-section>> which is not enabled
+in Run mode and is focused on presenting the current stack element and debug controls. 
+
+.TODO
+******
+Present how to do that: 
+
+ - extend diagram description/add animation layer to existing diagram description
+ - implement AbstractGemocAnimatorServices.java
+******

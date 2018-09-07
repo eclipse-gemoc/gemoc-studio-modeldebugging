@@ -1,0 +1,35 @@
+////////////////////////////////////////////////////////////////
+//	Reproduce title only if not included in master documentation
+////////////////////////////////////////////////////////////////
+ifndef::includedInMaster[]
+= GEMOC modeling workbench user guide
+== Execute, animate and debug models
+=== Debug a model
+==== Editor debug integration
+
+endif::[]
+
+
+[[modeling-workbench-editor-integration-sirius-section]]
+===== Sirius specific debug integration
+
+footnote:[asciidoc source of this page:  https://github.com/eclipse/gemoc-studio-modeldebugging/tree/master/simulationmodelanimation/plugins/org.eclipse.gemoc.dsl.debug.ide.sirius.ui/docs/asciidoc/user_mw_EditModels_Sirius.asciidoc.]
+
+If you have defined a debug representation using <<defining-a-debug-representation-section>>. 
+You can use the following actions to start a debug session and toggle breakpoints.
+
+image::images/workbench/modeling/debug_actions.png[Debug actions, 400]
+
+Usually, elements with a break point are decorated with a blue bullet.
+
+image::images/workbench/modeling/sirius_debug_breakpoint_decoration.png[Sirius Debug Breakpoint decoration]
+
+Additionally, when suspended during the execution in Debug mode, the target of 
+the current instruction in the call stack can be highlighted.  
+In the following example, (<<img-sirius_debug_stack_highlighting.png>>) the selected 
+element in the Debug stack (top left) is highlighted in yellow in Sirius (bottom left) thanks to the 
+Debug layer added to the editor. 
+
+[[img-sirius_debug_stack_highlighting.png]]
+.Sirius debug stack highlighting
+image::images/workbench/modeling/sirius_debug_stack_highlighting.png[sirius_debug_stack_highlighting]  

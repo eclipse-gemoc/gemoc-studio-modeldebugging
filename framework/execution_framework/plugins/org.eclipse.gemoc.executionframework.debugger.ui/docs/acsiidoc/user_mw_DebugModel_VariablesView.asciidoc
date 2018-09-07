@@ -1,0 +1,38 @@
+////////////////////////////////////////////////////////////////
+//	Reproduce title only if not included in master documentation
+////////////////////////////////////////////////////////////////
+ifndef::includedInMaster[]
+= GEMOC Modeling workbench User guide
+
+== Execute, animate and debug models
+
+=== Debug a model
+
+endif::[]
+
+[[userguide-mw-variables-view]]
+==== Variables view
+
+footnote:[asciidoc source of this page:  https://github.com/eclipse/gemoc-studio-modeldebugging/tree/master/framework/execution_framework/plugins/org.eclipse.gemoc.executionframework.debugger.ui/docs/acsiidoc/user_mw_DebugModel_VariablesView.asciidoc.]
+
+This view is available on the Debug perspective.
+When an execution is paused, this view presents the current ((Runtime Data)) of the model. 
+
+[[mw-debug-variable-sequential-view-figure]]
+.Debug and Variable views with the sequential engine
+image::images/workbench/modeling/sequential_debug_and_variables_views.png[Debug view, 800]
+
+
+[NOTE]
+====
+As a language designer, to control which Runtime Data should be presented in the Variables view, you need to set 
+an EAnnotation with nsURI set to `aspect` on the corresponding EAttributes, EReferences 
+or EClass in the ecore metamodel. (see <<userguide-lw-define-debug-rtd-information>>).
+====
+
+[TIP]
+====
+When the execution is paused, it is possible to edit the values in this view and then manually change the Runtime Data of the model. 
+
+If the MultiDimentional trace is activated, this tip works only if the execution is paused on the last instruction of the trace.
+====

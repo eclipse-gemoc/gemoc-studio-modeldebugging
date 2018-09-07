@@ -49,6 +49,16 @@ Defining the control flow between operation for the sequential engine is equival
 This is quite straightforward with K3 _@Aspect_ annotation since the operations are directly weaved on the metaclasses and applied on the target model elements. 
 
 ====== Defining the entry point
-The sequential  engines will use as entry point methods having an _@Main_ annotation.
+The sequential  engines will use as entry point the methods having an *@Main* annotation. (see 
+http://diverse-project.github.io/k3/publish/user_documentation/html_single/user_documentation.html#_project_specific_annotations[K3 documentation])
 
 This annotation must be placed on operations applicable to the root model element.
+
+[[lw-sequential-defining-initialization]]
+==== Defining the initialization function
+Optionally, In the DSA, one of the method can be tagged with the *@InitializeModel* annotation. (see 
+http://diverse-project.github.io/k3/publish/user_documentation/html_single/user_documentation.html#_project_specific_annotations[K3 documentation])
+
+This method will be called before the engine starts and is typically used to fill the 
+RunTime Data initial values using information provided by the user in the <<userguide-mw-launch-a-model-execution,launch configuration>>. 
+
