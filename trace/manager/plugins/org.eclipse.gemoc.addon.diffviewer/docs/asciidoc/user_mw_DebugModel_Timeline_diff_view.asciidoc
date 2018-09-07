@@ -1,0 +1,28 @@
+////////////////////////////////////////////////////////////////
+//	Reproduce title only if not included in master documentation
+////////////////////////////////////////////////////////////////
+ifndef::includedInMaster[]
+= GEMOC Modeling workbench User guide
+
+== Execute, animate and debug models
+
+=== Debug a model
+
+==== Timelines
+endif::[]
+
+[[userguide-mw-timeline-diff-view]]
+===== Timeline diff view
+
+footnote:[asciidoc source of this page:  https://github.com/eclipse/gemoc-studio-modeldebugging/tree/master/trace/manager/plugins/org.eclipse.gemoc.addon.diffviewer/docs/asciidoc/user_mw_DebugModel_Timeline_diff_view.asciidoc.]
+
+
+This view allows to compare the Runtime Data dimensions of two saved traces.
+
+Obtaining traces can be done using the save command in the <<userguide-mw-multidimentional-timeline-view>>. 
+
+.TODO
+*****
+provide screenshot and more details
+*****
+

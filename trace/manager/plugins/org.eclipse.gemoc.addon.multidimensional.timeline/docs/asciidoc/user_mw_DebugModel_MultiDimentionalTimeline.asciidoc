@@ -1,0 +1,112 @@
+////////////////////////////////////////////////////////////////
+//	Reproduce title only if not included in master documentation
+////////////////////////////////////////////////////////////////
+ifndef::includedInMaster[]
+= GEMOC Modeling workbench User guide
+
+== Execute, animate and debug models
+
+=== Debug a model
+
+==== Timelines
+endif::[]
+
+[[userguide-mw-multidimentional-timeline-view]]
+===== Multidimentional timeline view
+
+footnote:[asciidoc source of this page:  https://github.com/eclipse/gemoc-studio-modeldebugging/tree/master/trace/manager/plugins/org.eclipse.gemoc.addon.multidimensional.timeline/docs/asciidoc/user_mw_DebugModel_MultiDimentionalTimeline.asciidoc.]
+
+
+The Multidimensional Timeline view provides an interactive representation of the execution trace being captured and the states of the Runtime Data. 
+When double-clicking on a previous state represented in the timeline, the model is brought back into this state.
+Moreover, the timeline represents all the different runtime data dimensions captured in a trace, each being the sequence of 
+values taken by one specific element of the model. When double-clicking on a value that was reached by an element, 
+the complete model is brought back in the state corresponding to this value. Bullets and line in orange correspond
+to the current state.
+
+
+
+
+[[img-mutidimensional-timeline-overview]]
+.MutiDimensional Timeline Overview
+image:images/workbench/modeling/timeline/sequential_omniscient_debugging_multidimensionnal_timeline_overview.png[Sequential Execution Multidimensionnal Timeline Overview, 800]
+
+Each bullets on top of the view represent a state of the Runtime Data. 
+The lines between states represent the method call as a kind of stack. Dot lines indicate that the model has been set back
+to a previous state (ie. currently navigating in the past and also represented  by the icon 
+image:images/workbench/modeling/timeline/ui_icons/restart_task.gif[restart] )
+
+
+In this mode, the <<userguide-mw-debug-commands, Debug commands>> are extended with backward 
+actions that behave on the call stack similarly to their forward counterparts, but follow 
+execution steps in the opposite direction:
+image:images/workbench/modeling/ui_icons/stepbackinto_co.png[stepbackinto] _StepBack Into_,
+image:images/workbench/modeling/ui_icons/stepbackout_co.png[stepbackout] _StepBack Out_, and
+image:images/workbench/modeling/ui_icons/stepbackover_co.png[stepbackover] _StepBack Over_. 
+
+Each row below represent one runtime data dimension. Ie. an attribute or a reference in the model. In these rows,
+a line indicate that the given data has not changed during these states (Ie. the state has been recorded due to a change in another
+data)
+
+When exploring the trace, the navigation buttons _Navigate backward_ image:images/workbench/modeling/timeline/ui_icons/nav_backward.gif[nav_backward] 
+_Navigate forward_ image:images/workbench/modeling/timeline/ui_icons/nav_forward.gif[nav_forward] allows to go directly to the previous or next state
+where the given data has changed.
+
+The _Jump to state_ image:images/workbench/modeling/timeline/ui_icons/runtoline_co.gif[Jump to state] 
+command allows to jump directly to a given state by providing its number.
+
+The check box at the beginning of each row allows to _hide_ the corresponding data. When unchecked, 
+it is actually put at the bottom of the list. 
+
+The state coloration command image:images/workbench/modeling/timeline/ui_icons/state_coloration.gif[state_coloration] allows 
+to set some _unique_ color on the states using only dimensions that are not hidden. 
+ 
+A trace can be saved image:images/workbench/modeling/timeline/ui_icons/save.gif[savetrace] and 
+reloaded image:images/workbench/modeling/timeline/ui_icons/jload_obj.gif[loadtrace] using the 
+commands on top of the view. Saved traces can then be compared using the Timeline Diff view or displayed 
+in the State Graph View.  
+ 
+[NOTE]
+====
+As the bullets on top of the view represent the Runtime Data states, the number of these will be different 
+from the number of steps that have been executed. (Number of steps executed is displayed in the <<userguide-mw-control-engine-execution-engine-view, Engine view>>) 
+====
+
+[TIP]
+====
+Hovering also provides an overview of the data. On a state, it uses the hidden/visible checkbox 
+information to show data only from visible rows. 
+====
+
+
+
+[[img-mutidimensional-timeline-implicit-states]]
+.MutiDimensional Timeline Implicit States
+image:images/workbench/modeling/timeline/multidimentionnal_timeline_implicit_states.png[Multidimensionnal Timeline Implicit States]
+
+In some cases, like states 6 and 9 in <<img-mutidimensional-timeline-implicit-states>>, some states may use a diagonal hash pattern color.
+This indicates that some changes in the runtime data have been recorded between 2 declared steps. This can 
+happen for example with nested steps where runtime data are changed in the caller step; 
+
+[source,xtend]
+----
+@Step
+def public void outerStep() {	
+	... // change some runtime data before calling innerStep() <1>
+	 
+	_self.innerStep()
+	
+	... // change some runtime data after calling innerStep() <2>	
+}
+
+@Step
+def public void innerStep() {
+	... // change some runtime data <3>
+}
+
+----
+<1> change has occurred before the call of inner step; trigger the recording of an implicit state.
+<2> change has occurred after the call of inner step; trigger the recording of an implicit state.
+<3> Normal step; trigger the recording of a normal state
+
+

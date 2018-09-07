@@ -1,0 +1,46 @@
+////////////////////////////////////////////////////////////////
+//	Reproduce title only if not included in master documentation
+////////////////////////////////////////////////////////////////
+ifndef::includedInMaster[]
+= GEMOC Modeling workbench User guide
+
+== Execute, animate and debug models
+
+=== Debug a model
+
+endif::[]
+
+[[userguide-mw-debug-view]]
+==== Debug view
+
+footnote:[asciidoc source of this page:  https://github.com/eclipse/gemoc-studio-modeldebugging/tree/master/framework/execution_framework/plugins/org.eclipse.gemoc.executionframework.debugger.ui/docs/acsiidoc/user_mw_DebugModel_DebugView.asciidoc.]
+
+
+
+This view is part of the Debug perspective.
+It presents an interface for Step by Step execution of the model.
+
+When an execution is paused, this view presents a stack containing all ongoing 
+steps, with the last started step at the top of the stack.
+
+At the bottom of the stack is a particular stackframe named `Global context`.
+When selected, this stackframe displays the runtime data in the <<mw-executing-sequential-model-variable-view-section,Variable View>>. 
+
+
+
+[[mw-debug-view-figure]]
+.Debug view
+image::images/workbench/modeling/debug_view_sequential.png[Debug view, 800]
+
+
+[NOTE]
+====
+In order to improve the look and feel in <<mw-debug-variable-sequential-view-figure>>, the icons have been customized using the technique described in <<defining-a-concrete-syntax-with-emf-section>>
+====
+
+
+[NOTE]
+====
+As a language designer, to control how steps should be stacked and presented 
+in the Debug view, consult <<userguide-lw-define-debug-step-information>>.
+====

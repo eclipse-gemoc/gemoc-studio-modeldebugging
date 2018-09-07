@@ -1,0 +1,64 @@
+////////////////////////////////////////////////////////////////
+//	Reproduce title only if not included in master documentation
+////////////////////////////////////////////////////////////////
+ifndef::includedInMaster[]
+= GEMOC Modeling workbench User guide
+
+== Execute, animate and debug models
+
+=== Execute a model
+
+==== Launch a model execution
+endif::[]
+
+[[userguide-sequential-launch-conf]]
+===== Sequential Engine Launch Configuration
+
+footnote:[asciidoc source of this page:  https://github.com/eclipse/gemoc-studio-modeldebugging/tree/master/java_execution/java_engine/plugins/org.eclipse.gemoc.execution.sequential.javaengine.ui/docs/asciidoc/user_mw_LaunchSequentialModelExecution.asciidoc.]
+
+====== Sequential general options
+Run and debug are configured using the launch configuration. An example of configuration:
+
+image:images/workbench/modeling/sequential_launch_configuration.png[Sequential Launch configuration, 800]
+
+- Model to execute : this is the model that will be executed 
+- Model initialization method and argument : if the chosen language has a valid method with the `@InitializeModel` annotation in its DSA, the field Model initialization method will be set and this method will be called before launching the animation. 
+- Model initialization arguments : optional string arguments that can be passed to the initialization method. (one string per line)
+- Melange languages : this field allows to select among the languages defined in Melange.
+- Main method : the name of the method that can be used to start the engine. The possible value are specified by the language designer in the language definition by adding an `@Main` annotation on methods in the DSA.
+- Main model element path : after having selected a main method, use the browse button to select a model element on wich this method will be called. This field presents its path in the model, the following field _Main model element name_ displays a human readable name for this element.
+
+The _break at start_ tells to the debugger to add a virtual breakpoint on the first instruction that will run. 
+
+[NOTE]
+====
+`@Main` and `@InitializeModel` annotations used to declare possible methods used in this launcher are detailed in <<section-define-sequential-dsa-project>>.
+====
+
+====== Sequential Run mode
+The run mode is the fastest way to execute a model. If an animation is defined, it will also be displayed (see <<userguide-mw-animate-a-model>>).
+The execution cannot be paused/suspended. It can however be stopped.
+It offers a limited set of views :
+
+- the <<mw-executing-sequential-model-engine-view-section,((Engine)) View>> allows to stop a running model.
+- the <<mw-executing-sequential-model-multibranch-timeline-view-section,((MultiBranch Timeline)) View>> is displayed at the end of the execution in order to check the resulting execution trace.
+
+If more feedback is required, please use one of the frontend or backend available for the xDSML, see <<modeling-workbench-backends-frontends-section,Backends and frontends>>. 
+
+====== Sequential Debug mode
+In debug mode, the engine offers more control over the execution.
+It allows to pause, add breakpoints, and execute the model in a step by step mode.
+
+It reuses the Eclipse Debug perspective and some of its views and adds some Gemoc specific views.
+
+- the <<mw-executing-sequential-model-engine-view-section,((Engine)) View>> allows to stop a running model.
+- the <<mw-executing-sequential-model-animation-view-section,((Animation Manager)) View>> is displayed and updated in real-time during the simulation. It can display both an animation layer and a debug layer.
+- the <<mw-executing-sequential-model-debug-view-section,Debug View>>. This view presents an interface for Step by Step execution of the model.
+- the <<mw-executing-sequential-model-variable-view-section,Variable View>>. This view presents the ((Runtime Data)) as a (EMF based) tree.
+
+When running a simulation in Debug mode, it is configured to activate automatically the Debug layer and the Animation layer in the Animation view.
+
+On the engine addon tab, one can activate several optional addons.
+
+- the <<mw-executing-sequential-model-multibranch-timeline-view-section,((MultiBranch Timeline)) View>> can be displayed during all the simulation.
+- the <<mw-executing-sequential-model-multidimensional-timeline-view-section,((MultiDimensional Timeline)) View>> can be displayed during all the simulation.

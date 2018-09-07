@@ -8,10 +8,10 @@
 ===== Sequential general options
 Run and debug are configured using the launch configuration. An example of configuration:
 
-image:Guide/images/workbench/modeling/sequential_launch_configuration.png[Sequential Launch configuration, 800]
+image:images/workbench/modeling/sequential_launch_configuration.png[Sequential Launch configuration, 800]
 
 - Model to execute : this is the model that will be executed 
-- Model initialization method and argument : if the choosen language has a valid method with the `@InitializeModel` annotation in its DSA, the field Model initialization method will be set and this method will be called before launching the animation. 
+- Model initialization method and argument : if the chosen language has a valid method with the `@InitializeModel` annotation in its DSA, the field Model initialization method will be set and this method will be called before launching the animation. 
 - Model initialization arguments : optional string arguments that can be passed to the initialization method. (one string per line)
 - Melange languages : this field allows to select among the languages defined in Melange.
 - Main method : the name of the method that can be used to start the engine. The possible value are specified by the language designer in the language definition by adding an `@Main` annotation on methods in the DSA.
@@ -59,7 +59,7 @@ The engine view displays a list of execution engines and their status:
 * number of execution steps, 
 * current running status.
 
-image:Guide/images/workbench/modeling/engine_view.png[Engine View, 400]
+image:images/workbench/modeling/engine_view.png[Engine View, 400]
 
 [[modeling-workbench-executing-model-logical-step-view-section]]
 
@@ -80,9 +80,9 @@ the complete model is brought back in the state corresponding to this value.
 
 In this mode, the Debug interface is extended with backward actions that behave similarly to their forward counterparts, but follow execution steps in the opposite direction:
 
-* image:Guide/images/workbench/ui_icons/stepbackinto_co.png[stepbackinto] _StepBack Into_ 
-* image:Guide/images/workbench/ui_icons/stepbackout_co.png[stepbackout] _StepBack Out_
-* image:Guide/images/workbench/ui_icons/stepbackover_co.png[stepbackover] _StepBack Over_
+* image:images/workbench/modeling/ui_icons/stepbackinto_co.png[stepbackinto] _StepBack Into_ 
+* image:images/workbench/modeling/ui_icons/stepbackout_co.png[stepbackout] _StepBack Out_
+* image:images/workbench/modeling/ui_icons/stepbackover_co.png[stepbackover] _StepBack Over_
 
 
 [WARNING]
@@ -96,7 +96,7 @@ This view currently works only with the Sequential engine. We're working on exte
 ====
 
 .MutiDimensional Timeline
-image:Guide/images/workbench/modeling/timeline/sequential_omniscient_debugging_multidimensionnal_timeline.png[Sequential Execution Multidimensionnal Timeline, 800]
+image:images/workbench/modeling/timeline/sequential_omniscient_debugging_multidimensionnal_timeline.png[Sequential Execution Multidimensionnal Timeline, 800]
 
 [[mw-executing-sequential-model-multibranch-timeline-view-section]]
 ==== MultiBranch Timeline View
@@ -118,11 +118,11 @@ This view represents the line of the model's execution. It displays:
 This view is enabled/disable in the launch configuration by checking "Event Scheduling Execution tracing" in the Engine Addons tab.
 ====
 .Sequential Execution MultiBranch Timeline
-image:Guide/images/workbench/modeling/timeline/sequential_model_event_scheduling_timeline.png[Sequential Execution MultiBranch Timeline, 800]
+image:images/workbench/modeling/timeline/sequential_model_event_scheduling_timeline.png[Sequential Execution MultiBranch Timeline, 800]
 
 It is  possible to select a logical step and use the contextual menu to show its caller by selecting the corresponding model element in the Sirius editor:
 
-image:Guide/images/workbench/modeling/timeline/sequential_model_event_schduling_timeline_show_caller.png[Show caller]
+image:images/workbench/modeling/timeline/sequential_model_event_schduling_timeline_show_caller.png[Show caller]
 
 
 
@@ -131,24 +131,24 @@ image:Guide/images/workbench/modeling/timeline/sequential_model_event_schduling_
 
 If you have defined a debug representation using <<defining-a-debug-representation-section>>. You can use the following actions to start a debug session and toggle breakpoints.
 
-image::Guide/images/workbench/modeling/debug_actions.png[Debug actions]
+image::images/workbench/modeling/debug_actions.png[Debug actions]
 
 A decorator is shown on all element holding a breakpoint.
 The decorator also reflects the state of the breakpoint:
 
 - enabled
 
-image:Guide/images/workbench/modeling/breakpoint_enabled.png[breakpoint enabled]
+image:images/workbench/modeling/breakpoint_enabled.png[breakpoint enabled]
 
 - disabled
 
-image:Guide/images/workbench/modeling/breakpoint_disabled.png[breakpoint disabled]
+image:images/workbench/modeling/breakpoint_disabled.png[breakpoint disabled]
 
 When you hit a breakpoint on an element and are debugging with the decider "Step by step user decider", in order to restart the execution you must clic the resume button from the debug perspective. Then don't forget to select the next logical step to execute. Do the same when debugging in step by step with the decider "Step by step user decider".
 
 While executing you can visualize execution data. This setting must be defined by hand since the data are language dependent (see <<defining-a-debug-representation-section>> for more details). Here the current state is decorated with a green arrow.
 
-image:Guide/images/workbench/modeling/execution_data_highlight.png[Execution data highlight]
+image:images/workbench/modeling/execution_data_highlight.png[Execution data highlight]
 
 The default definition highlights the current instruction in yellow.
 
@@ -162,13 +162,13 @@ When an execution is paused, this view presents a stack containing all ongoing s
 At the bottom of the stack is a particular stackframe named `Global context`.
 When selected, this stackframe displays the runtime data in the <<mw-executing-sequential-model-variable-view-section,Variable View>>. 
 
-When paused, the usual debugging tools (step into, step over and step return) can be used to control the execution step by step. With the multidimentional trace enabled, the execution can be controlled backward using the image:Guide/images/workbench/ui_icons/stepbackinto_co.png[stepbackinto] _StepBack Into_, 
- image:Guide/images/workbench/ui_icons/stepbackout_co.png[stepbackout] _StepBack Out_ and
- image:Guide/images/workbench/ui_icons/stepbackover_co.png[stepbackover] _StepBack Over_ commands.
+When paused, the usual debugging tools (step into, step over and step return) can be used to control the execution step by step. With the multidimentional trace enabled, the execution can be controlled backward using the image:images/workbench/modeling/ui_icons/stepbackinto_co.png[stepbackinto] _StepBack Into_, 
+ image:images/workbench/modeling/ui_icons/stepbackout_co.png[stepbackout] _StepBack Out_ and
+ image:images/workbench/modeling/ui_icons/stepbackover_co.png[stepbackover] _StepBack Over_ commands.
 
 [[mw-debug-variable-sequential-view-figure]]
 .Debug and Variable views with the sequential engine
-image:Guide/images/workbench/modeling/sequential_omniscient_debugging_stack_variables.png[Debug view, 800]
+image:images/workbench/modeling/sequential_omniscient_debugging_stack_variables.png[Debug view, 800]
 
 
 [NOTE]

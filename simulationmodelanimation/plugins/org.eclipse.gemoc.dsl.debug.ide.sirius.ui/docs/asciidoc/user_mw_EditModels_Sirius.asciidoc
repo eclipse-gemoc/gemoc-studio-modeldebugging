@@ -2,7 +2,7 @@
 //	Reproduce title only if not included in master documentation
 ////////////////////////////////////////////////////////////////
 ifndef::includedInMaster[]
-= GEMOC Modeling Workbench User Guide
+= GEMOC modeling workbench user guide
 == Edit models
 endif::[]
 
