@@ -26,3 +26,4 @@ Export-Package: org.eclipse.gemoc.executionframework.engine,
  org.eclipse.gemoc.executionframework.engine.commons,
  org.eclipse.gemoc.executionframework.engine.core,
  org.eclipse.gemoc.executionframework.engine.profiler
+Automatic-Module-Name: org.eclipse.gemoc.executionframework.engine

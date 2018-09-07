@@ -30,3 +30,4 @@ Bundle-RequiredExecutionEnvironment: JavaSE-1.8
 Export-Package: org.eclipse.gemoc.trace.gemoc.generator,
  org.eclipse.gemoc.trace.gemoc.generator.codegen,
  org.eclipse.gemoc.trace.gemoc.generator.util
+Automatic-Module-Name: org.eclipse.gemoc.trace.gemoc.generator

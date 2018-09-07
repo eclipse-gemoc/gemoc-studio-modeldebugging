@@ -31,3 +31,4 @@ Export-Package: org.eclipse.gemoc.xdsmlframework.extensions.sirius,
  org.eclipse.gemoc.xdsmlframework.extensions.sirius.command,
  org.eclipse.gemoc.xdsmlframework.extensions.sirius.wizards,
  org.eclipse.gemoc.xdsmlframework.extensions.sirius.wizards.pages
+Automatic-Module-Name: org.eclipse.gemoc.xdsmlframework.extensions.sirius

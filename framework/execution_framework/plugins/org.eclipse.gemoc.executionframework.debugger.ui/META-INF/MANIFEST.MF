@@ -32,4 +32,5 @@ Require-Bundle: com.google.guava,
  org.eclipse.debug.ui,
  org.eclipse.emf.transaction;bundle-version="1.9.0"
 Bundle-ActivationPolicy: lazy
+Automatic-Module-Name: org.eclipse.gemoc.executionframework.debugger.ui
 

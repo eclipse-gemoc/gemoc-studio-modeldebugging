@@ -18,4 +18,5 @@ Bundle-RequiredExecutionEnvironment: JavaSE-1.7
 Export-Package: org.eclipse.gemoc.execution.sequential.javaengine
 Bundle-Activator: org.eclipse.gemoc.execution.sequential.javaengine.Activator
 Bundle-ActivationPolicy: lazy
+Automatic-Module-Name: org.eclipse.gemoc.execution.sequential.javaengine
 
