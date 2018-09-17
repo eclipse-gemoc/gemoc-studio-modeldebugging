@@ -360,7 +360,8 @@ public class GenericSequentialModelDebugger extends AbstractGemocDebugger {
 		// ended, as resuming execution will prevent further interactions with the
 		// trace and the debugging facilities, which might not be desirable.
 		executionTerminated = true;
-		control(threadName, FAKE_INSTRUCTION);
+		// does break the flow with the concurrent approach
+		//control(threadName, FAKE_INSTRUCTION);
 	}
 
 	override terminate() {
