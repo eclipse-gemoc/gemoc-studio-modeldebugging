@@ -15,4 +15,5 @@ Require-Bundle: org.eclipse.ui,
  org.eclipse.xtend.lib.macro
 Bundle-RequiredExecutionEnvironment: JavaSE-1.8
 Export-Package: org.eclipse.gemoc.trace.gemoc.api; uses:="org.eclipse.emf.ecore,  org.eclipse.gemoc.executionframework.engine.mse, org.eclipse.gemoc.xdsmlframework.api.engine_addon,  org.eclipse.gemoc.timeline.view"
+Automatic-Module-Name: org.eclipse.gemoc.trace.gemoc.api
 

@@ -42,3 +42,4 @@ Bundle-ActivationPolicy: lazy
 Bundle-ClassPath:  .
 Export-Package: org.eclipse.gemoc.execution.sequential.javaengine.ui,
  org.eclipse.gemoc.execution.sequential.javaengine.ui.launcher
+Automatic-Module-Name: org.eclipse.gemoc.execution.sequential.javaengine.ui

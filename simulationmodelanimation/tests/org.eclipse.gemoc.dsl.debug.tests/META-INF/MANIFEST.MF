@@ -9,3 +9,4 @@ Bundle-ActivationPolicy: lazy
 Require-Bundle: org.eclipse.gemoc.dsl.debug;bundle-version="1.0.0",
  org.junit;bundle-version="4.0.0"
 Export-Package: org.eclipse.gemoc.dsl.debug.tests
+Automatic-Module-Name: org.eclipse.gemoc.dsl.debug.tests

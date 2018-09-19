@@ -18,4 +18,5 @@ Require-Bundle: com.google.guava,
 Export-Package: org.eclipse.gemoc.execution.sequential.javaengine.tests,
  org.eclipse.gemoc.execution.sequential.javaengine.tests.languages,
  org.eclipse.gemoc.execution.sequential.javaengine.tests.wrapper
+Automatic-Module-Name: org.eclipse.gemoc.execution.sequential.javaengine.tests
 

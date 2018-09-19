@@ -27,3 +27,4 @@ Export-Package: org.eclipse.gemoc.dsl.debug.ide.sirius.ui,
  org.eclipse.gemoc.dsl.debug.ide.sirius.ui.action,
  org.eclipse.gemoc.dsl.debug.ide.sirius.ui.launch,
  org.eclipse.gemoc.dsl.debug.ide.sirius.ui.services
+Automatic-Module-Name: org.eclipse.gemoc.dsl.debug.ide.sirius.ui

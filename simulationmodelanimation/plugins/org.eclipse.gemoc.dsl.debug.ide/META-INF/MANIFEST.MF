@@ -21,3 +21,4 @@ Export-Package: org.eclipse.gemoc.dsl.debug.ide,
  org.eclipse.gemoc.dsl.debug.ide.event.model,
  org.eclipse.gemoc.dsl.debug.ide.launch
 Bundle-Activator: org.eclipse.gemoc.dsl.debug.ide.Activator
+Automatic-Module-Name: org.eclipse.gemoc.dsl.debug.ide

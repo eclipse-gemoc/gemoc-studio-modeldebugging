@@ -29,3 +29,4 @@ Export-Package: org.eclipse.gemoc.executionframework.extensions.sirius,
  org.eclipse.gemoc.executionframework.extensions.sirius.modelloader,
  org.eclipse.gemoc.executionframework.extensions.sirius.services
 Import-Package: org.eclipse.gemoc.trace.commons.model.trace
+Automatic-Module-Name: org.eclipse.gemoc.executionframework.extensions.sirius

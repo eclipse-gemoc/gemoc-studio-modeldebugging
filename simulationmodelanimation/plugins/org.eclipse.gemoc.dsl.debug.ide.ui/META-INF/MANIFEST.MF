@@ -19,3 +19,4 @@ Export-Package: org.eclipse.gemoc.dsl.debug.ide.ui,
  org.eclipse.gemoc.dsl.debug.ide.ui.provider
 Bundle-ActivationPolicy: lazy
 Bundle-Activator: org.eclipse.gemoc.dsl.debug.ide.ui.DebugIdeUiPlugin$Implementation
+Automatic-Module-Name: org.eclipse.gemoc.dsl.debug.ide.ui
