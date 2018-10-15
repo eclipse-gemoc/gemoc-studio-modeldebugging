@@ -20,6 +20,8 @@ import org.eclipse.gemoc.trace.gemoc.traceaddon.GenericTraceEngineAddon
 import org.eclipse.gemoc.xdsmlframework.api.engine_addon.IEngineAddon
 
 import static org.junit.Assert.*
+import org.eclipse.ui.internal.Workbench
+import org.eclipse.ui.PlatformUI
 
 class TestHelper {
 
@@ -108,8 +110,7 @@ class TestHelper {
 		boolean cleanup) {
 		val traceAddon = new GenericTraceEngineAddon()
 		val testResult = testWithJob(engine, language, #{}, #{traceAddon}, model, cleanup)
-		// TODO when other PR is merged
-		//testResult.trace = traceAddon.trace
+		testResult.trace = traceAddon.trace
 		return testResult
 	}
 
@@ -139,6 +140,19 @@ class TestHelper {
 		assertTrue("engineAboutToStop never performed", testResult.engineAboutToStop)
 		assertTrue("engineStopped never performed", testResult.engineStopped)
 		assertTrue("engineAboutToDispose never performed", testResult.engineAboutToDispose)
+	}
+
+	def static cleanWorkspace() {
+		val job = new Job("cleanup workspace") {
+			override protected run(IProgressMonitor m) {
+				for (p : ResourcesPlugin.getWorkspace().getRoot().projects) {
+					p.delete(true, m)
+				}
+				return Status.OK_STATUS
+			}
+		}
+		job.schedule
+		TestUtil::waitForJobs
 	}
 
 }
