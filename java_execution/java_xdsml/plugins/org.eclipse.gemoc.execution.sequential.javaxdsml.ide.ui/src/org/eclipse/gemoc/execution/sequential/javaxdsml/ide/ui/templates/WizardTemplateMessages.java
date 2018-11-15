@@ -44,11 +44,11 @@ public class WizardTemplateMessages extends NLS {
 	// SequentialSingleLanguage constants
 	public static String SequentialSingleLanguageTemplate_packageName;
 	public static String SequentialSingleLanguageTemplate_packageNameToolTip;
-	public static String SequentialSingleLanguageTemplate_melangeFileName;
-	public static String SequentialSingleLanguageTemplate_melangeFileNameTooltip;
-	public static String SequentialSingleLanguageTemplate_melangeDefaultFileName;
-	public static String SequentialSingleLanguageTemplate_melangeMetamodelName;
-	public static String SequentialSingleLanguageTemplate_melangeMetamodelNameToolTip;
+	public static String SequentialSingleLanguageTemplate_languageFileName;
+	public static String SequentialSingleLanguageTemplate_languageFileNameTooltip;
+	public static String SequentialSingleLanguageTemplate_languageDefaultFileName;
+	public static String SequentialSingleLanguageTemplate_languageMetamodelName;
+	public static String SequentialSingleLanguageTemplate_languageMetamodelNameToolTip;
 	public static String SequentialSingleLanguageTemplate_ecoreFileLocation;
 	public static String SequentialSingleLanguageTemplate_ecoreFileLocationTooltip;
 	public static String SequentialSingleLanguageTemplate_dsaProjectName;
