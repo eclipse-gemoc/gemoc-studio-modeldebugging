@@ -46,9 +46,6 @@ import org.eclipse.swt.widgets.Composite;
 import org.eclipse.ui.INewWizard;
 import org.eclipse.ui.IWorkbench;
 
-import fr.inria.diverse.melange.ui.wizards.GemocProjectFilesTemplates;
-
-
 @SuppressWarnings("restriction")
 public class CreateNewGemocSequentialLanguageProject extends AbstractNewProjectWizardWithTemplates implements INewWizard {
 

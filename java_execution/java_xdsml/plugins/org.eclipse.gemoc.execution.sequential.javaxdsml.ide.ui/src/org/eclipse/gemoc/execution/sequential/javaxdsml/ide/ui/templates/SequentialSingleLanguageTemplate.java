@@ -29,7 +29,6 @@ import org.eclipse.core.runtime.CoreException;
 import org.eclipse.core.runtime.IProgressMonitor;
 import org.eclipse.emf.common.ui.dialogs.WorkspaceResourceDialog;
 import org.eclipse.gemoc.commons.eclipse.core.resources.FileFinderVisitor;
-import org.eclipse.gemoc.commons.eclipse.core.resources.IFolderUtils;
 import org.eclipse.gemoc.commons.eclipse.pde.manifest.ManifestChanger;
 import org.eclipse.gemoc.commons.eclipse.pde.wizards.pages.pde.ui.BaseProjectWizardFields;
 import org.eclipse.gemoc.commons.eclipse.pde.wizards.pages.pde.ui.templates.AbstractStringWithButtonOption;
@@ -387,8 +386,6 @@ public class SequentialSingleLanguageTemplate extends JavaxdsmlTemplateSection {
 			} catch (IOException | BundleException e) {
 			}
 		}
-		// create empty folders in order to avoid warning on creation
-		IFolderUtils.createFolder("model-gen", project, monitor);
 	}
 	
 	@Override
