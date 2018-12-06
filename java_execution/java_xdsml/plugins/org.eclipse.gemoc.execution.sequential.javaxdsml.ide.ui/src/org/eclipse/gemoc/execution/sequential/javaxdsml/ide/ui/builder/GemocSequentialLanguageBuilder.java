@@ -149,7 +149,7 @@ public class GemocSequentialLanguageBuilder extends IncrementalProjectBuilder {
 						manifestChanger.addPluginDependency(org.eclipse.gemoc.executionframework.extensions.sirius.Activator.PLUGIN_ID);
 						manifestChanger.commit();
 					} catch (BundleException | IOException | CoreException e) {
-						e.printStackTrace();
+						Activator.error(e.getMessage(), e);
 					}
 				});
 				// lock the whole project

@@ -147,7 +147,7 @@
             This template creates a sequential language defined using a single Melange language and K3 aspects.
          </description>
     </wizard>
-    <wizard class="org.eclipse.gemoc.execution.sequential.javaxdsml.ide.ui.templates.SequentialSingleLanguageNewWizard" id="org.eclipse.gemoc.execution.sequential.javaxdsml.ide.ui.templates.projectContent.SequentialSingleLanguage" name="Simple Sequential K3 language project" targetPluginId="fr.inria.diverse.melange.ui">
+    <wizard class="org.eclipse.gemoc.execution.sequential.javaxdsml.ide.ui.templates.SequentialSingleLanguageNewWizard" id="org.eclipse.gemoc.execution.sequential.javaxdsml.ide.ui.templates.projectContent.SequentialSingleLanguage" name="Simple Sequential K3 language project" targetPluginId="org.eclipse.gemoc.execution.sequential.javaxdsml.ide.ui">
       <description>
             This template creates a sequential language defined using a simple DSL declaring an ecore and K3 aspects.
          </description>
@@ -160,7 +160,7 @@
   </extension>
   <extension point="org.eclipse.gemoc.commons.eclipse.pde.templates">
     <template class="org.eclipse.gemoc.execution.sequential.javaxdsml.ide.ui.templates.MelangeSequentialSingleLanguageTemplate" contributingId="fr.inria.diverse.melange.ui.templates.template1" id="org.eclipse.gemoc.execution.sequential.javaxdsml.ide.ui.templates.template_simple_melange_sequential_language" name="Simple GEMOC Melange Sequential project"/>
-    <template class="org.eclipse.gemoc.execution.sequential.javaxdsml.ide.ui.templates.SequentialSingleLanguageTemplate" contributingId="fr.inria.diverse.melange.ui.templates.template1" id="org.eclipse.gemoc.execution.sequential.javaxdsml.ide.ui.templates.template_simple_sequential_language" name="Simple Sequential K3 language project"/>
+    <template class="org.eclipse.gemoc.execution.sequential.javaxdsml.ide.ui.templates.SequentialSingleLanguageTemplate" contributingId="org.eclipse.gemoc.execution.sequential.javaxdsml.ide.ui" id="org.eclipse.gemoc.execution.sequential.javaxdsml.ide.ui.templates.template_simple_sequential_language" name="Simple Sequential K3 language project"/>
     <template class="org.eclipse.gemoc.execution.sequential.javaxdsml.ide.ui.templates.SequentialExtendedLanguageTemplate" contributingId="fr.inria.diverse.melange.ui.templates.template1" id="org.eclipse.gemoc.execution.sequential.javaxdsml.ide.ui.templates.template_sequential_extended_language" name="GEMOC Melange Extended Sequential project"/>
   </extension>
   <extension point="org.eclipse.core.expressions.definitions">
