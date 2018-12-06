@@ -29,13 +29,13 @@ import org.eclipse.core.runtime.CoreException;
 import org.eclipse.core.runtime.IProgressMonitor;
 import org.eclipse.emf.common.ui.dialogs.WorkspaceResourceDialog;
 import org.eclipse.gemoc.commons.eclipse.core.resources.FileFinderVisitor;
-import org.eclipse.gemoc.commons.eclipse.core.resources.IFolderUtils;
 import org.eclipse.gemoc.commons.eclipse.pde.manifest.ManifestChanger;
 import org.eclipse.gemoc.commons.eclipse.pde.wizards.pages.pde.ui.BaseProjectWizardFields;
 import org.eclipse.gemoc.commons.eclipse.pde.wizards.pages.pde.ui.templates.AbstractStringWithButtonOption;
 import org.eclipse.gemoc.commons.eclipse.pde.wizards.pages.pde.ui.templates.TemplateOption;
 import org.eclipse.gemoc.execution.sequential.javaxdsml.ide.ui.Activator;
 import org.eclipse.gemoc.execution.sequential.javaxdsml.ide.ui.dialogs.SelectDSAIProjectDialog;
+import org.eclipse.gemoc.execution.sequential.javaxdsml.ide.ui.wizards.pages.NewGemocLanguageProjectWizardFields;
 import org.eclipse.jface.viewers.IStructuredSelection;
 import org.eclipse.jface.viewers.Viewer;
 import org.eclipse.jface.viewers.ViewerFilter;
@@ -46,10 +46,9 @@ import org.eclipse.ui.PlatformUI;
 import org.eclipse.xtext.util.Strings;
 import org.osgi.framework.BundleException;
 
-import fr.inria.diverse.melange.ui.wizards.pages.NewMelangeProjectWizardFields;
 
 public class SequentialSingleLanguageTemplate extends JavaxdsmlTemplateSection {
-	public static final String KEY_MELANGE_FILE_NAME = "melangeFileName"; //$NON-NLS-1$
+	public static final String KEY_LANGUAGE_FILE_NAME = "languageFileName"; //$NON-NLS-1$
 	public static final String KEY_ASPECTCLASS_POSTFIX = "aspectClassPostfix"; //$NON-NLS-1$
 	public static final String KEY_LANGUAGE_NAME = "languageName"; //$NON-NLS-1$
 	public static final String METAMODEL_NAME = "MyLanguage"; //$NON-NLS-1$
@@ -63,7 +62,7 @@ public class SequentialSingleLanguageTemplate extends JavaxdsmlTemplateSection {
 	protected static final List<String> FILE_EXTENSIONS = Arrays.asList(new String [] { "ecore" });
 	
 
-	NewMelangeProjectWizardFields _data;
+	NewGemocLanguageProjectWizardFields _data;
 	
 	// other data specific to this template
 	public IFile 		ecoreIFile;
@@ -82,15 +81,15 @@ public class SequentialSingleLanguageTemplate extends JavaxdsmlTemplateSection {
 		addOption(KEY_PACKAGE_NAME, WizardTemplateMessages.SequentialSingleLanguageTemplate_packageName,
 				WizardTemplateMessages.SequentialSingleLanguageTemplate_packageNameToolTip, 
 				(String) null, 0);
-		addOption(KEY_LANGUAGE_NAME, WizardTemplateMessages.SequentialSingleLanguageTemplate_melangeMetamodelName,
-				WizardTemplateMessages.SequentialSingleLanguageTemplate_melangeMetamodelNameToolTip, 
+		addOption(KEY_LANGUAGE_NAME, WizardTemplateMessages.SequentialSingleLanguageTemplate_languageMetamodelName,
+				WizardTemplateMessages.SequentialSingleLanguageTemplate_languageMetamodelNameToolTip, 
 				METAMODEL_NAME, 0);
 		
 
 		addBlankField(0);
-		addOption(KEY_MELANGE_FILE_NAME, WizardTemplateMessages.SequentialSingleLanguageTemplate_melangeFileName, 
-				WizardTemplateMessages.SequentialSingleLanguageTemplate_melangeFileNameTooltip, 
-				WizardTemplateMessages.SequentialSingleLanguageTemplate_melangeDefaultFileName, 0);
+		addOption(KEY_LANGUAGE_FILE_NAME, WizardTemplateMessages.SequentialSingleLanguageTemplate_languageFileName, 
+				WizardTemplateMessages.SequentialSingleLanguageTemplate_languageFileNameTooltip, 
+				WizardTemplateMessages.SequentialSingleLanguageTemplate_languageDefaultFileName, 0);
 
 		addBlankField(0);
 		TemplateOption ecoreLocationOption  = new AbstractStringWithButtonOption(this, KEY_ECOREFILE_PATH, 
@@ -188,17 +187,17 @@ public class SequentialSingleLanguageTemplate extends JavaxdsmlTemplateSection {
 			else if(option.getName().equals(KEY_LANGUAGE_NAME) && languageName != null){
 				option.setValue(languageName);
 			}
-			else if(option.getName().equals(KEY_MELANGE_FILE_NAME) && fileName != null){
+			else if(option.getName().equals(KEY_LANGUAGE_FILE_NAME) && fileName != null){
 				option.setValue(fileName);
 			}
 		}
 	}
 	
 	protected void initializeFields(BaseProjectWizardFields data) {
-		final String projectName = ((NewMelangeProjectWizardFields)data).projectName;
+		final String projectName = ((NewGemocLanguageProjectWizardFields)data).projectName;
 		String packageName = inferPackageNameFromProjectName(projectName);
 		initializeOption(KEY_PACKAGE_NAME, packageName);
-		_data = (NewMelangeProjectWizardFields) data;
+		_data = (NewGemocLanguageProjectWizardFields) data;
 		String languageName = inferLanguageNameFromProjectName(projectName);
 		updateOptions(packageName, languageName, languageName);
 	}
@@ -387,8 +386,6 @@ public class SequentialSingleLanguageTemplate extends JavaxdsmlTemplateSection {
 			} catch (IOException | BundleException e) {
 			}
 		}
-		// create empty folders in order to avoid warning on creation
-		IFolderUtils.createFolder("model-gen", project, monitor);
 	}
 	
 	@Override
