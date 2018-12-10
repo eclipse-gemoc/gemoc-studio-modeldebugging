@@ -30,4 +30,5 @@ This project is still in incubation and need more work to reach industrial grade
 
 # Development
 - Continuous integration on [Eclipse CI](https://ci.eclipse.org/gemoc/job/gemoc-studio/)
+- [Instructions for building](https://github.com/eclipse/gemoc-studio/tree/master/dev_support/full_compilation)
 
