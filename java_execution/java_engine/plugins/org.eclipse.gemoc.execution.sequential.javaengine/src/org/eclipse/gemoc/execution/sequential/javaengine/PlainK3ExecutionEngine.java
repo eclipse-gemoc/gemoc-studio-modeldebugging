@@ -52,7 +52,7 @@ import fr.inria.diverse.melange.adapters.EObjectAdapter;
  * @author Didier Vojtisek<didier.vojtisek@inria.fr>
  *
  */
-public class PlainK3ExecutionEngine extends AbstractCommandBasedSequentialExecutionEngine<SequentialModelExecutionContext<K3RunConfiguration>, K3RunConfiguration>
+public class PlainK3ExecutionEngine extends AbstractCommandBasedSequentialExecutionEngine<SequentialModelExecutionContext<IK3RunConfiguration>, IK3RunConfiguration>
 		implements IStepManager {
 
 	private Method initializeMethod;
@@ -74,7 +74,7 @@ public class PlainK3ExecutionEngine extends AbstractCommandBasedSequentialExecut
 	 * operation.
 	 */
 	@Override
-	protected void prepareEntryPoint(SequentialModelExecutionContext<K3RunConfiguration> executionContext) {
+	protected void prepareEntryPoint(SequentialModelExecutionContext<IK3RunConfiguration> executionContext) {
 		/*
 		 * Get info from the RunConfiguration
 		 */
@@ -128,7 +128,7 @@ public class PlainK3ExecutionEngine extends AbstractCommandBasedSequentialExecut
 	}
 
 	@Override
-	protected void prepareInitializeModel(SequentialModelExecutionContext<K3RunConfiguration> executionContext) {
+	protected void prepareInitializeModel(SequentialModelExecutionContext<IK3RunConfiguration> executionContext) {
 
 		// try to get the initializeModelRunnable
 		String modelInitializationMethodQName = executionContext.getRunConfiguration().getModelInitializationMethod();
@@ -318,7 +318,7 @@ public class PlainK3ExecutionEngine extends AbstractCommandBasedSequentialExecut
 	 * 
 	 * Return null if not found.
 	 */
-	private Bundle findBundle(final SequentialModelExecutionContext<K3RunConfiguration> executionContext, String aspectClassName) {
+	private Bundle findBundle(final SequentialModelExecutionContext<IK3RunConfiguration> executionContext, String aspectClassName) {
 
 		// Look using JavaWorkspaceScope as this is safer and will look in
 		// dependencies
