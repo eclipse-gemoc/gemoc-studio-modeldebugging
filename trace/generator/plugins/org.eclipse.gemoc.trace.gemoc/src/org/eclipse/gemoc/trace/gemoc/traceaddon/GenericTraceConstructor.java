@@ -23,21 +23,13 @@ import java.util.stream.Collectors;
 import org.eclipse.emf.common.util.TreeIterator;
 import org.eclipse.emf.common.util.URI;
 import org.eclipse.emf.ecore.EAttribute;
-import org.eclipse.emf.ecore.EClass;
 import org.eclipse.emf.ecore.EClassifier;
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.EReference;
 import org.eclipse.emf.ecore.EStructuralFeature;
 import org.eclipse.emf.ecore.EcorePackage;
 import org.eclipse.emf.ecore.resource.Resource;
-import org.eclipse.gemoc.xdsmlframework.api.engine_addon.modelchangelistener.ModelChange;
-import org.eclipse.gemoc.xdsmlframework.api.engine_addon.modelchangelistener.NewObjectModelChange;
-import org.eclipse.gemoc.xdsmlframework.api.engine_addon.modelchangelistener.NonCollectionFieldModelChange;
-import org.eclipse.gemoc.xdsmlframework.api.engine_addon.modelchangelistener.PotentialCollectionFieldModelChange;
-import org.eclipse.gemoc.xdsmlframework.api.engine_addon.modelchangelistener.RemovedObjectModelChange;
-import org.eclipse.gemoc.xdsmlframework.commons.DynamicAnnotationHelper;
 import org.eclipse.gemoc.executionframework.debugger.IDynamicPartAccessor;
-import org.eclipse.gemoc.executionframework.debugger.IMutableFieldExtractor;
 import org.eclipse.gemoc.executionframework.debugger.MutableField;
 import org.eclipse.gemoc.trace.commons.model.generictrace.BooleanAttributeValue;
 import org.eclipse.gemoc.trace.commons.model.generictrace.DoubleAttributeValue;
@@ -65,6 +57,11 @@ import org.eclipse.gemoc.trace.commons.model.trace.Trace;
 import org.eclipse.gemoc.trace.commons.model.trace.TracedObject;
 import org.eclipse.gemoc.trace.gemoc.Activator;
 import org.eclipse.gemoc.trace.gemoc.api.ITraceConstructor;
+import org.eclipse.gemoc.xdsmlframework.api.engine_addon.modelchangelistener.ModelChange;
+import org.eclipse.gemoc.xdsmlframework.api.engine_addon.modelchangelistener.NewObjectModelChange;
+import org.eclipse.gemoc.xdsmlframework.api.engine_addon.modelchangelistener.NonCollectionFieldModelChange;
+import org.eclipse.gemoc.xdsmlframework.api.engine_addon.modelchangelistener.PotentialCollectionFieldModelChange;
+import org.eclipse.gemoc.xdsmlframework.api.engine_addon.modelchangelistener.RemovedObjectModelChange;
 
 public class GenericTraceConstructor implements ITraceConstructor {
 
@@ -94,7 +91,6 @@ public class GenericTraceConstructor implements ITraceConstructor {
 	}
 
 	private boolean addNewObjectToStateIfDynamic(EObject object, GenericState state) {
-		final EClass c = object.eClass();
 		List<MutableField> fields = dynamicPartAccessor.extractMutableField(object);
 		final List<EStructuralFeature> mutableProperties = fields.stream()
 				.map(f -> f.getMutableProperty())

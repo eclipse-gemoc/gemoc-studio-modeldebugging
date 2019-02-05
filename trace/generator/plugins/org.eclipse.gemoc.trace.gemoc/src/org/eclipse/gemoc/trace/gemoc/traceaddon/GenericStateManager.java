@@ -22,10 +22,8 @@ import org.eclipse.emf.transaction.RecordingCommand;
 import org.eclipse.emf.transaction.TransactionalEditingDomain;
 import org.eclipse.emf.transaction.util.TransactionUtil;
 import org.eclipse.gemoc.executionframework.debugger.IDynamicPartAccessor;
-import org.eclipse.gemoc.executionframework.debugger.IMutableFieldExtractor;
 import org.eclipse.gemoc.executionframework.debugger.MutableField;
 import org.eclipse.gemoc.executionframework.engine.core.CommandExecution;
-
 import org.eclipse.gemoc.trace.commons.model.generictrace.BooleanAttributeValue;
 import org.eclipse.gemoc.trace.commons.model.generictrace.GenericAttributeValue;
 import org.eclipse.gemoc.trace.commons.model.generictrace.GenericDimension;
