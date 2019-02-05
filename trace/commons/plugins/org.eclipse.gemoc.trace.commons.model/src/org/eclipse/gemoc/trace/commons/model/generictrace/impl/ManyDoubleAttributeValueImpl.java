@@ -1,19 +1,6 @@
-/*******************************************************************************
- * Copyright (c) 2017 Inria and others.
- * All rights reserved. This program and the accompanying materials
- * are made available under the terms of the Eclipse Public License v1.0
- * which accompanies this distribution, and is available at
- * http://www.eclipse.org/legal/epl-v10.html
- *
- * Contributors:
- *     Inria - initial API and implementation
- *******************************************************************************/
 /**
  */
 package org.eclipse.gemoc.trace.commons.model.generictrace.impl;
-
-import org.eclipse.gemoc.trace.commons.model.generictrace.GenerictracePackage;
-import org.eclipse.gemoc.trace.commons.model.generictrace.ManyIntegerAttributeValue;
 
 import java.util.Collection;
 
@@ -23,20 +10,23 @@ import org.eclipse.emf.ecore.EClass;
 
 import org.eclipse.emf.ecore.util.EDataTypeUniqueEList;
 
+import org.eclipse.gemoc.trace.commons.model.generictrace.GenerictracePackage;
+import org.eclipse.gemoc.trace.commons.model.generictrace.ManyDoubleAttributeValue;
+
 /**
  * <!-- begin-user-doc -->
- * An implementation of the model object '<em><b>Many Integer Attribute Value</b></em>'.
+ * An implementation of the model object '<em><b>Many Double Attribute Value</b></em>'.
  * <!-- end-user-doc -->
  * <p>
  * The following features are implemented:
  * </p>
  * <ul>
- *   <li>{@link org.eclipse.gemoc.trace.commons.model.generictrace.impl.ManyIntegerAttributeValueImpl#getAttributeValue <em>Attribute Value</em>}</li>
+ *   <li>{@link org.eclipse.gemoc.trace.commons.model.generictrace.impl.ManyDoubleAttributeValueImpl#getAttributeValue <em>Attribute Value</em>}</li>
  * </ul>
  *
  * @generated
  */
-public class ManyIntegerAttributeValueImpl extends GenericAttributeValueImpl implements ManyIntegerAttributeValue {
+public class ManyDoubleAttributeValueImpl extends GenericAttributeValueImpl implements ManyDoubleAttributeValue {
 	/**
 	 * The cached value of the '{@link #getAttributeValue() <em>Attribute Value</em>}' attribute list.
 	 * <!-- begin-user-doc -->
@@ -45,14 +35,14 @@ public class ManyIntegerAttributeValueImpl extends GenericAttributeValueImpl imp
 	 * @generated
 	 * @ordered
 	 */
-	protected EList<Integer> attributeValue;
+	protected EList<Double> attributeValue;
 
 	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	protected ManyIntegerAttributeValueImpl() {
+	protected ManyDoubleAttributeValueImpl() {
 		super();
 	}
 
@@ -63,7 +53,7 @@ public class ManyIntegerAttributeValueImpl extends GenericAttributeValueImpl imp
 	 */
 	@Override
 	protected EClass eStaticClass() {
-		return GenerictracePackage.Literals.MANY_INTEGER_ATTRIBUTE_VALUE;
+		return GenerictracePackage.Literals.MANY_DOUBLE_ATTRIBUTE_VALUE;
 	}
 
 	/**
@@ -71,9 +61,9 @@ public class ManyIntegerAttributeValueImpl extends GenericAttributeValueImpl imp
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	public EList<Integer> getAttributeValue() {
+	public EList<Double> getAttributeValue() {
 		if (attributeValue == null) {
-			attributeValue = new EDataTypeUniqueEList<Integer>(Integer.class, this, GenerictracePackage.MANY_INTEGER_ATTRIBUTE_VALUE__ATTRIBUTE_VALUE);
+			attributeValue = new EDataTypeUniqueEList<Double>(Double.class, this, GenerictracePackage.MANY_DOUBLE_ATTRIBUTE_VALUE__ATTRIBUTE_VALUE);
 		}
 		return attributeValue;
 	}
@@ -86,7 +76,7 @@ public class ManyIntegerAttributeValueImpl extends GenericAttributeValueImpl imp
 	@Override
 	public Object eGet(int featureID, boolean resolve, boolean coreType) {
 		switch (featureID) {
-			case GenerictracePackage.MANY_INTEGER_ATTRIBUTE_VALUE__ATTRIBUTE_VALUE:
+			case GenerictracePackage.MANY_DOUBLE_ATTRIBUTE_VALUE__ATTRIBUTE_VALUE:
 				return getAttributeValue();
 		}
 		return super.eGet(featureID, resolve, coreType);
@@ -101,9 +91,9 @@ public class ManyIntegerAttributeValueImpl extends GenericAttributeValueImpl imp
 	@Override
 	public void eSet(int featureID, Object newValue) {
 		switch (featureID) {
-			case GenerictracePackage.MANY_INTEGER_ATTRIBUTE_VALUE__ATTRIBUTE_VALUE:
+			case GenerictracePackage.MANY_DOUBLE_ATTRIBUTE_VALUE__ATTRIBUTE_VALUE:
 				getAttributeValue().clear();
-				getAttributeValue().addAll((Collection<? extends Integer>)newValue);
+				getAttributeValue().addAll((Collection<? extends Double>)newValue);
 				return;
 		}
 		super.eSet(featureID, newValue);
@@ -117,7 +107,7 @@ public class ManyIntegerAttributeValueImpl extends GenericAttributeValueImpl imp
 	@Override
 	public void eUnset(int featureID) {
 		switch (featureID) {
-			case GenerictracePackage.MANY_INTEGER_ATTRIBUTE_VALUE__ATTRIBUTE_VALUE:
+			case GenerictracePackage.MANY_DOUBLE_ATTRIBUTE_VALUE__ATTRIBUTE_VALUE:
 				getAttributeValue().clear();
 				return;
 		}
@@ -132,7 +122,7 @@ public class ManyIntegerAttributeValueImpl extends GenericAttributeValueImpl imp
 	@Override
 	public boolean eIsSet(int featureID) {
 		switch (featureID) {
-			case GenerictracePackage.MANY_INTEGER_ATTRIBUTE_VALUE__ATTRIBUTE_VALUE:
+			case GenerictracePackage.MANY_DOUBLE_ATTRIBUTE_VALUE__ATTRIBUTE_VALUE:
 				return attributeValue != null && !attributeValue.isEmpty();
 		}
 		return super.eIsSet(featureID);
@@ -154,4 +144,4 @@ public class ManyIntegerAttributeValueImpl extends GenericAttributeValueImpl imp
 		return result.toString();
 	}
 
-} //ManyIntegerAttributeValueImpl
+} //ManyDoubleAttributeValueImpl

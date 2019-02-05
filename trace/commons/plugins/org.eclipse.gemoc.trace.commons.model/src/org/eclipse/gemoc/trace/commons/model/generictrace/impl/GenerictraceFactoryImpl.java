@@ -83,6 +83,12 @@ public class GenerictraceFactoryImpl extends EFactoryImpl implements Generictrac
 			case GenerictracePackage.SINGLE_REFERENCE_VALUE: return createSingleReferenceValue();
 			case GenerictracePackage.MANY_REFERENCE_VALUE: return createManyReferenceValue();
 			case GenerictracePackage.INTEGER_OBJECT_ATTRIBUTE_VALUE: return createIntegerObjectAttributeValue();
+			case GenerictracePackage.DOUBLE_ATTRIBUTE_VALUE: return createDoubleAttributeValue();
+			case GenerictracePackage.MANY_DOUBLE_ATTRIBUTE_VALUE: return createManyDoubleAttributeValue();
+			case GenerictracePackage.DOUBLE_OBJECT_ATTRIBUTE_VALUE: return createDoubleObjectAttributeValue();
+			case GenerictracePackage.LONG_ATTRIBUTE_VALUE: return createLongAttributeValue();
+			case GenerictracePackage.MANY_LONG_ATTRIBUTE_VALUE: return createManyLongAttributeValue();
+			case GenerictracePackage.LONG_OBJECT_ATTRIBUTE_VALUE: return createLongObjectAttributeValue();
 			default:
 				throw new IllegalArgumentException("The class '" + eClass.getName() + "' is not a valid classifier");
 		}
@@ -276,6 +282,66 @@ public class GenerictraceFactoryImpl extends EFactoryImpl implements Generictrac
 	public IntegerObjectAttributeValue createIntegerObjectAttributeValue() {
 		IntegerObjectAttributeValueImpl integerObjectAttributeValue = new IntegerObjectAttributeValueImpl();
 		return integerObjectAttributeValue;
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public DoubleAttributeValue createDoubleAttributeValue() {
+		DoubleAttributeValueImpl doubleAttributeValue = new DoubleAttributeValueImpl();
+		return doubleAttributeValue;
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public ManyDoubleAttributeValue createManyDoubleAttributeValue() {
+		ManyDoubleAttributeValueImpl manyDoubleAttributeValue = new ManyDoubleAttributeValueImpl();
+		return manyDoubleAttributeValue;
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public DoubleObjectAttributeValue createDoubleObjectAttributeValue() {
+		DoubleObjectAttributeValueImpl doubleObjectAttributeValue = new DoubleObjectAttributeValueImpl();
+		return doubleObjectAttributeValue;
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public LongAttributeValue createLongAttributeValue() {
+		LongAttributeValueImpl longAttributeValue = new LongAttributeValueImpl();
+		return longAttributeValue;
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public ManyLongAttributeValue createManyLongAttributeValue() {
+		ManyLongAttributeValueImpl manyLongAttributeValue = new ManyLongAttributeValueImpl();
+		return manyLongAttributeValue;
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public LongObjectAttributeValue createLongObjectAttributeValue() {
+		LongObjectAttributeValueImpl longObjectAttributeValue = new LongObjectAttributeValueImpl();
+		return longObjectAttributeValue;
 	}
 
 	/**
