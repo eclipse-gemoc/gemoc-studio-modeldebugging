@@ -40,6 +40,8 @@ import org.eclipse.gemoc.executionframework.debugger.IDynamicPartAccessor;
 import org.eclipse.gemoc.executionframework.debugger.IMutableFieldExtractor;
 import org.eclipse.gemoc.executionframework.debugger.MutableField;
 import org.eclipse.gemoc.trace.commons.model.generictrace.BooleanAttributeValue;
+import org.eclipse.gemoc.trace.commons.model.generictrace.DoubleAttributeValue;
+import org.eclipse.gemoc.trace.commons.model.generictrace.DoubleObjectAttributeValue;
 import org.eclipse.gemoc.trace.commons.model.generictrace.GenericDimension;
 import org.eclipse.gemoc.trace.commons.model.generictrace.GenericSequentialStep;
 import org.eclipse.gemoc.trace.commons.model.generictrace.GenericSmallStep;
@@ -50,6 +52,8 @@ import org.eclipse.gemoc.trace.commons.model.generictrace.GenericValue;
 import org.eclipse.gemoc.trace.commons.model.generictrace.GenerictraceFactory;
 import org.eclipse.gemoc.trace.commons.model.generictrace.IntegerAttributeValue;
 import org.eclipse.gemoc.trace.commons.model.generictrace.IntegerObjectAttributeValue;
+import org.eclipse.gemoc.trace.commons.model.generictrace.LongAttributeValue;
+import org.eclipse.gemoc.trace.commons.model.generictrace.LongObjectAttributeValue;
 import org.eclipse.gemoc.trace.commons.model.generictrace.ManyReferenceValue;
 import org.eclipse.gemoc.trace.commons.model.generictrace.SingleReferenceValue;
 import org.eclipse.gemoc.trace.commons.model.generictrace.StringAttributeValue;
@@ -59,6 +63,7 @@ import org.eclipse.gemoc.trace.commons.model.trace.MSEModel;
 import org.eclipse.gemoc.trace.commons.model.trace.Step;
 import org.eclipse.gemoc.trace.commons.model.trace.Trace;
 import org.eclipse.gemoc.trace.commons.model.trace.TracedObject;
+import org.eclipse.gemoc.trace.gemoc.Activator;
 import org.eclipse.gemoc.trace.gemoc.api.ITraceConstructor;
 
 public class GenericTraceConstructor implements ITraceConstructor {
@@ -131,6 +136,34 @@ public class GenericTraceConstructor implements ITraceConstructor {
 					value.setAttributeValue((Integer)dynamicProperty.get().getValue());
 				}
 				result = value;
+			} else if (eType == EcorePackage.Literals.EDOUBLE) {
+				final DoubleAttributeValue value = GenerictraceFactory.eINSTANCE.createDoubleAttributeValue();
+				if(dynamicProperty.isPresent()) {
+					value.setAttributeValue((Double)dynamicProperty.get().getValue());
+				}
+				result = value;
+			} else if (eType == EcorePackage.Literals.EDOUBLE_OBJECT) {
+				final DoubleObjectAttributeValue value = GenerictraceFactory.eINSTANCE.createDoubleObjectAttributeValue();
+				if(dynamicProperty.isPresent()) {
+					value.setAttributeValue((Double)dynamicProperty.get().getValue());
+				}
+				result = value;
+			} else if (eType == EcorePackage.Literals.ELONG) {
+				final LongAttributeValue value = GenerictraceFactory.eINSTANCE.createLongAttributeValue();
+				if(dynamicProperty.isPresent()) {
+					value.setAttributeValue((Long)dynamicProperty.get().getValue());
+				}
+				result = value;
+			} else if (eType == EcorePackage.Literals.ELONG_OBJECT) {
+				final LongObjectAttributeValue value = GenerictraceFactory.eINSTANCE.createLongObjectAttributeValue();
+				if(dynamicProperty.isPresent()) {
+					value.setAttributeValue((Long)dynamicProperty.get().getValue());
+				}
+				result = value;
+			} else {
+				Activator.error("eType "+eType+" not supported yet (used by "+mutableProperty.getName()+" of "+object.eClass()+ ");\n "
+						+ "Please use another type in your RTD or consider to contribute to GEMOC framework", 
+						new java.lang.UnsupportedOperationException("eType "+eType+" not supported yet (used by "+mutableProperty.getName()+" of "+object.eClass()+ ")"));
 			}
 		} else if (mutableProperty instanceof EReference) {
 			if (mutableProperty.isMany()) {
@@ -200,6 +233,40 @@ public class GenericTraceConstructor implements ITraceConstructor {
 							value.setAttributeValue((String)dynamicProperty.get().getValue());
 						}
 						firstValue = value;
+					} else if (eType == EcorePackage.Literals.EDOUBLE) {
+						final DoubleAttributeValue value = GenerictraceFactory.eINSTANCE.createDoubleAttributeValue();
+						if(dynamicProperty.isPresent()) {
+							value.setAttributeValue((Double)dynamicProperty.get().getValue());
+						}
+						firstValue = value; 
+					} else if (eType == EcorePackage.Literals.ELONG) {
+						final LongAttributeValue value = GenerictraceFactory.eINSTANCE.createLongAttributeValue();
+						if(dynamicProperty.isPresent()) {
+							value.setAttributeValue((Long)dynamicProperty.get().getValue());
+						}
+						firstValue = value;
+					} else if (eType == EcorePackage.Literals.EINTEGER_OBJECT) {
+						final IntegerObjectAttributeValue value = GenerictraceFactory.eINSTANCE.createIntegerObjectAttributeValue();
+						if(dynamicProperty.isPresent()) {
+							value.setAttributeValue((Integer)dynamicProperty.get().getValue());
+						}
+						firstValue = value;
+					} else if (eType == EcorePackage.Literals.EDOUBLE_OBJECT) {
+						final DoubleObjectAttributeValue value = GenerictraceFactory.eINSTANCE.createDoubleObjectAttributeValue();
+						if(dynamicProperty.isPresent()) {
+							value.setAttributeValue((Double)dynamicProperty.get().getValue());
+						}
+						firstValue = value;
+					} else if (eType == EcorePackage.Literals.ELONG_OBJECT) {
+						final LongObjectAttributeValue value = GenerictraceFactory.eINSTANCE.createLongObjectAttributeValue();
+						if(dynamicProperty.isPresent()) {
+							value.setAttributeValue((Long)dynamicProperty.get().getValue());
+						}
+						firstValue = value;
+					} else {
+						Activator.error("eType "+eType+" not supported yet (used by "+mutableProperty.getName()+" of "+object.eClass()+ "); "
+								+ "Please use another type in your RTD or consider to contribute to GEMOC framework", 
+								new java.lang.UnsupportedOperationException("eType "+eType+" not supported yet (used by "+mutableProperty.getName()+" of "+object.eClass()+ ")"));
 					}
 				} else if (mutableProperty instanceof EReference) {
 					if (mutableProperty.isMany()) {
@@ -210,7 +277,13 @@ public class GenericTraceConstructor implements ITraceConstructor {
 						final ManyReferenceValue value = GenerictraceFactory.eINSTANCE.createManyReferenceValue();
 						for (EObject o : modelElements) {
 							addNewObjectToStateIfDynamic(o, state);
-							value.getReferenceValues().add(exeToTraced.get(o));
+							final TracedObject<?> tracedObj = exeToTraced.get(o);
+							if(tracedObj == null) {
+							Activator.error("Cannot find traced object for "+o+" (used by "+mutableProperty.getName()+" of "+object.eClass()+ ");\n"
+									+ "Did you correctly declare it as Runtime Data ?", 
+									new Exception("Cannot find traced object for "+o+" (used by "+mutableProperty.getName()+" of "+object.eClass()+ ")"));
+							}
+							value.getReferenceValues().add(tracedObj);
 						}
 						firstValue = value;
 					} else {
