@@ -1,0 +1,113 @@
+@startuml
+skinparam class {
+	BackgroundColor White
+	ArrowColor Black
+	BorderColor Black
+}
+
+scale max 1024 width
+scale max 800 height
+
+
+package "Simulation and Model Animation" as simulation_model_animation <<Node>> {
+	
+	namespace eclipse.gemoc.dsl.debug.ide {
+		interface IDSLDebugger {
+			void start()
+			void terminate()
+			void suspend()
+			void suspended(String threadName)
+			void resume()
+			void disconnect()
+			boolean canStepInto(String threadName, EObject instruction)
+			void stepInto(String threadName)
+			void steppingInto(String threadName)
+			void stepOver(String threadName)
+			void steppingOver(String threadName)
+			void stepReturn(String threadName)
+			void steppingReturn(String threadName)
+			void stepped(String threadName)
+			void resume(String threadName)
+			void resuming(String threadName)
+			void suspend(String threadName)
+			void terminate(String threadName)
+			void addBreakPoint(URI instruction)
+			void removeBreakPoint(URI instruction)
+			void changeBreakPoint(URI instruction, String attribute, Serializable value)
+			void breaked(String threadName)
+			void terminated()
+			boolean control(String threadName, EObject instruction)
+			void spawnRunningThread(String threadName, EObject context)
+			EObject getNextInstruction(String threadName, EObject currentInstruction, Stepping stepping)
+			boolean isTerminated()
+			void setTerminated(boolean terminated)
+			boolean shouldBreak(EObject instruction)
+			void variable(String threadName, String stackName, String declarationTypeName, String variableName, Object value, boolean supportModifications)
+			void deleteVariable(String threadName, String name)
+			void updateData(String threadName, EObject instruction)
+			void pushStackFrame(String threadName, String frameName, EObject context, EObject instruction)
+			void popStackFrame(String threadName)
+			void setCurrentInstruction(String threadName, EObject instruction)
+			void terminated(String threadName)
+			boolean isTerminated(String threadName)
+			boolean validateVariableValue(String threadName, String variableName, String value)
+			Object getVariableValue(String threadName, String stackName, String variableName, String value)
+			void setVariableValue(String threadName, String stackName, String variableName, Object value)
+		}
+		abstract class AbstractDSLDebugger
+		namespace event {
+			interface IDSLDebugEventProcessor {	
+				Object handleEvent(IDSLDebugEvent event)
+			}
+		}
+		eclipse.gemoc.dsl.debug.ide.event.IDSLDebugEventProcessor <|.. IDSLDebugger
+		IDSLDebugger <|-- AbstractDSLDebugger 
+	}
+}
+
+package "GEMOC Framework / Execution Framework" as execution_framework <<Node>> {
+	namespace eclipse.gemoc.executionframework.debugger {
+		interface IGemocDebugger {
+			void addPredicateBreak(BiPredicate<IExecutionEngine<?>,Step<?>> predicate)
+			void addPredicateBreakpoint(BiPredicate<IExecutionEngine<?>,Step<?>> predicate)
+		}
+		abstract class AbstractGemocDebugger
+		class GenericSequentialModelDebugger
+		class OmniscientGenericSequentialModelDebugger
+		
+		eclipse.gemoc.dsl.debug.ide.AbstractDSLDebugger <|-- AbstractGemocDebugger
+		IGemocDebugger <|.. AbstractGemocDebugger
+		AbstractGemocDebugger <|-- GenericSequentialModelDebugger
+		GenericSequentialModelDebugger <|-- OmniscientGenericSequentialModelDebugger
+	}
+}
+
+package "GEMOC Framework / Framework Commons" as framework_commons <<Node>> {
+	namespace eclipse.gemoc.xdsmlframework.api.engine_addon {
+		interface IEngineAddon {
+			void engineAboutToStart(IExecutionEngine<?> engine)
+			void engineStarted(IExecutionEngine<?> executionEngine)
+			void engineInitialized(IExecutionEngine<?> executionEngine)
+			void engineAboutToStop(IExecutionEngine<?> engine)
+			void engineStopped(IExecutionEngine<?> engine)
+			void engineAboutToDispose(IExecutionEngine<?> engine)
+			void aboutToSelectStep(IExecutionEngine<?> engine, Collection<Step<?>> steps)
+			void proposedStepsChanged(IExecutionEngine<?> engine, Collection<Step<?>> steps)
+			void stepSelected(IExecutionEngine<?> engine, Step<?> selectedStep)
+			void aboutToExecuteStep(IExecutionEngine<?> engine, Step<?> stepToExecute)
+			void stepExecuted(IExecutionEngine<?> engine, Step<?> stepExecuted)
+			void engineStatusChanged(IExecutionEngine<?> engine, RunStatus newStatus)
+			List<String> validate(List<IEngineAddon> otherAddons)
+		}
+	}
+}
+package "Trace Framework / Trace Commons" as trace_commons <<Node>> {
+	namespace eclipse.gemoc.trace.gemoc.api {
+		interface ITraceViewListener {
+			void update()
+		}
+	}
+}
+eclipse.gemoc.xdsmlframework.api.engine_addon.IEngineAddon <|.. eclipse.gemoc.executionframework.debugger.IGemocDebugger
+eclipse.gemoc.trace.gemoc.api.ITraceViewListener <|.. eclipse.gemoc.executionframework.debugger.OmniscientGenericSequentialModelDebugger
+@enduml

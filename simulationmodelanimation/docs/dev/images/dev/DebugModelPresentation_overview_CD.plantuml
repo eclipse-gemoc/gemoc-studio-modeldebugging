@@ -1,0 +1,70 @@
+@startuml
+skinparam class {
+	BackgroundColor White
+	ArrowColor Black
+	BorderColor Black
+}
+
+scale max 1024 width
+scale max 800 height
+
+package "Eclipse Debug" as eclipse_debug <<Node>> {
+	namespace eclipse.debug.ui {
+		interface IDebugModelPresentation {
+			String DISPLAY_VARIABLE_TYPE_NAMES
+			void setAttribute(String attribute, Object value)
+			Image getImage(Object element)
+			String getText(Object element)
+			void computeDetail(IValue value, IValueDetailListener listener)
+		}
+		interface IDebugEditorPresentation {
+			boolean addAnnotations(IEditorPart editorPart, IStackFrame frame)
+			void removeAnnotations(IEditorPart editorPart, IThread thread)
+		}
+		interface ISourcePresentation {
+			IEditorInput getEditorInput(Object element)
+			String getEditorId(IEditorInput input, Object element)
+		}
+		ISourcePresentation <|.. IDebugModelPresentation
+	}
+	interface ILabelProvider
+	ILabelProvider <|.. eclipse.debug.ui.IDebugModelPresentation
+}
+
+package "Simulation and Model Animation" as simulation_model_animation <<Node>> {
+
+	namespace eclipse.gemoc.dsl.debug.ide.ui {
+		class DSLDebugModelPresentation {
+			+void addListener(ILabelProviderListener listener)
+			+void dispose()
+			+boolean isLabelProperty(Object element, String property)
+			+void removeListener(ILabelProviderListener listener)
+			+IEditorInput getEditorInput(Object element)
+			+String getEditorId(IEditorInput input, Object element)
+			+void setAttribute(String attribute, Object value)
+			+Image getImage(Object element)
+			+String getText(Object element)
+			+void computeDetail(IValue value, IValueDetailListener listener)
+			+boolean addAnnotations(IEditorPart editorPart, IStackFrame frame)
+			+void removeAnnotations(IEditorPart editorPart, IThread thread)
+		}
+	}
+		namespace eclipse.gemoc.dsl.debug.ide.sirius.ui {
+		class DSLDebugModelPresentation {
+			+IEditorInput getEditorInput(Object element)
+			#Session selectSession(List<Session> sessions)
+			#DRepresentation selectRepresentation(List<DRepresentation> representations)
+			+String getEditorId(IEditorInput input, Object element)
+			+boolean addAnnotations(IEditorPart editorPart, IStackFrame frame)
+			#void changeCurrentStackFrame(IStackFrame frame)
+			+void removeAnnotations(IEditorPart editorPart, IThread thread)
+		}
+	}
+}
+
+eclipse.gemoc.dsl.debug.ide.ui.DSLDebugModelPresentation <|-- eclipse.gemoc.dsl.debug.ide.sirius.ui.DSLDebugModelPresentation
+eclipse.debug.ui.IDebugModelPresentation <|.. eclipse.gemoc.dsl.debug.ide.ui.DSLDebugModelPresentation
+eclipse.debug.ui.IDebugEditorPresentation <|.. eclipse.gemoc.dsl.debug.ide.ui.DSLDebugModelPresentation
+
+
+@enduml

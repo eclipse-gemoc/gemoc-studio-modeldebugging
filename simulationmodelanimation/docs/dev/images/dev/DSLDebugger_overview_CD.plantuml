@@ -1,0 +1,110 @@
+@startuml
+skinparam class {
+	BackgroundColor White
+	ArrowColor Black
+	BorderColor Black
+}
+
+scale max 1024 width
+scale max 800 height
+
+
+package "Simulation and Model Animation" as simulation_model_animation <<Node>> {
+	
+	namespace eclipse.gemoc.dsl.debug.ide {
+		interface IDSLDebugger {
+			void start()
+			void terminate()
+			void suspend()
+			void suspended(String threadName)
+			void resume()
+			void disconnect()
+			boolean canStepInto(String threadName, EObject instruction)
+			void stepInto(String threadName)
+			void steppingInto(String threadName)
+			void stepOver(String threadName)
+			void steppingOver(String threadName)
+			void stepReturn(String threadName)
+			void steppingReturn(String threadName)
+			void stepped(String threadName)
+			void resume(String threadName)
+			void resuming(String threadName)
+			void suspend(String threadName)
+			void terminate(String threadName)
+			void addBreakPoint(URI instruction)
+			void removeBreakPoint(URI instruction)
+			void changeBreakPoint(URI instruction, String attribute, Serializable value)
+			void breaked(String threadName)
+			void terminated()
+			boolean control(String threadName, EObject instruction)
+			void spawnRunningThread(String threadName, EObject context)
+			EObject getNextInstruction(String threadName, EObject currentInstruction, Stepping stepping)
+			boolean isTerminated()
+			void setTerminated(boolean terminated)
+			boolean shouldBreak(EObject instruction)
+			void variable(String threadName, String stackName, String declarationTypeName, String variableName, Object value, boolean supportModifications)
+			void deleteVariable(String threadName, String name)
+			void updateData(String threadName, EObject instruction)
+			void pushStackFrame(String threadName, String frameName, EObject context, EObject instruction)
+			void popStackFrame(String threadName)
+			void setCurrentInstruction(String threadName, EObject instruction)
+			void terminated(String threadName)
+			boolean isTerminated(String threadName)
+			boolean validateVariableValue(String threadName, String variableName, String value)
+			Object getVariableValue(String threadName, String stackName, String variableName, String value)
+			void setVariableValue(String threadName, String stackName, String variableName, Object value)
+		}
+		abstract class AbstractDSLDebugger {
+			#IDSLDebugEventProcessor target
+			#Map<String,EObject> currentInstructions
+			+AbstractDSLDebugger(IDSLDebugEventProcessor target)
+			+Object handleEvent(IDSLDebugEvent event)
+			+void stepped(String threadName)
+			+void suspended(String threadName)
+			+void breaked(String threadName)
+			+void resuming(String threadName)
+			+void steppingInto(String threadName)
+			+void steppingOver(String threadName)
+			+void steppingReturn(String threadName)
+			+void terminated()
+			+void spawnRunningThread(String threadName, EObject context)
+			#ThreadController createThreadHandler(String threadName)
+			+void setTerminated(boolean terminated)
+			+boolean isTerminated()
+			+EObject getNextInstruction(String threadName, EObject currentInstruction, Stepping stepping)
+			+boolean shouldBreak(EObject instruction)
+			#Serializable getBreakpointAttributes(EObject instruction, String attribute)
+			+void addBreakPoint(URI instruction)
+			+void removeBreakPoint(URI instruction)
+			+void changeBreakPoint(URI instruction, String attribute, Serializable value)
+			+boolean control(String threadName, EObject instruction)
+			+void resume(String threadName)
+			+void stepInto(String threadName)
+			+void stepOver(String threadName)
+			+void stepReturn(String threadName)
+			+void suspend(String threadName)
+			+void terminate()
+			+void terminate(String threadName)
+			+void suspend()
+			+void resume()
+			+void variable(String threadName, String stackName, String declarationTypeName, String variableName, Object value, boolean supportModifications)
+			+void deleteVariable(String threadName, String name)
+			+void pushStackFrame(String threadName, String frameName, EObject context, EObject instruction)
+			+void popStackFrame(String threadName)
+			+void setCurrentInstruction(String threadName, EObject instruction)
+			+void terminated(String threadName)
+			+boolean isTerminated(String threadName)
+		}
+		namespace event {
+			interface IDSLDebugEventProcessor {	
+				Object handleEvent(IDSLDebugEvent event)
+			}
+		}
+		
+		eclipse.gemoc.dsl.debug.ide.event.IDSLDebugEventProcessor <|.. IDSLDebugger
+		IDSLDebugger <|-- AbstractDSLDebugger 
+	}
+}
+
+
+@enduml

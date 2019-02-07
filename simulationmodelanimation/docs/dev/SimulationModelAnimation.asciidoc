@@ -11,12 +11,53 @@ endif::[]
 
 footnote:[asciidoc source of this page:  https://github.com/eclipse/gemoc-studio-modeldebugging/tree/master/simulationmodelanimation/docs/dev/SimulationModelAnimation.asciidoc.]
 
-[NOTE]
+[IMPORTANT]
 ====
-The initial design of this component comes from GEMOC ANR project. Some relevant architecture information may be found in http://gemoc.irisa.fr/ins-pub/m30/gemoc-anr-d4.3.1-v1.0.pdf
+The initial design of this component comes from GEMOC ANR project. Some relevant 
+architecture information not copied yet in this document may be found in http://gemoc.irisa.fr/ins-pub/m30/gemoc-anr-d4.3.1-v1.0.pdf
+
 ====
 
 [TIP]
 ====
 The content of this framework can be used standalone in order to use only basic animation and debug services. The concrete implementation then has to create its own engine and launcher architecture (Ie. reproduce the other parts of the GEMOC framework in order to integrate the DSL in the IDE UI). An example of such implementation can be found with the Arduino Designer demo https://github.com/mbats/arduino
 ====
+
+[[devguide-simulationmodelanimation-framework-debugmodelpresentation]]
+==== Debugger 
+
+This is the base for the debugger.
+[[img-DSLDebugger-overview-CD-devguide]]
+.Base debugger presentation overview
+image::images/dev/DSLDebugger_overview_CD.png["Base DSLDebugger overview"]
+
+
+[[devguide-simulationmodelanimation-framework-debugmodelpresentation]]
+==== Debug model presentation
+
+The debug model presentation is responsible for GUI representation of the debug 
+model. It provides icons and labels. It also opens editor when a breakpoint is hit, 
+or an instruction must be displayed for a given stack frame The DSL debugger 
+provides a default implementation for generated EMF editors integration.
+
+It can be used via the following extension:
+ 
+[source,xml]
+----
+<extension point="org.eclipse.debug.ui.debugModelPresentations">
+	<debugModelPresentation
+		class="org.eclipse.gemoc.dsl.debug.ide.sirius.ui.DSLDebugModelPresentation"
+		id="com.example.dsl.ui.debugModel">
+	</debugModelPresentation>
+</extension>
+----
+It can also be extended for specific needs. For example, the 
+GEMOC Framework provides an extended version of the Debug model presentation.  See <<devguide-executionframework-debug-model-presentation>>.
+
+
+
+
+[[img-BaseDebugModelPresentation-overview-CD-devguide]]
+.Base debug model presentation overview
+image::images/dev/DebugModelPresentation_overview_CD.png["Base Debug model presentation overview"]
+
