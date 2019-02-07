@@ -48,3 +48,24 @@ Two main examples for mandatory addons are:
 
 - the Sirius animation used by Sirius services is registered in `AbstractSequentialGemocLauncher.launch`  
 - the debugger itself is registered in `AbstractGemocLauncher.getDebugger`. As it is responsible for pausing the execution flow on steps according to the breakpoints, it listens the calls to the engine events. 
+
+===== Execution Framework Debugger
+
+The debugger of the GEMOC Execution Framework is based on the DSLDebugger of the Simulation and model animation framework (see <<devguide-simulationmodelanimation-framework-debugmodelpresentation>>).
+
+[[img-ExecutionFramework-DSLDebugger-overview-CD-devguide]]
+.Execution framework debugger overview
+image::images/dev/ExecutionFramework_DSLDebugger_overview_CD.png["ExecutionFramework DSLDebugger overview"]
+
+
+[[devguide-executionframework-debug-model-presentation]]
+===== Debug model presentation
+
+The GEMOC Framework implements an extension of the Debug model presentation structure of the Simulation and model animation framework (see <<devguide-simulationmodelanimation-framework-debugmodelpresentation>>).
+
+[[img-ExecutionFramework-DebugModelPresentation-overview-CD-devguide]]
+.Execution framework debug model presentation overview
+image::images/dev/ExecutionFramework_DebugModelPresentation_overview_CD.png["Execution framework debug model presentation overview"]
+
+
+TODO
