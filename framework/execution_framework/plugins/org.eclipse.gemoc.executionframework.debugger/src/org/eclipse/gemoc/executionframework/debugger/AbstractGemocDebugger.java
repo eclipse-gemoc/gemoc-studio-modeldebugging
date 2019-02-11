@@ -60,6 +60,9 @@ public abstract class AbstractGemocDebugger extends AbstractDSLDebugger implemen
 
 	public final static String SELF_VARIABLE_NAME = "self";
 	
+	public final static String MUTABLE_DATA_DECLARATION_TYPENAME = "mutable data";
+	public final static String GLOBAL_CONTEXT_FRAMENAME = "Global context";
+	
 	/**
 	 * {@link MutableField} delta values.
 	 */
@@ -291,13 +294,13 @@ public abstract class AbstractGemocDebugger extends AbstractDSLDebugger implemen
 			}
 		});
 
-		String frameName = "Global context : " + executedModelRoot.eClass().getName();
+		String frameName = GLOBAL_CONTEXT_FRAMENAME +" : " + executedModelRoot.eClass().getName();
 		for (MutableField m : changed) {
-			variable(threadName, frameName, "mutable data", m.getName(), m.getValue(), true);
+			variable(threadName, frameName, MUTABLE_DATA_DECLARATION_TYPENAME, m.getName(), m.getValue(), true);
 		}
 		for (String name : stackFrameNames) {
 			for (MutableField m : changed) {
-				variable(threadName, name, "mutable data", m.getName(), m.getValue(), true);
+				variable(threadName, name, MUTABLE_DATA_DECLARATION_TYPENAME, m.getName(), m.getValue(), true);
 			}
 		}
 
@@ -361,12 +364,12 @@ public abstract class AbstractGemocDebugger extends AbstractDSLDebugger implemen
 		stackFrameNames.push(frameName);
 		// add a variable for "self" target
 		// note: the variable is marked as not supporting modification, this may change in the future if we support "live modeling"
-		variable(threadName, frameName, "mutable data", SELF_VARIABLE_NAME, context, false);
+		variable(threadName, frameName, MUTABLE_DATA_DECLARATION_TYPENAME, SELF_VARIABLE_NAME, context, false);
 		
 		// add all other mutable fields
 		for (MutableField m : mutableFields) {
 			// if (m.geteObject().eContainer() == context) {
-			variable(threadName, frameName, "mutable data", m.getName(), m.getValue(), true);
+			variable(threadName, frameName, MUTABLE_DATA_DECLARATION_TYPENAME, m.getName(), m.getValue(), true);
 			// }
 		}
 	}
@@ -396,11 +399,11 @@ public abstract class AbstractGemocDebugger extends AbstractDSLDebugger implemen
 		if (executedModelRoot == null) {
 			executedModelRoot = getModelRoot();
 			initializeMutableDatas();
-			String frameName = "Global context : " + executedModelRoot.eClass().getName();
+			String frameName = GLOBAL_CONTEXT_FRAMENAME +" : " + executedModelRoot.eClass().getName();
 			pushStackFrame(threadName, frameName, executedModelRoot, instruction);
 
 			for (MutableField m : mutableFields) {
-				variable(threadName, frameName, "mutable data", m.getName(), m.getValue(), true);
+				variable(threadName, frameName, MUTABLE_DATA_DECLARATION_TYPENAME, m.getName(), m.getValue(), true);
 			}
 		} else {
 			// Updating mutable datas
@@ -453,7 +456,7 @@ public abstract class AbstractGemocDebugger extends AbstractDSLDebugger implemen
 				for (TreeItem item : leafItems) {
 					final DSLStackFrameAdapter stackFrameAdapter = (DSLStackFrameAdapter) item.getData();
 					final StackFrame s = (StackFrame) stackFrameAdapter.getTarget();
-					if (s.getName().startsWith("Global context :")) {
+					if (s.getName().startsWith(GLOBAL_CONTEXT_FRAMENAME +" :")) {
 						tree.showItem(item);
 						tree.select(item);
 						final TreeSelection selection = (TreeSelection) viewer.getSelection();
