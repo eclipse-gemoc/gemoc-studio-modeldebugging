@@ -58,6 +58,8 @@ import org.eclipse.ui.PlatformUI;
 @SuppressWarnings("restriction")
 public abstract class AbstractGemocDebugger extends AbstractDSLDebugger implements IGemocDebugger {
 
+	public final static String SELF_VARIABLE_NAME = "self";
+	
 	/**
 	 * {@link MutableField} delta values.
 	 */
@@ -357,6 +359,11 @@ public abstract class AbstractGemocDebugger extends AbstractDSLDebugger implemen
 	public void pushStackFrame(String threadName, String frameName, EObject context, EObject instruction) {
 		super.pushStackFrame(threadName, frameName, context, instruction);
 		stackFrameNames.push(frameName);
+		// add a variable for "self" target
+		// note: the variable is marked as not supporting modification, this may change in the future if we support "live modeling"
+		variable(threadName, frameName, "mutable data", SELF_VARIABLE_NAME, context, false);
+		
+		// add all other mutable fields
 		for (MutableField m : mutableFields) {
 			// if (m.geteObject().eContainer() == context) {
 			variable(threadName, frameName, "mutable data", m.getName(), m.getValue(), true);
