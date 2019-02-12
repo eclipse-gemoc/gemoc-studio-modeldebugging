@@ -75,6 +75,7 @@ public abstract class AbstractGemocDebugger extends AbstractDSLDebugger implemen
 
 	/**
 	 * {@link MutableField} mutable values.
+	 * The list of mutable fields is stored in a flat list but will be displayed using containment structure
 	 */
 	private final List<MutableField> mutableFields = new ArrayList<>();
 
@@ -183,6 +184,23 @@ public abstract class AbstractGemocDebugger extends AbstractDSLDebugger implemen
 		}
 		return mutableFields.addAll(newMutableFields);
 	}
+	
+	/**
+	 * update the mutableField for the given eObject and recursively into its content
+	 * will do nothing if the object is already known
+	 * @param eObject
+	 */
+	private void recursiveUpdateMutableFieldList(EObject eObject) {
+		List<MutableField> currentMutableFields = lookForMutableFields(eObject);
+		if (currentMutableFields.isEmpty()) {
+			// This is a new object
+			updateMutableFieldList(eObject);
+		}
+		
+		for (EObject content : eObject.eContents()) {
+			recursiveUpdateMutableFieldList(content);
+		}
+	}
 
 	private void initializeMutableDatas() {
 		mutableFields.clear();
@@ -256,11 +274,7 @@ public abstract class AbstractGemocDebugger extends AbstractDSLDebugger implemen
 			case ADD:
 				if (change.getValue() instanceof EObject) {
 					EObject eObject = (EObject) change.getValue();
-					List<MutableField> currentMutableFields = lookForMutableFields(eObject);
-					if (currentMutableFields.isEmpty()) {
-						// This is a new object
-						updateMutableFieldList(eObject);
-					}
+					recursiveUpdateMutableFieldList(eObject);
 				}
 				break;
 			case REMOVE:
@@ -296,11 +310,15 @@ public abstract class AbstractGemocDebugger extends AbstractDSLDebugger implemen
 
 		String frameName = GLOBAL_CONTEXT_FRAMENAME +" : " + executedModelRoot.eClass().getName();
 		for (MutableField m : changed) {
-			variable(threadName, frameName, MUTABLE_DATA_DECLARATION_TYPENAME, m.getName(), m.getValue(), true);
+			if (isRootMutableField(m)) {
+				variable(threadName, frameName, MUTABLE_DATA_DECLARATION_TYPENAME, m.getName(), m.getValue(), true);
+			}
 		}
 		for (String name : stackFrameNames) {
 			for (MutableField m : changed) {
-				variable(threadName, name, MUTABLE_DATA_DECLARATION_TYPENAME, m.getName(), m.getValue(), true);
+				if (isRootMutableField(m)) {
+					variable(threadName, name, MUTABLE_DATA_DECLARATION_TYPENAME, m.getName(), m.getValue(), true);
+				}
 			}
 		}
 
@@ -364,13 +382,13 @@ public abstract class AbstractGemocDebugger extends AbstractDSLDebugger implemen
 		stackFrameNames.push(frameName);
 		// add a variable for "self" target
 		// note: the variable is marked as not supporting modification, this may change in the future if we support "live modeling"
-		variable(threadName, frameName, MUTABLE_DATA_DECLARATION_TYPENAME, SELF_VARIABLE_NAME, context, false);
+		variable(threadName, frameName, MUTABLE_DATA_DECLARATION_TYPENAME, SELF_VARIABLE_NAME, instruction, false);
 		
-		// add all other mutable fields
+		// add all other mutable fields (but keep only root fields)
 		for (MutableField m : mutableFields) {
-			// if (m.geteObject().eContainer() == context) {
-			variable(threadName, frameName, MUTABLE_DATA_DECLARATION_TYPENAME, m.getName(), m.getValue(), true);
-			// }
+			if (isRootMutableField(m)) {
+				variable(threadName, frameName, MUTABLE_DATA_DECLARATION_TYPENAME, m.getName(), m.getValue(), true);
+			}
 		}
 	}
 
@@ -403,7 +421,9 @@ public abstract class AbstractGemocDebugger extends AbstractDSLDebugger implemen
 			pushStackFrame(threadName, frameName, executedModelRoot, instruction);
 
 			for (MutableField m : mutableFields) {
-				variable(threadName, frameName, MUTABLE_DATA_DECLARATION_TYPENAME, m.getName(), m.getValue(), true);
+				if (isRootMutableField(m)) {
+					variable(threadName, frameName, MUTABLE_DATA_DECLARATION_TYPENAME, m.getName(), m.getValue(), true);
+				}
 			}
 		} else {
 			// Updating mutable datas
@@ -467,5 +487,25 @@ public abstract class AbstractGemocDebugger extends AbstractDSLDebugger implemen
 				}
 			}
 		});
+	}
+	
+	/**
+	 * indicates if the provided field is not contained by another object that is himself a mutable field.
+	 * This is useful in order to show only "root" fields
+	 * Note: this methods does not cross non mutable object. 
+	 * Ie. if A contains B, B contains C, C contains D
+	 *  A, C and D are mutable, then isRootMutableField will return true for A and C
+	 * @param field
+	 * @return
+	 */
+	protected boolean isRootMutableField(MutableField field) {
+		EObject parent = field.geteObject();
+	/*	if(parent != null) {
+			if(mutableFields.stream().anyMatch(m -> m.getValue() == parent)) {
+				mutableFields.stream().anyMatch(m -> m.getValue() == parent);
+				return false;
+			};
+		}*/
+		return true;
 	}
 }
