@@ -31,8 +31,11 @@ import java.util.stream.Collectors;
 
 import org.eclipse.debug.internal.ui.viewers.model.provisional.TreeModelViewer;
 import org.eclipse.debug.internal.ui.views.launch.LaunchView;
+import org.eclipse.emf.common.util.EList;
 import org.eclipse.emf.common.util.TreeIterator;
 import org.eclipse.emf.ecore.EObject;
+import org.eclipse.emf.ecore.EReference;
+import org.eclipse.emf.ecore.EStructuralFeature;
 import org.eclipse.emf.ecore.resource.Resource;
 import org.eclipse.gemoc.dsl.debug.StackFrame;
 import org.eclipse.gemoc.dsl.debug.ide.AbstractDSLDebugger;
@@ -310,13 +313,13 @@ public abstract class AbstractGemocDebugger extends AbstractDSLDebugger implemen
 
 		String frameName = GLOBAL_CONTEXT_FRAMENAME +" : " + executedModelRoot.eClass().getName();
 		for (MutableField m : changed) {
-			if (isRootMutableField(m)) {
+			if (!Activator.getDefault().isUseNestedDebugVariables() || isRootMutableField(m)) {
 				variable(threadName, frameName, MUTABLE_DATA_DECLARATION_TYPENAME, m.getName(), m.getValue(), true);
 			}
 		}
 		for (String name : stackFrameNames) {
 			for (MutableField m : changed) {
-				if (isRootMutableField(m)) {
+				if (!Activator.getDefault().isUseNestedDebugVariables() || isRootMutableField(m)) {
 					variable(threadName, name, MUTABLE_DATA_DECLARATION_TYPENAME, m.getName(), m.getValue(), true);
 				}
 			}
@@ -386,7 +389,7 @@ public abstract class AbstractGemocDebugger extends AbstractDSLDebugger implemen
 		
 		// add all other mutable fields (but keep only root fields)
 		for (MutableField m : mutableFields) {
-			if (isRootMutableField(m)) {
+			if (!Activator.getDefault().isUseNestedDebugVariables() || isRootMutableField(m)) {
 				variable(threadName, frameName, MUTABLE_DATA_DECLARATION_TYPENAME, m.getName(), m.getValue(), true);
 			}
 		}
@@ -421,7 +424,7 @@ public abstract class AbstractGemocDebugger extends AbstractDSLDebugger implemen
 			pushStackFrame(threadName, frameName, executedModelRoot, instruction);
 
 			for (MutableField m : mutableFields) {
-				if (isRootMutableField(m)) {
+				if (!Activator.getDefault().isUseNestedDebugVariables() || isRootMutableField(m)) {
 					variable(threadName, frameName, MUTABLE_DATA_DECLARATION_TYPENAME, m.getName(), m.getValue(), true);
 				}
 			}
@@ -500,12 +503,24 @@ public abstract class AbstractGemocDebugger extends AbstractDSLDebugger implemen
 	 */
 	protected boolean isRootMutableField(MutableField field) {
 		EObject parent = field.geteObject();
-	/*	if(parent != null) {
-			if(mutableFields.stream().anyMatch(m -> m.getValue() == parent)) {
-				mutableFields.stream().anyMatch(m -> m.getValue() == parent);
-				return false;
-			};
-		}*/
+		if(parent != null) {
+			for (MutableField m : mutableFields) {
+				if(m.getMutableProperty() instanceof EReference) {
+					EReference mRef = (EReference) m.getMutableProperty();
+					if(mRef.isContainment()) {
+						if(mRef.getUpperBound() != 1) {
+							EList<EObject> l = (EList<EObject>) m.getValue();
+							if(l.contains(parent)) 
+								return false;
+						} else {
+							if(m.getValue() == parent ) {
+								return false;
+							}
+						}
+					}
+				}
+			}
+		}
 		return true;
 	}
 }
