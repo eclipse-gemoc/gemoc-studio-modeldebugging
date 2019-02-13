@@ -104,4 +104,24 @@
   <eClassifiers xsi:type="ecore:EClass" name="IntegerObjectAttributeValue" eSuperTypes="#//GenericAttributeValue">
     <eStructuralFeatures xsi:type="ecore:EAttribute" name="attributeValue" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EIntegerObject"/>
   </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="DoubleAttributeValue" eSuperTypes="#//GenericAttributeValue">
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="attributeValue" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EDouble"/>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="ManyDoubleAttributeValue" eSuperTypes="#//GenericAttributeValue">
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="attributeValue" upperBound="-1"
+        eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EDouble"/>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="DoubleObjectAttributeValue" eSuperTypes="#//GenericAttributeValue">
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="attributeValue" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EDoubleObject"/>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="LongAttributeValue" eSuperTypes="#//GenericAttributeValue">
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="attributeValue" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//ELong"/>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="ManyLongAttributeValue" eSuperTypes="#//GenericAttributeValue">
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="attributeValue" upperBound="-1"
+        eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//ELong"/>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="LongObjectAttributeValue" eSuperTypes="#//GenericAttributeValue">
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="attributeValue" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//ELongObject"/>
+  </eClassifiers>
 </ecore:EPackage>
