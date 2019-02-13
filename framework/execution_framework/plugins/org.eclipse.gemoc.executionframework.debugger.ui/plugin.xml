@@ -68,12 +68,24 @@
             id="org.eclipse.gemoc.executionframework.debugger.ui.openSemantics"
             name="Open Semantics">
       </command>
+      <command
+            id="org.eclipse.gemoc.executionframework.debugger.ui.toggleFlatRTDField"
+            name="Toggle Flat RTD Fields">
+		<state
+			class="org.eclipse.ui.handlers.RegistryToggleState:true"
+			id="org.eclipse.ui.commands.toggleState">
+   		</state>
+      </command>
    </extension>
    <extension
          point="org.eclipse.ui.handlers">
       <handler
             class="org.eclipse.gemoc.executionframework.debugger.ui.OpenSemanticsHandler"
             commandId="org.eclipse.gemoc.executionframework.debugger.ui.openSemantics">
+      </handler>
+      <handler
+            class="org.eclipse.gemoc.executionframework.debugger.ui.handlers.ToggleFlatRTDField"
+            commandId="org.eclipse.gemoc.executionframework.debugger.ui.toggleFlatRTDField">
       </handler>
    </extension>
    <extension
@@ -84,6 +96,17 @@
          <command
                commandId="org.eclipse.gemoc.executionframework.debugger.ui.openSemantics"
                label="Open Semantics">
+         </command>
+      </menuContribution>
+      <menuContribution
+            allPopups="false"
+            locationURI="toolbar:org.eclipse.debug.ui.VariableView?after=additions">
+         <command
+               commandId="org.eclipse.gemoc.executionframework.debugger.ui.toggleFlatRTDField"
+               icon="icons/IconeGemocModel-16.png"
+               label="Use nested RTD fields layout"
+               style="toggle"
+               tooltip="Use nested or flat RTD fields layout;  A restart of running GEMOC engines may be required in order to be taken into account.">
          </command>
       </menuContribution>
    </extension>
