@@ -47,15 +47,15 @@ import org.eclipse.gemoc.xdsmlframework.api.extensions.engine_addon.EngineAddonS
 
 abstract class AbstractTraceAddon implements IEngineAddon, IMultiDimensionalTraceAddon<Step<?>, State<?, ?>, TracedObject<?>, Dimension<?>, Value<?>> {
 
-	private IExecutionContext<?, ?, ?> _executionContext
-	private ITraceExplorer<Step<?>, State<?, ?>, TracedObject<?>, Dimension<?>, Value<?>> traceExplorer
-	private ITraceExtractor<Step<?>, State<?, ?>, TracedObject<?>, Dimension<?>, Value<?>> traceExtractor
-	private ITraceConstructor traceConstructor
-	private ITraceNotifier traceNotifier
-	private BatchModelChangeListener traceListener
-	private var boolean needTransaction = true
-	private BatchModelChangeListener listenerAddon
-	private Trace<Step<?>, TracedObject<?>, State<?, ?>> trace
+	IExecutionContext<?, ?, ?> _executionContext
+	ITraceExplorer<Step<?>, State<?, ?>, TracedObject<?>, Dimension<?>, Value<?>> traceExplorer
+	ITraceExtractor<Step<?>, State<?, ?>, TracedObject<?>, Dimension<?>, Value<?>> traceExtractor
+	ITraceConstructor traceConstructor
+	ITraceNotifier traceNotifier
+	BatchModelChangeListener traceListener
+	var boolean needTransaction = true
+	BatchModelChangeListener listenerAddon
+	Trace<Step<?>, TracedObject<?>, State<?, ?>> trace
 
 	protected abstract def ITraceConstructor constructTraceConstructor(Resource modelResource, Resource traceResource,
 		Map<EObject, TracedObject<?>> exeToTraced)
@@ -79,7 +79,7 @@ abstract class AbstractTraceAddon implements IEngineAddon, IMultiDimensionalTrac
 		return traceNotifier
 	}
 
-	public override void load(Resource traceResource) {
+	override void load(Resource traceResource) {
 		val root = traceResource.contents.head
 		if (root instanceof Trace<?, ?, ?>) {
 			trace = root as Trace<Step<?>, TracedObject<?>, State<?, ?>>

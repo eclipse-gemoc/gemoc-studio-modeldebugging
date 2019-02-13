@@ -12,21 +12,17 @@
     <genClasses ecoreClass="GenericTraceImpl.ecore#//GenericSequentialStep"/>
     <genClasses ecoreClass="GenericTraceImpl.ecore#//GenericParallelStep"/>
     <genClasses ecoreClass="GenericTraceImpl.ecore#//GenericSmallStep"/>
-    <genClasses ecoreClass="GenericTraceImpl.ecore#//GenericReferenceValue">
-      <genFeatures notify="false" createChild="false" propertySortChoices="true" ecoreFeature="ecore:EReference GenericTraceImpl.ecore#//GenericReferenceValue/referenceValue"/>
-    </genClasses>
+    <genClasses ecoreClass="GenericTraceImpl.ecore#//GenericReferenceValue"/>
     <genClasses ecoreClass="GenericTraceImpl.ecore#//GenericDimension">
       <genFeatures notify="false" createChild="false" propertySortChoices="true" ecoreFeature="ecore:EReference GenericTraceImpl.ecore#//GenericDimension/dynamicProperty"/>
     </genClasses>
-    <genClasses ecoreClass="GenericTraceImpl.ecore#//GenericTracedObject"/>
-    <genClasses ecoreClass="GenericTraceImpl.ecore#//GenericState">
-      <genFeatures notify="false" createChild="false" propertySortChoices="true" ecoreFeature="ecore:EReference GenericTraceImpl.ecore#//GenericState/valuesRef"/>
-      <genFeatures notify="false" createChild="false" propertySortChoices="true" ecoreFeature="ecore:EReference GenericTraceImpl.ecore#//GenericState/startedStepsRef"/>
-      <genFeatures notify="false" createChild="false" propertySortChoices="true" ecoreFeature="ecore:EReference GenericTraceImpl.ecore#//GenericState/endedStepsRef"/>
-      <genOperations ecoreOperation="GenericTraceImpl.ecore#//GenericState/getValues"/>
-      <genOperations ecoreOperation="GenericTraceImpl.ecore#//GenericState/getStartedSteps"/>
-      <genOperations ecoreOperation="GenericTraceImpl.ecore#//GenericState/getEndedSteps"/>
+    <genClasses ecoreClass="GenericTraceImpl.ecore#//GenericTracedObject">
+      <genFeatures notify="false" createChild="false" propertySortChoices="true" ecoreFeature="ecore:EReference GenericTraceImpl.ecore#//GenericTracedObject/originalObject"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference GenericTraceImpl.ecore#//GenericTracedObject/allDimensions"/>
+      <genOperations ecoreOperation="GenericTraceImpl.ecore#//GenericTracedObject/getDimensionsInternal"
+          body="final EList&lt;GenericDimension> result = new org.eclipse.emf.ecore.util.BasicInternalEList&lt;GenericDimension>(Object.class);&#xA;result.addAll(super.getDimensionsInternal());&#xA;result.addAll(getAllDimensions());&#xA;return result;&#xA;"/>
     </genClasses>
+    <genClasses ecoreClass="GenericTraceImpl.ecore#//GenericState"/>
     <genClasses ecoreClass="GenericTraceImpl.ecore#//GenericTrace">
       <genTypeParameters ecoreTypeParameter="GenericTraceImpl.ecore#//GenericTrace/StepSubType"/>
     </genClasses>
@@ -34,21 +30,49 @@
     <genClasses ecoreClass="GenericTraceImpl.ecore#//BooleanAttributeValue">
       <genFeatures createChild="false" ecoreFeature="ecore:EAttribute GenericTraceImpl.ecore#//BooleanAttributeValue/attributeValue"/>
     </genClasses>
-    <genClasses ecoreClass="GenericTraceImpl.ecore#//IntegerAttributevalue">
-      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute GenericTraceImpl.ecore#//IntegerAttributevalue/attributeValue"/>
+    <genClasses ecoreClass="GenericTraceImpl.ecore#//IntegerAttributeValue">
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute GenericTraceImpl.ecore#//IntegerAttributeValue/attributeValue"/>
     </genClasses>
     <genClasses ecoreClass="GenericTraceImpl.ecore#//StringAttributeValue">
       <genFeatures createChild="false" ecoreFeature="ecore:EAttribute GenericTraceImpl.ecore#//StringAttributeValue/attributeValue"/>
     </genClasses>
-    <genClasses image="false" ecoreClass="GenericTraceImpl.ecore#//GenericStep">
-      <genFeatures notify="false" createChild="false" propertySortChoices="true" ecoreFeature="ecore:EReference GenericTraceImpl.ecore#//GenericStep/startingStateRef"/>
-      <genFeatures notify="false" createChild="false" propertySortChoices="true" ecoreFeature="ecore:EReference GenericTraceImpl.ecore#//GenericStep/endingStateRef"/>
-      <genOperations ecoreOperation="GenericTraceImpl.ecore#//GenericStep/getStartingState"/>
-      <genOperations ecoreOperation="GenericTraceImpl.ecore#//GenericStep/getEndingState"/>
+    <genClasses ecoreClass="GenericTraceImpl.ecore#//ManyBooleanAttributeValue">
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute GenericTraceImpl.ecore#//ManyBooleanAttributeValue/attributeValue"/>
     </genClasses>
-    <genClasses image="false" ecoreClass="GenericTraceImpl.ecore#//GenericValue">
-      <genFeatures notify="false" createChild="false" propertySortChoices="true" ecoreFeature="ecore:EReference GenericTraceImpl.ecore#//GenericValue/statesRef"/>
-      <genOperations ecoreOperation="GenericTraceImpl.ecore#//GenericValue/getStates"/>
+    <genClasses ecoreClass="GenericTraceImpl.ecore#//ManyIntegerAttributeValue">
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute GenericTraceImpl.ecore#//ManyIntegerAttributeValue/attributeValue"/>
+    </genClasses>
+    <genClasses ecoreClass="GenericTraceImpl.ecore#//ManyStringAttributeValue">
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute GenericTraceImpl.ecore#//ManyStringAttributeValue/attributeValue"/>
+    </genClasses>
+    <genClasses image="false" ecoreClass="GenericTraceImpl.ecore#//GenericStep"/>
+    <genClasses image="false" ecoreClass="GenericTraceImpl.ecore#//GenericValue"/>
+    <genClasses ecoreClass="GenericTraceImpl.ecore#//SingleReferenceValue">
+      <genFeatures notify="false" createChild="false" propertySortChoices="true" ecoreFeature="ecore:EReference GenericTraceImpl.ecore#//SingleReferenceValue/referenceValue"/>
+    </genClasses>
+    <genClasses ecoreClass="GenericTraceImpl.ecore#//ManyReferenceValue">
+      <genFeatures notify="false" createChild="false" propertySortChoices="true" ecoreFeature="ecore:EReference GenericTraceImpl.ecore#//ManyReferenceValue/referenceValues"/>
+    </genClasses>
+    <genClasses ecoreClass="GenericTraceImpl.ecore#//IntegerObjectAttributeValue">
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute GenericTraceImpl.ecore#//IntegerObjectAttributeValue/attributeValue"/>
+    </genClasses>
+    <genClasses ecoreClass="GenericTraceImpl.ecore#//DoubleAttributeValue">
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute GenericTraceImpl.ecore#//DoubleAttributeValue/attributeValue"/>
+    </genClasses>
+    <genClasses ecoreClass="GenericTraceImpl.ecore#//ManyDoubleAttributeValue">
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute GenericTraceImpl.ecore#//ManyDoubleAttributeValue/attributeValue"/>
+    </genClasses>
+    <genClasses ecoreClass="GenericTraceImpl.ecore#//DoubleObjectAttributeValue">
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute GenericTraceImpl.ecore#//DoubleObjectAttributeValue/attributeValue"/>
+    </genClasses>
+    <genClasses ecoreClass="GenericTraceImpl.ecore#//LongAttributeValue">
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute GenericTraceImpl.ecore#//LongAttributeValue/attributeValue"/>
+    </genClasses>
+    <genClasses ecoreClass="GenericTraceImpl.ecore#//ManyLongAttributeValue">
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute GenericTraceImpl.ecore#//ManyLongAttributeValue/attributeValue"/>
+    </genClasses>
+    <genClasses ecoreClass="GenericTraceImpl.ecore#//LongObjectAttributeValue">
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute GenericTraceImpl.ecore#//LongObjectAttributeValue/attributeValue"/>
     </genClasses>
   </genPackages>
 </genmodel:GenModel>

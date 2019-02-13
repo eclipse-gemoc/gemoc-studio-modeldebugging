@@ -255,6 +255,60 @@ public class GenerictraceSwitch<T> extends Switch<T> {
 				if (result == null) result = defaultCase(theEObject);
 				return result;
 			}
+			case GenerictracePackage.DOUBLE_ATTRIBUTE_VALUE: {
+				DoubleAttributeValue doubleAttributeValue = (DoubleAttributeValue)theEObject;
+				T result = caseDoubleAttributeValue(doubleAttributeValue);
+				if (result == null) result = caseGenericAttributeValue(doubleAttributeValue);
+				if (result == null) result = caseGenericValue(doubleAttributeValue);
+				if (result == null) result = caseValue(doubleAttributeValue);
+				if (result == null) result = defaultCase(theEObject);
+				return result;
+			}
+			case GenerictracePackage.MANY_DOUBLE_ATTRIBUTE_VALUE: {
+				ManyDoubleAttributeValue manyDoubleAttributeValue = (ManyDoubleAttributeValue)theEObject;
+				T result = caseManyDoubleAttributeValue(manyDoubleAttributeValue);
+				if (result == null) result = caseGenericAttributeValue(manyDoubleAttributeValue);
+				if (result == null) result = caseGenericValue(manyDoubleAttributeValue);
+				if (result == null) result = caseValue(manyDoubleAttributeValue);
+				if (result == null) result = defaultCase(theEObject);
+				return result;
+			}
+			case GenerictracePackage.DOUBLE_OBJECT_ATTRIBUTE_VALUE: {
+				DoubleObjectAttributeValue doubleObjectAttributeValue = (DoubleObjectAttributeValue)theEObject;
+				T result = caseDoubleObjectAttributeValue(doubleObjectAttributeValue);
+				if (result == null) result = caseGenericAttributeValue(doubleObjectAttributeValue);
+				if (result == null) result = caseGenericValue(doubleObjectAttributeValue);
+				if (result == null) result = caseValue(doubleObjectAttributeValue);
+				if (result == null) result = defaultCase(theEObject);
+				return result;
+			}
+			case GenerictracePackage.LONG_ATTRIBUTE_VALUE: {
+				LongAttributeValue longAttributeValue = (LongAttributeValue)theEObject;
+				T result = caseLongAttributeValue(longAttributeValue);
+				if (result == null) result = caseGenericAttributeValue(longAttributeValue);
+				if (result == null) result = caseGenericValue(longAttributeValue);
+				if (result == null) result = caseValue(longAttributeValue);
+				if (result == null) result = defaultCase(theEObject);
+				return result;
+			}
+			case GenerictracePackage.MANY_LONG_ATTRIBUTE_VALUE: {
+				ManyLongAttributeValue manyLongAttributeValue = (ManyLongAttributeValue)theEObject;
+				T result = caseManyLongAttributeValue(manyLongAttributeValue);
+				if (result == null) result = caseGenericAttributeValue(manyLongAttributeValue);
+				if (result == null) result = caseGenericValue(manyLongAttributeValue);
+				if (result == null) result = caseValue(manyLongAttributeValue);
+				if (result == null) result = defaultCase(theEObject);
+				return result;
+			}
+			case GenerictracePackage.LONG_OBJECT_ATTRIBUTE_VALUE: {
+				LongObjectAttributeValue longObjectAttributeValue = (LongObjectAttributeValue)theEObject;
+				T result = caseLongObjectAttributeValue(longObjectAttributeValue);
+				if (result == null) result = caseGenericAttributeValue(longObjectAttributeValue);
+				if (result == null) result = caseGenericValue(longObjectAttributeValue);
+				if (result == null) result = caseValue(longObjectAttributeValue);
+				if (result == null) result = defaultCase(theEObject);
+				return result;
+			}
 			default: return defaultCase(theEObject);
 		}
 	}
@@ -556,6 +610,96 @@ public class GenerictraceSwitch<T> extends Switch<T> {
 	 * @generated
 	 */
 	public T caseIntegerObjectAttributeValue(IntegerObjectAttributeValue object) {
+		return null;
+	}
+
+	/**
+	 * Returns the result of interpreting the object as an instance of '<em>Double Attribute Value</em>'.
+	 * <!-- begin-user-doc -->
+	 * This implementation returns null;
+	 * returning a non-null result will terminate the switch.
+	 * <!-- end-user-doc -->
+	 * @param object the target of the switch.
+	 * @return the result of interpreting the object as an instance of '<em>Double Attribute Value</em>'.
+	 * @see #doSwitch(org.eclipse.emf.ecore.EObject) doSwitch(EObject)
+	 * @generated
+	 */
+	public T caseDoubleAttributeValue(DoubleAttributeValue object) {
+		return null;
+	}
+
+	/**
+	 * Returns the result of interpreting the object as an instance of '<em>Many Double Attribute Value</em>'.
+	 * <!-- begin-user-doc -->
+	 * This implementation returns null;
+	 * returning a non-null result will terminate the switch.
+	 * <!-- end-user-doc -->
+	 * @param object the target of the switch.
+	 * @return the result of interpreting the object as an instance of '<em>Many Double Attribute Value</em>'.
+	 * @see #doSwitch(org.eclipse.emf.ecore.EObject) doSwitch(EObject)
+	 * @generated
+	 */
+	public T caseManyDoubleAttributeValue(ManyDoubleAttributeValue object) {
+		return null;
+	}
+
+	/**
+	 * Returns the result of interpreting the object as an instance of '<em>Double Object Attribute Value</em>'.
+	 * <!-- begin-user-doc -->
+	 * This implementation returns null;
+	 * returning a non-null result will terminate the switch.
+	 * <!-- end-user-doc -->
+	 * @param object the target of the switch.
+	 * @return the result of interpreting the object as an instance of '<em>Double Object Attribute Value</em>'.
+	 * @see #doSwitch(org.eclipse.emf.ecore.EObject) doSwitch(EObject)
+	 * @generated
+	 */
+	public T caseDoubleObjectAttributeValue(DoubleObjectAttributeValue object) {
+		return null;
+	}
+
+	/**
+	 * Returns the result of interpreting the object as an instance of '<em>Long Attribute Value</em>'.
+	 * <!-- begin-user-doc -->
+	 * This implementation returns null;
+	 * returning a non-null result will terminate the switch.
+	 * <!-- end-user-doc -->
+	 * @param object the target of the switch.
+	 * @return the result of interpreting the object as an instance of '<em>Long Attribute Value</em>'.
+	 * @see #doSwitch(org.eclipse.emf.ecore.EObject) doSwitch(EObject)
+	 * @generated
+	 */
+	public T caseLongAttributeValue(LongAttributeValue object) {
+		return null;
+	}
+
+	/**
+	 * Returns the result of interpreting the object as an instance of '<em>Many Long Attribute Value</em>'.
+	 * <!-- begin-user-doc -->
+	 * This implementation returns null;
+	 * returning a non-null result will terminate the switch.
+	 * <!-- end-user-doc -->
+	 * @param object the target of the switch.
+	 * @return the result of interpreting the object as an instance of '<em>Many Long Attribute Value</em>'.
+	 * @see #doSwitch(org.eclipse.emf.ecore.EObject) doSwitch(EObject)
+	 * @generated
+	 */
+	public T caseManyLongAttributeValue(ManyLongAttributeValue object) {
+		return null;
+	}
+
+	/**
+	 * Returns the result of interpreting the object as an instance of '<em>Long Object Attribute Value</em>'.
+	 * <!-- begin-user-doc -->
+	 * This implementation returns null;
+	 * returning a non-null result will terminate the switch.
+	 * <!-- end-user-doc -->
+	 * @param object the target of the switch.
+	 * @return the result of interpreting the object as an instance of '<em>Long Object Attribute Value</em>'.
+	 * @see #doSwitch(org.eclipse.emf.ecore.EObject) doSwitch(EObject)
+	 * @generated
+	 */
+	public T caseLongObjectAttributeValue(LongObjectAttributeValue object) {
 		return null;
 	}
 

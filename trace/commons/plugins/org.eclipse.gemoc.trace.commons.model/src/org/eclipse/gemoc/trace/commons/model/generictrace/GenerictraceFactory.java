@@ -176,6 +176,60 @@ public interface GenerictraceFactory extends EFactory {
 	IntegerObjectAttributeValue createIntegerObjectAttributeValue();
 
 	/**
+	 * Returns a new object of class '<em>Double Attribute Value</em>'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return a new object of class '<em>Double Attribute Value</em>'.
+	 * @generated
+	 */
+	DoubleAttributeValue createDoubleAttributeValue();
+
+	/**
+	 * Returns a new object of class '<em>Many Double Attribute Value</em>'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return a new object of class '<em>Many Double Attribute Value</em>'.
+	 * @generated
+	 */
+	ManyDoubleAttributeValue createManyDoubleAttributeValue();
+
+	/**
+	 * Returns a new object of class '<em>Double Object Attribute Value</em>'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return a new object of class '<em>Double Object Attribute Value</em>'.
+	 * @generated
+	 */
+	DoubleObjectAttributeValue createDoubleObjectAttributeValue();
+
+	/**
+	 * Returns a new object of class '<em>Long Attribute Value</em>'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return a new object of class '<em>Long Attribute Value</em>'.
+	 * @generated
+	 */
+	LongAttributeValue createLongAttributeValue();
+
+	/**
+	 * Returns a new object of class '<em>Many Long Attribute Value</em>'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return a new object of class '<em>Many Long Attribute Value</em>'.
+	 * @generated
+	 */
+	ManyLongAttributeValue createManyLongAttributeValue();
+
+	/**
+	 * Returns a new object of class '<em>Long Object Attribute Value</em>'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return a new object of class '<em>Long Object Attribute Value</em>'.
+	 * @generated
+	 */
+	LongObjectAttributeValue createLongObjectAttributeValue();
+
+	/**
 	 * Returns the package supported by this factory.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->

@@ -1,19 +1,6 @@
-/*******************************************************************************
- * Copyright (c) 2017 Inria and others.
- * All rights reserved. This program and the accompanying materials
- * are made available under the terms of the Eclipse Public License v1.0
- * which accompanies this distribution, and is available at
- * http://www.eclipse.org/legal/epl-v10.html
- *
- * Contributors:
- *     Inria - initial API and implementation
- *******************************************************************************/
 /**
  */
 package org.eclipse.gemoc.trace.commons.model.generictrace.impl;
-
-import org.eclipse.gemoc.trace.commons.model.generictrace.BooleanAttributeValue;
-import org.eclipse.gemoc.trace.commons.model.generictrace.GenerictracePackage;
 
 import org.eclipse.emf.common.notify.Notification;
 
@@ -21,46 +8,49 @@ import org.eclipse.emf.ecore.EClass;
 
 import org.eclipse.emf.ecore.impl.ENotificationImpl;
 
+import org.eclipse.gemoc.trace.commons.model.generictrace.GenerictracePackage;
+import org.eclipse.gemoc.trace.commons.model.generictrace.LongAttributeValue;
+
 /**
  * <!-- begin-user-doc -->
- * An implementation of the model object '<em><b>Boolean Attribute Value</b></em>'.
+ * An implementation of the model object '<em><b>Long Attribute Value</b></em>'.
  * <!-- end-user-doc -->
  * <p>
  * The following features are implemented:
  * </p>
  * <ul>
- *   <li>{@link org.eclipse.gemoc.trace.commons.model.generictrace.impl.BooleanAttributeValueImpl#isAttributeValue <em>Attribute Value</em>}</li>
+ *   <li>{@link org.eclipse.gemoc.trace.commons.model.generictrace.impl.LongAttributeValueImpl#getAttributeValue <em>Attribute Value</em>}</li>
  * </ul>
  *
  * @generated
  */
-public class BooleanAttributeValueImpl extends GenericAttributeValueImpl implements BooleanAttributeValue {
+public class LongAttributeValueImpl extends GenericAttributeValueImpl implements LongAttributeValue {
 	/**
-	 * The default value of the '{@link #isAttributeValue() <em>Attribute Value</em>}' attribute.
+	 * The default value of the '{@link #getAttributeValue() <em>Attribute Value</em>}' attribute.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * @see #isAttributeValue()
+	 * @see #getAttributeValue()
 	 * @generated
 	 * @ordered
 	 */
-	protected static final boolean ATTRIBUTE_VALUE_EDEFAULT = false;
+	protected static final long ATTRIBUTE_VALUE_EDEFAULT = 0L;
 
 	/**
-	 * The cached value of the '{@link #isAttributeValue() <em>Attribute Value</em>}' attribute.
+	 * The cached value of the '{@link #getAttributeValue() <em>Attribute Value</em>}' attribute.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * @see #isAttributeValue()
+	 * @see #getAttributeValue()
 	 * @generated
 	 * @ordered
 	 */
-	protected boolean attributeValue = ATTRIBUTE_VALUE_EDEFAULT;
+	protected long attributeValue = ATTRIBUTE_VALUE_EDEFAULT;
 
 	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	protected BooleanAttributeValueImpl() {
+	protected LongAttributeValueImpl() {
 		super();
 	}
 
@@ -71,7 +61,7 @@ public class BooleanAttributeValueImpl extends GenericAttributeValueImpl impleme
 	 */
 	@Override
 	protected EClass eStaticClass() {
-		return GenerictracePackage.Literals.BOOLEAN_ATTRIBUTE_VALUE;
+		return GenerictracePackage.Literals.LONG_ATTRIBUTE_VALUE;
 	}
 
 	/**
@@ -79,7 +69,7 @@ public class BooleanAttributeValueImpl extends GenericAttributeValueImpl impleme
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	public boolean isAttributeValue() {
+	public long getAttributeValue() {
 		return attributeValue;
 	}
 
@@ -88,11 +78,11 @@ public class BooleanAttributeValueImpl extends GenericAttributeValueImpl impleme
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	public void setAttributeValue(boolean newAttributeValue) {
-		boolean oldAttributeValue = attributeValue;
+	public void setAttributeValue(long newAttributeValue) {
+		long oldAttributeValue = attributeValue;
 		attributeValue = newAttributeValue;
 		if (eNotificationRequired())
-			eNotify(new ENotificationImpl(this, Notification.SET, GenerictracePackage.BOOLEAN_ATTRIBUTE_VALUE__ATTRIBUTE_VALUE, oldAttributeValue, attributeValue));
+			eNotify(new ENotificationImpl(this, Notification.SET, GenerictracePackage.LONG_ATTRIBUTE_VALUE__ATTRIBUTE_VALUE, oldAttributeValue, attributeValue));
 	}
 
 	/**
@@ -103,8 +93,8 @@ public class BooleanAttributeValueImpl extends GenericAttributeValueImpl impleme
 	@Override
 	public Object eGet(int featureID, boolean resolve, boolean coreType) {
 		switch (featureID) {
-			case GenerictracePackage.BOOLEAN_ATTRIBUTE_VALUE__ATTRIBUTE_VALUE:
-				return isAttributeValue();
+			case GenerictracePackage.LONG_ATTRIBUTE_VALUE__ATTRIBUTE_VALUE:
+				return getAttributeValue();
 		}
 		return super.eGet(featureID, resolve, coreType);
 	}
@@ -117,8 +107,8 @@ public class BooleanAttributeValueImpl extends GenericAttributeValueImpl impleme
 	@Override
 	public void eSet(int featureID, Object newValue) {
 		switch (featureID) {
-			case GenerictracePackage.BOOLEAN_ATTRIBUTE_VALUE__ATTRIBUTE_VALUE:
-				setAttributeValue((Boolean)newValue);
+			case GenerictracePackage.LONG_ATTRIBUTE_VALUE__ATTRIBUTE_VALUE:
+				setAttributeValue((Long)newValue);
 				return;
 		}
 		super.eSet(featureID, newValue);
@@ -132,7 +122,7 @@ public class BooleanAttributeValueImpl extends GenericAttributeValueImpl impleme
 	@Override
 	public void eUnset(int featureID) {
 		switch (featureID) {
-			case GenerictracePackage.BOOLEAN_ATTRIBUTE_VALUE__ATTRIBUTE_VALUE:
+			case GenerictracePackage.LONG_ATTRIBUTE_VALUE__ATTRIBUTE_VALUE:
 				setAttributeValue(ATTRIBUTE_VALUE_EDEFAULT);
 				return;
 		}
@@ -147,7 +137,7 @@ public class BooleanAttributeValueImpl extends GenericAttributeValueImpl impleme
 	@Override
 	public boolean eIsSet(int featureID) {
 		switch (featureID) {
-			case GenerictracePackage.BOOLEAN_ATTRIBUTE_VALUE__ATTRIBUTE_VALUE:
+			case GenerictracePackage.LONG_ATTRIBUTE_VALUE__ATTRIBUTE_VALUE:
 				return attributeValue != ATTRIBUTE_VALUE_EDEFAULT;
 		}
 		return super.eIsSet(featureID);
@@ -169,4 +159,4 @@ public class BooleanAttributeValueImpl extends GenericAttributeValueImpl impleme
 		return result.toString();
 	}
 
-} //BooleanAttributeValueImpl
+} //LongAttributeValueImpl

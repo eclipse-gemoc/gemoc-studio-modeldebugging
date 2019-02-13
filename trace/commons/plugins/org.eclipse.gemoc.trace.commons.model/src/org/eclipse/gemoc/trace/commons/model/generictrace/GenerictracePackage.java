@@ -1063,13 +1063,289 @@ public interface GenerictracePackage extends EPackage {
 	int INTEGER_OBJECT_ATTRIBUTE_VALUE_OPERATION_COUNT = GENERIC_ATTRIBUTE_VALUE_OPERATION_COUNT + 0;
 
 	/**
+	 * The meta object id for the '{@link org.eclipse.gemoc.trace.commons.model.generictrace.impl.DoubleAttributeValueImpl <em>Double Attribute Value</em>}' class.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @see org.eclipse.gemoc.trace.commons.model.generictrace.impl.DoubleAttributeValueImpl
+	 * @see org.eclipse.gemoc.trace.commons.model.generictrace.impl.GenerictracePackageImpl#getDoubleAttributeValue()
+	 * @generated
+	 */
+	int DOUBLE_ATTRIBUTE_VALUE = 20;
+
+	/**
+	 * The feature id for the '<em><b>States</b></em>' reference list.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int DOUBLE_ATTRIBUTE_VALUE__STATES = GENERIC_ATTRIBUTE_VALUE__STATES;
+
+	/**
+	 * The feature id for the '<em><b>Attribute Value</b></em>' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int DOUBLE_ATTRIBUTE_VALUE__ATTRIBUTE_VALUE = GENERIC_ATTRIBUTE_VALUE_FEATURE_COUNT + 0;
+
+	/**
+	 * The number of structural features of the '<em>Double Attribute Value</em>' class.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int DOUBLE_ATTRIBUTE_VALUE_FEATURE_COUNT = GENERIC_ATTRIBUTE_VALUE_FEATURE_COUNT + 1;
+
+	/**
+	 * The number of operations of the '<em>Double Attribute Value</em>' class.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int DOUBLE_ATTRIBUTE_VALUE_OPERATION_COUNT = GENERIC_ATTRIBUTE_VALUE_OPERATION_COUNT + 0;
+
+	/**
+	 * The meta object id for the '{@link org.eclipse.gemoc.trace.commons.model.generictrace.impl.ManyDoubleAttributeValueImpl <em>Many Double Attribute Value</em>}' class.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @see org.eclipse.gemoc.trace.commons.model.generictrace.impl.ManyDoubleAttributeValueImpl
+	 * @see org.eclipse.gemoc.trace.commons.model.generictrace.impl.GenerictracePackageImpl#getManyDoubleAttributeValue()
+	 * @generated
+	 */
+	int MANY_DOUBLE_ATTRIBUTE_VALUE = 21;
+
+	/**
+	 * The feature id for the '<em><b>States</b></em>' reference list.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int MANY_DOUBLE_ATTRIBUTE_VALUE__STATES = GENERIC_ATTRIBUTE_VALUE__STATES;
+
+	/**
+	 * The feature id for the '<em><b>Attribute Value</b></em>' attribute list.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int MANY_DOUBLE_ATTRIBUTE_VALUE__ATTRIBUTE_VALUE = GENERIC_ATTRIBUTE_VALUE_FEATURE_COUNT + 0;
+
+	/**
+	 * The number of structural features of the '<em>Many Double Attribute Value</em>' class.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int MANY_DOUBLE_ATTRIBUTE_VALUE_FEATURE_COUNT = GENERIC_ATTRIBUTE_VALUE_FEATURE_COUNT + 1;
+
+	/**
+	 * The number of operations of the '<em>Many Double Attribute Value</em>' class.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int MANY_DOUBLE_ATTRIBUTE_VALUE_OPERATION_COUNT = GENERIC_ATTRIBUTE_VALUE_OPERATION_COUNT + 0;
+
+	/**
+	 * The meta object id for the '{@link org.eclipse.gemoc.trace.commons.model.generictrace.impl.DoubleObjectAttributeValueImpl <em>Double Object Attribute Value</em>}' class.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @see org.eclipse.gemoc.trace.commons.model.generictrace.impl.DoubleObjectAttributeValueImpl
+	 * @see org.eclipse.gemoc.trace.commons.model.generictrace.impl.GenerictracePackageImpl#getDoubleObjectAttributeValue()
+	 * @generated
+	 */
+	int DOUBLE_OBJECT_ATTRIBUTE_VALUE = 22;
+
+	/**
+	 * The feature id for the '<em><b>States</b></em>' reference list.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int DOUBLE_OBJECT_ATTRIBUTE_VALUE__STATES = GENERIC_ATTRIBUTE_VALUE__STATES;
+
+	/**
+	 * The feature id for the '<em><b>Attribute Value</b></em>' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int DOUBLE_OBJECT_ATTRIBUTE_VALUE__ATTRIBUTE_VALUE = GENERIC_ATTRIBUTE_VALUE_FEATURE_COUNT + 0;
+
+	/**
+	 * The number of structural features of the '<em>Double Object Attribute Value</em>' class.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int DOUBLE_OBJECT_ATTRIBUTE_VALUE_FEATURE_COUNT = GENERIC_ATTRIBUTE_VALUE_FEATURE_COUNT + 1;
+
+	/**
+	 * The number of operations of the '<em>Double Object Attribute Value</em>' class.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int DOUBLE_OBJECT_ATTRIBUTE_VALUE_OPERATION_COUNT = GENERIC_ATTRIBUTE_VALUE_OPERATION_COUNT + 0;
+
+	/**
+	 * The meta object id for the '{@link org.eclipse.gemoc.trace.commons.model.generictrace.impl.LongAttributeValueImpl <em>Long Attribute Value</em>}' class.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @see org.eclipse.gemoc.trace.commons.model.generictrace.impl.LongAttributeValueImpl
+	 * @see org.eclipse.gemoc.trace.commons.model.generictrace.impl.GenerictracePackageImpl#getLongAttributeValue()
+	 * @generated
+	 */
+	int LONG_ATTRIBUTE_VALUE = 23;
+
+	/**
+	 * The feature id for the '<em><b>States</b></em>' reference list.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int LONG_ATTRIBUTE_VALUE__STATES = GENERIC_ATTRIBUTE_VALUE__STATES;
+
+	/**
+	 * The feature id for the '<em><b>Attribute Value</b></em>' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int LONG_ATTRIBUTE_VALUE__ATTRIBUTE_VALUE = GENERIC_ATTRIBUTE_VALUE_FEATURE_COUNT + 0;
+
+	/**
+	 * The number of structural features of the '<em>Long Attribute Value</em>' class.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int LONG_ATTRIBUTE_VALUE_FEATURE_COUNT = GENERIC_ATTRIBUTE_VALUE_FEATURE_COUNT + 1;
+
+	/**
+	 * The number of operations of the '<em>Long Attribute Value</em>' class.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int LONG_ATTRIBUTE_VALUE_OPERATION_COUNT = GENERIC_ATTRIBUTE_VALUE_OPERATION_COUNT + 0;
+
+	/**
+	 * The meta object id for the '{@link org.eclipse.gemoc.trace.commons.model.generictrace.impl.ManyLongAttributeValueImpl <em>Many Long Attribute Value</em>}' class.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @see org.eclipse.gemoc.trace.commons.model.generictrace.impl.ManyLongAttributeValueImpl
+	 * @see org.eclipse.gemoc.trace.commons.model.generictrace.impl.GenerictracePackageImpl#getManyLongAttributeValue()
+	 * @generated
+	 */
+	int MANY_LONG_ATTRIBUTE_VALUE = 24;
+
+	/**
+	 * The feature id for the '<em><b>States</b></em>' reference list.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int MANY_LONG_ATTRIBUTE_VALUE__STATES = GENERIC_ATTRIBUTE_VALUE__STATES;
+
+	/**
+	 * The feature id for the '<em><b>Attribute Value</b></em>' attribute list.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int MANY_LONG_ATTRIBUTE_VALUE__ATTRIBUTE_VALUE = GENERIC_ATTRIBUTE_VALUE_FEATURE_COUNT + 0;
+
+	/**
+	 * The number of structural features of the '<em>Many Long Attribute Value</em>' class.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int MANY_LONG_ATTRIBUTE_VALUE_FEATURE_COUNT = GENERIC_ATTRIBUTE_VALUE_FEATURE_COUNT + 1;
+
+	/**
+	 * The number of operations of the '<em>Many Long Attribute Value</em>' class.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int MANY_LONG_ATTRIBUTE_VALUE_OPERATION_COUNT = GENERIC_ATTRIBUTE_VALUE_OPERATION_COUNT + 0;
+
+	/**
+	 * The meta object id for the '{@link org.eclipse.gemoc.trace.commons.model.generictrace.impl.LongObjectAttributeValueImpl <em>Long Object Attribute Value</em>}' class.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @see org.eclipse.gemoc.trace.commons.model.generictrace.impl.LongObjectAttributeValueImpl
+	 * @see org.eclipse.gemoc.trace.commons.model.generictrace.impl.GenerictracePackageImpl#getLongObjectAttributeValue()
+	 * @generated
+	 */
+	int LONG_OBJECT_ATTRIBUTE_VALUE = 25;
+
+	/**
+	 * The feature id for the '<em><b>States</b></em>' reference list.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int LONG_OBJECT_ATTRIBUTE_VALUE__STATES = GENERIC_ATTRIBUTE_VALUE__STATES;
+
+	/**
+	 * The feature id for the '<em><b>Attribute Value</b></em>' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int LONG_OBJECT_ATTRIBUTE_VALUE__ATTRIBUTE_VALUE = GENERIC_ATTRIBUTE_VALUE_FEATURE_COUNT + 0;
+
+	/**
+	 * The number of structural features of the '<em>Long Object Attribute Value</em>' class.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int LONG_OBJECT_ATTRIBUTE_VALUE_FEATURE_COUNT = GENERIC_ATTRIBUTE_VALUE_FEATURE_COUNT + 1;
+
+	/**
+	 * The number of operations of the '<em>Long Object Attribute Value</em>' class.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int LONG_OBJECT_ATTRIBUTE_VALUE_OPERATION_COUNT = GENERIC_ATTRIBUTE_VALUE_OPERATION_COUNT + 0;
+
+	/**
 	 * The meta object id for the '<em>ISerializable</em>' data type.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @see org.eclipse.gemoc.trace.commons.model.generictrace.impl.GenerictracePackageImpl#getISerializable()
 	 * @generated
 	 */
-	int ISERIALIZABLE = 20;
+	int ISERIALIZABLE = 26;
 
 
 	/**
@@ -1415,6 +1691,132 @@ public interface GenerictracePackage extends EPackage {
 	EAttribute getIntegerObjectAttributeValue_AttributeValue();
 
 	/**
+	 * Returns the meta object for class '{@link org.eclipse.gemoc.trace.commons.model.generictrace.DoubleAttributeValue <em>Double Attribute Value</em>}'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return the meta object for class '<em>Double Attribute Value</em>'.
+	 * @see org.eclipse.gemoc.trace.commons.model.generictrace.DoubleAttributeValue
+	 * @generated
+	 */
+	EClass getDoubleAttributeValue();
+
+	/**
+	 * Returns the meta object for the attribute '{@link org.eclipse.gemoc.trace.commons.model.generictrace.DoubleAttributeValue#getAttributeValue <em>Attribute Value</em>}'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return the meta object for the attribute '<em>Attribute Value</em>'.
+	 * @see org.eclipse.gemoc.trace.commons.model.generictrace.DoubleAttributeValue#getAttributeValue()
+	 * @see #getDoubleAttributeValue()
+	 * @generated
+	 */
+	EAttribute getDoubleAttributeValue_AttributeValue();
+
+	/**
+	 * Returns the meta object for class '{@link org.eclipse.gemoc.trace.commons.model.generictrace.ManyDoubleAttributeValue <em>Many Double Attribute Value</em>}'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return the meta object for class '<em>Many Double Attribute Value</em>'.
+	 * @see org.eclipse.gemoc.trace.commons.model.generictrace.ManyDoubleAttributeValue
+	 * @generated
+	 */
+	EClass getManyDoubleAttributeValue();
+
+	/**
+	 * Returns the meta object for the attribute list '{@link org.eclipse.gemoc.trace.commons.model.generictrace.ManyDoubleAttributeValue#getAttributeValue <em>Attribute Value</em>}'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return the meta object for the attribute list '<em>Attribute Value</em>'.
+	 * @see org.eclipse.gemoc.trace.commons.model.generictrace.ManyDoubleAttributeValue#getAttributeValue()
+	 * @see #getManyDoubleAttributeValue()
+	 * @generated
+	 */
+	EAttribute getManyDoubleAttributeValue_AttributeValue();
+
+	/**
+	 * Returns the meta object for class '{@link org.eclipse.gemoc.trace.commons.model.generictrace.DoubleObjectAttributeValue <em>Double Object Attribute Value</em>}'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return the meta object for class '<em>Double Object Attribute Value</em>'.
+	 * @see org.eclipse.gemoc.trace.commons.model.generictrace.DoubleObjectAttributeValue
+	 * @generated
+	 */
+	EClass getDoubleObjectAttributeValue();
+
+	/**
+	 * Returns the meta object for the attribute '{@link org.eclipse.gemoc.trace.commons.model.generictrace.DoubleObjectAttributeValue#getAttributeValue <em>Attribute Value</em>}'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return the meta object for the attribute '<em>Attribute Value</em>'.
+	 * @see org.eclipse.gemoc.trace.commons.model.generictrace.DoubleObjectAttributeValue#getAttributeValue()
+	 * @see #getDoubleObjectAttributeValue()
+	 * @generated
+	 */
+	EAttribute getDoubleObjectAttributeValue_AttributeValue();
+
+	/**
+	 * Returns the meta object for class '{@link org.eclipse.gemoc.trace.commons.model.generictrace.LongAttributeValue <em>Long Attribute Value</em>}'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return the meta object for class '<em>Long Attribute Value</em>'.
+	 * @see org.eclipse.gemoc.trace.commons.model.generictrace.LongAttributeValue
+	 * @generated
+	 */
+	EClass getLongAttributeValue();
+
+	/**
+	 * Returns the meta object for the attribute '{@link org.eclipse.gemoc.trace.commons.model.generictrace.LongAttributeValue#getAttributeValue <em>Attribute Value</em>}'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return the meta object for the attribute '<em>Attribute Value</em>'.
+	 * @see org.eclipse.gemoc.trace.commons.model.generictrace.LongAttributeValue#getAttributeValue()
+	 * @see #getLongAttributeValue()
+	 * @generated
+	 */
+	EAttribute getLongAttributeValue_AttributeValue();
+
+	/**
+	 * Returns the meta object for class '{@link org.eclipse.gemoc.trace.commons.model.generictrace.ManyLongAttributeValue <em>Many Long Attribute Value</em>}'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return the meta object for class '<em>Many Long Attribute Value</em>'.
+	 * @see org.eclipse.gemoc.trace.commons.model.generictrace.ManyLongAttributeValue
+	 * @generated
+	 */
+	EClass getManyLongAttributeValue();
+
+	/**
+	 * Returns the meta object for the attribute list '{@link org.eclipse.gemoc.trace.commons.model.generictrace.ManyLongAttributeValue#getAttributeValue <em>Attribute Value</em>}'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return the meta object for the attribute list '<em>Attribute Value</em>'.
+	 * @see org.eclipse.gemoc.trace.commons.model.generictrace.ManyLongAttributeValue#getAttributeValue()
+	 * @see #getManyLongAttributeValue()
+	 * @generated
+	 */
+	EAttribute getManyLongAttributeValue_AttributeValue();
+
+	/**
+	 * Returns the meta object for class '{@link org.eclipse.gemoc.trace.commons.model.generictrace.LongObjectAttributeValue <em>Long Object Attribute Value</em>}'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return the meta object for class '<em>Long Object Attribute Value</em>'.
+	 * @see org.eclipse.gemoc.trace.commons.model.generictrace.LongObjectAttributeValue
+	 * @generated
+	 */
+	EClass getLongObjectAttributeValue();
+
+	/**
+	 * Returns the meta object for the attribute '{@link org.eclipse.gemoc.trace.commons.model.generictrace.LongObjectAttributeValue#getAttributeValue <em>Attribute Value</em>}'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return the meta object for the attribute '<em>Attribute Value</em>'.
+	 * @see org.eclipse.gemoc.trace.commons.model.generictrace.LongObjectAttributeValue#getAttributeValue()
+	 * @see #getLongObjectAttributeValue()
+	 * @generated
+	 */
+	EAttribute getLongObjectAttributeValue_AttributeValue();
+
+	/**
 	 * Returns the meta object for data type '<em>ISerializable</em>'.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -1750,6 +2152,114 @@ public interface GenerictracePackage extends EPackage {
 		 * @generated
 		 */
 		EAttribute INTEGER_OBJECT_ATTRIBUTE_VALUE__ATTRIBUTE_VALUE = eINSTANCE.getIntegerObjectAttributeValue_AttributeValue();
+
+		/**
+		 * The meta object literal for the '{@link org.eclipse.gemoc.trace.commons.model.generictrace.impl.DoubleAttributeValueImpl <em>Double Attribute Value</em>}' class.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * @see org.eclipse.gemoc.trace.commons.model.generictrace.impl.DoubleAttributeValueImpl
+		 * @see org.eclipse.gemoc.trace.commons.model.generictrace.impl.GenerictracePackageImpl#getDoubleAttributeValue()
+		 * @generated
+		 */
+		EClass DOUBLE_ATTRIBUTE_VALUE = eINSTANCE.getDoubleAttributeValue();
+
+		/**
+		 * The meta object literal for the '<em><b>Attribute Value</b></em>' attribute feature.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * @generated
+		 */
+		EAttribute DOUBLE_ATTRIBUTE_VALUE__ATTRIBUTE_VALUE = eINSTANCE.getDoubleAttributeValue_AttributeValue();
+
+		/**
+		 * The meta object literal for the '{@link org.eclipse.gemoc.trace.commons.model.generictrace.impl.ManyDoubleAttributeValueImpl <em>Many Double Attribute Value</em>}' class.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * @see org.eclipse.gemoc.trace.commons.model.generictrace.impl.ManyDoubleAttributeValueImpl
+		 * @see org.eclipse.gemoc.trace.commons.model.generictrace.impl.GenerictracePackageImpl#getManyDoubleAttributeValue()
+		 * @generated
+		 */
+		EClass MANY_DOUBLE_ATTRIBUTE_VALUE = eINSTANCE.getManyDoubleAttributeValue();
+
+		/**
+		 * The meta object literal for the '<em><b>Attribute Value</b></em>' attribute list feature.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * @generated
+		 */
+		EAttribute MANY_DOUBLE_ATTRIBUTE_VALUE__ATTRIBUTE_VALUE = eINSTANCE.getManyDoubleAttributeValue_AttributeValue();
+
+		/**
+		 * The meta object literal for the '{@link org.eclipse.gemoc.trace.commons.model.generictrace.impl.DoubleObjectAttributeValueImpl <em>Double Object Attribute Value</em>}' class.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * @see org.eclipse.gemoc.trace.commons.model.generictrace.impl.DoubleObjectAttributeValueImpl
+		 * @see org.eclipse.gemoc.trace.commons.model.generictrace.impl.GenerictracePackageImpl#getDoubleObjectAttributeValue()
+		 * @generated
+		 */
+		EClass DOUBLE_OBJECT_ATTRIBUTE_VALUE = eINSTANCE.getDoubleObjectAttributeValue();
+
+		/**
+		 * The meta object literal for the '<em><b>Attribute Value</b></em>' attribute feature.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * @generated
+		 */
+		EAttribute DOUBLE_OBJECT_ATTRIBUTE_VALUE__ATTRIBUTE_VALUE = eINSTANCE.getDoubleObjectAttributeValue_AttributeValue();
+
+		/**
+		 * The meta object literal for the '{@link org.eclipse.gemoc.trace.commons.model.generictrace.impl.LongAttributeValueImpl <em>Long Attribute Value</em>}' class.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * @see org.eclipse.gemoc.trace.commons.model.generictrace.impl.LongAttributeValueImpl
+		 * @see org.eclipse.gemoc.trace.commons.model.generictrace.impl.GenerictracePackageImpl#getLongAttributeValue()
+		 * @generated
+		 */
+		EClass LONG_ATTRIBUTE_VALUE = eINSTANCE.getLongAttributeValue();
+
+		/**
+		 * The meta object literal for the '<em><b>Attribute Value</b></em>' attribute feature.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * @generated
+		 */
+		EAttribute LONG_ATTRIBUTE_VALUE__ATTRIBUTE_VALUE = eINSTANCE.getLongAttributeValue_AttributeValue();
+
+		/**
+		 * The meta object literal for the '{@link org.eclipse.gemoc.trace.commons.model.generictrace.impl.ManyLongAttributeValueImpl <em>Many Long Attribute Value</em>}' class.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * @see org.eclipse.gemoc.trace.commons.model.generictrace.impl.ManyLongAttributeValueImpl
+		 * @see org.eclipse.gemoc.trace.commons.model.generictrace.impl.GenerictracePackageImpl#getManyLongAttributeValue()
+		 * @generated
+		 */
+		EClass MANY_LONG_ATTRIBUTE_VALUE = eINSTANCE.getManyLongAttributeValue();
+
+		/**
+		 * The meta object literal for the '<em><b>Attribute Value</b></em>' attribute list feature.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * @generated
+		 */
+		EAttribute MANY_LONG_ATTRIBUTE_VALUE__ATTRIBUTE_VALUE = eINSTANCE.getManyLongAttributeValue_AttributeValue();
+
+		/**
+		 * The meta object literal for the '{@link org.eclipse.gemoc.trace.commons.model.generictrace.impl.LongObjectAttributeValueImpl <em>Long Object Attribute Value</em>}' class.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * @see org.eclipse.gemoc.trace.commons.model.generictrace.impl.LongObjectAttributeValueImpl
+		 * @see org.eclipse.gemoc.trace.commons.model.generictrace.impl.GenerictracePackageImpl#getLongObjectAttributeValue()
+		 * @generated
+		 */
+		EClass LONG_OBJECT_ATTRIBUTE_VALUE = eINSTANCE.getLongObjectAttributeValue();
+
+		/**
+		 * The meta object literal for the '<em><b>Attribute Value</b></em>' attribute feature.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * @generated
+		 */
+		EAttribute LONG_OBJECT_ATTRIBUTE_VALUE__ATTRIBUTE_VALUE = eINSTANCE.getLongObjectAttributeValue_AttributeValue();
 
 		/**
 		 * The meta object literal for the '<em>ISerializable</em>' data type.
