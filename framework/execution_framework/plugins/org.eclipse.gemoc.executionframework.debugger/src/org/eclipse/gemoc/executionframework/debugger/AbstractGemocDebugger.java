@@ -311,17 +311,16 @@ public abstract class AbstractGemocDebugger extends AbstractDSLDebugger implemen
 			}
 		});
 
-		String frameName = GLOBAL_CONTEXT_FRAMENAME +" : " + executedModelRoot.eClass().getName();
+		// create a debug variable in all StackFrames (including the global context one)
+		final String globalFrameName = GLOBAL_CONTEXT_FRAMENAME +" : " + executedModelRoot.eClass().getName();
 		for (MutableField m : changed) {
 			if (!Activator.getDefault().isUseNestedDebugVariables() || isRootMutableField(m)) {
-				variable(threadName, frameName, MUTABLE_DATA_DECLARATION_TYPENAME, m.getName(), m.getValue(), true);
-			}
-		}
-		for (String name : stackFrameNames) {
-			for (MutableField m : changed) {
-				if (!Activator.getDefault().isUseNestedDebugVariables() || isRootMutableField(m)) {
+				for (String name : stackFrameNames) {
+			//	String name = stackFrameNames.getFirst();
 					variable(threadName, name, MUTABLE_DATA_DECLARATION_TYPENAME, m.getName(), m.getValue(), true);
 				}
+				variable(threadName, globalFrameName, MUTABLE_DATA_DECLARATION_TYPENAME, m.getName(), m.getValue(), true);
+				
 			}
 		}
 
@@ -388,6 +387,7 @@ public abstract class AbstractGemocDebugger extends AbstractDSLDebugger implemen
 		variable(threadName, frameName, MUTABLE_DATA_DECLARATION_TYPENAME, SELF_VARIABLE_NAME, instruction, false);
 		
 		// add all other mutable fields (but keep only root fields)
+		
 		for (MutableField m : mutableFields) {
 			if (!Activator.getDefault().isUseNestedDebugVariables() || isRootMutableField(m)) {
 				variable(threadName, frameName, MUTABLE_DATA_DECLARATION_TYPENAME, m.getName(), m.getValue(), true);
@@ -422,18 +422,18 @@ public abstract class AbstractGemocDebugger extends AbstractDSLDebugger implemen
 			initializeMutableDatas();
 			String frameName = GLOBAL_CONTEXT_FRAMENAME +" : " + executedModelRoot.eClass().getName();
 			pushStackFrame(threadName, frameName, executedModelRoot, instruction);
-
+			
 			for (MutableField m : mutableFields) {
 				if (!Activator.getDefault().isUseNestedDebugVariables() || isRootMutableField(m)) {
 					variable(threadName, frameName, MUTABLE_DATA_DECLARATION_TYPENAME, m.getName(), m.getValue(), true);
 				}
-			}
+			} 
 		} else {
 			// Updating mutable datas
 			updateVariables(threadName);
 		}
 		updateStack(threadName, instruction);
-		scheduleSelectLastStackframe(500);
+		//scheduleSelectLastStackframe(500);
 	}
 
 	protected void scheduleSelectLastStackframe(long delay) {
