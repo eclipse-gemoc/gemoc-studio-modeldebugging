@@ -1,5 +1,5 @@
 /*******************************************************************************
- * Copyright (c) 2016, 2017 Inria and others.
+ * Copyright (c) 2016, 2019 Inria and others.
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
  * which accompanies this distribution, and is available at
@@ -13,19 +13,22 @@ package org.eclipse.gemoc.execution.sequential.javaengine.ui.launcher;
 import java.util.Formatter;
 
 import org.eclipse.emf.common.notify.Adapter;
-import org.eclipse.jface.resource.ImageDescriptor;
-import org.eclipse.swt.graphics.Image;
-import org.eclipse.swt.widgets.Display;
-import org.eclipse.xtext.naming.DefaultDeclarativeQualifiedNameProvider;
-import org.eclipse.xtext.naming.QualifiedName;
-import org.eclipse.gemoc.execution.sequential.javaengine.ui.Activator;
 import org.eclipse.gemoc.commons.eclipse.emf.EObjectUtil;
 import org.eclipse.gemoc.dsl.debug.DebugTarget;
 import org.eclipse.gemoc.dsl.debug.StackFrame;
 import org.eclipse.gemoc.dsl.debug.ide.adapter.DSLDebugTargetAdapter;
 import org.eclipse.gemoc.dsl.debug.ide.adapter.DSLThreadAdapter;
+import org.eclipse.gemoc.execution.sequential.javaengine.ui.Activator;
+import org.eclipse.jface.resource.ImageDescriptor;
+import org.eclipse.jface.resource.JFaceResources;
+import org.eclipse.jface.viewers.IFontProvider;
+import org.eclipse.swt.graphics.Font;
+import org.eclipse.swt.graphics.Image;
+import org.eclipse.swt.widgets.Display;
+import org.eclipse.xtext.naming.DefaultDeclarativeQualifiedNameProvider;
+import org.eclipse.xtext.naming.QualifiedName;
 
-public class PlainK3DebugModelPresentation extends GemocDebugModelPresentation {
+public class PlainK3DebugModelPresentation extends GemocDebugModelPresentation implements IFontProvider {
 	
 	@Override
 	public String getText(Object element) {
@@ -68,6 +71,8 @@ public class PlainK3DebugModelPresentation extends GemocDebugModelPresentation {
 		return super.getText(element);
 	}
 	
+	
+	
 	private Image image;
 	
 	@Override
@@ -83,5 +88,22 @@ public class PlainK3DebugModelPresentation extends GemocDebugModelPresentation {
 		}
 		return super.getImage(element);
 	}
+
+	@Override
+	public Font getFont(Object element) {
+		if(element instanceof Adapter) {
+			Object target = ((Adapter)element).getTarget();
+			if(target instanceof StackFrame) {
+				StackFrame t = ((StackFrame) target);
+				if(t.getChildFrame() == null) {
+					// topmost frame is the stack created but not run yet
+					// as it is different from java usual presentation, let's differenciate it but putting it in italic
+					return JFaceResources.getFontRegistry().getItalic(JFaceResources.DEFAULT_FONT);
+				}
+			}
+		}
+		return null;
+	}
+
 
 }
