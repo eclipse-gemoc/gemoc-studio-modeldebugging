@@ -26,9 +26,9 @@ import org.eclipse.xtext.naming.DefaultDeclarativeQualifiedNameProvider
 
 class AnnotationMutableFieldExtractor implements IMutableFieldExtractor {
 
-	private val Map<EClass, Integer> counters = new HashMap
+	val Map<EClass, Integer> counters = new HashMap
 
-	private val org.eclipse.xtext.naming.DefaultDeclarativeQualifiedNameProvider nameprovider = new DefaultDeclarativeQualifiedNameProvider()
+	val org.eclipse.xtext.naming.DefaultDeclarativeQualifiedNameProvider nameprovider = new DefaultDeclarativeQualifiedNameProvider()
 
 	override extractMutableField(EObject eObject) {
 
