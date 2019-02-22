@@ -18,9 +18,9 @@ import org.eclipse.gemoc.trace.commons.model.trace.Step
  * sequential operational semantics.
  * 
  */
-public class SequentialExecutionException extends RuntimeException {
+class SequentialExecutionException extends RuntimeException {
 
-	private Step<?> pendingStep;
+	Step<?> pendingStep;
 
 	new(Step<?> pendingMSE, Throwable cause) {
 		this.pendingStep = pendingStep;
