@@ -32,14 +32,14 @@ import org.eclipse.gemoc.xdsmlframework.api.core.IExecutionEngine
 import org.eclipse.xtext.naming.DefaultDeclarativeQualifiedNameProvider
 import org.eclipse.gemoc.commons.eclipse.emf.EObjectUtil
 
-public class GenericSequentialModelDebugger extends AbstractGemocDebugger {
+class GenericSequentialModelDebugger extends AbstractGemocDebugger {
 
 	/**
 	 * A fake instruction to prevent the stepping return to stop on each event.
 	 */
-	private static final EObject FAKE_INSTRUCTION = EcorePackage.eINSTANCE;
+	static final EObject FAKE_INSTRUCTION = EcorePackage.eINSTANCE;
 
-	private List<ToPushPop> toPushPop = new ArrayList();
+	List<ToPushPop> toPushPop = new ArrayList();
 
 	protected final String threadName = "Model debugging";
 
@@ -72,7 +72,7 @@ public class GenericSequentialModelDebugger extends AbstractGemocDebugger {
 			it.next();
 			addPredicateBreak(new BiPredicate<IExecutionEngine<?>, Step<?>>() {
 				// The operation we want to step return
-				private Step<?> steppedReturn = it.next();
+				Step<?> steppedReturn = it.next();
 
 				override test(IExecutionEngine<?> t, Step<?> u) {
 					// We finished stepping over once the step is not
@@ -94,7 +94,7 @@ public class GenericSequentialModelDebugger extends AbstractGemocDebugger {
 		addPredicateBreak(new BiPredicate<IExecutionEngine<?>, Step<?>>() {
 			val IExecutionEngine<?> seqEngine = engine as IExecutionEngine<?>;
 			// The operation we want to step over
-			private Step<?> steppedOver = seqEngine.getCurrentStep();
+			Step<?> steppedOver = seqEngine.getCurrentStep();
 
 			override test(IExecutionEngine<?> t, Step<?> u) {
 				// We finished stepping over once the step is not there
@@ -192,7 +192,7 @@ public class GenericSequentialModelDebugger extends AbstractGemocDebugger {
 		}
 	}
 
-	public static class MSEFrameInformation {
+	static class MSEFrameInformation {
 		public val EObject caller;
 		public val String prettyLabel;
 

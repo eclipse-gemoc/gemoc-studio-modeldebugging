@@ -35,7 +35,6 @@ import org.eclipse.emf.common.util.EList;
 import org.eclipse.emf.common.util.TreeIterator;
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.EReference;
-import org.eclipse.emf.ecore.EStructuralFeature;
 import org.eclipse.emf.ecore.resource.Resource;
 import org.eclipse.gemoc.dsl.debug.StackFrame;
 import org.eclipse.gemoc.dsl.debug.ide.AbstractDSLDebugger;
@@ -509,6 +508,7 @@ public abstract class AbstractGemocDebugger extends AbstractDSLDebugger implemen
 					EReference mRef = (EReference) m.getMutableProperty();
 					if(mRef.isContainment()) {
 						if(mRef.getUpperBound() != 1) {
+							@SuppressWarnings("unchecked")
 							EList<EObject> l = (EList<EObject>) m.getValue();
 							if(l.contains(parent)) 
 								return false;
