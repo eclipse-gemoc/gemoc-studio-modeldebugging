@@ -30,6 +30,7 @@ import org.eclipse.gemoc.trace.commons.model.trace.ParallelStep
 import org.eclipse.gemoc.trace.commons.model.trace.Step
 import org.eclipse.gemoc.xdsmlframework.api.core.IExecutionEngine
 import org.eclipse.xtext.naming.DefaultDeclarativeQualifiedNameProvider
+import org.eclipse.gemoc.commons.eclipse.emf.EObjectUtil
 
 public class GenericSequentialModelDebugger extends AbstractGemocDebugger {
 
@@ -153,7 +154,19 @@ public class GenericSequentialModelDebugger extends AbstractGemocDebugger {
 	
 	private def String prettyObjectName(EObject o) {
 		val typeName = o.eClass().getName()
-		val objectName = nameprovider.getFullyQualifiedName(o)?.toString ?: o.toString()
+		var String objectName
+		val qn = nameprovider.getFullyQualifiedName(o)
+		if(qn !== null) {
+			objectName = qn.toString
+		} else {
+			val String resBasedName = EObjectUtil.getResourceBasedName(o, false);
+			if( resBasedName !== null) {
+				objectName = resBasedName
+			} else {
+				objectName = o.toString
+			}
+		}
+		
 		return '''[«typeName»] «objectName»'''
 	}
 
@@ -174,7 +187,7 @@ public class GenericSequentialModelDebugger extends AbstractGemocDebugger {
 				} else {
 					mse.action?.name
 				}
-			val String prettyName = objectName + " -> " + opName
+			val String prettyName = objectName + "#" + opName
 			return prettyName
 		}
 	}
