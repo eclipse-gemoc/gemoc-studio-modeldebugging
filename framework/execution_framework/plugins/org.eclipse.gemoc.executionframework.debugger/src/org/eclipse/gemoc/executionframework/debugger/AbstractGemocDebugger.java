@@ -63,6 +63,7 @@ public abstract class AbstractGemocDebugger extends AbstractDSLDebugger implemen
 	public final static String SELF_VARIABLE_NAME = "self";
 	
 	public final static String MUTABLE_DATA_DECLARATION_TYPENAME = "mutable data";
+	public final static String MUTABLE_STATIC_DATA_DECLARATION_TYPENAME = "mutable static data";
 	public final static String GLOBAL_CONTEXT_FRAMENAME = "Global context";
 	
 	/**
@@ -383,7 +384,7 @@ public abstract class AbstractGemocDebugger extends AbstractDSLDebugger implemen
 		stackFrameNames.push(frameName);
 		// add a variable for "self" target
 		// note: the variable is marked as not supporting modification, this may change in the future if we support "live modeling"
-		variable(threadName, frameName, MUTABLE_DATA_DECLARATION_TYPENAME, SELF_VARIABLE_NAME, instruction, false);
+		variable(threadName, frameName, MUTABLE_STATIC_DATA_DECLARATION_TYPENAME, SELF_VARIABLE_NAME, instruction, false);
 		
 		// add all other mutable fields (but keep only root fields)
 		
