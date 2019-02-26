@@ -17,6 +17,7 @@ import java.util.Set;
 
 import org.eclipse.debug.core.model.IStackFrame;
 import org.eclipse.debug.internal.ui.DebugUIPlugin;
+import org.eclipse.emf.common.notify.Adapter;
 import org.eclipse.emf.common.util.URI;
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.util.EcoreUtil;
@@ -36,6 +37,8 @@ import org.eclipse.gemoc.trace.commons.model.trace.Step;
 import org.eclipse.jface.viewers.ILabelDecorator;
 import org.eclipse.gemoc.dsl.debug.Variable;
 import org.eclipse.gemoc.dsl.debug.ide.adapter.DSLStackFrameAdapter;
+import org.eclipse.gemoc.dsl.debug.ide.adapter.value.DSLObjectValue;
+import org.eclipse.gemoc.dsl.debug.ide.adapter.variable.DSLObjectVariable;
 import org.eclipse.gemoc.dsl.debug.ide.sirius.ui.DSLDebugModelPresentation;
 import org.eclipse.gemoc.dsl.debug.ide.sirius.ui.SiriusEditorUtils;
 import org.eclipse.gemoc.dsl.debug.provider.CustomDebugItemProviderAdapterFactory;
@@ -152,6 +155,15 @@ public class GemocDebugModelPresentation extends DSLDebugModelPresentation {
 			}
 			res = labelDecorator.decorateImage(valueImage, unwrapped);
 
+		} else	if( element instanceof DSLObjectVariable ) {
+			Image valueImage = getImage(unwrapp(element));
+			if(valueImage == null) {
+				valueImage = super.getImage(element);
+			} 
+			if(valueImage == null) {
+				valueImage = DebugUIPlugin.getDefaultLabelProvider().getImage(element);
+			}
+			res = labelDecorator.decorateImage(valueImage,element);
 		} else {
 			res = super.getImage(element);
 		}

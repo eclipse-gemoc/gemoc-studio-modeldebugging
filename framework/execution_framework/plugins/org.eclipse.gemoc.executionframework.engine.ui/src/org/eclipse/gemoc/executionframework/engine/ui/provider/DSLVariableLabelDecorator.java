@@ -13,9 +13,17 @@ package org.eclipse.gemoc.executionframework.engine.ui.provider;
 import java.util.HashMap;
 import java.util.Map;
 
+import org.eclipse.debug.core.DebugException;
+import org.eclipse.emf.common.notify.Adapter;
+import org.eclipse.emf.ecore.EObject;
+import org.eclipse.emf.ecore.util.EObjectContainmentEList;
 import org.eclipse.gemoc.dsl.debug.Variable;
+import org.eclipse.gemoc.dsl.debug.ide.adapter.value.DSLObjectValue;
+import org.eclipse.gemoc.dsl.debug.ide.adapter.variable.DSLObjectVariable;
 import org.eclipse.gemoc.dsl.debug.ide.ui.provider.OverlayImageDescriptor;
 import org.eclipse.gemoc.executionframework.debugger.AbstractGemocDebugger;
+import org.eclipse.gemoc.executionframework.debugger.DefaultDynamicPartAccessor;
+import org.eclipse.gemoc.executionframework.debugger.IDynamicPartAccessor;
 import org.eclipse.gemoc.executionframework.engine.ui.Activator;
 import org.eclipse.jface.resource.ImageDescriptor;
 import org.eclipse.jface.viewers.BaseLabelProvider;
@@ -38,22 +46,23 @@ public class DSLVariableLabelDecorator extends BaseLabelProvider implements ILab
 	 * Static Data locked {@link Image}.
 	 */
 	private final Image staticDataLocked = new Image(Display.getDefault(), 
-			Activator.getImageDescriptor("icons/full/deco16/lock.gif").getImageData(100));
+			Activator.getImageDescriptor("icons/full/deco16/bottomright_lock_closed.gif").getImageData(100));
 
 	/**
 	 * Static data unlocked {@link Image}.
 	 */
 	private final Image staticDataUnlocked = new Image(Display.getDefault(), 
-			Activator.getImageDescriptor("icons/full/deco16/lock_open.gif").getImageData(100));
+			Activator.getImageDescriptor("icons/full/deco16/bottomright_lock_open.gif").getImageData(100));
 
 	
 	/**
 	 * Static data unlocked {@link Image}.
 	 */
 	private final Image dynamicData = new Image(Display.getDefault(), 
-			Activator.getImageDescriptor("icons/full/deco16/lock_blue_open.gif").getImageData(100));
+			Activator.getImageDescriptor("icons/full/deco16/topright_lock.gif").getImageData(100));
 	
 
+	private final IDynamicPartAccessor dynamicPartAccessor = new DefaultDynamicPartAccessor();
 
 
 
@@ -83,32 +92,58 @@ public class DSLVariableLabelDecorator extends BaseLabelProvider implements ILab
 		}
 		if (element instanceof Variable) {
 			Variable v = (Variable)element;
-			final OverlayImageDescriptor descriptor;
-			if(v.getDeclarationType().equals(AbstractGemocDebugger.MUTABLE_STATIC_DATA_DECLARATION_TYPENAME)) {
-				// static data
-				if(v.isSupportModifications()) {
-					descriptor = new OverlayImageDescriptor(img, staticDataUnlocked);
-				} else {
-					descriptor = new OverlayImageDescriptor(img, staticDataLocked);
-				}	
+			// root dynamic variables are currently created using this string as declartionType
+			boolean isDynamic = v.getDeclarationType().equals(AbstractGemocDebugger.MUTABLE_DATA_DECLARATION_TYPENAME);
+			res = getImageForMutableType(img,isDynamic, v.isSupportModifications());					
+		} else if (element instanceof DSLObjectVariable) {
+			DSLObjectVariable dslVar = ((DSLObjectVariable)element);
+			if(dslVar.getObject() instanceof EObject){
+				boolean isDynamic = dynamicPartAccessor.isDynamic((EObject)dslVar.getObject());
+				res = getImageForMutableType(image, isDynamic, dslVar.supportsValueModification());
 			} else {
-				// Runtime data
-				descriptor = new OverlayImageDescriptor(img, dynamicData);
+				if(dslVar.getObject() instanceof EObjectContainmentEList) {
+					EObjectContainmentEList l = (EObjectContainmentEList) dslVar.getObject();
+					l.getEObject();
+					boolean isDynamic = dynamicPartAccessor.isDynamic(l.getEObject());
+					res = getImageForMutableType(image, isDynamic, dslVar.supportsValueModification());
+				} else {
+					//dslVar.getDebugTarget()
+					res = getImageForMutableType(image, false, dslVar.supportsValueModification());
+				}
 			}
-			Image cachedImage = imagesCache.get(descriptor);
-			if (cachedImage == null) {
-				cachedImage = descriptor.createImage();
-				imagesCache.put(descriptor, cachedImage);
-			}
-			res = cachedImage;
-		
-		} else { 
+		} else if (element instanceof DSLObjectValue) {
+			DSLObjectValue dslVar = ((DSLObjectValue)element);			
+			res = getImageForMutableType(image, false, false);
+		} else {
 			res = image; 
 		} 
 
 		return res;
 	}
 
+	protected Image getImageForMutableType(Image baseImage, boolean isDynamic, boolean supportModification) {
+		Image res;
+		final OverlayImageDescriptor descriptor;
+		if(!isDynamic) {
+			// static data
+			if(supportModification) {
+				descriptor = new OverlayImageDescriptor(baseImage, staticDataUnlocked);
+			} else {
+				descriptor = new OverlayImageDescriptor(baseImage, staticDataLocked);
+			}	
+		} else {
+			// Runtime data
+			descriptor = new OverlayImageDescriptor(baseImage, dynamicData);
+		}
+		Image cachedImage = imagesCache.get(descriptor);
+		if (cachedImage == null) {
+			cachedImage = descriptor.createImage();
+			imagesCache.put(descriptor, cachedImage);
+		}
+		res = cachedImage;
+		return res;
+	}
+	
 	/**
 	 * {@inheritDoc}
 	 * 
