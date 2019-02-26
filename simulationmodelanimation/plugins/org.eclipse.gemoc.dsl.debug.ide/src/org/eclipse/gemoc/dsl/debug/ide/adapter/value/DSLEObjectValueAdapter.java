@@ -10,13 +10,13 @@
  *******************************************************************************/
 package org.eclipse.gemoc.dsl.debug.ide.adapter.value;
 
-import org.eclipse.gemoc.dsl.debug.ide.DSLEclipseDebugIntegration;
-
 import org.eclipse.debug.core.DebugException;
 import org.eclipse.debug.core.model.IValue;
 import org.eclipse.debug.core.model.IVariable;
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.EStructuralFeature;
+import org.eclipse.gemoc.dsl.debug.ide.DSLEclipseDebugIntegration;
+import org.eclipse.gemoc.dsl.debug.ide.adapter.AbstractDSLDebugElementAdapter;
 
 /**
  * An {@link EObject} {@link IValue}.
@@ -35,7 +35,8 @@ public class DSLEObjectValueAdapter extends AbstractDSLValue {
 	 * @param value
 	 *            the value {@link Object}
 	 */
-	public DSLEObjectValueAdapter(DSLEclipseDebugIntegration factory, String referenceTypeName, Object value) {
+	public DSLEObjectValueAdapter(DSLEclipseDebugIntegration factory, String referenceTypeName,
+			Object value) {
 		super(factory, referenceTypeName, value);
 	}
 
@@ -78,11 +79,16 @@ public class DSLEObjectValueAdapter extends AbstractDSLValue {
 	 * @see org.eclipse.debug.core.model.IValue#getVariables()
 	 */
 	public IVariable[] getVariables() throws DebugException {
+
 		IVariable[] res = new IVariable[getHost().eClass().getEAllStructuralFeatures().size()];
+
 		int i = 0;
 		for (EStructuralFeature feature : getHost().eClass().getEAllStructuralFeatures()) {
-			res[i] = (IVariable)factory.getVariable(feature.getEType().getName(), feature.getName(),
-					getHost().eGet(feature));
+			res[i] = (IVariable)factory.getVariable(feature.getEType().getName(), feature.getName(), getHost()
+					.eGet(feature));
+			if (res[i] instanceof AbstractDSLDebugElementAdapter) {
+				((AbstractDSLDebugElementAdapter)res[i]).setParentValue(this);
+			}
 			++i;
 		}
 		return res;

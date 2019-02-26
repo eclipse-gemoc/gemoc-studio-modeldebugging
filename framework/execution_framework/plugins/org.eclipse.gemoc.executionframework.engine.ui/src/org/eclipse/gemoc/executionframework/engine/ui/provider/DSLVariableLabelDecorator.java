@@ -16,6 +16,7 @@ import java.util.Map;
 import org.eclipse.debug.core.DebugException;
 import org.eclipse.emf.common.notify.Adapter;
 import org.eclipse.emf.ecore.EObject;
+import org.eclipse.emf.ecore.EStructuralFeature;
 import org.eclipse.emf.ecore.util.EObjectContainmentEList;
 import org.eclipse.gemoc.dsl.debug.Variable;
 import org.eclipse.gemoc.dsl.debug.ide.adapter.value.DSLObjectValue;
@@ -25,6 +26,7 @@ import org.eclipse.gemoc.executionframework.debugger.AbstractGemocDebugger;
 import org.eclipse.gemoc.executionframework.debugger.DefaultDynamicPartAccessor;
 import org.eclipse.gemoc.executionframework.debugger.IDynamicPartAccessor;
 import org.eclipse.gemoc.executionframework.engine.ui.Activator;
+import org.eclipse.gemoc.xdsmlframework.commons.DynamicAnnotationHelper;
 import org.eclipse.jface.resource.ImageDescriptor;
 import org.eclipse.jface.viewers.BaseLabelProvider;
 import org.eclipse.jface.viewers.ILabelDecorator;
@@ -97,20 +99,26 @@ public class DSLVariableLabelDecorator extends BaseLabelProvider implements ILab
 			res = getImageForMutableType(img,isDynamic, v.isSupportModifications());					
 		} else if (element instanceof DSLObjectVariable) {
 			DSLObjectVariable dslVar = ((DSLObjectVariable)element);
+			boolean isDynamic = false;
 			if(dslVar.getObject() instanceof EObject){
-				boolean isDynamic = dynamicPartAccessor.isDynamic((EObject)dslVar.getObject());
-				res = getImageForMutableType(image, isDynamic, dslVar.supportsValueModification());
+				isDynamic = dynamicPartAccessor.isDynamic((EObject)dslVar.getObject());
 			} else {
 				if(dslVar.getObject() instanceof EObjectContainmentEList) {
 					EObjectContainmentEList l = (EObjectContainmentEList) dslVar.getObject();
-					l.getEObject();
-					boolean isDynamic = dynamicPartAccessor.isDynamic(l.getEObject());
-					res = getImageForMutableType(image, isDynamic, dslVar.supportsValueModification());
+					isDynamic = dynamicPartAccessor.isDynamic(l.getEObject());
 				} else {
-					//dslVar.getDebugTarget()
-					res = getImageForMutableType(image, false, dslVar.supportsValueModification());
+					if(dslVar.getParentValue() != null && dslVar.getParentValue().getValue() instanceof EObject) {
+						EStructuralFeature p = null;
+						try {
+							p = ((EObject)dslVar.getParentValue().getValue()).eClass().getEStructuralFeature(dslVar.getName());
+							if(p != null) {
+								isDynamic = DynamicAnnotationHelper.isDynamic(p);
+							}
+						} catch (DebugException e) {}
+					}
 				}
 			}
+			res = getImageForMutableType(image, isDynamic, dslVar.supportsValueModification());
 		} else if (element instanceof DSLObjectValue) {
 			DSLObjectValue dslVar = ((DSLObjectValue)element);			
 			res = getImageForMutableType(image, false, false);
