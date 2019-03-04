@@ -64,7 +64,7 @@ public abstract class AbstractGemocDebugger extends AbstractDSLDebugger implemen
 	
 	public final static String MUTABLE_DATA_DECLARATION_TYPENAME = "mutable data";
 	public final static String MUTABLE_STATIC_DATA_DECLARATION_TYPENAME = "mutable static data";
-	public final static String GLOBAL_CONTEXT_FRAMENAME = "Global context";
+	public final static String GLOBAL_CONTEXT_FRAMENAME = "Engine";
 	
 	/**
 	 * {@link MutableField} delta values.
