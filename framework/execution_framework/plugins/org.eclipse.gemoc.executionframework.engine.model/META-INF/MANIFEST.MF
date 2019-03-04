@@ -1,0 +1,16 @@
+Manifest-Version: 1.0
+Bundle-ManifestVersion: 2
+Bundle-Name: %pluginName
+Bundle-SymbolicName: org.eclipse.gemoc.executionframework.engine.model;singleton:=true
+Automatic-Module-Name: org.eclipse.gemoc.executionframework.engine.model
+Bundle-Version: 0.1.0.qualifier
+Bundle-ClassPath: .
+Bundle-Vendor: %providerName
+Bundle-Localization: plugin
+Bundle-RequiredExecutionEnvironment: JavaSE-1.8
+Export-Package: org.eclipse.gemoc.executionframework.engine.model.engine,
+ org.eclipse.gemoc.executionframework.engine.model.engine.impl,
+ org.eclipse.gemoc.executionframework.engine.model.engine.util
+Require-Bundle: org.eclipse.emf.ecore;visibility:=reexport,
+ org.eclipse.core.runtime
+Bundle-ActivationPolicy: lazy

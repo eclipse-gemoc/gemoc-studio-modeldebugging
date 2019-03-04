@@ -40,6 +40,7 @@ import org.eclipse.gemoc.dsl.debug.StackFrame;
 import org.eclipse.gemoc.dsl.debug.ide.AbstractDSLDebugger;
 import org.eclipse.gemoc.dsl.debug.ide.adapter.DSLStackFrameAdapter;
 import org.eclipse.gemoc.dsl.debug.ide.event.IDSLDebugEventProcessor;
+import org.eclipse.gemoc.executionframework.engine.commons.adapters.ResourceEObjectAdapter;
 import org.eclipse.gemoc.trace.commons.model.trace.Step;
 import org.eclipse.gemoc.xdsmlframework.api.core.IExecutionEngine;
 import org.eclipse.gemoc.xdsmlframework.api.engine_addon.modelchangelistener.FieldChange;
@@ -60,6 +61,7 @@ import org.eclipse.ui.PlatformUI;
 @SuppressWarnings("restriction")
 public abstract class AbstractGemocDebugger extends AbstractDSLDebugger implements IGemocDebugger {
 
+	public final static String CONTEXT_VARIABLE_NAME = "context";
 	public final static String SELF_VARIABLE_NAME = "self";
 	
 	public final static String MUTABLE_DATA_DECLARATION_TYPENAME = "mutable data";
@@ -382,9 +384,10 @@ public abstract class AbstractGemocDebugger extends AbstractDSLDebugger implemen
 	public void pushStackFrame(String threadName, String frameName, EObject context, EObject instruction) {
 		super.pushStackFrame(threadName, frameName, context, instruction);
 		stackFrameNames.push(frameName);
+		
 		// add a variable for "self" target
 		// note: the variable is marked as not supporting modification, this may change in the future if we support "live modeling"
-		variable(threadName, frameName, MUTABLE_STATIC_DATA_DECLARATION_TYPENAME, SELF_VARIABLE_NAME, instruction, false);
+		variable(threadName, frameName, MUTABLE_STATIC_DATA_DECLARATION_TYPENAME, SELF_VARIABLE_NAME, context, false);
 		
 		// add all other mutable fields (but keep only root fields)
 		
@@ -419,9 +422,12 @@ public abstract class AbstractGemocDebugger extends AbstractDSLDebugger implemen
 	public void updateData(String threadName, EObject instruction) {
 		if (executedModelRoot == null) {
 			executedModelRoot = getModelRoot();
+			
+			EList<EObject> resourceContent  = engine.getExecutionContext().getResourceModel().getContents();
+			EObject context  = new ResourceEObjectAdapter(engine.getExecutionContext().getResourceModel().getURI().lastSegment(), resourceContent);
 			initializeMutableDatas();
 			String frameName = GLOBAL_CONTEXT_FRAMENAME +" : " + executedModelRoot.eClass().getName();
-			pushStackFrame(threadName, frameName, executedModelRoot, instruction);
+			pushStackFrame(threadName, frameName, context, instruction);
 			
 			for (MutableField m : mutableFields) {
 				if (!Activator.getDefault().isUseNestedDebugVariables() || isRootMutableField(m)) {

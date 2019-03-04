@@ -158,4 +158,7 @@ public abstract class AbstractModelExecutionContext<R extends IRunConfiguration,
 			editingDomain = TransactionalEditingDomain.Factory.INSTANCE.createEditingDomain(getResourceSet());
 		}
 	}
+	
+	
+	
 }
