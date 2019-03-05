@@ -61,7 +61,6 @@ import org.eclipse.ui.PlatformUI;
 @SuppressWarnings("restriction")
 public abstract class AbstractGemocDebugger extends AbstractDSLDebugger implements IGemocDebugger {
 
-	public final static String CONTEXT_VARIABLE_NAME = "context";
 	public final static String SELF_VARIABLE_NAME = "self";
 	
 	public final static String MUTABLE_DATA_DECLARATION_TYPENAME = "mutable data";
@@ -314,15 +313,13 @@ public abstract class AbstractGemocDebugger extends AbstractDSLDebugger implemen
 		});
 
 		// create a debug variable in all StackFrames (including the global context one)
-		final String globalFrameName = GLOBAL_CONTEXT_FRAMENAME +" : " + executedModelRoot.eClass().getName();
+		final String globalFrameName = GLOBAL_CONTEXT_FRAMENAME +" : " + engine.getExecutionContext().getResourceModel().getURI().lastSegment();
 		for (MutableField m : changed) {
 			if (!Activator.getDefault().isUseNestedDebugVariables() || isRootMutableField(m)) {
 				for (String name : stackFrameNames) {
-			//	String name = stackFrameNames.getFirst();
 					variable(threadName, name, MUTABLE_DATA_DECLARATION_TYPENAME, m.getName(), m.getValue(), true);
 				}
 				variable(threadName, globalFrameName, MUTABLE_DATA_DECLARATION_TYPENAME, m.getName(), m.getValue(), true);
-				
 			}
 		}
 
@@ -426,7 +423,7 @@ public abstract class AbstractGemocDebugger extends AbstractDSLDebugger implemen
 			EList<EObject> resourceContent  = engine.getExecutionContext().getResourceModel().getContents();
 			EObject context  = new ResourceEObjectAdapter(engine.getExecutionContext().getResourceModel().getURI().lastSegment(), resourceContent);
 			initializeMutableDatas();
-			String frameName = GLOBAL_CONTEXT_FRAMENAME +" : " + executedModelRoot.eClass().getName();
+			String frameName = GLOBAL_CONTEXT_FRAMENAME +" : " + engine.getExecutionContext().getResourceModel().getURI().lastSegment();
 			pushStackFrame(threadName, frameName, context, instruction);
 			
 			for (MutableField m : mutableFields) {
