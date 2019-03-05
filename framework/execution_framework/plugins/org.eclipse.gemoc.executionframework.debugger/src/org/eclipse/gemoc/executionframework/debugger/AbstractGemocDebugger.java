@@ -436,7 +436,7 @@ public abstract class AbstractGemocDebugger extends AbstractDSLDebugger implemen
 			updateVariables(threadName);
 		}
 		updateStack(threadName, instruction);
-		//scheduleSelectLastStackframe(500);
+		scheduleSelectLastStackframe(500);
 	}
 
 	protected void scheduleSelectLastStackframe(long delay) {
@@ -482,7 +482,9 @@ public abstract class AbstractGemocDebugger extends AbstractDSLDebugger implemen
 				for (TreeItem item : leafItems) {
 					final DSLStackFrameAdapter stackFrameAdapter = (DSLStackFrameAdapter) item.getData();
 					final StackFrame s = (StackFrame) stackFrameAdapter.getTarget();
-					if (s.getName().startsWith(GLOBAL_CONTEXT_FRAMENAME +" :")) {
+					if(s.getChildFrame() != null && s.getChildFrame().getChildFrame() == null) {
+						// we select the topmost frame where the step is actually started (ie. ignore the top step "about to start")
+						// this allows to focus on a frame that shows runtime data changes in yellow
 						tree.showItem(item);
 						tree.select(item);
 						final TreeSelection selection = (TreeSelection) viewer.getSelection();
