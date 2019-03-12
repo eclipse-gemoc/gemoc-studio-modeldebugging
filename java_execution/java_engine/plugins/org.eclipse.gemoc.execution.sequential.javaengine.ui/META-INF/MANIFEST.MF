@@ -36,7 +36,8 @@ Require-Bundle: org.eclipse.core.expressions;bundle-version="3.4.400",
  org.eclipse.gemoc.executionframework.debugger,
  org.eclipse.gemoc.executionframework.debugger.ui,
  org.eclipse.gemoc.commons.eclipse.messagingsystem.api;bundle-version="2.4.0",
- org.eclipse.gemoc.commons.eclipse.messagingsystem.ui;bundle-version="2.4.0"
+ org.eclipse.gemoc.commons.eclipse.messagingsystem.ui;bundle-version="2.4.0",
+ org.eclipse.gemoc.dsl.debug.edit
 Bundle-RequiredExecutionEnvironment: JavaSE-1.8
 Bundle-ActivationPolicy: lazy
 Bundle-ClassPath:  .

@@ -26,9 +26,9 @@ import org.eclipse.gemoc.executionframework.engine.commons.K3DslHelper
 
 class IntrospectiveMutableFieldExtractor implements IMutableFieldExtractor {
 
-	private String languageName
-	private Map<EObject, List<MutableField>> eObjects = new HashMap
-	private Map<EClass, List<Pair<Class<?>, Class<?>>>> aspectClasses = new HashMap
+	String languageName
+	Map<EObject, List<MutableField>> eObjects = new HashMap
+	Map<EClass, List<Pair<Class<?>, Class<?>>>> aspectClasses = new HashMap
 
 	new(String languageName) {
 		this.languageName = languageName

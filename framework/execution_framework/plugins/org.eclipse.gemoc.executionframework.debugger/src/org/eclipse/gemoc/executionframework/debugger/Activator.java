@@ -36,6 +36,8 @@ public class Activator extends GemocPlugin {
 	private Supplier<String> bundleSymbolicNameSupplier;
 
 	private Supplier<OmniscientGenericSequentialModelDebugger> debuggerSupplier;
+	
+	private boolean useNestedDebugVariables = true;
 
 	public void setHandlerFieldSuppliers(Supplier<IExecutionEngine<?>> engineSupplier,
 			Supplier<String> bundleSymbolicNameSupplier) {
@@ -114,6 +116,19 @@ public class Activator extends GemocPlugin {
 
 	public void setDebuggerSupplier(Supplier<OmniscientGenericSequentialModelDebugger> debuggerSupplier) {
 		this.debuggerSupplier = debuggerSupplier;
+	}
+
+	public boolean isUseNestedDebugVariables() {
+		return useNestedDebugVariables;
+	}
+
+	/**
+	 * if true, the debug variable will use a nested layout
+	 * otherwise it will use a flat layout
+	 * @param useNestedDebugVariables
+	 */
+	public void setUseNestedDebugVariables(boolean useNestedDebugVariables) {
+		this.useNestedDebugVariables = useNestedDebugVariables;
 	}
 
 }

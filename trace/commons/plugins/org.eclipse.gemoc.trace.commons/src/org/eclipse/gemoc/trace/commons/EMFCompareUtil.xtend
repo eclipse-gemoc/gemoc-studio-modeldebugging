@@ -22,7 +22,7 @@ import static org.junit.Assert.*
 
 class EMFCompareUtil {
 
-	public def static List<Diff> compare(EObject rootCurrent, EObject rootExpected) {
+	def static List<Diff> compare(EObject rootCurrent, EObject rootExpected) {
 		val DefaultComparisonScope _defaultComparisonScope = new DefaultComparisonScope(rootCurrent, rootExpected,
 			null);
 		val IComparisonScope scope = _defaultComparisonScope;
@@ -32,7 +32,7 @@ class EMFCompareUtil {
 		return comparison.differences
 	}
 
-	public def static void assertEqualsEMF(String message, EObject rootCurrent, EObject rootExpected) {
+	def static void assertEqualsEMF(String message, EObject rootCurrent, EObject rootExpected) {
 		val List<Diff> differences = compare(rootCurrent, rootExpected);
 		for (d : differences) {
 			val String _string = d.toString();

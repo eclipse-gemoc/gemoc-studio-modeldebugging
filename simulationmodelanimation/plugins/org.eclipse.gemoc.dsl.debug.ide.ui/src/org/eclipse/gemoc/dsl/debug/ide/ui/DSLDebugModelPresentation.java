@@ -10,13 +10,6 @@
  *******************************************************************************/
 package org.eclipse.gemoc.dsl.debug.ide.ui;
 
-import org.eclipse.gemoc.dsl.debug.Variable;
-import org.eclipse.gemoc.dsl.debug.ide.DSLBreakpoint;
-import org.eclipse.gemoc.dsl.debug.ide.adapter.DSLStackFrameAdapter;
-import org.eclipse.gemoc.dsl.debug.ide.adapter.value.DSLObjectValue;
-import org.eclipse.gemoc.dsl.debug.ide.adapter.variable.DSLObjectVariable;
-import org.eclipse.gemoc.dsl.debug.provider.CustomDebugItemProviderAdapterFactory;
-
 import java.util.HashMap;
 import java.util.Map;
 
@@ -36,6 +29,12 @@ import org.eclipse.emf.edit.provider.ReflectiveItemProviderAdapterFactory;
 import org.eclipse.emf.edit.provider.resource.ResourceItemProviderAdapterFactory;
 import org.eclipse.emf.edit.ui.provider.AdapterFactoryLabelProvider;
 import org.eclipse.emf.edit.ui.provider.ExtendedImageRegistry;
+import org.eclipse.gemoc.dsl.debug.Variable;
+import org.eclipse.gemoc.dsl.debug.ide.DSLBreakpoint;
+import org.eclipse.gemoc.dsl.debug.ide.adapter.DSLStackFrameAdapter;
+import org.eclipse.gemoc.dsl.debug.ide.adapter.value.DSLObjectValue;
+import org.eclipse.gemoc.dsl.debug.ide.adapter.variable.DSLObjectVariable;
+import org.eclipse.gemoc.dsl.debug.provider.CustomDebugItemProviderAdapterFactory;
 import org.eclipse.jface.resource.ImageDescriptor;
 import org.eclipse.jface.viewers.ILabelProvider;
 import org.eclipse.jface.viewers.ILabelProviderListener;
@@ -59,7 +58,7 @@ public class DSLDebugModelPresentation implements IDebugModelPresentation, IDebu
 	/**
 	 * The EMF {@link ILabelProvider}.
 	 */
-	private final ILabelProvider eLabelProvider;
+	protected ILabelProvider eLabelProvider;
 
 	/**
 	 * Constructor.
@@ -231,7 +230,7 @@ public class DSLDebugModelPresentation implements IDebugModelPresentation, IDebu
 	 * @return the {@link Adapter#getTarget() target} if the given element is an {@link Adapter}, the given
 	 *         element itself otherwise
 	 */
-	private Object unwrapp(Object element) {
+	protected Object unwrapp(Object element) {
 		final Object res;
 
 		if (element instanceof DSLObjectVariable) {

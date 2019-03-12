@@ -11,6 +11,7 @@
 package org.eclipse.gemoc.executionframework.debugger.ui;
 
 import org.eclipse.core.runtime.Status;
+import org.eclipse.gemoc.executionframework.debugger.ui.handlers.ToggleFlatRTDField;
 import org.eclipse.jface.resource.ImageDescriptor;
 import org.eclipse.ui.plugin.AbstractUIPlugin;
 //import org.eclipse.gemoc.gemoc_language_workbench.extensions.sirius.services.AbstractGemocDebuggerServices;
@@ -44,6 +45,7 @@ public class Activator extends AbstractUIPlugin {
 	public void start(BundleContext context) throws Exception {
 		super.start(context);
 		plugin = this;
+		ToggleFlatRTDField.applyCurrentState();
 	}
 
 	/*

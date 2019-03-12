@@ -24,27 +24,14 @@ import org.eclipse.emf.ecore.EStructuralFeature
 import org.eclipse.emf.ecore.resource.Resource
 import org.eclipse.emf.ecore.util.EContentAdapter
 
-/**
- * This model listener gathers EMF notifications, and computes when asked a
- * set of ModelChange objects to reflect what happened in a more abstract
- * and concise way.
- * 
- * For instance, if a field changed multiple times in between two queries to
- * the model listener, a single ModelChange object will be computed to reflect that change,
- * instead of a list of many EMF Notifications.
- * 
- * A ModelChange can be a new/removed object in the model, or a change in a field.
- * See associated class.
- * 
- */
-public class BatchModelChangeListener {
+ class BatchModelChangeListener {
 
-	private val EContentAdapter adapter;
-	private val Map<Object, List<Notification>> changes = new HashMap
-	private val Set<Object> registeredObservers = new HashSet
-	private val Set<Resource> observedResources = new HashSet<Resource>
+	val EContentAdapter adapter;
+	val Map<Object, List<Notification>> changes = new HashMap
+	val Set<Object> registeredObservers = new HashSet
+	val Set<Resource> observedResources = new HashSet<Resource>
 
-	public new(Set<Resource> resources) {
+	 new(Set<Resource> resources) {
 		/*
 		 * We create an adapter that stores and sort all the notifications for each object and field.
 		 * This avoids us to sort everything afterwards.
@@ -257,7 +244,7 @@ public class BatchModelChangeListener {
 		}
 	}
 
-	public def void cleanUp() {
+	def void cleanUp() {
 		for (r : observedResources.filter[r|r !== null]) {
 			r.eAdapters().remove(adapter);
 		}
