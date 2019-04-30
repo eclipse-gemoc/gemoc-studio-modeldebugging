@@ -42,7 +42,7 @@ class TestEngineAddon extends DefaultEngineAddon {
 		testResult.engineStopped = true
 	}
 
-	override stepExecuted(IExecutionEngine engine, Step<?> stepExecuted) {
+	override stepExecuted(IExecutionEngine<?> engine, Step<?> stepExecuted) {
 		testResult.amountOfStepsExecuted++
 		if (shouldStopAfter != -1 && shouldStopAfter < testResult.amountOfStepsExecuted) {
 			engine.stop
