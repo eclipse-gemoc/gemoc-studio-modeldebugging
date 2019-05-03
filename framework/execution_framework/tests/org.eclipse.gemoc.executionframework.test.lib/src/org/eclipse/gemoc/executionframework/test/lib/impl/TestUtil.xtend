@@ -114,7 +114,7 @@ class TestUtil {
 
 	def static public void removeStoppedEngines() {
 		val registry = Activator.getDefault().gemocRunningEngineRegistry
-		for (Entry<String, IExecutionEngine> engineEntry : registry.getRunningEngines().entrySet()) {
+		for (Entry<String, IExecutionEngine<?>> engineEntry : registry.getRunningEngines().entrySet()) {
 			if (engineEntry.value.runningStatus.equals(EngineStatus.RunStatus.Stopped)) {
 				registry.unregisterEngine(engineEntry.getKey())
 			}
