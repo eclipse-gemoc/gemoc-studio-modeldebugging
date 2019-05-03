@@ -286,12 +286,11 @@ public class GenericTraceConstructor implements ITraceConstructor {
 						for (EObject o : modelElements) {
 							addNewObjectToStateIfDynamic(o, state);
 							final TracedObject<?> tracedObj = exeToTraced.get(o);
-							if(tracedObj == null) {
-							Activator.error("Cannot find traced object for "+o+" (used by "+mutableProperty.getName()+" of "+object.eClass()+ ");\n"
-									+ "Did you correctly declare it as Runtime Data ?", 
-									new Exception("Cannot find traced object for "+o+" (used by "+mutableProperty.getName()+" of "+object.eClass()+ ")"));
+							if(tracedObj != null) {
+								value.getReferenceValues().add(tracedObj);
+							} else {
+								value.getReferenceValues().add(o);
 							}
-							value.getReferenceValues().add(tracedObj);
 						}
 						firstValue = value;
 					} else {
@@ -303,12 +302,11 @@ public class GenericTraceConstructor implements ITraceConstructor {
 							addNewObjectToStateIfDynamic(o, state);
 							final SingleReferenceValue value = GenerictraceFactory.eINSTANCE.createSingleReferenceValue();
 							final TracedObject<?> tracedObj = exeToTraced.get(o);
-							if(tracedObj == null) {
-							Activator.error("Cannot find traced object for "+o+" (used by "+mutableProperty.getName()+" of "+object.eClass()+ ");\n"
-									+ "Did you correctly declare it as Runtime Data ?", 
-									new Exception("Cannot find traced object for "+o+" (used by "+mutableProperty.getName()+" of "+object.eClass()+ ")"));
+							if(tracedObj != null) {
+								value.setReferenceValue(tracedObj);
+							} else {
+								value.setReferenceValue(o);
 							}
-							value.setReferenceValue(tracedObj);
 							firstValue = value;
 						}
 					}
