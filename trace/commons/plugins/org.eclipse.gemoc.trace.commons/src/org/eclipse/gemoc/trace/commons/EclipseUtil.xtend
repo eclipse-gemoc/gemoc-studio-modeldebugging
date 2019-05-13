@@ -138,11 +138,11 @@ class EclipseUtil {
 	// def public static void warn(String msg, String pluginID,Throwable e) {
 	// throw new CoreException(new Status(Status.WARNING, pluginID, msg, e));
 	// }
-	def public static void error(String msg, String pluginID, Throwable e) throws CoreException {
+	def static void error(String msg, String pluginID, Throwable e) throws CoreException {
 		throw new CoreException(new Status(Status.ERROR, pluginID, msg, e));
 	}
 
-	public def static Set<EPackage> findAllEPackagesIn(Set<IContainer> containers) {
+	def static Set<EPackage> findAllEPackagesIn(Set<IContainer> containers) {
 
 		val Set<EPackage> inputMetamodel = new HashSet<EPackage>();
 		val rs = new ResourceSetImpl
@@ -168,5 +168,4 @@ class EclipseUtil {
 		}
 		return inputMetamodel
 	}
-
 }

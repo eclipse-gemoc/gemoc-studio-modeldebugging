@@ -14,7 +14,7 @@ import org.eclipse.xtext.naming.DefaultDeclarativeQualifiedNameProvider;
 import org.eclipse.xtext.naming.QualifiedName;
 import org.eclipse.gemoc.executionframework.debugger.MutableField
 
-public class MutableFieldNameProvider extends DefaultDeclarativeQualifiedNameProvider{
+class MutableFieldNameProvider extends DefaultDeclarativeQualifiedNameProvider{
  
     def QualifiedName qualifiedName(MutableField e) {
         var qnameSegments = this.getFullyQualifiedName(e.geteObject).segments

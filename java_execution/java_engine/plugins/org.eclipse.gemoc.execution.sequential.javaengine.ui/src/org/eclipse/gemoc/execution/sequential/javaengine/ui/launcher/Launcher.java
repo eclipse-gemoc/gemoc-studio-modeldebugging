@@ -16,6 +16,7 @@ import org.eclipse.debug.core.ILaunchConfigurationWorkingCopy;
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.gemoc.commons.eclipse.messagingsystem.api.MessagingSystem;
 import org.eclipse.gemoc.commons.eclipse.ui.ViewHelper;
+import org.eclipse.gemoc.execution.sequential.javaengine.IK3RunConfiguration;
 import org.eclipse.gemoc.execution.sequential.javaengine.K3RunConfiguration;
 import org.eclipse.gemoc.execution.sequential.javaengine.PlainK3ExecutionEngine;
 import org.eclipse.gemoc.execution.sequential.javaengine.SequentialModelExecutionContext;
@@ -25,16 +26,16 @@ import org.eclipse.gemoc.executionframework.engine.ui.launcher.AbstractSequentia
 import org.eclipse.gemoc.executionframework.ui.views.engine.EnginesStatusView;
 import org.eclipse.gemoc.xdsmlframework.api.core.ExecutionMode;
 
-public class Launcher extends AbstractSequentialGemocLauncher<SequentialModelExecutionContext<K3RunConfiguration>, K3RunConfiguration> {
+public class Launcher extends AbstractSequentialGemocLauncher<SequentialModelExecutionContext<IK3RunConfiguration>, IK3RunConfiguration> {
 
 	public final static String TYPE_ID = Activator.PLUGIN_ID + ".launcher";
 
 	@Override
-	protected PlainK3ExecutionEngine createExecutionEngine(K3RunConfiguration runConfiguration,
+	protected PlainK3ExecutionEngine createExecutionEngine(IK3RunConfiguration runConfiguration,
 			ExecutionMode executionMode) throws CoreException, EngineContextException {
 		// create and initialize engine
 		PlainK3ExecutionEngine executionEngine = new PlainK3ExecutionEngine();
-		SequentialModelExecutionContext<K3RunConfiguration> executioncontext = new SequentialModelExecutionContext<K3RunConfiguration>(
+		SequentialModelExecutionContext<IK3RunConfiguration> executioncontext = new SequentialModelExecutionContext<IK3RunConfiguration>(
 				runConfiguration, executionMode);
 		executioncontext.getExecutionPlatform().getModelLoader().setProgressMonitor(this.launchProgressMonitor);
 		executioncontext.initializeResourceModel();

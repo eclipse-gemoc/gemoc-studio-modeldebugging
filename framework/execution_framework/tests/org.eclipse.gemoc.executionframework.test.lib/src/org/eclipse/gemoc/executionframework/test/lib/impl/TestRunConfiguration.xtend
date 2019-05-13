@@ -12,8 +12,9 @@ import org.eclipse.gemoc.xdsmlframework.api.core.IRunConfiguration
 import org.eclipse.gemoc.xdsmlframework.api.extensions.engine_addon.EngineAddonSpecificationExtension
 import org.eclipse.gemoc.xdsmlframework.api.extensions.engine_addon.EngineAddonSpecificationExtensionPoint
 import org.eclipse.gemoc.executionframework.test.lib.IExecutableModel
+import org.eclipse.gemoc.execution.sequential.javaengine.IK3RunConfiguration
 
-class TestRunConfiguration implements IRunConfiguration {
+class TestRunConfiguration implements IK3RunConfiguration {
 	private val ILanguageWrapper language
 	private val IExecutableModel model
 	private val Set<String> addonsToLoad
@@ -32,10 +33,6 @@ class TestRunConfiguration implements IRunConfiguration {
 
 	override getAnimatorURI() {
 		return null;
-	}
-
-	override getDeadlockDetectionDepth() {
-		return 0;
 	}
 
 	override getEngineAddonExtensions() {

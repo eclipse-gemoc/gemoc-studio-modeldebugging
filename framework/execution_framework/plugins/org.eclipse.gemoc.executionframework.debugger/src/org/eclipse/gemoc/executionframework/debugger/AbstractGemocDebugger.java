@@ -31,13 +31,16 @@ import java.util.stream.Collectors;
 
 import org.eclipse.debug.internal.ui.viewers.model.provisional.TreeModelViewer;
 import org.eclipse.debug.internal.ui.views.launch.LaunchView;
+import org.eclipse.emf.common.util.EList;
 import org.eclipse.emf.common.util.TreeIterator;
 import org.eclipse.emf.ecore.EObject;
+import org.eclipse.emf.ecore.EReference;
 import org.eclipse.emf.ecore.resource.Resource;
 import org.eclipse.gemoc.dsl.debug.StackFrame;
 import org.eclipse.gemoc.dsl.debug.ide.AbstractDSLDebugger;
 import org.eclipse.gemoc.dsl.debug.ide.adapter.DSLStackFrameAdapter;
 import org.eclipse.gemoc.dsl.debug.ide.event.IDSLDebugEventProcessor;
+import org.eclipse.gemoc.executionframework.engine.commons.adapters.ResourceEObjectAdapter;
 import org.eclipse.gemoc.trace.commons.model.trace.Step;
 import org.eclipse.gemoc.xdsmlframework.api.core.IExecutionEngine;
 import org.eclipse.gemoc.xdsmlframework.api.engine_addon.modelchangelistener.FieldChange;
@@ -58,6 +61,12 @@ import org.eclipse.ui.PlatformUI;
 @SuppressWarnings("restriction")
 public abstract class AbstractGemocDebugger extends AbstractDSLDebugger implements IGemocDebugger {
 
+	public final static String SELF_VARIABLE_NAME = "self";
+	
+	public final static String MUTABLE_DATA_DECLARATION_TYPENAME = "mutable data";
+	public final static String MUTABLE_STATIC_DATA_DECLARATION_TYPENAME = "mutable static data";
+	public final static String GLOBAL_CONTEXT_FRAMENAME = "Engine";
+	
 	/**
 	 * {@link MutableField} delta values.
 	 */
@@ -70,6 +79,7 @@ public abstract class AbstractGemocDebugger extends AbstractDSLDebugger implemen
 
 	/**
 	 * {@link MutableField} mutable values.
+	 * The list of mutable fields is stored in a flat list but will be displayed using containment structure
 	 */
 	private final List<MutableField> mutableFields = new ArrayList<>();
 
@@ -178,6 +188,23 @@ public abstract class AbstractGemocDebugger extends AbstractDSLDebugger implemen
 		}
 		return mutableFields.addAll(newMutableFields);
 	}
+	
+	/**
+	 * update the mutableField for the given eObject and recursively into its content
+	 * will do nothing if the object is already known
+	 * @param eObject
+	 */
+	private void recursiveUpdateMutableFieldList(EObject eObject) {
+		List<MutableField> currentMutableFields = lookForMutableFields(eObject);
+		if (currentMutableFields.isEmpty()) {
+			// This is a new object
+			updateMutableFieldList(eObject);
+		}
+		
+		for (EObject content : eObject.eContents()) {
+			recursiveUpdateMutableFieldList(content);
+		}
+	}
 
 	private void initializeMutableDatas() {
 		mutableFields.clear();
@@ -251,11 +278,7 @@ public abstract class AbstractGemocDebugger extends AbstractDSLDebugger implemen
 			case ADD:
 				if (change.getValue() instanceof EObject) {
 					EObject eObject = (EObject) change.getValue();
-					List<MutableField> currentMutableFields = lookForMutableFields(eObject);
-					if (currentMutableFields.isEmpty()) {
-						// This is a new object
-						updateMutableFieldList(eObject);
-					}
+					recursiveUpdateMutableFieldList(eObject);
 				}
 				break;
 			case REMOVE:
@@ -289,13 +312,14 @@ public abstract class AbstractGemocDebugger extends AbstractDSLDebugger implemen
 			}
 		});
 
-		String frameName = "Global context : " + executedModelRoot.eClass().getName();
+		// create a debug variable in all StackFrames (including the global context one)
+		final String globalFrameName = GLOBAL_CONTEXT_FRAMENAME +" : " + engine.getExecutionContext().getResourceModel().getURI().lastSegment();
 		for (MutableField m : changed) {
-			variable(threadName, frameName, "mutable data", m.getName(), m.getValue(), true);
-		}
-		for (String name : stackFrameNames) {
-			for (MutableField m : changed) {
-				variable(threadName, name, "mutable data", m.getName(), m.getValue(), true);
+			if (!Activator.getDefault().isUseNestedDebugVariables() || isRootMutableField(m)) {
+				for (String name : stackFrameNames) {
+					variable(threadName, name, MUTABLE_DATA_DECLARATION_TYPENAME, m.getName(), m.getValue(), true);
+				}
+				variable(threadName, globalFrameName, MUTABLE_DATA_DECLARATION_TYPENAME, m.getName(), m.getValue(), true);
 			}
 		}
 
@@ -357,10 +381,17 @@ public abstract class AbstractGemocDebugger extends AbstractDSLDebugger implemen
 	public void pushStackFrame(String threadName, String frameName, EObject context, EObject instruction) {
 		super.pushStackFrame(threadName, frameName, context, instruction);
 		stackFrameNames.push(frameName);
+		
+		// add a variable for "self" target
+		// note: the variable is marked as not supporting modification, this may change in the future if we support "live modeling"
+		variable(threadName, frameName, MUTABLE_STATIC_DATA_DECLARATION_TYPENAME, SELF_VARIABLE_NAME, context, false);
+		
+		// add all other mutable fields (but keep only root fields)
+		
 		for (MutableField m : mutableFields) {
-			// if (m.geteObject().eContainer() == context) {
-			variable(threadName, frameName, "mutable data", m.getName(), m.getValue(), true);
-			// }
+			if (!Activator.getDefault().isUseNestedDebugVariables() || isRootMutableField(m)) {
+				variable(threadName, frameName, MUTABLE_DATA_DECLARATION_TYPENAME, m.getName(), m.getValue(), true);
+			}
 		}
 	}
 
@@ -388,13 +419,18 @@ public abstract class AbstractGemocDebugger extends AbstractDSLDebugger implemen
 	public void updateData(String threadName, EObject instruction) {
 		if (executedModelRoot == null) {
 			executedModelRoot = getModelRoot();
+			
+			EList<EObject> resourceContent  = engine.getExecutionContext().getResourceModel().getContents();
+			EObject context  = new ResourceEObjectAdapter(engine.getExecutionContext().getResourceModel().getURI().lastSegment(), resourceContent);
 			initializeMutableDatas();
-			String frameName = "Global context : " + executedModelRoot.eClass().getName();
-			pushStackFrame(threadName, frameName, executedModelRoot, instruction);
-
+			String frameName = GLOBAL_CONTEXT_FRAMENAME +" : " + engine.getExecutionContext().getResourceModel().getURI().lastSegment();
+			pushStackFrame(threadName, frameName, context, instruction);
+			
 			for (MutableField m : mutableFields) {
-				variable(threadName, frameName, "mutable data", m.getName(), m.getValue(), true);
-			}
+				if (!Activator.getDefault().isUseNestedDebugVariables() || isRootMutableField(m)) {
+					variable(threadName, frameName, MUTABLE_DATA_DECLARATION_TYPENAME, m.getName(), m.getValue(), true);
+				}
+			} 
 		} else {
 			// Updating mutable datas
 			updateVariables(threadName);
@@ -446,7 +482,9 @@ public abstract class AbstractGemocDebugger extends AbstractDSLDebugger implemen
 				for (TreeItem item : leafItems) {
 					final DSLStackFrameAdapter stackFrameAdapter = (DSLStackFrameAdapter) item.getData();
 					final StackFrame s = (StackFrame) stackFrameAdapter.getTarget();
-					if (s.getName().startsWith("Global context :")) {
+					if(s.getChildFrame() != null && s.getChildFrame().getChildFrame() == null) {
+						// we select the topmost frame where the step is actually started (ie. ignore the top step "about to start")
+						// this allows to focus on a frame that shows runtime data changes in yellow
 						tree.showItem(item);
 						tree.select(item);
 						final TreeSelection selection = (TreeSelection) viewer.getSelection();
@@ -457,5 +495,38 @@ public abstract class AbstractGemocDebugger extends AbstractDSLDebugger implemen
 				}
 			}
 		});
+	}
+	
+	/**
+	 * indicates if the provided field is not contained by another object that is himself a mutable field.
+	 * This is useful in order to show only "root" fields
+	 * Note: this methods does not cross non mutable object. 
+	 * Ie. if A contains B, B contains C, C contains D
+	 *  A, C and D are mutable, then isRootMutableField will return true for A and C
+	 * @param field
+	 * @return
+	 */
+	protected boolean isRootMutableField(MutableField field) {
+		EObject parent = field.geteObject();
+		if(parent != null) {
+			for (MutableField m : mutableFields) {
+				if(m.getMutableProperty() instanceof EReference) {
+					EReference mRef = (EReference) m.getMutableProperty();
+					if(mRef.isContainment()) {
+						if(mRef.getUpperBound() != 1) {
+							@SuppressWarnings("unchecked")
+							EList<EObject> l = (EList<EObject>) m.getValue();
+							if(l.contains(parent)) 
+								return false;
+						} else {
+							if(m.getValue() == parent ) {
+								return false;
+							}
+						}
+					}
+				}
+			}
+		}
+		return true;
 	}
 }

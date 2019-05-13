@@ -23,15 +23,15 @@ class DynamicAnnotationHelper {
 		return o.EAnnotations.exists[a|a.source.equals(DYNAMIC_ANNOTATION_URI)]
 	}
 
-	public static def boolean isDynamic(EClass c) {
+	static def boolean isDynamic(EClass c) {
 		return isDynamic(c as EModelElement)
 	}
 
-	public static def boolean isDynamic(EStructuralFeature p) {
+	static def boolean isDynamic(EStructuralFeature p) {
 		return isDynamic(p as EModelElement) || isDynamic(p.EContainingClass)
 	}
 
-	public static def EAnnotation createDynamicAnnotation() {
+	static def EAnnotation createDynamicAnnotation() {
 		val EAnnotation dynamicAnnotation = EcoreFactory.eINSTANCE.createEAnnotation();
 		dynamicAnnotation.setSource(DYNAMIC_ANNOTATION_URI);
 		return dynamicAnnotation;
