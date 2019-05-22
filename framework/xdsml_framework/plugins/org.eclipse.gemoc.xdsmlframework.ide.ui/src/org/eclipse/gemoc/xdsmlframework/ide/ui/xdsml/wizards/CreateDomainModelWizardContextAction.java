@@ -81,9 +81,9 @@ public class CreateDomainModelWizardContextAction {
 
 		// "org.eclipse.emf.importer.ui.EMFProjectWizard" = create EMFProject
 		// from existing Ecore file
-
+		final String wizardId = "org.eclipse.ecoretools.emf.design.wizardID";
 		IWizardDescriptor descriptor = WizardFinder
-				.findNewWizardDescriptor("org.eclipse.ecoretools.emf.design.wizardID");
+				.findNewWizardDescriptor(wizardId);
 
 		// Then if we have a wizard, open it.
 		if (descriptor != null) {
@@ -128,7 +128,12 @@ public class CreateDomainModelWizardContextAction {
 				ResourcesPlugin.getWorkspace().removeResourceChangeListener(
 						workspaceListener);
 			}
+		} else {
+			Activator
+			.error("wizard with id="+wizardId+" not found",
+					null);
 		}
+		
 	}
 
 	protected void selectExistingEMFProject() {

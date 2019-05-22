@@ -143,9 +143,9 @@ public class CreateEditorProjectWizardContextAction {
 		// wizard id =
 		// org.eclipse.xtext.xtext.ui.wizard.ecore2xtext.NewXtextProjectFromEcoreWizard
 		// launch the appropriate wizard
-
+		final String wizardId = "org.eclipse.xtext.xtext.ui.wizard.ecore2xtext.NewXtextProjectFromEcoreWizard";
 		IWizardDescriptor descriptor = WizardFinder
-				.findNewWizardDescriptor("org.eclipse.xtext.xtext.ui.wizard.ecore2xtext.NewXtextProjectFromEcoreWizard");
+				.findNewWizardDescriptor(wizardId);
 		// Then if we have a wizard, open it.
 		if (descriptor != null) {
 			// add a listener to capture the creation of the resulting project
@@ -202,14 +202,15 @@ public class CreateEditorProjectWizardContextAction {
 			}
 		} else {
 			Activator
-					.error("wizard with id=org.eclipse.xtext.xtext.ui.wizard.ecore2xtext.NewXtextProjectFromEcoreWizard not found",
+					.error("wizard with id="+wizardId+" not found",
 							null);
 		}
 	}
 
 	protected void createNewODProject() {
+		final String wizardId = "org.eclipse.gemoc.xdsmlframework.extensions.sirius.wizards.NewGemocSiriusProjectWizard";
 		final IWizardDescriptor descriptor = WizardFinder
-				.findNewWizardDescriptor("org.eclipse.gemoc.xdsmlframework.extensions.sirius.wizards.NewGemocSiriusProjectWizard");
+				.findNewWizardDescriptor(wizardId);
 		// Then if we have a wizard, open it.
 		if (descriptor != null) {
 			NewProjectWorkspaceListener workspaceListener = new NewProjectWorkspaceListener();
@@ -251,7 +252,7 @@ public class CreateEditorProjectWizardContextAction {
 			}
 		} else {
 			Activator
-					.error("wizard with id=org.eclipse.sirius.ui.specificationproject.wizard not found",
+					.error("wizard with id="+wizardId+" not found",
 							null);
 		}
 	}
