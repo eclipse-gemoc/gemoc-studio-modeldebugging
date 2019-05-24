@@ -220,8 +220,23 @@ public class CreateEditorProjectWizardContextAction {
 			try {
 				IWorkbenchWizard wizard;
 				wizard = descriptor.createWizard();
-				 ((NewGemocSiriusProjectWizard)wizard).setInitialProjectName(XDSMLProjectHelper
-						                                                .baseProjectName(gemocLanguageIProject));
+				NewGemocSiriusProjectWizard gsWizard = ((NewGemocSiriusProjectWizard)wizard);
+				gsWizard.getContext().projectName= (XDSMLProjectHelper.baseProjectName(gemocLanguageIProject)+".design");
+				
+				FileFinderVisitor dslProjectVisitor = new FileFinderVisitor("dsl");
+				try {
+					gemocLanguageIProject.accept(dslProjectVisitor);
+					for (IFile projectDslIFile : dslProjectVisitor.getFiles()) {
+						// consider first dsl file in the project
+						if (!(projectDslIFile.getFullPath().toString().contains("/bin/")
+								| projectDslIFile.getFullPath().toString().contains("/target/"))) {
+							gsWizard.getContext().dslFilePath = projectDslIFile.getFullPath().toString();
+							break;
+						}
+					}
+				} catch (CoreException e) {
+					Activator.error(e.getMessage(), e);
+				}
 
 				IWorkbench workbench = PlatformUI.getWorkbench();
 				wizard.init(workbench, null);
