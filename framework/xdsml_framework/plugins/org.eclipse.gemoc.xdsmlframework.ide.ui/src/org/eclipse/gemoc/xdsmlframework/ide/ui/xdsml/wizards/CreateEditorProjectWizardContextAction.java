@@ -30,6 +30,7 @@ import org.eclipse.gemoc.commons.eclipse.core.resources.NewProjectWorkspaceListe
 import org.eclipse.gemoc.commons.eclipse.ui.WizardFinder;
 import org.eclipse.gemoc.xdsmlframework.extensions.sirius.wizards.NewGemocSiriusProjectWizard;
 import org.eclipse.gemoc.xdsmlframework.ide.ui.Activator;
+import org.eclipse.gemoc.xdsmlframework.ui.utils.XDSMLProjectHelper;
 
 //import org.eclipse.emf.ecoretools.design.wizard.EcoreModelerWizard;
 
@@ -219,7 +220,7 @@ public class CreateEditorProjectWizardContextAction {
 			try {
 				IWorkbenchWizard wizard;
 				wizard = descriptor.createWizard();
-				 ((NewGemocSiriusProjectWizard)wizard).setInitialProjectName(MelangeXDSMLProjectHelper
+				 ((NewGemocSiriusProjectWizard)wizard).setInitialProjectName(XDSMLProjectHelper
 						                                                .baseProjectName(gemocLanguageIProject));
 
 				IWorkbench workbench = PlatformUI.getWorkbench();

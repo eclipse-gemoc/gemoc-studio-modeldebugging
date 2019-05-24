@@ -34,7 +34,7 @@ import org.eclipse.gemoc.commons.eclipse.pde.wizards.pages.pde.TemplateListSelec
 import org.eclipse.gemoc.commons.eclipse.ui.WizardFinder;
 import org.eclipse.gemoc.execution.sequential.javaxdsml.ide.ui.Activator;
 import org.eclipse.gemoc.execution.sequential.javaxdsml.ide.ui.templates.SequentialSingleLanguageTemplate;
-import org.eclipse.gemoc.xdsmlframework.ide.ui.xdsml.wizards.MelangeXDSMLProjectHelper;
+import org.eclipse.gemoc.xdsmlframework.ui.utils.XDSMLProjectHelper;
 import org.eclipse.jface.wizard.IWizard;
 import org.eclipse.jface.wizard.WizardDialog;
 import org.eclipse.ui.PlatformUI;
@@ -146,7 +146,7 @@ public class CreateDSAProposal implements IProposal{
 			Language lang = (Language) context;
 			this.packageName = ((ModelTypingSpace)lang.eContainer()).getName().toLowerCase();
 			this.languageName = lang.getName().toLowerCase();
-			this.ecoreFile = MelangeXDSMLProjectHelper.getFirstEcore(lang);
+			this.ecoreFile = XDSMLProjectHelper.getFirstEcore(lang);
 		}
 	}
 	

@@ -24,6 +24,7 @@ import org.eclipse.gemoc.commons.eclipse.core.resources.FileFinderVisitor;
 import org.eclipse.gemoc.commons.eclipse.core.resources.NewProjectWorkspaceListener;
 import org.eclipse.gemoc.commons.eclipse.ui.WizardFinder;
 import org.eclipse.gemoc.xdsmlframework.ide.ui.Activator;
+import org.eclipse.gemoc.xdsmlframework.ui.utils.XDSMLProjectHelper;
 import org.eclipse.gemoc.xdsmlframework.ui.utils.dialogs.SelectEMFIProjectDialog;
 
 import org.eclipse.gemoc.commons.eclipse.pde.manifest.ManifestChanger;
@@ -96,7 +97,7 @@ public class CreateDomainModelWizardContextAction {
 				wizard = descriptor.createWizard();
 				// this wizard need some dedicated initialization
 				((EcoreModelerWizard) wizard)
-						.setInitialProjectName(MelangeXDSMLProjectHelper
+						.setInitialProjectName(XDSMLProjectHelper
 								.baseProjectName(gemocLanguageIProject)
 								+ ".model");
 				((EcoreModelerWizard) wizard).init(PlatformUI.getWorkbench(),
