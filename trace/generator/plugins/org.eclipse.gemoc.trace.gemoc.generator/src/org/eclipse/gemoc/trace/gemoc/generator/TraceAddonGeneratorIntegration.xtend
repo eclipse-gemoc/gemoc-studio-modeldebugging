@@ -23,11 +23,11 @@ import org.eclipse.core.runtime.IStatus
 import org.eclipse.core.runtime.Platform
 import org.eclipse.core.runtime.Status
 import org.eclipse.gemoc.opsemanticsview.gen.OperationalSemanticsViewGenerator
-import org.eclipse.gemoc.xdsmlframework.ide.ui.xdsml.wizards.MelangeXDSMLProjectHelper
 import org.eclipse.emf.ecore.resource.impl.ResourceSetImpl
 import org.eclipse.emf.ecore.resource.Resource
 import org.eclipse.emf.common.util.URI
 import org.eclipse.gemoc.dsl.Dsl
+import org.eclipse.gemoc.xdsmlframework.ui.utils.XDSMLProjectHelper
 
 /**
  * Plenty of ways to call the generator in an eclipse context.
@@ -38,7 +38,7 @@ class TraceAddonGeneratorIntegration {
 	static def void generateAddon(IFile melangeFile, String selectedLanguage, boolean replace,
 		IProgressMonitor monitor) {
 		// Computing output plugin name
-		val pluginName = MelangeXDSMLProjectHelper.baseProjectName(melangeFile.project) + "." +
+		val pluginName = XDSMLProjectHelper.baseProjectName(melangeFile.project) + "." +
 			selectedLanguage.toLowerCase + ".trace"
 		generateAddon(melangeFile, selectedLanguage, pluginName, replace, monitor)
 	}
@@ -61,7 +61,7 @@ class TraceAddonGeneratorIntegration {
 		]
 
 		// If we find one, we generate
-		if (validViewGenerator != null) {
+		if (validViewGenerator !== null) {
 			val OperationalSemanticsView mmextension = validViewGenerator.generate(selection, dslFile.project);
 			generateAddon(selectedLanguage, pluginName, replace, monitor, mmextension)
 
@@ -81,7 +81,7 @@ class TraceAddonGeneratorIntegration {
 	/**
 	 * Central operation of the class, that calls business operations
 	 */
-	public static def void generateAddon(String mmName, String pluginName, boolean replace, IProgressMonitor monitor,
+	static def void generateAddon(String mmName, String pluginName, boolean replace, IProgressMonitor monitor,
 		OperationalSemanticsView executionExtension) throws CoreException {
 
 		// We look for an existing project with this name
@@ -93,7 +93,7 @@ class TraceAddonGeneratorIntegration {
 			if (replace) {
 				// existingProject.delete(true, monitor);
 				val WorkspaceJob job = new WorkspaceJob("deleting project " + existingProject.name + " content") {
-					override public IStatus runInWorkspace(IProgressMonitor monitor) throws CoreException {
+					override IStatus runInWorkspace(IProgressMonitor monitor) throws CoreException {
 						for (IResource iRes : existingProject.members) {
 							if (!(iRes.name.equals(".project") || iRes.name.equals(".classpath"))) {
 								iRes.delete(true, monitor);
