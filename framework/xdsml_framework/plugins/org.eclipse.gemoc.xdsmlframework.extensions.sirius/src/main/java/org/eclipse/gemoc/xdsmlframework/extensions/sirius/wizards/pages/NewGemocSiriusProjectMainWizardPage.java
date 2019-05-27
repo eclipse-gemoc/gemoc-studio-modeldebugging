@@ -65,7 +65,6 @@ public class NewGemocSiriusProjectMainWizardPage extends WizardPage {
 	protected Button 		btnBrowseGemocProject;
 	protected Text			txtDSLFile;
 	protected Button 		btnBrowseDSLFile;
-	protected Button 		btnCheckUpdateGemocProject;
 	
 	protected Group 		grpGeneral;
 	protected Group 		grpBaseGemocProject;
@@ -330,12 +329,6 @@ public class NewGemocSiriusProjectMainWizardPage extends WizardPage {
 		else {
 			setErrorMessage(null);
 		}
-	}
-	
-
-	protected void updateUpdateDSLFile (boolean bState) {
-		this.context.updateGemocDSLFile = bState;
-		btnCheckUpdateGemocProject.setSelection(bState);
 	}
 	
 	protected void updateNameProject (String nameProject) {

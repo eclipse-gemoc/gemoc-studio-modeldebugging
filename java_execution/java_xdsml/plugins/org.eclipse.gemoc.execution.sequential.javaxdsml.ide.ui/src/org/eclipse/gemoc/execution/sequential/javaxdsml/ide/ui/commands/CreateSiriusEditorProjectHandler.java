@@ -10,26 +10,10 @@
  *******************************************************************************/
 package org.eclipse.gemoc.execution.sequential.javaxdsml.ide.ui.commands;
 
-import java.io.IOException;
-import java.util.Collections;
-import java.util.Optional;
-
 import org.eclipse.core.commands.ExecutionEvent;
 import org.eclipse.core.commands.ExecutionException;
 import org.eclipse.core.commands.IHandler;
-import org.eclipse.core.resources.IFile;
 import org.eclipse.core.resources.IProject;
-import org.eclipse.core.resources.ResourcesPlugin;
-import org.eclipse.core.runtime.OperationCanceledException;
-import org.eclipse.core.runtime.jobs.Job;
-import org.eclipse.emf.common.util.URI;
-import org.eclipse.emf.ecore.resource.Resource;
-import org.eclipse.emf.ecore.resource.impl.ResourceSetImpl;
-import org.eclipse.gemoc.dsl.Dsl;
-import org.eclipse.gemoc.dsl.DslFactory;
-import org.eclipse.gemoc.dsl.DslPackage;
-import org.eclipse.gemoc.dsl.Entry;
-import org.eclipse.gemoc.execution.sequential.javaxdsml.ide.ui.Activator;
 import org.eclipse.gemoc.xdsmlframework.ide.ui.commands.AbstractDslSelectHandler;
 import org.eclipse.gemoc.xdsmlframework.ide.ui.xdsml.wizards.CreateEditorProjectWizardContextAction;
 import org.eclipse.gemoc.xdsmlframework.ide.ui.xdsml.wizards.CreateEditorProjectWizardContextAction.CreateEditorProjectAction;
@@ -45,56 +29,13 @@ public class CreateSiriusEditorProjectHandler extends AbstractDslSelectHandler i
 		action.actionToExecute = CreateEditorProjectAction.CREATE_NEW_SIRIUS_PROJECT;
 		action.execute();
 		
-		if(action.getSiriusPath() != null){
-			waitForAutoBuild();
-			updateDsl(event,updatedGemocLanguageProject,language,action.getSiriusPath());
-		}
 		
 		return null;
 	}
 
 	@Override
 	public String getSelectionMessage() {
-		return "Select Melange language that will be used to initialize the new Sirius project";
+		return "Select language (*.dsl file) that will be used to initialize the new Sirius project";
 	}
 
-	protected void updateDsl(ExecutionEvent event, IProject project, String language, String siriusPath){
-		
-		IFile dslFile = getDslFileFromProject(project);
-		Resource res = (new ResourceSetImpl()).getResource(URI.createURI(dslFile.getFullPath().toOSString()), true);
-		Dsl dsl = (Dsl) res.getContents().get(0);
-		
-		Optional<Entry> sirius = dsl.getEntries()
-			.stream()
-			.filter(entry -> entry.getKey().equals("sirius"))
-			.findFirst();
-		if(sirius.isPresent()) {
-			sirius.get().setValue(siriusPath);
-		}
-		else {
-			Entry siriusEntry = ((DslFactory)DslPackage.eINSTANCE.getEFactoryInstance()).createEntry();
-			siriusEntry.setKey("sirius");
-			siriusEntry.setValue(siriusPath);
-			dsl.getEntries().add(siriusEntry);
-		}
-		try {
-			res.save(Collections.emptyMap());
-		} catch (IOException e) {
-			e.printStackTrace();
-		}
-	}
-	
-	protected void waitForAutoBuild() {
-		boolean wasInterrupted = false;
-		do {
-			try {
-				Job.getJobManager().join(ResourcesPlugin.FAMILY_AUTO_BUILD,	null);
-				wasInterrupted = false;
-			} catch (OperationCanceledException e) {
-				Activator.warn(e.getMessage(), e);
-			} catch (InterruptedException e) {
-				wasInterrupted = true;
-			}
-		} while (wasInterrupted);
-	}
 }

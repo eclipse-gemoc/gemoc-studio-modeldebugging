@@ -17,7 +17,6 @@ import org.eclipse.gemoc.commons.eclipse.messagingsystem.api.MessagingSystemMana
 import org.eclipse.gemoc.commons.eclipse.messagingsystem.ui.ConsoleLogLevel;
 import org.eclipse.gemoc.commons.eclipse.messagingsystem.ui.EclipseMessagingSystem;
 import org.eclipse.ui.plugin.AbstractUIPlugin;
-import org.osgi.framework.BundleActivator;
 import org.osgi.framework.BundleContext;
 
 public class Activator extends AbstractUIPlugin {
@@ -54,7 +53,16 @@ public class Activator extends AbstractUIPlugin {
 		// eclipse logger
 		getDefault().getLog().log(new Status(IStatus.ERROR, PLUGIN_ID, IStatus.ERROR, message, e));		
 	}
-
+	/**
+	 * This method logs an error message and an associated exception (as a trace)
+	 * @param message String
+	 */
+	public static void logWarnMessage(String message, Throwable e) {
+		if (message == null)
+			message= "";
+		// eclipse logger
+		getDefault().getLog().log(new Status(IStatus.WARNING, PLUGIN_ID, IStatus.ERROR, message, e));		
+	}
 	/*
 	 * (non-Javadoc)
 	 * @see org.eclipse.ui.plugin.AbstractUIPlugin#start(org.osgi.framework.BundleContext)
