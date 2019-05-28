@@ -151,6 +151,13 @@ public class NewGemocSiriusProjectMainWizardPage extends WizardPage {
 		txtProjectLocation = new Text(grpGeneral, SWT.BORDER);
 		txtProjectLocation.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, false, 3, 1));
 		txtProjectLocation.setText(this.context.projectLocation);
+		txtProjectLocation.addModifyListener(new ModifyListener() {
+			@Override
+			public void modifyText(ModifyEvent arg0) {
+				validatePage();
+				updateProjectLocation(txtProjectLocation.getText());
+			}
+		});
 		
 		btnBrowseLocation = new Button(grpGeneral, SWT.NONE);
 		btnBrowseLocation.setText("Browse...");
@@ -333,6 +340,13 @@ public class NewGemocSiriusProjectMainWizardPage extends WizardPage {
 	
 	protected void updateNameProject (String nameProject) {
 		this.context.projectName = nameProject;
+		if(btnCheckLocation.getSelection()) {
+			// if use default location then also update the location field accordingly
+			txtProjectLocation.setText(ResourcesPlugin.getWorkspace().getRoot().getLocation().toOSString()+"/"+nameProject);
+		}
+	}
+	protected void updateProjectLocation (String projectLocation) {
+		this.context.projectLocation = projectLocation;
 	}
 	protected void updateBaseGemocProject(String text) {
 		this.context.baseGemocProject = text;

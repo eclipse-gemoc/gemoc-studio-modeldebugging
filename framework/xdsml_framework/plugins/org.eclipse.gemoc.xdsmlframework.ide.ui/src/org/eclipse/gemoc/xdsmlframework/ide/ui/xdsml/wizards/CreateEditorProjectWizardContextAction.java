@@ -222,6 +222,7 @@ public class CreateEditorProjectWizardContextAction {
 				wizard = descriptor.createWizard();
 				NewGemocSiriusProjectWizard gsWizard = ((NewGemocSiriusProjectWizard)wizard);
 				gsWizard.getContext().projectName= (XDSMLProjectHelper.baseProjectName(gemocLanguageIProject)+".design");
+				gsWizard.getContext().projectLocation = ResourcesPlugin.getWorkspace().getRoot().getLocation().toOSString()+"/"+gsWizard.getContext().projectName;
 				
 				FileFinderVisitor dslProjectVisitor = new FileFinderVisitor("dsl");
 				try {

@@ -26,9 +26,9 @@ public class NewGemocSiriusProjectWizardFields extends BaseProjectWizardFields {
 	
 	public NewGemocSiriusProjectWizardFields () {
 		super();
-		this.projectLocation 		= ResourcesPlugin.getWorkspace().getRoot().getLocation().toOSString();
 		this.projectName 			= "org.company.language.design";
-
+		this.projectLocation 		= ResourcesPlugin.getWorkspace().getRoot().getLocation().toOSString()+"/"+this.projectName;
+		
 		this.baseGemocProject		= "org.company.language";
 		this.updateGemocDSLFile		= true;
 		this.dslFilePath			= "";
