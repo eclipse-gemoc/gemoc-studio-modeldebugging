@@ -24,9 +24,14 @@ Require-Bundle: org.eclipse.gemoc.xdsmlframework.api,
  org.eclipse.sirius.ext.base;bundle-version="2.0.7",
  org.eclipse.gemoc.commons.eclipse.pde,
  org.eclipse.core.filesystem,
- org.eclipse.sirius.editor;bundle-version="2.0.7"
+ org.eclipse.sirius.editor;bundle-version="2.0.7",
+ org.eclipse.gemoc.xdsmlframework.ui.utils,
+ org.eclipse.gemoc.commons.eclipse.ui,
+ org.eclipse.swt,
+ org.eclipse.ui.workbench,
+ org.eclipse.gemoc.dsl.model
 Bundle-ActivationPolicy: lazy
-Bundle-RequiredExecutionEnvironment: JavaSE-1.7
+Bundle-RequiredExecutionEnvironment: JavaSE-1.8
 Export-Package: org.eclipse.gemoc.xdsmlframework.extensions.sirius,
  org.eclipse.gemoc.xdsmlframework.extensions.sirius.command,
  org.eclipse.gemoc.xdsmlframework.extensions.sirius.wizards,
