@@ -24,6 +24,7 @@ import org.eclipse.gemoc.commons.eclipse.core.resources.FileFinderVisitor;
 import org.eclipse.gemoc.commons.eclipse.core.resources.NewProjectWorkspaceListener;
 import org.eclipse.gemoc.commons.eclipse.ui.WizardFinder;
 import org.eclipse.gemoc.xdsmlframework.ide.ui.Activator;
+import org.eclipse.gemoc.xdsmlframework.ui.utils.XDSMLProjectHelper;
 import org.eclipse.gemoc.xdsmlframework.ui.utils.dialogs.SelectEMFIProjectDialog;
 
 import org.eclipse.gemoc.commons.eclipse.pde.manifest.ManifestChanger;
@@ -81,9 +82,9 @@ public class CreateDomainModelWizardContextAction {
 
 		// "org.eclipse.emf.importer.ui.EMFProjectWizard" = create EMFProject
 		// from existing Ecore file
-
+		final String wizardId = "org.eclipse.ecoretools.emf.design.wizardID";
 		IWizardDescriptor descriptor = WizardFinder
-				.findNewWizardDescriptor("org.eclipse.ecoretools.emf.design.wizardID");
+				.findNewWizardDescriptor(wizardId);
 
 		// Then if we have a wizard, open it.
 		if (descriptor != null) {
@@ -96,7 +97,7 @@ public class CreateDomainModelWizardContextAction {
 				wizard = descriptor.createWizard();
 				// this wizard need some dedicated initialization
 				((EcoreModelerWizard) wizard)
-						.setInitialProjectName(MelangeXDSMLProjectHelper
+						.setInitialProjectName(XDSMLProjectHelper
 								.baseProjectName(gemocLanguageIProject)
 								+ ".model");
 				((EcoreModelerWizard) wizard).init(PlatformUI.getWorkbench(),
@@ -128,7 +129,12 @@ public class CreateDomainModelWizardContextAction {
 				ResourcesPlugin.getWorkspace().removeResourceChangeListener(
 						workspaceListener);
 			}
+		} else {
+			Activator
+			.error("wizard with id="+wizardId+" not found",
+					null);
 		}
+		
 	}
 
 	protected void selectExistingEMFProject() {

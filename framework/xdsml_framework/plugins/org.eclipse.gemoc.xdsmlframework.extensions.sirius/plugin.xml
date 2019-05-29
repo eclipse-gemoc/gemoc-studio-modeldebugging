@@ -25,6 +25,18 @@
             Create a debug/animation representation for a GEMOC language. May create a new project, or modify or extend an existing Viewpoint Specification.
          </description>
       </wizard>
+      <wizard
+            category="org.eclipse.gemoc.xdsmlframework.category/org.eclipse.gemoc.xdsmlframework.fragment.category"
+            class="org.eclipse.gemoc.xdsmlframework.extensions.sirius.wizards.NewGemocSiriusProjectWizard"
+            hasPages="true"
+            icon="icons/IconeGemocLanguage-16.png"
+            id="org.eclipse.gemoc.xdsmlframework.extensions.sirius.wizards.NewGemocSiriusProjectWizard"
+            name="Sirius Viewpoint Specification Project 4 GEMOC language"
+            project="true">
+         <description>
+            Create a debug/animation representation for a GEMOC language. May create a new project, or modify or extend an existing Viewpoint Specification.
+         </description>
+      </wizard>
    </extension>
    <extension
          point="org.eclipse.ui.commands">

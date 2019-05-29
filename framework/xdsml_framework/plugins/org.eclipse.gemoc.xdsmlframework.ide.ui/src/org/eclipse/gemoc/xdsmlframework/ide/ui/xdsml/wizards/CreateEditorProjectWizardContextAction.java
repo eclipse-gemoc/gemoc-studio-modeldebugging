@@ -30,6 +30,7 @@ import org.eclipse.gemoc.commons.eclipse.core.resources.NewProjectWorkspaceListe
 import org.eclipse.gemoc.commons.eclipse.ui.WizardFinder;
 import org.eclipse.gemoc.xdsmlframework.extensions.sirius.wizards.NewGemocSiriusProjectWizard;
 import org.eclipse.gemoc.xdsmlframework.ide.ui.Activator;
+import org.eclipse.gemoc.xdsmlframework.ui.utils.XDSMLProjectHelper;
 
 //import org.eclipse.emf.ecoretools.design.wizard.EcoreModelerWizard;
 
@@ -143,9 +144,9 @@ public class CreateEditorProjectWizardContextAction {
 		// wizard id =
 		// org.eclipse.xtext.xtext.ui.wizard.ecore2xtext.NewXtextProjectFromEcoreWizard
 		// launch the appropriate wizard
-
+		final String wizardId = "org.eclipse.xtext.xtext.ui.wizard.ecore2xtext.NewXtextProjectFromEcoreWizard";
 		IWizardDescriptor descriptor = WizardFinder
-				.findNewWizardDescriptor("org.eclipse.xtext.xtext.ui.wizard.ecore2xtext.NewXtextProjectFromEcoreWizard");
+				.findNewWizardDescriptor(wizardId);
 		// Then if we have a wizard, open it.
 		if (descriptor != null) {
 			// add a listener to capture the creation of the resulting project
@@ -202,14 +203,15 @@ public class CreateEditorProjectWizardContextAction {
 			}
 		} else {
 			Activator
-					.error("wizard with id=org.eclipse.xtext.xtext.ui.wizard.ecore2xtext.NewXtextProjectFromEcoreWizard not found",
+					.error("wizard with id="+wizardId+" not found",
 							null);
 		}
 	}
 
 	protected void createNewODProject() {
+		final String wizardId = "org.eclipse.gemoc.xdsmlframework.extensions.sirius.wizards.NewGemocSiriusProjectWizard";
 		final IWizardDescriptor descriptor = WizardFinder
-				.findNewWizardDescriptor("org.eclipse.gemoc.xdsmlframework.extensions.sirius.wizards.NewGemocSiriusProjectWizard");
+				.findNewWizardDescriptor(wizardId);
 		// Then if we have a wizard, open it.
 		if (descriptor != null) {
 			NewProjectWorkspaceListener workspaceListener = new NewProjectWorkspaceListener();
@@ -218,8 +220,24 @@ public class CreateEditorProjectWizardContextAction {
 			try {
 				IWorkbenchWizard wizard;
 				wizard = descriptor.createWizard();
-				 ((NewGemocSiriusProjectWizard)wizard).setInitialProjectName(MelangeXDSMLProjectHelper
-						                                                .baseProjectName(gemocLanguageIProject));
+				NewGemocSiriusProjectWizard gsWizard = ((NewGemocSiriusProjectWizard)wizard);
+				gsWizard.getContext().projectName= (XDSMLProjectHelper.baseProjectName(gemocLanguageIProject)+".design");
+				gsWizard.getContext().projectLocation = ResourcesPlugin.getWorkspace().getRoot().getLocation().toOSString()+"/"+gsWizard.getContext().projectName;
+				
+				FileFinderVisitor dslProjectVisitor = new FileFinderVisitor("dsl");
+				try {
+					gemocLanguageIProject.accept(dslProjectVisitor);
+					for (IFile projectDslIFile : dslProjectVisitor.getFiles()) {
+						// consider first dsl file in the project
+						if (!(projectDslIFile.getFullPath().toString().contains("/bin/")
+								| projectDslIFile.getFullPath().toString().contains("/target/"))) {
+							gsWizard.getContext().dslFilePath = projectDslIFile.getFullPath().toString();
+							break;
+						}
+					}
+				} catch (CoreException e) {
+					Activator.error(e.getMessage(), e);
+				}
 
 				IWorkbench workbench = PlatformUI.getWorkbench();
 				wizard.init(workbench, null);
@@ -251,7 +269,7 @@ public class CreateEditorProjectWizardContextAction {
 			}
 		} else {
 			Activator
-					.error("wizard with id=org.eclipse.sirius.ui.specificationproject.wizard not found",
+					.error("wizard with id="+wizardId+" not found",
 							null);
 		}
 	}

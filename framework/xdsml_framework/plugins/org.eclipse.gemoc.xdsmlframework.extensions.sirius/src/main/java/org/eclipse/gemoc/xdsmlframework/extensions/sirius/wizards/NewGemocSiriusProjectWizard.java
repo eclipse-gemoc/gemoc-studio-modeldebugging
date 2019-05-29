@@ -1,151 +1,87 @@
 /*******************************************************************************
- * Copyright (c) 2014, 2017 Obeo.
+ * Copyright (c) 2017 Inria and others.
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
  * which accompanies this distribution, and is available at
  * http://www.eclipse.org/legal/epl-v10.html
  *
  * Contributors:
- *    Obeo - initial API and implementation
- *    Gemoc - Copy the initial {@link ViewpointSpecificationProjectWizard} to set an initial project name    
+ *     Inria - initial API and implementation
  *******************************************************************************/
-
 package org.eclipse.gemoc.xdsmlframework.extensions.sirius.wizards;
 
-import java.util.ArrayList;
-import java.util.Collection;
-import java.util.List;
-import java.util.StringTokenizer;
+import java.io.IOException;
+import java.lang.reflect.InvocationTargetException;
+import java.util.Collections;
+import java.util.Optional;
 
 import org.eclipse.core.resources.IFile;
 import org.eclipse.core.resources.IProject;
+import org.eclipse.core.resources.IProjectDescription;
+import org.eclipse.core.resources.IResource;
+import org.eclipse.core.resources.IWorkspace;
+import org.eclipse.core.resources.IWorkspaceRunnable;
 import org.eclipse.core.resources.ResourcesPlugin;
 import org.eclipse.core.runtime.CoreException;
-import org.eclipse.core.runtime.IStatus;
-import org.eclipse.core.runtime.Status;
+import org.eclipse.core.runtime.IProgressMonitor;
+import org.eclipse.core.runtime.OperationCanceledException;
+import org.eclipse.core.runtime.Path;
+import org.eclipse.core.runtime.jobs.Job;
+import org.eclipse.emf.common.util.URI;
+import org.eclipse.emf.ecore.resource.Resource;
+import org.eclipse.emf.ecore.resource.impl.ResourceSetImpl;
 import org.eclipse.emf.edit.ui.provider.ExtendedImageRegistry;
+import org.eclipse.gemoc.commons.eclipse.core.resources.FileFinderVisitor;
+import org.eclipse.gemoc.commons.eclipse.pde.wizards.pages.pde.AbstractNewProjectWizardWithTemplates;
+import org.eclipse.gemoc.commons.eclipse.pde.wizards.pages.pde.ui.IProjectContentWizard;
+import org.eclipse.gemoc.commons.eclipse.pde.wizards.pages.pde.ui.ProjectTemplateApplicationOperation;
+import org.eclipse.gemoc.dsl.Dsl;
+import org.eclipse.gemoc.dsl.DslFactory;
+import org.eclipse.gemoc.dsl.DslPackage;
+import org.eclipse.gemoc.dsl.Entry;
+import org.eclipse.gemoc.xdsmlframework.extensions.sirius.Activator;
+import org.eclipse.gemoc.xdsmlframework.extensions.sirius.wizards.pages.NewGemocSiriusProjectMainWizardPage;
+import org.eclipse.gemoc.xdsmlframework.extensions.sirius.wizards.pages.NewGemocSiriusProjectWizardFields;
+import org.eclipse.gemoc.xdsmlframework.extensions.sirius.wizards.pages.NewODesignFileWizardPage;
 import org.eclipse.jface.viewers.IStructuredSelection;
-import org.eclipse.jface.wizard.Wizard;
-import org.eclipse.jface.wizard.WizardPage;
 import org.eclipse.sirius.editor.editorPlugin.SiriusEditorPlugin;
 import org.eclipse.sirius.ui.tools.api.project.ViewpointSpecificationProject;
-import org.eclipse.swt.SWT;
-import org.eclipse.swt.events.ModifyEvent;
-import org.eclipse.swt.events.ModifyListener;
-import org.eclipse.swt.layout.GridData;
-import org.eclipse.swt.layout.GridLayout;
-import org.eclipse.swt.widgets.Combo;
-import org.eclipse.swt.widgets.Composite;
-import org.eclipse.swt.widgets.Label;
-import org.eclipse.swt.widgets.Text;
 import org.eclipse.ui.INewWizard;
 import org.eclipse.ui.IWorkbench;
-import org.eclipse.ui.dialogs.WizardNewProjectCreationPage;
 
-public class NewGemocSiriusProjectWizard extends Wizard implements INewWizard {
+public class NewGemocSiriusProjectWizard extends AbstractNewProjectWizardWithTemplates implements INewWizard {
 
-	/**
-	 * Wizard id.
-	 */
-	public static final String ID = "org.eclipse.gemoc.xdsmlframework.extensions.sirius.wizards.NewGemocSiriusProjectWizard"; //$NON-NLS-1$
 
-	private IProject project;
-
-	/**
-	 * This is a new project wizard page.
-	 */
-	private WizardNewProjectCreationPage newProjectPage;
-
-	/**
-	 * This is the file creation page.
-	 */
-	private WizardNewODesignFilePage newOdesignPage;
-
+	
+	protected NewGemocSiriusProjectWizardFields 		context;	
+	
 	/**
 	 * Remember the workbench during initialization.
 	 */
 	private IWorkbench workbench;
-
-	private String initialProjectName;
-
+	
+	protected NewGemocSiriusProjectMainWizardPage 		projectPage;
+	//WizardPageCustomNewProjectK3Plugin 	projectPageCustom	 = new WizardPageCustomNewProjectK3Plugin(this.context);
+	
 	/**
-	 * Creates the project, all the directories and files and open the .odesign.
-	 * 
-	 * @return true if successful
+	 * This is the file creation page.
 	 */
-	@Override
-	public boolean performFinish() {
-		try {
-			// if user do not reach page 2, the VSM name is defined according to
-			// the project name
-			if (!newOdesignPage.isVsmNameChanged) {
-				newOdesignPage.modelName.setText(newOdesignPage
-						.extractModelName(newOdesignPage.firstPage
-								.getProjectName()));
-			}
-			ViewpointSpecificationProject
-					.createNewViewpointSpecificationProject(workbench,
-							newProjectPage.getProjectName(), newProjectPage
-									.getLocationPath(), newOdesignPage
-									.getModelName().getText(), newOdesignPage
-									.getInitialObjectName(), newOdesignPage
-									.getEncoding(), getContainer());
-			return true;
-		} catch (final CoreException e) {
-			final IStatus status = new Status(IStatus.ERROR,
-					SiriusEditorPlugin.PLUGIN_ID, IStatus.OK, e.getMessage(), e);
-			SiriusEditorPlugin.getPlugin().getLog().log(status);
-			return false;
-		}
-	}
+	private NewODesignFileWizardPage newOdesignPage;
 
-	/**
-	 * {@inheritDoc}
-	 * 
-	 * @see org.eclipse.ui.IWorkbenchWizard#init(org.eclipse.ui.IWorkbench,
-	 *      org.eclipse.jface.viewers.IStructuredSelection)
-	 */
-	public void init(final IWorkbench wkbch, final IStructuredSelection sel) {
-		this.workbench = wkbch;
-		setWindowTitle("New Viewpoint Specification Project");
-		setDefaultPageImageDescriptor(ExtendedImageRegistry.INSTANCE
-				.getImageDescriptor(SiriusEditorPlugin.INSTANCE
-						.getImage("full/wizban/banner_viewpoint_specification_project.gif")));
+	
+	public NewGemocSiriusProjectWizard() {
+		context = new NewGemocSiriusProjectWizardFields();
 	}
-
-	public IFile getModelFile() {
-		return ResourcesPlugin
-				.getWorkspace()
-				.getRoot()
-				.getFile(
-						project.getFullPath().append(
-								"description/"
-										+ newOdesignPage.getModelName()
-												.getText()));
-	}
-
-	/**
-	 * {@inheritDoc}
-	 * 
-	 * @see org.eclipse.jface.wizard.Wizard#addPages()
-	 */
+	
 	@Override
 	public void addPages() {
-		newProjectPage = new NewGemocModelingProjectCreationWizardPage(
-				SiriusEditorPlugin.getPlugin().getString(
-						"_UI_ViewpointSpecificationProjectWizard_label")); //$NON-NLS-1$
-		newProjectPage.setInitialProjectName(getInitialProjectName()
-				+ ".design");
-		newProjectPage.setTitle(SiriusEditorPlugin.getPlugin().getString(
-				"_UI_ViewpointSpecificationProjectWizard_label")); //$NON-NLS-1$
-		newProjectPage.setDescription(SiriusEditorPlugin.getPlugin().getString(
-				"_UI_ViewpointSpecificationProjectWizard_description")); //$NON-NLS-1$        
-		project = ResourcesPlugin.getWorkspace().getRoot()
-				.getProject(newProjectPage.getProjectName());
-		addPage(newProjectPage);
-
-		newOdesignPage = new WizardNewODesignFilePage(
-				"ODesign Model", newProjectPage); //$NON-NLS-1$
+		projectPage			 = new NewGemocSiriusProjectMainWizardPage(this.context);
+		
+		addPage(projectPage);			
+		addPage(getTemplateListSelectionPage(context));
+		
+		newOdesignPage = new NewODesignFileWizardPage(
+				"ODesign Model", this.context); //$NON-NLS-1$
 		newOdesignPage.setTitle(SiriusEditorPlugin.getPlugin().getString(
 				"_UI_SiriusModelWizard_label")); //$NON-NLS-1$
 		newOdesignPage.setDescription(SiriusEditorPlugin.getPlugin().getString(
@@ -153,164 +89,154 @@ public class NewGemocSiriusProjectWizard extends Wizard implements INewWizard {
 		addPage(newOdesignPage);
 
 		super.addPages();
+		
 	}
-
+	
+	@Override
+	public void init(IWorkbench workbench, IStructuredSelection selection) {
+		this.workbench = workbench;
+		setWindowTitle("New Viewpoint Specification Project for GEMOC");
+		setDefaultPageImageDescriptor(ExtendedImageRegistry.INSTANCE
+				.getImageDescriptor(SiriusEditorPlugin.INSTANCE
+						.getImage("full/wizban/banner_viewpoint_specification_project.gif")));
+		
+	}
+	
+	@Override
+	public boolean performFinish() {	
+		try {
+			IWorkspace workspace = ResourcesPlugin.getWorkspace(); 
+			final IProjectDescription description = workspace.newProjectDescription(this.context.projectName);
+			if (!this.context.projectLocation.equals(workspace.getRoot().getLocation().toOSString()))
+				description.setLocation(new Path(this.context.projectLocation));
+			
+			final IProject project = ResourcesPlugin.getWorkspace().getRoot().getProject(this.context.projectName);
+			IWorkspaceRunnable operation = new IWorkspaceRunnable() {
+				public void run(IProgressMonitor monitor) throws CoreException {
+					
+					// if user do not reach page 2, the VSM name is defined according to
+					// the project name
+				/*	if (!newOdesignPage.isVsmNameChanged) {
+						newOdesignPage.modelName.setText(newOdesignPage
+								.extractModelName(newOdesignPage.firstPage
+										.getProjectName()));
+					}*/
+					Path projectLocationPath = new Path(context.projectLocation);
+					ViewpointSpecificationProject
+							.createNewViewpointSpecificationProject(workbench,
+									context.projectName, 
+									projectLocationPath, 
+									newOdesignPage.getModelName().getText(), 
+									newOdesignPage.getInitialObjectName(), 
+									newOdesignPage.getEncoding(), 
+									getContainer());
+					
+					// launch the template is selected
+					IProjectContentWizard contentWizard = templateSelectionPage.getSelectedWizard();
+					try {
+						getContainer().run(false, true, new ProjectTemplateApplicationOperation(context, project, contentWizard));
+					} catch (InvocationTargetException e) {
+						Activator.logErrorMessage(e.getMessage(), e);
+					} catch (InterruptedException e) {
+						Activator.logErrorMessage(e.getMessage(), e);
+					}
+					
+					project.refreshLocal(IResource.DEPTH_INFINITE, monitor);
+					
+					waitForAutoBuild();
+					updateDsl(project);
+					
+					project.refreshLocal(IResource.DEPTH_INFINITE, monitor);
+				}
+			};
+			ResourcesPlugin.getWorkspace().run(operation, null);
+			
+		} catch (Exception exception) {
+			Activator.logErrorMessage(exception.getMessage(), exception);
+			return false;
+		}
+		return true;
+	}
+	
 	/**
-	 * A page to configure the new model to create.
-	 * 
-	 * @author Obeo
+	 * update the dsl file with the indication of the sirius project 
+	 * @param siriusProject
 	 */
-	private static class WizardNewODesignFilePage extends WizardPage {
-		private static final String DOT = ".";
-
-		private List<String> encodings;
-
-		private Combo encodingField;
-
-		private ModifyListener validator = new ModifyListener() {
-			public void modifyText(final ModifyEvent e) {
-				setPageComplete(validatePage());
-				isVsmNameChanged = true;
-			}
-		};
-
-		private Text modelName;
-
-		// Check if VSM name has been modified
-		private Boolean isVsmNameChanged = false;
-
-		private WizardNewProjectCreationPage firstPage;
-
-		protected WizardNewODesignFilePage(final String pageName,
-				WizardNewProjectCreationPage firstPage) {
-			super(pageName);
-			this.firstPage = firstPage;
-		}
-
-		public Text getModelName() {
-			return modelName;
-		}
-
-		public String getEncoding() {
-			return encodingField.getText();
-		}
-
-		public String getInitialObjectName() {
-			return ViewpointSpecificationProject.INITIAL_OBJECT_NAME;
-		}
-
-		public void createControl(final Composite parent) {
-			final Composite composite = new Composite(parent, SWT.NONE);
-			final GridLayout layout = new GridLayout();
-			layout.numColumns = 2;
-			layout.verticalSpacing = 12;
-			composite.setLayout(layout);
-
-			GridData data = new GridData();
-			data.verticalAlignment = GridData.FILL;
-			data.grabExcessVerticalSpace = true;
-			data.horizontalAlignment = GridData.FILL;
-			composite.setLayoutData(data);
-
-			final Label modelNameLabel = new Label(composite, SWT.LEFT);
-			modelNameLabel.setText(SiriusEditorPlugin.getPlugin().getString(
-					"_UI_SiriusModelWizardName_label"));
-
-			data = new GridData();
-			data.horizontalAlignment = GridData.FILL;
-			modelNameLabel.setLayoutData(data);
-
-			modelName = new Text(composite, SWT.LEFT | SWT.BORDER);
-			modelName.setText(extractModelName(firstPage.getProjectName()));
-
-			data = new GridData();
-			data.horizontalAlignment = GridData.FILL;
-			data.grabExcessHorizontalSpace = true;
-			modelName.setLayoutData(data);
-			modelName.addModifyListener(validator);
-
-			final Label encodingLabel = new Label(composite, SWT.LEFT);
-			encodingLabel.setText(SiriusEditorPlugin.getPlugin().getString(
-					"_UI_XMLEncoding"));
-
-			data = new GridData();
-			data.horizontalAlignment = GridData.FILL;
-			encodingLabel.setLayoutData(data);
-
-			encodingField = new Combo(composite, SWT.BORDER);
-			data = new GridData();
-			data.horizontalAlignment = GridData.FILL;
-			data.grabExcessHorizontalSpace = true;
-			encodingField.setLayoutData(data);
-
-			for (final String string : getEncodings()) {
-				encodingField.add(string);
-			}
-
-			encodingField.select(0);
-			encodingField.addModifyListener(validator);
-
-			setPageComplete(validatePage());
-			setControl(composite);
-		}
-
-		protected boolean validatePage() {
-			return /* getInitialObjectName() != null && */getEncodings()
-					.contains(encodingField.getText())
-					&& getModelName()
-							.getText()
-							.endsWith(
-									DOT
-											+ ViewpointSpecificationProject.VIEWPOINT_MODEL_EXTENSION)
-					&& (getModelName().getText().length() > (ViewpointSpecificationProject.VIEWPOINT_MODEL_EXTENSION
-							.length() + 1));
-		}
-
-		private Collection<String> getEncodings() {
-			if (encodings == null) {
-				encodings = new ArrayList<String>();
-				final StringTokenizer stringTokenizer = new StringTokenizer(
-						SiriusEditorPlugin.getPlugin().getString(
-								"_UI_XMLEncodingChoices"));
-				while (stringTokenizer.hasMoreTokens()) {
-					encodings.add(stringTokenizer.nextToken());
+	protected void updateDsl(IProject siriusProject){
+		
+		FileFinderVisitor odesignProjectVisitor = new FileFinderVisitor("odesign");
+		try {
+			siriusProject.accept(odesignProjectVisitor);
+			IFile odesignIFile = odesignProjectVisitor.getFile();
+			if (odesignIFile != null) {
+				// the dsl file that will be updated
+				Resource res = (new ResourceSetImpl()).getResource(URI.createURI(context.dslFilePath), true);
+				Dsl dsl = (Dsl) res.getContents().get(0);
+				
+				Optional<Entry> sirius = dsl.getEntries()
+					.stream()
+					.filter(entry -> entry.getKey().equals("sirius"))
+					.findFirst();
+				if(sirius.isPresent()) {
+					sirius.get().setValue(odesignIFile.getFullPath().toOSString());
+				}
+				else {
+					Entry siriusEntry = ((DslFactory)DslPackage.eINSTANCE.getEFactoryInstance()).createEntry();
+					siriusEntry.setKey("sirius");
+					siriusEntry.setValue(odesignIFile.getFullPath().toOSString());
+					dsl.getEntries().add(siriusEntry);
+				}
+				try {
+					res.save(Collections.emptyMap());
+				} catch (IOException e) {
+					Activator.logErrorMessage(e.getMessage(), e);
 				}
 			}
-			return encodings;
+		} catch (CoreException e) {
+			Activator.logErrorMessage(e.getMessage(), e);
 		}
-
-		public void setVisible(boolean visible) {
-			if (visible) {
-				if (!isVsmNameChanged) {
-					this.modelName.setText(extractModelName(firstPage
-							.getProjectName()));
-				}
+	}
+	
+	/**
+	 * wait that eclipse worskace has finish all its background builds
+	 */
+	protected void waitForAutoBuild() {
+		boolean wasInterrupted = false;
+		do {
+			try {
+				Job.getJobManager().join(ResourcesPlugin.FAMILY_AUTO_BUILD,	null);
+				wasInterrupted = false;
+			} catch (OperationCanceledException e) {
+				Activator.logWarnMessage(e.getMessage(), e);
+			} catch (InterruptedException e) {
+				wasInterrupted = true;
 			}
-			super.setVisible(visible);
-		}
-
-		private String extractModelName(String projectName) {
-			String modelPrefixName = "";
-			if (projectName != null && projectName.contains(".")) {
-				String[] projectNames = projectName.split("[.]");
-				if ("design".equals(projectNames[projectNames.length - 1])) {
-					modelPrefixName = projectNames[projectNames.length - 2];
-				} else {
-					modelPrefixName = projectNames[projectNames.length - 1];
-				}
-			} else {
-				modelPrefixName = projectName;
-			}
-			return modelPrefixName + DOT
-					+ ViewpointSpecificationProject.VIEWPOINT_MODEL_EXTENSION;
-		}
+		} while (wasInterrupted);
+	}
+	@Override
+	public boolean isHelpAvailable() {
+		return true;
 	}
 
-	public void setInitialProjectName(String value) {
-		initialProjectName = value;
+	
+	public NewGemocSiriusProjectWizardFields getContext() {
+		return context;
+	}
+	
+
+
+	
+	
+	public NewGemocSiriusProjectMainWizardPage getPageProject() {
+		return this.projectPage;
 	}
 
-	public String getInitialProjectName() {
-		return initialProjectName;
+
+	@Override
+	public String getTargetPluginId() {		
+		return Activator.PLUGIN_ID;
 	}
+	
+	
+	
 }

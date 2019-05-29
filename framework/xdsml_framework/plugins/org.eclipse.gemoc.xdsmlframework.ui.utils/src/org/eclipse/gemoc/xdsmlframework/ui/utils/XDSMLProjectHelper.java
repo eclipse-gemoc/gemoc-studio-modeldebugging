@@ -8,7 +8,7 @@
  * Contributors:
  *     Inria - initial API and implementation
  *******************************************************************************/
-package org.eclipse.gemoc.xdsmlframework.ide.ui.xdsml.wizards;
+package org.eclipse.gemoc.xdsmlframework.ui.utils;
 
 import org.eclipse.core.resources.IFile;
 import org.eclipse.core.resources.IProject;
@@ -21,20 +21,27 @@ import fr.inria.diverse.melange.metamodel.melange.Import;
 import fr.inria.diverse.melange.metamodel.melange.Language;
 import fr.inria.diverse.melange.metamodel.melange.Operator;
 
-public class MelangeXDSMLProjectHelper {
+public class XDSMLProjectHelper {
 
 	/**
-	 * Computer the base name for a project base on xdsml project
-	 * ie. if it ends with .xdsml this suffix is removed
+	 * Computes the base name from an xdsml/dsml project
+	 * ie. if it ends with .xdsml or .dsml this suffix is removed
 	 * @param xdsmlProject
 	 * @return
 	 */
 	public static String baseProjectName(IProject xdsmlProject){
-		int index = xdsmlProject.getName().indexOf(".xdsml");
+		return baseProjectName(xdsmlProject.getName());
+	}
+	public static String baseProjectName(String xdsmlProjectName){
+		int index = xdsmlProjectName.indexOf(".xdsml");
 		if(index != -1){
-			return xdsmlProject.getName().substring(0, index);		
+			return xdsmlProjectName.substring(0, index);		
 		}
-		return xdsmlProject.getName();
+		index = xdsmlProjectName.indexOf(".dsml");
+		if(index != -1){
+			return xdsmlProjectName.substring(0, index);		
+		}
+		return xdsmlProjectName;
 	}
 	
 	public static String getFirstEcorePath(Language language){
