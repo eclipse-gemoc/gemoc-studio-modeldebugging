@@ -10,19 +10,21 @@
  *******************************************************************************/
 package org.eclipse.gemoc.xdsmlframework.extensions.sirius;
 
+import org.eclipse.core.runtime.IStatus;
+import org.eclipse.core.runtime.Status;
 import org.eclipse.gemoc.commons.eclipse.messagingsystem.api.MessagingSystem;
 import org.eclipse.gemoc.commons.eclipse.messagingsystem.api.MessagingSystemManager;
 import org.eclipse.gemoc.commons.eclipse.messagingsystem.ui.ConsoleLogLevel;
 import org.eclipse.gemoc.commons.eclipse.messagingsystem.ui.EclipseMessagingSystem;
-import org.osgi.framework.BundleActivator;
+import org.eclipse.ui.plugin.AbstractUIPlugin;
 import org.osgi.framework.BundleContext;
 
-public class Activator implements BundleActivator {
+public class Activator extends AbstractUIPlugin {
 
-	private static BundleContext context;
+	private static Activator plugin;
 
-	public static BundleContext getContext() {
-		return context;
+	public static Activator getDefault() {
+		return plugin;
 	}
 	
 	public static final String PLUGIN_ID = "org.eclipse.gemoc.xdsmlframework.extensions.sirius"; //$NON-NLS-1$
@@ -40,26 +42,43 @@ public class Activator implements BundleActivator {
 		}
 		return messagingSystem;
 	}
-
+	
+	/**
+	 * This method logs an error message and an associated exception (as a trace)
+	 * @param message String
+	 */
+	public static void logErrorMessage(String message, Throwable e) {
+		if (message == null)
+			message= "";
+		// eclipse logger
+		getDefault().getLog().log(new Status(IStatus.ERROR, PLUGIN_ID, IStatus.ERROR, message, e));		
+	}
+	/**
+	 * This method logs an error message and an associated exception (as a trace)
+	 * @param message String
+	 */
+	public static void logWarnMessage(String message, Throwable e) {
+		if (message == null)
+			message= "";
+		// eclipse logger
+		getDefault().getLog().log(new Status(IStatus.WARNING, PLUGIN_ID, IStatus.ERROR, message, e));		
+	}
 	/*
 	 * (non-Javadoc)
-	 * 
-	 * @see
-	 * org.osgi.framework.BundleActivator#start(org.osgi.framework.BundleContext
-	 * )
+	 * @see org.eclipse.ui.plugin.AbstractUIPlugin#start(org.osgi.framework.BundleContext)
 	 */
-	public void start(BundleContext bundleContext) throws Exception {
-		Activator.context = bundleContext;
+	public void start(BundleContext context) throws Exception {
+		super.start(context);
+		plugin = this;
 	}
 
 	/*
 	 * (non-Javadoc)
-	 * 
-	 * @see
-	 * org.osgi.framework.BundleActivator#stop(org.osgi.framework.BundleContext)
+	 * @see org.eclipse.ui.plugin.AbstractUIPlugin#stop(org.osgi.framework.BundleContext)
 	 */
-	public void stop(BundleContext bundleContext) throws Exception {
-		Activator.context = null;
+	public void stop(BundleContext context) throws Exception {
+		plugin = null;
+		super.stop(context);
 	}
 
 }
