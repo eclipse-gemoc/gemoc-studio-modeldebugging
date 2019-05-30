@@ -78,7 +78,6 @@ public class NewGemocSiriusProjectWizard extends AbstractNewProjectWizardWithTem
 		projectPage			 = new NewGemocSiriusProjectMainWizardPage(this.context);
 		
 		addPage(projectPage);			
-		addPage(getTemplateListSelectionPage(context));
 		
 		newOdesignPage = new NewODesignFileWizardPage(
 				"ODesign Model", this.context); //$NON-NLS-1$
@@ -87,6 +86,10 @@ public class NewGemocSiriusProjectWizard extends AbstractNewProjectWizardWithTem
 		newOdesignPage.setDescription(SiriusEditorPlugin.getPlugin().getString(
 				"_UI_SiriusModelWizard_description")); //$NON-NLS-1$
 		addPage(newOdesignPage);
+		
+		addPage(getTemplateListSelectionPage(context));
+		
+		
 
 		super.addPages();
 		
