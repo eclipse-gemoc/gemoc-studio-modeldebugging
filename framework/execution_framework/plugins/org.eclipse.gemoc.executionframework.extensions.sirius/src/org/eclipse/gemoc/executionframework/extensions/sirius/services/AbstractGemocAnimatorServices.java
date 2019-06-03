@@ -393,13 +393,13 @@ public abstract class AbstractGemocAnimatorServices {
 
 		@Override
 		public void aboutToExecuteStep(IExecutionEngine<?> engine, Step<?> stepToExecute) {
-			if(!(stepToExecute.eContainer() instanceof ParallelStep)){
-				activate(engine, stepToExecute);
-			}
 		}
 
 		@Override
 		public void stepExecuted(IExecutionEngine<?> engine, Step<?> stepExecuted) {
+			if(!(stepExecuted.eContainer() instanceof ParallelStep)){
+				activate(engine, stepExecuted);
+			}
 		}
 	}
 
