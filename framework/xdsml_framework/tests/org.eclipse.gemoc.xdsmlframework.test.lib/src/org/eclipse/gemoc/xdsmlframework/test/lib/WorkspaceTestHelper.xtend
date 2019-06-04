@@ -19,6 +19,7 @@ import java.util.HashSet
 import java.util.List
 import java.util.Set
 import java.util.zip.ZipFile
+import org.eclipse.core.expressions.IEvaluationContext
 import org.eclipse.core.resources.IMarker
 import org.eclipse.core.resources.IProject
 import org.eclipse.core.resources.IResource
@@ -35,6 +36,7 @@ import org.eclipse.jdt.core.IJavaProject
 import org.eclipse.jdt.core.JavaCore
 import org.eclipse.jdt.launching.IJavaLaunchConfigurationConstants
 import org.eclipse.jdt.launching.JavaRuntime
+import org.eclipse.jface.viewers.StructuredSelection
 import org.eclipse.osgi.internal.framework.EquinoxBundle
 import org.eclipse.osgi.storage.BundleInfo.Generation
 import org.eclipse.pde.core.target.ITargetDefinition
@@ -43,21 +45,19 @@ import org.eclipse.pde.core.target.ITargetPlatformService
 import org.eclipse.pde.core.target.LoadTargetDefinitionJob
 import org.eclipse.pde.internal.core.target.TargetPlatformService
 import org.eclipse.swt.widgets.Display
+import org.eclipse.ui.ISources
 import org.eclipse.ui.IWindowListener
 import org.eclipse.ui.IWorkbenchWindow
 import org.eclipse.ui.PlatformUI
+import org.eclipse.ui.commands.ICommandService
 import org.eclipse.ui.dialogs.IOverwriteQuery
+import org.eclipse.ui.handlers.IHandlerService
 import org.eclipse.ui.internal.wizards.datatransfer.ZipLeveledStructureProvider
 import org.eclipse.ui.wizards.datatransfer.ImportOperation
+import org.eclipse.xtext.junit4.ui.util.IResourcesSetupUtil
 import org.eclipse.xtext.junit4.ui.util.JavaProjectSetupUtil
 import org.junit.Assert
 import org.osgi.framework.Bundle
-import org.eclipse.ui.commands.ICommandService
-import org.eclipse.ui.handlers.IHandlerService
-import org.eclipse.xtext.junit4.ui.util.IResourcesSetupUtil
-import org.eclipse.core.expressions.IEvaluationContext
-import org.eclipse.ui.ISources
-import org.eclipse.jface.viewers.StructuredSelection
 
 /**
  * Class containing helper methods for testing a workspace in a GEMOC Language workbench
@@ -72,7 +72,7 @@ class WorkspaceTestHelper {
 	 * It must be used for any GEMOC test using swtbot 
 	 * we should increase this value up to the value where we don't have any false failed tests
 	 */ 
-	public static final int SWTBotPreferencesTIMEOUT_4_GEMOC = 8000;
+	public static final int SWTBotPreferencesTIMEOUT_4_GEMOC = 20000;
 		/**
 	 * Value to use by default for SWTBotPreferences.PLAYBACK_DELAY 
 	 * It must be used for any GEMOC test using swtbot 
@@ -99,7 +99,7 @@ class WorkspaceTestHelper {
 	}
 
 
-	private IProject deployProjectResult = null;
+	IProject deployProjectResult = null;
 	def IProject deployProject(String projectName, String zipLocation) {
 		
 		deployProjectResult = null
@@ -332,7 +332,7 @@ class WorkspaceTestHelper {
 	/**
 	 * call a command the selection file, if file is null or empty it will call the command without selection
 	 */
-	public def static void invokeCommandOnSelectedFile(String commandId, String file) {
+	def static void invokeCommandOnSelectedFile(String commandId, String file) {
 		val ws = ResourcesPlugin::workspace
 		val wb = PlatformUI::workbench
 		
@@ -382,7 +382,7 @@ class WorkspaceTestHelper {
 	 * relaunch the  waitForJobs several times in case some other background task
 	 * also wait for idle time to triggers new jobs 
 	 */
-	public static def void reallyWaitForJobs(int retry) {
+	static def void reallyWaitForJobs(int retry) {
 		for(i : 0.. retry){
 			waitForJobs
 			Thread.sleep(100)
@@ -390,12 +390,12 @@ class WorkspaceTestHelper {
 		waitForJobs
 	}
 	
-	public static def void waitForJobs() {
+	static def void waitForJobs() {
 		while (!Job.getJobManager().isIdle())
 			delay(100);
 	}
 	static var closed = false;
-	public static def void delay(long waitTimeMillis) {
+	static def void delay(long waitTimeMillis) {
 		val Display display = Display.getCurrent();
 
 		// We try to capture when the window is closed by the tester
@@ -420,7 +420,7 @@ class WorkspaceTestHelper {
 
 		// If this is the UI thread,
 		// then process input.
-		if (display != null) {
+		if (display !== null) {
 			val long endTimeMillis = System.currentTimeMillis() + waitTimeMillis;
 			while (System.currentTimeMillis() < endTimeMillis && !closed) {
 				if (!display.readAndDispatch())
