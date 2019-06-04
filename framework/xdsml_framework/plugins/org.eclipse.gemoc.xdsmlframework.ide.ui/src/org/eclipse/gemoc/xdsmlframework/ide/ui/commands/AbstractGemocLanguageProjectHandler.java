@@ -24,6 +24,7 @@ import org.eclipse.emf.ecore.resource.Resource;
 import org.eclipse.emf.ecore.resource.impl.ResourceSetImpl;
 import org.eclipse.gemoc.commons.eclipse.core.resources.FileFinderVisitor;
 import org.eclipse.gemoc.dsl.Dsl;
+import org.eclipse.gemoc.xdsmlframework.ide.ui.Activator;
 import org.eclipse.jface.text.ITextSelection;
 import org.eclipse.jface.viewers.ISelection;
 import org.eclipse.jface.viewers.IStructuredSelection;
@@ -116,7 +117,7 @@ public abstract class AbstractGemocLanguageProjectHandler extends AbstractHandle
 				}
 			}
 		} catch (CoreException e) {
-			e.printStackTrace();
+			Activator.error(e.getMessage(), e);
 		}
 		return null;
 	}

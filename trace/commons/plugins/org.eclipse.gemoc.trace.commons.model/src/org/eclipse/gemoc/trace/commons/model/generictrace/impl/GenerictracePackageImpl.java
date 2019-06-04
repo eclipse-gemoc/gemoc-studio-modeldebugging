@@ -13,6 +13,8 @@
 package org.eclipse.gemoc.trace.commons.model.generictrace.impl;
 
 import org.eclipse.gemoc.trace.commons.model.generictrace.BooleanAttributeValue;
+import org.eclipse.gemoc.trace.commons.model.generictrace.DoubleAttributeValue;
+import org.eclipse.gemoc.trace.commons.model.generictrace.DoubleObjectAttributeValue;
 import org.eclipse.gemoc.trace.commons.model.generictrace.GenericAttributeValue;
 import org.eclipse.gemoc.trace.commons.model.generictrace.GenericDimension;
 import org.eclipse.gemoc.trace.commons.model.generictrace.GenericParallelStep;
@@ -28,13 +30,18 @@ import org.eclipse.gemoc.trace.commons.model.generictrace.GenerictraceFactory;
 import org.eclipse.gemoc.trace.commons.model.generictrace.GenerictracePackage;
 import org.eclipse.gemoc.trace.commons.model.generictrace.IntegerAttributeValue;
 import org.eclipse.gemoc.trace.commons.model.generictrace.IntegerObjectAttributeValue;
+import org.eclipse.gemoc.trace.commons.model.generictrace.LongAttributeValue;
+import org.eclipse.gemoc.trace.commons.model.generictrace.LongObjectAttributeValue;
 import org.eclipse.gemoc.trace.commons.model.generictrace.ManyBooleanAttributeValue;
+import org.eclipse.gemoc.trace.commons.model.generictrace.ManyDoubleAttributeValue;
 import org.eclipse.gemoc.trace.commons.model.generictrace.ManyIntegerAttributeValue;
+import org.eclipse.gemoc.trace.commons.model.generictrace.ManyLongAttributeValue;
 import org.eclipse.gemoc.trace.commons.model.generictrace.ManyReferenceValue;
 import org.eclipse.gemoc.trace.commons.model.generictrace.ManyStringAttributeValue;
 import org.eclipse.gemoc.trace.commons.model.generictrace.SingleReferenceValue;
 import org.eclipse.gemoc.trace.commons.model.generictrace.StringAttributeValue;
 
+import org.eclipse.gemoc.trace.commons.model.launchconfiguration.LaunchconfigurationPackage;
 import org.eclipse.gemoc.trace.commons.model.trace.TracePackage;
 
 import org.eclipse.emf.ecore.EAttribute;
@@ -201,6 +208,48 @@ public class GenerictracePackageImpl extends EPackageImpl implements Generictrac
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
+	private EClass doubleAttributeValueEClass = null;
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	private EClass manyDoubleAttributeValueEClass = null;
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	private EClass doubleObjectAttributeValueEClass = null;
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	private EClass longAttributeValueEClass = null;
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	private EClass manyLongAttributeValueEClass = null;
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	private EClass longObjectAttributeValueEClass = null;
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
 	private EDataType iSerializableEDataType = null;
 
 	/**
@@ -231,7 +280,7 @@ public class GenerictracePackageImpl extends EPackageImpl implements Generictrac
 
 	/**
 	 * Creates, registers, and initializes the <b>Package</b> for this model, and for any others upon which it depends.
-	 * 
+	 *
 	 * <p>This method is used to initialize {@link GenerictracePackage#eINSTANCE} when that field is accessed.
 	 * Clients should not invoke it directly. Instead, they should simply access that field to obtain the package.
 	 * <!-- begin-user-doc -->
@@ -245,12 +294,15 @@ public class GenerictracePackageImpl extends EPackageImpl implements Generictrac
 		if (isInited) return (GenerictracePackage)EPackage.Registry.INSTANCE.getEPackage(GenerictracePackage.eNS_URI);
 
 		// Obtain or create and register package
-		GenerictracePackageImpl theGenerictracePackage = (GenerictracePackageImpl)(EPackage.Registry.INSTANCE.get(eNS_URI) instanceof GenerictracePackageImpl ? EPackage.Registry.INSTANCE.get(eNS_URI) : new GenerictracePackageImpl());
+		Object registeredGenerictracePackage = EPackage.Registry.INSTANCE.get(eNS_URI);
+		GenerictracePackageImpl theGenerictracePackage = registeredGenerictracePackage instanceof GenerictracePackageImpl ? (GenerictracePackageImpl)registeredGenerictracePackage : new GenerictracePackageImpl();
 
 		isInited = true;
 
 		// Initialize simple dependencies
+		EcorePackage.eINSTANCE.eClass();
 		TracePackage.eINSTANCE.eClass();
+		LaunchconfigurationPackage.eINSTANCE.eClass();
 
 		// Create package meta-data objects
 		theGenerictracePackage.createPackageContents();
@@ -261,7 +313,6 @@ public class GenerictracePackageImpl extends EPackageImpl implements Generictrac
 		// Mark meta-data to indicate it can't be changed
 		theGenerictracePackage.freeze();
 
-  
 		// Update the registry and return the package
 		EPackage.Registry.INSTANCE.put(GenerictracePackage.eNS_URI, theGenerictracePackage);
 		return theGenerictracePackage;
@@ -569,6 +620,114 @@ public class GenerictracePackageImpl extends EPackageImpl implements Generictrac
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
+	public EClass getDoubleAttributeValue() {
+		return doubleAttributeValueEClass;
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public EAttribute getDoubleAttributeValue_AttributeValue() {
+		return (EAttribute)doubleAttributeValueEClass.getEStructuralFeatures().get(0);
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public EClass getManyDoubleAttributeValue() {
+		return manyDoubleAttributeValueEClass;
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public EAttribute getManyDoubleAttributeValue_AttributeValue() {
+		return (EAttribute)manyDoubleAttributeValueEClass.getEStructuralFeatures().get(0);
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public EClass getDoubleObjectAttributeValue() {
+		return doubleObjectAttributeValueEClass;
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public EAttribute getDoubleObjectAttributeValue_AttributeValue() {
+		return (EAttribute)doubleObjectAttributeValueEClass.getEStructuralFeatures().get(0);
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public EClass getLongAttributeValue() {
+		return longAttributeValueEClass;
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public EAttribute getLongAttributeValue_AttributeValue() {
+		return (EAttribute)longAttributeValueEClass.getEStructuralFeatures().get(0);
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public EClass getManyLongAttributeValue() {
+		return manyLongAttributeValueEClass;
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public EAttribute getManyLongAttributeValue_AttributeValue() {
+		return (EAttribute)manyLongAttributeValueEClass.getEStructuralFeatures().get(0);
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public EClass getLongObjectAttributeValue() {
+		return longObjectAttributeValueEClass;
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public EAttribute getLongObjectAttributeValue_AttributeValue() {
+		return (EAttribute)longObjectAttributeValueEClass.getEStructuralFeatures().get(0);
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
 	public EDataType getISerializable() {
 		return iSerializableEDataType;
 	}
@@ -653,6 +812,24 @@ public class GenerictracePackageImpl extends EPackageImpl implements Generictrac
 
 		integerObjectAttributeValueEClass = createEClass(INTEGER_OBJECT_ATTRIBUTE_VALUE);
 		createEAttribute(integerObjectAttributeValueEClass, INTEGER_OBJECT_ATTRIBUTE_VALUE__ATTRIBUTE_VALUE);
+
+		doubleAttributeValueEClass = createEClass(DOUBLE_ATTRIBUTE_VALUE);
+		createEAttribute(doubleAttributeValueEClass, DOUBLE_ATTRIBUTE_VALUE__ATTRIBUTE_VALUE);
+
+		manyDoubleAttributeValueEClass = createEClass(MANY_DOUBLE_ATTRIBUTE_VALUE);
+		createEAttribute(manyDoubleAttributeValueEClass, MANY_DOUBLE_ATTRIBUTE_VALUE__ATTRIBUTE_VALUE);
+
+		doubleObjectAttributeValueEClass = createEClass(DOUBLE_OBJECT_ATTRIBUTE_VALUE);
+		createEAttribute(doubleObjectAttributeValueEClass, DOUBLE_OBJECT_ATTRIBUTE_VALUE__ATTRIBUTE_VALUE);
+
+		longAttributeValueEClass = createEClass(LONG_ATTRIBUTE_VALUE);
+		createEAttribute(longAttributeValueEClass, LONG_ATTRIBUTE_VALUE__ATTRIBUTE_VALUE);
+
+		manyLongAttributeValueEClass = createEClass(MANY_LONG_ATTRIBUTE_VALUE);
+		createEAttribute(manyLongAttributeValueEClass, MANY_LONG_ATTRIBUTE_VALUE__ATTRIBUTE_VALUE);
+
+		longObjectAttributeValueEClass = createEClass(LONG_OBJECT_ATTRIBUTE_VALUE);
+		createEAttribute(longObjectAttributeValueEClass, LONG_OBJECT_ATTRIBUTE_VALUE__ATTRIBUTE_VALUE);
 
 		// Create data types
 		iSerializableEDataType = createEDataType(ISERIALIZABLE);
@@ -756,6 +933,12 @@ public class GenerictracePackageImpl extends EPackageImpl implements Generictrac
 		singleReferenceValueEClass.getESuperTypes().add(this.getGenericReferenceValue());
 		manyReferenceValueEClass.getESuperTypes().add(this.getGenericReferenceValue());
 		integerObjectAttributeValueEClass.getESuperTypes().add(this.getGenericAttributeValue());
+		doubleAttributeValueEClass.getESuperTypes().add(this.getGenericAttributeValue());
+		manyDoubleAttributeValueEClass.getESuperTypes().add(this.getGenericAttributeValue());
+		doubleObjectAttributeValueEClass.getESuperTypes().add(this.getGenericAttributeValue());
+		longAttributeValueEClass.getESuperTypes().add(this.getGenericAttributeValue());
+		manyLongAttributeValueEClass.getESuperTypes().add(this.getGenericAttributeValue());
+		longObjectAttributeValueEClass.getESuperTypes().add(this.getGenericAttributeValue());
 
 		// Initialize classes, features, and operations; add parameters
 		initEClass(genericSequentialStepEClass, GenericSequentialStep.class, "GenericSequentialStep", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
@@ -811,6 +994,24 @@ public class GenerictracePackageImpl extends EPackageImpl implements Generictrac
 
 		initEClass(integerObjectAttributeValueEClass, IntegerObjectAttributeValue.class, "IntegerObjectAttributeValue", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
 		initEAttribute(getIntegerObjectAttributeValue_AttributeValue(), ecorePackage.getEIntegerObject(), "attributeValue", null, 0, 1, IntegerObjectAttributeValue.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+
+		initEClass(doubleAttributeValueEClass, DoubleAttributeValue.class, "DoubleAttributeValue", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
+		initEAttribute(getDoubleAttributeValue_AttributeValue(), ecorePackage.getEDouble(), "attributeValue", null, 0, 1, DoubleAttributeValue.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+
+		initEClass(manyDoubleAttributeValueEClass, ManyDoubleAttributeValue.class, "ManyDoubleAttributeValue", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
+		initEAttribute(getManyDoubleAttributeValue_AttributeValue(), ecorePackage.getEDouble(), "attributeValue", null, 0, -1, ManyDoubleAttributeValue.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+
+		initEClass(doubleObjectAttributeValueEClass, DoubleObjectAttributeValue.class, "DoubleObjectAttributeValue", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
+		initEAttribute(getDoubleObjectAttributeValue_AttributeValue(), ecorePackage.getEDoubleObject(), "attributeValue", null, 0, 1, DoubleObjectAttributeValue.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+
+		initEClass(longAttributeValueEClass, LongAttributeValue.class, "LongAttributeValue", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
+		initEAttribute(getLongAttributeValue_AttributeValue(), ecorePackage.getELong(), "attributeValue", null, 0, 1, LongAttributeValue.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+
+		initEClass(manyLongAttributeValueEClass, ManyLongAttributeValue.class, "ManyLongAttributeValue", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
+		initEAttribute(getManyLongAttributeValue_AttributeValue(), ecorePackage.getELong(), "attributeValue", null, 0, -1, ManyLongAttributeValue.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+
+		initEClass(longObjectAttributeValueEClass, LongObjectAttributeValue.class, "LongObjectAttributeValue", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
+		initEAttribute(getLongObjectAttributeValue_AttributeValue(), ecorePackage.getELongObject(), "attributeValue", null, 0, 1, LongObjectAttributeValue.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 
 		// Initialize data types
 		initEDataType(iSerializableEDataType, byte[].class, "ISerializable", IS_SERIALIZABLE, !IS_GENERATED_INSTANCE_CLASS);

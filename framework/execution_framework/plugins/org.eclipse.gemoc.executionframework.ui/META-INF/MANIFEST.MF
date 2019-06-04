@@ -22,4 +22,5 @@ Export-Package: org.eclipse.gemoc.executionframework.ui,
  org.eclipse.gemoc.executionframework.ui.views.engine,
  org.eclipse.gemoc.executionframework.ui.views.engine.actions,
  org.eclipse.gemoc.executionframework.ui.xdsml.activefile
+Automatic-Module-Name: org.eclipse.gemoc.executionframework.ui
 

@@ -24,8 +24,11 @@ Require-Bundle: org.eclipse.gemoc.xdsmlframework.api,
  org.eclipse.gemoc.dsl.debug,
  fr.inria.diverse.melange,
  org.eclipse.gemoc.executionframework.debugger;bundle-version="3.0.0",
- org.eclipse.gemoc.trace.gemoc.api
+ org.eclipse.gemoc.trace.gemoc.api,
+ org.eclipse.emf.edit.ui
 Bundle-ActivationPolicy: lazy
 Bundle-RequiredExecutionEnvironment: JavaSE-1.8
 Export-Package: org.eclipse.gemoc.executionframework.engine.ui,
- org.eclipse.gemoc.executionframework.engine.ui.launcher
+ org.eclipse.gemoc.executionframework.engine.ui.launcher,
+ org.eclipse.gemoc.executionframework.engine.ui.provider
+Automatic-Module-Name: org.eclipse.gemoc.executionframework.engine.ui

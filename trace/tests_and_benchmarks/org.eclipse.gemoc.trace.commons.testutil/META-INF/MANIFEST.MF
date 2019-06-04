@@ -12,4 +12,5 @@ Require-Bundle: com.google.guava,
  org.eclipse.emf.ecore;bundle-version="2.10.2"
 Export-Package: org.eclipse.gemoc.trace.commons.testutil
 Bundle-RequiredExecutionEnvironment: JavaSE-1.8
+Automatic-Module-Name: org.eclipse.gemoc.trace.commons.testutil
 

@@ -109,7 +109,7 @@ class TestHelper {
 		val traceAddon = new GenericTraceEngineAddon()
 		val testResult = testWithJob(engine, language, #{}, #{traceAddon}, model, cleanup)
 		// TODO when other PR is merged
-		//testResult.trace = traceAddon.trace
+		testResult.trace = traceAddon.trace
 		return testResult
 	}
 

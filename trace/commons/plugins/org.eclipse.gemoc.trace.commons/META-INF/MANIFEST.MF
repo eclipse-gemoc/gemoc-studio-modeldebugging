@@ -23,4 +23,5 @@ Require-Bundle: com.google.guava,
  org.jdom2;bundle-version="2.0.6"
 Bundle-ClassPath: .
 Bundle-RequiredExecutionEnvironment: JavaSE-1.8
+Automatic-Module-Name: org.eclipse.gemoc.trace.commons
 

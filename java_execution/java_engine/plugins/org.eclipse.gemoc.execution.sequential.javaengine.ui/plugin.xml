@@ -78,7 +78,7 @@
             delegate="org.eclipse.gemoc.execution.sequential.javaengine.ui.launcher.Launcher"
             id="org.eclipse.gemoc.execution.sequential.javaengine.ui.launcher"
             modes="run, debug"
-            name="Gemoc Sequential eXecutable Model"
+            name="Executable model with GEMOC Java engine"
             public="true"
             sourceLocatorId="org.eclipse.gemoc.execution.sequential.javaengine.ui.sourceLocator">
       </launchConfigurationType>

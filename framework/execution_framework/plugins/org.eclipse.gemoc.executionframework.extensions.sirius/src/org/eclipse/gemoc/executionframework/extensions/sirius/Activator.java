@@ -39,41 +39,43 @@ public class Activator extends AbstractUIPlugin {
 	 * The constructor
 	 */
 	public Activator() {
-		IWorkbench workbench = PlatformUI.getWorkbench();
-		//final IWorkbenchPage activePage = workbench.getActiveWorkbenchWindow().getActivePage();
-		workbench.addWorkbenchListener(new IWorkbenchListener() {
-			public boolean preShutdown(IWorkbench workbench, boolean forced) {
-				
-				// close all editors (a bit too strong ;-)  )
-				// activePage.closeEditors(activePage.getEditorReferences(), false);
-				
-				// try to close only Sirius sessions related to engines
-				for (Entry<String, IExecutionEngine<?>> engineEntry : org.eclipse.gemoc.executionframework.engine.Activator.getDefault().gemocRunningEngineRegistry.getRunningEngines().entrySet())
-			    {	
-					try{
-						// stop any running engine
-						IExecutionEngine<?> engine = engineEntry.getValue();
-						if(engine.getRunningStatus() != RunStatus.Stopped){
+		if(PlatformUI.isWorkbenchRunning()) { // if running in headless, the workbench does not exit
+			IWorkbench workbench = PlatformUI.getWorkbench();
+			//final IWorkbenchPage activePage = workbench.getActiveWorkbenchWindow().getActivePage();
+			workbench.addWorkbenchListener(new IWorkbenchListener() {
+				public boolean preShutdown(IWorkbench workbench, boolean forced) {
+					
+					// close all editors (a bit too strong ;-)  )
+					// activePage.closeEditors(activePage.getEditorReferences(), false);
+					
+					// try to close only Sirius sessions related to engines
+					for (Entry<String, IExecutionEngine<?>> engineEntry : org.eclipse.gemoc.executionframework.engine.Activator.getDefault().gemocRunningEngineRegistry.getRunningEngines().entrySet())
+				    {	
+						try{
+							// stop any running engine
+							IExecutionEngine<?> engine = engineEntry.getValue();
+							if(engine.getRunningStatus() != RunStatus.Stopped){
+								
+								engine.dispose();
+							}
 							
-							engine.dispose();
-						}
-						
-						// ensure to clear sirius session
-						URI uri = engine.getExecutionContext().getRunConfiguration().getAnimatorURI();
-						if (uri != null) {
-							Session session = SessionManager.INSTANCE.getSession(uri, new NullProgressMonitor());
-							session.close(new NullProgressMonitor());
-							SessionManager.INSTANCE.remove(session);
-						}
-							
-					} catch (Exception e){ /* we don't care try the other */}
-		    	}
-				
-				return true;
-			}
-			public void postShutdown(IWorkbench workbench) {
-			}
-		}); 
+							// ensure to clear sirius session
+							URI uri = engine.getExecutionContext().getRunConfiguration().getAnimatorURI();
+							if (uri != null) {
+								Session session = SessionManager.INSTANCE.getSession(uri, new NullProgressMonitor());
+								session.close(new NullProgressMonitor());
+								SessionManager.INSTANCE.remove(session);
+							}
+								
+						} catch (Exception e){ /* we don't care try the other */}
+			    	}
+					
+					return true;
+				}
+				public void postShutdown(IWorkbench workbench) {
+				}
+			}); 
+		}
 	}
 
 	/*

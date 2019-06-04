@@ -26,7 +26,7 @@ class JavaEngineWrapper implements IEngineWrapper {
 	override prepare(ILanguageWrapper wrapper, IExecutableModel model, Set<String> addons, URI uri) {
 		engine = new PlainK3ExecutionEngine()
 		val IRunConfiguration runConf = new TestRunConfiguration(model, uri,wrapper,addons)
-		val IExecutionContext exeContext = new SequentialModelExecutionContext(runConf, ExecutionMode::Run);
+		val SequentialModelExecutionContext exeContext = new SequentialModelExecutionContext(runConf, ExecutionMode::Run);
 		exeContext.initializeResourceModel();
 		engine.initialize(exeContext)
 		engine.stopOnAddonError = true;

@@ -10,7 +10,6 @@
  *******************************************************************************/
 package org.eclipse.gemoc.trace.gemoc.ui.commands
 
-import org.eclipse.gemoc.trace.gemoc.generator.TraceAddonGeneratorIntegration
 import org.eclipse.core.commands.ExecutionEvent
 import org.eclipse.core.commands.ExecutionException
 import org.eclipse.core.commands.IHandler
@@ -19,10 +18,11 @@ import org.eclipse.core.resources.IProject
 import org.eclipse.core.runtime.IProgressMonitor
 import org.eclipse.core.runtime.Status
 import org.eclipse.core.runtime.jobs.Job
+import org.eclipse.gemoc.trace.gemoc.generator.TraceAddonGeneratorIntegration
+import org.eclipse.gemoc.xdsmlframework.ide.ui.commands.AbstractDslSelectHandler
+import org.eclipse.gemoc.xdsmlframework.ui.utils.XDSMLProjectHelper
 import org.eclipse.jface.dialogs.InputDialog
 import org.eclipse.jface.window.Window
-import org.eclipse.gemoc.xdsmlframework.ide.ui.xdsml.wizards.MelangeXDSMLProjectHelper
-import org.eclipse.gemoc.xdsmlframework.ide.ui.commands.AbstractDslSelectHandler
 
 /**
  * Handler that allows to get an XDSML project (containing a melange file) 
@@ -35,7 +35,7 @@ class XDSMLProject2TraceAddonHandler extends AbstractDslSelectHandler implements
 		String language) throws ExecutionException {
 
 		val IFile dslFile = getDslFileFromSelection(event);
-		val baseProjectName = MelangeXDSMLProjectHelper.baseProjectName(dslFile.project)
+		val baseProjectName = XDSMLProjectHelper.baseProjectName(dslFile.project)
 
 		// If the base project name doesn't end with the language name, we suggest it		
 		val suggestedBasePluginName = if (baseProjectName.endsWith(language.toLowerCase))

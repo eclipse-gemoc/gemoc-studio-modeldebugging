@@ -1,0 +1,43 @@
+@startuml
+skinparam class {
+	BackgroundColor White
+	ArrowColor Black
+	BorderColor Black
+}
+
+scale max 1024 width
+scale max 800 height
+
+package "Eclipse Debug" as eclipse_debug <<Node>> {
+	namespace eclipse.debug.ui {
+		interface IDebugModelPresentation
+		interface IDebugEditorPresentation
+	}
+}
+
+package "Simulation and Model Animation" as simulation_model_animation <<Node>> {
+	namespace eclipse.gemoc.dsl.debug.ide.sirius.ui {
+		class DSLDebugModelPresentation {
+		}
+	}
+	namespace eclipse.gemoc.dsl.debug.ide.ui {
+		class DSLDebugModelPresentation
+	}
+}
+
+
+package "Java Execution / Java Engine" as java_execution <<Node>> {
+	namespace eclipse.gemoc.execution.sequential.javaengine.ui.launcher {
+		class GemocDebugModelPresentation  #beige
+		class PlainK3DebugModelPresentation  #beige
+		GemocDebugModelPresentation <|-- PlainK3DebugModelPresentation
+	}
+}
+
+eclipse.gemoc.dsl.debug.ide.ui.DSLDebugModelPresentation <|-- eclipse.gemoc.dsl.debug.ide.sirius.ui.DSLDebugModelPresentation
+eclipse.debug.ui.IDebugModelPresentation <|.. eclipse.gemoc.dsl.debug.ide.ui.DSLDebugModelPresentation
+eclipse.debug.ui.IDebugEditorPresentation <|.. eclipse.gemoc.dsl.debug.ide.ui.DSLDebugModelPresentation
+
+eclipse.gemoc.dsl.debug.ide.sirius.ui.DSLDebugModelPresentation <|-- eclipse.gemoc.execution.sequential.javaengine.ui.launcher.GemocDebugModelPresentation
+
+@enduml

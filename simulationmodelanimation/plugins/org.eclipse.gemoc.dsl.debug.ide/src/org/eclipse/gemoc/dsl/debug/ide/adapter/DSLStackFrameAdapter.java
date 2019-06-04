@@ -10,12 +10,6 @@
  *******************************************************************************/
 package org.eclipse.gemoc.dsl.debug.ide.adapter;
 
-import org.eclipse.gemoc.dsl.debug.StackFrame;
-import org.eclipse.gemoc.dsl.debug.ThreadUtils;
-import org.eclipse.gemoc.dsl.debug.Variable;
-import org.eclipse.gemoc.dsl.debug.ide.Activator;
-import org.eclipse.gemoc.dsl.debug.ide.DSLEclipseDebugIntegration;
-
 import java.util.ArrayList;
 import java.util.List;
 
@@ -25,6 +19,11 @@ import org.eclipse.debug.core.model.IStackFrame;
 import org.eclipse.debug.core.model.IThread;
 import org.eclipse.debug.core.model.IVariable;
 import org.eclipse.emf.ecore.EObject;
+import org.eclipse.gemoc.dsl.debug.StackFrame;
+import org.eclipse.gemoc.dsl.debug.ThreadUtils;
+import org.eclipse.gemoc.dsl.debug.Variable;
+import org.eclipse.gemoc.dsl.debug.ide.Activator;
+import org.eclipse.gemoc.dsl.debug.ide.DSLEclipseDebugIntegration;
 
 /**
  * The {@link StackFrame} DSL debug model.
@@ -241,7 +240,7 @@ public class DSLStackFrameAdapter extends AbstractDSLDebugElementAdapter impleme
 	 * @see org.eclipse.debug.core.model.IStackFrame#getLineNumber()
 	 */
 	public int getLineNumber() throws DebugException {
-		final EObject context = getContext();
+		final EObject context = getCurrentInstruction();
 		int result = -1;
 		for (ILocator locator : Activator.getDefault().retrieveLocators()) {
 			final ILocator.Location location = locator.getLocation(context);
@@ -266,6 +265,7 @@ public class DSLStackFrameAdapter extends AbstractDSLDebugElementAdapter impleme
 	 * @see org.eclipse.debug.core.model.IStackFrame#getCharStart()
 	 */
 	public int getCharStart() throws DebugException {
+
 		return -1;
 	}
 

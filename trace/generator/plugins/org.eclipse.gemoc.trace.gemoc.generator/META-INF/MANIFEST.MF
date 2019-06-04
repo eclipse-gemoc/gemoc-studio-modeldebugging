@@ -24,9 +24,11 @@ Require-Bundle: com.google.guava,
  org.eclipse.gemoc.opsemanticsview.model;bundle-version="0.1.0",
  org.eclipse.gemoc.opsemanticsview.gen;bundle-version="1.0.0",
  org.jdom2;bundle-version="2.0.6",
- org.eclipse.gemoc.dsl
+ org.eclipse.gemoc.dsl,
+ org.eclipse.gemoc.xdsmlframework.ui.utils;bundle-version="4.0.0"
 Bundle-ClassPath: .
 Bundle-RequiredExecutionEnvironment: JavaSE-1.8
 Export-Package: org.eclipse.gemoc.trace.gemoc.generator,
  org.eclipse.gemoc.trace.gemoc.generator.codegen,
  org.eclipse.gemoc.trace.gemoc.generator.util
+Automatic-Module-Name: org.eclipse.gemoc.trace.gemoc.generator

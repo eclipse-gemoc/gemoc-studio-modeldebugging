@@ -169,6 +169,30 @@ public class GenerictraceAdapterFactory extends AdapterFactoryImpl {
 				return createIntegerObjectAttributeValueAdapter();
 			}
 			@Override
+			public Adapter caseDoubleAttributeValue(DoubleAttributeValue object) {
+				return createDoubleAttributeValueAdapter();
+			}
+			@Override
+			public Adapter caseManyDoubleAttributeValue(ManyDoubleAttributeValue object) {
+				return createManyDoubleAttributeValueAdapter();
+			}
+			@Override
+			public Adapter caseDoubleObjectAttributeValue(DoubleObjectAttributeValue object) {
+				return createDoubleObjectAttributeValueAdapter();
+			}
+			@Override
+			public Adapter caseLongAttributeValue(LongAttributeValue object) {
+				return createLongAttributeValueAdapter();
+			}
+			@Override
+			public Adapter caseManyLongAttributeValue(ManyLongAttributeValue object) {
+				return createManyLongAttributeValueAdapter();
+			}
+			@Override
+			public Adapter caseLongObjectAttributeValue(LongObjectAttributeValue object) {
+				return createLongObjectAttributeValueAdapter();
+			}
+			@Override
 			public <StateSubType extends State<?, ?>> Adapter caseStep(Step<StateSubType> object) {
 				return createStepAdapter();
 			}
@@ -505,6 +529,90 @@ public class GenerictraceAdapterFactory extends AdapterFactoryImpl {
 	 * @generated
 	 */
 	public Adapter createIntegerObjectAttributeValueAdapter() {
+		return null;
+	}
+
+	/**
+	 * Creates a new adapter for an object of class '{@link org.eclipse.gemoc.trace.commons.model.generictrace.DoubleAttributeValue <em>Double Attribute Value</em>}'.
+	 * <!-- begin-user-doc -->
+	 * This default implementation returns null so that we can easily ignore cases;
+	 * it's useful to ignore a case when inheritance will catch all the cases anyway.
+	 * <!-- end-user-doc -->
+	 * @return the new adapter.
+	 * @see org.eclipse.gemoc.trace.commons.model.generictrace.DoubleAttributeValue
+	 * @generated
+	 */
+	public Adapter createDoubleAttributeValueAdapter() {
+		return null;
+	}
+
+	/**
+	 * Creates a new adapter for an object of class '{@link org.eclipse.gemoc.trace.commons.model.generictrace.ManyDoubleAttributeValue <em>Many Double Attribute Value</em>}'.
+	 * <!-- begin-user-doc -->
+	 * This default implementation returns null so that we can easily ignore cases;
+	 * it's useful to ignore a case when inheritance will catch all the cases anyway.
+	 * <!-- end-user-doc -->
+	 * @return the new adapter.
+	 * @see org.eclipse.gemoc.trace.commons.model.generictrace.ManyDoubleAttributeValue
+	 * @generated
+	 */
+	public Adapter createManyDoubleAttributeValueAdapter() {
+		return null;
+	}
+
+	/**
+	 * Creates a new adapter for an object of class '{@link org.eclipse.gemoc.trace.commons.model.generictrace.DoubleObjectAttributeValue <em>Double Object Attribute Value</em>}'.
+	 * <!-- begin-user-doc -->
+	 * This default implementation returns null so that we can easily ignore cases;
+	 * it's useful to ignore a case when inheritance will catch all the cases anyway.
+	 * <!-- end-user-doc -->
+	 * @return the new adapter.
+	 * @see org.eclipse.gemoc.trace.commons.model.generictrace.DoubleObjectAttributeValue
+	 * @generated
+	 */
+	public Adapter createDoubleObjectAttributeValueAdapter() {
+		return null;
+	}
+
+	/**
+	 * Creates a new adapter for an object of class '{@link org.eclipse.gemoc.trace.commons.model.generictrace.LongAttributeValue <em>Long Attribute Value</em>}'.
+	 * <!-- begin-user-doc -->
+	 * This default implementation returns null so that we can easily ignore cases;
+	 * it's useful to ignore a case when inheritance will catch all the cases anyway.
+	 * <!-- end-user-doc -->
+	 * @return the new adapter.
+	 * @see org.eclipse.gemoc.trace.commons.model.generictrace.LongAttributeValue
+	 * @generated
+	 */
+	public Adapter createLongAttributeValueAdapter() {
+		return null;
+	}
+
+	/**
+	 * Creates a new adapter for an object of class '{@link org.eclipse.gemoc.trace.commons.model.generictrace.ManyLongAttributeValue <em>Many Long Attribute Value</em>}'.
+	 * <!-- begin-user-doc -->
+	 * This default implementation returns null so that we can easily ignore cases;
+	 * it's useful to ignore a case when inheritance will catch all the cases anyway.
+	 * <!-- end-user-doc -->
+	 * @return the new adapter.
+	 * @see org.eclipse.gemoc.trace.commons.model.generictrace.ManyLongAttributeValue
+	 * @generated
+	 */
+	public Adapter createManyLongAttributeValueAdapter() {
+		return null;
+	}
+
+	/**
+	 * Creates a new adapter for an object of class '{@link org.eclipse.gemoc.trace.commons.model.generictrace.LongObjectAttributeValue <em>Long Object Attribute Value</em>}'.
+	 * <!-- begin-user-doc -->
+	 * This default implementation returns null so that we can easily ignore cases;
+	 * it's useful to ignore a case when inheritance will catch all the cases anyway.
+	 * <!-- end-user-doc -->
+	 * @return the new adapter.
+	 * @see org.eclipse.gemoc.trace.commons.model.generictrace.LongObjectAttributeValue
+	 * @generated
+	 */
+	public Adapter createLongObjectAttributeValueAdapter() {
 		return null;
 	}
 

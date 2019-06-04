@@ -33,4 +33,5 @@ Export-Package: org.eclipse.gemoc.xdsmlframework.ide.ui,
  org.eclipse.gemoc.xdsmlframework.ide.ui.commands,
  org.eclipse.gemoc.xdsmlframework.ide.ui.xdsml.wizards,
  org.eclipse.gemoc.xdsmlframework.ide.ui.xdsml.wizards.pages
+Automatic-Module-Name: org.eclipse.gemoc.xdsmlframework.ide.ui
 

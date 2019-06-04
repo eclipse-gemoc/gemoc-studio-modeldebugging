@@ -43,4 +43,5 @@ Export-Package: org.eclipse.gemoc.execution.sequential.javaxdsml.ide.ui,
  org.eclipse.gemoc.execution.sequential.javaxdsml.ide.ui.menu,
  org.eclipse.gemoc.execution.sequential.javaxdsml.ide.ui.templates,
  org.eclipse.gemoc.execution.sequential.javaxdsml.ide.ui.wizards
+Automatic-Module-Name: org.eclipse.gemoc.execution.sequential.javaxdsml.ide.ui
 
