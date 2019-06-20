@@ -165,15 +165,6 @@ This Agreement is governed by the laws of the State of New York and the intellec
          id="org.eclipse.gemoc.modeldebugging.framework.commons.feature"
          version="0.0.0"/>
 
-   <requires>
-      <import feature="org.eclipse.gemoc.modeldebugging.framework.commons.feature" version="0.0.0" match="greaterOrEqual"/>
-      <import feature="org.eclipse.gemoc.modeldebugging.framework.commons.feature.source" version="0.0.0" match="greaterOrEqual"/>
-      <import feature="org.eclipse.gemoc.xdsmlframework.feature" version="0.0.0" match="greaterOrEqual"/>
-      <import feature="org.eclipse.gemoc.xdsmlframework.feature.source" version="0.0.0" match="greaterOrEqual"/>
-      <import feature="org.eclipse.gemoc.executionframework.feature" version="0.0.0" match="greaterOrEqual"/>
-      <import feature="org.eclipse.gemoc.executionframework.feature.source" version="0.0.0" match="greaterOrEqual"/>
-   </requires>
-
    <plugin
          id="org.eclipse.gemoc.language_workbench.documentation"
          download-size="0"
