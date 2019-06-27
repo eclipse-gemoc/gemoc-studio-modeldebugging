@@ -1,6 +1,6 @@
 # Changelog
 
-## v3.1.0-glose (25/06/2019)
+## v3.1.0-20190627 (27/06/2019)
 
 #### Enhancements:
 
@@ -36,6 +36,7 @@
 
 #### Release Engineering
 
+- [**releng**] Add gexpressions to studio/updatesite and restructure update site [#114](https://github.com/eclipse/gemoc-studio-modeldebugging/pull/114)
 - [**releng**] Update icons to official branding colors [#110](https://github.com/eclipse/gemoc-studio-modeldebugging/pull/110)
 - [**releng**] Increase swtbot test timeout [#106](https://github.com/eclipse/gemoc-studio-modeldebugging/pull/106)
 - [**releng**] Fix xtend compilation issue 1373 [#79](https://github.com/eclipse/gemoc-studio-modeldebugging/pull/79)
