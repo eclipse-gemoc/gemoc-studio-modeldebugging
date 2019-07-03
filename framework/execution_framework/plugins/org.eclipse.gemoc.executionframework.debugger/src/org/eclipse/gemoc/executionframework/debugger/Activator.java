@@ -96,7 +96,11 @@ public class Activator extends GemocPlugin {
 		if (_loggingBackend == null) {
 			_loggingBackend = new DefaultLoggingBackend(this);
 			MessagingSystemManager msm = new MessagingSystemManager();
-			MessagingSystem ms = msm.createBestPlatformMessagingSystem(PLUGIN_ID, "Model Debugger console");
+			// use the baseMessageGroup of the engine in order to share consoles instead of duplicating them
+			// however do not use shared static string to avoid direct dependency 
+			MessagingSystem ms = msm.createBestPlatformMessagingSystem(
+					"org.eclipse.gemoc.executionframework.engine", 
+					"Modeling Workbench Console");
 			_loggingBackend.setMessagingSystem(ms);
 		}
 		return _loggingBackend;
