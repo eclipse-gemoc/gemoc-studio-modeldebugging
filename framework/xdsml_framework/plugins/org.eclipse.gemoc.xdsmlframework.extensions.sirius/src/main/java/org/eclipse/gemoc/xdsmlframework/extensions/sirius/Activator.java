@@ -36,7 +36,9 @@ public class Activator extends AbstractUIPlugin {
 		if (messagingSystem == null) 
 		{
 			MessagingSystemManager msm = new MessagingSystemManager();
-			messagingSystem = msm.createBestPlatformMessagingSystem(PLUGIN_ID, "Modeling Workbench Console");
+			messagingSystem = msm.createBestPlatformMessagingSystem(
+				org.eclipse.gemoc.executionframework.engine.Activator.PLUGIN_ID, 
+				org.eclipse.gemoc.executionframework.engine.Activator.CONSOLE_NAME);
 			if (messagingSystem instanceof EclipseMessagingSystem)
 				((EclipseMessagingSystem) messagingSystem).setConsoleLogLevel(ConsoleLogLevel.DEV_DEBUG);
 		}
