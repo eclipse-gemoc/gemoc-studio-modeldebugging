@@ -36,7 +36,7 @@ public class Activator extends AbstractUIPlugin {
 		if (messagingSystem == null) 
 		{
 			MessagingSystemManager msm = new MessagingSystemManager();
-			messagingSystem = msm.createBestPlatformMessagingSystem(PLUGIN_ID, "Execution Engine");
+			messagingSystem = msm.createBestPlatformMessagingSystem(PLUGIN_ID, "Modeling Workbench Console");
 			if (messagingSystem instanceof EclipseMessagingSystem)
 				((EclipseMessagingSystem) messagingSystem).setConsoleLogLevel(ConsoleLogLevel.DEV_DEBUG);
 		}
