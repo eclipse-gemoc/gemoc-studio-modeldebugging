@@ -1,5 +1,10 @@
 # Changelog
 
+## v3.1.0 (29/07/2019)
+*No changelog for this release.*
+
+---
+
 ## v3.1.0-20190627 (27/06/2019)
 
 #### Enhancements:
