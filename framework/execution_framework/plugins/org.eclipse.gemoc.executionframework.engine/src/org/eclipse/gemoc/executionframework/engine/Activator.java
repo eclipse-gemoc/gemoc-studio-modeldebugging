@@ -25,6 +25,8 @@ public class Activator extends GemocPlugin {
 
 	// The plug-in ID
 	public static final String PLUGIN_ID = "org.eclipse.gemoc.executionframework.engine"; //$NON-NLS-1$
+	
+	public static final String CONSOLE_NAME = "Modeling Workbench Console";
 
 	// The shared instance
 	private static Activator plugin;
@@ -92,7 +94,7 @@ public class Activator extends GemocPlugin {
 		{
 			_loggingBackend = new DefaultLoggingBackend(this);
 			MessagingSystemManager msm = new MessagingSystemManager();
-			MessagingSystem ms = msm.createBestPlatformMessagingSystem(PLUGIN_ID, "Execution Engine");
+			MessagingSystem ms = msm.createBestPlatformMessagingSystem(PLUGIN_ID, CONSOLE_NAME);
 			_loggingBackend.setMessagingSystem(ms);
 		}
 		return _loggingBackend;
