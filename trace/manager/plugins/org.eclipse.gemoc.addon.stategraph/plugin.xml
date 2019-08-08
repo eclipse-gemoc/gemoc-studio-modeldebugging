@@ -15,7 +15,12 @@
 
    <extension
          point="org.eclipse.ui.views">
+      <category
+            id="org.eclipse.gemoc.executionframework.ui.category"
+            name="Gemoc">
+      </category>
       <view
+            category="org.eclipse.gemoc.executionframework.ui.category"
             name="State Graph View"
             icon="icons/IconeGemocModel-16.png"
             class="org.eclipse.gemoc.addon.stategraph.views.StateGraphViewPart"

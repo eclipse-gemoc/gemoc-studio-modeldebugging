@@ -379,12 +379,12 @@
 	        </modules>
 		</profile>
 		<profile>
-	        <id>repository</id>
+	        <id>releng</id>
 	        <activation>
 	            <activeByDefault>true</activeByDefault>
 	        </activation>
 	        <modules>
-	        	<module>releng/org.eclipse.gemoc.modeldebugging.repository/pom.xml</module>
+	        	<module>releng</module>
 	        </modules>
 		</profile>
 		<profile>
