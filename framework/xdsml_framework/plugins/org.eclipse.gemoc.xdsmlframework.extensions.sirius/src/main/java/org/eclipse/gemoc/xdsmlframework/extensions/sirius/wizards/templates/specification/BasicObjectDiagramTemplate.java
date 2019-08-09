@@ -15,24 +15,40 @@ import org.eclipse.jface.viewers.Viewer;
 import org.eclipse.jface.viewers.ViewerFilter;
 import org.eclipse.jface.wizard.Wizard;
 import org.eclipse.jface.wizard.WizardPage;
+import org.eclipse.sirius.diagram.description.ContainerMapping;
+import org.eclipse.sirius.diagram.description.DiagramDescription;
+import org.eclipse.sirius.diagram.description.NodeMapping;
+import org.eclipse.sirius.diagram.description.style.ContainerStyleDescription;
+import org.eclipse.sirius.diagram.description.style.FlatContainerStyleDescription;
+import org.eclipse.sirius.viewpoint.description.Group;
+import org.eclipse.sirius.viewpoint.description.Viewpoint;
 import org.eclipse.ui.IWorkbenchWindow;
 import org.eclipse.ui.PlatformUI;
-
+import org.eclipse.xtext.EcoreUtil2;
 
 import java.io.IOException;
 import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
 import java.util.Optional;
+import java.util.stream.Collectors;
 
 import org.eclipse.core.resources.IFile;
+import org.eclipse.core.resources.IWorkspaceRoot;
+import org.eclipse.core.resources.ResourcesPlugin;
 import org.eclipse.core.runtime.CoreException;
 import org.eclipse.core.runtime.IProgressMonitor;
+import org.eclipse.core.runtime.Path;
 import org.eclipse.emf.common.ui.dialogs.WorkspaceResourceDialog;
+import org.eclipse.emf.common.util.EList;
 import org.eclipse.emf.common.util.URI;
+import org.eclipse.emf.ecore.EClass;
+import org.eclipse.emf.ecore.EObject;
+import org.eclipse.emf.ecore.EPackage;
 import org.eclipse.emf.ecore.resource.Resource;
 import org.eclipse.emf.ecore.resource.ResourceSet;
 import org.eclipse.emf.ecore.resource.impl.ResourceSetImpl;
+import org.eclipse.emf.ecore.util.EcoreUtil;
 import org.eclipse.gemoc.commons.eclipse.core.resources.FileFinderVisitor;
 import org.eclipse.gemoc.commons.eclipse.emf.EMFResource;
 import org.eclipse.gemoc.commons.eclipse.emf.URIHelper;
@@ -43,13 +59,14 @@ import org.eclipse.gemoc.dsl.Dsl;
 import org.eclipse.gemoc.dsl.Entry;
 import org.eclipse.gemoc.xdsmlframework.extensions.sirius.Activator;
 import org.eclipse.gemoc.xdsmlframework.extensions.sirius.IHelpContextIds;
+import org.eclipse.gemoc.xdsmlframework.extensions.sirius.helpers.SiriusCreationHelper;
 import org.eclipse.gemoc.xdsmlframework.extensions.sirius.wizards.pages.NewGemocSiriusProjectWizardFields;
 import org.eclipse.gemoc.xdsmlframework.extensions.sirius.wizards.templates.SiriusTemplateSection;
 import org.eclipse.gemoc.xdsmlframework.extensions.sirius.wizards.templates.TemplateMessages;
 
 
 public class BasicObjectDiagramTemplate extends SiriusTemplateSection {
-	public static final String KEY_VIEWPOINT_NAME = "viewpointName"; //$NON-NLS-1$
+	public static final String KEY_DIAGRAM_NAME = "diagramName"; //$NON-NLS-1$
 	public static final String KEY_ECOREFILE_PATH = "ecoreFilePath"; //$NON-NLS-1$
 	
 
@@ -83,7 +100,7 @@ public class BasicObjectDiagramTemplate extends SiriusTemplateSection {
 
 	private void createOptions() {
 		//addOption(KEY_PACKAGE_NAME, TemplateMessages.MiniAspectSampleTemplate_packageName, (String) null, 0);
-		addOption(KEY_VIEWPOINT_NAME, TemplateMessages.BasicObjectDiagramTemplate_viewpointName, "ObjectDiagram", 0);
+		addOption(KEY_DIAGRAM_NAME, TemplateMessages.BasicObjectDiagramTemplate_diagramName, "ObjectDiagram", 0);
 		TemplateOption ecoreLocationOption  = new AbstractStringWithButtonOption(this, KEY_ECOREFILE_PATH, TemplateMessages.BasicObjectDiagramTemplate_ecoreFilePath) {
 			@Override
 			public String doSelectButton() {
@@ -162,12 +179,15 @@ public class BasicObjectDiagramTemplate extends SiriusTemplateSection {
 				String[] ecores = ecore.get().getValue().split(",");
 				if(ecores.length > 0) {
 					String ecoreUri = ecores[0];
-					initializeOption(KEY_ECOREFILE_PATH,URIHelper.removePlatformScheme(URI.createURI(ecoreUri)));
+					String path = URIHelper.removePlatformScheme(URI.createURI(ecoreUri));
+					initializeOption(KEY_ECOREFILE_PATH,path);
+					ecoreIFile =  ResourcesPlugin.getWorkspace().getRoot().getFile(new Path(path));
+					
 				}
 			}
 		}
 	}
-
+	
 
 	public String getUsedExtensionPoint() {
 		return "org.eclipse.ui.actionSets"; //$NON-NLS-1$
@@ -186,8 +206,7 @@ public class BasicObjectDiagramTemplate extends SiriusTemplateSection {
 	 * @see org.eclipse.gemoc.xdsmlframework.extensions.sirius.wizards.templates.SiriusTemplateSection#generateFiles(org.eclipse.core.runtime.IProgressMonitor)
 	 */
 	@Override
-	protected void generateFiles(IProgressMonitor monitor) throws CoreException {		
-		
+	protected void generateFiles(IProgressMonitor monitor) throws CoreException {
 		super.generateFiles(monitor);
 
 		// update the .odesign file with appropriate data
@@ -203,7 +222,21 @@ public class BasicObjectDiagramTemplate extends SiriusTemplateSection {
 				ecoreRes.load(Collections.EMPTY_MAP);
 				odesignRes.load(Collections.EMPTY_MAP);
 				
-				// TODO  
+				Group contents = (Group) odesignRes.getContents().get(0);
+				EList<Viewpoint> viewpoints = contents.getOwnedViewpoints();
+				Viewpoint viewpoint = viewpoints.get(0);
+
+				List<EClass> allEClasses = EcoreUtil2.eAllContentsAsList(ecoreRes)
+						.stream()
+						.filter(e -> e instanceof EClass)
+						.map(e -> (EClass)e)
+						.collect(Collectors.toList());
+				List<EPackage> allEPackages = EcoreUtil2.eAllContentsAsList(ecoreRes)
+						.stream()
+						.filter(p -> p instanceof EPackage)
+						.map(p -> (EPackage)p)
+						.collect(Collectors.toList());
+				addDiagramSpecificationForEClasses(viewpoint, allEClasses, allEPackages);
 				
 				odesignRes.save(null);
 			} catch (IOException e) {
@@ -211,6 +244,33 @@ public class BasicObjectDiagramTemplate extends SiriusTemplateSection {
 			}
 
 		}
+		
+	}
+	
+	protected void addDiagramSpecificationForEClasses(Viewpoint viewpoint, List<EClass> eClasses, List<EPackage> ePackages) {
+		
+		// consider only leaf classes
+		String diagramName = (String) this.getValue(KEY_DIAGRAM_NAME);
+		DiagramDescription diag = SiriusCreationHelper.createDiagram(viewpoint, diagramName);
+		// TODO diag.setDomainClass(arg0); ask in wizard or find most probable top container
+		diag.getMetamodel().addAll(ePackages);
+		diag.setDefaultLayer(SiriusCreationHelper.createAdditionalLayer("Default"));
+		
+		// create ContainerNodes
+		for(EClass anEClass : eClasses) {
+			if(anEClass.getESuperTypes().isEmpty()) {
+				// only for leaf classes
+				ContainerMapping node = SiriusCreationHelper.createContainerMapping(diag, anEClass.getName()+"Container");
+				node.setDomainClass(anEClass.getEPackage().getName()+"::"+anEClass.getName());
+				FlatContainerStyleDescription gradientStyle = SiriusCreationHelper.createFlatContainerStyleDescription(node);
+				// TODO infer a nice label (from name or id or urifragment)
+				//gradientStyle.setLabelExpression(arg0);
+				
+				// TODO create content for EAttributes // takes care of inheritance
+			}
+		}
+		// TODO create Edge for containment references (takes care of eOpposite and inheritance)
+		// TODO create Edge for normal references (takes care of eOpposite and inheritance)
 		
 	}
 }

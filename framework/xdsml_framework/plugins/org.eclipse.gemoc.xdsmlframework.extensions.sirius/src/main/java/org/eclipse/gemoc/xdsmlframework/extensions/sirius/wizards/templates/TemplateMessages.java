@@ -26,7 +26,7 @@ public class TemplateMessages extends NLS {
 		
 	// MiniAspectSample constants
 	public static String BasicObjectDiagramNewWizard_wtitle;
-	public static String BasicObjectDiagramTemplate_viewpointName;
+	public static String BasicObjectDiagramTemplate_diagramName;
 	public static String BasicObjectDiagramTemplate_ecoreFilePath;
 	public static String BasicObjectDiagramTemplate_title;
 	public static String BasicObjectDiagramTemplate_desc;
