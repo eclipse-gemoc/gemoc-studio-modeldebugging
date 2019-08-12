@@ -6,11 +6,13 @@ import org.eclipse.sirius.diagram.description.DiagramDescription;
 import org.eclipse.sirius.diagram.description.EdgeMapping;
 import org.eclipse.sirius.diagram.description.Layer;
 import org.eclipse.sirius.diagram.description.NodeMapping;
+import org.eclipse.sirius.diagram.description.style.CenterLabelStyleDescription;
+import org.eclipse.sirius.diagram.description.style.EdgeStyleDescription;
 import org.eclipse.sirius.diagram.description.style.FlatContainerStyleDescription;
 import org.eclipse.sirius.diagram.description.style.NodeStyleDescription;
 import org.eclipse.sirius.viewpoint.description.Viewpoint;
 
-public class SiriusBuildHelper {
+public class SpecificationBuildHelper {
 
 	/**
 	 * Create a {@link DiagramDescription}
@@ -111,6 +113,22 @@ public class SiriusBuildHelper {
 	 * @param emName the {@link EdgeMapping} label
 	 * @return the created {@link EdgeMapping}
 	 */
+	public static EdgeMapping createEdgeMapping(DiagramDescription diag, String emName) {
+		final EdgeMapping res = org.eclipse.sirius.diagram.description.DescriptionPackage.eINSTANCE
+				.getDescriptionFactory().createEdgeMapping();
+		res.setName(emName);
+		Layer layer = diag.getDefaultLayer();
+		layer.getEdgeMappings().add(res);
+		return res;
+	}
+	
+	/**
+	 * Create a {@link EdgeMapping}
+	 * 
+	 * @param layer  the parent {@link Layer} of the {@link EdgeMapping}
+	 * @param emName the {@link EdgeMapping} label
+	 * @return the created {@link EdgeMapping}
+	 */
 	public static EdgeMapping createEdgeMapping(Layer layer, String emName) {
 		final EdgeMapping res = org.eclipse.sirius.diagram.description.DescriptionPackage.eINSTANCE
 				.getDescriptionFactory().createEdgeMapping();
@@ -131,6 +149,22 @@ public class SiriusBuildHelper {
 				.getDescriptionFactory().createContainerMapping();
 		res.setName(name);
 		description.getDefaultLayer().getContainerMappings().add(res);
+		return res;
+	}
+
+	public static EdgeStyleDescription createStyleDescription(EdgeMapping edgeMapping) {
+		final EdgeStyleDescription res = org.eclipse.sirius.diagram.description.style.StylePackage.eINSTANCE
+				.getStyleFactory().createEdgeStyleDescription();
+		edgeMapping.setStyle(res);
+		return res;
+	}
+	
+	public static CenterLabelStyleDescription createCenterLabelStyleDescription(EdgeStyleDescription edgeStyleDecl, String labelExpression) {
+		final CenterLabelStyleDescription res = org.eclipse.sirius.diagram.description.style.StylePackage.eINSTANCE
+				.getStyleFactory().createCenterLabelStyleDescription();
+		res.setLabelExpression(labelExpression);
+		res.setShowIcon(false);
+		edgeStyleDecl.setCenterLabelStyleDescription(res);
 		return res;
 	}
 

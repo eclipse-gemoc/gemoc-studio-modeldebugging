@@ -29,7 +29,11 @@ import org.eclipse.emf.ecore.EClass;
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.EPackage;
 import org.eclipse.emf.ecore.resource.Resource;
+import org.eclipse.emf.ecore.resource.ResourceSet;
 import org.eclipse.emf.ecore.resource.impl.ResourceSetImpl;
+import org.eclipse.emf.edit.command.ChangeCommand;
+import org.eclipse.emf.edit.domain.EditingDomain;
+import org.eclipse.emf.edit.domain.IEditingDomainProvider;
 import org.eclipse.gemoc.commons.eclipse.core.resources.FileFinderVisitor;
 import org.eclipse.gemoc.commons.eclipse.emf.EMFResource;
 import org.eclipse.gemoc.commons.eclipse.emf.URIHelper;
@@ -54,8 +58,11 @@ import org.eclipse.jface.wizard.WizardDialog;
 import org.eclipse.jface.wizard.WizardPage;
 import org.eclipse.sirius.viewpoint.description.Group;
 import org.eclipse.sirius.viewpoint.description.Viewpoint;
+import org.eclipse.ui.IEditorDescriptor;
+import org.eclipse.ui.IEditorPart;
 import org.eclipse.ui.IWorkbenchWindow;
 import org.eclipse.ui.PlatformUI;
+import org.eclipse.ui.part.FileEditorInput;
 import org.eclipse.xtext.EcoreUtil2;
 
 
@@ -247,36 +254,69 @@ public class BasicObjectDiagramTemplate extends SiriusTemplateSection {
 		if(file != null) {
 			try {
 				// load ecore and design files (they are in 2 separate resourceSet)
-				Resource odesignRes = EMFResource.getResource(file);
-				Resource ecoreRes = EMFResource.getResource(ecoreIFile);
-				ecoreRes.load(Collections.EMPTY_MAP);
-				odesignRes.load(Collections.EMPTY_MAP);
 				
-				Group contents = (Group) odesignRes.getContents().get(0);
-				EList<Viewpoint> viewpoints = contents.getOwnedViewpoints();
-				Viewpoint viewpoint = viewpoints.get(0);
-				String diagramName = (String) this.getValue(KEY_DIAGRAM_NAME);
-				String rootEClassName = (String) this.getValue(KEY_DIAGRAM_ROOT_ECLASS);
-				List<EClass> allEClasses = EcoreUtil2.eAllContentsAsList(ecoreRes)
-						.stream()
-						.filter(e -> e instanceof EClass)
-						.map(e -> (EClass)e)
-						.collect(Collectors.toList());
-				List<EPackage> allEPackages = EcoreUtil2.eAllContentsAsList(ecoreRes)
-						.stream()
-						.filter(p -> p instanceof EPackage)
-						.map(p -> (EPackage)p)
-						.collect(Collectors.toList());
-				Ecore2BasicObjectDiagramSpecification diagramBuilder = new Ecore2BasicObjectDiagramSpecification(
-						viewpoint, 
-						diagramName, 
-						allEClasses, 
-						allEPackages, 
-						rootEClassName);
-				diagramBuilder.addBasicObjectDiagram();
+				/// Sirius wizard has already created the file and opened the editor
+				// make sure to get the same resource and modify it in its editing domain 
+				// note a (possible alternative, close, modify and reopen editor)
+				// Resource odesignRes = EMFResource.getResource(file);
+				// odesignRes.load(Collections.EMPTY_MAP);
+				// Group contents = (Group) odesignRes.getContents().get(0);
+				
+				IEditorDescriptor desc = PlatformUI.getWorkbench().
+				        getEditorRegistry().getDefaultEditor(file.getName());
+				final IEditorPart editor = PlatformUI.getWorkbench().getActiveWorkbenchWindow().getActivePage().openEditor(new FileEditorInput(file), desc.getId());
+				
+				if (editor instanceof IEditingDomainProvider) {
+					final EditingDomain editingDomain = ((IEditingDomainProvider) editor)
+							.getEditingDomain();
+					final ResourceSet resourceSet = editingDomain.getResourceSet();
+					Group group = null;
+
+					for (Resource resource : resourceSet.getResources()) {
+						for (EObject eObj : resource.getContents()) {
+							if (eObj instanceof Group) {
+								group = (Group) eObj;
+								break;
+							}
+						}
+					}
+					Resource ecoreRes = EMFResource.getResource(ecoreIFile);
+					ecoreRes.load(Collections.EMPTY_MAP);
+					
+					
+					
+					EList<Viewpoint> viewpoints = group.getOwnedViewpoints();
+					Viewpoint viewpoint = viewpoints.get(0);
+					String diagramName = (String) this.getValue(KEY_DIAGRAM_NAME);
+					String rootEClassName = (String) this.getValue(KEY_DIAGRAM_ROOT_ECLASS);
+					List<EClass> allEClasses = EcoreUtil2.eAllContentsAsList(ecoreRes)
+							.stream()
+							.filter(e -> e instanceof EClass)
+							.map(e -> (EClass)e)
+							.collect(Collectors.toList());
+					List<EPackage> allEPackages = EcoreUtil2.eAllContentsAsList(ecoreRes)
+							.stream()
+							.filter(p -> p instanceof EPackage)
+							.map(p -> (EPackage)p)
+							.collect(Collectors.toList());
+					Ecore2BasicObjectDiagramSpecification diagramBuilder = new Ecore2BasicObjectDiagramSpecification(
+							viewpoint, 
+							diagramName, 
+							allEClasses, 
+							allEPackages, 
+							rootEClassName);
+					editingDomain.getCommandStack().execute(
+							new ChangeCommand(group.eResource()) {
+								@Override
+								protected void doExecute() {
+									diagramBuilder.addBasicObjectDiagram();
+								}
+							});
+					
+					
+				}
 				
 				
-				odesignRes.save(null);
 			} catch (IOException e) {
 				Activator.logErrorMessage(e.getMessage(), e);
 			}
