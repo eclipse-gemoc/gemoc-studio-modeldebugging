@@ -28,6 +28,7 @@ public class TemplateMessages extends NLS {
 	public static String BasicObjectDiagramNewWizard_wtitle;
 	public static String BasicObjectDiagramTemplate_diagramName;
 	public static String BasicObjectDiagramTemplate_ecoreFilePath;
+	public static String BasicObjectDiagramTemplate_diagramRootEClass;
 	public static String BasicObjectDiagramTemplate_title;
 	public static String BasicObjectDiagramTemplate_desc;
 

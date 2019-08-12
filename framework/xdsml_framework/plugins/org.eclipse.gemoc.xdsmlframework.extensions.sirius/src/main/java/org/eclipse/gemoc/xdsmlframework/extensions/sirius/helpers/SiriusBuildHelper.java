@@ -10,7 +10,7 @@ import org.eclipse.sirius.diagram.description.style.FlatContainerStyleDescriptio
 import org.eclipse.sirius.diagram.description.style.NodeStyleDescription;
 import org.eclipse.sirius.viewpoint.description.Viewpoint;
 
-public class SiriusCreationHelper {
+public class SiriusBuildHelper {
 
 	/**
 	 * Create a {@link DiagramDescription}

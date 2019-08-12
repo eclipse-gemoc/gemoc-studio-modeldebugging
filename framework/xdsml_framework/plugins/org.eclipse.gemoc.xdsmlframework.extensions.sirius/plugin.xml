@@ -96,7 +96,7 @@
             name="Basic Object Diagram"
             targetPluginId="org.eclipse.gemoc.xdsmlframework.extensions.sirius">
          <description>
-            This template will generate a ViewPoint specification offering representation looking like an object diagram.
+            This template generates a ViewPoint specification offering a basic object diagram representation.
          </description>
       </wizard>
    </extension>
