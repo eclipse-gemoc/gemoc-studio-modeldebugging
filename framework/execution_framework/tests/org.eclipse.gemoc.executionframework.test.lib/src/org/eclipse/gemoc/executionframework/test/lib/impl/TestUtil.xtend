@@ -13,13 +13,13 @@ import org.eclipse.core.runtime.IProgressMonitor
 import org.eclipse.core.runtime.Path
 import org.eclipse.core.runtime.Platform
 import org.eclipse.core.runtime.jobs.Job
+import org.eclipse.gemoc.executionframework.engine.Activator
+import org.eclipse.gemoc.xdsmlframework.api.core.EngineStatus
+import org.eclipse.gemoc.xdsmlframework.api.core.IExecutionEngine
 import org.eclipse.swt.widgets.Display
 import org.eclipse.ui.IWindowListener
 import org.eclipse.ui.IWorkbenchWindow
 import org.eclipse.ui.PlatformUI
-import org.eclipse.gemoc.executionframework.engine.Activator
-import org.eclipse.gemoc.xdsmlframework.api.core.EngineStatus
-import org.eclipse.gemoc.xdsmlframework.api.core.IExecutionEngine
 import org.osgi.framework.Bundle
 
 class TestUtil {
@@ -95,7 +95,7 @@ class TestUtil {
 
 		// If this is the UI thread,
 		// then process input.
-		if (display != null) {
+		if (display !== null) {
 			val long endTimeMillis = System.currentTimeMillis() + waitTimeMillis;
 			while (System.currentTimeMillis() < endTimeMillis && !closed) {
 				if (!display.readAndDispatch())
@@ -122,12 +122,17 @@ class TestUtil {
 		}
 	}
 
-	def static copyFileFromPlugin(String pluginName, String pathInPlugin, IFile targetFile, IProgressMonitor m) {
+	def static InputStream openFileFromPlugin(String pluginName, String pathInPlugin) {
 		val Bundle bundle = Platform::getBundle(pluginName);
 		val path = new Path(pathInPlugin)
 		val InputStream stream = FileLocator::openStream(bundle, path, false);
-		targetFile.create(stream, true, m);
+		return stream
 	}
-	
-	
+
+	def static copyFileFromPlugin(String pluginName, String pathInPlugin, IFile targetFile, IProgressMonitor m) {
+		val stream = openFileFromPlugin(pluginName, pathInPlugin)
+		targetFile.create(stream, true, m);
+		stream.close
+	}
+
 }

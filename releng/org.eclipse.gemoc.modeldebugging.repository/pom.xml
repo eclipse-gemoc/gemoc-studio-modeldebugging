@@ -23,10 +23,10 @@
     xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
   <modelVersion>4.0.0</modelVersion>
   <parent>
-        <artifactId>org.eclipse.gemoc.modeldebugging.root</artifactId>
+        <artifactId>org.eclipse.gemoc.modeldebugging.releng.root</artifactId>
         <groupId>org.eclipse.gemoc</groupId>
         <version>3.0.0-SNAPSHOT</version>
-        <relativePath>../../pom.xml</relativePath>
+        <relativePath>..</relativePath>
   </parent>
   <groupId>org.eclipse.gemoc</groupId>
   <artifactId>org.eclipse.gemoc.modeldebugging.repository</artifactId>

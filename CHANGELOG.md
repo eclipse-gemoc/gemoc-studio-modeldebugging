@@ -1,7 +1,55 @@
 # Changelog
 
-## v3.0.0 (17/07/2018)
+## v3.1.0 (29/07/2019)
 *No changelog for this release.*
+
+---
+
+## v3.1.0-20190627 (27/06/2019)
+
+#### Enhancements:
+
+- [**enhancement**] Add restoreState support for missing eType [#102](https://github.com/eclipse/gemoc-studio-modeldebugging/pull/102)
+- [**enhancement**] Display step arguments in the debugger stack view [#59](https://github.com/eclipse/gemoc-studio-modeldebugging/pull/59)
+- [**bug**][**enhancement**] Fix sirius wizard call and improve Sirius project creation for GEMOC [#104](https://github.com/eclipse/gemoc-studio-modeldebugging/pull/104)
+- [**enhancement**][**releng**] Add concurrent engine to the studio [#98](https://github.com/eclipse/gemoc-studio-modeldebugging/pull/98)
+- [**enhancement**] Improve Variable and Debug views [#97](https://github.com/eclipse/gemoc-studio-modeldebugging/pull/97)
+- [**enhancement**][**releng**] Add command line Eclipse application to run GEMOC languages and headless product [#90](https://github.com/eclipse/gemoc-studio-modeldebugging/pull/90)
+- [**enhancement**] Integrate ALE interpreted engine in GEMOC Studio build [#77](https://github.com/eclipse/gemoc-studio-modeldebugging/pull/77)
+- [**enhancement**][**refactoring**] Move dsl default location to project root and minor Melange related refactoring [#76](https://github.com/eclipse/gemoc-studio-modeldebugging/pull/76)
+
+#### Bug Fixes:
+
+- [**bug**] Update launchconf icon according to official colors [#101](https://github.com/eclipse/gemoc-studio-modeldebugging/pull/101)
+- [**bug**] Reorder Sirius 4 GEMOC wizard pages [#107](https://github.com/eclipse/gemoc-studio-modeldebugging/pull/107)
+- [**bug**] [tracing] Remove exceptions when no traced objects [#100](https://github.com/eclipse/gemoc-studio-modeldebugging/pull/100)
+- [**bug**] [test] Adapt test helper code to latest api changes [#99](https://github.com/eclipse/gemoc-studio-modeldebugging/pull/99)
+- [**bug**] Fix updating of Sirius views during debugging [#105](https://github.com/eclipse/gemoc-studio-modeldebugging/pull/105)
+- [**bug**]  Implement some missing eType in generic trace  and improve user feedback on RDT definition problems [#89](https://github.com/eclipse/gemoc-studio-modeldebugging/pull/89)
+- [**bug**] Add restoreState support for missing eType [#94](https://github.com/eclipse/gemoc-studio-modeldebugging/pull/94)
+- [**bug**] Fixes GemocSequentialLanguageBuilder problem on windows [#68](https://github.com/eclipse/gemoc-studio-modeldebugging/pull/68)
+
+#### Refactorings
+
+- [**refactoring**] Execution framework refactoring [#53](https://github.com/eclipse/gemoc-studio-modeldebugging/pull/53)
+
+#### Version upgrades
+
+- [**bump**] Bump to eclipse photon [#72](https://github.com/eclipse/gemoc-studio-modeldebugging/pull/72)
+- [**bump**] Bump to latest k3/melange version [#64](https://github.com/eclipse/gemoc-studio-modeldebugging/pull/64)
+- [**bump**] Bump components and studio versions [#62](https://github.com/eclipse/gemoc-studio-modeldebugging/pull/62)
+
+#### Release Engineering
+
+- [**releng**] Add gexpressions to studio/updatesite and restructure update site [#114](https://github.com/eclipse/gemoc-studio-modeldebugging/pull/114)
+- [**releng**] Update icons to official branding colors [#110](https://github.com/eclipse/gemoc-studio-modeldebugging/pull/110)
+- [**releng**] Increase swtbot test timeout [#106](https://github.com/eclipse/gemoc-studio-modeldebugging/pull/106)
+- [**releng**] Fix xtend compilation issue 1373 [#79](https://github.com/eclipse/gemoc-studio-modeldebugging/pull/79)
+
+---
+
+## v3.0.0 (17/07/2018)
+*Includes all changes from 3.0.0 release candidates.*
 
 ---
 
