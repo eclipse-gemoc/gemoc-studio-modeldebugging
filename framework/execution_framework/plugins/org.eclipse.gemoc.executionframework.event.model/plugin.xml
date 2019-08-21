@@ -8,8 +8,17 @@
    <extension point="org.eclipse.emf.ecore.generated_package">
       <!-- @generated event -->
       <package
-            uri="http://www.eclipse.org/eclipse/gemoc/event"
+            uri="http://www.eclipse.org/gemoc/event"
             class="org.eclipse.gemoc.executionframework.event.model.event.EventPackage"
             genModel="model/event.genmodel"/>
    </extension>
+
+   <extension point="org.eclipse.emf.ecore.generated_package">
+      <!-- @generated testsuite -->
+      <package
+            uri="http://http://www.eclipse.org/gemoc/event/testsuite"
+            class="org.eclipse.gemoc.executionframework.event.testsuite.TestsuitePackage"
+            genModel="model/testsuite.genmodel"/>
+   </extension>
+
 </plugin>

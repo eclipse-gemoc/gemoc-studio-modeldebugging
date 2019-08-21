@@ -1,0 +1,19 @@
+grammar org.eclipse.gemoc.executionframework.behavioralinterface.BehavioralInterface with org.eclipse.xtext.xbase.Xtype
+
+import "http://www.eclipse.org/xtext/xbase/Xbase" as xbase
+
+generate behavioralInterface "http://www.eclipse.org/gemoc/xdsmlframework/behavioralinterface/BehavioralInterface"
+
+BehavioralInterface:
+	'BehavioralInterface' name=QualifiedName
+	events+=Event*;
+
+Event returns Event:
+	(type=EventType)? 'event' name=QualifiedName ':'
+		('parameters' '=' '[' params+=EventParameter (',' params+=EventParameter)* ']')?;
+
+EventParameter returns EventParameter:
+	name=QualifiedName ':' type=QualifiedName (many?='*')?;
+	
+enum EventType:
+	BOTH='both' | ACCEPTED='accepted' | EXPOSED='exposed';
