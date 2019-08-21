@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?eclipse version="3.0"?>
+
+<!--
+-->
+
+<plugin>
+
+   <extension point="org.eclipse.ui.newWizards">
+      <!-- @generated value -->
+      <category
+            id="org.eclipse.emf.ecore.Wizard.category.ID"
+            name="%_UI_Wizard_category"/>
+      <wizard
+            id="org.eclipse.gemoc.executionframework.value.model.value.presentation.ValueModelWizardID"
+            name="%_UI_ValueModelWizard_label"
+            class="org.eclipse.gemoc.executionframework.value.model.value.presentation.ValueModelWizard"
+            category="org.eclipse.emf.ecore.Wizard.category.ID"
+            icon="icons/full/obj16/ValueModelFile.gif">
+         <description>%_UI_ValueModelWizard_description</description>
+         <selection class="org.eclipse.core.resources.IResource"/>
+      </wizard>
+   </extension>
+
+   <extension point="org.eclipse.ui.editors">
+      <!-- @generated value -->
+      <editor
+            id="org.eclipse.gemoc.executionframework.value.model.value.presentation.ValueEditorID"
+            name="%_UI_ValueEditor_label"
+            icon="icons/full/obj16/ValueModelFile.gif"
+            extensions="value"
+            class="org.eclipse.gemoc.executionframework.value.model.value.presentation.ValueEditor"
+            contributorClass="org.eclipse.gemoc.executionframework.value.model.value.presentation.ValueActionBarContributor">
+      </editor>
+   </extension>
+
+</plugin>

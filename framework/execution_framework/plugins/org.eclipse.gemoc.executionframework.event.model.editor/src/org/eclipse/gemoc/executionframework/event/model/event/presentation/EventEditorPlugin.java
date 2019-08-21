@@ -8,6 +8,10 @@ import org.eclipse.emf.common.ui.EclipseUIPlugin;
 
 import org.eclipse.emf.common.util.ResourceLocator;
 
+import org.eclipse.gemoc.executionframework.behavioralinterface.behavioralInterface.provider.BehavioralInterfaceEditPlugin;
+
+import org.eclipse.gemoc.executionframework.value.model.value.provider.ValueEditPlugin;
+
 /**
  * This is the central singleton for the Event editor plugin.
  * <!-- begin-user-doc -->
@@ -40,6 +44,8 @@ public final class EventEditorPlugin extends EMFPlugin {
 	public EventEditorPlugin() {
 		super
 			(new ResourceLocator [] {
+				BehavioralInterfaceEditPlugin.INSTANCE,
+				ValueEditPlugin.INSTANCE,
 			});
 	}
 

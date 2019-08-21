@@ -1,5 +1,23 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<ecore:EPackage xmi:version="2.0" xmlns:xmi="http://www.omg.org/XMI" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-    xmlns:ecore="http://www.eclipse.org/emf/2002/Ecore" name="event" nsURI="http://www.eclipse.org/eclipse/gemoc/event" nsPrefix="event">
-  <eClassifiers xsi:type="ecore:EClass" name="Event" abstract="true"/>
+<ecore:EPackage xmi:version="2.0" xmlns:xmi="http://www.omg.org/XMI" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:ecore="http://www.eclipse.org/emf/2002/Ecore" name="event" nsURI="http://www.eclipse.org/gemoc/event" nsPrefix="event">
+  <eClassifiers xsi:type="ecore:EClass" name="EventOccurrence">
+    <eStructuralFeatures xsi:type="ecore:EReference" name="event">
+      <eType xsi:type="ecore:EClass" href="../../org.eclipse.gemoc.executionframework.behavioralinterface/model/generated/BehavioralInterface.ecore#//Event"/>
+    </eStructuralFeatures>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="args" upperBound="-1" eType="//EventOccurrenceArgument" containment="true"/>
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="type" lowerBound="1" eType="//EventOccurrenceType"/>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="StopEventOccurrence" eSuperTypes="//EventOccurrence"/>
+  <eClassifiers xsi:type="ecore:EClass" name="EventOccurrenceArgument">
+    <eStructuralFeatures xsi:type="ecore:EReference" name="parameter">
+      <eType xsi:type="ecore:EClass" href="../../org.eclipse.gemoc.executionframework.behavioralinterface/model/generated/BehavioralInterface.ecore#//EventParameter"/>
+    </eStructuralFeatures>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="value" containment="true">
+      <eType xsi:type="ecore:EClass" href="../../org.eclipse.gemoc.executionframework.value.model/model/value.ecore#//Value"/>
+    </eStructuralFeatures>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EEnum" name="EventOccurrenceType">
+    <eLiterals name="ACCEPTED"/>
+    <eLiterals name="EXPOSED" value="1"/>
+  </eClassifiers>
 </ecore:EPackage>

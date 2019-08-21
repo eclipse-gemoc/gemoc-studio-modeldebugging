@@ -1,0 +1,148 @@
+<?xml version="1.0" encoding="ASCII"?>
+<genmodel:GenModel xmi:version="2.0" xmlns:xmi="http://www.omg.org/XMI" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:ecore="http://www.eclipse.org/emf/2002/Ecore" xmlns:genmodel="http://www.eclipse.org/emf/2002/GenModel" modelDirectory="/org.eclipse.gemoc.executionframework.value.model/src" modelPluginID="org.eclipse.gemoc.executionframework.value.model" modelName="Value" rootExtendsClass="org.eclipse.emf.ecore.impl.MinimalEObjectImpl$Container" importerID="org.eclipse.emf.importer.ecore" complianceLevel="8.0" copyrightFields="false" operationReflection="true" importOrganizing="true">
+  <foreignModel>value.ecore</foreignModel>
+  <genPackages prefix="Value" basePackage="org.eclipse.gemoc.executionframework.value.model" disposableProviderFactory="true">
+    <ecorePackage href="value.ecore#/"/>
+    <genClasses image="false">
+      <ecoreClass href="value.ecore#//Value"/>
+    </genClasses>
+    <genClasses image="false">
+      <ecoreClass href="value.ecore#//AttributeValue"/>
+    </genClasses>
+    <genClasses image="false">
+      <ecoreClass href="value.ecore#//ReferenceValue"/>
+    </genClasses>
+    <genClasses>
+      <ecoreClass href="value.ecore#//BooleanAttributeValue"/>
+      <genFeatures createChild="false">
+        <ecoreFeature xsi:type="ecore:EAttribute" href="value.ecore#//BooleanAttributeValue/attributeValue"/>
+      </genFeatures>
+    </genClasses>
+    <genClasses>
+      <ecoreClass href="value.ecore#//BooleanObjectAttributeValue"/>
+      <genFeatures createChild="false">
+        <ecoreFeature xsi:type="ecore:EAttribute" href="value.ecore#//BooleanObjectAttributeValue/attributeValue"/>
+      </genFeatures>
+    </genClasses>
+    <genClasses>
+      <ecoreClass href="value.ecore#//IntegerAttributeValue"/>
+      <genFeatures createChild="false">
+        <ecoreFeature xsi:type="ecore:EAttribute" href="value.ecore#//IntegerAttributeValue/attributeValue"/>
+      </genFeatures>
+    </genClasses>
+    <genClasses>
+      <ecoreClass href="value.ecore#//IntegerObjectAttributeValue"/>
+      <genFeatures createChild="false">
+        <ecoreFeature xsi:type="ecore:EAttribute" href="value.ecore#//IntegerObjectAttributeValue/attributeValue"/>
+      </genFeatures>
+    </genClasses>
+    <genClasses>
+      <ecoreClass href="value.ecore#//LongAttributeValue"/>
+      <genFeatures createChild="false">
+        <ecoreFeature xsi:type="ecore:EAttribute" href="value.ecore#//LongAttributeValue/attributeValue"/>
+      </genFeatures>
+    </genClasses>
+    <genClasses>
+      <ecoreClass href="value.ecore#//LongObjectAttributeValue"/>
+      <genFeatures createChild="false">
+        <ecoreFeature xsi:type="ecore:EAttribute" href="value.ecore#//LongObjectAttributeValue/attributeValue"/>
+      </genFeatures>
+    </genClasses>
+    <genClasses>
+      <ecoreClass href="value.ecore#//FloatAttributeValue"/>
+      <genFeatures createChild="false">
+        <ecoreFeature xsi:type="ecore:EAttribute" href="value.ecore#//FloatAttributeValue/attributeValue"/>
+      </genFeatures>
+    </genClasses>
+    <genClasses>
+      <ecoreClass href="value.ecore#//FloatObjectAttributeValue"/>
+      <genFeatures createChild="false">
+        <ecoreFeature xsi:type="ecore:EAttribute" href="value.ecore#//FloatObjectAttributeValue/attributeValue"/>
+      </genFeatures>
+    </genClasses>
+    <genClasses>
+      <ecoreClass href="value.ecore#//StringAttributeValue"/>
+      <genFeatures createChild="false">
+        <ecoreFeature xsi:type="ecore:EAttribute" href="value.ecore#//StringAttributeValue/attributeValue"/>
+      </genFeatures>
+    </genClasses>
+    <genClasses>
+      <ecoreClass href="value.ecore#//ManyBooleanAttributeValue"/>
+      <genFeatures createChild="false">
+        <ecoreFeature xsi:type="ecore:EAttribute" href="value.ecore#//ManyBooleanAttributeValue/attributeValue"/>
+      </genFeatures>
+    </genClasses>
+    <genClasses>
+      <ecoreClass href="value.ecore#//ManyBooleanObjectAttributeValue"/>
+      <genFeatures createChild="false">
+        <ecoreFeature xsi:type="ecore:EAttribute" href="value.ecore#//ManyBooleanObjectAttributeValue/attributeValue"/>
+      </genFeatures>
+    </genClasses>
+    <genClasses>
+      <ecoreClass href="value.ecore#//ManyIntegerAttributeValue"/>
+      <genFeatures createChild="false">
+        <ecoreFeature xsi:type="ecore:EAttribute" href="value.ecore#//ManyIntegerAttributeValue/attributeValue"/>
+      </genFeatures>
+    </genClasses>
+    <genClasses>
+      <ecoreClass href="value.ecore#//ManyIntegerObjectAttributeValue"/>
+      <genFeatures createChild="false">
+        <ecoreFeature xsi:type="ecore:EAttribute" href="value.ecore#//ManyIntegerObjectAttributeValue/attributeValue"/>
+      </genFeatures>
+    </genClasses>
+    <genClasses>
+      <ecoreClass href="value.ecore#//ManyLongAttributeValue"/>
+      <genFeatures createChild="false">
+        <ecoreFeature xsi:type="ecore:EAttribute" href="value.ecore#//ManyLongAttributeValue/attributeValue"/>
+      </genFeatures>
+    </genClasses>
+    <genClasses>
+      <ecoreClass href="value.ecore#//ManyLongObjectAttributeValue"/>
+      <genFeatures createChild="false">
+        <ecoreFeature xsi:type="ecore:EAttribute" href="value.ecore#//ManyLongObjectAttributeValue/attributeValue"/>
+      </genFeatures>
+    </genClasses>
+    <genClasses>
+      <ecoreClass href="value.ecore#//ManyFloatAttributeValue"/>
+      <genFeatures createChild="false">
+        <ecoreFeature xsi:type="ecore:EAttribute" href="value.ecore#//ManyFloatAttributeValue/attributeValue"/>
+      </genFeatures>
+    </genClasses>
+    <genClasses>
+      <ecoreClass href="value.ecore#//ManyFloatObjectAttributeValue"/>
+      <genFeatures createChild="false">
+        <ecoreFeature xsi:type="ecore:EAttribute" href="value.ecore#//ManyFloatObjectAttributeValue/attributeValue"/>
+      </genFeatures>
+    </genClasses>
+    <genClasses>
+      <ecoreClass href="value.ecore#//ManyStringAttributeValue"/>
+      <genFeatures createChild="false">
+        <ecoreFeature xsi:type="ecore:EAttribute" href="value.ecore#//ManyStringAttributeValue/attributeValue"/>
+      </genFeatures>
+    </genClasses>
+    <genClasses>
+      <ecoreClass href="value.ecore#//SingleReferenceValue"/>
+      <genFeatures notify="false" createChild="false" propertySortChoices="true">
+        <ecoreFeature xsi:type="ecore:EReference" href="value.ecore#//SingleReferenceValue/referenceValue"/>
+      </genFeatures>
+    </genClasses>
+    <genClasses>
+      <ecoreClass href="value.ecore#//ManyReferenceValue"/>
+      <genFeatures notify="false" createChild="false" propertySortChoices="true">
+        <ecoreFeature xsi:type="ecore:EReference" href="value.ecore#//ManyReferenceValue/referenceValues"/>
+      </genFeatures>
+    </genClasses>
+    <genClasses>
+      <ecoreClass href="value.ecore#//SingleObjectValue"/>
+      <genFeatures property="None" children="true" createChild="true">
+        <ecoreFeature xsi:type="ecore:EReference" href="value.ecore#//SingleObjectValue/objectValue"/>
+      </genFeatures>
+    </genClasses>
+    <genClasses>
+      <ecoreClass href="value.ecore#//ManyObjectValue"/>
+      <genFeatures property="None" children="true" createChild="true">
+        <ecoreFeature xsi:type="ecore:EReference" href="value.ecore#//ManyObjectValue/objectValues"/>
+      </genFeatures>
+    </genClasses>
+  </genPackages>
+</genmodel:GenModel>

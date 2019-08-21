@@ -72,6 +72,75 @@ public class EventItemProviderAdapterFactory extends EventAdapterFactory impleme
 	}
 
 	/**
+	 * This keeps track of the one adapter used for all {@link org.eclipse.gemoc.executionframework.event.model.event.EventOccurrence} instances.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	protected EventOccurrenceItemProvider eventOccurrenceItemProvider;
+
+	/**
+	 * This creates an adapter for a {@link org.eclipse.gemoc.executionframework.event.model.event.EventOccurrence}.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	@Override
+	public Adapter createEventOccurrenceAdapter() {
+		if (eventOccurrenceItemProvider == null) {
+			eventOccurrenceItemProvider = new EventOccurrenceItemProvider(this);
+		}
+
+		return eventOccurrenceItemProvider;
+	}
+
+	/**
+	 * This keeps track of the one adapter used for all {@link org.eclipse.gemoc.executionframework.event.model.event.StopEventOccurrence} instances.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	protected StopEventOccurrenceItemProvider stopEventOccurrenceItemProvider;
+
+	/**
+	 * This creates an adapter for a {@link org.eclipse.gemoc.executionframework.event.model.event.StopEventOccurrence}.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	@Override
+	public Adapter createStopEventOccurrenceAdapter() {
+		if (stopEventOccurrenceItemProvider == null) {
+			stopEventOccurrenceItemProvider = new StopEventOccurrenceItemProvider(this);
+		}
+
+		return stopEventOccurrenceItemProvider;
+	}
+
+	/**
+	 * This keeps track of the one adapter used for all {@link org.eclipse.gemoc.executionframework.event.model.event.EventOccurrenceArgument} instances.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	protected EventOccurrenceArgumentItemProvider eventOccurrenceArgumentItemProvider;
+
+	/**
+	 * This creates an adapter for a {@link org.eclipse.gemoc.executionframework.event.model.event.EventOccurrenceArgument}.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	@Override
+	public Adapter createEventOccurrenceArgumentAdapter() {
+		if (eventOccurrenceArgumentItemProvider == null) {
+			eventOccurrenceArgumentItemProvider = new EventOccurrenceArgumentItemProvider(this);
+		}
+
+		return eventOccurrenceArgumentItemProvider;
+	}
+
+	/**
 	 * This returns the root adapter factory that contains this factory.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -170,6 +239,9 @@ public class EventItemProviderAdapterFactory extends EventAdapterFactory impleme
 	 * @generated
 	 */
 	public void dispose() {
+		if (eventOccurrenceItemProvider != null) eventOccurrenceItemProvider.dispose();
+		if (stopEventOccurrenceItemProvider != null) stopEventOccurrenceItemProvider.dispose();
+		if (eventOccurrenceArgumentItemProvider != null) eventOccurrenceArgumentItemProvider.dispose();
 	}
 
 }
