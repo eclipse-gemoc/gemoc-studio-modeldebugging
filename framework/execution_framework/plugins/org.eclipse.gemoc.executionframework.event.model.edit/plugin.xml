@@ -7,49 +7,23 @@
 <plugin>
 
    <extension point="org.eclipse.emf.edit.itemProviderAdapterFactories">
-      <!-- @generated arbiter -->
-      <factory
-            uri="http://www.gemoc.org/arbiter"
-            class="org.eclipse.gemoc.executionframework.event.model.arbiter.provider.ArbiterItemProviderAdapterFactory"
-            supportedTypes=
-              "org.eclipse.emf.edit.provider.IEditingDomainItemProvider
-               org.eclipse.emf.edit.provider.IStructuredItemContentProvider
-               org.eclipse.emf.edit.provider.ITreeItemContentProvider
-               org.eclipse.emf.edit.provider.IItemLabelProvider
-               org.eclipse.emf.edit.provider.IItemPropertySource"/>
-   </extension>
-
-   <extension point="org.eclipse.emf.edit.itemProviderAdapterFactories">
-      <!-- @generated property -->
-      <factory
-            uri="http://www.gemoc.org/property"
-            class="org.eclipse.gemoc.executionframework.event.model.property.provider.PropertyItemProviderAdapterFactory"
-            supportedTypes=
-              "org.eclipse.emf.edit.provider.IEditingDomainItemProvider
-               org.eclipse.emf.edit.provider.IStructuredItemContentProvider
-               org.eclipse.emf.edit.provider.ITreeItemContentProvider
-               org.eclipse.emf.edit.provider.IItemLabelProvider
-               org.eclipse.emf.edit.provider.IItemPropertySource"/>
-   </extension>
-
-   <extension point="org.eclipse.emf.edit.itemProviderAdapterFactories">
-      <!-- @generated scenario -->
-      <factory
-            uri="http://www.gemoc.org/scenario"
-            class="org.eclipse.gemoc.executionframework.event.model.scenario.provider.ScenarioItemProviderAdapterFactory"
-            supportedTypes=
-              "org.eclipse.emf.edit.provider.IEditingDomainItemProvider
-               org.eclipse.emf.edit.provider.IStructuredItemContentProvider
-               org.eclipse.emf.edit.provider.ITreeItemContentProvider
-               org.eclipse.emf.edit.provider.IItemLabelProvider
-               org.eclipse.emf.edit.provider.IItemPropertySource"/>
-   </extension>
-
-   <extension point="org.eclipse.emf.edit.itemProviderAdapterFactories">
       <!-- @generated event -->
       <factory
-            uri="http://www.eclipse.org/eclipse/gemoc/event"
+            uri="http://www.eclipse.org/gemoc/event"
             class="org.eclipse.gemoc.executionframework.event.model.event.provider.EventItemProviderAdapterFactory"
+            supportedTypes=
+              "org.eclipse.emf.edit.provider.IEditingDomainItemProvider
+               org.eclipse.emf.edit.provider.IStructuredItemContentProvider
+               org.eclipse.emf.edit.provider.ITreeItemContentProvider
+               org.eclipse.emf.edit.provider.IItemLabelProvider
+               org.eclipse.emf.edit.provider.IItemPropertySource"/>
+   </extension>
+
+   <extension point="org.eclipse.emf.edit.itemProviderAdapterFactories">
+      <!-- @generated testsuite -->
+      <factory
+            uri="http://http://www.eclipse.org/gemoc/event/testsuite"
+            class="org.eclipse.gemoc.executionframework.event.testsuite.provider.TestsuiteItemProviderAdapterFactory"
             supportedTypes=
               "org.eclipse.emf.edit.provider.IEditingDomainItemProvider
                org.eclipse.emf.edit.provider.IStructuredItemContentProvider

@@ -68,8 +68,16 @@ public class EventAdapterFactory extends AdapterFactoryImpl {
 	protected EventSwitch<Adapter> modelSwitch =
 		new EventSwitch<Adapter>() {
 			@Override
-			public Adapter caseEvent(Event object) {
-				return createEventAdapter();
+			public Adapter caseEventOccurrence(EventOccurrence object) {
+				return createEventOccurrenceAdapter();
+			}
+			@Override
+			public Adapter caseStopEventOccurrence(StopEventOccurrence object) {
+				return createStopEventOccurrenceAdapter();
+			}
+			@Override
+			public Adapter caseEventOccurrenceArgument(EventOccurrenceArgument object) {
+				return createEventOccurrenceArgumentAdapter();
 			}
 			@Override
 			public Adapter defaultCase(EObject object) {
@@ -92,16 +100,44 @@ public class EventAdapterFactory extends AdapterFactoryImpl {
 
 
 	/**
-	 * Creates a new adapter for an object of class '{@link org.eclipse.gemoc.executionframework.event.model.event.Event <em>Event</em>}'.
+	 * Creates a new adapter for an object of class '{@link org.eclipse.gemoc.executionframework.event.model.event.EventOccurrence <em>Occurrence</em>}'.
 	 * <!-- begin-user-doc -->
 	 * This default implementation returns null so that we can easily ignore cases;
 	 * it's useful to ignore a case when inheritance will catch all the cases anyway.
 	 * <!-- end-user-doc -->
 	 * @return the new adapter.
-	 * @see org.eclipse.gemoc.executionframework.event.model.event.Event
+	 * @see org.eclipse.gemoc.executionframework.event.model.event.EventOccurrence
 	 * @generated
 	 */
-	public Adapter createEventAdapter() {
+	public Adapter createEventOccurrenceAdapter() {
+		return null;
+	}
+
+	/**
+	 * Creates a new adapter for an object of class '{@link org.eclipse.gemoc.executionframework.event.model.event.StopEventOccurrence <em>Stop Event Occurrence</em>}'.
+	 * <!-- begin-user-doc -->
+	 * This default implementation returns null so that we can easily ignore cases;
+	 * it's useful to ignore a case when inheritance will catch all the cases anyway.
+	 * <!-- end-user-doc -->
+	 * @return the new adapter.
+	 * @see org.eclipse.gemoc.executionframework.event.model.event.StopEventOccurrence
+	 * @generated
+	 */
+	public Adapter createStopEventOccurrenceAdapter() {
+		return null;
+	}
+
+	/**
+	 * Creates a new adapter for an object of class '{@link org.eclipse.gemoc.executionframework.event.model.event.EventOccurrenceArgument <em>Occurrence Argument</em>}'.
+	 * <!-- begin-user-doc -->
+	 * This default implementation returns null so that we can easily ignore cases;
+	 * it's useful to ignore a case when inheritance will catch all the cases anyway.
+	 * <!-- end-user-doc -->
+	 * @return the new adapter.
+	 * @see org.eclipse.gemoc.executionframework.event.model.event.EventOccurrenceArgument
+	 * @generated
+	 */
+	public Adapter createEventOccurrenceArgumentAdapter() {
 		return null;
 	}
 

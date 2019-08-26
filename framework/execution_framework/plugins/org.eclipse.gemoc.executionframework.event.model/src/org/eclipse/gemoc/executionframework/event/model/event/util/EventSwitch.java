@@ -66,9 +66,22 @@ public class EventSwitch<T> extends Switch<T> {
 	@Override
 	protected T doSwitch(int classifierID, EObject theEObject) {
 		switch (classifierID) {
-			case EventPackage.EVENT: {
-				Event event = (Event)theEObject;
-				T result = caseEvent(event);
+			case EventPackage.EVENT_OCCURRENCE: {
+				EventOccurrence eventOccurrence = (EventOccurrence)theEObject;
+				T result = caseEventOccurrence(eventOccurrence);
+				if (result == null) result = defaultCase(theEObject);
+				return result;
+			}
+			case EventPackage.STOP_EVENT_OCCURRENCE: {
+				StopEventOccurrence stopEventOccurrence = (StopEventOccurrence)theEObject;
+				T result = caseStopEventOccurrence(stopEventOccurrence);
+				if (result == null) result = caseEventOccurrence(stopEventOccurrence);
+				if (result == null) result = defaultCase(theEObject);
+				return result;
+			}
+			case EventPackage.EVENT_OCCURRENCE_ARGUMENT: {
+				EventOccurrenceArgument eventOccurrenceArgument = (EventOccurrenceArgument)theEObject;
+				T result = caseEventOccurrenceArgument(eventOccurrenceArgument);
 				if (result == null) result = defaultCase(theEObject);
 				return result;
 			}
@@ -77,17 +90,47 @@ public class EventSwitch<T> extends Switch<T> {
 	}
 
 	/**
-	 * Returns the result of interpreting the object as an instance of '<em>Event</em>'.
+	 * Returns the result of interpreting the object as an instance of '<em>Occurrence</em>'.
 	 * <!-- begin-user-doc -->
 	 * This implementation returns null;
 	 * returning a non-null result will terminate the switch.
 	 * <!-- end-user-doc -->
 	 * @param object the target of the switch.
-	 * @return the result of interpreting the object as an instance of '<em>Event</em>'.
+	 * @return the result of interpreting the object as an instance of '<em>Occurrence</em>'.
 	 * @see #doSwitch(org.eclipse.emf.ecore.EObject) doSwitch(EObject)
 	 * @generated
 	 */
-	public T caseEvent(Event object) {
+	public T caseEventOccurrence(EventOccurrence object) {
+		return null;
+	}
+
+	/**
+	 * Returns the result of interpreting the object as an instance of '<em>Stop Event Occurrence</em>'.
+	 * <!-- begin-user-doc -->
+	 * This implementation returns null;
+	 * returning a non-null result will terminate the switch.
+	 * <!-- end-user-doc -->
+	 * @param object the target of the switch.
+	 * @return the result of interpreting the object as an instance of '<em>Stop Event Occurrence</em>'.
+	 * @see #doSwitch(org.eclipse.emf.ecore.EObject) doSwitch(EObject)
+	 * @generated
+	 */
+	public T caseStopEventOccurrence(StopEventOccurrence object) {
+		return null;
+	}
+
+	/**
+	 * Returns the result of interpreting the object as an instance of '<em>Occurrence Argument</em>'.
+	 * <!-- begin-user-doc -->
+	 * This implementation returns null;
+	 * returning a non-null result will terminate the switch.
+	 * <!-- end-user-doc -->
+	 * @param object the target of the switch.
+	 * @return the result of interpreting the object as an instance of '<em>Occurrence Argument</em>'.
+	 * @see #doSwitch(org.eclipse.emf.ecore.EObject) doSwitch(EObject)
+	 * @generated
+	 */
+	public T caseEventOccurrenceArgument(EventOccurrenceArgument object) {
 		return null;
 	}
 

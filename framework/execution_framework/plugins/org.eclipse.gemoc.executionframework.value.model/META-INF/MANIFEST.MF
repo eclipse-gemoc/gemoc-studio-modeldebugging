@@ -1,0 +1,16 @@
+Manifest-Version: 1.0
+Bundle-ManifestVersion: 2
+Bundle-Name: %pluginName
+Bundle-SymbolicName: org.eclipse.gemoc.executionframework.value.model;singleton:=true
+Bundle-Version: 4.0.0.qualifier
+Bundle-ClassPath: .
+Bundle-Vendor: %providerName
+Bundle-Localization: plugin
+Bundle-RequiredExecutionEnvironment: JavaSE-1.8
+Export-Package: org.eclipse.gemoc.executionframework.value.model.value,
+ org.eclipse.gemoc.executionframework.value.model.value.impl,
+ org.eclipse.gemoc.executionframework.value.model.value.util
+Require-Bundle: org.eclipse.core.runtime,
+ org.eclipse.emf.ecore;visibility:=reexport
+Bundle-ActivationPolicy: lazy
+Automatic-Module-Name: org.eclipse.gemoc.executionframework.value.model
