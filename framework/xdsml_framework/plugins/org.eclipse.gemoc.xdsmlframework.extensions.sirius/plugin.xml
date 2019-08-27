@@ -79,5 +79,26 @@
          </menu>
       </menuContribution>
    </extension>
+   <extension
+         point="org.eclipse.gemoc.commons.eclipse.pde.templates">
+      <template
+            class="org.eclipse.gemoc.xdsmlframework.extensions.sirius.wizards.templates.specification.BasicObjectDiagramTemplate"
+            contributingId="org.eclipse.gemoc.xdsmlframework.extensions.sirius.template1"
+            id="org.eclipse.gemoc.xdsmlframework.extensions.sirius.basic_object_diagram_template1"
+            name="Basic Object Diagram">
+      </template>
+   </extension>
+   <extension
+         point="org.eclipse.gemoc.commons.eclipse.pde.projectContent">
+      <wizard
+            class="org.eclipse.gemoc.xdsmlframework.extensions.sirius.wizards.templates.specification.BasicObjectDiagramNewWizard"
+            id="org.eclipse.gemoc.xdsmlframework.extensions.sirius.wizards.templates.specification.projectContent.BasicObjectDiagram"
+            name="Basic Object Diagram"
+            targetPluginId="org.eclipse.gemoc.xdsmlframework.extensions.sirius">
+         <description>
+            This template generates a ViewPoint specification offering a basic object diagram representation.
+         </description>
+      </wizard>
+   </extension>
 
 </plugin>

@@ -30,7 +30,9 @@ Require-Bundle: org.eclipse.gemoc.xdsmlframework.api,
  org.eclipse.swt,
  org.eclipse.ui.workbench,
  org.eclipse.gemoc.dsl.model,
- org.eclipse.gemoc.executionframework.engine;bundle-version="4.0.0"
+ org.eclipse.gemoc.executionframework.engine;bundle-version="4.0.0",
+ org.eclipse.sirius.diagram,
+ org.eclipse.sirius
 Bundle-ActivationPolicy: lazy
 Bundle-RequiredExecutionEnvironment: JavaSE-1.8
 Export-Package: org.eclipse.gemoc.xdsmlframework.extensions.sirius,

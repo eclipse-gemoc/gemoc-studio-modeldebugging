@@ -10,6 +10,8 @@
  *******************************************************************************/
 package org.eclipse.gemoc.xdsmlframework.extensions.sirius;
 
+import java.net.URL;
+
 import org.eclipse.core.runtime.IStatus;
 import org.eclipse.core.runtime.Status;
 import org.eclipse.gemoc.commons.eclipse.messagingsystem.api.MessagingSystem;
@@ -29,6 +31,9 @@ public class Activator extends AbstractUIPlugin {
 	
 	public static final String PLUGIN_ID = "org.eclipse.gemoc.xdsmlframework.extensions.sirius"; //$NON-NLS-1$
 
+	public URL getInstallURL() {
+		return getDefault().getBundle().getEntry("/"); //$NON-NLS-1$
+	}
 
 	protected static MessagingSystem messagingSystem = null;
 
