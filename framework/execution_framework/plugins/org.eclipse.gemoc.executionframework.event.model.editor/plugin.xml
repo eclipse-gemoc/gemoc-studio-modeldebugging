@@ -7,58 +7,58 @@
 <plugin>
 
    <extension point="org.eclipse.ui.newWizards">
-      <!-- @generated scenario -->
+      <!-- @generated event -->
       <category
             id="org.eclipse.emf.ecore.Wizard.category.ID"
             name="%_UI_Wizard_category"/>
       <wizard
-            id="org.eclipse.gemoc.executionframework.event.model.scenario.presentation.ScenarioModelWizardID"
-            name="%_UI_ScenarioModelWizard_label"
-            class="org.eclipse.gemoc.executionframework.event.model.scenario.presentation.ScenarioModelWizard"
+            id="org.eclipse.gemoc.executionframework.event.model.event.presentation.EventModelWizardID"
+            name="%_UI_EventModelWizard_label"
+            class="org.eclipse.gemoc.executionframework.event.model.event.presentation.EventModelWizard"
             category="org.eclipse.emf.ecore.Wizard.category.ID"
-            icon="icons/full/obj16/ScenarioModelFile.gif">
-         <description>%_UI_ScenarioModelWizard_description</description>
+            icon="icons/full/obj16/EventModelFile.gif">
+         <description>%_UI_EventModelWizard_description</description>
          <selection class="org.eclipse.core.resources.IResource"/>
       </wizard>
    </extension>
 
    <extension point="org.eclipse.ui.editors">
-      <!-- @generated scenario -->
+      <!-- @generated event -->
       <editor
-            id="org.eclipse.gemoc.executionframework.event.model.scenario.presentation.ScenarioEditorID"
-            name="%_UI_ScenarioEditor_label"
-            icon="icons/full/obj16/ScenarioModelFile.gif"
-            extensions="scenario"
-            class="org.eclipse.gemoc.executionframework.event.model.scenario.presentation.ScenarioEditor"
-            contributorClass="org.eclipse.gemoc.executionframework.event.model.scenario.presentation.ScenarioActionBarContributor">
+            id="org.eclipse.gemoc.executionframework.event.model.event.presentation.EventEditorID"
+            name="%_UI_EventEditor_label"
+            icon="icons/full/obj16/EventModelFile.gif"
+            extensions="event"
+            class="org.eclipse.gemoc.executionframework.event.model.event.presentation.EventEditor"
+            contributorClass="org.eclipse.gemoc.executionframework.event.model.event.presentation.EventActionBarContributor">
       </editor>
    </extension>
 
    <extension point="org.eclipse.ui.newWizards">
-      <!-- @generated property -->
+      <!-- @generated testsuite -->
       <category
             id="org.eclipse.emf.ecore.Wizard.category.ID"
             name="%_UI_Wizard_category"/>
       <wizard
-            id="org.eclipse.gemoc.executionframework.event.model.property.presentation.PropertyModelWizardID"
-            name="%_UI_PropertyModelWizard_label"
-            class="org.eclipse.gemoc.executionframework.event.model.property.presentation.PropertyModelWizard"
+            id="org.eclipse.gemoc.executionframework.event.testsuite.presentation.TestsuiteModelWizardID"
+            name="%_UI_TestsuiteModelWizard_label"
+            class="org.eclipse.gemoc.executionframework.event.testsuite.presentation.TestsuiteModelWizard"
             category="org.eclipse.emf.ecore.Wizard.category.ID"
-            icon="icons/full/obj16/PropertyModelFile.gif">
-         <description>%_UI_PropertyModelWizard_description</description>
+            icon="icons/full/obj16/TestsuiteModelFile.gif">
+         <description>%_UI_TestsuiteModelWizard_description</description>
          <selection class="org.eclipse.core.resources.IResource"/>
       </wizard>
    </extension>
 
    <extension point="org.eclipse.ui.editors">
-      <!-- @generated property -->
+      <!-- @generated testsuite -->
       <editor
-            id="org.eclipse.gemoc.executionframework.event.model.property.presentation.PropertyEditorID"
-            name="%_UI_PropertyEditor_label"
-            icon="icons/full/obj16/PropertyModelFile.gif"
-            extensions="property"
-            class="org.eclipse.gemoc.executionframework.event.model.property.presentation.PropertyEditor"
-            contributorClass="org.eclipse.gemoc.executionframework.event.model.property.presentation.PropertyActionBarContributor">
+            id="org.eclipse.gemoc.executionframework.event.testsuite.presentation.TestsuiteEditorID"
+            name="%_UI_TestsuiteEditor_label"
+            icon="icons/full/obj16/TestsuiteModelFile.gif"
+            extensions="testsuite"
+            class="org.eclipse.gemoc.executionframework.event.testsuite.presentation.TestsuiteEditor"
+            contributorClass="org.eclipse.gemoc.executionframework.event.testsuite.presentation.TestsuiteActionBarContributor">
       </editor>
    </extension>
 </plugin>
