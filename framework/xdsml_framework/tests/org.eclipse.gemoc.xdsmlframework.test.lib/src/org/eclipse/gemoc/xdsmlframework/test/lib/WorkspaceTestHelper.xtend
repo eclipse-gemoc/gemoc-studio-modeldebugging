@@ -171,7 +171,7 @@ class WorkspaceTestHelper {
 					case IMarker::SEVERITY_INFO: "info"
 					default: ""
 				}
-				println('''Found «severity» marker «getAttribute(IMarker::MESSAGE)»''')
+				println('''Found «severity» marker "«getAttribute(IMarker::MESSAGE)»" on «res.name»''')
 			]
 	}
 
