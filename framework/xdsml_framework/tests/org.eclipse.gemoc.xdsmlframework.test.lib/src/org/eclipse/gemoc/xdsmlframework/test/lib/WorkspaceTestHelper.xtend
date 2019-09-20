@@ -139,10 +139,12 @@ class WorkspaceTestHelper {
 
 	def void assertNoMarkers() {
 		ResourcesPlugin::workspace.root.projects.forEach[project |
+			project.printAllMarkers()
+		]
+		ResourcesPlugin::workspace.root.projects.forEach[project |
 			project.findMarkers(IMarker::PROBLEM, true, IResource::DEPTH_INFINITE).forEach[m|
-				println('''Found marker «m.getAttribute(IMarker::MESSAGE)» («m.getAttribute(IMarker::SEVERITY)»)''')
 				Assert.assertFalse(
-					"Unexpected marker: " + m.getAttribute(IMarker::MESSAGE) + " on "+m.resource.fullPath,
+					"Unexpected error marker: " + m.getAttribute(IMarker::MESSAGE) + " on "+m.resource.fullPath,
 					m.getAttribute(IMarker::SEVERITY) == IMarker::SEVERITY_ERROR
 				)
 				
@@ -152,15 +154,26 @@ class WorkspaceTestHelper {
 	
 	def void assertNoMarkers(String filename) {
 		val mlgFile = ResourcesPlugin::workspace.root.getFile(new Path(filename))
+		mlgFile.printAllMarkers()
 		mlgFile.findMarkers(IMarker::PROBLEM, true, IResource::DEPTH_INFINITE).forEach[
-				println('''Found marker «getAttribute(IMarker::MESSAGE)» («getAttribute(IMarker::SEVERITY)»)''')
 				Assert.assertFalse(
-					"Unexpected marker: " + getAttribute(IMarker::MESSAGE) + " on file "+filename,
+					"Unexpected error marker: " + getAttribute(IMarker::MESSAGE) + " on file "+filename,
 					getAttribute(IMarker::SEVERITY) == IMarker::SEVERITY_ERROR
 				)
 			]
 	}
 
+	def void printAllMarkers(IResource res) {
+		res.findMarkers(IMarker::PROBLEM, true, IResource::DEPTH_INFINITE).forEach[
+				val severity = switch getAttribute(IMarker::SEVERITY){
+					case IMarker::SEVERITY_ERROR: "error"
+					case IMarker::SEVERITY_WARNING: "warning"
+					case IMarker::SEVERITY_INFO: "info"
+					default: ""
+				}
+				println('''Found «severity» marker «getAttribute(IMarker::MESSAGE)»''')
+			]
+	}
 
 	/**
 	 * Usage : projectName/folder/file
