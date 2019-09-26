@@ -29,11 +29,12 @@ public class DefaultExecutionPlatform implements IExecutionPlatform {
 
 	public DefaultExecutionPlatform(LanguageDefinitionExtension _languageDefinition, IRunConfiguration runConfiguration) throws CoreException {
 		_modelLoader = _languageDefinition.instanciateModelLoader();
-		_addons = _languageDefinition.instanciateEngineAddons();
+		_addons = new ArrayList<IEngineAddon>();
 
 		for (EngineAddonSpecificationExtension extension : runConfiguration.getEngineAddonExtensions()) {
 			addEngineAddon(extension.instanciateComponent());
 		}
+		//addons defined specifically for the language
 		for (IEngineAddon addon : _languageDefinition.instanciateEngineAddons()) {
 			addEngineAddon(addon);
 		}
