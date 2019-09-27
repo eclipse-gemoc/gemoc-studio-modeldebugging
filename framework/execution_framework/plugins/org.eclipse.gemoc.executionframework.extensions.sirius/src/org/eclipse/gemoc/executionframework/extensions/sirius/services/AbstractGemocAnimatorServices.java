@@ -17,6 +17,8 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
+import java.util.Timer;
+import java.util.TimerTask;
 import java.util.stream.Collectors;
 
 import org.eclipse.core.runtime.IStatus;
@@ -27,6 +29,16 @@ import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.resource.ResourceSet;
 import org.eclipse.emf.ecore.util.EcoreUtil;
 import org.eclipse.emf.transaction.TransactionalEditingDomain;
+import org.eclipse.gemoc.dsl.debug.ide.DSLBreakpoint;
+import org.eclipse.gemoc.dsl.debug.ide.sirius.ui.services.AbstractDSLDebuggerServices.BreakpointListener;
+import org.eclipse.gemoc.executionframework.engine.core.CommandExecution;
+import org.eclipse.gemoc.trace.commons.model.trace.MSEOccurrence;
+import org.eclipse.gemoc.trace.commons.model.trace.ParallelStep;
+import org.eclipse.gemoc.trace.commons.model.trace.Step;
+import org.eclipse.gemoc.xdsmlframework.api.Activator;
+import org.eclipse.gemoc.xdsmlframework.api.core.EngineStatus.RunStatus;
+import org.eclipse.gemoc.xdsmlframework.api.core.IExecutionEngine;
+import org.eclipse.gemoc.xdsmlframework.api.engine_addon.IEngineAddon;
 import org.eclipse.sirius.business.api.dialect.DialectManager;
 import org.eclipse.sirius.business.api.dialect.command.RefreshRepresentationsCommand;
 import org.eclipse.sirius.business.api.session.Session;
@@ -38,15 +50,6 @@ import org.eclipse.sirius.ui.business.api.session.IEditingSession;
 import org.eclipse.sirius.ui.business.api.session.SessionUIManager;
 import org.eclipse.sirius.viewpoint.DRepresentation;
 import org.eclipse.sirius.viewpoint.description.RepresentationDescription;
-import org.eclipse.gemoc.executionframework.engine.core.CommandExecution;
-import org.eclipse.gemoc.xdsmlframework.api.core.EngineStatus.RunStatus;
-import org.eclipse.gemoc.xdsmlframework.api.Activator;
-import org.eclipse.gemoc.xdsmlframework.api.core.IExecutionEngine;
-import org.eclipse.gemoc.xdsmlframework.api.engine_addon.IEngineAddon;
-import org.eclipse.gemoc.trace.commons.model.trace.MSEOccurrence;
-import org.eclipse.gemoc.trace.commons.model.trace.ParallelStep;
-import org.eclipse.gemoc.trace.commons.model.trace.Step;
-import org.eclipse.gemoc.dsl.debug.ide.DSLBreakpoint;
 
 public abstract class AbstractGemocAnimatorServices {
 
@@ -122,7 +125,9 @@ public abstract class AbstractGemocAnimatorServices {
 
 		/**
 		 * Notifies Sirius about a change in the given {@link DSLBreakpoint}.
-		 * 
+		 * This methods ensures that concrete refresh commnd on Sirius is not called
+		 * more than a frequency. (currently hardcoded to 300ms) the refresh will be done
+		 * but only 300ms after the previous refresh command
 		 * @param instructionUri
 		 *            the {@link URI} of the instruction to refresh.
 		 */
@@ -137,13 +142,47 @@ public abstract class AbstractGemocAnimatorServices {
 				final boolean instructionPresent = isOneInstructionPresent(
 						instructionUris, resourceSet);
 				if (instructionPresent) {
-					final List<DRepresentation> representations = getRepresentationsToRefresh(
-							toRefresh, session);
-					refreshRepresentations(transactionalEditingDomain,
-							representations);
+					long elapsedTimeSinceLastNotif = System.currentTimeMillis() - lastSiriusNotification;
+					if(elapsedTimeSinceLastNotif >= intervalBetweenSiriusNotification) {
+						// trigger a notification now
+						lastSiriusNotification = System.currentTimeMillis();
+						final List<DRepresentation> representations = getRepresentationsToRefresh(
+								toRefresh, session);
+						refreshRepresentations(transactionalEditingDomain,
+								representations);
+
+						//System.err.println("sirius immediate refresh ");
+					} else {
+						
+						if(siriusNotificationTimer != null) {
+							// if a timer is already pending , ignore notification	
+							// System.err.println("ignoring sirius refresh due to already pending refresh");
+						} else {
+							// no timer pending, trigger notification after a delay using timer
+							siriusNotificationTimer = new Timer("SiriusNotificationTimer");
+						
+							TimerTask task = new TimerTask() {
+						        public void run() {
+						        	lastSiriusNotification = System.currentTimeMillis();
+						        	siriusNotificationTimer = null;
+						        	final List<DRepresentation> representations = getRepresentationsToRefresh(
+											toRefresh, session);
+									refreshRepresentations(transactionalEditingDomain,
+											representations);
+									//System.err.println("sirius refresh after delay");
+						        }
+						    };
+						    siriusNotificationTimer.schedule(task, intervalBetweenSiriusNotification - elapsedTimeSinceLastNotif);
+						}
+					}
 				}
+				
 			}
 		}
+		
+		protected long lastSiriusNotification = System.currentTimeMillis();
+		public int intervalBetweenSiriusNotification = 300;
+		protected Timer siriusNotificationTimer;
 
 		/**Refreshes given {@link DRepresentation} in the given {@link TransactionalEditingDomain}.
 		 * @param transactionalEditingDomain the {@link TransactionalEditingDomain}
