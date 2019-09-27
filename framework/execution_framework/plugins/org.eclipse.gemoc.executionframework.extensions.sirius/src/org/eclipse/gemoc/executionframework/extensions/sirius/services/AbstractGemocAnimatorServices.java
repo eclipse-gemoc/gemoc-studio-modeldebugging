@@ -125,9 +125,9 @@ public abstract class AbstractGemocAnimatorServices {
 
 		/**
 		 * Notifies Sirius about a change in the given {@link DSLBreakpoint}.
-		 * This methods ensures that concrete refresh commnd on Sirius is not called
-		 * more than a frequency. (currently hardcoded to 300ms) the refresh will be done
-		 * but only 300ms after the previous refresh command
+		 * This methods ensures that concrete refresh command on Sirius is not called
+		 * more than a frequency. (currently hardcoded to 1000ms) the refresh will be done
+		 * but only 1000ms after the previous refresh command
 		 * @param instructionUri
 		 *            the {@link URI} of the instruction to refresh.
 		 */
@@ -145,6 +145,9 @@ public abstract class AbstractGemocAnimatorServices {
 					long elapsedTimeSinceLastNotif = System.currentTimeMillis() - lastSiriusNotification;
 					if(elapsedTimeSinceLastNotif >= intervalBetweenSiriusNotification) {
 						// trigger a notification now
+						if(siriusNotificationTimer != null) {
+							siriusNotificationTimer.cancel();
+						}
 						lastSiriusNotification = System.currentTimeMillis();
 						final List<DRepresentation> representations = getRepresentationsToRefresh(
 								toRefresh, session);
@@ -160,7 +163,6 @@ public abstract class AbstractGemocAnimatorServices {
 						} else {
 							// no timer pending, trigger notification after a delay using timer
 							siriusNotificationTimer = new Timer("SiriusNotificationTimer");
-						
 							TimerTask task = new TimerTask() {
 						        public void run() {
 						        	lastSiriusNotification = System.currentTimeMillis();
@@ -170,6 +172,7 @@ public abstract class AbstractGemocAnimatorServices {
 									refreshRepresentations(transactionalEditingDomain,
 											representations);
 									//System.err.println("sirius refresh after delay");
+									this.cancel();
 						        }
 						    };
 						    siriusNotificationTimer.schedule(task, intervalBetweenSiriusNotification - elapsedTimeSinceLastNotif);
@@ -181,7 +184,7 @@ public abstract class AbstractGemocAnimatorServices {
 		}
 		
 		protected long lastSiriusNotification = System.currentTimeMillis();
-		public int intervalBetweenSiriusNotification = 300;
+		public int intervalBetweenSiriusNotification = 1000;
 		protected Timer siriusNotificationTimer;
 
 		/**Refreshes given {@link DRepresentation} in the given {@link TransactionalEditingDomain}.
@@ -432,6 +435,9 @@ public abstract class AbstractGemocAnimatorServices {
 
 		@Override
 		public void aboutToExecuteStep(IExecutionEngine<?> engine, Step<?> stepToExecute) {
+			if(!(stepToExecute.eContainer() instanceof ParallelStep)){
+				activate(engine, stepToExecute);
+			}
 		}
 
 		@Override
