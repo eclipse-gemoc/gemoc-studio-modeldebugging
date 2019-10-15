@@ -15,8 +15,6 @@
        
         <module>org.eclipse.gemoc.modeldebugging.feature</module>
         
-        <module>org.eclipse.gemoc.modeldebugging.repository</module>
-        
     </modules>
 	
 </project>
