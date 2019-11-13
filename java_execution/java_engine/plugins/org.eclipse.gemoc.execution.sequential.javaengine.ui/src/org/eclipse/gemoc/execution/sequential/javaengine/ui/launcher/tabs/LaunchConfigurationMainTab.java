@@ -36,6 +36,7 @@ import org.eclipse.gemoc.execution.sequential.javaengine.ui.launcher.LauncherMes
 import org.eclipse.gemoc.executionframework.engine.commons.DslHelper;
 import org.eclipse.gemoc.executionframework.engine.commons.K3DslHelper;
 import org.eclipse.gemoc.executionframework.engine.commons.MelangeHelper;
+import org.eclipse.gemoc.executionframework.engine.ui.launcher.tabs.AbstractLaunchConfigurationTab;
 import org.eclipse.gemoc.executionframework.ui.utils.ENamedElementQualifiedNameLabelProvider;
 import org.eclipse.gemoc.xdsmlframework.ui.utils.dialogs.SelectAIRDIFileDialog;
 import org.eclipse.gemoc.xdsmlframework.ui.utils.dialogs.SelectAnyEObjectDialog;
@@ -67,7 +68,7 @@ import org.osgi.framework.Bundle;
  * 
  * @author Didier Vojtisek<didier.vojtisek@inria.fr>
  */
-public class LaunchConfigurationMainTab extends LaunchConfigurationTab {
+public class LaunchConfigurationMainTab extends AbstractLaunchConfigurationTab {
 
 	protected Composite _parent;
 

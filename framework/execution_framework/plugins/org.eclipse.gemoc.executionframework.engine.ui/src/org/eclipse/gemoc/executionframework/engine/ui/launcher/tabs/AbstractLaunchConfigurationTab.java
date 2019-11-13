@@ -1,5 +1,5 @@
 /*******************************************************************************
- * Copyright (c) 2016, 2017 Inria and others.
+ * Copyright (c) 2016, 2019 Inria and others.
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
  * which accompanies this distribution, and is available at
@@ -8,9 +8,8 @@
  * Contributors:
  *     Inria - initial API and implementation
  *******************************************************************************/
-package org.eclipse.gemoc.execution.sequential.javaengine.ui.launcher.tabs;
+package org.eclipse.gemoc.executionframework.engine.ui.launcher.tabs;
 
-import org.eclipse.debug.ui.AbstractLaunchConfigurationTab;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.layout.GridData;
 import org.eclipse.swt.layout.GridLayout;
@@ -18,10 +17,15 @@ import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Group;
 import org.eclipse.swt.widgets.Label;
 
-public abstract class LaunchConfigurationTab extends AbstractLaunchConfigurationTab 
+/**
+ * This class adds to org.eclipse.debug.ui.AbstractLaunchConfigurationTab
+ *  some additional helper methods in order to create elements in the UI
+ *
+ */
+public abstract class AbstractLaunchConfigurationTab extends org.eclipse.debug.ui.AbstractLaunchConfigurationTab 
 {
 
-	public LaunchConfigurationTab() {
+	public AbstractLaunchConfigurationTab() {
 		super();
 	}
 

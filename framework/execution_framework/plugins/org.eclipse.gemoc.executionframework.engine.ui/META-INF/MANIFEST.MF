@@ -30,5 +30,6 @@ Bundle-ActivationPolicy: lazy
 Bundle-RequiredExecutionEnvironment: JavaSE-1.8
 Export-Package: org.eclipse.gemoc.executionframework.engine.ui,
  org.eclipse.gemoc.executionframework.engine.ui.launcher,
+ org.eclipse.gemoc.executionframework.engine.ui.launcher.tabs,
  org.eclipse.gemoc.executionframework.engine.ui.provider
 Automatic-Module-Name: org.eclipse.gemoc.executionframework.engine.ui

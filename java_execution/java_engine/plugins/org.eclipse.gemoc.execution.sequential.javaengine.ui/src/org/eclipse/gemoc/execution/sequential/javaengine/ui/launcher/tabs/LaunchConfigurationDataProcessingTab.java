@@ -26,11 +26,12 @@ import org.eclipse.swt.layout.GridLayout;
 import org.eclipse.swt.widgets.Button;
 import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Group;
+import org.eclipse.gemoc.executionframework.engine.ui.launcher.tabs.AbstractLaunchConfigurationTab;
 import org.eclipse.gemoc.xdsmlframework.api.engine_addon.IEngineAddon;
 import org.eclipse.gemoc.xdsmlframework.api.extensions.engine_addon.EngineAddonSpecificationExtension;
 import org.eclipse.gemoc.xdsmlframework.api.extensions.engine_addon_group.EngineAddonGroupSpecificationExtension;
 
-public abstract class LaunchConfigurationDataProcessingTab extends LaunchConfigurationTab {
+public abstract class LaunchConfigurationDataProcessingTab extends AbstractLaunchConfigurationTab {
 
 	private HashMap<EngineAddonSpecificationExtension, Button> _components = new HashMap<>();
 
