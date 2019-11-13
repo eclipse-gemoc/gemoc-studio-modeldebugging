@@ -15,12 +15,13 @@ import java.util.Collection;
 import java.util.HashMap;
 import java.util.Iterator;
 
+import org.eclipse.gemoc.executionframework.engine.ui.launcher.tabs.AbstractLaunchConfigurationDataProcessingTab;
 import org.eclipse.gemoc.xdsmlframework.api.extensions.engine_addon.EngineAddonSpecificationExtension;
 import org.eclipse.gemoc.xdsmlframework.api.extensions.engine_addon.EngineAddonSpecificationExtensionPoint;
 import org.eclipse.gemoc.xdsmlframework.api.extensions.engine_addon_group.EngineAddonGroupSpecificationExtension;
 import org.eclipse.gemoc.xdsmlframework.api.extensions.engine_addon_group.EngineAddonGroupSpecificationExtensionPoint;
 
-public class LaunchConfigurationBackendsTab extends LaunchConfigurationDataProcessingTab 
+public class LaunchConfigurationBackendsTab extends AbstractLaunchConfigurationDataProcessingTab 
 {
 
 	@Override

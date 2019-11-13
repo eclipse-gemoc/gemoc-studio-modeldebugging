@@ -8,7 +8,7 @@
  * Contributors:
  *     Inria - initial API and implementation
  *******************************************************************************/
-package org.eclipse.gemoc.execution.sequential.javaengine.ui.launcher.tabs;
+package org.eclipse.gemoc.executionframework.engine.ui.launcher.tabs;
 
 import java.util.ArrayList;
 import java.util.Collection;
@@ -26,16 +26,15 @@ import org.eclipse.swt.layout.GridLayout;
 import org.eclipse.swt.widgets.Button;
 import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Group;
-import org.eclipse.gemoc.executionframework.engine.ui.launcher.tabs.AbstractLaunchConfigurationTab;
 import org.eclipse.gemoc.xdsmlframework.api.engine_addon.IEngineAddon;
 import org.eclipse.gemoc.xdsmlframework.api.extensions.engine_addon.EngineAddonSpecificationExtension;
 import org.eclipse.gemoc.xdsmlframework.api.extensions.engine_addon_group.EngineAddonGroupSpecificationExtension;
 
-public abstract class LaunchConfigurationDataProcessingTab extends AbstractLaunchConfigurationTab {
+public abstract class AbstractLaunchConfigurationDataProcessingTab extends AbstractLaunchConfigurationTab {
 
 	private HashMap<EngineAddonSpecificationExtension, Button> _components = new HashMap<>();
 
-	protected LaunchConfigurationDataProcessingTab() {
+	protected AbstractLaunchConfigurationDataProcessingTab() {
 		for (EngineAddonSpecificationExtension extension : getExtensionSpecifications()) {
 			final String id = extension.getAddonGroupId();
 			if (id == null || id.equals("Sequential.AddonGroup") || id.equals("General.AddonGroup")) {
