@@ -1,5 +1,5 @@
 /*******************************************************************************
- * Copyright (c) 2016, 2017 Inria and others.
+ * Copyright (c) 2016, 2019 Inria and others.
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
  * which accompanies this distribution, and is available at
@@ -19,6 +19,9 @@ import java.util.Map.Entry;
 import org.eclipse.core.runtime.CoreException;
 import org.eclipse.debug.core.ILaunchConfiguration;
 import org.eclipse.debug.core.ILaunchConfigurationWorkingCopy;
+import org.eclipse.gemoc.xdsmlframework.api.engine_addon.IEngineAddon;
+import org.eclipse.gemoc.xdsmlframework.api.extensions.engine_addon.EngineAddonSpecificationExtension;
+import org.eclipse.gemoc.xdsmlframework.api.extensions.engine_addon_group.EngineAddonGroupSpecificationExtension;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.events.SelectionEvent;
 import org.eclipse.swt.events.SelectionListener;
@@ -26,23 +29,24 @@ import org.eclipse.swt.layout.GridLayout;
 import org.eclipse.swt.widgets.Button;
 import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Group;
-import org.eclipse.gemoc.xdsmlframework.api.engine_addon.IEngineAddon;
-import org.eclipse.gemoc.xdsmlframework.api.extensions.engine_addon.EngineAddonSpecificationExtension;
-import org.eclipse.gemoc.xdsmlframework.api.extensions.engine_addon_group.EngineAddonGroupSpecificationExtension;
 
 public abstract class AbstractLaunchConfigurationDataProcessingTab extends AbstractLaunchConfigurationTab {
 
 	private HashMap<EngineAddonSpecificationExtension, Button> _components = new HashMap<>();
 
 	protected AbstractLaunchConfigurationDataProcessingTab() {
+		
+		// add all extensions returned by getExtensionSpecifications()
 		for (EngineAddonSpecificationExtension extension : getExtensionSpecifications()) {
-			final String id = extension.getAddonGroupId();
-			if (id == null || id.equals("Sequential.AddonGroup") || id.equals("General.AddonGroup")) {
-				_components.put(extension, null);
-			}
+			_components.put(extension, null);
 		}
 	}
 
+	/**
+	 * return the list of extension specifications that apply to this launcher
+	 * It acts as a filter on  EngineAddonSpecificationExtensionPoint.getSpecifications()
+	 * @return
+	 */
 	protected abstract Collection<EngineAddonSpecificationExtension> getExtensionSpecifications();
 
 	protected abstract Collection<EngineAddonGroupSpecificationExtension> getGroupExtensionSpecifications();
