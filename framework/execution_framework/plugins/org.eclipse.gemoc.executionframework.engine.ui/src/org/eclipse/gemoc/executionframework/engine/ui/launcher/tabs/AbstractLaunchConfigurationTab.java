@@ -18,62 +18,76 @@ import org.eclipse.swt.widgets.Group;
 import org.eclipse.swt.widgets.Label;
 
 /**
- * This class adds to org.eclipse.debug.ui.AbstractLaunchConfigurationTab
- *  some additional helper methods in order to create elements in the UI
+ * This class adds to org.eclipse.debug.ui.AbstractLaunchConfigurationTab some
+ * additional helper methods in order to create elements in the UI
  *
  */
-public abstract class AbstractLaunchConfigurationTab extends org.eclipse.debug.ui.AbstractLaunchConfigurationTab 
-{
+public abstract class AbstractLaunchConfigurationTab extends org.eclipse.debug.ui.AbstractLaunchConfigurationTab {
 
 	public AbstractLaunchConfigurationTab() {
 		super();
 	}
 
+	/**
+	 * Create a group with the default number of columns (3)
+	 * 
+	 * @param parent
+	 * @param text
+	 * @return
+	 */
 	protected Group createGroup(Composite parent, String text) {
+		return createGroup(parent, text, 3);
+	}
+
+	/**
+	 * create a group with the specified number of columns
+	 * 
+	 * @param parent
+	 * @param text
+	 * @param nbColumn
+	 * @return
+	 */
+	protected Group createGroup(Composite parent, String text, int nbColumn) {
 		Group group = new Group(parent, SWT.NULL);
 		group.setText(text);
 		GridLayout locationLayout = new GridLayout();
-		locationLayout.numColumns = 3;
+		locationLayout.numColumns = nbColumn;
 		locationLayout.marginHeight = 10;
 		locationLayout.marginWidth = 10;
 		group.setLayout(locationLayout);
 		return group;
 	}
-	
+
 	/**
 	 * 
-	 * @param parent
-	 *            the Parent of this argument tab
-	 * @param labelString
-	 *            the label of the input text to create
+	 * @param parent      the Parent of this argument tab
+	 * @param labelString the label of the input text to create
 	 */
 	protected void createTextLabelLayout(Composite parent, String labelString) {
 		GridData gd = new GridData(GridData.FILL_HORIZONTAL);
 		parent.setLayoutData(gd);
 		Label inputLabel = new Label(parent, SWT.NONE);
-		inputLabel.setText(labelString); //$NON-NLS-1$
-		//gd = new GridData();
-		//gd.horizontalSpan = 2;
-		//inputLabel.setLayoutData(gd);
+		inputLabel.setText(labelString); // $NON-NLS-1$
+		// gd = new GridData();
+		// gd.horizontalSpan = 2;
+		// inputLabel.setLayoutData(gd);
 	}
+
 	/**
 	 * 
-	 * @param parent
-	 *            the Parent of this argument tab
-	 * @param labelString
-	 *            the label of the input text to create
-	 * @param toolTipText
-	 * 			  the text for tool tip
+	 * @param parent      the Parent of this argument tab
+	 * @param labelString the label of the input text to create
+	 * @param toolTipText the text for tool tip
 	 */
 	protected void createTextLabelLayout(Composite parent, String labelString, String toolTipText) {
 		GridData gd = new GridData(GridData.FILL_HORIZONTAL);
 		parent.setLayoutData(gd);
 		Label inputLabel = new Label(parent, SWT.NONE);
-		inputLabel.setText(labelString); //$NON-NLS-1$
+		inputLabel.setText(labelString); // $NON-NLS-1$
 		inputLabel.setToolTipText(toolTipText);
-		//gd = new GridData();
-		//gd.horizontalSpan = 2;
-		//inputLabel.setLayoutData(gd);
+		// gd = new GridData();
+		// gd.horizontalSpan = 2;
+		// inputLabel.setLayoutData(gd);
 	}
 
 }

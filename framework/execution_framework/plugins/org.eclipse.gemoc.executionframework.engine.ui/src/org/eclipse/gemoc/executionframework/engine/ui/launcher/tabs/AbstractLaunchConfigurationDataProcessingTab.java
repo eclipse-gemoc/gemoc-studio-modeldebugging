@@ -35,7 +35,7 @@ public abstract class AbstractLaunchConfigurationDataProcessingTab extends Abstr
 	private HashMap<EngineAddonSpecificationExtension, Button> _components = new HashMap<>();
 
 	protected AbstractLaunchConfigurationDataProcessingTab() {
-		
+
 		// add all extensions returned by getExtensionSpecifications()
 		for (EngineAddonSpecificationExtension extension : getExtensionSpecifications()) {
 			_components.put(extension, null);
@@ -43,8 +43,10 @@ public abstract class AbstractLaunchConfigurationDataProcessingTab extends Abstr
 	}
 
 	/**
-	 * return the list of extension specifications that apply to this launcher
-	 * It acts as a filter on  EngineAddonSpecificationExtensionPoint.getSpecifications()
+	 * return the list of extension specifications that apply to this launcher It
+	 * acts as a filter on
+	 * EngineAddonSpecificationExtensionPoint.getSpecifications()
+	 * 
 	 * @return
 	 */
 	protected abstract Collection<EngineAddonSpecificationExtension> getExtensionSpecifications();
@@ -67,10 +69,10 @@ public abstract class AbstractLaunchConfigurationDataProcessingTab extends Abstr
 		HashMap<String, Group> groupmap = new HashMap<String, Group>();
 
 		for (EngineAddonGroupSpecificationExtension extension : getGroupExtensionSpecifications()) {
-			groupmap.put(extension.getId(), createGroup(parent, extension.getName()));
+			groupmap.put(extension.getId(), createGroup(parent, extension.getName(), 2));
 		}
 
-		groupmap.put("", createGroup(parent, "Uncategorized"));
+		groupmap.put("", createGroup(parent, "Uncategorized", 2));
 
 		for (EngineAddonSpecificationExtension extension : _components.keySet()) {
 			Group parentGroup = groupmap.get("");
@@ -84,10 +86,8 @@ public abstract class AbstractLaunchConfigurationDataProcessingTab extends Abstr
 				}
 			}
 
-			Button checkbox = createCheckButton(parentGroup, extension.getName());
-			if (extension.getShortDescription() != null) {
-				checkbox.setToolTipText(extension.getShortDescription());
-			}
+			Button checkbox = createCheckButton(parentGroup, extension.getName() + ":");
+			checkbox.setToolTipText("contributed by " + extension.getContributorName());
 			// checkbox.setSelection(extension.getDefaultActivationValue());
 			checkbox.addSelectionListener(new SelectionListener() {
 
@@ -100,6 +100,12 @@ public abstract class AbstractLaunchConfigurationDataProcessingTab extends Abstr
 				public void widgetDefaultSelected(SelectionEvent e) {
 				}
 			});
+			String desc;
+			if (extension.getShortDescription() != null) {
+				desc = extension.getShortDescription();
+			} else
+				desc = "";
+			createTextLabelLayout(parentGroup, desc, "contributed by " + extension.getContributorName());
 			_components.put(extension, checkbox);
 		}
 
