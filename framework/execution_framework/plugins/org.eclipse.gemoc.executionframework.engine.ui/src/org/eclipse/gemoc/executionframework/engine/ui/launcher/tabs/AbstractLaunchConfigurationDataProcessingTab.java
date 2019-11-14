@@ -19,6 +19,7 @@ import java.util.Map.Entry;
 import org.eclipse.core.runtime.CoreException;
 import org.eclipse.debug.core.ILaunchConfiguration;
 import org.eclipse.debug.core.ILaunchConfigurationWorkingCopy;
+import org.eclipse.gemoc.executionframework.engine.ui.Activator;
 import org.eclipse.gemoc.xdsmlframework.api.engine_addon.IEngineAddon;
 import org.eclipse.gemoc.xdsmlframework.api.extensions.engine_addon.EngineAddonSpecificationExtension;
 import org.eclipse.gemoc.xdsmlframework.api.extensions.engine_addon_group.EngineAddonGroupSpecificationExtension;
@@ -134,8 +135,7 @@ public abstract class AbstractLaunchConfigurationDataProcessingTab extends Abstr
 				Button checkbox = _components.get(extension);
 				checkbox.setSelection(value);
 			} catch (CoreException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
+				Activator.error(e.getMessage(), e);
 			}
 		}
 	}
@@ -168,7 +168,7 @@ public abstract class AbstractLaunchConfigurationDataProcessingTab extends Abstr
 				return false;
 			}
 		} catch (Exception e) {
-			e.printStackTrace();
+			Activator.error(e.getMessage(), e);
 		}
 
 		setErrorMessage(null);
