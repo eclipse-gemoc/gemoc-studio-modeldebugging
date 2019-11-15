@@ -1,5 +1,5 @@
 /*******************************************************************************
- * Copyright (c) 2016, 2017 Inria and others.
+ * Copyright (c) 2016, 2019 Inria and others.
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
  * which accompanies this distribution, and is available at
@@ -16,7 +16,7 @@ public abstract class LanguageDefinitionExtensionPoint extends ExtensionPoint<La
 {
 
 
-//	public static final String GEMOC_LANGUAGE_EXTENSION_POINT = "org.eclipse.gemoc.gemoc_language_workbench.xdsml";
+	public static final String GEMOC_LANGUAGE_EXTENSION_POINT = "org.eclipse.gemoc.gemoc_language_workbench.xdsml";
 	public static final String GEMOC_LANGUAGE_EXTENSION_POINT_XDSML_DEF = "XDSML_Definition";
 	public static final String GEMOC_LANGUAGE_EXTENSION_POINT_XDSML_DEF_NAME_ATT = "name";
 	public static final String GEMOC_LANGUAGE_EXTENSION_POINT_XDSML_DEF_LOADMODEL_ATT = "modelLoader_class";
