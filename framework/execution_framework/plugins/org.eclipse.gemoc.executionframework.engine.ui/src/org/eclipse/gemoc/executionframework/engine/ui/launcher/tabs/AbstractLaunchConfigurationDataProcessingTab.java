@@ -23,6 +23,7 @@ import org.eclipse.gemoc.executionframework.engine.ui.Activator;
 import org.eclipse.gemoc.xdsmlframework.api.engine_addon.IEngineAddon;
 import org.eclipse.gemoc.xdsmlframework.api.extensions.engine_addon.EngineAddonSpecificationExtension;
 import org.eclipse.gemoc.xdsmlframework.api.extensions.engine_addon_group.EngineAddonGroupSpecificationExtension;
+import org.eclipse.gemoc.xdsmlframework.api.extensions.languages.LanguageDefinitionExtension;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.events.SelectionEvent;
 import org.eclipse.swt.events.SelectionListener;
@@ -31,13 +32,20 @@ import org.eclipse.swt.widgets.Button;
 import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Group;
 
-public abstract class AbstractLaunchConfigurationDataProcessingTab extends AbstractLaunchConfigurationTab {
+public abstract class AbstractLaunchConfigurationDataProcessingTab extends AbstractLaunchConfigurationTab
+		implements ILaunchLanguageSelectionListener {
 
 	private HashMap<EngineAddonSpecificationExtension, Button> _components = new HashMap<>();
 
 	protected AbstractLaunchConfigurationDataProcessingTab() {
 
 		// add all extensions returned by getExtensionSpecifications()
+		for (EngineAddonSpecificationExtension extension : getExtensionSpecifications()) {
+			_components.put(extension, null);
+		}
+
+		// given the current language definition, look for engine addons
+		LanguageDefinitionExtension _languageDefinition;
 		for (EngineAddonSpecificationExtension extension : getExtensionSpecifications()) {
 			_components.put(extension, null);
 		}
@@ -73,7 +81,7 @@ public abstract class AbstractLaunchConfigurationDataProcessingTab extends Abstr
 			groupmap.put(extension.getId(), createGroup(parent, extension.getName(), 2));
 		}
 
-		groupmap.put("", createGroup(parent, "Uncategorized", 2));
+		groupmap.put("", createGroup(parent, "", 2));
 
 		for (EngineAddonSpecificationExtension extension : _components.keySet()) {
 			Group parentGroup = groupmap.get("");
@@ -88,7 +96,7 @@ public abstract class AbstractLaunchConfigurationDataProcessingTab extends Abstr
 			}
 
 			Button checkbox = createCheckButton(parentGroup, extension.getName() + ":");
-			checkbox.setToolTipText("contributed by " + extension.getContributorName());
+			checkbox.setToolTipText(extension.getId() + " contributed by " + extension.getContributorName());
 			// checkbox.setSelection(extension.getDefaultActivationValue());
 			checkbox.addSelectionListener(new SelectionListener() {
 
@@ -174,4 +182,9 @@ public abstract class AbstractLaunchConfigurationDataProcessingTab extends Abstr
 		setErrorMessage(null);
 		return true;
 	}
+	
+	public void languageChanged() {
+		Activator.error("TODO implement adaptation when a language changes", new Exception());
+	}
+	
 }
