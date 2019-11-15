@@ -19,6 +19,7 @@ import org.eclipse.emf.common.util.URI;
 import org.eclipse.emf.ecore.resource.Resource;
 import org.eclipse.emf.ecore.resource.impl.ResourceSetImpl;
 import org.eclipse.gemoc.dsl.Dsl;
+import org.eclipse.gemoc.xdsmlframework.api.extensions.languages.LanguageDefinitionExtensionPoint;
 import org.osgi.framework.Bundle;
 
 /**
@@ -26,13 +27,13 @@ import org.osgi.framework.Bundle;
  * 
  */
 public class DslHelper {
-	
+
 	/**
 	 * Return a bundle with a .dsl declaring 'languageName'
 	 */
 	public static Bundle getDslBundle(String languageName) {
-		
-		IConfigurationElement[] languages = Platform.getExtensionRegistry().getConfigurationElementsFor("org.eclipse.gemoc.gemoc_language_workbench.sequential.xdsml");
+
+		IConfigurationElement[] languages = Platform.getExtensionRegistry().getConfigurationElementsFor(LanguageDefinitionExtensionPoint.GEMOC_LANGUAGE_EXTENSION_POINT);
 		for (IConfigurationElement lang : languages) {
 			String xdsmlPath = lang.getAttribute("xdsmlFilePath");
 			String xdsmlName = lang.getAttribute("name");
@@ -43,22 +44,22 @@ public class DslHelper {
 		}
 		return null;
 	}
-	
+
 	/**
 	 * Return all declared Languages
 	 */
-	public static List<String> getAllLanguages(){
+	public static List<String> getAllLanguages() {
 		List<String> languagesNames = new ArrayList<String>();
-		IConfigurationElement[] languages = Platform.getExtensionRegistry().getConfigurationElementsFor("org.eclipse.gemoc.gemoc_language_workbench.sequential.xdsml");
+		IConfigurationElement[] languages = Platform.getExtensionRegistry().getConfigurationElementsFor(LanguageDefinitionExtensionPoint.GEMOC_LANGUAGE_EXTENSION_POINT);
 		for (IConfigurationElement lang : languages) {
 			languagesNames.add(lang.getAttribute("name"));
 		}
 		return languagesNames;
 	}
-	
+
 	public static Dsl load(String languageName) {
-		
-		IConfigurationElement[] languages = Platform.getExtensionRegistry().getConfigurationElementsFor("org.eclipse.gemoc.gemoc_language_workbench.sequential.xdsml");
+
+		IConfigurationElement[] languages = Platform.getExtensionRegistry().getConfigurationElementsFor(LanguageDefinitionExtensionPoint.GEMOC_LANGUAGE_EXTENSION_POINT);
 		for (IConfigurationElement lang : languages) {
 			String xdsmlPath = lang.getAttribute("xdsmlFilePath");
 			String xdsmlName = lang.getAttribute("name");
@@ -70,14 +71,14 @@ public class DslHelper {
 		}
 		return null;
 	}
-	
+
 	/**
-	 * Return the substring after the last '.' or the whole 'qualifiedName' if
-	 * no dot character.
+	 * Return the substring after the last '.' or the whole 'qualifiedName' if no
+	 * dot character.
 	 */
-	public static String lastSegment(String qualifiedName){
-		if(qualifiedName.contains(".")) {
-			return qualifiedName.substring(qualifiedName.lastIndexOf(".")+1);
+	public static String lastSegment(String qualifiedName) {
+		if (qualifiedName.contains(".")) {
+			return qualifiedName.substring(qualifiedName.lastIndexOf(".") + 1);
 		} else {
 			return qualifiedName;
 		}
