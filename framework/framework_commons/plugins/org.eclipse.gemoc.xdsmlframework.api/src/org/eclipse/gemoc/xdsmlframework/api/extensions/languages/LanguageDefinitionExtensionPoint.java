@@ -10,9 +10,11 @@
  *******************************************************************************/
 package org.eclipse.gemoc.xdsmlframework.api.extensions.languages;
 
+import java.util.Collection;
+
 import org.eclipse.gemoc.xdsmlframework.api.extensions.ExtensionPoint;
 
-public abstract class LanguageDefinitionExtensionPoint extends ExtensionPoint<LanguageDefinitionExtension>
+public class LanguageDefinitionExtensionPoint extends ExtensionPoint<LanguageDefinitionExtension>
 {
 
 
@@ -32,41 +34,41 @@ public abstract class LanguageDefinitionExtensionPoint extends ExtensionPoint<La
 	{
 		super(LanguageDefinitionExtension.class);
 	}
-//
-//	private static LanguageDefinitionExtensionPoint _singleton;
-//	
-//	private static LanguageDefinitionExtensionPoint getExtensionPoint()
-//	{
-//		if (_singleton == null)
-//		{
-//			_singleton = new LanguageDefinitionExtensionPoint();
-//		}
-//		return _singleton;
-//	}
+
+	private static LanguageDefinitionExtensionPoint _singleton;
+	
+	private static LanguageDefinitionExtensionPoint getExtensionPoint()
+	{
+		if (_singleton == null)
+		{
+			_singleton = new LanguageDefinitionExtensionPoint();
+		}
+		return _singleton;
+	}
 		
-//	static public Collection<LanguageDefinitionExtension> getSpecifications() 
-//	{
-//		return getExtensionPoint().internal_getSpecifications();
-//	}
-//	
-//	static public LanguageDefinitionExtension findDefinition(String languageName)
-//	{
-//		for (LanguageDefinitionExtension extension : getSpecifications())
-//		{
-//			if (extension.getName().equals(languageName))
-//			{
-//				return extension;
-//			}
-//		}
-//		return null;
-//	}
+	static public Collection<LanguageDefinitionExtension> getSpecifications() 
+	{
+		return getExtensionPoint().internal_getSpecifications();
+	}
+	
+	static public LanguageDefinitionExtension findDefinition(String languageName)
+	{
+		for (LanguageDefinitionExtension extension : getSpecifications())
+		{
+			if (extension.getName().equals(languageName))
+			{
+				return extension;
+			}
+		}
+		return null;
+	}
 
 
 	
-//	@Override
-//	protected String getExtensionPointName()
-//	{
-//		return GEMOC_LANGUAGE_EXTENSION_POINT;
-//	}
+	@Override
+	protected String getExtensionPointName()
+	{
+		return GEMOC_LANGUAGE_EXTENSION_POINT;
+	}
 		
 }
