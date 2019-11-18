@@ -151,8 +151,7 @@ public class AddRemoveGemocSequentialLanguageNatureHandler extends AbstractHandl
 		try {
 			changer.addPluginDependency(org.eclipse.gemoc.xdsmlframework.api.Activator.PLUGIN_ID, "0.1.0", true, true);
 			changer.addPluginDependency("org.eclipse.emf.ecore.xmi", "2.8.0", true, true);				
-			changer.addPluginDependency("org.eclipse.gemoc.xdsmlframework.api");				
-			changer.addPluginDependency("org.eclipse.gemoc.execution.sequential.javaxdsml.api");		
+			changer.addPluginDependency("org.eclipse.gemoc.xdsmlframework.api");		
 			changer.addPluginDependency("org.eclipse.gemoc.executionframework.engine");
 			changer.commit();	
 		} catch (BundleException | IOException | CoreException e) {

@@ -14,7 +14,6 @@
     <modules>
     
         <!-- plugins -->
-        <module>java_xdsml/plugins/org.eclipse.gemoc.execution.sequential.javaxdsml.api</module>
         <module>java_engine/plugins/org.eclipse.gemoc.execution.sequential.javaengine</module>       
         <module>java_xdsml/plugins/org.eclipse.gemoc.execution.sequential.javaxdsml.ide.ui</module>
         <module>java_engine/plugins/org.eclipse.gemoc.execution.sequential.javaengine.ui</module>
