@@ -28,7 +28,7 @@ public class SequentialModelExecutionContext<T extends IRunConfiguration> extend
 	}
 
 	@Override
-	protected LanguageDefinitionExtension getLanguageDefinition(String languageName) throws EngineContextException {
+	protected LanguageDefinitionExtension getLanguageDefinitionExtension(String languageName) throws EngineContextException {
 		LanguageDefinitionExtension languageDefinition = LanguageDefinitionExtensionPoint
 				.findDefinition(_runConfiguration.getLanguageName());
 		if (languageDefinition == null) {
