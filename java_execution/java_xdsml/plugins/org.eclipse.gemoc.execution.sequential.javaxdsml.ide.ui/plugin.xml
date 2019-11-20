@@ -31,7 +31,7 @@
     <menuContribution allPopups="false" locationURI="popup:org.eclipse.ui.popup.any?after=addition">
       <separator name="xdsmlGroup"/>
     </menuContribution>
-    <menuContribution allPopups="false" locationURI="popup:org.eclipse.ui.projectConfigure?after=additions">
+    <menuContribution allPopups="false" locationURI="popup:org.eclipse.ui.projectConfigure?after=xdsmlGroup">
       <command commandId="org.eclipse.gemoc.execution.sequential.javaxdsml.ide.ui.addRemoveGemocSequentialLanguageNature" icon="icons/IconeGemocLanguage-16.png" label="Remove Sequential xDSML Project Nature" style="push">
         <visibleWhen checkEnabled="false">
           <with variable="selection">
