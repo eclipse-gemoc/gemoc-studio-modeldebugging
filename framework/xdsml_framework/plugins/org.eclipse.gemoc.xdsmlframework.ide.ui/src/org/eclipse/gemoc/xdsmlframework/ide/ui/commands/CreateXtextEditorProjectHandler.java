@@ -8,7 +8,7 @@
  * Contributors:
  *     Inria - initial API and implementation
  *******************************************************************************/
-package org.eclipse.gemoc.execution.sequential.javaxdsml.ide.ui.commands;
+package org.eclipse.gemoc.xdsmlframework.ide.ui.commands;
 
 import java.io.IOException;
 import java.util.Collections;
@@ -29,7 +29,7 @@ import org.eclipse.gemoc.dsl.Dsl;
 import org.eclipse.gemoc.dsl.DslFactory;
 import org.eclipse.gemoc.dsl.DslPackage;
 import org.eclipse.gemoc.dsl.Entry;
-import org.eclipse.gemoc.execution.sequential.javaxdsml.ide.ui.Activator;
+import org.eclipse.gemoc.xdsmlframework.ide.ui.Activator;
 import org.eclipse.gemoc.xdsmlframework.ide.ui.commands.AbstractDslSelectHandler;
 import org.eclipse.gemoc.xdsmlframework.ide.ui.xdsml.wizards.CreateEditorProjectWizardContextAction;
 import org.eclipse.gemoc.xdsmlframework.ide.ui.xdsml.wizards.CreateEditorProjectWizardContextAction.CreateEditorProjectAction;
