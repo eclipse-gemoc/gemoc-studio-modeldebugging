@@ -35,7 +35,6 @@ Bundle-RequiredExecutionEnvironment: JavaSE-1.8
 Bundle-ActivationPolicy: lazy
 Bundle-ClassPath: .
 Export-Package: org.eclipse.gemoc.execution.sequential.javaxdsml.ide.ui,
- org.eclipse.gemoc.execution.sequential.javaxdsml.ide.ui.builder,
  org.eclipse.gemoc.execution.sequential.javaxdsml.ide.ui.commands,
  org.eclipse.gemoc.execution.sequential.javaxdsml.ide.ui.dialogs,
  org.eclipse.gemoc.execution.sequential.javaxdsml.ide.ui.editor,

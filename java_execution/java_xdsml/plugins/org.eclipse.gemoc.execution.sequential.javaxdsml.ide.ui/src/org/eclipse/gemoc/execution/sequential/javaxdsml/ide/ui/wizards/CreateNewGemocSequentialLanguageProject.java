@@ -1,5 +1,5 @@
 /*******************************************************************************
- * Copyright (c) 2016, 2017 Inria and others.
+ * Copyright (c) 2016, 2019 Inria and others.
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
  * which accompanies this distribution, and is available at
@@ -26,6 +26,7 @@ import org.eclipse.core.runtime.CoreException;
 import org.eclipse.core.runtime.IProgressMonitor;
 import org.eclipse.core.runtime.Path;
 import org.eclipse.gemoc.commons.eclipse.core.resources.IFileUtils;
+import org.eclipse.gemoc.commons.eclipse.core.resources.IProjectUtils;
 import org.eclipse.gemoc.commons.eclipse.pde.manifest.ManifestChanger;
 import org.eclipse.gemoc.commons.eclipse.pde.wizards.pages.pde.AbstractNewProjectWizardWithTemplates;
 import org.eclipse.gemoc.commons.eclipse.pde.wizards.pages.pde.TemplateListSelectionPage;
@@ -33,9 +34,10 @@ import org.eclipse.gemoc.commons.eclipse.pde.wizards.pages.pde.WizardElement;
 import org.eclipse.gemoc.commons.eclipse.pde.wizards.pages.pde.ui.IProjectContentWizard;
 import org.eclipse.gemoc.commons.eclipse.pde.wizards.pages.pde.ui.ProjectTemplateApplicationOperation;
 import org.eclipse.gemoc.execution.sequential.javaxdsml.ide.ui.Activator;
-import org.eclipse.gemoc.execution.sequential.javaxdsml.ide.ui.builder.AddRemoveGemocSequentialLanguageNatureHandler;
+import org.eclipse.gemoc.execution.sequential.javaxdsml.ide.ui.builder.GemocSequentialLanguageNature;
 import org.eclipse.gemoc.execution.sequential.javaxdsml.ide.ui.wizards.pages.NewGemocLanguageProjectWizardFields;
 import org.eclipse.gemoc.execution.sequential.javaxdsml.ide.ui.wizards.pages.NewGemocLanguageProjectWizardPage;
+import org.eclipse.gemoc.xdsmlframework.ide.ui.builder.GemocLanguageProjectNature;
 import org.eclipse.jdt.core.IClasspathEntry;
 import org.eclipse.jdt.core.IJavaProject;
 import org.eclipse.jdt.core.IPackageFragmentRoot;
@@ -120,18 +122,9 @@ public class CreateNewGemocSequentialLanguageProject extends AbstractNewProjectW
 	
 	public void configureProject(IProject project, IProgressMonitor monitor) {
 		try {
-			IProjectDescription description;
-			description = project.getDescription();
-			addNature(description, "org.eclipse.jdt.core.javanature");
-			addNature(description, "org.eclipse.xtext.ui.shared.xtextNature");
-			//String sourceFolderName= "src/";
-			
-
-			//IFolderUtils.createFolder(sourceFolderName + context.basePackageName.replaceAll("\\.", "/"), project, monitor);
-			//IFolderUtils.createFolder("src-gen", project, monitor);
-			
-			addNature(description, "org.eclipse.pde.PluginNature");
-			project.setDescription(description, monitor);
+			IProjectUtils.addNature(project, "org.eclipse.jdt.core.javanature");
+			IProjectUtils.addNature(project, "org.eclipse.xtext.ui.shared.xtextNature");
+			IProjectUtils.addNature(project, "org.eclipse.pde.PluginNature");
 			
 			createEmptyManifestFile(project, monitor);
 			updateManifestFile(project, monitor);
@@ -143,23 +136,14 @@ public class CreateNewGemocSequentialLanguageProject extends AbstractNewProjectW
 			setClasspath(project,  monitor);
 			
 			
-			
-			new AddRemoveGemocSequentialLanguageNatureHandler().configureNature(project);
+			IProjectUtils.addNature(project, GemocLanguageProjectNature.NATURE_ID);
+			IProjectUtils.addNature(project, GemocSequentialLanguageNature.NATURE_ID);
 			
 		} catch (Exception e) {
 			Activator.error(e.getMessage(), e);
 		}
 		
 	}
-	
-	public static void addNature(IProjectDescription description, String nature) {
-		String[] natures = description.getNatureIds();
-		String[] newNatures = new String[natures.length + 1];
-		System.arraycopy(natures, 0, newNatures, 0, natures.length);
-		newNatures[natures.length] = nature;
-		description.setNatureIds(newNatures);
-	}	
-	
 	
     private void createEmptyManifestFile(IProject project, IProgressMonitor monitor) throws Exception {	
 	    IFolder metaInf = project.getFolder("META-INF");

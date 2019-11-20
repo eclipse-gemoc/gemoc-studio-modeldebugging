@@ -8,17 +8,12 @@
    
     Contributors:
         Inria - initial API and implementation
- --><plugin>
-  <extension id="GemocSequentialLanguageBuilder" name="GemocSequentialLanguage Project Builder" point="org.eclipse.core.resources.builders">
-    <builder hasNature="true">
-      <run class="org.eclipse.gemoc.execution.sequential.javaxdsml.ide.ui.builder.GemocSequentialLanguageBuilder"/>
-    </builder>
-  </extension>
+ -->
+ <plugin>
   <extension id="GemocSequentialLanguageNature" name="GemocSequentialLanguage Project Nature" point="org.eclipse.core.resources.natures">
     <runtime>
       <run class="org.eclipse.gemoc.execution.sequential.javaxdsml.ide.ui.builder.GemocSequentialLanguageNature"/>
     </runtime>
-    <builder id="org.eclipse.gemoc.execution.sequential.javaxdsml.ide.ui.GemocSequentialLanguageBuilder"/>
   </extension>
   <extension point="org.eclipse.ui.ide.projectNatureImages">
     <image icon="icons/IconeGemocLanguage-10.png" id="org.eclipse.gemoc.execution.sequential.javaxdsml.ide.ui.GemocSequentialLanguageNature.image" natureId="org.eclipse.gemoc.execution.sequential.javaxdsml.ide.ui.GemocSequentialLanguageNature"/>

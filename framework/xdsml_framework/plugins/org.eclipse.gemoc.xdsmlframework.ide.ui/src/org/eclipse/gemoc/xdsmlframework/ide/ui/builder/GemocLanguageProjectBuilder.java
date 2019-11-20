@@ -8,7 +8,7 @@
  * Contributors:
  *     Inria - initial API and implementation
  *******************************************************************************/
-package org.eclipse.gemoc.execution.sequential.javaxdsml.ide.ui.builder;
+package org.eclipse.gemoc.xdsmlframework.ide.ui.builder;
 
 import java.io.IOException;
 import java.util.Map;
@@ -30,15 +30,15 @@ import org.eclipse.emf.ecore.resource.Resource;
 import org.eclipse.emf.ecore.resource.impl.ResourceSetImpl;
 import org.eclipse.gemoc.commons.eclipse.pde.manifest.ManifestChanger;
 import org.eclipse.gemoc.dsl.Dsl;
-import org.eclipse.gemoc.execution.sequential.javaxdsml.ide.ui.Activator;
 import org.eclipse.gemoc.xdsmlframework.api.extensions.languages.LanguageDefinitionExtensionPoint;
+import org.eclipse.gemoc.xdsmlframework.ide.ui.Activator;
 import org.eclipse.gemoc.xdsmlframework.ide.ui.builder.pde.PluginXMLHelper;
 import org.eclipse.jdt.core.IJavaProject;
 import org.eclipse.jdt.core.JavaCore;
 import org.jdom2.Element;
 import org.osgi.framework.BundleException;
 
-public class GemocSequentialLanguageBuilder extends IncrementalProjectBuilder {
+public class GemocLanguageProjectBuilder extends IncrementalProjectBuilder {
 
 	class GemocSequentialLanguageProjectDeltaVisitor implements IResourceDeltaVisitor {
 		/*
@@ -79,7 +79,7 @@ public class GemocSequentialLanguageBuilder extends IncrementalProjectBuilder {
 		}
 	}
 
-	public static final String BUILDER_ID = "org.eclipse.gemoc.execution.sequential.javaxdsml.ide.ui.GemocSequentialLanguageBuilder";
+	public static final String BUILDER_ID = Activator.PLUGIN_ID+".GemocLanguageProjectBuilder";
 
 	/*
 	 * (non-Javadoc)
