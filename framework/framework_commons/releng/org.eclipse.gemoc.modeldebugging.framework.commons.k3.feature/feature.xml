@@ -9,10 +9,9 @@
     Contributors:
         Inria - initial API and implementation
  -->
-
 <feature
-      id="org.eclipse.gemoc.modeldebugging.framework.commons.feature"
-      label="ModelDebugging framework commons"
+      id="org.eclipse.gemoc.modeldebugging.framework.commons.k3.feature"
+      label="ModelDebugging framework commons for k3"
       version="4.0.0.qualifier"
       provider-name="%providerName"
       image="gemocstudio32.png">
@@ -34,39 +33,17 @@ http://www.eclipse.org/legal/epl-v10.html
    </license>
 
    <plugin
-         id="org.eclipse.gemoc.executionframework.reflectivetrace.model"
+         id="org.eclipse.gemoc.opsemanticsview.gen.k3"
          download-size="0"
          install-size="0"
          version="0.0.0"
          unpack="false"/>
 
    <plugin
-         id="org.eclipse.gemoc.xdsmlframework.api"
+         id="org.eclipse.gemoc.xdsmlframework.commons.k3"
          download-size="0"
          install-size="0"
          version="0.0.0"
          unpack="false"/>
-
-   <plugin
-         id="org.eclipse.gemoc.xdsmlframework.commons"
-         download-size="0"
-         install-size="0"
-         version="0.0.0"
-         unpack="false"/>
-
-   <plugin
-         id="org.eclipse.gemoc.opsemanticsview.gen"
-         download-size="0"
-         install-size="0"
-         version="0.0.0"
-         unpack="false"/>
-
-   <plugin
-         id="org.eclipse.gemoc.opsemanticsview.model"
-         download-size="0"
-         install-size="0"
-         version="0.0.0"
-         unpack="false"/>
-
 
 </feature>
