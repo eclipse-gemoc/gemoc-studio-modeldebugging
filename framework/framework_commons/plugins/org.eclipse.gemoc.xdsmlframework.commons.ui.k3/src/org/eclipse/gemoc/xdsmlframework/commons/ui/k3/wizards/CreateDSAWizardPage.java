@@ -8,8 +8,9 @@
  * Contributors:
  *     Inria - initial API and implementation
  *******************************************************************************/
-package org.eclipse.gemoc.execution.sequential.javaxdsml.ide.ui.wizards;
+package org.eclipse.gemoc.xdsmlframework.commons.ui.k3.wizards;
 
+import org.eclipse.gemoc.xdsmlframework.commons.ui.k3.wizards.CreateDSAWizardContextAction.CreateDSAAction;
 import org.eclipse.jface.wizard.WizardPage;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.layout.RowLayout;
@@ -19,7 +20,6 @@ import org.eclipse.swt.widgets.Event;
 import org.eclipse.swt.widgets.Group;
 import org.eclipse.swt.widgets.Listener;
 import org.eclipse.ui.PlatformUI;
-import org.eclipse.gemoc.execution.sequential.javaxdsml.ide.ui.wizards.CreateDSAWizardContextAction.CreateDSAAction;
 
 public class CreateDSAWizardPage extends WizardPage {
 
@@ -50,17 +50,7 @@ public class CreateDSAWizardPage extends WizardPage {
 		Group actionSelection = new Group(container, SWT.FILL);
 		actionSelection.setLayout (new RowLayout (SWT.VERTICAL));
 		actionSelection.setText("Select action");
-		//actionSelection.setBounds(10, 10, 193, 85);
-	    
-	   /* Button createK2DSAProject = new Button(actionSelection, SWT.RADIO);
-	    createK2DSAProject.setText("Create new K2 DSA project");
-	    createK2DSAProject.setSelection(true);
-	    createK2DSAProject.addListener (SWT.Selection, new Listener () {
-			public void handleEvent (Event event) {
-				// update context and potentially add new pages ?
-				context.actionToExecute = CreateDSAAction.CREATE_NEW_K2_DSA_PROJECT;
-			}
-		});*/
+		
 	    Button createK3DSAProject = new Button(actionSelection, SWT.RADIO);
 	    createK3DSAProject.setText("Create new K3 DSA project");
 	    createK3DSAProject.addListener (SWT.Selection, new Listener () {

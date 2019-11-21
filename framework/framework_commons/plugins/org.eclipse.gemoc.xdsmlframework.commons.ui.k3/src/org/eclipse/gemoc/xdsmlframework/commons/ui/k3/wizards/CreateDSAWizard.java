@@ -8,7 +8,7 @@
  * Contributors:
  *     Inria - initial API and implementation
  *******************************************************************************/
-package org.eclipse.gemoc.execution.sequential.javaxdsml.ide.ui.wizards;
+package org.eclipse.gemoc.xdsmlframework.commons.ui.k3.wizards;
 
 import org.eclipse.jface.wizard.Wizard;
 

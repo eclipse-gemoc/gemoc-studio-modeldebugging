@@ -8,10 +8,10 @@
  * Contributors:
  *     Inria - initial API and implementation
  *******************************************************************************/
-package org.eclipse.gemoc.execution.sequential.javaxdsml.ide.ui.wizards;
+package org.eclipse.gemoc.xdsmlframework.commons.ui.k3.wizards;
 
 import org.eclipse.core.resources.IProject;
-import org.eclipse.gemoc.execution.sequential.javaxdsml.ide.ui.dialogs.SelectDSAIProjectDialog;
+import org.eclipse.gemoc.xdsmlframework.commons.ui.k3.dialogs.SelectDSAIProjectDialog;
 import org.eclipse.jface.wizard.WizardDialog;
 import org.eclipse.ui.PlatformUI;
 

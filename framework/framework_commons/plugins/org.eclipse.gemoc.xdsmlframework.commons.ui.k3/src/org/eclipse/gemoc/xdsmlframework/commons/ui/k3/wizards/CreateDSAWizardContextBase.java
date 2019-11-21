@@ -8,9 +8,10 @@
  * Contributors:
  *     Inria - initial API and implementation
  *******************************************************************************/
-package org.eclipse.gemoc.execution.sequential.javaxdsml.ide.ui.wizards;
+package org.eclipse.gemoc.xdsmlframework.commons.ui.k3.wizards;
 
 import org.eclipse.core.resources.IProject;
+import org.eclipse.gemoc.commons.eclipse.Activator;
 import org.eclipse.gemoc.commons.eclipse.pde.manifest.ManifestChanger;
 
 
@@ -28,7 +29,7 @@ public class CreateDSAWizardContextBase {
 			manifestChanger.addPluginDependency(projectName);
 			manifestChanger.commit();
 		} catch (Exception e) {
-			e.printStackTrace();
+			Activator.error(e.getMessage(), e);
 		}
 	}
 	
