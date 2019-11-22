@@ -52,7 +52,7 @@ public abstract class AbstractModelExecutionContext<R extends IRunConfiguration,
 			} catch (CoreException e) {
 				// TODO throw warning that we couldn't copy the model
 			}
-			_languageDefinition = getLanguageDefinition(_runConfiguration.getLanguageName());
+			_languageDefinition = getLanguageDefinitionExtension(_runConfiguration.getLanguageName());
 			_dslBundle = DslHelper.getDslBundle(_runConfiguration.getLanguageName());
 			_executionPlatform = createExecutionPlatform(); // new
 															// DefaultExecutionPlatform(_languageDefinition,
@@ -66,7 +66,7 @@ public abstract class AbstractModelExecutionContext<R extends IRunConfiguration,
 
 	protected abstract P createExecutionPlatform() throws CoreException;
 
-	protected abstract L getLanguageDefinition(String languageName) throws EngineContextException;
+	protected abstract L getLanguageDefinitionExtension(String languageName) throws EngineContextException;
 
 	@Override
 	public R getRunConfiguration() {

@@ -1,5 +1,5 @@
 /*******************************************************************************
- * Copyright (c) 2016, 2017 Inria and others.
+ * Copyright (c) 2016, 2019 Inria and others.
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
  * which accompanies this distribution, and is available at
@@ -10,13 +10,15 @@
  *******************************************************************************/
 package org.eclipse.gemoc.xdsmlframework.api.extensions.languages;
 
+import java.util.Collection;
+
 import org.eclipse.gemoc.xdsmlframework.api.extensions.ExtensionPoint;
 
-public abstract class LanguageDefinitionExtensionPoint extends ExtensionPoint<LanguageDefinitionExtension>
+public class LanguageDefinitionExtensionPoint extends ExtensionPoint<LanguageDefinitionExtension>
 {
 
 
-//	public static final String GEMOC_LANGUAGE_EXTENSION_POINT = "org.eclipse.gemoc.gemoc_language_workbench.xdsml";
+	public static final String GEMOC_LANGUAGE_EXTENSION_POINT = "org.eclipse.gemoc.gemoc_language_workbench.xdsml";
 	public static final String GEMOC_LANGUAGE_EXTENSION_POINT_XDSML_DEF = "XDSML_Definition";
 	public static final String GEMOC_LANGUAGE_EXTENSION_POINT_XDSML_DEF_NAME_ATT = "name";
 	public static final String GEMOC_LANGUAGE_EXTENSION_POINT_XDSML_DEF_LOADMODEL_ATT = "modelLoader_class";
@@ -32,41 +34,41 @@ public abstract class LanguageDefinitionExtensionPoint extends ExtensionPoint<La
 	{
 		super(LanguageDefinitionExtension.class);
 	}
-//
-//	private static LanguageDefinitionExtensionPoint _singleton;
-//	
-//	private static LanguageDefinitionExtensionPoint getExtensionPoint()
-//	{
-//		if (_singleton == null)
-//		{
-//			_singleton = new LanguageDefinitionExtensionPoint();
-//		}
-//		return _singleton;
-//	}
+
+	private static LanguageDefinitionExtensionPoint _singleton;
+	
+	private static LanguageDefinitionExtensionPoint getExtensionPoint()
+	{
+		if (_singleton == null)
+		{
+			_singleton = new LanguageDefinitionExtensionPoint();
+		}
+		return _singleton;
+	}
 		
-//	static public Collection<LanguageDefinitionExtension> getSpecifications() 
-//	{
-//		return getExtensionPoint().internal_getSpecifications();
-//	}
-//	
-//	static public LanguageDefinitionExtension findDefinition(String languageName)
-//	{
-//		for (LanguageDefinitionExtension extension : getSpecifications())
-//		{
-//			if (extension.getName().equals(languageName))
-//			{
-//				return extension;
-//			}
-//		}
-//		return null;
-//	}
+	static public Collection<LanguageDefinitionExtension> getSpecifications() 
+	{
+		return getExtensionPoint().internal_getSpecifications();
+	}
+	
+	static public LanguageDefinitionExtension findDefinition(String languageName)
+	{
+		for (LanguageDefinitionExtension extension : getSpecifications())
+		{
+			if (extension.getName().equals(languageName))
+			{
+				return extension;
+			}
+		}
+		return null;
+	}
 
 
 	
-//	@Override
-//	protected String getExtensionPointName()
-//	{
-//		return GEMOC_LANGUAGE_EXTENSION_POINT;
-//	}
+	@Override
+	protected String getExtensionPointName()
+	{
+		return GEMOC_LANGUAGE_EXTENSION_POINT;
+	}
 		
 }

@@ -13,15 +13,10 @@
 	</parent>
 	<modules>
 		<!-- plugins -->
-		<module>plugins/org.eclipse.gemoc.executionframework.reflectivetrace.model</module>
-		<module>plugins/org.eclipse.gemoc.opsemanticsview.gen</module>
-		<module>plugins/org.eclipse.gemoc.opsemanticsview.gen.k3</module>
-		<module>plugins/org.eclipse.gemoc.opsemanticsview.model</module>
-		<module>plugins/org.eclipse.gemoc.xdsmlframework.api</module>
-		<module>plugins/org.eclipse.gemoc.xdsmlframework.commons</module>
+		<module>plugins</module>
 
 		<!-- feature -->
-		<module>releng/org.eclipse.gemoc.modeldebugging.framework.commons.feature</module>
+		<module>releng</module>
 
 	</modules>
 

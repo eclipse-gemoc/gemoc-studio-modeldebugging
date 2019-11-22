@@ -17,8 +17,8 @@ import org.eclipse.emf.common.util.URI;
 import org.eclipse.emf.ecore.resource.Resource;
 import org.eclipse.emf.ecore.resource.ResourceSet;
 import org.eclipse.emf.ecore.resource.impl.ResourceSetImpl;
-import org.eclipse.gemoc.execution.sequential.javaxdsml.api.extensions.languages.SequentialLanguageDefinitionExtension;
-import org.eclipse.gemoc.execution.sequential.javaxdsml.api.extensions.languages.SequentialLanguageDefinitionExtensionPoint;
+import org.eclipse.gemoc.xdsmlframework.api.extensions.languages.LanguageDefinitionExtension;
+import org.eclipse.gemoc.xdsmlframework.api.extensions.languages.LanguageDefinitionExtensionPoint;
 
 /**
  * Property tester for context launching menu.
@@ -67,7 +67,7 @@ public class GemocSequentialPropertyTester extends PropertyTester {
 	
 	
 	protected boolean existsDSMLWithFileExtension(String fileExtension){
-		for(SequentialLanguageDefinitionExtension lde : SequentialLanguageDefinitionExtensionPoint.getSpecifications()){
+		for(LanguageDefinitionExtension lde : LanguageDefinitionExtensionPoint.getSpecifications()){
 			if(lde.getFileExtensions().contains(fileExtension)) return true;
 		}
 		return false;

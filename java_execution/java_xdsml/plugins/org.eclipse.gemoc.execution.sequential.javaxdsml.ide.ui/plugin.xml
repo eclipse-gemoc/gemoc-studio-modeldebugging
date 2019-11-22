@@ -8,17 +8,12 @@
    
     Contributors:
         Inria - initial API and implementation
- --><plugin>
-  <extension id="GemocSequentialLanguageBuilder" name="GemocSequentialLanguage Project Builder" point="org.eclipse.core.resources.builders">
-    <builder hasNature="true">
-      <run class="org.eclipse.gemoc.execution.sequential.javaxdsml.ide.ui.builder.GemocSequentialLanguageBuilder"/>
-    </builder>
-  </extension>
+ -->
+ <plugin>
   <extension id="GemocSequentialLanguageNature" name="GemocSequentialLanguage Project Nature" point="org.eclipse.core.resources.natures">
     <runtime>
       <run class="org.eclipse.gemoc.execution.sequential.javaxdsml.ide.ui.builder.GemocSequentialLanguageNature"/>
     </runtime>
-    <builder id="org.eclipse.gemoc.execution.sequential.javaxdsml.ide.ui.GemocSequentialLanguageBuilder"/>
   </extension>
   <extension point="org.eclipse.ui.ide.projectNatureImages">
     <image icon="icons/IconeGemocLanguage-10.png" id="org.eclipse.gemoc.execution.sequential.javaxdsml.ide.ui.GemocSequentialLanguageNature.image" natureId="org.eclipse.gemoc.execution.sequential.javaxdsml.ide.ui.GemocSequentialLanguageNature"/>
@@ -26,18 +21,14 @@
   <extension point="org.eclipse.ui.commands">
     <category id="org.eclipse.gemoc.execution.sequential.javaxdsml.ide.ui.GemocSequentialLanguageNature.category" name="GemocSequentialLanguage Project Nature commands"/>
     <command categoryId="org.eclipse.gemoc.execution.sequential.javaxdsml.ide.ui.GemocSequentialLanguageNature.category" defaultHandler="org.eclipse.gemoc.execution.sequential.javaxdsml.ide.ui.builder.AddRemoveGemocSequentialLanguageNatureHandler" id="org.eclipse.gemoc.execution.sequential.javaxdsml.ide.ui.addRemoveGemocSequentialLanguageNature" name="Add/RemoveGemocSequentialLanguage Project Nature"/>
-    <command categoryId="org.eclipse.gemoc.execution.sequential.javaxdsml.ide.ui.GemocSequentialLanguageNature.category" defaultHandler="org.eclipse.gemoc.execution.sequential.javaxdsml.ide.ui.commands.CreateDomainModelProjectHandler" id="org.eclipse.gemoc.execution.sequential.javaxdsml.ide.ui.commands.CreateDomainModelProject" name="CreateDomainModelProject"/>
     <command categoryId="org.eclipse.gemoc.execution.sequential.javaxdsml.ide.ui.GemocSequentialLanguageNature.category" defaultHandler="org.eclipse.gemoc.execution.sequential.javaxdsml.ide.ui.commands.CreateDSAProjectHandler" id="org.eclipse.gemoc.execution.sequential.javaxdsml.ide.ui.commands.CreateDSAProject" name="CreateDSAProject"/>
-    <command categoryId="org.eclipse.gemoc.execution.sequential.javaxdsml.ide.ui.GemocSequentialLanguageNature.category" defaultHandler="org.eclipse.gemoc.execution.sequential.javaxdsml.ide.ui.commands.CreateSiriusEditorProjectHandler" id="org.eclipse.gemoc.execution.sequential.javaxdsml.ide.ui.commands.CreateSiriusEditorProject" name="CreateSiriusEditorProject"/>
-    <command categoryId="org.eclipse.gemoc.execution.sequential.javaxdsml.ide.ui.GemocSequentialLanguageNature.category" defaultHandler="org.eclipse.gemoc.execution.sequential.javaxdsml.ide.ui.commands.CreateXtextEditorProjectHandler" id="org.eclipse.gemoc.execution.sequential.javaxdsml.ide.ui.commands.CreateXtextEditorProject" name="CreateXtextEditorProject"/>
-    <command categoryId="org.eclipse.gemoc.execution.sequential.javaxdsml.ide.ui.GemocSequentialLanguageNature.category" defaultHandler="org.eclipse.gemoc.execution.sequential.javaxdsml.ide.ui.commands.CreateAnimatorProjectHandler" id="org.eclipse.gemoc.execution.sequential.javaxdsml.ide.ui.commands.CreateAnimatorProject" name="CreateAnimatorProject"/>
   </extension>
   <extension point="org.eclipse.ui.menus">
     <menuContribution allPopups="false" locationURI="popup:org.eclipse.ui.popup.any?after=addition">
       <separator name="xdsmlGroup"/>
     </menuContribution>
-    <menuContribution allPopups="false" locationURI="popup:org.eclipse.ui.projectConfigure?after=additions">
-      <command commandId="org.eclipse.gemoc.execution.sequential.javaxdsml.ide.ui.addRemoveGemocSequentialLanguageNature" icon="icons/IconeGemocLanguage-16.png" label="Remove Sequential xDSML Project Nature" style="push">
+    <menuContribution allPopups="false" locationURI="popup:org.eclipse.ui.projectConfigure?after=xdsmlGroup">
+      <command commandId="org.eclipse.gemoc.execution.sequential.javaxdsml.ide.ui.addRemoveGemocSequentialLanguageNature" icon="icons/IconeGemocLanguage-16.png" label="Remove GEMOC Java xDSML Project Nature" style="push">
         <visibleWhen checkEnabled="false">
           <with variable="selection">
             <count value="1"/>
@@ -49,7 +40,7 @@
           </with>
         </visibleWhen>
       </command>
-      <command commandId="org.eclipse.gemoc.execution.sequential.javaxdsml.ide.ui.addRemoveGemocSequentialLanguageNature" icon="icons/IconeGemocLanguage-16.png" label="Add Sequential xDSML Project Nature" style="push">
+      <command commandId="org.eclipse.gemoc.execution.sequential.javaxdsml.ide.ui.addRemoveGemocSequentialLanguageNature" icon="icons/IconeGemocLanguage-16.png" label="Add GEMOC Java xDSML Project Nature" style="push">
         <visibleWhen checkEnabled="false">
           <with variable="selection">
             <count value="1"/>
@@ -65,48 +56,8 @@
       </command>
     </menuContribution>
     <menuContribution allPopups="false" locationURI="popup:org.eclipse.ui.popup.any?after=xdsmlGroup">
-      <menu icon="icons/IconeGemocLanguage-16.png" id="GemocLanguage.menu" label="GEMOC Language">
-        <command commandId="org.eclipse.gemoc.execution.sequential.javaxdsml.ide.ui.commands.CreateDomainModelProject" icon="icons/plus-16.png" label="Create Domain Model Project for language" style="push">
-          <visibleWhen checkEnabled="false">
-            <with variable="selection">
-              <count value="1"/>
-              <iterate ifEmpty="false">
-                <reference definitionId="org.eclipse.gemoc.execution.sequential.javaxdsml.ide.ui.definitions.IsSelectionInGemocSequentialLanguageProject"/>
-              </iterate>
-            </with>
-          </visibleWhen>
-        </command>
-        <command commandId="org.eclipse.gemoc.execution.sequential.javaxdsml.ide.ui.commands.CreateSiriusEditorProject" icon="icons/plus-16.png" label="Create Sirius Editor Project for language" style="push">
-          <visibleWhen checkEnabled="false">
-            <with variable="selection">
-              <count value="1"/>
-              <iterate ifEmpty="false">
-                <reference definitionId="org.eclipse.gemoc.execution.sequential.javaxdsml.ide.ui.definitions.IsSelectionInGemocSequentialLanguageProject"/>
-              </iterate>
-            </with>
-          </visibleWhen>
-        </command>
-        <command commandId="org.eclipse.gemoc.execution.sequential.javaxdsml.ide.ui.commands.CreateXtextEditorProject" icon="icons/plus-16.png" label="Create XText Editor Project for language" style="push">
-          <visibleWhen checkEnabled="false">
-            <with variable="selection">
-              <count value="1"/>
-              <iterate ifEmpty="false">
-                <reference definitionId="org.eclipse.gemoc.execution.sequential.javaxdsml.ide.ui.definitions.IsSelectionInGemocSequentialLanguageProject"/>
-              </iterate>
-            </with>
-          </visibleWhen>
-        </command>
+      <menu icon="icons/IconeGemocLanguage-16.png" id="GemocJavaLanguage.menu" label="GEMOC Java xDSML">
         <command commandId="org.eclipse.gemoc.execution.sequential.javaxdsml.ide.ui.commands.CreateDSAProject" icon="icons/plus-16.png" label="Create DSA Project for language" style="push">
-          <visibleWhen checkEnabled="false">
-            <with variable="selection">
-              <count value="1"/>
-              <iterate ifEmpty="false">
-                <reference definitionId="org.eclipse.gemoc.execution.sequential.javaxdsml.ide.ui.definitions.IsSelectionInGemocSequentialLanguageProject"/>
-              </iterate>
-            </with>
-          </visibleWhen>
-        </command>
-        <command commandId="org.eclipse.gemoc.execution.sequential.javaxdsml.ide.ui.commands.CreateAnimatorProject" icon="icons/plus-16.png" label="Create Animator Project for language" style="push">
           <visibleWhen checkEnabled="false">
             <with variable="selection">
               <count value="1"/>
@@ -122,7 +73,7 @@
   <extension point="org.eclipse.ui.newWizards">
     <category id="org.eclipse.gemoc.xdsmlframework.category" name="GEMOC Language"/>
     <category id="org.eclipse.gemoc.xdsmlframework.fragment.category" name="GEMOC Specific Language Fragment" parentCategory="org.eclipse.gemoc.xdsmlframework.category"/>
-    <wizard category="org.eclipse.gemoc.xdsmlframework.category" class="org.eclipse.gemoc.execution.sequential.javaxdsml.ide.ui.wizards.CreateNewGemocSequentialLanguageProject" finalPerspective="org.eclipse.gemoc.xdsmlframework.ide.ui.xdsml.perspective" icon="icons/IconeGemocLanguage-16.png" id="org.eclipse.gemoc.gemoc_language_workbench.ui.wizards.CreateNewGemocSequentialLanguageProject" name="GEMOC Sequential xDSML Project" project="true">
+    <wizard category="org.eclipse.gemoc.xdsmlframework.category" class="org.eclipse.gemoc.execution.sequential.javaxdsml.ide.ui.wizards.CreateNewGemocSequentialLanguageProject" finalPerspective="org.eclipse.gemoc.xdsmlframework.ide.ui.xdsml.perspective" icon="icons/IconeGemocLanguage-16.png" id="org.eclipse.gemoc.gemoc_language_workbench.ui.wizards.CreateNewGemocSequentialLanguageProject" name="GEMOC Java xDSML Project" project="true">
       <description>
             Create a new dsl project to specify an executable language that will run using the GEMOC java sequential  engine.
          </description>

@@ -10,12 +10,17 @@
  *******************************************************************************/
 package org.eclipse.gemoc.execution.sequential.javaxdsml.ide.ui.builder;
 
-import org.eclipse.core.resources.ICommand;
 import org.eclipse.core.resources.IProject;
-import org.eclipse.core.resources.IProjectDescription;
 import org.eclipse.core.resources.IProjectNature;
 import org.eclipse.core.runtime.CoreException;
+import org.eclipse.gemoc.commons.eclipse.core.resources.IProjectUtils;
+import org.eclipse.gemoc.xdsmlframework.ide.ui.builder.GemocLanguageProjectNature;
 
+/**
+ * This nature is mainly to help eclipse UI to have the proper popup menus
+ * There is no need for a builder since it is supposed to be done by the generic GemocLanguageProjectBuilder in org.eclipse.gemoc.xdsmlframework.ide.ui
+ *
+ */
 public class GemocSequentialLanguageNature implements IProjectNature {
 
 	/**
@@ -31,6 +36,11 @@ public class GemocSequentialLanguageNature implements IProjectNature {
 	 * @see org.eclipse.core.resources.IProjectNature#configure()
 	 */
 	public void configure() throws CoreException {
+
+		// configure the requirement 
+		requirementConfigure();
+		
+		/*  no builder for now
 		IProjectDescription desc = project.getDescription();
 		ICommand[] commands = desc.getBuildSpec();
 
@@ -38,7 +48,7 @@ public class GemocSequentialLanguageNature implements IProjectNature {
 			if (commands[i].getBuilderName().equals(GemocSequentialLanguageBuilder.BUILDER_ID)) {
 				return;
 			}
-		}
+		} 
 
 		ICommand[] newCommands = new ICommand[commands.length + 1];
 		System.arraycopy(commands, 0, newCommands, 0, commands.length);
@@ -47,6 +57,7 @@ public class GemocSequentialLanguageNature implements IProjectNature {
 		newCommands[newCommands.length - 1] = command;
 		desc.setBuildSpec(newCommands);
 		project.setDescription(desc, null);
+		*/
 	}
 
 	/*
@@ -55,6 +66,7 @@ public class GemocSequentialLanguageNature implements IProjectNature {
 	 * @see org.eclipse.core.resources.IProjectNature#deconfigure()
 	 */
 	public void deconfigure() throws CoreException {
+		/*
 		IProjectDescription description = getProject().getDescription();
 		ICommand[] commands = description.getBuildSpec();
 		for (int i = 0; i < commands.length; ++i) {
@@ -68,6 +80,7 @@ public class GemocSequentialLanguageNature implements IProjectNature {
 				return;
 			}
 		}
+		*/
 	}
 
 	/*
@@ -86,6 +99,15 @@ public class GemocSequentialLanguageNature implements IProjectNature {
 	 */
 	public void setProject(IProject project) {
 		this.project = project;
+	}
+	
+	/**
+	 * Action done during the configure() that cannot be undone during the deconfigure()
+	 * this is the case of the addition of required natures, and changes in the files (plugin, manifest, ...)
+	 * @throws CoreException
+	 */
+	public void requirementConfigure() throws CoreException {
+		IProjectUtils.addNature(project, GemocLanguageProjectNature.NATURE_ID);
 	}
 
 }
