@@ -30,9 +30,9 @@ public class GEMOCTestVideoHelper {
 
 	/**
 	 * relative path to the log file
-	 * this is relative to the current user dir
+	 * this is relative to the environment variable "WORKSPACE"  that is usually set be JENKINS
 	 */
-	public static String LOGFILEPATH = "../../../dev_support/full_compilation/target/system_test_timeline.log";
+	public static String LOGFILEPATH = "gemoc_studio/dev_support/full_compilation/target/system_test_timeline.log";
 	
 	/**
 	 * if the file LOGFILENAME exists, then it reads the first line in order to get the test start time stamp
@@ -75,7 +75,9 @@ public class GEMOCTestVideoHelper {
 	
 	public static File getVideoTimeStampFile() {
 		
-		File file=new File(System.getProperty("user.dir")+"/"+LOGFILEPATH);
+		// search the git root using the JENKINS environment variable
+		String jenkinsWorkspaceDir = System.getProperty("WORKSPACE");
+		File file=new File(jenkinsWorkspaceDir+"/"+LOGFILEPATH);
 		return file;
 	}
 	
