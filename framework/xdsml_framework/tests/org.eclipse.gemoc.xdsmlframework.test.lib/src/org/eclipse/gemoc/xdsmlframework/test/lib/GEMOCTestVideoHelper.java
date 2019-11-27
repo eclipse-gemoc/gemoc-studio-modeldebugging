@@ -41,7 +41,11 @@ public class GEMOCTestVideoHelper {
 	 */
 	public static void addTestSuiteVideoLog(String msg) {
 		File file = getVideoTimeStampFile();
-		if(!file.exists()) return;
+		if(!file.exists()) {
+			System.out.println("ignoring addTestSuiteVideoLog");
+			System.out.println(file.getPath()+ " not found");
+			return;
+		}
 		try {
 			Date videoStartDate = readTimeStamp();
 			try(PrintWriter printwriter = new PrintWriter(new FileWriter(file, true))){
