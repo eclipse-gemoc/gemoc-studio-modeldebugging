@@ -96,7 +96,7 @@
 							<artifactId>${project.artifactId}</artifactId>
 							<version>${project.version}</version>
 							<classifier>
-								../../releng/org.eclipse.gemoc.dsl.debug.target/dsldebug-oxygen
+								../../releng/org.eclipse.gemoc.dsl.debug.target/dsldebug-photon
 							</classifier>
 						</artifact>
 					</target>
