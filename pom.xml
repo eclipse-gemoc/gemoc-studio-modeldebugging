@@ -27,80 +27,19 @@
 	</modules>
 
     <properties>
-		<tycho-version>1.2.0</tycho-version>
+		<tycho-version>1.5.1</tycho-version>
     	<xtend.version>2.14.0</xtend.version>
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
 		<tycho.scmUrl>scm:git:https://github.com/SiriusLab/ModelDebugging.git</tycho.scmUrl>
-		<!-- <sonar.projectKey>gemoc:${project.groupId}:${project.artifactId}</sonar.projectKey>-->		
+		<!-- <sonar.projectKey>gemoc:${project.groupId}:${project.artifactId}</sonar.projectKey>-->	
+		
+		<eclipse.release.p2.url>http://download.eclipse.org/releases/photon</eclipse.release.p2.url>
+		<k3.p2.url>http://www.kermeta.org/k3/update_2018-09-05</k3.p2.url>
+		<melange.p2.url>http://melange.inria.fr/updatesite/nightly/update_2018-12-03/</melange.p2.url>
+		<elk.p2.url>http://download.eclipse.org/elk/updates/releases/0.4.1</elk.p2.url>
+		<aspectJ.p2.url>http://download.eclipse.org/tools/ajdt/48/dev/update</aspectJ.p2.url>
+			
 	</properties>
-	
-  	<repositories>
-  	<!-- List of P2 repositories of external tool used to build the components -->
-  	<!--  must NOT include the repositories of the tools included in the Studio has it has its own complementary list -->
-
-		<repository>
-            <id>Photon release</id>
-            <layout>p2</layout>
-            <url>http://download.eclipse.org/releases/photon</url>
-        </repository>
-        <repository>
-            <id>kermeta-3</id>
-            <layout>p2</layout>
-            <url>http://www.kermeta.org/k3/update_2018-09-05</url>
-        </repository>
-        <repository>
-            <id>melange</id>
-            <layout>p2</layout>
-            <url>http://melange.inria.fr/updatesite/nightly/update_2018-12-03/</url>
-        </repository>
-        <repository>
-            <id>elk</id>
-            <layout>p2</layout>
-            <url>http://download.eclipse.org/elk/updates/releases/0.4.1/</url>
-        </repository>
-        <repository>
-            <id>Sirius</id>
-            <layout>p2</layout>
-            <url>http://download.eclipse.org/sirius/updates/releases/6.0.1/photon/</url>
-        </repository>
-<!--         <repository> -->
-<!--             <id>umldesigner</id> -->
-<!--             <layout>p2</layout> -->
-<!--             <url>http://releases.umldesigner.org/5.0.0/repository/</url> -->
-<!--         </repository> -->
-        <repository>
-            <id>nebula</id>
-            <layout>p2</layout>
-            <url>http://download.eclipse.org/nebula/snapshot/</url>
-        </repository>
-        <repository> <!-- this repo is used to provide jdom and jaxen plugins -->
-            <id>app4mc</id>
-            <layout>p2</layout>
-            <url>http://download.eclipse.org/app4mc/updatesites/releases/0.8.1/</url>
-        </repository>
-	    <repository>
-            <id>AspectJ</id>
-            <layout>p2</layout>
-            <url>http://download.eclipse.org/tools/ajdt/48/dev/update</url>
-        </repository>
-        <!-- <repository>
-            <id>javafx</id>
-            <layout>p2</layout>
-            <url>http://download.eclipse.org/efxclipse/updates-released/2.1.0/site</url>
-        </repository>-->
-<!--          <repository> -->
-<!-- 			<id>efxclipse-repo</id> -->
-<!-- 			<layout>p2</layout> -->
-<!-- 			<url>http://download.eclipse.org/efxclipse/runtime-nightly/site</url> -->
-<!-- 		</repository> -->
-<!-- 		<repository> -->
-<!-- 			<id>efxclipse-addons</id> -->
-<!-- 			<layout>p2</layout> -->
-<!-- 			<url>http://downloads.efxclipse.org/efxclipse.bestsolution.at/p2-repos/addons/nightly/site/</url> -->
-<!-- 		</repository>  -->
-		    
-    </repositories>
-
 
 	<build>
 		<plugins>
@@ -250,6 +189,13 @@
 							<arch>x86_64</arch>
 						</environment>
 					</environments>
+				<!-- 	<target>
+                     <artifact>
+                         <groupId>org.eclipse.gemoc</groupId>
+                         <artifactId>org.eclipse.gemoc.modeldebugging.target-platform</artifactId>
+                         <version>3.0.0-SNAPSHOT</version>
+                     </artifact>
+                 </target>-->
 				</configuration>
 			</plugin>
 			<plugin>
