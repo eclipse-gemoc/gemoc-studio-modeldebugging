@@ -124,7 +124,7 @@ public abstract class AbstractGemocLanguageProjectHandler extends AbstractHandle
 
 	protected String getDslNameFromSelection(ExecutionEvent event) {
 		IFile dslFile = getDslFileFromSelection(event);
-		Resource res = (new ResourceSetImpl()).getResource(URI.createURI(dslFile.getFullPath().toOSString()), true);
+		Resource res = (new ResourceSetImpl()).getResource(URI.createURI(dslFile.getLocationURI().toString()), true);
 		return ((Dsl) res.getContents().get(0)).getName();
 	}
 }

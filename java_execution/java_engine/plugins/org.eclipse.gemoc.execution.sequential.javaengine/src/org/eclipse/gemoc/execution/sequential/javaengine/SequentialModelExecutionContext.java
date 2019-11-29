@@ -11,16 +11,16 @@
 package org.eclipse.gemoc.execution.sequential.javaengine;
 
 import org.eclipse.core.runtime.CoreException;
-import org.eclipse.gemoc.execution.sequential.javaxdsml.api.extensions.languages.SequentialLanguageDefinitionExtension;
-import org.eclipse.gemoc.execution.sequential.javaxdsml.api.extensions.languages.SequentialLanguageDefinitionExtensionPoint;
+import org.eclipse.gemoc.executionframework.engine.commons.AbstractModelExecutionContext;
 import org.eclipse.gemoc.executionframework.engine.commons.DefaultExecutionPlatform;
 import org.eclipse.gemoc.executionframework.engine.commons.EngineContextException;
-import org.eclipse.gemoc.executionframework.engine.commons.AbstractModelExecutionContext;
 import org.eclipse.gemoc.trace.commons.model.trace.MSEModel;
 import org.eclipse.gemoc.xdsmlframework.api.core.ExecutionMode;
 import org.eclipse.gemoc.xdsmlframework.api.core.IRunConfiguration;
+import org.eclipse.gemoc.xdsmlframework.api.extensions.languages.LanguageDefinitionExtension;
+import org.eclipse.gemoc.xdsmlframework.api.extensions.languages.LanguageDefinitionExtensionPoint;
 
-public class SequentialModelExecutionContext<T extends IRunConfiguration> extends AbstractModelExecutionContext<T, DefaultExecutionPlatform, SequentialLanguageDefinitionExtension> {
+public class SequentialModelExecutionContext<T extends IRunConfiguration> extends AbstractModelExecutionContext<T, DefaultExecutionPlatform, LanguageDefinitionExtension> {
 
 	public SequentialModelExecutionContext(T runConfiguration, ExecutionMode executionMode)
 			throws EngineContextException {
@@ -28,11 +28,11 @@ public class SequentialModelExecutionContext<T extends IRunConfiguration> extend
 	}
 
 	@Override
-	protected SequentialLanguageDefinitionExtension getLanguageDefinition(String languageName) throws EngineContextException {
-		SequentialLanguageDefinitionExtension languageDefinition = SequentialLanguageDefinitionExtensionPoint
+	protected LanguageDefinitionExtension getLanguageDefinitionExtension(String languageName) throws EngineContextException {
+		LanguageDefinitionExtension languageDefinition = LanguageDefinitionExtensionPoint
 				.findDefinition(_runConfiguration.getLanguageName());
 		if (languageDefinition == null) {
-			String message = "Cannot find sequential xdsml definition for the language "
+			String message = "Cannot find xdsml definition for the language "
 					+ _runConfiguration.getLanguageName() + ", please verify that is is correctly deployed.";
 			EngineContextException exception = new EngineContextException(message);
 			throw exception;

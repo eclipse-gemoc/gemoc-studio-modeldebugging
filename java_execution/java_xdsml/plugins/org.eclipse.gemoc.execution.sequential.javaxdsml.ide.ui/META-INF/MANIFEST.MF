@@ -14,7 +14,6 @@ Require-Bundle: org.eclipse.core.runtime,
  org.eclipse.gemoc.commons.eclipse.ui,
  org.eclipse.gemoc.executionframework.ui,
  org.eclipse.gemoc.xdsmlframework.api,
- org.eclipse.gemoc.execution.sequential.javaxdsml.api,
  org.eclipse.gemoc.xdsmlframework.extensions.sirius;bundle-version="0.1.0",
  org.eclipse.emf.ecore.xmi;bundle-version="2.10.2",
  org.eclipse.gemoc.executionframework.extensions.sirius;bundle-version="0.1.0",
@@ -31,16 +30,14 @@ Require-Bundle: org.eclipse.core.runtime,
  org.eclipse.gemoc.xdsmlframework.ide.ui;bundle-version="2.4.0",
  org.eclipse.gemoc.dsl,
  org.eclipse.core.jobs,
- org.eclipse.jdt.core
+ org.eclipse.jdt.core,
+ org.eclipse.gemoc.xdsmlframework.commons.ui.k3
 Bundle-RequiredExecutionEnvironment: JavaSE-1.8
 Bundle-ActivationPolicy: lazy
 Bundle-ClassPath: .
 Export-Package: org.eclipse.gemoc.execution.sequential.javaxdsml.ide.ui,
- org.eclipse.gemoc.execution.sequential.javaxdsml.ide.ui.builder,
  org.eclipse.gemoc.execution.sequential.javaxdsml.ide.ui.commands,
- org.eclipse.gemoc.execution.sequential.javaxdsml.ide.ui.dialogs,
  org.eclipse.gemoc.execution.sequential.javaxdsml.ide.ui.editor,
- org.eclipse.gemoc.execution.sequential.javaxdsml.ide.ui.menu,
  org.eclipse.gemoc.execution.sequential.javaxdsml.ide.ui.templates,
  org.eclipse.gemoc.execution.sequential.javaxdsml.ide.ui.wizards
 Automatic-Module-Name: org.eclipse.gemoc.execution.sequential.javaxdsml.ide.ui

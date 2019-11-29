@@ -36,7 +36,7 @@ import org.eclipse.gemoc.dsl.DslPackage;
 import org.eclipse.gemoc.dsl.Entry;
 import org.eclipse.gemoc.execution.sequential.javaxdsml.ide.ui.Activator;
 import org.eclipse.gemoc.execution.sequential.javaxdsml.ide.ui.templates.SequentialSingleLanguageTemplate;
-import org.eclipse.gemoc.execution.sequential.javaxdsml.ide.ui.wizards.CreateDSAWizardContextActionDSAK3;
+import org.eclipse.gemoc.xdsmlframework.commons.ui.k3.wizards.CreateDSAWizardContextActionDSAK3;
 import org.eclipse.gemoc.xdsmlframework.ide.ui.commands.AbstractDslSelectHandler;
 
 import com.google.common.collect.Lists;

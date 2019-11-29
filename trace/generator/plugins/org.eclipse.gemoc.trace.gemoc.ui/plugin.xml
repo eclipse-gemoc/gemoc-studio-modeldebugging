@@ -53,7 +53,7 @@
                      <iterate
                            ifEmpty="false">
                         <reference
-                              definitionId="org.eclipse.gemoc.execution.sequential.javaxdsml.ide.ui.definitions.IsSelectionInGemocSequentialLanguageProject">
+                              definitionId="org.eclipse.gemoc.xdsmlframework.ide.ui.definitions.IsSelectionInGemocLanguageProject">
                         </reference>
                      </iterate>
                   </with>
@@ -65,12 +65,12 @@
    <extension
          point="org.eclipse.core.expressions.definitions">
       <definition
-            id="org.eclipse.gemoc.execution.sequential.javaxdsml.ide.ui.definitions.IsSelectionInGemocSequentialLanguageProject">
+            id="org.eclipse.gemoc.xdsmlframework.ide.ui.definitions.IsSelectionInGemocLanguageProject">
          <adapt
                type="org.eclipse.core.resources.IResource">
             <test
                   property="org.eclipse.core.resources.projectNature "
-                  value="org.eclipse.gemoc.execution.sequential.javaxdsml.ide.ui.GemocSequentialLanguageNature">
+                  value="org.eclipse.gemoc.xdsmlframework.ide.ui.GemocLanguageProjectNature">
             </test>
          </adapt>
       </definition>

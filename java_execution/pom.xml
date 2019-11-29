@@ -14,7 +14,6 @@
     <modules>
     
         <!-- plugins -->
-        <module>java_xdsml/plugins/org.eclipse.gemoc.execution.sequential.javaxdsml.api</module>
         <module>java_engine/plugins/org.eclipse.gemoc.execution.sequential.javaengine</module>       
         <module>java_xdsml/plugins/org.eclipse.gemoc.execution.sequential.javaxdsml.ide.ui</module>
         <module>java_engine/plugins/org.eclipse.gemoc.execution.sequential.javaengine.ui</module>
@@ -28,5 +27,32 @@
         
     </modules>
 
+    <repositories>
+    	<repository>
+    		<id>Eclipse release</id>
+            <layout>p2</layout>
+            <url>${eclipse.release.p2.url}</url>
+    	</repository>
+    	<repository>
+    		<id>K3</id>
+            <layout>p2</layout>
+            <url>${k3.p2.url}</url>
+    	</repository>
+    	<repository>
+    		<id>Melange</id>
+            <layout>p2</layout>
+            <url>${melange.p2.url}</url>
+    	</repository>
+    	<repository>
+    		<id>ELK</id>
+            <layout>p2</layout>
+            <url>${elk.p2.url}</url>
+    	</repository>
+    	<repository>
+    		<id>AspectJ</id>
+            <layout>p2</layout>
+            <url>${aspectJ.p2.url}</url>
+    	</repository>
+    </repositories>
 </project>
 
