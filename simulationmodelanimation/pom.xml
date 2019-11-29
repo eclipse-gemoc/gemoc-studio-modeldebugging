@@ -27,7 +27,7 @@
 	</licenses>
 
 	<properties>
-		<tycho-version>1.2.0</tycho-version>
+		<tycho-version>1.5.1</tycho-version>
 		<tycho.scmUrl>scm:git:https://github.com/SiriusLab/ModelDebugging.git</tycho.scmUrl>
 	</properties>
 
@@ -48,7 +48,6 @@
 		<module>releng/org.eclipse.gemoc.dsl.debug.ui.feature</module>
 		<module>releng/org.eclipse.gemoc.dsl.debug.sirius.ui.feature</module>
 	</modules>
-
 	<build>
 		<plugins>
 			<plugin>
@@ -84,13 +83,20 @@
 							<arch>x86_64</arch>
 						</environment>
 					</environments>
+<!-- 					<target> -->
+<!-- 	                     <artifact> -->
+<!-- 	                         <groupId>org.eclipse.gemoc</groupId> -->
+<!-- 	                         <artifactId>org.eclipse.gemoc.modeldebugging.target-platform</artifactId> -->
+<!-- 	                         <version>3.0.0-SNAPSHOT</version> -->
+<!-- 	                     </artifact> -->
+<!-- 	                 </target> -->
 					<target>
 						<artifact>
 							<groupId>${project.groupId}</groupId>
 							<artifactId>${project.artifactId}</artifactId>
 							<version>${project.version}</version>
 							<classifier>
-								../../releng/org.eclipse.gemoc.dsl.debug.target/dsldebug-oxygen
+								../../releng/org.eclipse.gemoc.dsl.debug.target/dsldebug-photon
 							</classifier>
 						</artifact>
 					</target>
