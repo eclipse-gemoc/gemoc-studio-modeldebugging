@@ -53,7 +53,9 @@ public class GEMOCTestVideoHelper {
 				Duration duration = Duration.between(currentDate.toInstant().atZone(ZoneId.systemDefault()).toLocalDateTime(),
 						videoStartDate.toInstant().atZone(ZoneId.systemDefault()).toLocalDateTime());
 				
+				// print in the log file and in the system.out (for junit capture)
 				printwriter.println(""+String.format("%1$13s", duration) +" | " + currentDate + " | "+msg);
+				System.out.println(""+String.format("%1$13s", duration) +" | " + currentDate + " | "+msg);
 			}
 		} catch (IOException | ParseException e) {
 			e.printStackTrace();
