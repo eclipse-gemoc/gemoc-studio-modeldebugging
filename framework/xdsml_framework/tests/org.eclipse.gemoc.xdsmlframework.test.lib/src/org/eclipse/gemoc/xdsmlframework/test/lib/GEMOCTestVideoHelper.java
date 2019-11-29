@@ -54,8 +54,8 @@ public class GEMOCTestVideoHelper {
 						videoStartDate.toInstant().atZone(ZoneId.systemDefault()).toLocalDateTime());
 				
 				// print in the log file and in the system.out (for junit capture)
-				printwriter.println(""+String.format("%1$13s", duration) +" | " + currentDate + " | "+msg);
-				System.out.println(""+String.format("%1$13s", duration) +" | " + currentDate + " | "+msg);
+				printwriter.println(""+String.format("%1$14s", duration) +" | " + currentDate + " | "+msg);
+				System.out.println(""+String.format("%1$14s", duration) +" | " + currentDate + " | "+msg);
 			}
 		} catch (IOException | ParseException e) {
 			e.printStackTrace();
