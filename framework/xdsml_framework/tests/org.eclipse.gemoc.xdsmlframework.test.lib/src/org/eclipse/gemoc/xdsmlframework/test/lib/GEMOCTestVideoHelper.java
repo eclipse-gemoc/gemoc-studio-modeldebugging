@@ -56,7 +56,6 @@ public class GEMOCTestVideoHelper {
 				printwriter.println(""+duration +" | " + currentDate + " | "+msg);
 			}
 		} catch (IOException | ParseException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 	}
@@ -68,9 +67,9 @@ public class GEMOCTestVideoHelper {
 			String line=br.readLine(); 
 			if(line!=null)  
 			{     
-				//date --iso-8601=s     
-				//2019-11-26T10:57:45+01:00
-				SimpleDateFormat sdf = new SimpleDateFormat ("yyyy-MM-dd'T'HH:mm:ssXXX");
+				//date --rfc-3339=s     
+				//2019-11-29 09:43:30+00:00
+				SimpleDateFormat sdf = new SimpleDateFormat ("yyyy-MM-dd HH:mm:ssXXX");
 				return sdf.parse(line);
 			}
 		}
