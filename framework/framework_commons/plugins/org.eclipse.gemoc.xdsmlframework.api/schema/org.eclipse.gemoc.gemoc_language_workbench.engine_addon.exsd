@@ -79,7 +79,8 @@ can be used to specify addon exclusion
          <attribute name="class" type="string" use="required">
             <annotation>
                <documentation>
-                  
+                  This class allows to hook some code to some phase of the Gemoc engine.
+The hooked code will be run at the appropriate time by the engine.
                </documentation>
                <appinfo>
                   <meta.attribute kind="java" basedOn=":org.eclipse.gemoc.gemoc_language_workbench.api.engine_addon.IEngineAddon"/>
@@ -89,7 +90,7 @@ can be used to specify addon exclusion
          <attribute name="default" type="boolean">
             <annotation>
                <documentation>
-                  
+                  indicates if this addon should be enabled by default or not.
                </documentation>
             </annotation>
          </attribute>
