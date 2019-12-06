@@ -29,8 +29,8 @@
    <extension
          point="org.eclipse.gemoc.gemoc_language_workbench.engine_addon_group">
          <addonGroup
-            name="Sequential"
-            id="Sequential.AddonGroup">
+            name="General"
+            id="General.AddonGroup">
       </addonGroup>
    </extension>
    <extension
