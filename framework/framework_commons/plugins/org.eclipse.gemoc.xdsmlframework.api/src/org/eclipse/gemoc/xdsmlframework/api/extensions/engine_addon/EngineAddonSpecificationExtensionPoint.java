@@ -21,11 +21,11 @@ public class EngineAddonSpecificationExtensionPoint extends ExtensionPoint<Engin
 
 	public static final String GEMOC_ENGINE_ADDON_EXTENSION_POINT = "org.eclipse.gemoc.gemoc_language_workbench.engine_addon";
 	public static final String GEMOC_ENGINE_ADDON_EXTENSION_POINT_ID = "id";
-	public static final String GEMOC_ENGINE_ADDON_EXTENSION_POINT_NAME = "Name";
-	public static final String GEMOC_ENGINE_ADDON_EXTENSION_POINT_SHORTDESCRIPTION = "ShortDescription";
-	public static final String GEMOC_ENGINE_ADDON_EXTENSION_POINT_CLASS = "Class";
-	public static final String GEMOC_ENGINE_ADDON_EXTENSION_POINT_DEFAULT = "Default";
-	public static final String GEMOC_ENGINE_ADDON_EXTENSION_POINT_ADDONGROUPID = "AddonGroupId";
+	public static final String GEMOC_ENGINE_ADDON_EXTENSION_POINT_NAME = "name";
+	public static final String GEMOC_ENGINE_ADDON_EXTENSION_POINT_SHORTDESCRIPTION = "shortDescription";
+	public static final String GEMOC_ENGINE_ADDON_EXTENSION_POINT_CLASS = "class";
+	public static final String GEMOC_ENGINE_ADDON_EXTENSION_POINT_DEFAULT = "default";
+	public static final String GEMOC_ENGINE_ADDON_EXTENSION_POINT_ADDONGROUPID = "addonGroupId";
 	public static final String GEMOC_ENGINE_ADDON_EXTENSION_POINT_OPENVIEWIDS = "openViewIds";
 
 	protected EngineAddonSpecificationExtensionPoint() 

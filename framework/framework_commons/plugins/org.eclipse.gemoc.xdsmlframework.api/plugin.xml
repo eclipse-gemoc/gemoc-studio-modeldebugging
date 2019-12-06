@@ -19,9 +19,9 @@
 
    <extension
          point="org.eclipse.gemoc.gemoc_language_workbench.engine_addon_group">
-         <AddonGroup
-            Name="General"
+         <addonGroup
+            name="General"
             id="General.AddonGroup">
-      </AddonGroup>
+      </addonGroup>
    </extension>
 </plugin>

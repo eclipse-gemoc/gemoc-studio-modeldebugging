@@ -18,7 +18,7 @@
       </annotation>
       <complexType>
          <sequence minOccurs="0" maxOccurs="unbounded">
-            <element ref="AddonGroup"/>
+            <element ref="addonGroup"/>
          </sequence>
          <attribute name="point" type="string" use="required">
             <annotation>
@@ -47,7 +47,7 @@
       </complexType>
    </element>
 
-   <element name="AddonGroup">
+   <element name="addonGroup">
       <complexType>
          <attribute name="id" type="string" use="required">
             <annotation>
@@ -56,7 +56,7 @@
                </documentation>
             </annotation>
          </attribute>
-         <attribute name="Name" type="string" use="required">
+         <attribute name="name" type="string" use="required">
             <annotation>
                <documentation>
                   Name of the group of Addon as it will be displayed to the end user when he will select it in the Launcher GUI

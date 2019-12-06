@@ -18,7 +18,7 @@
       </annotation>
       <complexType>
          <sequence minOccurs="0" maxOccurs="unbounded">
-            <element ref="Addon"/>
+            <element ref="addon"/>
          </sequence>
          <attribute name="point" type="string" use="required">
             <annotation>
@@ -47,7 +47,7 @@
       </complexType>
    </element>
 
-   <element name="Addon">
+   <element name="addon">
       <annotation>
          <documentation>
             allows to define Engine addons that will be made available to all execution engines
@@ -62,21 +62,21 @@ can be used to specify addon exclusion
                </documentation>
             </annotation>
          </attribute>
-         <attribute name="Name" type="string" use="required">
+         <attribute name="name" type="string" use="required">
             <annotation>
                <documentation>
                   Name of the Addon as it will be displayed to the end user when he will select it in the Launcher GUI
                </documentation>
             </annotation>
          </attribute>
-         <attribute name="ShortDescription" type="string">
+         <attribute name="shortDescription" type="string">
             <annotation>
                <documentation>
                   A short description that will be presented in the launch tab
                </documentation>
             </annotation>
          </attribute>
-         <attribute name="Class" type="string" use="required">
+         <attribute name="class" type="string" use="required">
             <annotation>
                <documentation>
                   
@@ -86,14 +86,14 @@ can be used to specify addon exclusion
                </appinfo>
             </annotation>
          </attribute>
-         <attribute name="Default" type="boolean">
+         <attribute name="default" type="boolean">
             <annotation>
                <documentation>
                   
                </documentation>
             </annotation>
          </attribute>
-         <attribute name="AddonGroupId" type="string">
+         <attribute name="addonGroupId" type="string">
             <annotation>
                <documentation>
                   If specified, the addon will be presented in a dedicated group in the launcher tab.

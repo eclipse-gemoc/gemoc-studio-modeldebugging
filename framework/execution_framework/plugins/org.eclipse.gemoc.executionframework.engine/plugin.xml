@@ -4,10 +4,10 @@
    
    <extension
          point="org.eclipse.gemoc.gemoc_language_workbench.engine_addon_group">
-         <AddonGroup
+         <addonGroup
             Name="General"
             id="General.AddonGroup">
-      </AddonGroup>
+      </addonGroup>
    </extension>
 
 
