@@ -9,5 +9,5 @@ package org.eclipse.gemoc.executionframework.engine.ui.launcher.tabs;
 public interface ILaunchLanguageSelectionListener {
 
 	
-	public void languageChanged();
+	public void languageChanged(String newLanguageName);
 }

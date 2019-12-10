@@ -45,7 +45,8 @@ public class RunConfiguration implements IRunConfiguration {
 		_melangeQuery = getAttribute(LAUNCH_MELANGE_QUERY, "");
 
 		for (EngineAddonSpecificationExtension extension : EngineAddonSpecificationExtensionPoint.getSpecifications()) {
-			_engineAddonExtensions.put(extension, getAttribute(extension.getName(), false));
+			String extensionName = extension.getName() != null ? extension.getName() : extension.getId();
+			_engineAddonExtensions.put(extension, getAttribute(extensionName, false));
 		}
 
 		_breakStart = getAttribute(LAUNCH_BREAK_START, Boolean.FALSE);

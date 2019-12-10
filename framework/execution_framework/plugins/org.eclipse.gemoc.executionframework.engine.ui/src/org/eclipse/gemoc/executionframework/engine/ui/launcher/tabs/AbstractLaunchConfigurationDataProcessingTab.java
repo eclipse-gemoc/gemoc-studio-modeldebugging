@@ -19,11 +19,13 @@ import java.util.Map.Entry;
 import org.eclipse.core.runtime.CoreException;
 import org.eclipse.debug.core.ILaunchConfiguration;
 import org.eclipse.debug.core.ILaunchConfigurationWorkingCopy;
+import org.eclipse.gemoc.executionframework.engine.core.RunConfiguration;
 import org.eclipse.gemoc.executionframework.engine.ui.Activator;
 import org.eclipse.gemoc.xdsmlframework.api.engine_addon.IEngineAddon;
 import org.eclipse.gemoc.xdsmlframework.api.extensions.engine_addon.EngineAddonSpecificationExtension;
 import org.eclipse.gemoc.xdsmlframework.api.extensions.engine_addon_group.EngineAddonGroupSpecificationExtension;
 import org.eclipse.gemoc.xdsmlframework.api.extensions.languages.LanguageDefinitionExtension;
+import org.eclipse.gemoc.xdsmlframework.api.extensions.languages.LanguageDefinitionExtensionPoint;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.events.SelectionEvent;
 import org.eclipse.swt.events.SelectionListener;
@@ -36,16 +38,17 @@ public abstract class AbstractLaunchConfigurationDataProcessingTab extends Abstr
 		implements ILaunchLanguageSelectionListener {
 
 	private HashMap<EngineAddonSpecificationExtension, Button> _components = new HashMap<>();
+	
+	private HashMap<EngineAddonSpecificationExtension, Button> _languageSpecificComponents = new HashMap<>();
+	
+	protected String _currentLanguageName;
+	
+	protected Group _languageSpecificGroup;
+	
+	protected Composite groupParent;
 
 	protected AbstractLaunchConfigurationDataProcessingTab() {
-
 		// add all extensions returned by getExtensionSpecifications()
-		for (EngineAddonSpecificationExtension extension : getExtensionSpecifications()) {
-			_components.put(extension, null);
-		}
-
-		// given the current language definition, look for engine addons
-		LanguageDefinitionExtension _languageDefinition;
 		for (EngineAddonSpecificationExtension extension : getExtensionSpecifications()) {
 			_components.put(extension, null);
 		}
@@ -78,10 +81,11 @@ public abstract class AbstractLaunchConfigurationDataProcessingTab extends Abstr
 		HashMap<String, Group> groupmap = new HashMap<String, Group>();
 
 		for (EngineAddonGroupSpecificationExtension extension : getGroupExtensionSpecifications()) {
-			groupmap.put(extension.getId(), createGroup(parent, extension.getName(), 2));
+			String gname = extension.getName() != null ? extension.getName() : extension.getId();
+			groupmap.put(extension.getId(), createGroup(parent, gname, 2));
 		}
-
-		groupmap.put("", createGroup(parent, "", 2));
+		groupParent = parent;
+		groupmap.put("", createGroup(groupParent, "", 2));
 
 		for (EngineAddonSpecificationExtension extension : _components.keySet()) {
 			Group parentGroup = groupmap.get("");
@@ -95,29 +99,13 @@ public abstract class AbstractLaunchConfigurationDataProcessingTab extends Abstr
 				}
 			}
 
-			Button checkbox = createCheckButton(parentGroup, extension.getName() + ":");
-			checkbox.setToolTipText(extension.getId() + " contributed by " + extension.getContributorName());
-			// checkbox.setSelection(extension.getDefaultActivationValue());
-			checkbox.addSelectionListener(new SelectionListener() {
-
-				@Override
-				public void widgetSelected(SelectionEvent e) {
-					updateLaunchConfigurationDialog();
-				}
-
-				@Override
-				public void widgetDefaultSelected(SelectionEvent e) {
-				}
-			});
-			String desc;
-			if (extension.getShortDescription() != null) {
-				desc = extension.getShortDescription();
-			} else
-				desc = "";
-			createTextLabelLayout(parentGroup, desc, "contributed by " + extension.getContributorName());
+			Button checkbox = createComponentForExtension(parentGroup, extension);
 			_components.put(extension, checkbox);
 		}
 
+		// display language specific components
+		createLanguageSpecificGroup(groupParent);
+		
 		// remove empty groups
 		for (Group g : groupmap.values()) {
 			if (g.getChildren().length == 0) {
@@ -126,11 +114,66 @@ public abstract class AbstractLaunchConfigurationDataProcessingTab extends Abstr
 			}
 		}
 	}
+	
+	/**
+	 * create the group if the current language is valid
+	 * the group is created only if not already done (user must dispose and  clear the _languageSpecificGroup variable in order to change language) 
+	 * @param parent
+	 */
+	protected void createLanguageSpecificGroup(Composite parent) {
+		// display language specific components
+		if(_languageSpecificGroup == null && _currentLanguageName != null && !_currentLanguageName.isEmpty()) {
+			_languageSpecificGroup = createGroup(parent, _currentLanguageName, 2);
+			LanguageDefinitionExtension langDefExtension = LanguageDefinitionExtensionPoint.findDefinition(_currentLanguageName);
+			if(langDefExtension != null) {
+				for(EngineAddonSpecificationExtension extension : langDefExtension.getLanguageSpecificEngineAddonSpecificationExtensions()){
+					Button checkbox = createComponentForExtension(_languageSpecificGroup, extension);
+					
+					_languageSpecificComponents.put(extension, checkbox);
+				}
+			}
+			// remove group if empty
+			if(_languageSpecificGroup.getChildren().length == 0) {
+				_languageSpecificGroup.dispose();
+				parent.layout(true);
+				_languageSpecificGroup = null;
+			}
+		}
+	}
+	
+	protected Button createComponentForExtension(Composite parentGroup, EngineAddonSpecificationExtension extension) {
+		Button checkbox = createCheckButton(parentGroup, extension.getName() + ":");
+		checkbox.setToolTipText(extension.getId() + " contributed by " + extension.getContributorName());
+		// checkbox.setSelection(extension.getDefaultActivationValue());
+		checkbox.addSelectionListener(new SelectionListener() {
+
+			@Override
+			public void widgetSelected(SelectionEvent e) {
+				updateLaunchConfigurationDialog();
+			}
+
+			@Override
+			public void widgetDefaultSelected(SelectionEvent e) {
+			}
+		});
+		String desc;
+		if (extension.getShortDescription() != null) {
+			desc = extension.getShortDescription();
+		} else
+			desc = "";
+		createTextLabelLayout(parentGroup, desc, "contributed by " + extension.getContributorName());
+		return checkbox;
+	}
 
 	@Override
 	public void setDefaults(ILaunchConfigurationWorkingCopy configuration) {
 		for (EngineAddonSpecificationExtension entry : _components.keySet()) {
-			configuration.setAttribute(entry.getName(), entry.getDefaultActivationValue());
+			String extensionName = entry.getName() != null ? entry.getName() : entry.getId();
+			configuration.setAttribute(extensionName, entry.getDefaultActivationValue());
+		}
+		for (EngineAddonSpecificationExtension entry : _languageSpecificComponents.keySet()) {
+			String extensionName = entry.getName() != null ? entry.getName() : entry.getId();
+			configuration.setAttribute(extensionName, entry.getDefaultActivationValue());
 		}
 	}
 
@@ -138,7 +181,8 @@ public abstract class AbstractLaunchConfigurationDataProcessingTab extends Abstr
 	public void initializeFrom(ILaunchConfiguration configuration) {
 		for (EngineAddonSpecificationExtension extension : _components.keySet()) {
 			try {
-				boolean value = configuration.getAttribute(extension.getName(), false);
+				String extensionName = extension.getName() != null ? extension.getName() : extension.getId();
+				boolean value = configuration.getAttribute(extensionName, false);
 				// _componentsActive.put(extension, value);
 				Button checkbox = _components.get(extension);
 				checkbox.setSelection(value);
@@ -146,12 +190,40 @@ public abstract class AbstractLaunchConfigurationDataProcessingTab extends Abstr
 				Activator.error(e.getMessage(), e);
 			}
 		}
+		
+		try {
+			RunConfiguration gemocRunConf = new RunConfiguration(configuration);
+			_currentLanguageName = gemocRunConf.getLanguageName();
+			createLanguageSpecificGroup(groupParent);
+			//LanguageDefinitionExtension landDefExtension = LanguageDefinitionExtensionPoint.findDefinition(_currentLanguageName);
+			Collection<EngineAddonSpecificationExtension> languageSpecificEngineAddonSpecificationExtensions = _languageSpecificComponents.keySet();
+			for(EngineAddonSpecificationExtension extension : languageSpecificEngineAddonSpecificationExtensions){
+				//Button checkbox = createComponentForExtension(_languageSpecificGroup, extension);
+				try {
+					String extensionName = extension.getName() != null ? extension.getName() : extension.getId();
+					boolean value = configuration.getAttribute(extensionName, false);
+					// _componentsActive.put(extension, value);
+					Button checkbox = _languageSpecificComponents.get(extension);
+					checkbox.setSelection(value);
+				} catch (CoreException e) {
+					Activator.error(e.getMessage(), e);
+				}
+			}
+			
+		} catch (CoreException e) {
+			Activator.error(e.getMessage(), e);
+		}
 	}
 
 	@Override
 	public void performApply(ILaunchConfigurationWorkingCopy configuration) {
 		for (Entry<EngineAddonSpecificationExtension, Button> entry : _components.entrySet()) {
-			configuration.setAttribute(entry.getKey().getName(), entry.getValue().getSelection());
+			String extensionName = entry.getKey().getName() != null ? entry.getKey().getName() : entry.getKey().getId();
+			configuration.setAttribute(extensionName, entry.getValue().getSelection());
+		}
+		for (Entry<EngineAddonSpecificationExtension, Button> entry : _languageSpecificComponents.entrySet()) {
+			String extensionName = entry.getKey().getName() != null ? entry.getKey().getName() : entry.getKey().getId();
+			configuration.setAttribute(extensionName, entry.getValue().getSelection());
 		}
 	}
 
@@ -161,6 +233,11 @@ public abstract class AbstractLaunchConfigurationDataProcessingTab extends Abstr
 		try {
 			List<IEngineAddon> addons = new ArrayList<IEngineAddon>();
 			for (Entry<EngineAddonSpecificationExtension, Button> entry : _components.entrySet()) {
+				if (entry.getValue().getSelection()) {
+					addons.add(entry.getKey().instanciateComponent());
+				}
+			}
+			for (Entry<EngineAddonSpecificationExtension, Button> entry : _languageSpecificComponents.entrySet()) {
 				if (entry.getValue().getSelection()) {
 					addons.add(entry.getKey().instanciateComponent());
 				}
@@ -183,8 +260,27 @@ public abstract class AbstractLaunchConfigurationDataProcessingTab extends Abstr
 		return true;
 	}
 	
-	public void languageChanged() {
-		Activator.error("TODO implement adaptation when a language changes", new Exception());
+	public void languageChanged(String newLanguageName) {
+		//Activator.error("TODO implement adaptation when a language changes", new Exception());
+		if(_currentLanguageName != null 
+				&& !_currentLanguageName.equals(newLanguageName) 
+				&& newLanguageName!= null 
+				&& !newLanguageName.isEmpty()) {
+			// clear current 
+			if(_languageSpecificGroup != null) {
+				_languageSpecificGroup.dispose();
+				groupParent.layout(true);
+				_languageSpecificGroup = null;
+			}
+			_languageSpecificComponents.clear();
+			
+			// create componet for new language
+			_currentLanguageName = newLanguageName;
+			createLanguageSpecificGroup(groupParent);
+			groupParent.layout(true);
+		}
+		
+		
 	}
 	
 }
