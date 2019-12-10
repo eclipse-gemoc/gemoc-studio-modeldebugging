@@ -40,6 +40,12 @@ public interface IRunConfiguration {
 
 	int getAnimationDelay();
 	
+	
+	/**
+	 * the list of enabled engine addons
+	 * This list includes the language specific addons
+	 * @return
+	 */
 	Collection<EngineAddonSpecificationExtension> getEngineAddonExtensions();
 		
 	String getDebugModelID();

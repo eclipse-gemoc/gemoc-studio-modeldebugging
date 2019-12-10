@@ -128,7 +128,6 @@ public abstract class AbstractLaunchConfigurationDataProcessingTab extends Abstr
 			if(langDefExtension != null) {
 				for(EngineAddonSpecificationExtension extension : langDefExtension.getLanguageSpecificEngineAddonSpecificationExtensions()){
 					Button checkbox = createComponentForExtension(_languageSpecificGroup, extension);
-					
 					_languageSpecificComponents.put(extension, checkbox);
 				}
 			}
@@ -201,7 +200,7 @@ public abstract class AbstractLaunchConfigurationDataProcessingTab extends Abstr
 				//Button checkbox = createComponentForExtension(_languageSpecificGroup, extension);
 				try {
 					String extensionName = extension.getName() != null ? extension.getName() : extension.getId();
-					boolean value = configuration.getAttribute(extensionName, false);
+					boolean value = configuration.getAttribute(extensionName, extension.getDefaultActivationValue());
 					// _componentsActive.put(extension, value);
 					Button checkbox = _languageSpecificComponents.get(extension);
 					checkbox.setSelection(value);
