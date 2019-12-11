@@ -34,6 +34,11 @@
 			<layout>p2</layout>
 			<url>${melange.p2.url}</url>
 		</repository>
+		<repository>
+			<id>Sirius</id>
+			<layout>p2</layout>
+			<url>${sirius.p2.url}</url>
+		</repository>
 		<!-- <repository> -->
 		<!-- <id>ELK</id> -->
 		<!-- <layout>p2</layout> -->
