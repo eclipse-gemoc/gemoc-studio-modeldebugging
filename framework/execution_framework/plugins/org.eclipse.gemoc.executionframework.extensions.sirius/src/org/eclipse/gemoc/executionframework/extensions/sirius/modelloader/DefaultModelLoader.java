@@ -38,6 +38,14 @@ import org.eclipse.emf.ecore.util.EcoreUtil;
 import org.eclipse.emf.ecore.xmi.XMLResource;
 import org.eclipse.emf.transaction.RecordingCommand;
 import org.eclipse.emf.transaction.TransactionalEditingDomain;
+import org.eclipse.gemoc.commons.eclipse.emf.EMFResource;
+import org.eclipse.gemoc.dsl.debug.ide.sirius.ui.services.AbstractDSLDebuggerServices;
+import org.eclipse.gemoc.executionframework.engine.core.CommandExecution;
+import org.eclipse.gemoc.executionframework.extensions.sirius.Activator;
+import org.eclipse.gemoc.executionframework.extensions.sirius.debug.DebugSessionFactory;
+import org.eclipse.gemoc.executionframework.extensions.sirius.services.AbstractGemocAnimatorServices;
+import org.eclipse.gemoc.xdsmlframework.api.core.IExecutionContext;
+import org.eclipse.gemoc.xdsmlframework.api.core.IModelLoader;
 import org.eclipse.gmf.runtime.diagram.ui.parts.DiagramEditorWithFlyOutPalette;
 import org.eclipse.sirius.business.api.resource.ResourceDescriptor;
 import org.eclipse.sirius.business.api.session.Session;
@@ -47,12 +55,13 @@ import org.eclipse.sirius.business.internal.session.danalysis.DAnalysisSessionIm
 import org.eclipse.sirius.common.tools.api.resource.ResourceSetFactory;
 import org.eclipse.sirius.diagram.DDiagram;
 import org.eclipse.sirius.diagram.DSemanticDiagram;
+import org.eclipse.sirius.diagram.DiagramPlugin;
 import org.eclipse.sirius.diagram.description.DiagramExtensionDescription;
 import org.eclipse.sirius.diagram.description.Layer;
 import org.eclipse.sirius.diagram.tools.api.command.ChangeLayerActivationCommand;
+import org.eclipse.sirius.diagram.tools.api.management.ToolFilter;
+import org.eclipse.sirius.diagram.tools.api.management.ToolManagement;
 import org.eclipse.sirius.diagram.ui.business.internal.command.RefreshDiagramOnOpeningCommand;
-import org.eclipse.sirius.diagram.ui.tools.api.editor.DDiagramEditor;
-import org.eclipse.sirius.diagram.ui.tools.api.graphical.edit.palette.ToolFilter;
 import org.eclipse.sirius.ui.business.api.dialect.DialectEditor;
 import org.eclipse.sirius.ui.business.api.dialect.DialectUIManager;
 import org.eclipse.sirius.ui.business.api.session.IEditingSession;
@@ -68,18 +77,10 @@ import org.eclipse.ui.IEditorSite;
 import org.eclipse.ui.PlatformUI;
 import org.eclipse.xtext.resource.XtextPlatformResourceURIHandler;
 import org.eclipse.xtext.util.StringInputStream;
-import org.eclipse.gemoc.commons.eclipse.emf.EMFResource;
-import org.eclipse.gemoc.executionframework.engine.core.CommandExecution;
-import org.eclipse.gemoc.executionframework.extensions.sirius.Activator;
-import org.eclipse.gemoc.executionframework.extensions.sirius.debug.DebugSessionFactory;
-import org.eclipse.gemoc.executionframework.extensions.sirius.services.AbstractGemocAnimatorServices;
-import org.eclipse.gemoc.xdsmlframework.api.core.IExecutionContext;
-import org.eclipse.gemoc.xdsmlframework.api.core.IModelLoader;
 
 import fr.inria.diverse.melange.adapters.EObjectAdapter;
 import fr.inria.diverse.melange.resource.MelangeRegistry;
 import fr.inria.diverse.melange.resource.MelangeResourceImpl;
-import org.eclipse.gemoc.dsl.debug.ide.sirius.ui.services.AbstractDSLDebuggerServices;
 
 /**
  * Default and main class to load models for execution. Can load with or without
@@ -297,14 +298,13 @@ public class DefaultModelLoader implements IModelLoader {
 
 				final IEditorPart editorPart = DialectUIManager.INSTANCE.openEditor(session, representation,
 						openEditorSubMonitor.newChild(1));
-				if (editorPart instanceof DDiagramEditor) {
-					((DDiagramEditor) editorPart).getPaletteManager().addToolFilter(new ToolFilter() {
+				ToolManagement toolManagement = DiagramPlugin.getDefault().getToolManagement(diagram);
+				toolManagement.addToolFilter(new ToolFilter() {
 						@Override
 						public boolean filter(DDiagram diagram, AbstractToolDescription tool) {
 							return true;
 						}
 					});
-				}
 				try {
 					RefreshDiagramOnOpeningCommand refresh = new RefreshDiagramOnOpeningCommand(editingDomain, diagram);
 					CommandExecution.execute(editingDomain, refresh);
