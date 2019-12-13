@@ -57,6 +57,12 @@ public class DslHelper {
 		return languagesNames;
 	}
 
+	/**
+	 * Load the language from installed languages
+	 * converts the xdsmlFilePath into platform:/plugin/ URI
+	 * @param languageName
+	 * @return the root element of the dsl model
+	 */
 	public static Dsl load(String languageName) {
 
 		IConfigurationElement[] languages = Platform.getExtensionRegistry().getConfigurationElementsFor(LanguageDefinitionExtensionPoint.GEMOC_LANGUAGE_EXTENSION_POINT);
@@ -64,7 +70,8 @@ public class DslHelper {
 			String xdsmlPath = lang.getAttribute("xdsmlFilePath");
 			String xdsmlName = lang.getAttribute("name");
 			if (xdsmlName.equals(languageName) && xdsmlPath.endsWith(".dsl")) {
-				Resource res = (new ResourceSetImpl()).getResource(URI.createURI(xdsmlPath), true);
+				URI xdsmlURI = xdsmlPath.startsWith("platform:/") ? URI.createURI(xdsmlPath) : URI.createPlatformPluginURI(xdsmlPath, true);
+				Resource res = (new ResourceSetImpl()).getResource(xdsmlURI, true);
 				Dsl dsl = (Dsl) res.getContents().get(0);
 				return dsl;
 			}
