@@ -165,14 +165,26 @@ public class DefaultModelLoader implements IModelLoader {
 			try {
 				// Killing + restarting Sirius session for animation
 				killPreviousSiriusSession(context.getRunConfiguration().getAnimatorURI());
-				openNewSiriusSession(context, context.getRunConfiguration().getAnimatorURI(), resourceSet, modelURI,
+				Session session = openNewSiriusSession(context, context.getRunConfiguration().getAnimatorURI(), resourceSet, modelURI,
 						subMonitor,nsURIMapping);
-
 				// At this point Sirius has loaded the model, we just need to
 				// find it
-				for (Resource r : resourceSet.getResources()) {
-					if (r.getURI().equals(modelURI)) {
-						return r;
+				if(session.getTransactionalEditingDomain().getResourceSet() != resourceSet) {
+					// the session has created a different resourceSet than the one we provided
+					//we need to use the resource from it instead of the one from our resourceSet
+					// TODO check if this is still compatible with melange
+					// TODO maybe some simplification is possible !
+
+					for (Resource r : session.getTransactionalEditingDomain().getResourceSet().getResources()) {
+						if (r.getURI().equals(modelURI)) {
+							return r;
+						}
+					}
+				} else {
+					for (Resource r : resourceSet.getResources()) {
+						if (r.getURI().equals(modelURI)) {
+							return r;
+						}
 					}
 				}
 			} catch (CoreException e) {
