@@ -174,7 +174,9 @@ public class DefaultModelLoader implements IModelLoader {
 					//we need to use the resource from it instead of the one from our resourceSet
 					// TODO check if this is still compatible with melange
 					// TODO maybe some simplification is possible !
-
+					if(useMelange) {
+						Activator.getDefault().getLog().log(new Status(IStatus.WARNING, Activator.PLUGIN_ID, "Sirius Session returned a new ResourceSet and you are using a melange query, this scenario has not been validated yet", new Exception()));
+					}
 					for (Resource r : session.getTransactionalEditingDomain().getResourceSet().getResources()) {
 						if (r.getURI().equals(modelURI)) {
 							return r;
