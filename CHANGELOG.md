@@ -1,6 +1,36 @@
 # Changelog
 
-## v3.2.0-20191213 (13/12/2019)
+## v3.2.0-20191216 (16/12/2019)
+
+#### Enhancements:
+
+- [**enhancement**] Behavioral interface DSL, event occurrence metamodel and value metamodel [#119](https://github.com/eclipse/gemoc-studio-modeldebugging/pull/119)
+- [**enhancement**] Add "openFileFromPlugin" method to TestUtil [#109](https://github.com/eclipse/gemoc-studio-modeldebugging/pull/109)
+- [**enhancement**] Clarifies Eclipse consoles used by the engines [#116](https://github.com/eclipse/gemoc-studio-modeldebugging/pull/116)
+
+#### Bug Fixes:
+
+- [**bug**] Fix xdsmlFilePath attribute in plugin.xml [#139](https://github.com/eclipse/gemoc-studio-modeldebugging/pull/139)
+- [**bug**] Fix double instantiation of language specific addons [#121](https://github.com/eclipse/gemoc-studio-modeldebugging/pull/121)
+
+#### Refactorings
+
+- [**refactoring**] Use general extension point + nature and  builder refactoring [#133](https://github.com/eclipse/gemoc-studio-modeldebugging/pull/133)
+
+#### Version upgrades
+
+- [**bump**] Bump to Sirius 6.1.3 [#138](https://github.com/eclipse/gemoc-studio-modeldebugging/pull/138)
+- [**bump**][**releng**] Tycho 1.5 and p2 dependencies optimisation [#134](https://github.com/eclipse/gemoc-studio-modeldebugging/pull/134)
+
+#### Release Engineering
+
+- [**releng**] Improve test video recording [#135](https://github.com/eclipse/gemoc-studio-modeldebugging/pull/135)
+- [**releng**] Remove deprecated update site [#130](https://github.com/eclipse/gemoc-studio-modeldebugging/pull/130)
+- [**releng**] Improve marker reporting in tests [#120](https://github.com/eclipse/gemoc-studio-modeldebugging/pull/120)
+
+---
+
+## v3.2.0-20191213 (01/01/1970)
 
 #### Enhancements:
 
