@@ -13,9 +13,11 @@ package org.eclipse.gemoc.xdsmlframework.ui.utils;
 import org.eclipse.core.resources.IFile;
 import org.eclipse.core.resources.IProject;
 import org.eclipse.core.resources.ResourcesPlugin;
+import org.eclipse.core.runtime.CoreException;
 import org.eclipse.core.runtime.IPath;
 import org.eclipse.core.runtime.Path;
 import org.eclipse.emf.common.util.URI;
+import org.eclipse.gemoc.commons.eclipse.core.resources.FileFinderVisitor;
 
 import fr.inria.diverse.melange.metamodel.melange.Import;
 import fr.inria.diverse.melange.metamodel.melange.Language;
@@ -23,6 +25,8 @@ import fr.inria.diverse.melange.metamodel.melange.Operator;
 
 public class XDSMLProjectHelper {
 
+	public static final String DSLFILE_EXTENSION = "dsl";
+	
 	/**
 	 * Computes the base name from an xdsml/dsml project
 	 * ie. if it ends with .xdsml or .dsml this suffix is removed
@@ -65,6 +69,25 @@ public class XDSMLProjectHelper {
 			final String filePath = uri.toPlatformString(true);
 			final IPath path = new Path(filePath);
 			return ResourcesPlugin.getWorkspace().getRoot().getFile(path);
+		}
+		return null;
+	}
+	
+	/**
+	 * find and return the first dsl file in the given project
+	 * @param updatedGemocLanguageProject
+	 * @return
+	 * @throws CoreException
+	 */
+	public static IFile getFirstDslFileFromProject(IProject updatedGemocLanguageProject) throws CoreException {
+		FileFinderVisitor dslProjectVisitor = new FileFinderVisitor(DSLFILE_EXTENSION);
+		updatedGemocLanguageProject.accept(dslProjectVisitor);
+		for (IFile projectDslIFile : dslProjectVisitor.getFiles()) {
+			// consider all dsl files in the project
+			if (!(projectDslIFile.getFullPath().toString().contains("/bin/")
+					| projectDslIFile.getFullPath().toString().contains("/target/"))) {
+				return projectDslIFile;
+			}
 		}
 		return null;
 	}

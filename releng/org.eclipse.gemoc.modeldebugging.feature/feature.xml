@@ -165,6 +165,10 @@ This Agreement is governed by the laws of the State of New York and the intellec
          id="org.eclipse.gemoc.modeldebugging.framework.commons.feature"
          version="0.0.0"/>
 
+   <includes
+         id="org.eclipse.gemoc.modeldebugging.framework.commons.k3.feature"
+         version="0.0.0"/>
+         
    <plugin
          id="org.eclipse.gemoc.language_workbench.documentation"
          download-size="0"
