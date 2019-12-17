@@ -53,6 +53,11 @@
             <layout>p2</layout>
             <url>${aspectJ.p2.url}</url>
     	</repository>
+		<repository>
+			<id>Sirius</id>
+			<layout>p2</layout>
+			<url>${sirius.p2.url}</url>
+		</repository>
     </repositories>
 </project>
 

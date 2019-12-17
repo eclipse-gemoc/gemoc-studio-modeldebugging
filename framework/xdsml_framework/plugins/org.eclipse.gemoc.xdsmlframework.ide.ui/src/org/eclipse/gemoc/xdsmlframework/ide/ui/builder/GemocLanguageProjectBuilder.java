@@ -189,7 +189,7 @@ public class GemocLanguageProjectBuilder extends IncrementalProjectBuilder {
 		helper.updateXDSMLDefinitionInExtensionPoint(gemocExtensionPoint, languageName);
 		helper.updateXDSMLDefinitionAttributeInExtensionPoint(gemocExtensionPoint,
 				LanguageDefinitionExtensionPoint.GEMOC_LANGUAGE_EXTENSION_POINT_XDSML_DEF_XDSML_FILE_PATH_ATT,
-				"platform:/plugin/" + project.getName() + "/" + dslFile.getProjectRelativePath());
+				dslFile.getFullPath().toString());
 		helper.saveDocument(pluginfile);
 	}
 	
