@@ -15,6 +15,6 @@
 -->
 <plugin>
   <extension point="org.eclipse.gemoc.gemoc_language_workbench.engine_addon">
-    <Addon Class="org.eclipse.gemoc.trace.gemoc.traceaddon.GenericTraceEngineAddon" Default="false" id="org.eclipse.gemoc.trace.gemoc.traceaddon" Name="Generic MultiDimensional Trace" ShortDescription="MultiDimensional Trace support for any language" openViewIds="org.eclipse.gemoc.addon.multidimensional.timeline.views.timeline.MultidimensionalTimeLineView" AddonGroupId="Sequential.AddonGroup" />
+    <addon class="org.eclipse.gemoc.trace.gemoc.traceaddon.GenericTraceEngineAddon" default="false" id="org.eclipse.gemoc.trace.gemoc.traceaddon" name="Generic MultiDimensional Data Trace" shortDescription="Data Trace support for any language" openViewIds="org.eclipse.gemoc.addon.multidimensional.timeline.views.timeline.MultidimensionalTimeLineView" addonGroupId="General.AddonGroup" />
   </extension>
 </plugin>

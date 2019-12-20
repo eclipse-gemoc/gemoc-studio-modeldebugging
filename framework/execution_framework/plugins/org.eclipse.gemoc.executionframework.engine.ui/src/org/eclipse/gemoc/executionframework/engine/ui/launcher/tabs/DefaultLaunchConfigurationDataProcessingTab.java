@@ -1,5 +1,5 @@
 /*******************************************************************************
- * Copyright (c) 2016, 2019 Inria and others.
+ * Copyright (c) 2019 Inria and others.
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
  * which accompanies this distribution, and is available at
@@ -8,20 +8,26 @@
  * Contributors:
  *     Inria - initial API and implementation
  *******************************************************************************/
-package org.eclipse.gemoc.execution.sequential.javaengine.ui.launcher.tabs;
+package org.eclipse.gemoc.executionframework.engine.ui.launcher.tabs;
 
 import java.util.Collection;
 import java.util.HashMap;
 import java.util.Iterator;
-import java.util.stream.Collectors;
 
-import org.eclipse.gemoc.executionframework.engine.ui.launcher.tabs.AbstractLaunchConfigurationDataProcessingTab;
 import org.eclipse.gemoc.xdsmlframework.api.extensions.engine_addon.EngineAddonSpecificationExtension;
 import org.eclipse.gemoc.xdsmlframework.api.extensions.engine_addon.EngineAddonSpecificationExtensionPoint;
 import org.eclipse.gemoc.xdsmlframework.api.extensions.engine_addon_group.EngineAddonGroupSpecificationExtension;
 import org.eclipse.gemoc.xdsmlframework.api.extensions.engine_addon_group.EngineAddonGroupSpecificationExtensionPoint;
 
-public class LaunchConfigurationBackendsTab extends AbstractLaunchConfigurationDataProcessingTab 
+/**
+ * Default implementation of AbstractLaunchConfigurationDataProcessingTab
+ * that presents all engine addons
+ * 
+ *  More precise implementation may override getExtensionSpecifications() in order to filter engine addons 
+ *  and return only the ones relevant for the engine (for example by looking to the declared group of the addons)
+ *
+ */
+public class DefaultLaunchConfigurationDataProcessingTab extends AbstractLaunchConfigurationDataProcessingTab 
 {
 
 	@Override
@@ -30,16 +36,12 @@ public class LaunchConfigurationBackendsTab extends AbstractLaunchConfigurationD
 		return "Engine Addons";
 	}
 	
+	
+	
 	@Override
 	protected Collection<EngineAddonSpecificationExtension> getExtensionSpecifications() 
 	{
-		return EngineAddonSpecificationExtensionPoint.getSpecifications().stream()
-				.filter(extension -> 
-					extension.getAddonGroupId() == null || 
-					extension.getAddonGroupId().equals("Sequential.AddonGroup") || 
-					extension.getAddonGroupId().equals("General.AddonGroup")
-				)
-				.collect(Collectors.toList());
+		return EngineAddonSpecificationExtensionPoint.getSpecifications();
 	}
 	
 	@Override
@@ -55,3 +57,4 @@ public class LaunchConfigurationBackendsTab extends AbstractLaunchConfigurationD
 	}
 		
 }
+

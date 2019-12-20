@@ -51,7 +51,7 @@
       <complexType>
          <sequence minOccurs="0" maxOccurs="unbounded">
             <sequence minOccurs="0" maxOccurs="unbounded">
-               <element ref="EngineAddon_Definition"/>
+               <element ref="engineAddon_Definition"/>
             </sequence>
             <element ref="XDSML_Definition_Customization" minOccurs="0" maxOccurs="1"/>
          </sequence>
@@ -82,9 +82,31 @@
       </complexType>
    </element>
 
-   <element name="EngineAddon_Definition">
+   <element name="engineAddon_Definition">
       <complexType>
-         <attribute name="engineAddon_class" type="string">
+         <attribute name="id" type="string" use="required">
+            <annotation>
+               <documentation>
+                  Unique ID of the AddOn
+can be used to specify addon exclusion
+               </documentation>
+            </annotation>
+         </attribute>
+         <attribute name="name" type="string" use="required">
+            <annotation>
+               <documentation>
+                  Name of the Addon as it will be displayed to the end user when he will select it in the Launcher GUI
+               </documentation>
+            </annotation>
+         </attribute>
+         <attribute name="shortDescription" type="string">
+            <annotation>
+               <documentation>
+                  A short description that will be presented in the launch tab
+               </documentation>
+            </annotation>
+         </attribute>
+         <attribute name="class" type="string">
             <annotation>
                <documentation>
                   This class allows to hook some code to some phase of the Gemoc engine.
@@ -96,6 +118,31 @@ Addons defined there are available for this language only.
                <appinfo>
                   <meta.attribute kind="java" basedOn=":org.eclipse.gemoc.gemoc_language_workbench.api.engine_addon.IEngineAddon"/>
                </appinfo>
+            </annotation>
+         </attribute>
+         <attribute name="default" type="boolean">
+            <annotation>
+               <documentation>
+                  indicates if this addon should be enabled by default or not.
+If not set, language specific addons are enabled by default.
+               </documentation>
+            </annotation>
+         </attribute>
+         <attribute name="addonGroupId" type="string">
+            <annotation>
+               <documentation>
+                  If specified, the addon will be presented in a dedicated group in the launcher tab.
+               </documentation>
+               <appinfo>
+                  <meta.attribute kind="identifier" basedOn="org.eclipse.gemoc.gemoc_language_workbench.engine_addon_group/@id"/>
+               </appinfo>
+            </annotation>
+         </attribute>
+         <attribute name="openViewIds" type="string">
+            <annotation>
+               <documentation>
+                  comma separated list of view ids that should be opened when the addon is used in Eclipse UI.
+               </documentation>
             </annotation>
          </attribute>
       </complexType>

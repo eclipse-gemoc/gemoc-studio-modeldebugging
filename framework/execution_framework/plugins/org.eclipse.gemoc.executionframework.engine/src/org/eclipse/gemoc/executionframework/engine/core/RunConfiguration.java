@@ -22,6 +22,8 @@ import org.eclipse.gemoc.dsl.debug.ide.launch.AbstractDSLLaunchConfigurationDele
 import org.eclipse.gemoc.xdsmlframework.api.core.IRunConfiguration;
 import org.eclipse.gemoc.xdsmlframework.api.extensions.engine_addon.EngineAddonSpecificationExtension;
 import org.eclipse.gemoc.xdsmlframework.api.extensions.engine_addon.EngineAddonSpecificationExtensionPoint;
+import org.eclipse.gemoc.xdsmlframework.api.extensions.languages.LanguageDefinitionExtension;
+import org.eclipse.gemoc.xdsmlframework.api.extensions.languages.LanguageDefinitionExtensionPoint;
 
 public class RunConfiguration implements IRunConfiguration {
 
@@ -45,9 +47,19 @@ public class RunConfiguration implements IRunConfiguration {
 		_melangeQuery = getAttribute(LAUNCH_MELANGE_QUERY, "");
 
 		for (EngineAddonSpecificationExtension extension : EngineAddonSpecificationExtensionPoint.getSpecifications()) {
-			_engineAddonExtensions.put(extension, getAttribute(extension.getName(), false));
+			String extensionName = extension.getName() != null ? extension.getName() : extension.getId();
+			_engineAddonExtensions.put(extension, getAttribute(extensionName, extension.getDefaultActivationValue()));
 		}
 
+		//  
+		LanguageDefinitionExtension langDefExtension = LanguageDefinitionExtensionPoint.findDefinition(_languageName);
+		if(langDefExtension != null) {
+			for(EngineAddonSpecificationExtension extension : langDefExtension.getLanguageSpecificEngineAddonSpecificationExtensions()){
+				String extensionName = extension.getName() != null ? extension.getName() : extension.getId();
+				_engineAddonExtensions.put(extension, getAttribute(extensionName, extension.getDefaultActivationValue()));
+			}
+		}
+		
 		_breakStart = getAttribute(LAUNCH_BREAK_START, Boolean.FALSE);
 		_debugModelID = getAttribute(DEBUG_MODEL_ID, ".debugModel");
 	}
@@ -99,6 +111,7 @@ public class RunConfiguration implements IRunConfiguration {
 		return _animatorURI;
 	}
 
+	
 	private HashMap<EngineAddonSpecificationExtension, Boolean> _engineAddonExtensions = new HashMap<>();
 
 	@Override
