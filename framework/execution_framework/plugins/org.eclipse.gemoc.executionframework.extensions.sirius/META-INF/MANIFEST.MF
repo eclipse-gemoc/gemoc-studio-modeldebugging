@@ -1,6 +1,6 @@
 Manifest-Version: 1.0
 Bundle-ManifestVersion: 2
-Bundle-Name: Sirius
+Bundle-Name: GEMOC executionframework extensions for Sirius
 Bundle-SymbolicName: org.eclipse.gemoc.executionframework.extensions.sirius;singleton:=true
 Bundle-Version: 4.0.0.qualifier
 Bundle-Activator: org.eclipse.gemoc.executionframework.extensions.sirius.Activator
