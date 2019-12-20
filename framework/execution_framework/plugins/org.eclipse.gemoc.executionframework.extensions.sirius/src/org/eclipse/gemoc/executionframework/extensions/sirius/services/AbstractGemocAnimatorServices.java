@@ -19,6 +19,10 @@ import java.util.Map;
 import java.util.Set;
 import java.util.Timer;
 import java.util.TimerTask;
+import java.util.concurrent.ArrayBlockingQueue;
+import java.util.concurrent.Executor;
+import java.util.concurrent.ThreadPoolExecutor;
+import java.util.concurrent.TimeUnit;
 import java.util.stream.Collectors;
 
 import org.eclipse.core.runtime.IStatus;
@@ -32,10 +36,10 @@ import org.eclipse.emf.transaction.TransactionalEditingDomain;
 import org.eclipse.gemoc.dsl.debug.ide.DSLBreakpoint;
 import org.eclipse.gemoc.dsl.debug.ide.sirius.ui.services.AbstractDSLDebuggerServices.BreakpointListener;
 import org.eclipse.gemoc.executionframework.engine.core.CommandExecution;
+import org.eclipse.gemoc.executionframework.extensions.sirius.Activator;
 import org.eclipse.gemoc.trace.commons.model.trace.MSEOccurrence;
 import org.eclipse.gemoc.trace.commons.model.trace.ParallelStep;
 import org.eclipse.gemoc.trace.commons.model.trace.Step;
-import org.eclipse.gemoc.xdsmlframework.api.Activator;
 import org.eclipse.gemoc.xdsmlframework.api.core.EngineStatus.RunStatus;
 import org.eclipse.gemoc.xdsmlframework.api.core.IExecutionEngine;
 import org.eclipse.gemoc.xdsmlframework.api.engine_addon.IEngineAddon;
@@ -143,45 +147,82 @@ public abstract class AbstractGemocAnimatorServices {
 						instructionUris, resourceSet);
 				if (instructionPresent) {
 					long elapsedTimeSinceLastNotif = System.currentTimeMillis() - lastSiriusNotification;
-					if(elapsedTimeSinceLastNotif >= intervalBetweenSiriusNotification) {
-						// trigger a notification now
-						if(siriusNotificationTimer != null) {
-							siriusNotificationTimer.cancel();
-						}
-						lastSiriusNotification = System.currentTimeMillis();
+
+					switch (Activator.getDefault().getAnimationRefreshStrategy())
+					{
+					case Every:
+						// trigger a notification now and lock current thread. Ie wait for the end of the refresh 
+						// before continuing
 						final List<DRepresentation> representations = getRepresentationsToRefresh(
 								toRefresh, session);
 						refreshRepresentations(transactionalEditingDomain,
 								representations);
-
-						//System.err.println("sirius immediate refresh ");
-					} else {
+						break;
+					case Manual:
+						// manual refresh nothing to do
+						break;
+					case OnPause:
+						// NOT IMPLEMENTED YET
+					case CommandQueue:
+						latestTaskExecutor.execute(new Runnable() {
+							@Override
+							public void run() {
+								final List<DRepresentation> representations = getRepresentationsToRefresh(
+										toRefresh, session);
+								refreshRepresentations(transactionalEditingDomain,
+										representations);
+							}
+						});
+						break;
+					case Frequencylimit:
 						
-						if(siriusNotificationTimer != null) {
-							// if a timer is already pending , ignore notification	
-							// System.err.println("ignoring sirius refresh due to already pending refresh");
+						if(elapsedTimeSinceLastNotif >= intervalBetweenSiriusNotification) {
+							// trigger a notification now
+							if(siriusNotificationTimer != null) {
+								siriusNotificationTimer.cancel();
+							}
+							lastSiriusNotification = System.currentTimeMillis();
+							final List<DRepresentation> representation2s = getRepresentationsToRefresh(
+									toRefresh, session);
+							refreshRepresentations(transactionalEditingDomain,
+									representation2s);
+							// TODO should we use the latestTaskExecutor here too in order to run in another thread ?
+							//System.err.println("sirius immediate refresh ");
 						} else {
-							// no timer pending, trigger notification after a delay using timer
-							siriusNotificationTimer = new Timer("SiriusNotificationTimer");
-							TimerTask task = new TimerTask() {
-						        public void run() {
-						        	lastSiriusNotification = System.currentTimeMillis();
-						        	siriusNotificationTimer = null;
-						        	final List<DRepresentation> representations = getRepresentationsToRefresh(
-											toRefresh, session);
-									refreshRepresentations(transactionalEditingDomain,
-											representations);
-									//System.err.println("sirius refresh after delay");
-									this.cancel();
-						        }
-						    };
-						    siriusNotificationTimer.schedule(task, intervalBetweenSiriusNotification - elapsedTimeSinceLastNotif);
+							
+							if(siriusNotificationTimer != null) {
+								// if a timer is already pending , ignore notification	
+								// System.err.println("ignoring sirius refresh due to already pending refresh");
+							} else {
+								// no timer pending, trigger notification after a delay using timer
+								siriusNotificationTimer = new Timer("SiriusNotificationTimer");
+								TimerTask task = new TimerTask() {
+							        public void run() {
+							        	lastSiriusNotification = System.currentTimeMillis();
+							        	siriusNotificationTimer = null;
+							        	final List<DRepresentation> representations = getRepresentationsToRefresh(
+												toRefresh, session);
+										refreshRepresentations(transactionalEditingDomain,
+												representations);
+										//System.err.println("sirius refresh after delay");
+										this.cancel();
+							        }
+							    };
+							    siriusNotificationTimer.schedule(task, intervalBetweenSiriusNotification - elapsedTimeSinceLastNotif);
+							}
 						}
 					}
 				}
 				
 			}
 		}
+		
+		// for commandqueue management
+		// cf. https://stackoverflow.com/questions/11306425/executor-queue-process-last-known-task-only
+		Executor latestTaskExecutor = new ThreadPoolExecutor(1, 1, // Single threaded 
+		        30L, TimeUnit.SECONDS, // Keep alive, not really important here
+		        new ArrayBlockingQueue<>(1), // Single element queue
+		        new ThreadPoolExecutor.DiscardOldestPolicy()); // When new work is submitted discard oldest
 		
 		protected long lastSiriusNotification = System.currentTimeMillis();
 		public int intervalBetweenSiriusNotification = 1000;
