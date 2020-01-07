@@ -130,8 +130,8 @@ public abstract class AbstractGemocAnimatorServices {
 		/**
 		 * Notifies Sirius about a change in the given {@link DSLBreakpoint}.
 		 * This methods ensures that concrete refresh command on Sirius is not called
-		 * more than a frequency. (currently hardcoded to 1000ms) the refresh will be done
-		 * but only 1000ms after the previous refresh command
+		 * more than a frequency.  the refresh will be done
+		 * but only some time after the previous refresh command
 		 * @param instructionUri
 		 *            the {@link URI} of the instruction to refresh.
 		 */
@@ -151,18 +151,20 @@ public abstract class AbstractGemocAnimatorServices {
 					switch (Activator.getDefault().getAnimationRefreshStrategy())
 					{
 					case Every:
-						// trigger a notification now and lock current thread. Ie wait for the end of the refresh 
+						// trigger a notification now and lock current thread. Ie. wait for the end of the refresh 
 						// before continuing
 						final List<DRepresentation> representations = getRepresentationsToRefresh(
 								toRefresh, session);
 						refreshRepresentations(transactionalEditingDomain,
 								representations);
+					//	System.err.println("sirius animation refresh (blocking)");
 						break;
 					case Manual:
 						// manual refresh nothing to do
 						break;
 					case OnPause:
-						// NOT IMPLEMENTED YET
+						// actually nothing to do here this is the AbstractGemocDebuggerServices that handle this value
+						break;
 					case CommandQueue:
 						latestTaskExecutor.execute(new Runnable() {
 							@Override
@@ -171,6 +173,7 @@ public abstract class AbstractGemocAnimatorServices {
 										toRefresh, session);
 								refreshRepresentations(transactionalEditingDomain,
 										representations);
+								System.err.println("sirius animation refresh ");
 							}
 						});
 						break;
@@ -180,14 +183,20 @@ public abstract class AbstractGemocAnimatorServices {
 							// trigger a notification now
 							if(siriusNotificationTimer != null) {
 								siriusNotificationTimer.cancel();
+								siriusNotificationTimer= null;
 							}
 							lastSiriusNotification = System.currentTimeMillis();
-							final List<DRepresentation> representation2s = getRepresentationsToRefresh(
-									toRefresh, session);
-							refreshRepresentations(transactionalEditingDomain,
-									representation2s);
-							// TODO should we use the latestTaskExecutor here too in order to run in another thread ?
-							//System.err.println("sirius immediate refresh ");
+							// use the latestTaskExecutor here too in order to run in another thread 
+							latestTaskExecutor.execute(new Runnable() {
+								@Override
+								public void run() {
+									final List<DRepresentation> representations = getRepresentationsToRefresh(
+											toRefresh, session);
+									refreshRepresentations(transactionalEditingDomain,
+											representations);
+								//	System.err.println("sirius animation refresh ");
+								}
+							});
 						} else {
 							
 							if(siriusNotificationTimer != null) {
@@ -204,11 +213,15 @@ public abstract class AbstractGemocAnimatorServices {
 												toRefresh, session);
 										refreshRepresentations(transactionalEditingDomain,
 												representations);
-										//System.err.println("sirius refresh after delay");
+									//	System.err.println("sirius animation refresh after delay");
 										this.cancel();
 							        }
 							    };
-							    siriusNotificationTimer.schedule(task, intervalBetweenSiriusNotification - elapsedTimeSinceLastNotif);
+							    try {
+							    	siriusNotificationTimer.schedule(task, intervalBetweenSiriusNotification - elapsedTimeSinceLastNotif);
+							    } catch (Exception e) {
+							    	siriusNotificationTimer = null;
+								}
 							}
 						}
 					}
@@ -238,16 +251,14 @@ public abstract class AbstractGemocAnimatorServices {
 			// TODO prevent the editors from getting dirty
 			if (representations.size() != 0) {
 				final RefreshRepresentationsCommand refresh = new RefreshRepresentationsCommand(
-						transactionalEditingDomain,
-						new NullProgressMonitor(),
-						representations);
+						transactionalEditingDomain, new NullProgressMonitor(), representations);
 				try {
 					CommandExecution.execute(transactionalEditingDomain, refresh);
 				} catch (Exception e){
 					String repString = representations.stream().map(r -> r.getName()).collect(Collectors.joining(", "));
 					Activator.getDefault().getLog().log(new Status(IStatus.WARNING, Activator.PLUGIN_ID, "Failed to refresh Sirius representation(s)["+repString+"], we hope to be able to do it later", e));
 				}
-				
+
 			}
 		}
 
@@ -402,6 +413,8 @@ public abstract class AbstractGemocAnimatorServices {
 
 		@Override
 		public void engineAboutToStart(IExecutionEngine<?> engine) {
+			// reset timer task
+			siriusNotificationTimer = null;
 		}
 
 		@Override
@@ -414,6 +427,8 @@ public abstract class AbstractGemocAnimatorServices {
 
 		@Override
 		public void engineStopped(IExecutionEngine<?> engine) {
+			// reset timer task
+			siriusNotificationTimer = null;
 			clear(engine);
 		}
 

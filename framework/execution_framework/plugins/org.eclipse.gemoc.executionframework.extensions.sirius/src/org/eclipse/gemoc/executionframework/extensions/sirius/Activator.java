@@ -12,7 +12,9 @@ package org.eclipse.gemoc.executionframework.extensions.sirius;
 
 import java.util.Map.Entry;
 
+import org.eclipse.core.runtime.IStatus;
 import org.eclipse.core.runtime.NullProgressMonitor;
+import org.eclipse.core.runtime.Status;
 import org.eclipse.emf.common.util.URI;
 import org.eclipse.sirius.business.api.session.Session;
 import org.eclipse.sirius.business.api.session.SessionManager;
@@ -121,6 +123,26 @@ public class Activator extends AbstractUIPlugin {
 		} catch (IllegalArgumentException e) {
 			return AnimationRefreshStrategy.Every;
 		}
+	}
+	
+	/**
+	 * send a warning to the plugin log
+	 * 
+	 * @param msg
+	 * @param e
+	 */
+	public static void warning(String msg, Exception e) {
+		getDefault().getLog().log(new Status(IStatus.WARNING, PLUGIN_ID, msg, e));
+	}
+
+	/**
+	 * send an error to the plugin log
+	 * 
+	 * @param msg
+	 * @param e
+	 */
+	public static void error(String msg, Exception e) {
+		getDefault().getLog().log(new Status(IStatus.ERROR, PLUGIN_ID, msg, e));
 	}
 
 }

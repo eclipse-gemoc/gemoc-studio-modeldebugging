@@ -43,12 +43,12 @@ public class GemocAnimationPreferencePage extends FieldEditorPreferencePage impl
 	public void createFieldEditors() {
 
 		String[][] entryNamesAndValues = new String[][] {
-				{ "Refresh on every step", AnimationRefreshStrategy.Every.toString()},
-				{ "Refresh if no previous refresh command is pending ",
+				{ "All notifications (blocking exection thread)", AnimationRefreshStrategy.Every.toString()},
+				{ "Best effort (use single job queue with discard oldest policy)",
 					AnimationRefreshStrategy.CommandQueue.toString() },
-				{ "Refresh with max frequency limit", AnimationRefreshStrategy.Frequencylimit.toString() },
-				{ "Refresh when pausing the engine", AnimationRefreshStrategy.OnPause.toString() },
-				{ "Manual", AnimationRefreshStrategy.Manual.toString() } };
+				{ "Max frequency limit (notifications are delayed to enforce refresh rate)", AnimationRefreshStrategy.Frequencylimit.toString() },
+				{ "Engine pause (refresh only on debug actions)", AnimationRefreshStrategy.OnPause.toString() },
+				{ "Manual (no automatic refresh)", AnimationRefreshStrategy.Manual.toString() } };
 		addField(new org.eclipse.jface.preference.ComboFieldEditor(PreferenceConstants.P_REFRESH_STRATEGY,
 				"Animation refresh strategy", entryNamesAndValues, getFieldEditorParent()));
 		addField(new IntegerFieldEditor(PreferenceConstants.P_REFRESH_FREQUENCY_LIMIT,

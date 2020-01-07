@@ -10,6 +10,8 @@
  *******************************************************************************/
 package org.eclipse.gemoc.dsl.debug.ide.sirius.ui;
 
+import org.eclipse.core.runtime.IStatus;
+import org.eclipse.core.runtime.Status;
 import org.eclipse.emf.common.EMFPlugin;
 import org.eclipse.emf.common.util.ResourceLocator;
 import org.osgi.framework.BundleContext;
@@ -40,7 +42,7 @@ public final class DebugSiriusIdeUiPlugin extends EMFPlugin {
 	 * Create the instance.
 	 */
 	public DebugSiriusIdeUiPlugin() {
-	super(new ResourceLocator[] {});
+		super(new ResourceLocator[] {});
 	}
 
 	/**
@@ -50,7 +52,7 @@ public final class DebugSiriusIdeUiPlugin extends EMFPlugin {
 	 */
 	@Override
 	public ResourceLocator getPluginResourceLocator() {
-	return plugin;
+		return plugin;
 	}
 
 	/**
@@ -59,7 +61,7 @@ public final class DebugSiriusIdeUiPlugin extends EMFPlugin {
 	 * @return the singleton instance.
 	 */
 	public static Implementation getPlugin() {
-	return plugin;
+		return plugin;
 	}
 
 	/**
@@ -67,27 +69,47 @@ public final class DebugSiriusIdeUiPlugin extends EMFPlugin {
 	 */
 	public static class Implementation extends EclipsePlugin {
 
+		/**
+		 * Creates an instance.
+		 */
+		public Implementation() {
+			super();
+			// Remember the static instance.
+			//
+			plugin = this;
+
+		}
+
+		@Override
+		public void start(BundleContext context) throws Exception {
+			super.start(context);
+		}
+
+		@Override
+		public void stop(BundleContext context) throws Exception {
+			super.stop(context);
+		}
+
+	}
+
 	/**
-	 * Creates an instance.
+	 * send a warning to the plugin log
+	 * 
+	 * @param msg
+	 * @param e
 	 */
-	public Implementation() {
-		super();
-		// Remember the static instance.
-		//
-		plugin = this;
-
+	public static void warning(String msg, Exception e) {
+		getPlugin().getLog().log(new Status(IStatus.WARNING, ID, msg, e));
 	}
 
-	@Override
-	public void start(BundleContext context) throws Exception {
-		super.start(context);
-	}
-
-	@Override
-	public void stop(BundleContext context) throws Exception {
-		super.stop(context);
-	}
-
+	/**
+	 * send an error to the plugin log
+	 * 
+	 * @param msg
+	 * @param e
+	 */
+	public static void error(String msg, Exception e) {
+		getPlugin().getLog().log(new Status(IStatus.ERROR, ID, msg, e));
 	}
 
 }
