@@ -173,7 +173,7 @@ public abstract class AbstractGemocAnimatorServices {
 										toRefresh, session);
 								refreshRepresentations(transactionalEditingDomain,
 										representations);
-								System.err.println("sirius animation refresh ");
+							//	System.err.println("sirius animation refresh ");
 							}
 						});
 						break;
