@@ -43,7 +43,7 @@ public class GemocAnimationPreferencePage extends FieldEditorPreferencePage impl
 	public void createFieldEditors() {
 
 		String[][] entryNamesAndValues = new String[][] {
-				{ "All notifications (blocking exection thread)", AnimationRefreshStrategy.Every.toString()},
+				{ "All notifications (blocks execution thread)", AnimationRefreshStrategy.Every.toString()},
 				{ "Best effort (use single job queue with discard oldest policy)",
 					AnimationRefreshStrategy.CommandQueue.toString() },
 				{ "Max frequency limit (notifications are delayed to enforce refresh rate)", AnimationRefreshStrategy.Frequencylimit.toString() },

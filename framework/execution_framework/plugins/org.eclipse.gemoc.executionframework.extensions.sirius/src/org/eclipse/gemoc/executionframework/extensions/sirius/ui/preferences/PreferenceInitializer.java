@@ -28,7 +28,7 @@ public class PreferenceInitializer extends AbstractPreferenceInitializer {
 		IPreferenceStore store = Activator.getDefault().getPreferenceStore();
 		
 		store.setDefault(PreferenceConstants.P_REFRESH_STRATEGY, AnimationRefreshStrategy.Every.toString());
-		store.setDefault(PreferenceConstants.P_REFRESH_FREQUENCY_LIMIT, 1000);
+		store.setDefault(PreferenceConstants.P_REFRESH_FREQUENCY_LIMIT, 500);
 		
 	}
 
