@@ -14,12 +14,19 @@ import java.util.ArrayList;
 import java.util.List;
 
 import org.eclipse.core.runtime.CoreException;
+import org.eclipse.core.runtime.IConfigurationElement;
 import org.eclipse.gemoc.xdsmlframework.api.engine_addon.IEngineAddon;
 import org.eclipse.gemoc.xdsmlframework.api.extensions.Extension;
 
 public class EngineAddonSpecificationExtension extends Extension
 {
 
+	public EngineAddonSpecificationExtension() {
+	}
+	public EngineAddonSpecificationExtension(IConfigurationElement configurationElement) {
+		_configurationElement = configurationElement;
+	}
+	
 	public String getId()
 	{
 		return getAttribute(EngineAddonSpecificationExtensionPoint.GEMOC_ENGINE_ADDON_EXTENSION_POINT_ID);
@@ -70,6 +77,12 @@ public class EngineAddonSpecificationExtension extends Extension
 		}
 		return null;
 	}
+	
+	public String getComponentClassName()
+	{
+		return getAttribute(EngineAddonSpecificationExtensionPoint.GEMOC_ENGINE_ADDON_EXTENSION_POINT_CLASS);
+	}
+	
 	
 	public Boolean getDefaultActivationValue() 
 	{

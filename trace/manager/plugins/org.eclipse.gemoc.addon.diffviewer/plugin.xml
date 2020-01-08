@@ -28,10 +28,10 @@
    </extension>
    <extension
          point="org.eclipse.gemoc.gemoc_language_workbench.engine_addon_group">
-      <AddonGroup
-            Name="Sequential"
+      <addonGroup
+            name="Sequential"
             id="Sequential.AddonGroup">
-      </AddonGroup>
+      </addonGroup>
    </extension>
    <extension
          point="org.eclipse.ui.perspectiveExtensions">

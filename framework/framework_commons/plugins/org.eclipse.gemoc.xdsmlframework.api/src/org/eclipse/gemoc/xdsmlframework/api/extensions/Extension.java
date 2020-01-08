@@ -23,7 +23,12 @@ public class Extension {
 		_configurationElement = configurationElement;
 	}
 
+	public String getContributorName() {
+		return _configurationElement.getContributor().getName();
+	}
+	
 	protected String getAttribute(String attributeName) {
+		
 		return _configurationElement.getAttribute(attributeName);
 	}
 

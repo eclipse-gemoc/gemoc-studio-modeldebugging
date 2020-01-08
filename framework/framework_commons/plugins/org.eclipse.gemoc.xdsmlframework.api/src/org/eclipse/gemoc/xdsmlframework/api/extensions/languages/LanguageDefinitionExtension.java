@@ -20,6 +20,7 @@ import org.eclipse.core.runtime.IConfigurationElement;
 import org.eclipse.gemoc.xdsmlframework.api.core.IModelLoader;
 import org.eclipse.gemoc.xdsmlframework.api.engine_addon.IEngineAddon;
 import org.eclipse.gemoc.xdsmlframework.api.extensions.Extension;
+import org.eclipse.gemoc.xdsmlframework.api.extensions.engine_addon.EngineAddonSpecificationExtension;
 
 public class LanguageDefinitionExtension extends Extension {
 
@@ -53,6 +54,17 @@ public class LanguageDefinitionExtension extends Extension {
 			if (addon instanceof IEngineAddon) {
 				addons.add((IEngineAddon) addon);
 			}
+		}
+		return addons;
+	}
+	
+	final public Collection<EngineAddonSpecificationExtension> getLanguageSpecificEngineAddonSpecificationExtensions() {
+		ArrayList<EngineAddonSpecificationExtension> addons = new ArrayList<EngineAddonSpecificationExtension>();
+		for (IConfigurationElement childConfElement : _configurationElement
+				.getChildren(LanguageDefinitionExtensionPoint.GEMOC_LANGUAGE_EXTENSION_POINT_ENGINE_ADDON_DEF)) {
+			EngineAddonSpecificationExtension engineAddonSpecificationExtension = new EngineAddonSpecificationExtension(childConfElement);
+			//childConfElement.getAttribute(LanguageDefinitionExtensionPoint.GEMOC_LANGUAGE_EXTENSION_POINT_ENGINE_ADDON_DEF_ENGINE_ADDON_ATT)
+			addons.add(engineAddonSpecificationExtension);
 		}
 		return addons;
 	}

@@ -15,6 +15,7 @@ import java.util.Collection;
 import java.util.Collections;
 
 import org.eclipse.core.runtime.CoreException;
+import org.eclipse.gemoc.executionframework.engine.Activator;
 import org.eclipse.gemoc.xdsmlframework.api.core.IExecutionPlatform;
 import org.eclipse.gemoc.xdsmlframework.api.core.IModelLoader;
 import org.eclipse.gemoc.xdsmlframework.api.core.IRunConfiguration;
@@ -31,12 +32,10 @@ public class DefaultExecutionPlatform implements IExecutionPlatform {
 		_modelLoader = _languageDefinition.instanciateModelLoader();
 		_addons = new ArrayList<IEngineAddon>();
 
+		// instanciate addons (this includes language specific addons)
 		for (EngineAddonSpecificationExtension extension : runConfiguration.getEngineAddonExtensions()) {
+			Activator.getDefault().debug("Enabled addon: "+extension.getName());
 			addEngineAddon(extension.instanciateComponent());
-		}
-		//addons defined specifically for the language
-		for (IEngineAddon addon : _languageDefinition.instanciateEngineAddons()) {
-			addEngineAddon(addon);
 		}
 	}
 
