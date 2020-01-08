@@ -25,6 +25,10 @@ public class Activator extends AbstractUIPlugin {
 	// The plug-in ID
 	public static final String PLUGIN_ID = "org.eclipse.gemoc.executionframework.engine.ui"; //$NON-NLS-1$
 
+	/**
+	 * Generic DebugModelId that is used for engines that shares the same ModelPresentation, source locator, breakpoint definition 
+	 */
+	public static final String DEBUG_MODEL_ID = PLUGIN_ID + ".generic.debugModel";
 	
 	// The shared instance
 	private static Activator plugin;
