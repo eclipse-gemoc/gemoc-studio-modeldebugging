@@ -42,3 +42,23 @@ the current state is decorated with a green arrow and a new box shows the buffer
 .Example of Sirius animation on a FSM DSL.
 image::images/workbench/modeling/execution_data_animation.png[Example of Sirius animation on a FSM DSL]
 
+===== Sirius animation performance
+
+By default the Sirius animation  will refresh on every engine notification and will wait for the end of the refresh before processing the next steps.
+While providing precise display, on complex diagram (for example with many queries or several views) this can significantly slow down the model execution speed.
+
+In order to speed up the model execution, GEMOC provides several Sirius animation strategies:
+
+* *All notifications*: processes all engine diagram refresh notifications. The refresh command is blocking, the model execution is stopped until the refresh is done (slowest) 
+* *Best effort*: the refresh is done in a separate job. It uses a single job queue with a discard oldest policy (i.e. the execution continue during the refresh of the diagrams, 
+intermediate notifications may be discarded if the previous refresh hasn't finished)
+* *Max frequency limit*: use an additional timer in order to guarantee to not call refresh more than the given frequency (default to 500ms)
+* *Engine pause*: the refresh occurs only on the debugger commands (ie. pause / resume / step into / step over ...)
+* *Manual*: no automatic refresh, the user has to click on the diagram button to refresh the diagrams (available when selecting the page background in Sirius editors)
+
+These strategies are set in the _Preferences_ -> _Run/Debug_ -> _GEMOC Sirius Animation_ (see <<img_sirius-animation-preference-page>>)
+ 
+[[img_sirius-animation-preference-page]]
+.GEMOC Sirius animation preference page.
+image::images/workbench/modeling/sirius_animation_preference_page.png[GEMOC Sirius animation preference page]
+  

@@ -43,7 +43,7 @@ public class GemocAnimationPreferencePage extends FieldEditorPreferencePage impl
 	public void createFieldEditors() {
 
 		String[][] entryNamesAndValues = new String[][] {
-				{ "All notifications (blocks execution thread)", AnimationRefreshStrategy.Every.toString()},
+				{ "All notifications (blocks execution thread)(slowest)", AnimationRefreshStrategy.Every.toString()},
 				{ "Best effort (use single job queue with discard oldest policy)",
 					AnimationRefreshStrategy.CommandQueue.toString() },
 				{ "Max frequency limit (notifications are delayed to enforce refresh rate)", AnimationRefreshStrategy.Frequencylimit.toString() },
@@ -52,7 +52,7 @@ public class GemocAnimationPreferencePage extends FieldEditorPreferencePage impl
 		addField(new org.eclipse.jface.preference.ComboFieldEditor(PreferenceConstants.P_REFRESH_STRATEGY,
 				"Animation refresh strategy", entryNamesAndValues, getFieldEditorParent()));
 		addField(new IntegerFieldEditor(PreferenceConstants.P_REFRESH_FREQUENCY_LIMIT,
-				"Frequency when using Frenquency Limit strategy (in ms):", getFieldEditorParent()));
+				"Frequency when using frequency limit strategy (in ms):", getFieldEditorParent()));
 	}
 
 	/*

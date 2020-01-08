@@ -26,7 +26,7 @@
             category="org.eclipse.debug.ui.DebugPreferencePage"
             class="org.eclipse.gemoc.executionframework.extensions.sirius.ui.preferences.GemocAnimationPreferencePage"
             id="org.eclipse.gemoc.executionframework.extensions.sirius.ui.preferences.GemocAnimationPreferencePage"
-            name="GEMOC Animation">
+            name="GEMOC Sirius Animation">
       </page>
    </extension>
    <extension
