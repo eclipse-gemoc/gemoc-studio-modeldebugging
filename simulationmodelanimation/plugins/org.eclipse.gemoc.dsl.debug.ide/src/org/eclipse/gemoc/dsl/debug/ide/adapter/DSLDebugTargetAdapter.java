@@ -10,6 +10,24 @@
  *******************************************************************************/
 package org.eclipse.gemoc.dsl.debug.ide.adapter;
 
+import java.io.Serializable;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Map.Entry;
+
+import org.eclipse.core.resources.IMarker;
+import org.eclipse.core.resources.IMarkerDelta;
+import org.eclipse.core.resources.IResourceDelta;
+import org.eclipse.core.runtime.CoreException;
+import org.eclipse.debug.core.DebugEvent;
+import org.eclipse.debug.core.DebugException;
+import org.eclipse.debug.core.DebugPlugin;
+import org.eclipse.debug.core.model.IBreakpoint;
+import org.eclipse.debug.core.model.IDebugTarget;
+import org.eclipse.debug.core.model.IMemoryBlock;
+import org.eclipse.debug.core.model.IProcess;
+import org.eclipse.debug.core.model.IThread;
+import org.eclipse.emf.common.util.URI;
 import org.eclipse.gemoc.dsl.debug.DebugTarget;
 import org.eclipse.gemoc.dsl.debug.DebugTargetState;
 import org.eclipse.gemoc.dsl.debug.DebugTargetUtils;
@@ -44,25 +62,6 @@ import org.eclipse.gemoc.dsl.debug.ide.event.model.ResumeRequest;
 import org.eclipse.gemoc.dsl.debug.ide.event.model.StartRequest;
 import org.eclipse.gemoc.dsl.debug.ide.event.model.SuspendRequest;
 import org.eclipse.gemoc.dsl.debug.ide.event.model.TerminateRequest;
-
-import java.io.Serializable;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Map.Entry;
-
-import org.eclipse.core.resources.IMarker;
-import org.eclipse.core.resources.IMarkerDelta;
-import org.eclipse.core.resources.IResourceDelta;
-import org.eclipse.core.runtime.CoreException;
-import org.eclipse.debug.core.DebugEvent;
-import org.eclipse.debug.core.DebugException;
-import org.eclipse.debug.core.DebugPlugin;
-import org.eclipse.debug.core.model.IBreakpoint;
-import org.eclipse.debug.core.model.IDebugTarget;
-import org.eclipse.debug.core.model.IMemoryBlock;
-import org.eclipse.debug.core.model.IProcess;
-import org.eclipse.debug.core.model.IThread;
-import org.eclipse.emf.common.util.URI;
 
 /**
  * The {@link DebugTarget} DSL debug model.
@@ -608,7 +607,9 @@ public class DSLDebugTargetAdapter extends AbstractDSLDebugElementAdapter implem
 	 *            the {@link IDSLSuspendListener} to add
 	 */
 	public void addCurrentInstructionListener(IDSLCurrentInstructionListener listener) {
-		currentInstructionListeners.add(listener);
+		if (!currentInstructionListeners.contains(listener)) {
+			currentInstructionListeners.add(listener);
+		}
 	}
 
 	/**

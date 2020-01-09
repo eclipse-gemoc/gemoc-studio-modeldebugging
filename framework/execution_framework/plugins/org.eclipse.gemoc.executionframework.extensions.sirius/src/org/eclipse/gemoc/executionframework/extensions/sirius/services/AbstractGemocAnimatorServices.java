@@ -17,6 +17,12 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
+import java.util.Timer;
+import java.util.TimerTask;
+import java.util.concurrent.ArrayBlockingQueue;
+import java.util.concurrent.Executor;
+import java.util.concurrent.ThreadPoolExecutor;
+import java.util.concurrent.TimeUnit;
 import java.util.stream.Collectors;
 
 import org.eclipse.core.runtime.IStatus;
@@ -27,6 +33,16 @@ import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.resource.ResourceSet;
 import org.eclipse.emf.ecore.util.EcoreUtil;
 import org.eclipse.emf.transaction.TransactionalEditingDomain;
+import org.eclipse.gemoc.dsl.debug.ide.DSLBreakpoint;
+import org.eclipse.gemoc.dsl.debug.ide.sirius.ui.services.AbstractDSLDebuggerServices.BreakpointListener;
+import org.eclipse.gemoc.executionframework.engine.core.CommandExecution;
+import org.eclipse.gemoc.executionframework.extensions.sirius.Activator;
+import org.eclipse.gemoc.trace.commons.model.trace.MSEOccurrence;
+import org.eclipse.gemoc.trace.commons.model.trace.ParallelStep;
+import org.eclipse.gemoc.trace.commons.model.trace.Step;
+import org.eclipse.gemoc.xdsmlframework.api.core.EngineStatus.RunStatus;
+import org.eclipse.gemoc.xdsmlframework.api.core.IExecutionEngine;
+import org.eclipse.gemoc.xdsmlframework.api.engine_addon.IEngineAddon;
 import org.eclipse.sirius.business.api.dialect.DialectManager;
 import org.eclipse.sirius.business.api.dialect.command.RefreshRepresentationsCommand;
 import org.eclipse.sirius.business.api.session.Session;
@@ -38,15 +54,6 @@ import org.eclipse.sirius.ui.business.api.session.IEditingSession;
 import org.eclipse.sirius.ui.business.api.session.SessionUIManager;
 import org.eclipse.sirius.viewpoint.DRepresentation;
 import org.eclipse.sirius.viewpoint.description.RepresentationDescription;
-import org.eclipse.gemoc.executionframework.engine.core.CommandExecution;
-import org.eclipse.gemoc.xdsmlframework.api.core.EngineStatus.RunStatus;
-import org.eclipse.gemoc.xdsmlframework.api.Activator;
-import org.eclipse.gemoc.xdsmlframework.api.core.IExecutionEngine;
-import org.eclipse.gemoc.xdsmlframework.api.engine_addon.IEngineAddon;
-import org.eclipse.gemoc.trace.commons.model.trace.MSEOccurrence;
-import org.eclipse.gemoc.trace.commons.model.trace.ParallelStep;
-import org.eclipse.gemoc.trace.commons.model.trace.Step;
-import org.eclipse.gemoc.dsl.debug.ide.DSLBreakpoint;
 
 public abstract class AbstractGemocAnimatorServices {
 
@@ -122,7 +129,9 @@ public abstract class AbstractGemocAnimatorServices {
 
 		/**
 		 * Notifies Sirius about a change in the given {@link DSLBreakpoint}.
-		 * 
+		 * This methods ensures that concrete refresh command on Sirius is not called
+		 * more than a frequency.  the refresh will be done
+		 * but only some time after the previous refresh command
 		 * @param instructionUri
 		 *            the {@link URI} of the instruction to refresh.
 		 */
@@ -137,13 +146,100 @@ public abstract class AbstractGemocAnimatorServices {
 				final boolean instructionPresent = isOneInstructionPresent(
 						instructionUris, resourceSet);
 				if (instructionPresent) {
-					final List<DRepresentation> representations = getRepresentationsToRefresh(
-							toRefresh, session);
-					refreshRepresentations(transactionalEditingDomain,
-							representations);
+					long elapsedTimeSinceLastNotif = System.currentTimeMillis() - lastSiriusNotification;
+
+					switch (Activator.getDefault().getAnimationRefreshStrategy())
+					{
+					case Every:
+						// trigger a notification now and lock current thread. Ie. wait for the end of the refresh 
+						// before continuing
+						final List<DRepresentation> representations = getRepresentationsToRefresh(
+								toRefresh, session);
+						refreshRepresentations(transactionalEditingDomain,
+								representations);
+					//	System.err.println("sirius animation refresh (blocking)");
+						break;
+					case Manual:
+						// manual refresh nothing to do
+						break;
+					case OnPause:
+						// actually nothing to do here this is the AbstractGemocDebuggerServices that handle this value
+						break;
+					case CommandQueue:
+						latestTaskExecutor.execute(new Runnable() {
+							@Override
+							public void run() {
+								final List<DRepresentation> representations = getRepresentationsToRefresh(
+										toRefresh, session);
+								refreshRepresentations(transactionalEditingDomain,
+										representations);
+							//	System.err.println("sirius animation refresh ");
+							}
+						});
+						break;
+					case Frequencylimit:
+						
+						if(elapsedTimeSinceLastNotif >= intervalBetweenSiriusNotification) {
+							// trigger a notification now
+							if(siriusNotificationTimer != null) {
+								siriusNotificationTimer.cancel();
+								siriusNotificationTimer= null;
+							}
+							lastSiriusNotification = System.currentTimeMillis();
+							// use the latestTaskExecutor here too in order to run in another thread 
+							latestTaskExecutor.execute(new Runnable() {
+								@Override
+								public void run() {
+									final List<DRepresentation> representations = getRepresentationsToRefresh(
+											toRefresh, session);
+									refreshRepresentations(transactionalEditingDomain,
+											representations);
+								//	System.err.println("sirius animation refresh ");
+								}
+							});
+						} else {
+							
+							if(siriusNotificationTimer != null) {
+								// if a timer is already pending , ignore notification	
+								// System.err.println("ignoring sirius refresh due to already pending refresh");
+							} else {
+								// no timer pending, trigger notification after a delay using timer
+								siriusNotificationTimer = new Timer("SiriusNotificationTimer");
+								TimerTask task = new TimerTask() {
+							        public void run() {
+							        	lastSiriusNotification = System.currentTimeMillis();
+							        	siriusNotificationTimer = null;
+							        	final List<DRepresentation> representations = getRepresentationsToRefresh(
+												toRefresh, session);
+										refreshRepresentations(transactionalEditingDomain,
+												representations);
+									//	System.err.println("sirius animation refresh after delay");
+										this.cancel();
+							        }
+							    };
+							    try {
+							    	siriusNotificationTimer.schedule(task, intervalBetweenSiriusNotification - elapsedTimeSinceLastNotif);
+							    } catch (Exception e) {
+							    	siriusNotificationTimer = null;
+								}
+							}
+						}
+					}
 				}
+				
 			}
 		}
+		
+		// for commandqueue management
+		// cf. https://stackoverflow.com/questions/11306425/executor-queue-process-last-known-task-only
+		Executor latestTaskExecutor = new ThreadPoolExecutor(1, 1, // Single threaded 
+		        30L, TimeUnit.SECONDS, // Keep alive, not really important here
+		        new ArrayBlockingQueue<>(1), // Single element queue
+		        new ThreadPoolExecutor.DiscardOldestPolicy()); // When new work is submitted discard oldest
+		
+		protected long lastSiriusNotification = System.currentTimeMillis();
+		public int intervalBetweenSiriusNotification = 1000;
+		protected Timer siriusNotificationTimer;
 
 		/**Refreshes given {@link DRepresentation} in the given {@link TransactionalEditingDomain}.
 		 * @param transactionalEditingDomain the {@link TransactionalEditingDomain}
@@ -155,16 +251,14 @@ public abstract class AbstractGemocAnimatorServices {
 			// TODO prevent the editors from getting dirty
 			if (representations.size() != 0) {
 				final RefreshRepresentationsCommand refresh = new RefreshRepresentationsCommand(
-						transactionalEditingDomain,
-						new NullProgressMonitor(),
-						representations);
+						transactionalEditingDomain, new NullProgressMonitor(), representations);
 				try {
 					CommandExecution.execute(transactionalEditingDomain, refresh);
 				} catch (Exception e){
 					String repString = representations.stream().map(r -> r.getName()).collect(Collectors.joining(", "));
 					Activator.getDefault().getLog().log(new Status(IStatus.WARNING, Activator.PLUGIN_ID, "Failed to refresh Sirius representation(s)["+repString+"], we hope to be able to do it later", e));
 				}
-				
+
 			}
 		}
 
@@ -319,6 +413,8 @@ public abstract class AbstractGemocAnimatorServices {
 
 		@Override
 		public void engineAboutToStart(IExecutionEngine<?> engine) {
+			// reset timer task
+			siriusNotificationTimer = null;
 		}
 
 		@Override
@@ -331,6 +427,8 @@ public abstract class AbstractGemocAnimatorServices {
 
 		@Override
 		public void engineStopped(IExecutionEngine<?> engine) {
+			// reset timer task
+			siriusNotificationTimer = null;
 			clear(engine);
 		}
 
@@ -393,6 +491,9 @@ public abstract class AbstractGemocAnimatorServices {
 
 		@Override
 		public void aboutToExecuteStep(IExecutionEngine<?> engine, Step<?> stepToExecute) {
+			if(!(stepToExecute.eContainer() instanceof ParallelStep)){
+				activate(engine, stepToExecute);
+			}
 		}
 
 		@Override

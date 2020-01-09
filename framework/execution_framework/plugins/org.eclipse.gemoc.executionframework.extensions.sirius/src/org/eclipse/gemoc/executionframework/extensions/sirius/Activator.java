@@ -12,7 +12,9 @@ package org.eclipse.gemoc.executionframework.extensions.sirius;
 
 import java.util.Map.Entry;
 
+import org.eclipse.core.runtime.IStatus;
 import org.eclipse.core.runtime.NullProgressMonitor;
+import org.eclipse.core.runtime.Status;
 import org.eclipse.emf.common.util.URI;
 import org.eclipse.sirius.business.api.session.Session;
 import org.eclipse.sirius.business.api.session.SessionManager;
@@ -20,6 +22,8 @@ import org.eclipse.ui.IWorkbench;
 import org.eclipse.ui.IWorkbenchListener;
 import org.eclipse.ui.PlatformUI;
 import org.eclipse.ui.plugin.AbstractUIPlugin;
+import org.eclipse.gemoc.executionframework.extensions.sirius.ui.preferences.AnimationRefreshStrategy;
+import org.eclipse.gemoc.executionframework.extensions.sirius.ui.preferences.PreferenceConstants;
 import org.eclipse.gemoc.xdsmlframework.api.core.EngineStatus.RunStatus;
 import org.eclipse.gemoc.xdsmlframework.api.core.IExecutionEngine;
 import org.osgi.framework.BundleContext;
@@ -34,31 +38,32 @@ public class Activator extends AbstractUIPlugin {
 
 	// The shared instance
 	private static Activator plugin;
-	
+
 	/**
 	 * The constructor
 	 */
 	public Activator() {
-		if(PlatformUI.isWorkbenchRunning()) { // if running in headless, the workbench does not exit
+		if (PlatformUI.isWorkbenchRunning()) { // if running in headless, the workbench does not exit
 			IWorkbench workbench = PlatformUI.getWorkbench();
-			//final IWorkbenchPage activePage = workbench.getActiveWorkbenchWindow().getActivePage();
+			// final IWorkbenchPage activePage =
+			// workbench.getActiveWorkbenchWindow().getActivePage();
 			workbench.addWorkbenchListener(new IWorkbenchListener() {
 				public boolean preShutdown(IWorkbench workbench, boolean forced) {
-					
-					// close all editors (a bit too strong ;-)  )
+
+					// close all editors (a bit too strong ;-) )
 					// activePage.closeEditors(activePage.getEditorReferences(), false);
-					
+
 					// try to close only Sirius sessions related to engines
-					for (Entry<String, IExecutionEngine<?>> engineEntry : org.eclipse.gemoc.executionframework.engine.Activator.getDefault().gemocRunningEngineRegistry.getRunningEngines().entrySet())
-				    {	
-						try{
+					for (Entry<String, IExecutionEngine<?>> engineEntry : org.eclipse.gemoc.executionframework.engine.Activator
+							.getDefault().gemocRunningEngineRegistry.getRunningEngines().entrySet()) {
+						try {
 							// stop any running engine
 							IExecutionEngine<?> engine = engineEntry.getValue();
-							if(engine.getRunningStatus() != RunStatus.Stopped){
-								
+							if (engine.getRunningStatus() != RunStatus.Stopped) {
+
 								engine.dispose();
 							}
-							
+
 							// ensure to clear sirius session
 							URI uri = engine.getExecutionContext().getRunConfiguration().getAnimatorURI();
 							if (uri != null) {
@@ -66,21 +71,25 @@ public class Activator extends AbstractUIPlugin {
 								session.close(new NullProgressMonitor());
 								SessionManager.INSTANCE.remove(session);
 							}
-								
-						} catch (Exception e){ /* we don't care try the other */}
-			    	}
-					
+
+						} catch (Exception e) {
+							/* we don't care try the other */}
+					}
+
 					return true;
 				}
+
 				public void postShutdown(IWorkbench workbench) {
 				}
-			}); 
+			});
 		}
 	}
 
 	/*
 	 * (non-Javadoc)
-	 * @see org.eclipse.ui.plugin.AbstractUIPlugin#start(org.osgi.framework.BundleContext)
+	 * 
+	 * @see org.eclipse.ui.plugin.AbstractUIPlugin#start(org.osgi.framework.
+	 * BundleContext)
 	 */
 	public void start(BundleContext context) throws Exception {
 		super.start(context);
@@ -89,7 +98,9 @@ public class Activator extends AbstractUIPlugin {
 
 	/*
 	 * (non-Javadoc)
-	 * @see org.eclipse.ui.plugin.AbstractUIPlugin#stop(org.osgi.framework.BundleContext)
+	 * 
+	 * @see
+	 * org.eclipse.ui.plugin.AbstractUIPlugin#stop(org.osgi.framework.BundleContext)
 	 */
 	public void stop(BundleContext context) throws Exception {
 		plugin = null;
@@ -103,6 +114,35 @@ public class Activator extends AbstractUIPlugin {
 	 */
 	public static Activator getDefault() {
 		return plugin;
+	}
+
+	public AnimationRefreshStrategy getAnimationRefreshStrategy() {
+		try {
+			return AnimationRefreshStrategy.valueOf(
+					Activator.getDefault().getPreferenceStore().getString(PreferenceConstants.P_REFRESH_STRATEGY));
+		} catch (IllegalArgumentException e) {
+			return AnimationRefreshStrategy.Every;
+		}
+	}
+	
+	/**
+	 * send a warning to the plugin log
+	 * 
+	 * @param msg
+	 * @param e
+	 */
+	public static void warning(String msg, Exception e) {
+		getDefault().getLog().log(new Status(IStatus.WARNING, PLUGIN_ID, msg, e));
+	}
+
+	/**
+	 * send an error to the plugin log
+	 * 
+	 * @param msg
+	 * @param e
+	 */
+	public static void error(String msg, Exception e) {
+		getDefault().getLog().log(new Status(IStatus.ERROR, PLUGIN_ID, msg, e));
 	}
 
 }

@@ -36,8 +36,8 @@ public final class ThreadUtils {
 	 *         connected and the given {@link Thread} state is suspended.
 	 */
 	public static boolean canResume(Thread thread) {
-		return thread.getDebugTarget().getState() == DebugTargetState.CONNECTED
-				&& thread.getState() == State.SUSPENDED;
+		return thread.getDebugTarget().getState() == DebugTargetState.CONNECTED && thread
+				.getState() == State.SUSPENDED;
 	}
 
 	/**
@@ -77,8 +77,8 @@ public final class ThreadUtils {
 	 *         connected and the given {@link Thread} state is running, <code>false</code> otherwise
 	 */
 	public static boolean isActive(Thread thread) {
-		return thread.getDebugTarget().getState() == DebugTargetState.CONNECTED
-				&& ThreadUtils.isActiveStat(thread.getState());
+		return thread.getDebugTarget().getState() == DebugTargetState.CONNECTED && ThreadUtils.isActiveStat(
+				thread.getState());
 	}
 
 	/**
@@ -103,8 +103,8 @@ public final class ThreadUtils {
 	 *         return, <code>false</code> otherwise
 	 */
 	public static boolean isStepping(Thread thread) {
-		return thread.getDebugTarget().getState() == DebugTargetState.CONNECTED
-				&& ThreadUtils.isSteppingState(thread.getState());
+		return thread.getDebugTarget().getState() == DebugTargetState.CONNECTED && ThreadUtils
+				.isSteppingState(thread.getState());
 	}
 
 	/**
@@ -144,8 +144,8 @@ public final class ThreadUtils {
 	public static void suspendedReply(Thread thread) {
 		// final StackFrame topStackFrame = thread.getTopStackFrame();
 		final State state = thread.getState();
-		if (thread.getDebugTarget().getState() == DebugTargetState.CONNECTED
-				&& (state == State.SUSPENDING || isActiveStat(state))) {
+		if (thread.getDebugTarget().getState() == DebugTargetState.CONNECTED && (state == State.SUSPENDING
+				|| isActiveStat(state))) {
 			thread.setState(State.SUSPENDED);
 			ThreadUtils.unchangeVariables(thread);
 		} else {
@@ -183,7 +183,8 @@ public final class ThreadUtils {
 		if (ThreadUtils.canTerminate(thread)) {
 			thread.setState(State.TERMINATING);
 		} else {
-			throw new IllegalStateException("can't terminate a thread if this debug target is not connected.");
+			throw new IllegalStateException(
+					"can't terminate a thread if this debug target is not connected.");
 		}
 	}
 
@@ -196,8 +197,7 @@ public final class ThreadUtils {
 	 */
 	public static void terminatedReply(Thread thread) {
 		if ((thread.getDebugTarget().getState() == DebugTargetState.CONNECTED || thread.getDebugTarget()
-				.getState() == DebugTargetState.TERMINATING)
-				&& thread.getState() != State.TERMINATED) {
+				.getState() == DebugTargetState.TERMINATING) && thread.getState() != State.TERMINATED) {
 			thread.setState(State.TERMINATED);
 		} else {
 			throw new IllegalStateException(
@@ -244,9 +244,9 @@ public final class ThreadUtils {
 	 */
 	public static boolean canStepReturn(Thread thread) {
 		final StackFrame topStackFrame = thread.getTopStackFrame();
-		return thread.getDebugTarget().getState() == DebugTargetState.CONNECTED
-				&& thread.getState() == State.SUSPENDED && topStackFrame != null
-				&& topStackFrame.getParentFrame() != null;
+		return thread.getDebugTarget().getState() == DebugTargetState.CONNECTED && thread
+				.getState() == State.SUSPENDED && topStackFrame != null && topStackFrame
+						.getParentFrame() != null;
 	}
 
 	/**
@@ -275,9 +275,9 @@ public final class ThreadUtils {
 	 */
 	public static boolean canStepInto(Thread thread) {
 		final StackFrame topStackFrame = thread.getTopStackFrame();
-		return thread.getDebugTarget().getState() == DebugTargetState.CONNECTED
-				&& thread.getState() == State.SUSPENDED && topStackFrame != null
-				&& topStackFrame.isCanStepIntoCurrentInstruction();
+		return thread.getDebugTarget().getState() == DebugTargetState.CONNECTED && thread
+				.getState() == State.SUSPENDED && topStackFrame != null && topStackFrame
+						.isCanStepIntoCurrentInstruction();
 	}
 
 	/**
@@ -304,8 +304,8 @@ public final class ThreadUtils {
 	 * @return <code>true</code> if the given {@link Thread} is suspended.
 	 */
 	public static boolean canStepOver(Thread thread) {
-		return thread.getDebugTarget().getState() == DebugTargetState.CONNECTED
-				&& thread.getState() == State.SUSPENDED;
+		return thread.getDebugTarget().getState() == DebugTargetState.CONNECTED && thread
+				.getState() == State.SUSPENDED;
 	}
 
 	/**
@@ -386,8 +386,8 @@ public final class ThreadUtils {
 	 *         {@link Thread} is suspended.
 	 */
 	private static boolean canSetVariable(Thread thread) {
-		return thread.getDebugTarget().getState() == DebugTargetState.CONNECTED
-				&& thread.getState() == State.SUSPENDED;
+		return thread.getDebugTarget().getState() == DebugTargetState.CONNECTED && thread
+				.getState() == State.SUSPENDED;
 	}
 
 	/**
@@ -489,8 +489,8 @@ public final class ThreadUtils {
 	 *         {@link State#SUSPENDED}.
 	 */
 	public static boolean canPushFrame(Thread thread) {
-		return thread.getDebugTarget().getState() == DebugTargetState.CONNECTED
-				&& thread.getState() == State.SUSPENDED;
+		return thread.getDebugTarget().getState() == DebugTargetState.CONNECTED && thread
+				.getState() == State.SUSPENDED;
 	}
 
 	/**
@@ -524,8 +524,8 @@ public final class ThreadUtils {
 	 */
 	public static boolean canPopFrame(Thread thread) {
 		final StackFrame topStackFrame = thread.getTopStackFrame();
-		return thread.getDebugTarget().getState() == DebugTargetState.CONNECTED
-				&& thread.getState() == State.SUSPENDED && topStackFrame != null;
+		return thread.getDebugTarget().getState() == DebugTargetState.CONNECTED && thread
+				.getState() == State.SUSPENDED && topStackFrame != null;
 	}
 
 	/**
@@ -582,7 +582,8 @@ public final class ThreadUtils {
 			topStackFrame.setCurrentInstruction(instruction);
 			topStackFrame.setCanStepIntoCurrentInstruction(canStepInto);
 		} else {
-			throw new IllegalStateException("can't set current instrcution when there is no top stack frame.");
+			throw new IllegalStateException(
+					"can't set current instrcution when there is no top stack frame.");
 		}
 	}
 

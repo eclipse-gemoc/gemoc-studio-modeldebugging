@@ -19,4 +19,20 @@
             providerClass="org.eclipse.gemoc.executionframework.extensions.sirius.modelloader.DebugPermissionProvider">
       </permissionprovider>
    </extension>
+   
+   <extension
+         point="org.eclipse.ui.preferencePages">
+      <page
+            category="org.eclipse.debug.ui.DebugPreferencePage"
+            class="org.eclipse.gemoc.executionframework.extensions.sirius.ui.preferences.GemocAnimationPreferencePage"
+            id="org.eclipse.gemoc.executionframework.extensions.sirius.ui.preferences.GemocAnimationPreferencePage"
+            name="GEMOC Sirius Animation">
+      </page>
+   </extension>
+   <extension
+         point="org.eclipse.core.runtime.preferences">
+      <initializer
+            class="org.eclipse.gemoc.executionframework.extensions.sirius.ui.preferences.PreferenceInitializer">
+      </initializer>
+   </extension>
 </plugin>
