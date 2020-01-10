@@ -256,7 +256,9 @@ public class EnginesStatusView extends ViewPart implements IEngineAddon, IEngine
 						break;
 					}
 					result += "\n";
-					result += "Step " + engine.getEngineStatus().getNbLogicalStepRun();
+					long runSteps = engine.getEngineStatus().getNbLogicalStepRun();
+					long notCompletedSteps = engine.getEngineStatus().getNbLogicalStepCalled() - runSteps;
+					result += String.format("Steps (Completed[NotCompleted]): %d[%d]", runSteps, notCompletedSteps);
 				}
 				return result;
 			}
@@ -273,7 +275,9 @@ public class EnginesStatusView extends ViewPart implements IEngineAddon, IEngine
 				String result = "";
 				if (element instanceof IExecutionEngine) {
 					IExecutionEngine<?> engine = (IExecutionEngine<?>) element;
-					result = String.format("%d", engine.getEngineStatus().getNbLogicalStepRun());
+					long runSteps = engine.getEngineStatus().getNbLogicalStepRun();
+					long notCompletedSteps = engine.getEngineStatus().getNbLogicalStepCalled() - runSteps;
+					result = String.format("%d[%d]", runSteps, notCompletedSteps);
 				}
 				return result;
 			}
@@ -379,7 +383,8 @@ public class EnginesStatusView extends ViewPart implements IEngineAddon, IEngine
 	}
 
 	@Override
-	public void aboutToExecuteStep(IExecutionEngine<?> executionEngine, Step<?> logicalStepToApply) {
+	public void aboutToExecuteStep(IExecutionEngine<?> engine, Step<?> logicalStepToApply) {
+		reselectEngine(engine);
 	}
 
 	@Override
