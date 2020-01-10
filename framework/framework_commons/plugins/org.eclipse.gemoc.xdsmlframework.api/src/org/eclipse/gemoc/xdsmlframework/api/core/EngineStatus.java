@@ -17,6 +17,7 @@ import org.eclipse.gemoc.trace.commons.model.trace.Step;
  *
  */
 public class  EngineStatus {
+	long nbLogicalStepCalled = 0;
 	long nbLogicalStepRun = 0;
 	
 	Step<?> chosenLogicalStep;
@@ -51,6 +52,27 @@ public class  EngineStatus {
 	public void incrementNbLogicalStepRun() {
 		this.nbLogicalStepRun +=1;
 	}
-		
+	
+	/**
+	 * Numbers of Logical step that have been called (may or may not have finished yet)
+	 * @return number of steps that have been called
+	 */
+	public long getNbLogicalStepCalled() {
+		return nbLogicalStepCalled;
+	}
+	/**
+	 * This method may be used to monitor engine progression 
+	 * @param nbLogicalStepCalled new value for nbLogicalStepCalled
+	 */
+	public void setNbLogicalStepCalled(long nbLogicalStepCalled) {
+		this.nbLogicalStepCalled = nbLogicalStepCalled;
+	}
+	
+	/**
+	 * An engine is responsible for incrementing this when a LogicalStep will be called
+	 */
+	public void incrementNbLogicalStepCalled() {
+		this.nbLogicalStepCalled +=1;
+	}
 	
 }
