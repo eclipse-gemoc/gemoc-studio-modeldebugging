@@ -451,7 +451,7 @@ public abstract class AbstractExecutionEngine<C extends IExecutionContext<R, ?, 
 	 * step was done through a RecordingCommand, it can be given.
 	 */
 	protected final void beforeExecutionStep(Step<?> step, RecordingCommand rc) {
-
+		engineStatus.incrementNbLogicalStepCalled();
 		try {
 
 			currentSteps.push(step);
