@@ -1,5 +1,5 @@
 /*******************************************************************************
- * Copyright (c) 2016, 2017 Inria and others.
+ * Copyright (c) 2016, 2020 Inria and others.
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
  * which accompanies this distribution, and is available at
@@ -26,7 +26,9 @@ import org.eclipse.emf.ecore.resource.ResourceSet;
 import org.eclipse.emf.ecore.resource.impl.ResourceSetImpl;
 import org.eclipse.emf.transaction.TransactionalEditingDomain;
 import org.eclipse.emf.transaction.impl.InternalTransactionalEditingDomain;
+import org.eclipse.gemoc.executionframework.engine.commons.GenericModelExecutionContext;
 import org.eclipse.gemoc.executionframework.engine.commons.K3DslHelper;
+import org.eclipse.gemoc.executionframework.engine.commons.sequential.ISequentialRunConfiguration;
 import org.eclipse.gemoc.executionframework.engine.core.AbstractCommandBasedSequentialExecutionEngine;
 import org.eclipse.gemoc.executionframework.engine.core.EngineStoppedException;
 import org.eclipse.jdt.core.IPackageFragmentRoot;
@@ -52,7 +54,7 @@ import fr.inria.diverse.melange.adapters.EObjectAdapter;
  * @author Didier Vojtisek<didier.vojtisek@inria.fr>
  *
  */
-public class PlainK3ExecutionEngine extends AbstractCommandBasedSequentialExecutionEngine<SequentialModelExecutionContext<IK3RunConfiguration>, IK3RunConfiguration>
+public class PlainK3ExecutionEngine extends AbstractCommandBasedSequentialExecutionEngine<GenericModelExecutionContext<ISequentialRunConfiguration>, ISequentialRunConfiguration>
 		implements IStepManager {
 
 	private Method initializeMethod;
@@ -74,7 +76,7 @@ public class PlainK3ExecutionEngine extends AbstractCommandBasedSequentialExecut
 	 * operation.
 	 */
 	@Override
-	protected void prepareEntryPoint(SequentialModelExecutionContext<IK3RunConfiguration> executionContext) {
+	protected void prepareEntryPoint(GenericModelExecutionContext<ISequentialRunConfiguration> executionContext) {
 		/*
 		 * Get info from the RunConfiguration
 		 */
@@ -128,7 +130,7 @@ public class PlainK3ExecutionEngine extends AbstractCommandBasedSequentialExecut
 	}
 
 	@Override
-	protected void prepareInitializeModel(SequentialModelExecutionContext<IK3RunConfiguration> executionContext) {
+	protected void prepareInitializeModel(GenericModelExecutionContext<ISequentialRunConfiguration> executionContext) {
 
 		// try to get the initializeModelRunnable
 		String modelInitializationMethodQName = executionContext.getRunConfiguration().getModelInitializationMethod();
@@ -318,7 +320,7 @@ public class PlainK3ExecutionEngine extends AbstractCommandBasedSequentialExecut
 	 * 
 	 * Return null if not found.
 	 */
-	private Bundle findBundle(final SequentialModelExecutionContext<IK3RunConfiguration> executionContext, String aspectClassName) {
+	private Bundle findBundle(final GenericModelExecutionContext<ISequentialRunConfiguration> executionContext, String aspectClassName) {
 
 		// Look using JavaWorkspaceScope as this is safer and will look in
 		// dependencies
