@@ -8,21 +8,18 @@
  * Contributors:
  *     Inria - initial API and implementation
  *******************************************************************************/
-package org.eclipse.gemoc.execution.sequential.javaengine;
+package org.eclipse.gemoc.executionframework.engine.commons;
 
 import org.eclipse.core.runtime.CoreException;
-import org.eclipse.gemoc.executionframework.engine.commons.AbstractModelExecutionContext;
-import org.eclipse.gemoc.executionframework.engine.commons.DefaultExecutionPlatform;
-import org.eclipse.gemoc.executionframework.engine.commons.EngineContextException;
 import org.eclipse.gemoc.trace.commons.model.trace.MSEModel;
 import org.eclipse.gemoc.xdsmlframework.api.core.ExecutionMode;
 import org.eclipse.gemoc.xdsmlframework.api.core.IRunConfiguration;
 import org.eclipse.gemoc.xdsmlframework.api.extensions.languages.LanguageDefinitionExtension;
 import org.eclipse.gemoc.xdsmlframework.api.extensions.languages.LanguageDefinitionExtensionPoint;
 
-public class SequentialModelExecutionContext<T extends IRunConfiguration> extends AbstractModelExecutionContext<T, DefaultExecutionPlatform, LanguageDefinitionExtension> {
+public class GenericModelExecutionContext<T extends IRunConfiguration> extends AbstractModelExecutionContext<T, DefaultExecutionPlatform, LanguageDefinitionExtension> {
 
-	public SequentialModelExecutionContext(T runConfiguration, ExecutionMode executionMode)
+	public GenericModelExecutionContext(T runConfiguration, ExecutionMode executionMode)
 			throws EngineContextException {
 		super(runConfiguration, executionMode);
 	}

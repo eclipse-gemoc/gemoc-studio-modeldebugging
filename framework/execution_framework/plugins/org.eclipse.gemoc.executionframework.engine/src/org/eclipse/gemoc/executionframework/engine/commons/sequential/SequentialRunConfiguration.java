@@ -1,5 +1,5 @@
 /*******************************************************************************
- * Copyright (c) 2016 Inria and others.
+ * Copyright (c) 2016, 2020 Inria and others.
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
  * which accompanies this distribution, and is available at
@@ -8,15 +8,18 @@
  * Contributors:
  *     Inria - initial API and implementation
  *******************************************************************************/
-package org.eclipse.gemoc.execution.sequential.javaengine;
+package org.eclipse.gemoc.executionframework.engine.commons.sequential;
 
 import org.eclipse.core.runtime.CoreException;
 import org.eclipse.debug.core.ILaunchConfiguration;
 import org.eclipse.gemoc.executionframework.engine.core.RunConfiguration;
 
-public class K3RunConfiguration extends RunConfiguration implements IK3RunConfiguration {
+/**
+ * Basic RunConfiguration that can be used by sequential engines
+ */
+public class SequentialRunConfiguration extends RunConfiguration implements ISequentialRunConfiguration {
 
-	public K3RunConfiguration(ILaunchConfiguration launchConfiguration) throws CoreException {
+	public SequentialRunConfiguration(ILaunchConfiguration launchConfiguration) throws CoreException {
 		super(launchConfiguration);
 	}
 
