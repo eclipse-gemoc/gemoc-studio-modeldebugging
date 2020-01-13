@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?eclipse version="3.4"?>
+<plugin>
+   <extension
+         point="org.eclipse.debug.ui.debugModelPresentations">
+      <debugModelPresentation
+            class="org.eclipse.gemoc.executionframework.engine.ui.genericdebugmodel.GemocGenericDebugModelPresentation"
+            id="org.eclipse.gemoc.executionframework.engine.ui.generic.debugModel">
+      </debugModelPresentation>
+   </extension>
+   <extension
+         point="org.eclipse.debug.core.sourceLocators">
+      <sourceLocator
+            class="org.eclipse.gemoc.executionframework.engine.ui.genericdebugmodel.GemocGenericSourceLocator"
+            id="org.eclipse.gemoc.executionframework.engine.ui.generic.sourceLocator"
+            name="GEMOC Generic Source Locator">
+      </sourceLocator>
+   </extension>
+
+</plugin>
