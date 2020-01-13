@@ -1,5 +1,5 @@
 /*******************************************************************************
- * Copyright (c) 2016, 2017 Inria and others.
+ * Copyright (c) 2016, 2020 Inria and others.
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
  * which accompanies this distribution, and is available at
@@ -30,7 +30,7 @@ public class GenericModelExecutionContext<T extends IRunConfiguration> extends A
 				.findDefinition(_runConfiguration.getLanguageName());
 		if (languageDefinition == null) {
 			String message = "Cannot find xdsml definition for the language "
-					+ _runConfiguration.getLanguageName() + ", please verify that is is correctly deployed.";
+					+ _runConfiguration.getLanguageName() + ", please verify that it is correctly deployed.";
 			EngineContextException exception = new EngineContextException(message);
 			throw exception;
 		}
