@@ -184,31 +184,7 @@
          <actionSet
                id="org.eclipse.debug.ui.launchActionSet">
          </actionSet>
-      </perspectiveExtension>
-      <perspectiveExtension
-            targetID="org.eclipse.sirius.ui.tools.perspective.modeling">
-        <!-- <newWizardShortcut
-               id="org.eclipse.gemoc.gemoc_modeling_workbench.ui.wizards.CreateNewGemocModelingProject">
-         </newWizardShortcut>-->
-         <view
-               id="org.eclipse.gemoc.executionframework.engine.io.views.steps.LogicalStepsView"
-               minimized="false"
-               relationship="stack"
-               relative="org.eclipse.sirius.ui.tools.views.model.explorer"
-               visible="true">
-         </view>
-      </perspectiveExtension>
-      <perspectiveExtension
-            targetID="org.eclipse.debug.ui.DebugPerspective">
-         <view
-               id="org.eclipse.gemoc.executionframework.engine.io.views.steps.LogicalStepsView"
-               minimized="false"
-               ratio="0.5"
-               relationship="right"
-               relative="org.eclipse.debug.ui.VariableView">
-         </view>
-      </perspectiveExtension>
-      
+      </perspectiveExtension>      
    </extension>
    
       <extension
