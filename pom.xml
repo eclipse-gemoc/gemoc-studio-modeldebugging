@@ -30,7 +30,7 @@
 		<tycho-version>1.5.1</tycho-version>
     	<xtend.version>2.14.0</xtend.version>
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
-		<tycho.scmUrl>scm:git:https://github.com/SiriusLab/ModelDebugging.git</tycho.scmUrl>
+		<tycho.scmUrl>scm:git:https://github.com/eclipse/gemoc-studio-modeldebugging.git</tycho.scmUrl>
 		<!-- <sonar.projectKey>gemoc:${project.groupId}:${project.artifactId}</sonar.projectKey>-->	
 		
 		<eclipse.release.p2.url>http://download.eclipse.org/releases/photon</eclipse.release.p2.url>
@@ -314,15 +314,6 @@
 	        <modules>
 	        	<module>trace/pom.xml</module>
 	        	<module>framework/pom.xml</module>
-	        </modules>
-		</profile>
-		<profile>
-	        <id>java_execution</id>
-	        <activation>
-	            <activeByDefault>true</activeByDefault>
-	        </activation>
-	        <modules>
-	        	<module>java_execution/pom.xml</module>
 	        </modules>
 		</profile>
 		<profile>
