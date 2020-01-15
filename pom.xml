@@ -298,6 +298,14 @@
 		<!-- profiles are used to build sub groups -->
 		<!--  as they areactive by default, simply do mvn clean package to build everything -->
 		<profile>
+	        <id>commons</id>
+	        <activation>
+	            <activeByDefault>true</activeByDefault>
+	        </activation>
+	        <modules>
+	        	<module>commons/pom.xml</module>
+	        </modules>
+		</profile>		<profile>
 	        <id>modelanimation</id>
 	        <activation>
 	            <activeByDefault>true</activeByDefault>
