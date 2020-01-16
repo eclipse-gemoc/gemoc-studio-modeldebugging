@@ -434,12 +434,18 @@ class WorkspaceTestHelper {
 		// If this is the UI thread,
 		// then process input.
 		if (display !== null) {
-			val long endTimeMillis = System.currentTimeMillis() + waitTimeMillis;
+			val long endTimeMillis = System.currentTimeMillis() + (waitTimeMillis/2);
 			while (System.currentTimeMillis() < endTimeMillis && !closed) {
 				if (!display.readAndDispatch())
 					display.sleep();
 			}
 			display.update();
+			// do a sleep on current thread too (use half of the allocated time
+			try {
+				Thread.sleep(waitTimeMillis/2);
+			} catch (InterruptedException e) {
+				// Ignored.
+			}
 		}
       // Otherwise, perform a simple sleep.
 		else {
