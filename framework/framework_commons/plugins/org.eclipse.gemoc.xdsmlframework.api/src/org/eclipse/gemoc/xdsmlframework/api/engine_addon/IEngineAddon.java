@@ -11,6 +11,7 @@
 package org.eclipse.gemoc.xdsmlframework.api.engine_addon;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Collection;
 import java.util.List;
 
@@ -87,4 +88,33 @@ public interface IEngineAddon {
 	default public List<String> validate(List<IEngineAddon> otherAddons) {
 		return new ArrayList<String>();
 	};
+	
+	/**
+	 * indicates the ID of the addon as defined in the extension point for explicit addon
+	 * or manually defined for implicit addons
+	 * default implementation assumes that the addon ID is the full qualified name of the java class
+	 * @return the addon ID
+	 */
+	default public String getAddonID() {
+		return this.getClass().getCanonicalName();
+	}
+	
+	/**
+	 * provide the list of Tags are assigned to this addon
+	 * it contains the addon ID as minimal tag
+	 * @return the list of tags of this addon 
+	 */
+	default public List<String> getTags() {
+		return  Arrays.asList(getAddonID());
+	}
+	
+	/**
+	 * provides the list of rules defined by this addon in order to sort the engine's calls to its addons 
+	 * A given rule indicate when to call the current addon relatively to addons referred by the rule
+	 * @return
+	 */
+	default public List<EngineAddonSortingRule> getAddonSortingRules(){
+		return new ArrayList<EngineAddonSortingRule>();
+	}
+	
 }

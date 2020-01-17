@@ -10,6 +10,9 @@
  *******************************************************************************/
 package org.eclipse.gemoc.xdsmlframework.api.core;
 
+import java.util.List;
+
+import org.eclipse.gemoc.xdsmlframework.api.engine_addon.EngineAddonSortingRule;
 import org.eclipse.gemoc.xdsmlframework.api.engine_addon.IEngineAddon;
 
 public interface IExecutionPlatform extends IDisposable {
@@ -23,6 +26,16 @@ public interface IExecutionPlatform extends IDisposable {
 
 	void removeEngineAddon(IEngineAddon addon);
 
+	/** 
+	 * @return an iterable on the list of all addons enabled for this execution
+	 */
 	Iterable<IEngineAddon> getEngineAddons();
+	
+	/**
+	 * 
+	 * @param engineEvent
+	 * @return an iterable on the list of all addons enabled for this execution that are sorted using EngineAddonSortingRule for the given engineEvent
+	 */
+	List<IEngineAddon> getSortedEngineAddons(EngineAddonSortingRule.EngineEvent engineEvent);
 
 }

@@ -11,10 +11,26 @@
 package org.eclipse.gemoc.executionframework.ui.views.engine;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Collection;
 import java.util.List;
 import java.util.Map.Entry;
 
+import org.eclipse.gemoc.commons.eclipse.ui.TreeViewerHelper;
+import org.eclipse.gemoc.executionframework.debugger.IGemocDebugger;
+import org.eclipse.gemoc.executionframework.engine.core.GemocRunningEnginesRegistry;
+import org.eclipse.gemoc.executionframework.engine.core.IEngineRegistrationListener;
+import org.eclipse.gemoc.executionframework.ui.Activator;
+import org.eclipse.gemoc.executionframework.ui.SharedIcons;
+import org.eclipse.gemoc.executionframework.ui.views.engine.actions.DisposeAllStoppedEnginesAction;
+import org.eclipse.gemoc.executionframework.ui.views.engine.actions.DisposeStoppedEngineAction;
+//import org.eclipse.gemoc.executionframework.ui.views.engine.actions.PauseResumeEngineDeciderAction;
+import org.eclipse.gemoc.executionframework.ui.views.engine.actions.StopEngineAction;
+import org.eclipse.gemoc.trace.commons.model.trace.Step;
+//import org.eclipse.gemoc.executionframework.ui.views.engine.actions.SwitchDeciderAction;
+import org.eclipse.gemoc.xdsmlframework.api.core.IExecutionEngine;
+import org.eclipse.gemoc.xdsmlframework.api.engine_addon.EngineAddonSortingRule;
+import org.eclipse.gemoc.xdsmlframework.api.engine_addon.IEngineAddon;
 import org.eclipse.jface.action.Action;
 import org.eclipse.jface.action.IToolBarManager;
 import org.eclipse.jface.resource.JFaceResources;
@@ -36,21 +52,6 @@ import org.eclipse.swt.widgets.TreeColumn;
 import org.eclipse.ui.IActionBars;
 import org.eclipse.ui.PlatformUI;
 import org.eclipse.ui.part.ViewPart;
-import org.eclipse.gemoc.commons.eclipse.ui.TreeViewerHelper;
-import org.eclipse.gemoc.executionframework.engine.core.GemocRunningEnginesRegistry;
-import org.eclipse.gemoc.executionframework.engine.core.IEngineRegistrationListener;
-import org.eclipse.gemoc.executionframework.ui.Activator;
-import org.eclipse.gemoc.executionframework.ui.SharedIcons;
-import org.eclipse.gemoc.executionframework.ui.views.engine.actions.DisposeAllStoppedEnginesAction;
-import org.eclipse.gemoc.executionframework.ui.views.engine.actions.DisposeStoppedEngineAction;
-//import org.eclipse.gemoc.executionframework.ui.views.engine.actions.PauseResumeEngineDeciderAction;
-import org.eclipse.gemoc.executionframework.ui.views.engine.actions.StopEngineAction;
-import org.eclipse.gemoc.xdsmlframework.api.core.EngineStatus.RunStatus;
-//import org.eclipse.gemoc.executionframework.ui.views.engine.actions.SwitchDeciderAction;
-import org.eclipse.gemoc.xdsmlframework.api.core.IExecutionEngine;
-import org.eclipse.gemoc.xdsmlframework.api.engine_addon.IEngineAddon;
-
-import org.eclipse.gemoc.trace.commons.model.trace.Step;
 
 public class EnginesStatusView extends ViewPart implements IEngineAddon, IEngineRegistrationListener {
 
@@ -373,9 +374,9 @@ public class EnginesStatusView extends ViewPart implements IEngineAddon, IEngine
 
 	}
 
-	@Override
-	public void engineAboutToStart(IExecutionEngine<?> engine) {
-	}
+	// ***************
+	// IEngineAddon
+	// ***************
 
 	@Override
 	public void engineStarted(IExecutionEngine<?> engine) {
@@ -403,37 +404,27 @@ public class EnginesStatusView extends ViewPart implements IEngineAddon, IEngine
 	}
 
 	@Override
-	public void stepSelected(IExecutionEngine<?> engine, Step<?> selectedLogicalStep) {
-		// TODO Auto-generated method stub
-
-	}
-
-	@Override
 	public void stepExecuted(IExecutionEngine<?> engine, Step<?> logicalStepExecuted) {
 		reselectEngine(engine); // need to update the executed step count in the view
-
-	}
-
-	@Override
-	public void engineStatusChanged(IExecutionEngine<?> engine, RunStatus newStatus) {
-		// TODO Auto-generated method stub
-
 	}
 
 	@Override
 	public void proposedStepsChanged(IExecutionEngine<?> engine, Collection<Step<?>> logicalSteps) {
 		reselectEngine(engine);
-
 	}
 
 	@Override
-	public void engineAboutToDispose(IExecutionEngine<?> engine) {
-		// TODO Auto-generated method stub
-
+	public List<EngineAddonSortingRule> getAddonSortingRules() {
+		// create rules to ensure good behavior with GemocDebugger
+		// the debugger addon will stop the execution in this event
+		// make sure to be called before in order to properly refresh the view
+		ArrayList<EngineAddonSortingRule> sortingRules = new ArrayList<EngineAddonSortingRule>();
+		sortingRules.add(new EngineAddonSortingRule( this,
+				EngineAddonSortingRule.EngineEvent.aboutToExecuteStep,
+				EngineAddonSortingRule.Priority.BEFORE,
+				Arrays.asList(IGemocDebugger.GROUP_TAG)));
+		return sortingRules;
 	}
-
-	@Override
-	public List<String> validate(List<IEngineAddon> otherAddons) {
-		return new ArrayList<>();
-	}
+	
+	
 }

@@ -1,5 +1,5 @@
 /*******************************************************************************
- * Copyright (c) 2016, 2017 Inria and others.
+ * Copyright (c) 2016, 2020 Inria and others.
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
  * which accompanies this distribution, and is available at
@@ -10,6 +10,8 @@
  *******************************************************************************/
 package org.eclipse.gemoc.executionframework.debugger;
 
+import java.util.Arrays;
+import java.util.List;
 import java.util.function.BiPredicate;
 
 import org.eclipse.gemoc.trace.commons.model.trace.Step;
@@ -22,4 +24,11 @@ public interface IGemocDebugger extends IEngineAddon {
 
 	public abstract void addPredicateBreakpoint(BiPredicate<IExecutionEngine<?>, Step<?>> predicate);
 
+	@Override
+	default List<String> getTags() {
+		// add the "GemocDebugger" tag to the list
+		return  Arrays.asList(GROUP_TAG, getAddonID());
+	}
+	
+	public final String GROUP_TAG = "GemocDebugger";
 }

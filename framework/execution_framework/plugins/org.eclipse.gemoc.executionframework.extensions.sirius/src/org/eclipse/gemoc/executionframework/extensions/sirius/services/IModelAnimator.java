@@ -10,8 +10,14 @@
  *******************************************************************************/
 package org.eclipse.gemoc.executionframework.extensions.sirius.services;
 
+import org.eclipse.gemoc.xdsmlframework.api.engine_addon.EngineAddonSortingRule;
 import org.eclipse.gemoc.xdsmlframework.api.engine_addon.IEngineAddon;
 
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
+
+import org.eclipse.gemoc.executionframework.debugger.IGemocDebugger;
 import org.eclipse.gemoc.trace.commons.model.trace.Step;
 
 /**
@@ -40,5 +46,18 @@ public interface IModelAnimator extends IEngineAddon {
 	 *            the context {@link Object}
 	 */
 	void clear(Object context);
+	
+	@Override
+	public default List<EngineAddonSortingRule> getAddonSortingRules() {
+		// create rules to ensure good behavior with GemocDebugger
+		// the debugger addon will stop the execution in this event
+		// this rule makes sure to be called before in order to properly refresh the view
+		ArrayList<EngineAddonSortingRule> sortingRules = new ArrayList<EngineAddonSortingRule>();
+		sortingRules.add(new EngineAddonSortingRule( this,
+				EngineAddonSortingRule.EngineEvent.aboutToExecuteStep,
+				EngineAddonSortingRule.Priority.BEFORE,
+				Arrays.asList(IGemocDebugger.GROUP_TAG)));
+		return sortingRules;
+	}
 
 }
