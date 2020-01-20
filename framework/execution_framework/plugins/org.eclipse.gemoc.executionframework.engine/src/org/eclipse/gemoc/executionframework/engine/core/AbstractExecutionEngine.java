@@ -14,8 +14,10 @@ import java.io.PrintWriter;
 import java.io.StringWriter;
 import java.util.ArrayDeque;
 import java.util.Deque;
+import java.util.HashMap;
 import java.util.HashSet;
 import java.util.List;
+import java.util.Map;
 import java.util.Set;
 
 import org.eclipse.emf.ecore.resource.ResourceSet;
@@ -195,6 +197,7 @@ public abstract class AbstractExecutionEngine<C extends IExecutionContext<R, ?, 
 				addonError(addon, e);
 			}
 		}
+		sortedAddonMapCache.clear();
 	}
 
 	protected void notifyEngineStatusChanged(RunStatus newStatus) {
@@ -207,8 +210,9 @@ public abstract class AbstractExecutionEngine<C extends IExecutionContext<R, ?, 
 		}
 	}
 
+	
 	protected void notifyAboutToExecuteLogicalStep(Step<?> l) {
-		for (IEngineAddon addon : getExecutionContext().getExecutionPlatform().getSortedEngineAddons(EngineEvent.aboutToExecuteStep)) {
+		for (IEngineAddon addon : getCachedSortedEngineAddons(EngineEvent.aboutToExecuteStep)) {
 			try {
 				addon.aboutToExecuteStep(this, l);
 			} catch (EngineStoppedException ese) {
@@ -223,7 +227,7 @@ public abstract class AbstractExecutionEngine<C extends IExecutionContext<R, ?, 
 	}
 
 	protected void notifyLogicalStepExecuted(Step<?> l) {
-		for (IEngineAddon addon : getExecutionContext().getExecutionPlatform().getSortedEngineAddons(EngineEvent.stepExecuted)) {
+		for (IEngineAddon addon : getCachedSortedEngineAddons(EngineEvent.stepExecuted)) {
 			try {
 				addon.stepExecuted(this, l);
 			} catch (EngineStoppedException ese) {
@@ -235,6 +239,23 @@ public abstract class AbstractExecutionEngine<C extends IExecutionContext<R, ?, 
 		}
 	}
 
+	
+	protected Map<EngineAddonSortingRule.EngineEvent, List<IEngineAddon>> sortedAddonMapCache = new HashMap<EngineAddonSortingRule.EngineEvent, List<IEngineAddon>>();
+	/** 
+	 * a cache for the sort algorithm
+	 * applies only to most relevant event such as stepExecuted aboutToExecuteLogicalStep
+	 * should not be used for engineStatusChanged because engines may add new implicit addon
+	 */ 
+	protected List<IEngineAddon> getCachedSortedEngineAddons(EngineAddonSortingRule.EngineEvent engineEvent) {
+		List<IEngineAddon> cachedList = sortedAddonMapCache.get(engineEvent);
+		if (((cachedList != null))) {
+	      return cachedList;
+	    } else {
+	    	List<IEngineAddon> result = getExecutionContext().getExecutionPlatform().getSortedEngineAddons(engineEvent);
+	    	sortedAddonMapCache.put(engineEvent, result);
+	    	return result;
+	    }
+	}
 	
 	/*
 	 * (non-Javadoc)
