@@ -342,6 +342,23 @@ class GenericSequentialModelDebugger extends AbstractGemocDebugger {
 		// handle everything with shouldBreak
 		return FAKE_INSTRUCTION;
 	}
+	
+	
+	/**
+	 * Breakpoints are persistent, and can trigger pauses as long as they are not
+	 * removed.
+	 */
+	override addPredicateBreakpoint(BiPredicate<IExecutionEngine<?>, Step<?>> predicate) {
+		super.addPredicateBreakpoint(predicate);
+	}
+
+	
+	/**
+	 * A Break only trigger a single pause, then is removed.
+	 */
+	override addPredicateBreak(BiPredicate<IExecutionEngine<?>, Step<?>> predicate) {
+		super.addPredicateBreak(predicate);
+	}
 
 	override engineStarted(IExecutionEngine<?> executionEngine) {
 		spawnRunningThread(threadName, engine.getExecutionContext().getResourceModel().getContents().get(0));
