@@ -32,6 +32,7 @@ import org.eclipse.gemoc.commons.eclipse.messagingsystem.api.MessagingSystem;
 import org.eclipse.gemoc.dsl.debug.ide.adapter.IDSLCurrentInstructionListener;
 import org.eclipse.gemoc.executionframework.engine.commons.EngineContextException;
 import org.eclipse.gemoc.executionframework.engine.core.RunConfiguration;
+import org.eclipse.gemoc.executionframework.engine.ui.Activator;
 import org.eclipse.gemoc.executionframework.extensions.sirius.services.AbstractGemocAnimatorServices;
 import org.eclipse.gemoc.executionframework.extensions.sirius.services.AbstractGemocDebuggerServices;
 import org.eclipse.gemoc.xdsmlframework.api.core.EngineStatus.RunStatus;
@@ -120,6 +121,7 @@ abstract public class AbstractSequentialGemocLauncher<C extends IExecutionContex
 					// the engine
 					if (ILaunchManager.DEBUG_MODE.equals(mode)) {
 						IEngineAddon animator = AbstractGemocAnimatorServices.getAnimator();
+						Activator.getDefault().getMessaggingSystem().debug("Enabled implicit addon: "+animator.getAddonID(), getPluginID());
 						_executionEngine.getExecutionContext().getExecutionPlatform().addEngineAddon(animator);
 						try {
 							AbstractSequentialGemocLauncher.super.launch(configuration, mode, launch, monitor);

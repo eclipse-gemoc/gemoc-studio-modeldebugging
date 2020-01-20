@@ -11,6 +11,8 @@
 package org.eclipse.gemoc.executionframework.engine.ui;
 
 import org.eclipse.core.runtime.Status;
+import org.eclipse.gemoc.commons.eclipse.messagingsystem.api.MessagingSystem;
+import org.eclipse.gemoc.commons.eclipse.messagingsystem.api.MessagingSystemManager;
 import org.eclipse.jface.resource.ImageDescriptor;
 import org.eclipse.ui.plugin.AbstractUIPlugin;
 //import org.eclipse.gemoc.gemoc_language_workbench.extensions.sirius.services.AbstractGemocDebuggerServices;
@@ -90,5 +92,16 @@ public class Activator extends AbstractUIPlugin {
                 msg, 
                 e));
 	}
+
+	protected MessagingSystem messaggingSystem = null;
 	
+	public MessagingSystem getMessaggingSystem() {
+		if (messaggingSystem == null) {
+			MessagingSystemManager msm = new MessagingSystemManager();
+			messaggingSystem = msm.createBestPlatformMessagingSystem(
+					org.eclipse.gemoc.executionframework.engine.Activator.PLUGIN_ID,
+					org.eclipse.gemoc.executionframework.engine.Activator.CONSOLE_NAME);
+		}
+		return messaggingSystem;
+	}
 }

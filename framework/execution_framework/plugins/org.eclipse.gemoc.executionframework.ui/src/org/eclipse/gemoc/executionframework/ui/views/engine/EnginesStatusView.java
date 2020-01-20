@@ -342,6 +342,7 @@ public class EnginesStatusView extends ViewPart implements IEngineAddon, IEngine
 	public void engineRegistered(final IExecutionEngine<?> engine) {
 		Display.getDefault().syncExec(new Runnable() {
 			public void run() {
+				Activator.getDefault().getMessaggingSystem().debug("Enabled implicit addon: "+EnginesStatusView.this.getAddonID(), Activator.PLUGIN_ID);
 				engine.getExecutionContext().getExecutionPlatform().addEngineAddon(EnginesStatusView.this);
 				_viewer.setInput(org.eclipse.gemoc.executionframework.engine.Activator.getDefault().gemocRunningEngineRegistry);
 				TreeViewerHelper.resizeColumns(_viewer);

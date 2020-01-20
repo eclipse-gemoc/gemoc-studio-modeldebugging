@@ -29,6 +29,7 @@ import org.eclipse.gemoc.executionframework.debugger.IMutableFieldExtractor;
 import org.eclipse.gemoc.executionframework.debugger.IntrospectiveMutableFieldExtractor;
 import org.eclipse.gemoc.executionframework.debugger.OmniscientGenericSequentialModelDebugger;
 import org.eclipse.gemoc.executionframework.engine.core.RunConfiguration;
+import org.eclipse.gemoc.executionframework.engine.ui.Activator;
 import org.eclipse.gemoc.trace.commons.model.trace.Step;
 import org.eclipse.gemoc.trace.gemoc.api.IMultiDimensionalTraceAddon;
 import org.eclipse.gemoc.xdsmlframework.api.core.IExecutionContext;
@@ -99,6 +100,7 @@ abstract public class AbstractGemocLauncher<C extends IExecutionContext<?, ?, ?>
 			org.eclipse.gemoc.executionframework.engine.ui.Activator.error(e.getMessage(), e);
 		}
 
+		Activator.getDefault().getMessaggingSystem().debug("Enabled implicit addon: "+res.getAddonID(), getPluginID());
 		getExecutionEngine().getExecutionContext().getExecutionPlatform().addEngineAddon(res);
 		return res;
 	}
