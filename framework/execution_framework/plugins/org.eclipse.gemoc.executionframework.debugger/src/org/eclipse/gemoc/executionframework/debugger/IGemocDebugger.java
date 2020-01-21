@@ -24,6 +24,9 @@ public interface IGemocDebugger extends IEngineAddon {
 
 	public abstract void addPredicateBreakpoint(BiPredicate<IExecutionEngine<?>, Step<?>> predicate);
 
+	// FIXME this code should be here but this raise error in maven-xtend-compiler
+	// this is probably a compliancelevel issue...
+	// as a temporary workaround, the code is in the implmentation classes
 	@Override
 	default List<String> getTags() {
 		// add the "GemocDebugger" tag to the list
