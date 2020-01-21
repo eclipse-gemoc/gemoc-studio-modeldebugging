@@ -144,6 +144,13 @@ public abstract class AbstractGemocDebugger extends AbstractDSLDebugger implemen
 	public void addPredicateBreak(BiPredicate<IExecutionEngine<?>, Step<?>> predicate) {
 		predicateBreaks.add(predicate);
 	}
+	
+	
+
+	@Override
+	public List<String> getTags() {
+		return IGemocDebugger.super.getTags();
+	}
 
 	protected boolean shouldBreakPredicates(IExecutionEngine<?> engine, Step<?> step) {
 

@@ -16,6 +16,8 @@ import java.util.List;
 import org.eclipse.core.runtime.Status;
 import org.eclipse.jface.resource.ImageDescriptor;
 import org.eclipse.ui.plugin.AbstractUIPlugin;
+import org.eclipse.gemoc.commons.eclipse.messagingsystem.api.MessagingSystem;
+import org.eclipse.gemoc.commons.eclipse.messagingsystem.api.MessagingSystemManager;
 import org.eclipse.gemoc.executionframework.ui.views.engine.EngineSelectionManager;
 import org.osgi.framework.BundleContext;
 
@@ -130,5 +132,17 @@ public class Activator extends AbstractUIPlugin {
 
 	public EngineSelectionManager getEngineSelectionManager() {
 		return engineSelectionManager;
+	}
+	
+	protected MessagingSystem messaggingSystem = null;
+	
+	public MessagingSystem getMessaggingSystem() {
+		if (messaggingSystem == null) {
+			MessagingSystemManager msm = new MessagingSystemManager();
+			messaggingSystem = msm.createBestPlatformMessagingSystem(
+					org.eclipse.gemoc.executionframework.engine.Activator.PLUGIN_ID,
+					org.eclipse.gemoc.executionframework.engine.Activator.CONSOLE_NAME);
+		}
+		return messaggingSystem;
 	}
 }

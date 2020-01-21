@@ -17,7 +17,7 @@ Require-Bundle: org.eclipse.gemoc.gexpressions.xtext;visibility:=reexport,
  org.eclipse.xtext.ui.codetemplates.ui,
  org.eclipse.compare
 Import-Package: org.apache.log4j
-Bundle-RequiredExecutionEnvironment: JavaSE-1.7
+Bundle-RequiredExecutionEnvironment: JavaSE-1.8
 Export-Package: org.eclipse.gemoc.gexpressions.xtext.ui,
  org.eclipse.gemoc.gexpressions.xtext.ui.contentassist,
  org.eclipse.gemoc.gexpressions.xtext.ui.contentassist.antlr,

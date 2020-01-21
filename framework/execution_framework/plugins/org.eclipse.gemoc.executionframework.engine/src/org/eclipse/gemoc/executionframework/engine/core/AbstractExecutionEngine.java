@@ -14,7 +14,10 @@ import java.io.PrintWriter;
 import java.io.StringWriter;
 import java.util.ArrayDeque;
 import java.util.Deque;
+import java.util.HashMap;
 import java.util.HashSet;
+import java.util.List;
+import java.util.Map;
 import java.util.Set;
 
 import org.eclipse.emf.ecore.resource.ResourceSet;
@@ -31,6 +34,8 @@ import org.eclipse.gemoc.xdsmlframework.api.core.IDisposable;
 import org.eclipse.gemoc.xdsmlframework.api.core.IExecutionContext;
 import org.eclipse.gemoc.xdsmlframework.api.core.IExecutionEngine;
 import org.eclipse.gemoc.xdsmlframework.api.core.IRunConfiguration;
+import org.eclipse.gemoc.xdsmlframework.api.engine_addon.EngineAddonSortingRule;
+import org.eclipse.gemoc.xdsmlframework.api.engine_addon.EngineAddonSortingRule.EngineEvent;
 import org.eclipse.gemoc.xdsmlframework.api.engine_addon.IEngineAddon;
 
 /**
@@ -135,7 +140,7 @@ public abstract class AbstractExecutionEngine<C extends IExecutionContext<R, ?, 
 	}
 
 	protected void notifyEngineAboutToStart() {
-		for (IEngineAddon addon : getExecutionContext().getExecutionPlatform().getEngineAddons()) {
+		for (IEngineAddon addon : getExecutionContext().getExecutionPlatform().getSortedEngineAddons(EngineEvent.engineAboutToStart)) {
 			try {
 				addon.engineAboutToStart(this);
 			} catch (Exception e) {
@@ -145,7 +150,7 @@ public abstract class AbstractExecutionEngine<C extends IExecutionContext<R, ?, 
 	}
 
 	protected void notifyEngineStarted() {
-		for (IEngineAddon addon : getExecutionContext().getExecutionPlatform().getEngineAddons()) {
+		for (IEngineAddon addon : getExecutionContext().getExecutionPlatform().getSortedEngineAddons(EngineEvent.engineStarted)) {
 			try {
 				addon.engineStarted(this);
 			} catch (Exception e) {
@@ -155,7 +160,7 @@ public abstract class AbstractExecutionEngine<C extends IExecutionContext<R, ?, 
 	}
 
 	protected void notifyEngineInitialized() {
-		for (IEngineAddon addon : getExecutionContext().getExecutionPlatform().getEngineAddons()) {
+		for (IEngineAddon addon : getExecutionContext().getExecutionPlatform().getSortedEngineAddons(EngineEvent.engineInitialized)) {
 			try {
 				addon.engineInitialized(this);
 			} catch (Exception e) {
@@ -165,7 +170,7 @@ public abstract class AbstractExecutionEngine<C extends IExecutionContext<R, ?, 
 	}
 
 	protected final void notifyAboutToStop() {
-		for (IEngineAddon addon : getExecutionContext().getExecutionPlatform().getEngineAddons()) {
+		for (IEngineAddon addon : getExecutionContext().getExecutionPlatform().getSortedEngineAddons(EngineEvent.engineAboutToStop)) {
 			try {
 				addon.engineAboutToStop(this);
 			} catch (Exception e) {
@@ -175,7 +180,7 @@ public abstract class AbstractExecutionEngine<C extends IExecutionContext<R, ?, 
 	}
 
 	protected final void notifyEngineStopped() {
-		for (IEngineAddon addon : getExecutionContext().getExecutionPlatform().getEngineAddons()) {
+		for (IEngineAddon addon : getExecutionContext().getExecutionPlatform().getSortedEngineAddons(EngineEvent.engineStopped)) {
 			try {
 				addon.engineStopped(this);
 			} catch (Exception e) {
@@ -185,17 +190,18 @@ public abstract class AbstractExecutionEngine<C extends IExecutionContext<R, ?, 
 	}
 
 	protected final void notifyEngineAboutToDispose() {
-		for (IEngineAddon addon : getExecutionContext().getExecutionPlatform().getEngineAddons()) {
+		for (IEngineAddon addon : getExecutionContext().getExecutionPlatform().getSortedEngineAddons(EngineEvent.engineAboutToDispose)) {
 			try {
 				addon.engineAboutToDispose(this);
 			} catch (Exception e) {
 				addonError(addon, e);
 			}
 		}
+		sortedAddonMapCache.clear();
 	}
 
 	protected void notifyEngineStatusChanged(RunStatus newStatus) {
-		for (IEngineAddon addon : getExecutionContext().getExecutionPlatform().getEngineAddons()) {
+		for (IEngineAddon addon : getExecutionContext().getExecutionPlatform().getSortedEngineAddons(EngineEvent.engineStatusChanged)) {
 			try {
 				addon.engineStatusChanged(this, newStatus);
 			} catch (Exception e) {
@@ -204,8 +210,9 @@ public abstract class AbstractExecutionEngine<C extends IExecutionContext<R, ?, 
 		}
 	}
 
+	
 	protected void notifyAboutToExecuteLogicalStep(Step<?> l) {
-		for (IEngineAddon addon : getExecutionContext().getExecutionPlatform().getEngineAddons()) {
+		for (IEngineAddon addon : getCachedSortedEngineAddons(EngineEvent.aboutToExecuteStep)) {
 			try {
 				addon.aboutToExecuteStep(this, l);
 			} catch (EngineStoppedException ese) {
@@ -220,7 +227,7 @@ public abstract class AbstractExecutionEngine<C extends IExecutionContext<R, ?, 
 	}
 
 	protected void notifyLogicalStepExecuted(Step<?> l) {
-		for (IEngineAddon addon : getExecutionContext().getExecutionPlatform().getEngineAddons()) {
+		for (IEngineAddon addon : getCachedSortedEngineAddons(EngineEvent.stepExecuted)) {
 			try {
 				addon.stepExecuted(this, l);
 			} catch (EngineStoppedException ese) {
@@ -232,6 +239,24 @@ public abstract class AbstractExecutionEngine<C extends IExecutionContext<R, ?, 
 		}
 	}
 
+	
+	protected Map<EngineAddonSortingRule.EngineEvent, List<IEngineAddon>> sortedAddonMapCache = new HashMap<EngineAddonSortingRule.EngineEvent, List<IEngineAddon>>();
+	/** 
+	 * a cache for the sort algorithm
+	 * applies only to most relevant event such as stepExecuted aboutToExecuteLogicalStep
+	 * should not be used for engineStatusChanged because engines may add new implicit addon
+	 */ 
+	protected List<IEngineAddon> getCachedSortedEngineAddons(EngineAddonSortingRule.EngineEvent engineEvent) {
+		List<IEngineAddon> cachedList = sortedAddonMapCache.get(engineEvent);
+		if (((cachedList != null))) {
+	      return cachedList;
+	    } else {
+	    	List<IEngineAddon> result = getExecutionContext().getExecutionPlatform().getSortedEngineAddons(engineEvent);
+	    	sortedAddonMapCache.put(engineEvent, result);
+	    	return result;
+	    }
+	}
+	
 	/*
 	 * (non-Javadoc)
 	 * 

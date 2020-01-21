@@ -18,7 +18,7 @@ Require-Bundle: org.eclipse.xtext;visibility:=reexport,
  org.eclipse.xtext.xbase.lib,
  org.antlr.runtime
 Import-Package: org.apache.log4j
-Bundle-RequiredExecutionEnvironment: JavaSE-1.7
+Bundle-RequiredExecutionEnvironment: JavaSE-1.8
 Export-Package: org.eclipse.gemoc.gexpressions.xtext,
  org.eclipse.gemoc.gexpressions.xtext.formatting,
  org.eclipse.gemoc.gexpressions.xtext.generator,

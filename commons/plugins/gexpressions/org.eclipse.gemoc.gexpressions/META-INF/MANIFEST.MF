@@ -13,6 +13,6 @@ Export-Package: org.eclipse.gemoc.gexpressions,
 Require-Bundle: org.eclipse.core.runtime,
  org.eclipse.emf.ecore;bundle-version="2.10.2";visibility:=reexport
 Bundle-ActivationPolicy: lazy
-Bundle-RequiredExecutionEnvironment: JavaSE-1.7
+Bundle-RequiredExecutionEnvironment: JavaSE-1.8
 Import-Package: org.eclipse.xtext
 Automatic-Module-Name: org.eclipse.gemoc.gexpressions
