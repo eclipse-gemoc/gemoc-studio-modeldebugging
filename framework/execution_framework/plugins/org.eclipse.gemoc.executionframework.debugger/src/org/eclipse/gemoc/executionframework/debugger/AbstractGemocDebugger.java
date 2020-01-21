@@ -149,8 +149,7 @@ public abstract class AbstractGemocDebugger extends AbstractDSLDebugger implemen
 
 	@Override
 	public List<String> getTags() {
-		//return IGemocDebugger.super.getTags();
-		return Arrays.asList(GROUP_TAG, getAddonID());
+		return IGemocDebugger.super.getTags();
 	}
 
 	protected boolean shouldBreakPredicates(IExecutionEngine<?> engine, Step<?> step) {
