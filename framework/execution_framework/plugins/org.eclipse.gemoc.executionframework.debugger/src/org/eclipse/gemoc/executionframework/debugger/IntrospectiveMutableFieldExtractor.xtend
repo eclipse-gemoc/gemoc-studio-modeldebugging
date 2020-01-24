@@ -50,7 +50,7 @@ class IntrospectiveMutableFieldExtractor implements IMutableFieldExtractor {
 		val name = cls.declaredFields.filter[f|f.name.equals("name")]
 		if (name.empty) {
 			// Try again on superclass if it's not EObjectImpl.
-			if (cls.superclass != EObjectImpl) {
+			if (cls.superclass != EObjectImpl && cls.superclass !== null) {
 				return findName(cls.superclass, eObject)
 			}
 			// No field called "name" accessible on the given EObject, return null.
@@ -59,7 +59,13 @@ class IntrospectiveMutableFieldExtractor implements IMutableFieldExtractor {
 			// A field called "name" has been found, return its value.
 			val f = name.get(0)
 			f.accessible = true
-			return f.get(eObject).toString
+			val o = f.get(eObject)
+			if(o !== null) {
+				return f.get(eObject).toString			
+			} else {
+				// the value stored in the attribute is null
+				return null
+			}
 		}
 	}
 
@@ -68,7 +74,7 @@ class IntrospectiveMutableFieldExtractor implements IMutableFieldExtractor {
 		val id = cls.declaredFields.filter[f|f.name.equals("id")]
 		if (id.empty) {
 			// Try again on superclass if it's not EObjectImpl.
-			if (cls.superclass != EObjectImpl) {
+			if (cls.superclass != EObjectImpl && cls.superclass !== null) {
 				return findId(cls.superclass, eObject)
 			}
 			// No field called "id" accessible on the given EObject, return null.
@@ -77,7 +83,13 @@ class IntrospectiveMutableFieldExtractor implements IMutableFieldExtractor {
 			// A field called "id" has been found, return its value.
 			val f = id.get(0)
 			f.accessible = true
-			return f.get(eObject).toString
+			val o = f.get(eObject)
+			if(o !== null) {
+				return f.get(eObject).toString			
+			} else {
+				// the value stored in the attribute is null
+				return null
+			}
 		}
 	}
 
