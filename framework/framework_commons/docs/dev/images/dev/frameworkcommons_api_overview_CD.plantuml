@@ -9,6 +9,7 @@ scale max 1024 width
 scale max 800 height
 
 package xdsmlframework.api.engine_addon {
+	
 	interface IEngineAddon #beige {
 		void engineAboutToStart(IExecutionEngine engine)
 		void engineStarted(IExecutionEngine executionEngine)
@@ -23,7 +24,40 @@ package xdsmlframework.api.engine_addon {
 		void stepExecuted(IExecutionEngine engine, trace.commons.model.trace.Step<?> stepExecuted)
 		void engineStatusChanged(IExecutionEngine engine, EngineStatus.RunStatus newStatus)
 		List<String> validate(List<engine_addon.IEngineAddon> otherAddons)
+		String getAddonID()
+		List<String> getTags()
+		List<EngineAddonSortingRule> getAddonSortingRules()
 	}
+	
+	class EngineAddonSortingRule {
+		Priority priority
+		IEngineAddon owner;
+		EngineEvent event;
+		Priority priority;
+		List<String> addonsWithTags;
+	}
+	enum Priority {
+		BEFORE
+		AFTER
+	}
+	enum EngineEvent {
+		engineAboutToStart
+		engineStarted,
+		engineInitialized
+		engineAboutToStop,
+		engineStopped
+		engineAboutToDispose
+		aboutToSelectStep
+		proposedStepsChanged
+		stepSelected
+		aboutToExecuteStep
+		stepExecuted
+		engineStatusChanged
+	}
+	
+	Priority -[hidden]> EngineAddonSortingRule
+	EngineEvent -[hidden]> EngineAddonSortingRule
+	IEngineAddon <-- EngineAddonSortingRule : owner
 }
 
 package xdsmlframework.api.core {
