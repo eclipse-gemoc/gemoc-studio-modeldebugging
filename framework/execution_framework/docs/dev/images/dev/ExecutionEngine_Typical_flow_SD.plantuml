@@ -35,6 +35,11 @@ deactivate Launcher
 deactivate Launcher
 
 Engine --> addon : engineAboutToStart
+note right
+	if required, the order of the calls to the Addons 
+	can be controled by defining 
+	EngineAddonSortingRules in the Addons
+end note
 Engine -> Engine : beforeStart
 Engine --> addon : engineStarted
 Engine -> Engine : performStart

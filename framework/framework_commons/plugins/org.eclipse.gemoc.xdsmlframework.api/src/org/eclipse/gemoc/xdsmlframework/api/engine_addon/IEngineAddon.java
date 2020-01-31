@@ -113,7 +113,7 @@ public interface IEngineAddon {
 	 * A given rule indicate when to call the current addon relatively to addons referred by the rule
 	 * @return
 	 */
-	default public List<EngineAddonSortingRule> getAddonSortingRules(){
+	default public List<EngineAddonSortingRule> getAddonSortingRules() {
 		return new ArrayList<EngineAddonSortingRule>();
 	}
 	

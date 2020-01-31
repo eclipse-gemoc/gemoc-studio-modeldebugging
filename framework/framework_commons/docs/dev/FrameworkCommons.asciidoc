@@ -24,3 +24,5 @@ Most notably, the _IEngineAddon_ and _IExecutionEngine_ interfaces that are the 
 image::images/dev/frameworkcommons_api_overview_CD.png["Execution Framework API Interfaces overview"]
 
 
+TIP: The section <<dev-new-addons>> contains some details and code snippets about how to write an engine addon.
+
