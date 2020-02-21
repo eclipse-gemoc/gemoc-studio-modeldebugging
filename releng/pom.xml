@@ -11,6 +11,9 @@
         <version>3.0.0-SNAPSHOT</version>
         <relativePath>..</relativePath>
 	</parent>
+	<properties>
+		<maven.deploy.skip>true</maven.deploy.skip>
+	</properties>
     <modules>
         <module>org.eclipse.gemoc.modeldebugging.feature</module>
     </modules>

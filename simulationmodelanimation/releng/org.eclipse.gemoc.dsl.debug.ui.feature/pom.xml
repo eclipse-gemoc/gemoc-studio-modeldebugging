@@ -24,5 +24,7 @@ Contributors:
   <packaging>eclipse-feature</packaging>
 
   <name>DSL Debugger UI Feature</name>
-  
+  	<properties>
+		<maven.deploy.skip>true</maven.deploy.skip>
+	</properties>
 </project>

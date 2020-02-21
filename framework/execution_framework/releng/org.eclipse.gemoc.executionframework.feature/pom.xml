@@ -23,4 +23,7 @@
   <artifactId>org.eclipse.gemoc.executionframework.feature</artifactId>
   <packaging>eclipse-feature</packaging>
 
+	<properties>
+		<maven.deploy.skip>true</maven.deploy.skip>
+	</properties>
 </project> 
