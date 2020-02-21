@@ -8,11 +8,14 @@
   <version>3.0.1-SNAPSHOT</version>
   <packaging>eclipse-feature</packaging>
 
-   <parent>
-    <groupId>org.eclipse.gemoc.trace.manager</groupId>
-    <artifactId>org.eclipse.gemoc.trace.manager.root</artifactId>
-    <version>3.0.1-SNAPSHOT</version>
-    <relativePath>../..</relativePath>
-   </parent>
+	<parent>
+		<groupId>org.eclipse.gemoc.trace.manager</groupId>
+		<artifactId>org.eclipse.gemoc.trace.manager.root</artifactId>
+		<version>3.0.1-SNAPSHOT</version>
+		<relativePath>../..</relativePath>
+	</parent>
+	<properties>
+		<maven.deploy.skip>true</maven.deploy.skip>
+	</properties>
 
 </project>

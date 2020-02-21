@@ -12,5 +12,8 @@
 	<artifactId>org.eclipse.gemoc.xdsmlframework.test.lib</artifactId>
 	<packaging>eclipse-plugin</packaging>
 
+	<properties>
+		<maven.deploy.skip>true</maven.deploy.skip>
+	</properties>
 </project>
 

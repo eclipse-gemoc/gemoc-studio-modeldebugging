@@ -9,4 +9,8 @@
   </parent>
 	<artifactId>org.eclipse.gemoc.dsl.tests</artifactId>
 	<packaging>eclipse-test-plugin</packaging>
+	
+	<properties>
+		<maven.deploy.skip>true</maven.deploy.skip>
+	</properties>
 </project>
