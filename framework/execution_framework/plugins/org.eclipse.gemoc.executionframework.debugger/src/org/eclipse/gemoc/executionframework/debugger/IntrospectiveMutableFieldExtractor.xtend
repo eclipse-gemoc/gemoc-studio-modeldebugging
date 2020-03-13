@@ -93,7 +93,7 @@ class IntrospectiveMutableFieldExtractor implements IMutableFieldExtractor {
 		}
 	}
 
-	private def String findDataName(EObject eObject) {
+	protected def String findDataName(EObject eObject) {
 		val name = findName(eObject.class, eObject)
 		if (name === null) {
 			val id = findId(eObject.class, eObject)
@@ -107,7 +107,7 @@ class IntrospectiveMutableFieldExtractor implements IMutableFieldExtractor {
 		}
 	}
 
-	private def List<MutableField> getMutableFieldsFromAspect(EObject eObject, Class<?> properties, Class<?> aspect) {
+	protected def List<MutableField> getMutableFieldsFromAspect(EObject eObject, Class<?> properties, Class<?> aspect) {
 
 		val result = new ArrayList
 
