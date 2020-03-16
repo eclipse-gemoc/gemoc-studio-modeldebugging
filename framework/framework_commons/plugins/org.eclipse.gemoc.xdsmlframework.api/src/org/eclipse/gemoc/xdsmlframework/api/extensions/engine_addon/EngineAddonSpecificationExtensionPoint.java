@@ -28,6 +28,13 @@ public class EngineAddonSpecificationExtensionPoint extends ExtensionPoint<Engin
 	public static final String GEMOC_ENGINE_ADDON_EXTENSION_POINT_ADDONGROUPID = "addonGroupId";
 	public static final String GEMOC_ENGINE_ADDON_EXTENSION_POINT_OPENVIEWIDS = "openViewIds";
 
+	public static final String GEMOC_ENGINE_ADDON_EXTENSION_POINT_BOOLEANOPTION = "addon_booleanOption";
+	public static final String GEMOC_ENGINE_ADDON_EXTENSION_POINT_STRINGOPTION = "addon_stringOption";
+	public static final String GEMOC_ENGINE_ADDON_EXTENSION_POINT_OPTION_ID = "id";
+	public static final String GEMOC_ENGINE_ADDON_EXTENSION_POINT_OPTION_NAME = "name";
+	public static final String GEMOC_ENGINE_ADDON_EXTENSION_POINT_OPTION_SHORTDESCRIPTION = "shortDescription";
+	public static final String GEMOC_ENGINE_ADDON_EXTENSION_POINT_OPTION_DEFAULTVALUE = "defaultValue";
+
 	protected EngineAddonSpecificationExtensionPoint() 
 	{
 		super(EngineAddonSpecificationExtension.class);

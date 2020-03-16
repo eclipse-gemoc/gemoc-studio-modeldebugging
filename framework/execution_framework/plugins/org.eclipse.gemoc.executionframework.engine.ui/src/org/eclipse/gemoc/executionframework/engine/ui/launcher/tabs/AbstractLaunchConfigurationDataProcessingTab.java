@@ -36,10 +36,12 @@ import org.eclipse.swt.widgets.Group;
 
 public abstract class AbstractLaunchConfigurationDataProcessingTab extends AbstractLaunchConfigurationTab
 		implements ILaunchLanguageSelectionListener {
-
-	private HashMap<EngineAddonSpecificationExtension, Button> _components = new HashMap<>();
 	
-	private HashMap<EngineAddonSpecificationExtension, Button> _languageSpecificComponents = new HashMap<>();
+	public static String OPTION_CONF_ID_SEPARATOR = "_option_";
+
+	private HashMap<EngineAddonSpecificationExtension, EngineAddonLaunchConfigWidget> _components = new HashMap<>();
+	
+	private HashMap<EngineAddonSpecificationExtension, EngineAddonLaunchConfigWidget> _languageSpecificComponents = new HashMap<>();
 	
 	protected String _currentLanguageName;
 	
@@ -73,7 +75,6 @@ public abstract class AbstractLaunchConfigurationDataProcessingTab extends Abstr
 		content.setLayout(gl);
 		content.layout();
 		setControl(content);
-
 		createLayout(content);
 	}
 
@@ -82,10 +83,10 @@ public abstract class AbstractLaunchConfigurationDataProcessingTab extends Abstr
 
 		for (EngineAddonGroupSpecificationExtension extension : getGroupExtensionSpecifications()) {
 			String gname = extension.getName() != null ? extension.getName() : extension.getId();
-			groupmap.put(extension.getId(), createGroup(parent, gname, 2));
+			groupmap.put(extension.getId(), LaunchConfUtils.createGroup(parent, gname, 2));
 		}
 		groupParent = parent;
-		groupmap.put("", createGroup(groupParent, "", 2));
+		groupmap.put("", LaunchConfUtils.createGroup(groupParent, "", 2));
 
 		for (EngineAddonSpecificationExtension extension : _components.keySet()) {
 			Group parentGroup = groupmap.get("");
@@ -99,8 +100,8 @@ public abstract class AbstractLaunchConfigurationDataProcessingTab extends Abstr
 				}
 			}
 
-			Button checkbox = createComponentForExtension(parentGroup, extension);
-			_components.put(extension, checkbox);
+			EngineAddonLaunchConfigWidget addonWidget = new EngineAddonLaunchConfigWidget(this, parentGroup, extension);
+			_components.put(extension, addonWidget);
 		}
 
 		// display language specific components
@@ -123,12 +124,12 @@ public abstract class AbstractLaunchConfigurationDataProcessingTab extends Abstr
 	protected void createLanguageSpecificGroup(Composite parent) {
 		// display language specific components
 		if(_languageSpecificGroup == null && _currentLanguageName != null && !_currentLanguageName.isEmpty()) {
-			_languageSpecificGroup = createGroup(parent, _currentLanguageName, 2);
+			_languageSpecificGroup = LaunchConfUtils.createGroup(parent, _currentLanguageName, 2);
 			LanguageDefinitionExtension langDefExtension = LanguageDefinitionExtensionPoint.findDefinition(_currentLanguageName);
 			if(langDefExtension != null) {
 				for(EngineAddonSpecificationExtension extension : langDefExtension.getLanguageSpecificEngineAddonSpecificationExtensions()){
-					Button checkbox = createComponentForExtension(_languageSpecificGroup, extension);
-					_languageSpecificComponents.put(extension, checkbox);
+					EngineAddonLaunchConfigWidget addonWidget = new EngineAddonLaunchConfigWidget(this, _languageSpecificGroup, extension);
+					_languageSpecificComponents.put(extension, addonWidget);
 				}
 			}
 			// remove group if empty
@@ -141,6 +142,10 @@ public abstract class AbstractLaunchConfigurationDataProcessingTab extends Abstr
 	}
 	
 	protected Button createComponentForExtension(Composite parentGroup, EngineAddonSpecificationExtension extension) {
+		if(! extension.getAddonBooleanOptionsIds().isEmpty() || ! extension.getAddonStringOptionsIds().isEmpty()) {
+			// TODO need to create options for this addon
+		}
+		
 		Button checkbox = createCheckButton(parentGroup, extension.getName() + ":");
 		checkbox.setToolTipText(extension.getId() + " contributed by " + extension.getContributorName());
 		// checkbox.setSelection(extension.getDefaultActivationValue());
@@ -160,7 +165,7 @@ public abstract class AbstractLaunchConfigurationDataProcessingTab extends Abstr
 			desc = extension.getShortDescription();
 		} else
 			desc = "";
-		createTextLabelLayout(parentGroup, desc, "contributed by " + extension.getContributorName());
+		LaunchConfUtils.createTextLabelLayout(parentGroup, desc, "contributed by " + extension.getContributorName());
 		return checkbox;
 	}
 
@@ -183,8 +188,11 @@ public abstract class AbstractLaunchConfigurationDataProcessingTab extends Abstr
 				String extensionName = extension.getName() != null ? extension.getName() : extension.getId();
 				boolean value = configuration.getAttribute(extensionName, false);
 				// _componentsActive.put(extension, value);
-				Button checkbox = _components.get(extension);
+				EngineAddonLaunchConfigWidget configWidget = _components.get(extension);
+				Button checkbox = configWidget.mainCheckButton;
 				checkbox.setSelection(value);
+				configWidget.setOptionsEnabled(value);
+				configWidget.optionInitializeFrom(configuration);
 			} catch (CoreException e) {
 				Activator.error(e.getMessage(), e);
 			}
@@ -202,8 +210,11 @@ public abstract class AbstractLaunchConfigurationDataProcessingTab extends Abstr
 					String extensionName = extension.getName() != null ? extension.getName() : extension.getId();
 					boolean value = configuration.getAttribute(extensionName, extension.getDefaultActivationValue());
 					// _componentsActive.put(extension, value);
-					Button checkbox = _languageSpecificComponents.get(extension);
+					EngineAddonLaunchConfigWidget configWidget = _languageSpecificComponents.get(extension);
+					Button checkbox = configWidget.mainCheckButton;
 					checkbox.setSelection(value);
+					configWidget.setOptionsEnabled(value);
+					configWidget.optionInitializeFrom(configuration);
 				} catch (CoreException e) {
 					Activator.error(e.getMessage(), e);
 				}
@@ -216,13 +227,15 @@ public abstract class AbstractLaunchConfigurationDataProcessingTab extends Abstr
 
 	@Override
 	public void performApply(ILaunchConfigurationWorkingCopy configuration) {
-		for (Entry<EngineAddonSpecificationExtension, Button> entry : _components.entrySet()) {
+		for (Entry<EngineAddonSpecificationExtension, EngineAddonLaunchConfigWidget> entry : _components.entrySet()) {
 			String extensionName = entry.getKey().getName() != null ? entry.getKey().getName() : entry.getKey().getId();
-			configuration.setAttribute(extensionName, entry.getValue().getSelection());
+			configuration.setAttribute(extensionName, entry.getValue().mainCheckButton.getSelection());
+			entry.getValue().optionsPerformApply(configuration);
 		}
-		for (Entry<EngineAddonSpecificationExtension, Button> entry : _languageSpecificComponents.entrySet()) {
+		for (Entry<EngineAddonSpecificationExtension, EngineAddonLaunchConfigWidget> entry : _languageSpecificComponents.entrySet()) {
 			String extensionName = entry.getKey().getName() != null ? entry.getKey().getName() : entry.getKey().getId();
-			configuration.setAttribute(extensionName, entry.getValue().getSelection());
+			configuration.setAttribute(extensionName, entry.getValue().mainCheckButton.getSelection());
+			entry.getValue().optionsPerformApply(configuration);
 		}
 	}
 
@@ -231,13 +244,13 @@ public abstract class AbstractLaunchConfigurationDataProcessingTab extends Abstr
 		// Validate each addon
 		try {
 			List<IEngineAddon> addons = new ArrayList<IEngineAddon>();
-			for (Entry<EngineAddonSpecificationExtension, Button> entry : _components.entrySet()) {
-				if (entry.getValue().getSelection()) {
+			for (Entry<EngineAddonSpecificationExtension, EngineAddonLaunchConfigWidget> entry : _components.entrySet()) {
+				if (entry.getValue().mainCheckButton.getSelection()) {
 					addons.add(entry.getKey().instanciateComponent());
 				}
 			}
-			for (Entry<EngineAddonSpecificationExtension, Button> entry : _languageSpecificComponents.entrySet()) {
-				if (entry.getValue().getSelection()) {
+			for (Entry<EngineAddonSpecificationExtension, EngineAddonLaunchConfigWidget> entry : _languageSpecificComponents.entrySet()) {
+				if (entry.getValue().mainCheckButton.getSelection()) {
 					addons.add(entry.getKey().instanciateComponent());
 				}
 			}
@@ -280,6 +293,15 @@ public abstract class AbstractLaunchConfigurationDataProcessingTab extends Abstr
 		}
 		
 		
+	}
+
+	
+	// called by widgets when they are selected
+	public void updateTab() {
+		// todo deal with enabled/disabled addon with options
+		
+		
+		updateLaunchConfigurationDialog();
 	}
 	
 }
