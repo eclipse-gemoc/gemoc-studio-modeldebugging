@@ -139,7 +139,7 @@ public class EngineAddonLaunchConfigWidget {
 		if( optionGroup != null) {
 			for(EngineAddonBooleanOptionSpecificationExtension booleanOption : booleanOptionButtons.keySet()) {
 				try {
-					String key = extension.getId() + AbstractLaunchConfigurationDataProcessingTab.OPTION_CONF_ID_SEPARATOR + booleanOption.getId();
+					String key = booleanOption.getId();
 					boolean value = configuration.getAttribute(key, false);
 					booleanOptionButtons.get(booleanOption).setSelection(value);
 				} catch (CoreException e) {
@@ -149,7 +149,7 @@ public class EngineAddonLaunchConfigWidget {
 
 			for(EngineAddonStringOptionSpecificationExtension option : stringOptionTexts.keySet()) {
 				try {
-					String key = extension.getId() + AbstractLaunchConfigurationDataProcessingTab.OPTION_CONF_ID_SEPARATOR + option.getId();
+					String key = option.getId();
 					String value = configuration.getAttribute(key, "");
 					stringOptionTexts.get(option).setText(value);
 				} catch (CoreException e) {
@@ -161,12 +161,12 @@ public class EngineAddonLaunchConfigWidget {
 	public void optionsPerformApply(ILaunchConfigurationWorkingCopy configuration){
 		if( optionGroup != null) {
 			for(EngineAddonBooleanOptionSpecificationExtension booleanOption : booleanOptionButtons.keySet()) {
-				String key = extension.getId() + AbstractLaunchConfigurationDataProcessingTab.OPTION_CONF_ID_SEPARATOR + booleanOption.getId();
+				String key = booleanOption.getId();
 				configuration.setAttribute(key, booleanOptionButtons.get(booleanOption).getSelection());
 			}
 
 			for(EngineAddonStringOptionSpecificationExtension option : stringOptionTexts.keySet()) {
-				String key = extension.getId() + AbstractLaunchConfigurationDataProcessingTab.OPTION_CONF_ID_SEPARATOR + option.getId();
+				String key = option.getId();
 				configuration.setAttribute(key, stringOptionTexts.get(option).getText());
 			}
 		}

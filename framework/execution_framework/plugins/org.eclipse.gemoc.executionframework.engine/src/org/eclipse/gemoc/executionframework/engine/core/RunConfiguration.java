@@ -19,6 +19,7 @@ import org.eclipse.core.runtime.CoreException;
 import org.eclipse.debug.core.ILaunchConfiguration;
 import org.eclipse.emf.common.util.URI;
 import org.eclipse.gemoc.dsl.debug.ide.launch.AbstractDSLLaunchConfigurationDelegate;
+import org.eclipse.gemoc.executionframework.engine.Activator;
 import org.eclipse.gemoc.xdsmlframework.api.core.IRunConfiguration;
 import org.eclipse.gemoc.xdsmlframework.api.extensions.engine_addon.EngineAddonSpecificationExtension;
 import org.eclipse.gemoc.xdsmlframework.api.extensions.engine_addon.EngineAddonSpecificationExtensionPoint;
@@ -64,16 +65,31 @@ public class RunConfiguration implements IRunConfiguration {
 		_debugModelID = getAttribute(DEBUG_MODEL_ID, ".debugModel");
 	}
 
-	protected String getAttribute(String attributeName, String defaultValue) throws CoreException {
-		return _launchConfiguration.getAttribute(attributeName, defaultValue);
+	public String getAttribute(String attributeName, String defaultValue) {
+		try {
+			return _launchConfiguration.getAttribute(attributeName, defaultValue);
+		} catch (CoreException e) {
+			Activator.getDefault().error(e.getMessage(), e);
+			return defaultValue;
+		}
 	}
 
-	protected Integer getAttribute(String attributeName, Integer defaultValue) throws CoreException {
-		return _launchConfiguration.getAttribute(attributeName, defaultValue);
+	public Integer getAttribute(String attributeName, Integer defaultValue) {
+		try {
+			return _launchConfiguration.getAttribute(attributeName, defaultValue);
+		} catch (CoreException e) {
+			Activator.getDefault().error(e.getMessage(), e);
+			return defaultValue;
+		}
 	}
 
-	protected Boolean getAttribute(String attributeName, Boolean defaultValue) throws CoreException {
-		return _launchConfiguration.getAttribute(attributeName, defaultValue);
+	public Boolean getAttribute(String attributeName, Boolean defaultValue) {
+		try {
+			return _launchConfiguration.getAttribute(attributeName, defaultValue);
+		} catch (CoreException e) {
+			Activator.getDefault().error(e.getMessage(), e);
+			return defaultValue;
+		}
 	}
 
 	private int _animationDelay = 0;

@@ -36,8 +36,6 @@ import org.eclipse.swt.widgets.Group;
 
 public abstract class AbstractLaunchConfigurationDataProcessingTab extends AbstractLaunchConfigurationTab
 		implements ILaunchLanguageSelectionListener {
-	
-	public static String OPTION_CONF_ID_SEPARATOR = "_option_";
 
 	private HashMap<EngineAddonSpecificationExtension, EngineAddonLaunchConfigWidget> _components = new HashMap<>();
 	

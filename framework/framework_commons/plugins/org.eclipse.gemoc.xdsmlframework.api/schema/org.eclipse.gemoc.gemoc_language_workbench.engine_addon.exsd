@@ -130,7 +130,8 @@ The hooked code will be run at the appropriate time by the engine.
          <attribute name="id" type="string" use="required">
             <annotation>
                <documentation>
-                  ID of the option
+                  UID of the option. 
+(please use a long qualified name including the addon id in order to avoid conflicts with similar option in other addons)
                </documentation>
             </annotation>
          </attribute>
@@ -168,7 +169,8 @@ The hooked code will be run at the appropriate time by the engine.
          <attribute name="id" type="string" use="required">
             <annotation>
                <documentation>
-                  ID of the option
+                  UID of the option. 
+(please use a long qualified name including the addon id in order to avoid conflicts with similar option in other addons)
                </documentation>
             </annotation>
          </attribute>

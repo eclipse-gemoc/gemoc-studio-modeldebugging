@@ -176,7 +176,8 @@ If not set, language specific addons are enabled by default.
          <attribute name="id" type="string" use="required">
             <annotation>
                <documentation>
-                  ID of the option
+                  UID of the option. 
+(please use a long qualified name including the addon id in order to avoid conflicts with similar option in other addons)
                </documentation>
             </annotation>
          </attribute>
@@ -214,7 +215,8 @@ If not set, language specific addons are enabled by default.
          <attribute name="id" type="string" use="required">
             <annotation>
                <documentation>
-                  ID of the option
+                  UID of the option. 
+(please use a long qualified name including the addon id in order to avoid conflicts with similar option in other addons)
                </documentation>
             </annotation>
          </attribute>

@@ -40,6 +40,35 @@ public interface IRunConfiguration {
 
 	int getAnimationDelay();
 	
+	/**
+	 * return a string attribute from the runconfiguration identified by attributeName
+	 * returns the default value if not found
+	 * This is useful for addon options for example
+	 * @param attributeName
+	 * @param defaultValue
+	 * @return
+	 */
+	String getAttribute(String attributeName, String defaultValue);
+
+	/**
+	 * return an integer attribute from the runconfiguration identified by attributeName
+	 * returns the default value if not found
+	 * This is useful for addon options for example
+	 * @param attributeName
+	 * @param defaultValue
+	 * @return
+	 */	
+	Integer getAttribute(String attributeName, Integer defaultValue);
+
+	/**
+	 * return a boolean attribute from the runconfiguration identified by attributeName
+	 * returns the default value if not found
+	 * This is useful for addon options for example
+	 * @param attributeName
+	 * @param defaultValue
+	 * @return
+	 */	
+	Boolean getAttribute(String attributeName, Boolean defaultValue);
 	
 	/**
 	 * the list of enabled engine addons
