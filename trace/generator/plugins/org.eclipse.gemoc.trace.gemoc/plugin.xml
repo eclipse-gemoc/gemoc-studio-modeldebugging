@@ -29,11 +29,6 @@
              name="Equivalency classes computing"
              shortDescription="Activate equivalency classes computing during trace recording (warning this is time consumming on long running models that don&apos;t have equivalent states)">
        </addon_booleanOption>
-       <addon_stringOption
-             id="org.eclipse.gemoc.trace.gemoc.addon_stringOption1"
-             name="Test String option"
-             shortDescription="some description">
-       </addon_stringOption>
     </addon>
   </extension>
 </plugin>
