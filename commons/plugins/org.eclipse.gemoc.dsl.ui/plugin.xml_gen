@@ -204,6 +204,15 @@
 			</activeWhen>
 		</handler>
 	</extension>
+	<extension point="org.eclipse.core.contenttype.contentTypes">
+		<content-type
+			base-type="org.eclipse.core.runtime.text"
+			file-extensions="dsl"
+			id="org.eclipse.gemoc.Dsl.contenttype"
+			name="Dsl File"
+			priority="normal">
+		</content-type>
+	</extension>
 	<!-- adding resource factories -->
 	<extension
 		point="org.eclipse.emf.ecore.extension_parser">
@@ -239,6 +248,15 @@
 			point="org.eclipse.core.resources.markers">
 		<super type="org.eclipse.xtext.ui.check.expensive"/>
 		<persistent value="true"/>
+	</extension>
+	<extension point="org.eclipse.ui.preferencePages">
+		<page
+			category="org.eclipse.gemoc.Dsl"
+			class="org.eclipse.gemoc.ui.DslExecutableExtensionFactory:org.eclipse.xtext.ui.validation.ValidatorPreferencePage"
+			id="org.eclipse.gemoc.Dsl.validator.preferencePage"
+			name="Errors/Warnings">
+			<keywordReference id="org.eclipse.gemoc.ui.keyword_Dsl"/>
+		</page>
 	</extension>
 	<extension point="org.eclipse.xtext.builder.participant">
 		<participant
@@ -388,12 +406,18 @@
 			class="org.eclipse.gemoc.ui.DslExecutableExtensionFactory:org.eclipse.xtext.ui.compare.InjectableViewerCreator"
 			extensions="dsl">
 		</viewer>
+		<contentTypeBinding
+			contentTypeId="org.eclipse.gemoc.Dsl.contenttype"
+			contentViewerId="org.eclipse.gemoc.Dsl.compare.contentViewers" />
 	</extension>
 	<extension point="org.eclipse.compare.contentMergeViewers">
 		<viewer id="org.eclipse.gemoc.Dsl.compare.contentMergeViewers"
 			class="org.eclipse.gemoc.ui.DslExecutableExtensionFactory:org.eclipse.xtext.ui.compare.InjectableViewerCreator"
 			extensions="dsl" label="Dsl Compare">
 		</viewer>
+		<contentTypeBinding
+			contentTypeId="org.eclipse.gemoc.Dsl.contenttype"
+			contentMergeViewerId="org.eclipse.gemoc.Dsl.compare.contentMergeViewers" />
 	</extension>
 	<extension point="org.eclipse.ui.editors.documentProviders">
 		<provider id="org.eclipse.gemoc.Dsl.editors.documentProviders"
