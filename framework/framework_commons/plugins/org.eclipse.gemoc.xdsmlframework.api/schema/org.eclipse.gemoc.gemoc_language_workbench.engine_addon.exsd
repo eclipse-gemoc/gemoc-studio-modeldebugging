@@ -54,6 +54,12 @@
          </documentation>
       </annotation>
       <complexType>
+         <sequence minOccurs="0" maxOccurs="unbounded">
+            <choice>
+               <element ref="addon_booleanOption"/>
+               <element ref="addon_stringOption"/>
+            </choice>
+         </sequence>
          <attribute name="id" type="string" use="required">
             <annotation>
                <documentation>
@@ -108,6 +114,84 @@ The hooked code will be run at the appropriate time by the engine.
             <annotation>
                <documentation>
                   comma separated list of view ids that should be opened when the addon is used in Eclipse UI.
+               </documentation>
+            </annotation>
+         </attribute>
+      </complexType>
+   </element>
+
+   <element name="addon_booleanOption">
+      <annotation>
+         <documentation>
+            add a boolean option to engine addon
+         </documentation>
+      </annotation>
+      <complexType>
+         <attribute name="id" type="string" use="required">
+            <annotation>
+               <documentation>
+                  UID of the option. 
+(please use a long qualified name including the addon id in order to avoid conflicts with similar option in other addons)
+               </documentation>
+            </annotation>
+         </attribute>
+         <attribute name="name" type="string" use="required">
+            <annotation>
+               <documentation>
+                  Name of the option as it will be displayed to the end user when he will select it in the Launcher GUI
+               </documentation>
+            </annotation>
+         </attribute>
+         <attribute name="shortDescription" type="string">
+            <annotation>
+               <documentation>
+                  
+               </documentation>
+            </annotation>
+         </attribute>
+         <attribute name="defaultValue" type="boolean">
+            <annotation>
+               <documentation>
+                  
+               </documentation>
+            </annotation>
+         </attribute>
+      </complexType>
+   </element>
+
+   <element name="addon_stringOption">
+      <annotation>
+         <documentation>
+            add a string option to engine addon
+         </documentation>
+      </annotation>
+      <complexType>
+         <attribute name="id" type="string" use="required">
+            <annotation>
+               <documentation>
+                  UID of the option. 
+(please use a long qualified name including the addon id in order to avoid conflicts with similar option in other addons)
+               </documentation>
+            </annotation>
+         </attribute>
+         <attribute name="name" type="string" use="required">
+            <annotation>
+               <documentation>
+                  Name of the option as it will be displayed to the end user when he will select it in the Launcher GUI
+               </documentation>
+            </annotation>
+         </attribute>
+         <attribute name="shortDescription" type="string">
+            <annotation>
+               <documentation>
+                  
+               </documentation>
+            </annotation>
+         </attribute>
+         <attribute name="defaultValue" type="string">
+            <annotation>
+               <documentation>
+                  
                </documentation>
             </annotation>
          </attribute>

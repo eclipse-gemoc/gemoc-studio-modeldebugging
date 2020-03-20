@@ -11,12 +11,14 @@
 package org.eclipse.gemoc.xdsmlframework.api.extensions.engine_addon;
 
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.List;
 
 import org.eclipse.core.runtime.CoreException;
 import org.eclipse.core.runtime.IConfigurationElement;
 import org.eclipse.gemoc.xdsmlframework.api.engine_addon.IEngineAddon;
 import org.eclipse.gemoc.xdsmlframework.api.extensions.Extension;
+import org.eclipse.gemoc.xdsmlframework.api.extensions.languages.LanguageDefinitionExtensionPoint;
 
 public class EngineAddonSpecificationExtension extends Extension
 {
@@ -62,6 +64,65 @@ public class EngineAddonSpecificationExtension extends Extension
 		}
 		return idsList;
 	}
+	
+	/**
+	 * 
+	 * @return the list of boolean option ids for the given engine
+	 */
+	public List<String> getAddonBooleanOptionsIds() {
+		ArrayList<String> booleanOptionIDs = new ArrayList<String>();
+		for (IConfigurationElement childConfElement : _configurationElement
+				.getChildren(EngineAddonSpecificationExtensionPoint.GEMOC_ENGINE_ADDON_EXTENSION_POINT_BOOLEANOPTION)) {
+			childConfElement.getName();
+			final String booleanOptionIDString = childConfElement
+					.getAttribute(EngineAddonSpecificationExtensionPoint.GEMOC_ENGINE_ADDON_EXTENSION_POINT_OPTION_ID);
+			if (booleanOptionIDString != null) {
+				for( String fileExtension : booleanOptionIDString.split(",")){
+					booleanOptionIDs.add(fileExtension.trim());
+				}
+			}
+		}
+		return booleanOptionIDs;
+	}
+	/**
+	 * 
+	 * @return the list of boolean option ids for the given engine
+	 */
+	public List<String> getAddonStringOptionsIds() {
+		ArrayList<String> optionIDs = new ArrayList<String>();
+		for (IConfigurationElement childConfElement : _configurationElement
+				.getChildren(EngineAddonSpecificationExtensionPoint.GEMOC_ENGINE_ADDON_EXTENSION_POINT_STRINGOPTION)) {
+			childConfElement.getName();
+			final String optionIDString = childConfElement
+					.getAttribute(EngineAddonSpecificationExtensionPoint.GEMOC_ENGINE_ADDON_EXTENSION_POINT_OPTION_ID);
+			if (optionIDString != null) {
+				for( String fileExtension : optionIDString.split(",")){
+					optionIDs.add(fileExtension.trim());
+				}
+			}
+		}
+		return optionIDs;
+	}
+	
+	final public Collection<EngineAddonBooleanOptionSpecificationExtension> getAddonBooleanOptionSpecificationExtensions() {
+		ArrayList<EngineAddonBooleanOptionSpecificationExtension> addonOptions = new ArrayList<EngineAddonBooleanOptionSpecificationExtension>();
+		for (IConfigurationElement childConfElement : _configurationElement
+				.getChildren(EngineAddonSpecificationExtensionPoint.GEMOC_ENGINE_ADDON_EXTENSION_POINT_BOOLEANOPTION)) {
+			EngineAddonBooleanOptionSpecificationExtension engineAddonSpecificationExtension = new EngineAddonBooleanOptionSpecificationExtension(childConfElement);
+			addonOptions.add(engineAddonSpecificationExtension);
+		}
+		return addonOptions;
+	}
+	final public Collection<EngineAddonStringOptionSpecificationExtension> getAddonStringOptionSpecificationExtensions() {
+		ArrayList<EngineAddonStringOptionSpecificationExtension> addonOptions = new ArrayList<EngineAddonStringOptionSpecificationExtension>();
+		for (IConfigurationElement childConfElement : _configurationElement
+				.getChildren(EngineAddonSpecificationExtensionPoint.GEMOC_ENGINE_ADDON_EXTENSION_POINT_STRINGOPTION)) {
+			EngineAddonStringOptionSpecificationExtension engineAddonSpecificationExtension = new EngineAddonStringOptionSpecificationExtension(childConfElement);
+			addonOptions.add(engineAddonSpecificationExtension);
+		}
+		return addonOptions;
+	}
+
 	
 	public IEngineAddon instanciateComponent() throws CoreException
 	{

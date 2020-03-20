@@ -3,7 +3,7 @@
 <schema targetNamespace="org.eclipse.gemoc.gemoc_language_workbench.ui" xmlns="http://www.w3.org/2001/XMLSchema">
 <annotation>
       <appinfo>
-         <meta.schema plugin="org.eclipse.gemoc.gemoc_language_workbench.ui" id="org.eclipse.gemoc.gemoc_language_workbench.xdsml" name="Gemoc Language Definition"/>
+         <meta.schema plugin="org.eclipse.gemoc.gemoc_language_workbench.ui" id="org.eclipse.gemoc.gemoc_language_workbench.xdsml" name="GEMOC Language Definition"/>
       </appinfo>
       <documentation>
          [Enter description of this extension point.]
@@ -84,6 +84,12 @@
 
    <element name="engineAddon_Definition">
       <complexType>
+         <sequence minOccurs="0" maxOccurs="unbounded">
+            <choice>
+               <element ref="addon_booleanOption"/>
+               <element ref="addon_stringOption"/>
+            </choice>
+         </sequence>
          <attribute name="id" type="string" use="required">
             <annotation>
                <documentation>
@@ -151,6 +157,84 @@ If not set, language specific addons are enabled by default.
    <element name="XDSML_Definition_Customization">
       <complexType>
          <attribute name="fileExtensions" type="string">
+            <annotation>
+               <documentation>
+                  
+               </documentation>
+            </annotation>
+         </attribute>
+      </complexType>
+   </element>
+
+   <element name="addon_booleanOption">
+      <annotation>
+         <documentation>
+            allows to add a boolean option to engine addon
+         </documentation>
+      </annotation>
+      <complexType>
+         <attribute name="id" type="string" use="required">
+            <annotation>
+               <documentation>
+                  UID of the option. 
+(please use a long qualified name including the addon id in order to avoid conflicts with similar option in other addons)
+               </documentation>
+            </annotation>
+         </attribute>
+         <attribute name="name" type="string" use="required">
+            <annotation>
+               <documentation>
+                  Name of the option as it will be displayed to the end user when he will select it in the Launcher GUI
+               </documentation>
+            </annotation>
+         </attribute>
+         <attribute name="shortDescription" type="string">
+            <annotation>
+               <documentation>
+                  
+               </documentation>
+            </annotation>
+         </attribute>
+         <attribute name="defaultValue" type="boolean">
+            <annotation>
+               <documentation>
+                  
+               </documentation>
+            </annotation>
+         </attribute>
+      </complexType>
+   </element>
+
+   <element name="addon_stringOption">
+      <annotation>
+         <documentation>
+            add a string option to engine addon
+         </documentation>
+      </annotation>
+      <complexType>
+         <attribute name="id" type="string" use="required">
+            <annotation>
+               <documentation>
+                  UID of the option. 
+(please use a long qualified name including the addon id in order to avoid conflicts with similar option in other addons)
+               </documentation>
+            </annotation>
+         </attribute>
+         <attribute name="name" type="string" use="required">
+            <annotation>
+               <documentation>
+                  Name of the option as it will be displayed to the end user when he will select it in the Launcher GUI
+               </documentation>
+            </annotation>
+         </attribute>
+         <attribute name="shortDescription" type="string">
+            <annotation>
+               <documentation>
+                  
+               </documentation>
+            </annotation>
+         </attribute>
+         <attribute name="defaultValue" type="string">
             <annotation>
                <documentation>
                   
