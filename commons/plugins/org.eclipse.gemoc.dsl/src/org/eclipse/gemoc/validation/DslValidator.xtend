@@ -8,11 +8,11 @@ import org.eclipse.gemoc.dsl.DslPackage
 import org.eclipse.gemoc.dsl.Entry
 import org.eclipse.xtext.validation.Check
 import org.eclipse.core.runtime.IConfigurationElement
-import metaprogramming.extensionpoint.Message
-import metaprogramming.extensionpoint.IRule
+import org.eclipse.gemoc.dsl.approach.Message
+import org.eclipse.gemoc.dsl.approach.IRule
 import java.util.ArrayList
-import metaprogramming.extensionpoint.Severity
-import metaprogramming.extensionpoint.IRuleProvider
+import org.eclipse.gemoc.dsl.approach.Severity
+import org.eclipse.gemoc.dsl.approach.IRuleProvider
 
 /**
  * This class contains custom validation rules. 
@@ -117,6 +117,9 @@ class DslValidator extends AbstractDslValidator {
 			}
 			if(!approachesList.contains(entry.value)){
 				error("Unknown metaprogramming approach", DslPackage.Literals.ENTRY__VALUE)
+			}
+			if(entry.value == "Ecore Approach"){
+				info("The Ecore Approach only exist to provide an IRuleProvider to other metaprogramming approaches, replace it with one of them instead.", DslPackage.Literals.ENTRY__VALUE)
 			}
 		}
 	}
