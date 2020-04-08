@@ -16,6 +16,7 @@
    <extension-point id="org.eclipse.gemoc.gemoc_language_workbench.xdsml" name="GEMOC Language Definition" schema="schema/org.eclipse.gemoc.gemoc_language_workbench.xdsml.exsd"/>
    <extension-point id="org.eclipse.gemoc.gemoc_language_workbench.engine_addon" name="Engine Addon" schema="schema/org.eclipse.gemoc.gemoc_language_workbench.engine_addon.exsd"/>
    <extension-point id="org.eclipse.gemoc.gemoc_language_workbench.engine_addon_group" name="Engine AddonGroup" schema="schema/org.eclipse.gemoc.gemoc_language_workbench.engine_addon_group.exsd"/>
+   <extension-point id="org.eclipse.gemoc.gemoc_language_workbench.metaprog" name="Metaprogramming" schema="schema/org.eclipse.gemoc.gemoc_language_workbench.metaprog.exsd"/>
 
    <extension
          point="org.eclipse.gemoc.gemoc_language_workbench.engine_addon_group">
