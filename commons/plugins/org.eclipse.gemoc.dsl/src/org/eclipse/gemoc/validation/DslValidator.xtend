@@ -25,7 +25,7 @@ class DslValidator extends AbstractDslValidator {
 	public static val DUPLICATEKEY = 'duplicateKey'
 	
 	
-	public val IConfigurationElement[] exts = org.eclipse.core.runtime.Platform.getExtensionRegistry().getConfigurationElementsFor("metaprogramming.extensionpoint")	
+	public val IConfigurationElement[] exts = org.eclipse.core.runtime.Platform.getExtensionRegistry().getConfigurationElementsFor("org.eclipse.gemoc.gemoc_language_workbench.metaprog")	
 	public var IRuleProvider providedValidator
 
 	@Check
@@ -99,14 +99,14 @@ class DslValidator extends AbstractDslValidator {
 	
 	@Check
 	def checkForApproachEntry(Dsl dsl) {
-		if(dsl.getEntries().filter[e | e.key == "approach"].isEmpty) {
-			warning("Missing \"approach\" entry to define the metaprogramming approach used", DslPackage.Literals.DSL__NAME)
+		if(dsl.getEntries().filter[e | e.key == "metaprog"].isEmpty) {
+			warning("Missing \"metaprog\" entry to define the metaprogramming approach used", DslPackage.Literals.DSL__NAME)
 		}
 	}
 	
 	@Check
 	def checkForApproach(Entry entry){
-		if(entry.key == "approach") {	
+		if(entry.key == "metaprog") {	
 			for(IConfigurationElement elem : exts) {
 				if(entry.value.equals(elem.getAttribute("name"))) {
 					providedValidator = elem.createExecutableExtension("validator") as IRuleProvider
@@ -120,8 +120,8 @@ class DslValidator extends AbstractDslValidator {
 			if(!approachesList.contains(entry.value)){
 				error("Unknown metaprogramming approach", DslPackage.Literals.ENTRY__VALUE)
 			}
-			if(entry.value == "Ecore Approach"){
-				info("The Ecore Approach only exist to provide an IRuleProvider to other metaprogramming approaches, replace it with one of them instead.", DslPackage.Literals.ENTRY__VALUE)
+			if(entry.value == "Ecore"){
+				info("The Ecore approach only exist to provide an IRuleProvider to other metaprogramming approaches, replace it with one of them instead.", DslPackage.Literals.ENTRY__VALUE)
 			}
 		}
 	}
