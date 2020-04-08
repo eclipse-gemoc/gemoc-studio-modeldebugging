@@ -80,16 +80,18 @@ class DslValidator extends AbstractDslValidator {
 			
 			switch message.getSeverity() {
 				
-				case message.getSeverity() == Severity.ERROR :	error(message.getContent(),
+				case Severity.ERROR :	error(message.getContent(),
 														DslPackage.Literals.ENTRY__VALUE
 														)
-				case message.getSeverity() == Severity.WARNING :	warning(message.getContent(),
+				case Severity.WARNING :	warning(message.getContent(),
 														DslPackage.Literals.ENTRY__VALUE
 													)
-				case message.getSeverity() == Severity.INFO :	info(message.getContent(),
+				case Severity.INFO :	info(message.getContent(),
 														DslPackage.Literals.ENTRY__VALUE
 													)
-				default : message = new Message()
+				case Severity.DEFAULT : message = new Message()
+				
+				default : print("Unknown severity")
 			}
 		}
 
