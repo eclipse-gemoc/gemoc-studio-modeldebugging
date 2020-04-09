@@ -9,7 +9,10 @@ import org.eclipse.gemoc.dsl.Entry
 import org.eclipse.xtext.validation.Check
 import org.eclipse.core.runtime.IConfigurationElement
 import java.util.ArrayList
-//import org.eclipse.gemoc.xdsmlframework.api.extensions.metaprog
+import org.eclipse.gemoc.xdsmlframework.api.extensions.metaprog.IRuleProvider
+import org.eclipse.gemoc.xdsmlframework.api.extensions.metaprog.IRule
+import org.eclipse.gemoc.xdsmlframework.api.extensions.metaprog.Message
+import org.eclipse.gemoc.xdsmlframework.api.extensions.metaprog.Severity
 
 /**
  * This class contains custom validation rules. 

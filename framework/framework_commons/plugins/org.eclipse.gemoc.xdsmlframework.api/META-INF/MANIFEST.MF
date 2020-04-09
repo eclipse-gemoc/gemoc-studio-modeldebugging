@@ -20,5 +20,6 @@ Export-Package: org.eclipse.gemoc.xdsmlframework.api,
  org.eclipse.gemoc.xdsmlframework.api.extensions,
  org.eclipse.gemoc.xdsmlframework.api.extensions.engine_addon,
  org.eclipse.gemoc.xdsmlframework.api.extensions.engine_addon_group,
- org.eclipse.gemoc.xdsmlframework.api.extensions.languages
+ org.eclipse.gemoc.xdsmlframework.api.extensions.languages,
+ org.eclipse.gemoc.xdsmlframework.api.extensions.metaprog
 Automatic-Module-Name: org.eclipse.gemoc.xdsmlframework.api
