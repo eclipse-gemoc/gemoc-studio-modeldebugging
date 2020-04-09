@@ -8,11 +8,8 @@ import org.eclipse.gemoc.dsl.DslPackage
 import org.eclipse.gemoc.dsl.Entry
 import org.eclipse.xtext.validation.Check
 import org.eclipse.core.runtime.IConfigurationElement
-import org.eclipse.gemoc.dsl.approach.Message
-import org.eclipse.gemoc.dsl.approach.IRule
 import java.util.ArrayList
-import org.eclipse.gemoc.dsl.approach.Severity
-import org.eclipse.gemoc.dsl.approach.IRuleProvider
+//import org.eclipse.gemoc.xdsmlframework.api.extensions.metaprog
 
 /**
  * This class contains custom validation rules. 

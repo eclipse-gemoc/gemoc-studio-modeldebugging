@@ -1,4 +1,4 @@
-package org.eclipse.gemoc.xdslframework.api.extension.metaprog;
+package org.eclipse.gemoc.xdsmlframework.api.extensions.metaprog;
 
 import java.util.Collection;
 
