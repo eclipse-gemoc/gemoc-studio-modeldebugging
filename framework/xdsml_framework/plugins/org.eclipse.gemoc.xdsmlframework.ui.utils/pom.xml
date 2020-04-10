@@ -22,4 +22,7 @@
 
   <artifactId>org.eclipse.gemoc.xdsmlframework.ui.utils</artifactId>
   <packaging>eclipse-plugin</packaging>
+    <properties>
+		<maven.deploy.skip>false</maven.deploy.skip>
+	</properties>
 </project>

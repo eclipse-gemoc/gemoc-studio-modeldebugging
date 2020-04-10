@@ -71,14 +71,17 @@ public class GenericTraceExtractor
 	private final IQualifiedNameProvider nameProvider = new DefaultDeclarativeQualifiedNameProvider();
 	private Map<ITraceViewListener, Set<TraceViewCommand>> listeners = new HashMap<>();
 
+	protected boolean activateUpdateEquivalenceClasses = true;
+	
 	/**
 	 * Constructor
 	 * 
 	 * @param trace
 	 *            The trace
 	 */
-	public GenericTraceExtractor(Trace<Step<?>, TracedObject<?>, State<?, ?>> trace) {
+	public GenericTraceExtractor(Trace<Step<?>, TracedObject<?>, State<?, ?>> trace, boolean ignoreUpdateEquivalenceClasses) {
 		this.trace = trace;
+		this.activateUpdateEquivalenceClasses = ignoreUpdateEquivalenceClasses; 
 		configureDiffEngine();
 	}
 
@@ -560,7 +563,9 @@ public class GenericTraceExtractor
 
 	@Override
 	public void statesAdded(List<State<?, ?>> states) {
-		updateEquivalenceClasses(states);
+		if(activateUpdateEquivalenceClasses) {
+			updateEquivalenceClasses(states);
+		}
 		notifyListeners();
 	}
 

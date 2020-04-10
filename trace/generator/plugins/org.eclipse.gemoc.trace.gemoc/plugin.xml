@@ -15,6 +15,20 @@
 -->
 <plugin>
   <extension point="org.eclipse.gemoc.gemoc_language_workbench.engine_addon">
-    <addon class="org.eclipse.gemoc.trace.gemoc.traceaddon.GenericTraceEngineAddon" default="false" id="org.eclipse.gemoc.trace.gemoc.traceaddon" name="Generic MultiDimensional Data Trace" shortDescription="Data Trace support for any language" openViewIds="org.eclipse.gemoc.addon.multidimensional.timeline.views.timeline.MultidimensionalTimeLineView" addonGroupId="General.AddonGroup" />
+    <addon
+          addonGroupId="General.AddonGroup"
+          class="org.eclipse.gemoc.trace.gemoc.traceaddon.GenericTraceEngineAddon"
+          default="false"
+          id="org.eclipse.gemoc.trace.gemoc.traceaddon"
+          name="Generic MultiDimensional Data Trace"
+          openViewIds="org.eclipse.gemoc.addon.multidimensional.timeline.views.timeline.MultidimensionalTimeLineView"
+          shortDescription="Data Trace support for any language">
+       <addon_booleanOption
+             defaultValue="false"
+             id="org.eclipse.gemoc.trace.gemoc.addon_booleanOption"
+             name="Equivalency classes computing"
+             shortDescription="Activate equivalency classes computing during trace recording (warning this is time consumming on long running models that don&apos;t have equivalent states)">
+       </addon_booleanOption>
+    </addon>
   </extension>
 </plugin>

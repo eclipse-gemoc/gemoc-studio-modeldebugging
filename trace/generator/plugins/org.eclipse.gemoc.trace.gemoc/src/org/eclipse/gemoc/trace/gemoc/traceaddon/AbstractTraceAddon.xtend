@@ -56,6 +56,9 @@ abstract class AbstractTraceAddon implements IEngineAddon, IMultiDimensionalTrac
 	var boolean needTransaction = true
 	BatchModelChangeListener listenerAddon
 	Trace<Step<?>, TracedObject<?>, State<?, ?>> trace
+	
+	
+	protected boolean activateUpdateEquivalenceClasses = true;
 
 	protected abstract def ITraceConstructor constructTraceConstructor(Resource modelResource, Resource traceResource,
 		Map<EObject, TracedObject<?>> exeToTraced)
@@ -84,7 +87,7 @@ abstract class AbstractTraceAddon implements IEngineAddon, IMultiDimensionalTrac
 		if (root instanceof Trace<?, ?, ?>) {
 			trace = root as Trace<Step<?>, TracedObject<?>, State<?, ?>>
 			traceExplorer = new GenericTraceExplorer(trace)
-			traceExtractor = new GenericTraceExtractor(trace)
+			traceExtractor = new GenericTraceExtractor(trace, activateUpdateEquivalenceClasses)
 		} else {
 			traceExplorer = null
 			traceExtractor = null
@@ -138,6 +141,10 @@ abstract class AbstractTraceAddon implements IEngineAddon, IMultiDimensionalTrac
 	override engineAboutToStart(IExecutionEngine<?> engine) {
 		if (_executionContext === null) {
 			_executionContext = engine.executionContext
+			
+			
+			// load addon options from the execution context
+			this.activateUpdateEquivalenceClasses = _executionContext.runConfiguration.getAttribute("org.eclipse.gemoc.trace.gemoc.addon_booleanOption", false);
 
 			val modelResource = _executionContext.resourceModel
 
@@ -174,7 +181,7 @@ abstract class AbstractTraceAddon implements IEngineAddon, IMultiDimensionalTrac
 				trace = root as Trace<Step<?>, TracedObject<?>, State<?, ?>>
 				val stateManager = constructStateManager(modelResource, exeToTraced.inverse)
 				traceExplorer = new GenericTraceExplorer(trace, stateManager)
-				traceExtractor = new GenericTraceExtractor(trace)
+				traceExtractor = new GenericTraceExtractor(trace, activateUpdateEquivalenceClasses)
 				traceListener = new BatchModelChangeListener(EMFResource.getRelatedResources(traceResource))
 				traceNotifier = new GenericTraceNotifier(traceListener)
 				traceNotifier.addListener(traceExtractor)

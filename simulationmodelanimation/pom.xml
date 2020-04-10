@@ -182,7 +182,18 @@
 			</plugin>
 		</plugins>
 	</build>
-
+	<distributionManagement>
+		<repository>
+			<id>repo.eclipse.org</id>
+			<name>GEMOC Project Repository - Releases</name>
+			<url>https://repo.eclipse.org/content/repositories/gemoc-releases/</url>
+		</repository>
+		<snapshotRepository>
+			<id>repo.eclipse.org</id>
+			<name>GEMOC Project Repository - Snapshots</name>
+			<url>https://repo.eclipse.org/content/repositories/gemoc-snapshots/</url>
+		</snapshotRepository>
+	</distributionManagement>
 	<profiles>
 		<profile>
 			<!-- This profile should be enabled for sonar analysis -->
