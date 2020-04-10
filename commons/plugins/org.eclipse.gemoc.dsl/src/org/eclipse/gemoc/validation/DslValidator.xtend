@@ -120,9 +120,6 @@ class DslValidator extends AbstractDslValidator {
 			if(!approachesList.contains(entry.value)){
 				error("Unknown metaprogramming approach", DslPackage.Literals.ENTRY__VALUE)
 			}
-			if(entry.value == "ecore"){
-				info("The Ecore approach only exist to provide an IRuleProvider to other meta-programming approaches, please replace it with one of them instead.", DslPackage.Literals.ENTRY__VALUE)
-			}
 		}
 	}
 
