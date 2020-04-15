@@ -5,9 +5,14 @@ package org.eclipse.gemoc.validation
 
 import org.eclipse.gemoc.dsl.Dsl
 import org.eclipse.gemoc.dsl.DslPackage
-
-import org.eclipse.xtext.validation.Check
 import org.eclipse.gemoc.dsl.Entry
+import org.eclipse.xtext.validation.Check
+import org.eclipse.core.runtime.IConfigurationElement
+import java.util.ArrayList
+import org.eclipse.gemoc.xdsmlframework.api.extensions.metaprog.IRuleProvider
+import org.eclipse.gemoc.xdsmlframework.api.extensions.metaprog.IRule
+import org.eclipse.gemoc.xdsmlframework.api.extensions.metaprog.Message
+import org.eclipse.gemoc.xdsmlframework.api.extensions.metaprog.Severity
 
 /**
  * This class contains custom validation rules. 
@@ -18,6 +23,10 @@ class DslValidator extends AbstractDslValidator {
 	
 	public static val MISSING_NAME = 'missingName'
 	public static val DUPLICATEKEY = 'duplicateKey'
+	
+	
+	public val IConfigurationElement[] exts = org.eclipse.core.runtime.Platform.getExtensionRegistry().getConfigurationElementsFor("org.eclipse.gemoc.gemoc_language_workbench.metaprog")	
+	public var IRuleProvider providedValidator
 
 	@Check
 	def checkDSLHasName(Dsl dsl) {
@@ -38,4 +47,80 @@ class DslValidator extends AbstractDslValidator {
 		}
 	}
 	
+
+	@Check
+	def checkForDSL(Dsl dsl) {
+		
+		for(IRule rule : providedValidator.getValidationRules()) {
+			var message = rule.execute(dsl)
+			
+			switch message.getSeverity() {
+				
+				case message.getSeverity() == Severity.ERROR :	error(message.getContent(),
+														DslPackage.Literals.DSL__NAME
+														)
+				case message.getSeverity() == Severity.WARNING :	warning(message.getContent(),
+														DslPackage.Literals.DSL__NAME
+													)
+				case message.getSeverity() == Severity.INFO :	info(message.getContent(),
+														DslPackage.Literals.DSL__NAME
+													)
+				default : message = new Message()
+			}
+		}
+	}
+		
+	
+	// Performs checks provided by the required metaprogramming approach's validator for each entry in the dsl file
+	@Check
+	def checkForEntry(Entry entry) {
+		
+		for(IRule rule : providedValidator.getValidationRules()) {
+			var message = rule.execute(entry)
+			
+			switch message.getSeverity() {
+				
+				case Severity.ERROR :	error(message.getContent(),
+														DslPackage.Literals.ENTRY__VALUE
+														)
+				case Severity.WARNING :	warning(message.getContent(),
+														DslPackage.Literals.ENTRY__VALUE
+													)
+				case Severity.INFO :	info(message.getContent(),
+														DslPackage.Literals.ENTRY__VALUE
+													)
+				case Severity.DEFAULT : message = new Message()
+				
+				default : print("Unknown severity")
+			}
+		}
+
+	}
+	
+	@Check
+	def checkForApproachEntry(Dsl dsl) {
+		if(dsl.getEntries().filter[e | e.key == "metaprog"].isEmpty) {
+			warning("Missing \"metaprog\" entry to define the metaprogramming approach used", DslPackage.Literals.DSL__NAME)
+		}
+	}
+	
+	@Check
+	def checkForApproach(Entry entry){
+		if(entry.key == "metaprog") {	
+			for(IConfigurationElement elem : exts) {
+				if(entry.value.equals(elem.getAttribute("name"))) {
+					providedValidator = elem.createExecutableExtension("validator") as IRuleProvider
+				}
+			}
+						
+			var ArrayList<String> approachesList = new ArrayList()
+			for (IConfigurationElement e : exts) {
+				approachesList.add(e.getAttribute("name"))
+			}
+			if(!approachesList.contains(entry.value)){
+				error("Unknown metaprogramming approach", DslPackage.Literals.ENTRY__VALUE)
+			}
+		}
+	}
+
 }
