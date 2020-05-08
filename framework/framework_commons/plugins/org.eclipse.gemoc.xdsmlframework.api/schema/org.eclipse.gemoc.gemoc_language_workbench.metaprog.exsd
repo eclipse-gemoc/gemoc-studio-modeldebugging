@@ -62,7 +62,7 @@
                   Validator for the metaprogramming approach, provides checks for the DSLValidator to perform.
                </documentation>
                <appinfo>
-                  <meta.attribute kind="java" basedOn="metaprogramming.extensionpoint.AbstractValidator:"/>
+                  <meta.attribute kind="java" basedOn=":org.eclipse.gemoc.xdsmlframework.api.extensions.metaprog.IRuleProvider"/>
                </appinfo>
             </annotation>
          </attribute>
