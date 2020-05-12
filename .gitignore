@@ -16,6 +16,8 @@ target
 build.acceleo
 .DS_Store
 xtend-gen
+.polyglot.build.properties
 .polyglot.*
 .META-INF_MANIFEST.MF
+feature.xml.takari_issue_192
 
