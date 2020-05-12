@@ -1,0 +1,76 @@
+<project xmlns="http://maven.apache.org/POM/4.0.0"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+	<modelVersion>4.0.0</modelVersion>
+	<groupId>org.eclipse.gemoc.executionframework</groupId>
+	<artifactId>org.eclipse.gemoc.executionframework.mep</artifactId>
+	<version>1.0.0-SNAPSHOT</version>
+	
+	
+	<parent>
+		<groupId>org.eclipse.gemoc.executionframework</groupId>
+    	<artifactId>org.eclipse.gemoc.executionframework.pomfirst</artifactId>
+		<version>1.0.0-SNAPSHOT</version>
+	</parent>
+	
+	<properties>
+		<maven.compiler.target>1.8</maven.compiler.target>
+		<maven.compiler.source>1.8</maven.compiler.source>
+	    <surefire-plugin.version>2.22.0</surefire-plugin.version>
+	    <quarkus.version>0.21.1</quarkus.version>
+	    <xtend.version>2.14.0</xtend.version>
+	</properties>
+
+
+	<dependencies>
+
+<!-- 		<dependency> -->
+<!-- 			<groupId>io.quarkus</groupId> -->
+<!-- 			<artifactId>quarkus-resteasy</artifactId> -->
+<!-- 		</dependency> -->
+<!-- 		<dependency> -->
+<!-- 			<groupId>io.quarkus</groupId> -->
+<!-- 			<artifactId>quarkus-junit5</artifactId> -->
+<!-- 			<scope>test</scope> -->
+<!-- 		</dependency> -->
+<!-- 		<dependency> -->
+<!-- 			<groupId>io.rest-assured</groupId> -->
+<!-- 			<artifactId>rest-assured</artifactId> -->
+<!-- 			<scope>test</scope> -->
+<!-- 		</dependency> -->
+<!-- 		<dependency> -->
+<!-- 			<groupId>io.quarkus</groupId> -->
+<!-- 			<artifactId>quarkus-undertow-websockets</artifactId> -->
+<!-- 		</dependency> -->
+		<dependency>
+			<groupId>org.eclipse.xtext</groupId>
+			<artifactId>org.eclipse.xtext</artifactId>
+			<version>${xtend.version}</version>
+		</dependency>
+<!-- 		<dependency> -->
+<!-- 			<groupId>org.eclipse.xtext</groupId> -->
+<!-- 			<artifactId>org.eclipse.xtext.ide</artifactId> -->
+<!-- 			<version>${xtend.version}</version> -->
+<!-- 		</dependency> -->
+		<dependency>
+			<groupId>org.eclipse.lsp4j</groupId>
+			<artifactId>org.eclipse.lsp4j.debug</artifactId>
+			<version>0.8.0</version>
+		</dependency>
+		
+		<dependency>
+			<groupId>org.eclipse.gemoc.modeldebugging.framework.commons</groupId>
+			<artifactId>org.eclipse.gemoc.xdsmlframework.api</artifactId>
+			<version>4.0.0-SNAPSHOT</version>
+			<type>eclipse-plugin</type>
+		</dependency>
+
+	</dependencies>
+
+	<build>
+		<plugins>
+			
+		</plugins>
+	</build>
+
+</project>
