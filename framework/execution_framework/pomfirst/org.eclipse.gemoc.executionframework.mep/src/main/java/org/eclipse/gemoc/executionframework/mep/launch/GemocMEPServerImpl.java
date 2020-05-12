@@ -1,18 +1,12 @@
 package org.eclipse.gemoc.executionframework.mep.launch;
 import java.io.ByteArrayInputStream;
-import java.io.File;
 import java.io.IOException;
 import java.io.InputStream;
 import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.Collections;
 import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
-import java.util.Set;
-import java.util.TreeMap;
 import java.util.concurrent.CompletableFuture;
-import java.util.function.Function;
 import java.util.function.Supplier;
 
 import org.apache.log4j.Logger;
@@ -23,28 +17,34 @@ import org.eclipse.emf.ecore.resource.impl.ResourceSetImpl;
 import org.eclipse.gemoc.executionframework.mep.services.IModelExecutionProtocolClient;
 import org.eclipse.gemoc.executionframework.mep.services.IModelExecutionProtocolServer;
 import org.eclipse.gemoc.executionframework.mep.services.ModelExecutionClientAware;
+import org.eclipse.lsp4j.debug.Breakpoint;
 import org.eclipse.lsp4j.debug.Capabilities;
+import org.eclipse.lsp4j.debug.ContinueArguments;
+import org.eclipse.lsp4j.debug.ContinueResponse;
 import org.eclipse.lsp4j.debug.InitializeRequestArguments;
 import org.eclipse.lsp4j.debug.NextArguments;
+import org.eclipse.lsp4j.debug.OutputEventArguments;
+import org.eclipse.lsp4j.debug.RestartArguments;
+import org.eclipse.lsp4j.debug.SetBreakpointsArguments;
+import org.eclipse.lsp4j.debug.SetBreakpointsResponse;
+import org.eclipse.lsp4j.debug.SourceArguments;
+import org.eclipse.lsp4j.debug.SourceBreakpoint;
+import org.eclipse.lsp4j.debug.SourceResponse;
+import org.eclipse.lsp4j.debug.StackFrame;
+import org.eclipse.lsp4j.debug.StackTraceArguments;
+import org.eclipse.lsp4j.debug.StackTraceResponse;
+import org.eclipse.lsp4j.debug.StepInArguments;
+import org.eclipse.lsp4j.debug.StepOutArguments;
 import org.eclipse.lsp4j.debug.TerminateArguments;
+import org.eclipse.lsp4j.debug.Variable;
+import org.eclipse.lsp4j.debug.VariablesArguments;
+import org.eclipse.lsp4j.debug.VariablesResponse;
 import org.eclipse.lsp4j.jsonrpc.Endpoint;
+import org.eclipse.lsp4j.jsonrpc.ResponseErrorException;
 import org.eclipse.lsp4j.jsonrpc.json.JsonRpcMethod;
 import org.eclipse.lsp4j.jsonrpc.json.JsonRpcMethodProvider;
-import org.eclipse.lsp4j.jsonrpc.messages.Either;
+import org.eclipse.lsp4j.jsonrpc.messages.ResponseError;
 import org.eclipse.lsp4j.jsonrpc.services.ServiceEndpoints;
-
-import org.eclipse.xtext.xbase.lib.IterableExtensions;
-import org.eclipse.xtext.xbase.lib.Pair;
-
-import com.google.common.base.Objects;
-import com.google.common.collect.FluentIterable;
-import com.google.common.collect.ImmutableList;
-import com.google.common.collect.ImmutableMap;
-import com.google.common.collect.ImmutableMultimap;
-import com.google.common.collect.ImmutableSet;
-import com.google.common.collect.LinkedListMultimap;
-import com.google.common.collect.Multimap;
-import com.google.inject.Inject;
 
 abstract public class GemocMEPServerImpl implements IModelExecutionProtocolServer, Endpoint, JsonRpcMethodProvider, ModelExecutionClientAware {
 
@@ -54,8 +54,12 @@ abstract public class GemocMEPServerImpl implements IModelExecutionProtocolServe
 	
 	//private final Multimap<String, Endpoint> extensionProviders = LinkedListMultimap.create();
 	
-	private IModelExecutionProtocolClient client;
+	protected IModelExecutionProtocolClient client;
 	
+	protected boolean initialized = false;
+	protected boolean simulationStarted = false;
+	protected MEPLauncherParameters launcherParameters = null;
+	protected Breakpoint[] breakpoints = new Breakpoint[0];
 	
 	@Override
 	public Map<String, JsonRpcMethod> supportedMethods() {
@@ -152,27 +156,49 @@ abstract public class GemocMEPServerImpl implements IModelExecutionProtocolServe
 		CompletableFuture<Capabilities> future = CompletableFuture.supplyAsync(new Supplier<Capabilities>() {
 			@Override
 			public Capabilities get() {
+				if (initialized) {
+					ResponseError error = new ResponseError();
+					error.setMessage("Server already initialized");
+					throw new ResponseErrorException(error);
+				}
+				
 				Capabilities capabilities = new Capabilities();
 				capabilities.setSupportsTerminateRequest(true);
 				// TODO declare here DAP capabilities
+				
+				client.initialized();
+				initialized = true;
+				
 				return capabilities;
 			}
 		});
 		return future;
 	}
-
-	
 	
 	@Override
 	public CompletableFuture<Void> launch(Map<String, Object> args) {
 		CompletableFuture<Void> future = CompletableFuture.runAsync(new Runnable() {
 			@Override
 		    public void run() {
+				if (!initialized) {
+					ResponseError error = new ResponseError();
+					error.setMessage("Server not initialized");
+					throw new ResponseErrorException(error);
+				}
+				if (simulationStarted) {
+					ResponseError error = new ResponseError();
+					error.setMessage("Another simulation is running");
+					throw new ResponseErrorException(error);
+				}
+				
 				// TODO launch the engine
 			//	throw new Exception("failed to launch with args\'" + args + "\'.");
 				LOG.info("launch received with args "+args);
 				
 				Resource res =  null;
+				if (args.containsKey(MEPLaunchParameterKey.noDebug.name())) {
+					//TODO: Normal launch if true
+				}
 				if (args.containsKey(MEPLaunchParameterKey.modelContent.name())) {
 					try {
 						ResourceSet rs = createResourceSet();
@@ -201,10 +227,6 @@ abstract public class GemocMEPServerImpl implements IModelExecutionProtocolServe
 						LOG.error(e.getMessage(), e);
 					}
 				}
-				String languageName = "K3FSM";
-				if(args.containsKey(MEPLaunchParameterKey.language.name())) {
-					languageName = (String) args.get(MEPLaunchParameterKey.language.name());
-				}
 				
 				String methodEntryPoint = "";
 				if(args.containsKey(MEPLaunchParameterKey.methodEntryPoint.name())) {
@@ -223,46 +245,241 @@ abstract public class GemocMEPServerImpl implements IModelExecutionProtocolServe
 				if(args.containsKey(MEPLaunchParameterKey.initializationArguments.name())) {
 					initializationArguments = (String) args.get(MEPLaunchParameterKey.initializationArguments.name());
 				}
-				launchGemocEngine(res, 
-						languageName, 
-						modelEntryPoint, 
-						methodEntryPoint, //methodEntryPoint, 
-						initializationMethod, //initializationMethod, 
-						initializationArguments); //initializationMethodArgs
+				
+				launcherParameters = new MEPLauncherParameters();
+				launcherParameters.resourceModel = res;
+				launcherParameters.modelEntryPoint = modelEntryPoint; 
+				launcherParameters.methodEntryPoint = methodEntryPoint;
+				launcherParameters.initializationMethod = initializationMethod;
+				launcherParameters.initializationMethodArgs = initializationArguments;
+				launchGemocEngine(launcherParameters);
+				
+				simulationStarted = true;
 			}
 		});
 		
 		return future;
 	}
-
 	
+	@Override
+	public CompletableFuture<ContinueResponse> continue_(ContinueArguments args) {
+		CompletableFuture<ContinueResponse> future = CompletableFuture.supplyAsync(new Supplier<ContinueResponse>() {
+			@Override
+		    public ContinueResponse get() {
+				if (!simulationStarted) {
+					ResponseError error = new ResponseError();
+					error.setMessage("Simulation not started");
+					throw new ResponseErrorException(error);
+				}
+				
+				internalContinue();
+				
+				ContinueResponse response = new ContinueResponse();
+				return response;
+			}
+		});
+		return future;
+	}
 	
 	@Override
 	public CompletableFuture<Void> next(NextArguments args) {
 		CompletableFuture<Void> future = CompletableFuture.runAsync(new Runnable() {
 			@Override
 		    public void run() {
+				if (!simulationStarted) {
+					ResponseError error = new ResponseError();
+					error.setMessage("Simulation not started");
+					throw new ResponseErrorException(error);
+				}
+				
 				internalNext();
 			}
 		});
 		return future;
 	}
 	
+	@Override
+	public CompletableFuture<Void> stepIn(StepInArguments args) {
+		CompletableFuture<Void> future = CompletableFuture.runAsync(new Runnable() {
+			@Override
+		    public void run() {
+				if (!simulationStarted) {
+					ResponseError error = new ResponseError();
+					error.setMessage("Simulation not started");
+					throw new ResponseErrorException(error);
+				}
+				
+				internalStepIn();
+			}
+		});
+		return future;
+	}
+	
+	@Override
+	public CompletableFuture<Void> stepOut(StepOutArguments args) {
+		CompletableFuture<Void> future = CompletableFuture.runAsync(new Runnable() {
+			@Override
+		    public void run() {
+				if (!simulationStarted) {
+					ResponseError error = new ResponseError();
+					error.setMessage("Simulation not started");
+					throw new ResponseErrorException(error);
+				}
+				
+				internalStepOut();
+			}
+		});
+		return future;
+	}
+	
+	@Override
+	public CompletableFuture<SetBreakpointsResponse> setBreakpoints(SetBreakpointsArguments args) {
+		CompletableFuture<SetBreakpointsResponse> future = CompletableFuture.supplyAsync(new Supplier<SetBreakpointsResponse>() {
+			@Override
+		    public SetBreakpointsResponse get() {
+				//TODO: Manage different sources for breakpoints
+				SetBreakpointsResponse response = new SetBreakpointsResponse();
+	
+				internalClearBreakpoints();
+				
+				List<Breakpoint> bps = new ArrayList<>();
+				for (SourceBreakpoint sbp : args.getBreakpoints()) {
+					Breakpoint bp = new Breakpoint();
+					bp.setVerified(true);
+					bp.setLine(sbp.getLine());
+					internalToggleBreakpoint(sbp.getLine().intValue());
+					bps.add(bp);
+				}
+				breakpoints = bps.toArray(new Breakpoint[0]);
+				response.setBreakpoints(breakpoints);
+				
+				return response;
+			}
+		});
+		return future;
+	}
+	
+	@Override
+	public CompletableFuture<Void> restart(RestartArguments args) {
+		CompletableFuture<Void> future = CompletableFuture.runAsync(new Runnable() {
+			@Override
+		    public void run() {
+				if (launcherParameters == null) {
+					ResponseError error = new ResponseError();
+					error.setMessage("Simulation was not started before");
+					throw new ResponseErrorException(error);
+				}
+				if (simulationStarted) {
+					internalTerminate();
+					simulationStarted = false;
+				}
+				launchGemocEngine(launcherParameters);
+				simulationStarted = true;
+				for (Breakpoint bp : breakpoints) {
+					internalToggleBreakpoint(bp.getLine().intValue());
+				}
+			}
+		});
+		return future;
+	}
+
+	@Override
+	public CompletableFuture<StackTraceResponse> stackTrace(StackTraceArguments args) {
+		CompletableFuture<StackTraceResponse> future = CompletableFuture.supplyAsync(new Supplier<StackTraceResponse>() {
+			@Override
+		    public StackTraceResponse get() {
+				if (!simulationStarted) {
+					ResponseError error = new ResponseError();
+					error.setMessage("Simulation not started");
+					throw new ResponseErrorException(error);
+				}
+				StackTraceResponse response = new StackTraceResponse();
+				response.setStackFrames(internalStackTrace());
+				return response;
+			}
+		});
+		return future;
+	}
+
+	@Override
+	public CompletableFuture<VariablesResponse> variables(VariablesArguments args) {
+		CompletableFuture<VariablesResponse> future = CompletableFuture.supplyAsync(new Supplier<VariablesResponse>() {
+			@Override
+		    public VariablesResponse get() {
+				if (!simulationStarted) {
+					ResponseError error = new ResponseError();
+					error.setMessage("Simulation not started");
+					throw new ResponseErrorException(error);
+				}
+				VariablesResponse response = new VariablesResponse();
+				response.setVariables(internalVariables());
+				return response;
+			}
+		});
+		return future;
+	}
+	
+	@Override
+	public CompletableFuture<SourceResponse> source(SourceArguments args) {
+		CompletableFuture<SourceResponse> future = CompletableFuture.supplyAsync(new Supplier<SourceResponse>() {
+			@Override
+		    public SourceResponse get() {
+				if (!simulationStarted) {
+					ResponseError error = new ResponseError();
+					error.setMessage("Simulation not started");
+					throw new ResponseErrorException(error);
+				}
+				SourceResponse response = new SourceResponse();
+				response.setContent(internalSource());
+				return response;
+			}
+		});
+		return future;
+	}
+
 	protected abstract void internalNext();
+	
+	protected abstract void internalStepIn();
+
+	protected abstract void internalStepOut();
 
 	@Override
 	public CompletableFuture<Void> terminate(TerminateArguments args) {
 		CompletableFuture<Void> future = CompletableFuture.runAsync(new Runnable() {
 			@Override
 		    public void run() {
-				// TODO kill the engine
+				if (!simulationStarted) {
+					ResponseError error = new ResponseError();
+					error.setMessage("Simulation not started");
+					throw new ResponseErrorException(error);
+				}
 				internalTerminate();
+				simulationStarted = false;
 			}
 		});
 		return future;
 	}
 
+	public void sendOutput(String output) {
+		OutputEventArguments args = new OutputEventArguments();
+		args.setCategory("stdout");
+		args.setOutput(output);
+		client.output(args);
+	}
+	
+	protected abstract void internalClearBreakpoints();
+	
+	protected abstract void internalToggleBreakpoint(int line);
+	
 	protected abstract void internalTerminate();
+	
+	protected abstract void internalContinue();
+	
+	protected abstract Variable[] internalVariables();
+	
+	protected abstract StackFrame[] internalStackTrace();
+	
+	protected abstract String internalSource();
 	
 	/**
 	 * create a resource set
@@ -274,7 +491,10 @@ abstract public class GemocMEPServerImpl implements IModelExecutionProtocolServe
 		return new ResourceSetImpl();
 	}
 
-	
+	public void launchGemocEngine(MEPLauncherParameters parameters) {
+		launchGemocEngine(parameters.resourceModel, parameters.modelEntryPoint, parameters.methodEntryPoint,
+				parameters.initializationMethod, parameters.initializationMethodArgs);
+	}
 	
 	/**
 	 * 
@@ -285,6 +505,6 @@ abstract public class GemocMEPServerImpl implements IModelExecutionProtocolServe
 	 * @param initializationMethod
 	 * @param initializationMethodArgs
 	 */
-	abstract public  void launchGemocEngine(Resource resourceModel, String selectedLanguage, String modelEntryPoint,
+	abstract public void launchGemocEngine(Resource resourceModel, String modelEntryPoint,
 			String methodEntryPoint, String initializationMethod, String initializationMethodArgs);
 }
