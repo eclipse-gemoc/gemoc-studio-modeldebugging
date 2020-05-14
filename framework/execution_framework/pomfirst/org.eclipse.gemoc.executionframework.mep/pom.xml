@@ -18,40 +18,18 @@
 		<maven.compiler.source>1.8</maven.compiler.source>
 	    <surefire-plugin.version>2.22.0</surefire-plugin.version>
 	    <quarkus.version>0.21.1</quarkus.version>
-	    <xtend.version>2.14.0</xtend.version>
+	    <xtend.version>2.19.0</xtend.version>
 	</properties>
 
 
 	<dependencies>
 
-<!-- 		<dependency> -->
-<!-- 			<groupId>io.quarkus</groupId> -->
-<!-- 			<artifactId>quarkus-resteasy</artifactId> -->
-<!-- 		</dependency> -->
-<!-- 		<dependency> -->
-<!-- 			<groupId>io.quarkus</groupId> -->
-<!-- 			<artifactId>quarkus-junit5</artifactId> -->
-<!-- 			<scope>test</scope> -->
-<!-- 		</dependency> -->
-<!-- 		<dependency> -->
-<!-- 			<groupId>io.rest-assured</groupId> -->
-<!-- 			<artifactId>rest-assured</artifactId> -->
-<!-- 			<scope>test</scope> -->
-<!-- 		</dependency> -->
-<!-- 		<dependency> -->
-<!-- 			<groupId>io.quarkus</groupId> -->
-<!-- 			<artifactId>quarkus-undertow-websockets</artifactId> -->
-<!-- 		</dependency> -->
 		<dependency>
 			<groupId>org.eclipse.xtext</groupId>
 			<artifactId>org.eclipse.xtext</artifactId>
 			<version>${xtend.version}</version>
 		</dependency>
-<!-- 		<dependency> -->
-<!-- 			<groupId>org.eclipse.xtext</groupId> -->
-<!-- 			<artifactId>org.eclipse.xtext.ide</artifactId> -->
-<!-- 			<version>${xtend.version}</version> -->
-<!-- 		</dependency> -->
+
 		<dependency>
 			<groupId>org.eclipse.lsp4j</groupId>
 			<artifactId>org.eclipse.lsp4j.debug</artifactId>
@@ -62,7 +40,7 @@
 			<groupId>org.eclipse.gemoc.modeldebugging.framework.commons</groupId>
 			<artifactId>org.eclipse.gemoc.xdsmlframework.api</artifactId>
 			<version>4.0.0-SNAPSHOT</version>
-			<type>eclipse-plugin</type>
+			<!-- <type>eclipse-plugin</type> -->
 		</dependency>
 
 	</dependencies>
