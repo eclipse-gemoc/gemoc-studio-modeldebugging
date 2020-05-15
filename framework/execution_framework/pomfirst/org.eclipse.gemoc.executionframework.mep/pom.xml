@@ -37,10 +37,9 @@
 		</dependency>
 		
 		<dependency>
-			<groupId>org.eclipse.gemoc.modeldebugging.framework.commons</groupId>
+			<groupId>org.eclipse.gemoc.pomfirst</groupId>
 			<artifactId>org.eclipse.gemoc.xdsmlframework.api</artifactId>
 			<version>4.0.0-SNAPSHOT</version>
-			<!-- <type>eclipse-plugin</type> -->
 		</dependency>
 
 	</dependencies>

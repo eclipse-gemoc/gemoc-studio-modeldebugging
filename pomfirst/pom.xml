@@ -26,17 +26,26 @@
 		
 	<modules>
         <module>../framework/execution_framework/pomfirst</module>
+        <module>../commons/plugins/org.eclipse.gemoc.commons.eclipse/pomfirst</module>
+        <module>../commons/plugins/org.eclipse.gemoc.commons.eclipse.messagingsystem.api/pomfirst</module>
+        <module>../commons/plugins/org.eclipse.gemoc.commons.eclipse.pde/pomfirst</module>
+        <module>../commons/plugins/org.eclipse.gemoc.commons.utils/pomfirst</module>
+        <module>../commons/plugins/org.eclipse.gemoc.dsl.model/pomfirst</module>
+        <module>../framework/execution_framework/plugins/org.eclipse.gemoc.executionframework.debugger/pomfirst</module>
+        <module>../framework/execution_framework/plugins/org.eclipse.gemoc.executionframework.engine/pomfirst</module>
+        <module>../framework/framework_commons/plugins/org.eclipse.gemoc.executionframework.reflectivetrace.model/pomfirst</module>
+        <module>../framework/framework_commons/plugins/org.eclipse.gemoc.xdsmlframework.api/pomfirst</module>
+        <module>../framework/framework_commons/plugins/org.eclipse.gemoc.xdsmlframework.commons/pomfirst</module>
+        <module>../simulationmodelanimation/plugins/org.eclipse.gemoc.dsl.debug/pomfirst</module>
+        <module>../simulationmodelanimation/plugins/org.eclipse.gemoc.dsl.debug.edit/pomfirst</module>
+        <module>../simulationmodelanimation/plugins/org.eclipse.gemoc.dsl.debug.ide/pomfirst</module>
+        <module>../trace/commons/plugins/org.eclipse.gemoc.trace.commons/pomfirst</module>
+        <module>../trace/commons/plugins/org.eclipse.gemoc.trace.commons.model/pomfirst</module>
+        <module>../trace/commons/plugins/org.eclipse.gemoc.trace.gemoc.api/pomfirst</module>
     </modules>
 	
 	<build>
 		<plugins>
-			<!-- enable P2 layout for repositories -->
-			<plugin>
-				<groupId>org.eclipse.tycho</groupId>
-				<artifactId>tycho-maven-plugin</artifactId>
-				<version>${tycho.version}</version>
-				<extensions>true</extensions>
-			</plugin>
 			<!-- enable xtend compilation -->
 			<plugin>
 				<groupId>org.eclipse.xtend</groupId>
@@ -92,17 +101,6 @@
 			<releases><enabled>true</enabled></releases>
 			<snapshots><enabled>true</enabled></snapshots>
 			<url>https://repo.eclipse.org/content/groups/gemoc/</url>
-		</repository>
-		
-		<repository>
-			<id>eclipse-repo</id>
-			<url>${eclipse-repo.url}</url>
-			<layout>p2</layout>
-		</repository>
-		<repository>
-			<id>gemoc-repo</id>
-			<url>${gemoc-repo.url}</url>
-			<layout>p2</layout>
 		</repository>
 	</repositories>
 </project>
