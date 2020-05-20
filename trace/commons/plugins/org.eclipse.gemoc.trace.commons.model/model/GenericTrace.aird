@@ -23,7 +23,6 @@
     </ownedViews>
   </viewpoint:DAnalysis>
   <diagram:DSemanticDiagram uid="_VX9qMOFsEeayiMPtzH5mRw" name="trace class diagram">
-  <diagram:DSemanticDiagram uid="_VX9qMOFsEeayiMPtzH5mRw">
     <ownedAnnotationEntries xmi:type="description:AnnotationEntry" uid="_VX9qMeFsEeayiMPtzH5mRw" source="DANNOTATION_CUSTOMIZATION_KEY">
       <data xmi:type="diagram:ComputedStyleDescriptionRegistry" uid="_VX9qMuFsEeayiMPtzH5mRw">
         <computedStyleDescriptions xmi:type="style:EdgeStyleDescription" xmi:id="_WgSkMOFsEeayiMPtzH5mRw" routingStyle="manhattan">
@@ -726,7 +725,6 @@
           <styles xmi:type="notation:FontStyle" xmi:id="_Wib5QuFsEeayiMPtzH5mRw" fontColor="7490599" fontName="Ubuntu" fontHeight="8"/>
           <bendpoints xmi:type="notation:RelativeBendpoints" xmi:id="_Wib5Q-FsEeayiMPtzH5mRw" points="[3, -49, 211, 107]$[3, -76, 211, 80]$[-144, -76, 64, 80]$[-144, -107, 64, 49]"/>
           <sourceAnchor xmi:type="notation:IdentityAnchor" xmi:id="_WicgUOFsEeayiMPtzH5mRw" id="(0.5,0.5)"/>
-
             <layoutConstraint xmi:type="notation:Bounds" xmi:id="_Wib5ReFsEeayiMPtzH5mRw" x="-10"/>
           </children>
           <children xmi:type="notation:Node" xmi:id="_Wib5RuFsEeayiMPtzH5mRw" type="6002">
