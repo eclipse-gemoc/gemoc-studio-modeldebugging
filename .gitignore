@@ -17,4 +17,5 @@ build.acceleo
 .DS_Store
 xtend-gen
 .polyglot.*
+.META-INF_MANIFEST.MF
 
