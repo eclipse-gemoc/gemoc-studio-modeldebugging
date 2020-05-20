@@ -87,5 +87,10 @@
       <genFeatures notify="false" createChild="false" propertySortChoices="true" ecoreFeature="ecore:EReference GenericTrace.ecore#//Footprint/changes"/>
       <genFeatures notify="false" createChild="false" propertySortChoices="true" ecoreFeature="ecore:EReference GenericTrace.ecore#//Footprint/instantiations"/>
     </genClasses>
+    <genClasses ecoreClass="GenericTrace.ecore#//Footprint">
+      <genFeatures notify="false" createChild="false" propertySortChoices="true" ecoreFeature="ecore:EReference GenericTrace.ecore#//Footprint/accesses"/>
+      <genFeatures notify="false" createChild="false" propertySortChoices="true" ecoreFeature="ecore:EReference GenericTrace.ecore#//Footprint/changes"/>
+      <genFeatures notify="false" createChild="false" propertySortChoices="true" ecoreFeature="ecore:EReference GenericTrace.ecore#//Footprint/instantiations"/>
+    </genClasses>
   </genPackages>
 </genmodel:GenModel>
