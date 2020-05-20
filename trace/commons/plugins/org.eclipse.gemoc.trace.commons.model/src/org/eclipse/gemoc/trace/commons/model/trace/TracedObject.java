@@ -52,10 +52,7 @@ public interface TracedObject<DimensionSubType extends Dimension<?>> extends EOb
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @model kind="operation"
-<<<<<<< HEAD
-=======
 	 *        annotation="http://www.eclipse.org/emf/2002/GenModel body='// Default implementation, returning empty list.\nfinal EList&lt;DimensionSubType&gt; result = new org.eclipse.emf.ecore.util.BasicInternalEList&lt;DimensionSubType&gt;(Object.class);\nreturn result;'"
->>>>>>> 6a6b587 (Add Footprint EClass to trace metamodel)
 	 * @generated
 	 */
 	EList<DimensionSubType> getDimensionsInternal();

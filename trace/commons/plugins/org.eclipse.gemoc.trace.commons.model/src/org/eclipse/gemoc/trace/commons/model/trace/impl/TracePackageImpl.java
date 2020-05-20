@@ -442,9 +442,7 @@ public class TracePackageImpl extends EPackageImpl implements TracePackage {
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-<<<<<<< HEAD
 	@Override
-=======
 	public EReference getSmallStep_Footprint() {
 		return (EReference)smallStepEClass.getEStructuralFeatures().get(0);
 	}
@@ -454,7 +452,7 @@ public class TracePackageImpl extends EPackageImpl implements TracePackage {
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
->>>>>>> 6a6b587 (Add Footprint EClass to trace metamodel)
+
 	public EClass getSequentialStep() {
 		return sequentialStepEClass;
 	}
@@ -634,9 +632,7 @@ public class TracePackageImpl extends EPackageImpl implements TracePackage {
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-<<<<<<< HEAD
 	@Override
-=======
 	public EClass getFootprint() {
 		return footprintEClass;
 	}
@@ -673,7 +669,7 @@ public class TracePackageImpl extends EPackageImpl implements TracePackage {
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
->>>>>>> 6a6b587 (Add Footprint EClass to trace metamodel)
+
 	public EDataType getISerializable() {
 		return iSerializableEDataType;
 	}
