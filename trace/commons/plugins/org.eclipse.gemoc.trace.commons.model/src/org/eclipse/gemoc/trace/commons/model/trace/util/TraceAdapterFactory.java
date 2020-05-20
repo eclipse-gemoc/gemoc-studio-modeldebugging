@@ -136,6 +136,10 @@ public class TraceAdapterFactory extends AdapterFactoryImpl {
 				return createStateAdapter();
 			}
 			@Override
+			public Adapter caseFootprint(Footprint object) {
+				return createFootprintAdapter();
+			}
+			@Override
 			public Adapter caseEModelElement(EModelElement object) {
 				return createEModelElementAdapter();
 			}
@@ -356,6 +360,20 @@ public class TraceAdapterFactory extends AdapterFactoryImpl {
 	 * @generated
 	 */
 	public Adapter createStateAdapter() {
+		return null;
+	}
+
+	/**
+	 * Creates a new adapter for an object of class '{@link org.eclipse.gemoc.trace.commons.model.trace.Footprint <em>Footprint</em>}'.
+	 * <!-- begin-user-doc -->
+	 * This default implementation returns null so that we can easily ignore cases;
+	 * it's useful to ignore a case when inheritance will catch all the cases anyway.
+	 * <!-- end-user-doc -->
+	 * @return the new adapter.
+	 * @see org.eclipse.gemoc.trace.commons.model.trace.Footprint
+	 * @generated
+	 */
+	public Adapter createFootprintAdapter() {
 		return null;
 	}
 

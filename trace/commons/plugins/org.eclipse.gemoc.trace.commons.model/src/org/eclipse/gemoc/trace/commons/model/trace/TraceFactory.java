@@ -59,6 +59,15 @@ public interface TraceFactory extends EFactory {
 	GenericMSE createGenericMSE();
 
 	/**
+	 * Returns a new object of class '<em>Footprint</em>'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return a new object of class '<em>Footprint</em>'.
+	 * @generated
+	 */
+	Footprint createFootprint();
+
+	/**
 	 * Returns the package supported by this factory.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->

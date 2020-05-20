@@ -291,13 +291,22 @@ public interface GenerictracePackage extends EPackage {
 	int GENERIC_SMALL_STEP__ENDING_STATE = GENERIC_STEP__ENDING_STATE;
 
 	/**
+	 * The feature id for the '<em><b>Footprint</b></em>' containment reference.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int GENERIC_SMALL_STEP__FOOTPRINT = GENERIC_STEP_FEATURE_COUNT + 0;
+
+	/**
 	 * The number of structural features of the '<em>Generic Small Step</em>' class.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @generated
 	 * @ordered
 	 */
-	int GENERIC_SMALL_STEP_FEATURE_COUNT = GENERIC_STEP_FEATURE_COUNT + 0;
+	int GENERIC_SMALL_STEP_FEATURE_COUNT = GENERIC_STEP_FEATURE_COUNT + 1;
 
 	/**
 	 * The number of operations of the '<em>Generic Small Step</em>' class.

@@ -70,6 +70,7 @@ public class TraceFactoryImpl extends EFactoryImpl implements TraceFactory {
 			case TracePackage.MSE_OCCURRENCE: return createMSEOccurrence();
 			case TracePackage.MSE_MODEL: return createMSEModel();
 			case TracePackage.GENERIC_MSE: return createGenericMSE();
+			case TracePackage.FOOTPRINT: return createFootprint();
 			default:
 				throw new IllegalArgumentException("The class '" + eClass.getName() + "' is not a valid classifier");
 		}
@@ -136,6 +137,16 @@ public class TraceFactoryImpl extends EFactoryImpl implements TraceFactory {
 	public GenericMSE createGenericMSE() {
 		GenericMSEImpl genericMSE = new GenericMSEImpl();
 		return genericMSE;
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public Footprint createFootprint() {
+		FootprintImpl footprint = new FootprintImpl();
+		return footprint;
 	}
 
 	/**
