@@ -3,10 +3,40 @@
  */
 package org.eclipse.gemoc.ui.contentassist
 
+import org.eclipse.core.runtime.CoreException
+import org.eclipse.core.runtime.IConfigurationElement
+import org.eclipse.core.runtime.Platform
+import org.eclipse.emf.ecore.EObject
+import org.eclipse.xtext.Assignment
+import org.eclipse.xtext.ui.editor.contentassist.ContentAssistContext
+import org.eclipse.xtext.ui.editor.contentassist.ICompletionProposalAcceptor
+import org.eclipse.gemoc.dsl.Entry
 
 /**
  * See https://www.eclipse.org/Xtext/documentation/304_ide_concepts.html#content-assist
  * on how to customize the content assistant.
  */
 class DslProposalProvider extends AbstractDslProposalProvider {
+	
+	
+	override completeEntry_Value(EObject model, Assignment assignment, ContentAssistContext context, ICompletionProposalAcceptor acceptor){
+		super.completeEntry_Value(model, assignment, context, acceptor)
+		
+		val IConfigurationElement[] metaprogApproach = Platform.getExtensionRegistry().getConfigurationElementsFor("org.eclipse.gemoc.gemoc_language_workbench.metaprog")
+		var Entry entry
+		
+		if(model instanceof Entry){
+			entry = model as Entry
+			if("metaprog".equals(entry.key)){
+				try{
+					for (IConfigurationElement approach : metaprogApproach){
+						var name = approach.getAttribute("name")
+						acceptor.accept(createCompletionProposal(name, context))
+					}
+				}catch (CoreException ex){
+					System.out.println(ex.getMessage())
+				}
+			}
+		}
+	}
 }
