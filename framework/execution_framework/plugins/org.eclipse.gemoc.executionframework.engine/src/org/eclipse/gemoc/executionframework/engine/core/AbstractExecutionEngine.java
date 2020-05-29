@@ -201,7 +201,7 @@ public abstract class AbstractExecutionEngine<C extends IExecutionContext<R, ?, 
 	}
 
 	protected void notifyEngineStatusChanged(RunStatus newStatus) {
-		for (IEngineAddon addon : getExecutionContext().getExecutionPlatform().getSortedEngineAddons(EngineEvent.engineStatusChanged)) {
+		for (IEngineAddon addon : getCachedSortedEngineAddons(EngineEvent.engineStatusChanged)) {
 			try {
 				addon.engineStatusChanged(this, newStatus);
 			} catch (Exception e) {

@@ -25,4 +25,11 @@
             id="General.AddonGroup">
       </addonGroup>
    </extension>
+   <extension
+         point="org.eclipse.gemoc.gemoc_language_workbench.metaprog">
+      <approach
+            name="org.eclipse.gemoc.metaprog.ecore"
+            validator="org.eclipse.gemoc.xdsmlframework.api.extensions.metaprog.EcoreRuleProvider">
+      </approach>
+   </extension>
 </plugin>
