@@ -3,7 +3,6 @@
  */
 package org.eclipse.gemoc.ui.contentassist
 
-import org.eclipse.core.runtime.CoreException
 import org.eclipse.core.runtime.IConfigurationElement
 import org.eclipse.core.runtime.Platform
 import org.eclipse.emf.ecore.EObject
@@ -11,6 +10,8 @@ import org.eclipse.xtext.Assignment
 import org.eclipse.xtext.ui.editor.contentassist.ContentAssistContext
 import org.eclipse.xtext.ui.editor.contentassist.ICompletionProposalAcceptor
 import org.eclipse.gemoc.dsl.Entry
+import org.eclipse.gemoc.dsl.Dsl
+import org.eclipse.xtext.RuleCall
 
 /**
  * See https://www.eclipse.org/Xtext/documentation/304_ide_concepts.html#content-assist
@@ -19,24 +20,45 @@ import org.eclipse.gemoc.dsl.Entry
 class DslProposalProvider extends AbstractDslProposalProvider {
 	
 	
+	val IConfigurationElement[] metaprogApproach = Platform.getExtensionRegistry().getConfigurationElementsFor("org.eclipse.gemoc.gemoc_language_workbench.metaprog")
+	
 	override completeEntry_Value(EObject model, Assignment assignment, ContentAssistContext context, ICompletionProposalAcceptor acceptor){
 		super.completeEntry_Value(model, assignment, context, acceptor)
 		
-		val IConfigurationElement[] metaprogApproach = Platform.getExtensionRegistry().getConfigurationElementsFor("org.eclipse.gemoc.gemoc_language_workbench.metaprog")
-		var Entry entry
-		
 		if(model instanceof Entry){
-			entry = model as Entry
-			if("metaprog".equals(entry.key)){
-				try{
-					for (IConfigurationElement approach : metaprogApproach){
-						var name = approach.getAttribute("name")
-						acceptor.accept(createCompletionProposal(name, context))
-					}
-				}catch (CoreException ex){
-					System.out.println(ex.getMessage())
+			if("metaprog".equals(model.key)){
+				for (IConfigurationElement approach : metaprogApproach){
+					var name = approach.getAttribute("name")
+					acceptor.accept(createCompletionProposal(name, context))
 				}
 			}
 		}
 	}
+	
+	override completeDsl_Entries(EObject model, Assignment assignment, ContentAssistContext context, ICompletionProposalAcceptor acceptor){
+		super.completeDsl_Entries(model, assignment, context, acceptor)
+		
+		var String metaprog
+		var IConfigurationElement[] keys
+				
+		if(model instanceof Dsl){
+			for (Entry entry  : model.getEntries()){
+				if ("metaprog".equals(entry.key)){
+					metaprog = entry.value
+				}
+			}
+		}
+		
+		for (IConfigurationElement approach : metaprogApproach){
+			if(approach.getAttribute('name').equals(metaprog)){
+				keys = approach.getChildren('key')
+				for(IConfigurationElement key: keys){
+					var name = key.getAttribute('name')
+					acceptor.accept(createCompletionProposal(name,context))
+				}
+				
+			}
+		}
+	}
+		
 }
