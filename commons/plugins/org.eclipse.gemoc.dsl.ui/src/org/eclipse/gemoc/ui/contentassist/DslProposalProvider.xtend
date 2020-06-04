@@ -65,12 +65,12 @@ class DslProposalProvider extends AbstractDslProposalProvider {
 					keys = approach.getChildren("languageComponent")
 					for(IConfigurationElement key: keys){
 						var name = key.getAttribute('name')
-						var optional = key.getChildren('optional')
-						var String displayString = name
+						var optional = key.getAttribute('optional')
+						var String displayString = name + " - "
 						if("true".equals(optional)){
-							displayString = displayString + " (optional)"
+							displayString = displayString + "(optional) "
 						}
-						displayString = displayString + " - " + key.getAttribute("description")
+						displayString = displayString + key.getAttribute("description")
 						if(!dslKeys.contains(name)){
 							acceptor.accept(createCompletionProposal(name, displayString, null,context))
 						}
