@@ -12,6 +12,8 @@ import org.eclipse.xtext.ui.editor.contentassist.ICompletionProposalAcceptor
 import org.eclipse.gemoc.dsl.Entry
 import org.eclipse.gemoc.dsl.Dsl
 import org.eclipse.xtext.RuleCall
+import org.eclipse.emf.common.util.EList
+import java.util.ArrayList
 
 /**
  * See https://www.eclipse.org/Xtext/documentation/304_ide_concepts.html#content-assist
@@ -35,30 +37,50 @@ class DslProposalProvider extends AbstractDslProposalProvider {
 		}
 	}
 	
-	override completeDsl_Entries(EObject model, Assignment assignment, ContentAssistContext context, ICompletionProposalAcceptor acceptor){
-		super.completeDsl_Entries(model, assignment, context, acceptor)
+	override complete_SPACE(EObject model, RuleCall ruleCall, ContentAssistContext context, ICompletionProposalAcceptor acceptor){
+		super.complete_SPACE(model, ruleCall, context, acceptor)
 		
 		var String metaprog
 		var IConfigurationElement[] keys
-				
-		if(model instanceof Dsl){
-			for (Entry entry  : model.getEntries()){
-				if ("metaprog".equals(entry.key)){
+		var ArrayList<String> dslKeys = new ArrayList<String>()
+		
+		if (model instanceof Dsl){
+			for (Entry entry : model.getEntries()){
+				dslKeys.add(entry.key)
+				if("metaprog".equals(entry.key)){
 					metaprog = entry.value
 				}
 			}
-		}
-		
-		for (IConfigurationElement approach : metaprogApproach){
-			if(approach.getAttribute('name').equals(metaprog)){
-				keys = approach.getChildren('key')
-				for(IConfigurationElement key: keys){
-					var name = key.getAttribute('name')
-					acceptor.accept(createCompletionProposal(name,context))
+			if(!dslKeys.contains("name")){
+				var displayString = "name - name of the DSL"
+				acceptor.accept(createCompletionProposal("name", displayString, null, context))
+			}
+			if(!dslKeys.contains("metaprog")){
+				var String displayString = "metaprog - metaprogramming approach used"
+				acceptor.accept(createCompletionProposal("metaprog", displayString, null, context))
+			}
+			
+			for (IConfigurationElement approach : metaprogApproach){
+				if(approach.getAttribute('name').equals(metaprog)){
+					keys = approach.getChildren("languageComponent")
+					for(IConfigurationElement key: keys){
+						var name = key.getAttribute('name')
+						var optional = key.getChildren('optional')
+						var String displayString = name
+						if("true".equals(optional)){
+							displayString = displayString + " (optional)"
+						}
+						displayString = displayString + " - " + key.getAttribute("description")
+						if(!dslKeys.contains(name)){
+							acceptor.accept(createCompletionProposal(name, displayString, null,context))
+						}
+					}
+					
 				}
-				
 			}
 		}
-	}
 		
+		
+	}
+
 }

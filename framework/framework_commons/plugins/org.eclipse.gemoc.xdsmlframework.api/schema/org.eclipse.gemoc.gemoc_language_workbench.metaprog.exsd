@@ -50,7 +50,7 @@
    <element name="approach">
       <complexType>
          <sequence>
-            <element ref="key" minOccurs="1" maxOccurs="unbounded"/>
+            <element ref="languageComponent" minOccurs="1" maxOccurs="unbounded"/>
          </sequence>
          <attribute name="name" type="string" use="required">
             <annotation>
@@ -72,9 +72,9 @@
       </complexType>
    </element>
 
-   <element name="key">
+   <element name="languageComponent">
       <complexType>
-         <attribute name="optionnal" type="boolean" use="required">
+         <attribute name="optional" type="boolean" use="required">
             <annotation>
                <documentation>
                   
@@ -82,6 +82,13 @@
             </annotation>
          </attribute>
          <attribute name="name" type="string" use="required">
+            <annotation>
+               <documentation>
+                  
+               </documentation>
+            </annotation>
+         </attribute>
+         <attribute name="description" type="string">
             <annotation>
                <documentation>
                   
