@@ -28,6 +28,7 @@
    <extension
          point="org.eclipse.gemoc.gemoc_language_workbench.metaprog">
       <approach
+            dependencies=""
             name="org.eclipse.gemoc.metaprog.ecore"
             validator="org.eclipse.gemoc.xdsmlframework.api.extensions.metaprog.EcoreRuleProvider">
          <languageComponent

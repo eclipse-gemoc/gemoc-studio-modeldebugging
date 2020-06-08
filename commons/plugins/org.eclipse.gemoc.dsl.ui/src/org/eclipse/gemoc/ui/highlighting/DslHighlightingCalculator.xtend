@@ -14,13 +14,14 @@ import org.eclipse.xtext.util.CancelIndicator
 import org.eclipse.core.runtime.IConfigurationElement
 import org.eclipse.gemoc.dsl.Dsl
 import org.eclipse.gemoc.dsl.Entry
+import org.eclipse.gemoc.xdsmlframework.api.extensions.metaprog.LanguageComponentHelper
 
 public class DslHighlightingCalculator extends DefaultSemanticHighlightingCalculator {
 
 	override provideHighlightingFor(XtextResource resource, IHighlightedPositionAcceptor acceptor,
 		CancelIndicator cancelIndicator) {
 		val INode root = resource.getParseResult().getRootNode();
-		val IConfigurationElement[] exts = org.eclipse.core.runtime.Platform.getExtensionRegistry().getConfigurationElementsFor("org.eclipse.gemoc.gemoc_language_workbench.metaprog")
+		val LanguageComponentHelper languageHelper = new LanguageComponentHelper()
 		var Dsl dsl = root.getSemanticElement as Dsl
 		var String metaprog
 		var IConfigurationElement[] keys
@@ -31,11 +32,7 @@ public class DslHighlightingCalculator extends DefaultSemanticHighlightingCalcul
 			}
 		}
 		
-		for(IConfigurationElement approach : exts){
-			if(metaprog.matches(approach.getAttribute("name"))){
-				keys = approach.getChildren("languageComponent")
-			}
-		}
+		keys = languageHelper.getFullApproachKeys(metaprog)
 		
 		for (INode node : root.getAsTreeIterable()) {
 			val EObject grammarElement = node.getGrammarElement();
@@ -57,9 +54,12 @@ public class DslHighlightingCalculator extends DefaultSemanticHighlightingCalcul
 							
 							if(sem instanceof Entry){
 								
-								if(!keys.filter[e | e.getAttribute('name') == sem.key].isEmpty){
+								if(!keys.filter[e | (e.getAttribute('name') == sem.key) && (e.getAttribute('optional').matches("false"))].isEmpty){
 									acceptor.addPosition(node.getOffset(), node.getLength(),
 										DslHighlightingConfiguration.KEY_PLUGIN_ID);
+								}else if (!keys.filter[e | (e.getAttribute('name') == sem.key) && (e.getAttribute('optional').matches("true"))].isEmpty){
+									acceptor.addPosition(node.getOffset(), node.getLength(),
+									DslHighlightingConfiguration.OPTIONAL_KEY_PLUGIN_ID);
 								}else{
 									acceptor.addPosition(node.getOffset(), node.getLength(),
 									DslHighlightingConfiguration.KEY_ID);

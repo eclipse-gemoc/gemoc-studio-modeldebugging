@@ -12,8 +12,8 @@ import org.eclipse.xtext.ui.editor.contentassist.ICompletionProposalAcceptor
 import org.eclipse.gemoc.dsl.Entry
 import org.eclipse.gemoc.dsl.Dsl
 import org.eclipse.xtext.RuleCall
-import org.eclipse.emf.common.util.EList
 import java.util.ArrayList
+import org.eclipse.gemoc.xdsmlframework.api.extensions.metaprog.LanguageComponentHelper
 
 /**
  * See https://www.eclipse.org/Xtext/documentation/304_ide_concepts.html#content-assist
@@ -21,6 +21,7 @@ import java.util.ArrayList
  */
 class DslProposalProvider extends AbstractDslProposalProvider {
 	
+	val approachHelper = new LanguageComponentHelper()
 	
 	val IConfigurationElement[] metaprogApproach = Platform.getExtensionRegistry().getConfigurationElementsFor("org.eclipse.gemoc.gemoc_language_workbench.metaprog")
 	
@@ -60,27 +61,20 @@ class DslProposalProvider extends AbstractDslProposalProvider {
 				acceptor.accept(createCompletionProposal("metaprog", displayString, null, context))
 			}
 			
-			for (IConfigurationElement approach : metaprogApproach){
-				if(approach.getAttribute('name').equals(metaprog)){
-					keys = approach.getChildren("languageComponent")
-					for(IConfigurationElement key: keys){
-						var name = key.getAttribute('name')
-						var optional = key.getAttribute('optional')
-						var String displayString = name + " - "
-						if("true".equals(optional)){
-							displayString = displayString + "(optional) "
-						}
-						displayString = displayString + key.getAttribute("description")
-						if(!dslKeys.contains(name)){
-							acceptor.accept(createCompletionProposal(name, displayString, null,context))
-						}
-					}
-					
+			keys = approachHelper.getFullApproachKeys(metaprog)
+			
+			for(IConfigurationElement key : keys){
+				var name = key.getAttribute('name')
+				var optional = key.getAttribute('optional')
+				var String displayString = name + " - "
+				if("true".equals(optional)){
+					displayString = displayString + "(optional) "
+				}
+				displayString = displayString + key.getAttribute("description")
+				if(!dslKeys.contains(name)){
+					acceptor.accept(createCompletionProposal(name, displayString, null,context))
 				}
 			}
 		}
-		
-		
 	}
-
 }
