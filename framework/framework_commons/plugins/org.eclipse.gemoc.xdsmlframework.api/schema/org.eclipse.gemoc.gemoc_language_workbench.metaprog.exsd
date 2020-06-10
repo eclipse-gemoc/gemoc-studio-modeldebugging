@@ -59,7 +59,7 @@
                </documentation>
             </annotation>
          </attribute>
-         <attribute name="dependencies" type="string" use="required">
+         <attribute name="dependencies" type="string">
             <annotation>
                <documentation>
                   
@@ -71,7 +71,21 @@
 
    <element name="languageComponent">
       <complexType>
+         <attribute name="optional" type="boolean" use="required">
+            <annotation>
+               <documentation>
+                  
+               </documentation>
+            </annotation>
+         </attribute>
          <attribute name="name" type="string" use="required">
+            <annotation>
+               <documentation>
+                  
+               </documentation>
+            </annotation>
+         </attribute>
+         <attribute name="description" type="string">
             <annotation>
                <documentation>
                   
@@ -86,20 +100,6 @@
                <appinfo>
                   <meta.attribute kind="java" basedOn=":org.eclipse.gemoc.xdsmlframework.api.extensions.metaprog.IRule"/>
                </appinfo>
-            </annotation>
-         </attribute>
-         <attribute name="optional" type="boolean" use="required">
-            <annotation>
-               <documentation>
-                  
-               </documentation>
-            </annotation>
-         </attribute>
-         <attribute name="description" type="string" use="required">
-            <annotation>
-               <documentation>
-                  
-               </documentation>
             </annotation>
          </attribute>
       </complexType>
