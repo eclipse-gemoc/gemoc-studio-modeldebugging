@@ -49,6 +49,9 @@
 
    <element name="approach">
       <complexType>
+         <sequence>
+            <element ref="languageComponent" minOccurs="1" maxOccurs="unbounded"/>
+         </sequence>
          <attribute name="name" type="string" use="required">
             <annotation>
                <documentation>
@@ -56,14 +59,47 @@
                </documentation>
             </annotation>
          </attribute>
-         <attribute name="validator" type="string" use="required">
+         <attribute name="dependencies" type="string" use="required">
             <annotation>
                <documentation>
-                  Validator for the metaprogramming approach, provides checks for the DSLValidator to perform.
+                  
+               </documentation>
+            </annotation>
+         </attribute>
+      </complexType>
+   </element>
+
+   <element name="languageComponent">
+      <complexType>
+         <attribute name="name" type="string" use="required">
+            <annotation>
+               <documentation>
+                  
+               </documentation>
+            </annotation>
+         </attribute>
+         <attribute name="validationRule" type="string">
+            <annotation>
+               <documentation>
+                  
                </documentation>
                <appinfo>
-                  <meta.attribute kind="java" basedOn=":org.eclipse.gemoc.xdsmlframework.api.extensions.metaprog.IRuleProvider"/>
+                  <meta.attribute kind="java" basedOn=":org.eclipse.gemoc.xdsmlframework.api.extensions.metaprog.IRule"/>
                </appinfo>
+            </annotation>
+         </attribute>
+         <attribute name="optional" type="boolean" use="required">
+            <annotation>
+               <documentation>
+                  
+               </documentation>
+            </annotation>
+         </attribute>
+         <attribute name="description" type="string" use="required">
+            <annotation>
+               <documentation>
+                  
+               </documentation>
             </annotation>
          </attribute>
       </complexType>

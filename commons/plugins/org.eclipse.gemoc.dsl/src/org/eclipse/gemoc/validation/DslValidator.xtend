@@ -9,10 +9,10 @@ import org.eclipse.gemoc.dsl.Entry
 import org.eclipse.xtext.validation.Check
 import org.eclipse.core.runtime.IConfigurationElement
 import java.util.ArrayList
-import org.eclipse.gemoc.xdsmlframework.api.extensions.metaprog.IRuleProvider
 import org.eclipse.gemoc.xdsmlframework.api.extensions.metaprog.IRule
 import org.eclipse.gemoc.xdsmlframework.api.extensions.metaprog.Message
 import org.eclipse.gemoc.xdsmlframework.api.extensions.metaprog.Severity
+import org.eclipse.gemoc.xdsmlframework.api.extensions.metaprog.LanguageComponentHelper
 
 /**
  * This class contains custom validation rules. 
@@ -22,11 +22,15 @@ import org.eclipse.gemoc.xdsmlframework.api.extensions.metaprog.Severity
 class DslValidator extends AbstractDslValidator {
 	
 	public static val MISSING_NAME = 'missingName'
+	public static val MISSING_KEY = 'missingKey'
 	public static val DUPLICATEKEY = 'duplicateKey'
 	
 	
-	public val IConfigurationElement[] exts = org.eclipse.core.runtime.Platform.getExtensionRegistry().getConfigurationElementsFor("org.eclipse.gemoc.gemoc_language_workbench.metaprog")	
-	public var IRuleProvider providedValidator
+	public val IConfigurationElement[] exts = org.eclipse.core.runtime.Platform.getExtensionRegistry().getConfigurationElementsFor("org.eclipse.gemoc.gemoc_language_workbench.metaprog")
+	public val LanguageComponentHelper languageHelper = new LanguageComponentHelper();
+	public var IConfigurationElement[] keys
+		
+	//public var IRuleProvider providedValidator
 
 	@Check
 	def checkDSLHasName(Dsl dsl) {
@@ -46,36 +50,13 @@ class DslValidator extends AbstractDslValidator {
 					DUPLICATEKEY)
 		}
 	}
-	
-
-	@Check
-	def checkForDSL(Dsl dsl) {
 		
-		for(IRule rule : providedValidator.getValidationRules()) {
-			var message = rule.execute(dsl)
-			
-			switch message.getSeverity() {
-				
-				case message.getSeverity() == Severity.ERROR :	error(message.getContent(),
-														DslPackage.Literals.DSL__NAME
-														)
-				case message.getSeverity() == Severity.WARNING :	warning(message.getContent(),
-														DslPackage.Literals.DSL__NAME
-													)
-				case message.getSeverity() == Severity.INFO :	info(message.getContent(),
-														DslPackage.Literals.DSL__NAME
-													)
-				default : message = new Message()
-			}
-		}
-	}
-		
-	
 	// Performs checks provided by the required metaprogramming approach's validator for each entry in the dsl file
 	@Check
 	def checkForEntry(Entry entry) {
 		
-		for(IRule rule : providedValidator.getValidationRules()) {
+		for(IConfigurationElement key : keys) {
+			val IRule rule = key.createExecutableExtension("validationRule") as IRule
 			var message = rule.execute(entry)
 			
 			switch message.getSeverity() {
@@ -105,22 +86,39 @@ class DslValidator extends AbstractDslValidator {
 	}
 	
 	@Check
-	def checkForApproach(Entry entry){
-		if(entry.key == "metaprog") {	
-			for(IConfigurationElement elem : exts) {
-				if(entry.value.equals(elem.getAttribute("name"))) {
-					providedValidator = elem.createExecutableExtension("validator") as IRuleProvider
+	def checkMissingKeys(Dsl dsl){
+		var String metaprog
+		var ArrayList<String> approachesList = new ArrayList<String>()
+		
+		for (Entry entry: dsl.getEntries){
+			if("metaprog".matches(entry.key)){
+				metaprog = entry.value
+				
+				for(IConfigurationElement elem : exts){
+					approachesList.add(elem.getAttribute("name"))
+				}
+				
+				if(!approachesList.contains(entry.value)){
+				error("Unknown metaprogramming approach", DslPackage.Literals.ENTRY__VALUE)
 				}
 			}
-						
-			var ArrayList<String> approachesList = new ArrayList()
-			for (IConfigurationElement e : exts) {
-				approachesList.add(e.getAttribute("name"))
+		}
+		
+		var ArrayList<String> dslKeys = new ArrayList<String>()
+		for(Entry entry : dsl.getEntries){
+			dslKeys.add(entry.getKey)
+		}
+		keys = languageHelper.getFullApproachKeys(metaprog)
+		
+		for(IConfigurationElement elem : keys){
+			var name = elem.getAttribute("name")
+			if((!dslKeys.contains(name)) && ("false".matches(elem.getAttribute("optional")))){
+				error("Missing entry " + name + " in the dsl file.", DslPackage.Literals.DSL__NAME, MISSING_KEY)
 			}
-			if(!approachesList.contains(entry.value)){
-				error("Unknown metaprogramming approach", DslPackage.Literals.ENTRY__VALUE)
-			}
+			
 		}
 	}
+	
+	
 
 }
