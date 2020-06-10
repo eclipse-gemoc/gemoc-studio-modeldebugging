@@ -8,13 +8,10 @@ import java.util.concurrent.ExecutorService;
 import java.util.function.Consumer;
 import java.util.function.Function;
 
-import org.eclipse.gemoc.executionframework.mep.services.IModelExecutionProtocolClient;
-import org.eclipse.gemoc.executionframework.mep.services.IModelExecutionProtocolServer;
 import org.eclipse.lsp4j.jsonrpc.Endpoint;
 import org.eclipse.lsp4j.jsonrpc.Launcher;
 import org.eclipse.lsp4j.jsonrpc.MessageConsumer;
 import org.eclipse.lsp4j.jsonrpc.RemoteEndpoint;
-import org.eclipse.lsp4j.jsonrpc.debug.DebugRemoteEndpoint;
 import org.eclipse.lsp4j.jsonrpc.debug.json.DebugMessageJsonHandler;
 import org.eclipse.lsp4j.jsonrpc.json.JsonRpcMethod;
 import org.eclipse.lsp4j.jsonrpc.json.MessageJsonHandler;
