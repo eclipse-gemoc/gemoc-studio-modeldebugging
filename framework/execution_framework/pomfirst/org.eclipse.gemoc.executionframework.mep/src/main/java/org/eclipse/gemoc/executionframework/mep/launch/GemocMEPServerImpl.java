@@ -14,6 +14,11 @@ import org.eclipse.emf.common.util.URI;
 import org.eclipse.emf.ecore.resource.Resource;
 import org.eclipse.emf.ecore.resource.ResourceSet;
 import org.eclipse.emf.ecore.resource.impl.ResourceSetImpl;
+import org.eclipse.gemoc.executionframework.mep.engine.IMEPEngine;
+import org.eclipse.gemoc.executionframework.mep.engine.IMEPEventListener;
+import org.eclipse.gemoc.executionframework.mep.events.Output;
+import org.eclipse.gemoc.executionframework.mep.events.Stopped;
+import org.eclipse.gemoc.executionframework.mep.events.StoppedReason;
 import org.eclipse.gemoc.executionframework.mep.services.IModelExecutionProtocolClient;
 import org.eclipse.gemoc.executionframework.mep.services.IModelExecutionProtocolServer;
 import org.eclipse.gemoc.executionframework.mep.services.ModelExecutionClientAware;
@@ -35,7 +40,9 @@ import org.eclipse.lsp4j.debug.StackTraceArguments;
 import org.eclipse.lsp4j.debug.StackTraceResponse;
 import org.eclipse.lsp4j.debug.StepInArguments;
 import org.eclipse.lsp4j.debug.StepOutArguments;
+import org.eclipse.lsp4j.debug.StoppedEventArguments;
 import org.eclipse.lsp4j.debug.TerminateArguments;
+import org.eclipse.lsp4j.debug.TerminatedEventArguments;
 import org.eclipse.lsp4j.debug.Variable;
 import org.eclipse.lsp4j.debug.VariablesArguments;
 import org.eclipse.lsp4j.debug.VariablesResponse;
@@ -46,7 +53,7 @@ import org.eclipse.lsp4j.jsonrpc.json.JsonRpcMethodProvider;
 import org.eclipse.lsp4j.jsonrpc.messages.ResponseError;
 import org.eclipse.lsp4j.jsonrpc.services.ServiceEndpoints;
 
-abstract public class GemocMEPServerImpl implements IModelExecutionProtocolServer, Endpoint, JsonRpcMethodProvider, ModelExecutionClientAware {
+abstract public class GemocMEPServerImpl implements IModelExecutionProtocolServer, Endpoint, JsonRpcMethodProvider, ModelExecutionClientAware, IMEPEventListener {
 
 	private static final Logger LOG = Logger.getLogger(GemocMEPServerImpl.class);
 
@@ -54,12 +61,19 @@ abstract public class GemocMEPServerImpl implements IModelExecutionProtocolServe
 	
 	//private final Multimap<String, Endpoint> extensionProviders = LinkedListMultimap.create();
 	
+	protected IMEPEngine mepEngine;
+	
 	protected IModelExecutionProtocolClient client;
 	
 	protected boolean initialized = false;
 	protected boolean simulationStarted = false;
 	protected MEPLauncherParameters launcherParameters = null;
 	protected Breakpoint[] breakpoints = new Breakpoint[0];
+	
+	public GemocMEPServerImpl(IMEPEngine mepEngine) {
+		this.mepEngine = mepEngine;
+		this.mepEngine.addMEPEventListener(this);
+	}
 	
 	@Override
 	public Map<String, JsonRpcMethod> supportedMethods() {
@@ -272,7 +286,7 @@ abstract public class GemocMEPServerImpl implements IModelExecutionProtocolServe
 					throw new ResponseErrorException(error);
 				}
 				
-				internalContinue();
+				mepEngine.internalContinue();
 				
 				ContinueResponse response = new ContinueResponse();
 				return response;
@@ -292,7 +306,7 @@ abstract public class GemocMEPServerImpl implements IModelExecutionProtocolServe
 					throw new ResponseErrorException(error);
 				}
 				
-				internalNext();
+				mepEngine.internalNext();
 			}
 		});
 		return future;
@@ -309,10 +323,36 @@ abstract public class GemocMEPServerImpl implements IModelExecutionProtocolServe
 					throw new ResponseErrorException(error);
 				}
 				
-				internalStepIn();
+				mepEngine.internalStepIn();
 			}
 		});
 		return future;
+	}
+	
+	protected void manageStop(StoppedReason stopReason) {
+		switch (stopReason) {
+			case REACHED_BREAKPOINT:
+				StoppedEventArguments stoppedArgsBreakpoint = new StoppedEventArguments();
+				stoppedArgsBreakpoint.setReason(stopReason.toString());
+				stoppedArgsBreakpoint.setDescription("Reached breakpoint");
+				client.stopped(stoppedArgsBreakpoint);
+				break;
+			case REACHED_NEXT_LOGICAL_STEP:
+				StoppedEventArguments stoppedArgsStep = new StoppedEventArguments();
+				stoppedArgsStep.setReason(stopReason.toString());
+				stoppedArgsStep.setDescription("Reached new logical step");
+				client.stopped(stoppedArgsStep);
+				break;
+			case REACHED_SIMULATION_END:
+				TerminatedEventArguments terminatedArgs = new TerminatedEventArguments();
+				client.terminated(terminatedArgs);
+				simulationStarted = false;
+				break;
+			case TIME:
+				break;
+			default:
+				break;
+		}
 	}
 	
 	@Override
@@ -326,7 +366,7 @@ abstract public class GemocMEPServerImpl implements IModelExecutionProtocolServe
 					throw new ResponseErrorException(error);
 				}
 				
-				internalStepOut();
+				mepEngine.internalStepOut();
 			}
 		});
 		return future;
@@ -339,17 +379,21 @@ abstract public class GemocMEPServerImpl implements IModelExecutionProtocolServe
 		    public SetBreakpointsResponse get() {
 				//TODO: Manage different sources for breakpoints
 				SetBreakpointsResponse response = new SetBreakpointsResponse();
-	
-				internalClearBreakpoints();
-				
+					
 				List<Breakpoint> bps = new ArrayList<>();
+				org.eclipse.gemoc.executionframework.mep.types.SourceBreakpoint[] mepBreakpoints =
+						new org.eclipse.gemoc.executionframework.mep.types.SourceBreakpoint[args.getBreakpoints().length];
+				int i = 0;
 				for (SourceBreakpoint sbp : args.getBreakpoints()) {
+					org.eclipse.gemoc.executionframework.mep.types.SourceBreakpoint mepBreakpoint =
+							new org.eclipse.gemoc.executionframework.mep.types.SourceBreakpoint(sbp.getLine());
+					mepBreakpoints[i++] = mepBreakpoint;
 					Breakpoint bp = new Breakpoint();
 					bp.setVerified(true);
 					bp.setLine(sbp.getLine());
-					internalToggleBreakpoint(sbp.getLine().intValue());
 					bps.add(bp);
 				}
+				mepEngine.internalSetBreakpoints(mepBreakpoints);
 				breakpoints = bps.toArray(new Breakpoint[0]);
 				response.setBreakpoints(breakpoints);
 				
@@ -370,14 +414,18 @@ abstract public class GemocMEPServerImpl implements IModelExecutionProtocolServe
 					throw new ResponseErrorException(error);
 				}
 				if (simulationStarted) {
-					internalTerminate();
+					mepEngine.internalTerminate();
 					simulationStarted = false;
 				}
 				launchGemocEngine(launcherParameters);
 				simulationStarted = true;
+				org.eclipse.gemoc.executionframework.mep.types.SourceBreakpoint mepBreakpoints[] =
+						new org.eclipse.gemoc.executionframework.mep.types.SourceBreakpoint[breakpoints.length];
+				int i = 0;
 				for (Breakpoint bp : breakpoints) {
-					internalToggleBreakpoint(bp.getLine().intValue());
+					mepBreakpoints[i++] = new org.eclipse.gemoc.executionframework.mep.types.SourceBreakpoint(bp.getLine().intValue());
 				}
+				mepEngine.internalSetBreakpoints(mepBreakpoints);
 			}
 		});
 		return future;
@@ -394,7 +442,18 @@ abstract public class GemocMEPServerImpl implements IModelExecutionProtocolServe
 					throw new ResponseErrorException(error);
 				}
 				StackTraceResponse response = new StackTraceResponse();
-				response.setStackFrames(internalStackTrace());
+				org.eclipse.gemoc.executionframework.mep.types.StackFrame[] mepFrames = mepEngine.internalStackTrace();
+				StackFrame[] dapFrames = new StackFrame[mepFrames.length];
+				int i = 0;
+				for (org.eclipse.gemoc.executionframework.mep.types.StackFrame mepFrame : mepFrames) {
+					StackFrame dapFrame = new StackFrame();
+					dapFrame.setId(mepFrame.getId());
+					dapFrame.setName(mepFrame.getName());
+					dapFrame.setLine(mepFrame.getLine());
+					dapFrame.setColumn(mepFrame.getColumn());
+					dapFrames[i++] = dapFrame;
+				}
+				response.setStackFrames(dapFrames);
 				return response;
 			}
 		});
@@ -412,7 +471,16 @@ abstract public class GemocMEPServerImpl implements IModelExecutionProtocolServe
 					throw new ResponseErrorException(error);
 				}
 				VariablesResponse response = new VariablesResponse();
-				response.setVariables(internalVariables());
+				org.eclipse.gemoc.executionframework.mep.types.Variable[] mepVariables = mepEngine.internalVariables();
+				Variable[] dapVariables = new Variable[mepVariables.length];
+				int i = 0;
+				for (org.eclipse.gemoc.executionframework.mep.types.Variable mepVariable : mepVariables) {
+					Variable dapVariable = new Variable();
+					dapVariable.setName(mepVariable.getName());
+					dapVariable.setValue(mepVariable.getValue());
+					dapVariables[i++] = dapVariable;
+				}
+				response.setVariables(dapVariables);
 				return response;
 			}
 		});
@@ -430,18 +498,12 @@ abstract public class GemocMEPServerImpl implements IModelExecutionProtocolServe
 					throw new ResponseErrorException(error);
 				}
 				SourceResponse response = new SourceResponse();
-				response.setContent(internalSource());
+				response.setContent(mepEngine.internalSource());
 				return response;
 			}
 		});
 		return future;
 	}
-
-	protected abstract void internalNext();
-	
-	protected abstract void internalStepIn();
-
-	protected abstract void internalStepOut();
 
 	@Override
 	public CompletableFuture<Void> terminate(TerminateArguments args) {
@@ -453,7 +515,7 @@ abstract public class GemocMEPServerImpl implements IModelExecutionProtocolServe
 					error.setMessage("Simulation not started");
 					throw new ResponseErrorException(error);
 				}
-				internalTerminate();
+				mepEngine.internalTerminate();
 				simulationStarted = false;
 			}
 		});
@@ -467,20 +529,6 @@ abstract public class GemocMEPServerImpl implements IModelExecutionProtocolServe
 		client.output(args);
 	}
 	
-	protected abstract void internalClearBreakpoints();
-	
-	protected abstract void internalToggleBreakpoint(int line);
-	
-	protected abstract void internalTerminate();
-	
-	protected abstract void internalContinue();
-	
-	protected abstract Variable[] internalVariables();
-	
-	protected abstract StackFrame[] internalStackTrace();
-	
-	protected abstract String internalSource();
-	
 	/**
 	 * create a resource set
 	 * by default it only allows to load xmi models
@@ -492,19 +540,17 @@ abstract public class GemocMEPServerImpl implements IModelExecutionProtocolServe
 	}
 
 	public void launchGemocEngine(MEPLauncherParameters parameters) {
-		launchGemocEngine(parameters.resourceModel, parameters.modelEntryPoint, parameters.methodEntryPoint,
-				parameters.initializationMethod, parameters.initializationMethodArgs);
+		mepEngine.internalLaunchEngine(parameters);
 	}
 	
-	/**
-	 * 
-	 * @param resourceModel
-	 * @param selectedLanguage
-	 * @param modelEntryPoint
-	 * @param methodEntryPoint
-	 * @param initializationMethod
-	 * @param initializationMethodArgs
-	 */
-	abstract public void launchGemocEngine(Resource resourceModel, String modelEntryPoint,
-			String methodEntryPoint, String initializationMethod, String initializationMethodArgs);
+	@Override
+	public void outputReceived(Output event) {
+		this.sendOutput(event.getOutput());
+	}
+	
+	@Override
+	public void stopReceived(Stopped event) {
+		this.manageStop(event.getReason());
+	}
+	
 }
