@@ -8,6 +8,8 @@ import org.eclipse.swt.SWT
 
 class DslHighlightingConfiguration extends DefaultHighlightingConfiguration {
 	public static final String KEY_ID = "dsl_key"
+	public static final String KEY_PLUGIN_ID = "plugin_key"
+	public static final String OPTIONAL_KEY_PLUGIN_ID = "optional_plugin_key"
 	public static final String VALUE_ID = "dsl_value"
 	public static final String SEPARATOR_ID = "dsl_separator"
 	public static final String LINESEPARATOR_ID = "dsl_lineseparator"
@@ -15,6 +17,8 @@ class DslHighlightingConfiguration extends DefaultHighlightingConfiguration {
 	override configure(IHighlightingConfigurationAcceptor acceptor) {
 		super.configure(acceptor)
 		acceptor.acceptDefaultHighlighting(KEY_ID, "Entry key", keyTextStyle());
+		acceptor.acceptDefaultHighlighting(KEY_PLUGIN_ID, "Plugin entry key", pluginKeyTextStyle());
+		acceptor.acceptDefaultHighlighting(OPTIONAL_KEY_PLUGIN_ID, "Optional entry key", pluginOptionalKeyTextStyle());
 		acceptor.acceptDefaultHighlighting(VALUE_ID, "Entry value", valueTextStyle());
 		acceptor.acceptDefaultHighlighting(SEPARATOR_ID, "Entry separator", separatorTextStyle());
 		acceptor.acceptDefaultHighlighting(LINESEPARATOR_ID, "Line separator", lineSeparatorTextStyle());
@@ -23,8 +27,24 @@ class DslHighlightingConfiguration extends DefaultHighlightingConfiguration {
 	def TextStyle keyTextStyle() {
 		val TextStyle textStyle = defaultTextStyle().copy();
 		textStyle.setColor(new RGB(0, 26, 171)); // From org.eclipse.xtext.xbase.ui.highlighting.XbaseHighlightingConfiguration.field()
+		
 		// textStyle.setColor(new RGB(171, 48, 0)); // From org.eclipse.xtext.xbase.ui.highlighting.XbaseHighlightingConfiguration.extensionMethodInvocation()
 		return textStyle;
+	}
+	
+	def TextStyle pluginKeyTextStyle(){
+		val TextStyle textStyle = defaultTextStyle().copy()
+		textStyle.setColor(new RGB(145, 85, 0))
+		
+		return textStyle
+	}
+	
+	def TextStyle pluginOptionalKeyTextStyle(){
+		val TextStyle textStyle = defaultTextStyle().copy()
+		textStyle.setColor(new RGB(145, 85, 0))
+		textStyle.setStyle(SWT.ITALIC);
+		
+		return textStyle
 	}
 
 	def TextStyle valueTextStyle() {
