@@ -49,6 +49,9 @@
 
    <element name="approach">
       <complexType>
+         <sequence>
+            <element ref="languageComponent" minOccurs="1" maxOccurs="unbounded"/>
+         </sequence>
          <attribute name="name" type="string" use="required">
             <annotation>
                <documentation>
@@ -64,6 +67,39 @@
                <appinfo>
                   <meta.attribute kind="java" basedOn=":org.eclipse.gemoc.xdsmlframework.api.extensions.metaprog.IRuleProvider"/>
                </appinfo>
+            </annotation>
+         </attribute>
+         <attribute name="dependencies" type="string">
+            <annotation>
+               <documentation>
+                  
+               </documentation>
+            </annotation>
+         </attribute>
+      </complexType>
+   </element>
+
+   <element name="languageComponent">
+      <complexType>
+         <attribute name="optional" type="boolean" use="required">
+            <annotation>
+               <documentation>
+                  
+               </documentation>
+            </annotation>
+         </attribute>
+         <attribute name="name" type="string" use="required">
+            <annotation>
+               <documentation>
+                  
+               </documentation>
+            </annotation>
+         </attribute>
+         <attribute name="description" type="string">
+            <annotation>
+               <documentation>
+                  
+               </documentation>
             </annotation>
          </attribute>
       </complexType>
