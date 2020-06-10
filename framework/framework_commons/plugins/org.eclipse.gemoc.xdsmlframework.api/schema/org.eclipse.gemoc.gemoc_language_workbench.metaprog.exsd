@@ -59,7 +59,7 @@
                </documentation>
             </annotation>
          </attribute>
-         <attribute name="dependencies" type="string">
+         <attribute name="dependencies" type="string" use="required">
             <annotation>
                <documentation>
                   
@@ -85,7 +85,7 @@
                </documentation>
             </annotation>
          </attribute>
-         <attribute name="description" type="string">
+         <attribute name="description" type="string" use="required">
             <annotation>
                <documentation>
                   

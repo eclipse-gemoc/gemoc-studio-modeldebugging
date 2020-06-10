@@ -28,6 +28,7 @@
    <extension
          point="org.eclipse.gemoc.gemoc_language_workbench.metaprog">
       <approach
+            dependencies=" "
             name="org.eclipse.gemoc.metaprog.ecore">
          <languageComponent
                description="Entry to define the meta-model for the DSL"
