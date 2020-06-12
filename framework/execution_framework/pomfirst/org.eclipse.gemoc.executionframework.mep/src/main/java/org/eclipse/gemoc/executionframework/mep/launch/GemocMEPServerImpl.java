@@ -241,7 +241,10 @@ abstract public class GemocMEPServerImpl implements IModelExecutionProtocolServe
 						LOG.error(e.getMessage(), e);
 					}
 				}
-				
+				String languageName = "";
+				if(args.containsKey(MEPLaunchParameterKey.language.name())) {
+					languageName = (String) args.get(MEPLaunchParameterKey.language.name());
+				}				
 				String methodEntryPoint = "";
 				if(args.containsKey(MEPLaunchParameterKey.methodEntryPoint.name())) {
 					methodEntryPoint = (String) args.get(MEPLaunchParameterKey.methodEntryPoint.name());
@@ -262,6 +265,7 @@ abstract public class GemocMEPServerImpl implements IModelExecutionProtocolServe
 				
 				launcherParameters = new MEPLauncherParameters();
 				launcherParameters.resourceModel = res;
+				launcherParameters.languageName = languageName;
 				launcherParameters.modelEntryPoint = modelEntryPoint; 
 				launcherParameters.methodEntryPoint = methodEntryPoint;
 				launcherParameters.initializationMethod = initializationMethod;
