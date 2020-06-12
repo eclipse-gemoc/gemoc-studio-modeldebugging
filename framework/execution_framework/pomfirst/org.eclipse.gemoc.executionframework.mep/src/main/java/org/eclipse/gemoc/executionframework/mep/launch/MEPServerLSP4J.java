@@ -53,9 +53,9 @@ import org.eclipse.lsp4j.jsonrpc.json.JsonRpcMethodProvider;
 import org.eclipse.lsp4j.jsonrpc.messages.ResponseError;
 import org.eclipse.lsp4j.jsonrpc.services.ServiceEndpoints;
 
-abstract public class GemocMEPServerImpl implements IModelExecutionProtocolServer, Endpoint, JsonRpcMethodProvider, ModelExecutionClientAware, IMEPEventListener {
+abstract public class MEPServerLSP4J implements IModelExecutionProtocolServer, Endpoint, JsonRpcMethodProvider, ModelExecutionClientAware, IMEPEventListener {
 
-	private static final Logger LOG = Logger.getLogger(GemocMEPServerImpl.class);
+	private static final Logger LOG = Logger.getLogger(MEPServerLSP4J.class);
 
 	private Map<String, JsonRpcMethod> supportedMethods;
 	
@@ -70,7 +70,7 @@ abstract public class GemocMEPServerImpl implements IModelExecutionProtocolServe
 	protected MEPLauncherParameters launcherParameters = null;
 	protected Breakpoint[] breakpoints = new Breakpoint[0];
 	
-	public GemocMEPServerImpl(IMEPEngine mepEngine) {
+	public MEPServerLSP4J(IMEPEngine mepEngine) {
 		this.mepEngine = mepEngine;
 		this.mepEngine.addMEPEventListener(this);
 	}
