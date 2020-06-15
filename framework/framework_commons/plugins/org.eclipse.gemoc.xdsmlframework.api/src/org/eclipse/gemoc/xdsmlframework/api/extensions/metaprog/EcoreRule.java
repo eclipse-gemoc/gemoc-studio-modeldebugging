@@ -11,7 +11,6 @@ import org.eclipse.emf.ecore.EPackage;
 import org.eclipse.emf.ecore.resource.Resource;
 import org.eclipse.emf.ecore.resource.ResourceSet;
 import org.eclipse.emf.ecore.resource.impl.ResourceSetImpl;
-import org.eclipse.gemoc.dsl.Dsl;
 import org.eclipse.gemoc.dsl.Entry;
 
 /**
@@ -20,30 +19,7 @@ import org.eclipse.gemoc.dsl.Entry;
  * @author GUEGUEN Ronan
  *
  */
-public class EcoreRule implements IRule{ 
-		
-	/*
-	 * The method checks for the presence of an "ecore" entry in the dsl file.
-	 * (non-Javadoc)
-	 * @see metaprogramming.extensionpoint.IRule#execute(org.eclipse.gemoc.dsl.Dsl)
-	 */
-	@Override
-	public Message execute(Dsl dsl) {
-		
-		ArrayList<String> entriesNames = new ArrayList<String>();
-		
-		for (Entry e : dsl.getEntries()) {
-			entriesNames.add(e.getKey());
-		}
-		
-		if(!entriesNames.contains("ecore")) {
-			return (new Message("Missing entry \"ecore\"", Severity.ERROR));
-		}
-			
-		return (new Message("",Severity.DEFAULT));
-		
-	}
-	
+public class EcoreRule implements ILanguageComponentValidator{ 
 	
 	/*
 	 * This method checks if the adress given in the "ecore" entry in the dsl file points to an existing file,
@@ -52,7 +28,7 @@ public class EcoreRule implements IRule{
 	 * @see metaprogramming.extensionpoint.IRule#execute(org.eclipse.gemoc.dsl.Entry)
 	 */
 	@Override
-	public Message execute(Entry entry) {
+	public Message validate(Entry entry) {
 		if("ecore".matches(entry.getKey())) {
 			
 			URI uri = URI.createURI(entry.getValue());

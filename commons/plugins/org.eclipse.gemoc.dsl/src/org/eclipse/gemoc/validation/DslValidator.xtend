@@ -9,10 +9,10 @@ import org.eclipse.gemoc.dsl.Entry
 import org.eclipse.xtext.validation.Check
 import org.eclipse.core.runtime.IConfigurationElement
 import java.util.ArrayList
-import org.eclipse.gemoc.xdsmlframework.api.extensions.metaprog.IRule
 import org.eclipse.gemoc.xdsmlframework.api.extensions.metaprog.Message
 import org.eclipse.gemoc.xdsmlframework.api.extensions.metaprog.Severity
 import org.eclipse.gemoc.xdsmlframework.api.extensions.metaprog.LanguageComponentHelper
+import org.eclipse.gemoc.xdsmlframework.api.extensions.metaprog.ILanguageComponentValidator
 
 /**
  * This class contains custom validation rules. 
@@ -56,8 +56,8 @@ class DslValidator extends AbstractDslValidator {
 	def checkForEntry(Entry entry) {
 		
 		for(IConfigurationElement key : keys) {
-			val IRule rule = key.createExecutableExtension("validationRule") as IRule
-			var message = rule.execute(entry)
+			val ILanguageComponentValidator rule = key.createExecutableExtension("validationRule") as ILanguageComponentValidator
+			var message = rule.validate(entry)
 			
 			switch message.getSeverity() {
 				

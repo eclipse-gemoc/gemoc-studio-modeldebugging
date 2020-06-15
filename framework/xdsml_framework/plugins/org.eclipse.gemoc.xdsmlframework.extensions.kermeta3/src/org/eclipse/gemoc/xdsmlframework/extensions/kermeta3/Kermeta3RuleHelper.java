@@ -7,7 +7,7 @@ import org.eclipse.core.resources.IProject;
 import org.eclipse.core.resources.IWorkspaceRoot;
 import org.eclipse.core.resources.ResourcesPlugin;
 import org.eclipse.core.runtime.Path;
-import org.eclipse.gemoc.dsl.Entry;
+import org.eclipse.emf.common.util.URI;
 import org.eclipse.gemoc.xdsmlframework.api.extensions.metaprog.Message;
 import org.eclipse.gemoc.xdsmlframework.api.extensions.metaprog.Severity;
 import org.eclipse.jdt.core.IAnnotation;
@@ -24,28 +24,27 @@ public class Kermeta3RuleHelper{
 		tagTests = performsTagTest;
 	}
 
-	public Message execute(Entry entry) {
-		String aspectsFields = entry.getValue();
-		
+	public Message execute(String aspects, URI uri ) {
 		IWorkspaceRoot root = ResourcesPlugin.getWorkspace().getRoot();
-		IFile file = root.getFile(new Path(entry.eResource().getURI().toPlatformString(true)));
+		IFile file = root.getFile(new Path(uri.toPlatformString(true)));
 		
 		IProject proj = file.getProject();
 		IJavaProject jProj = JavaCore.create(proj);
 		
 		if(jProj == null) {
 			return (new Message("No project dsa in the workspace", Severity.ERROR));
-		}
+		}	
 		
-		ArrayList<String> aspectsName = new ArrayList<>();
+		return (executeAux(aspects.split(","), jProj));
+	
+	}
+	
+	public Message executeAux(String[] aspects, IJavaProject jProj) {
+		
 		ArrayList<String> aspectsAnnotation = new ArrayList<>();
 		
-		for(String s : aspectsFields.split(",")) {
-			aspectsName.add(s.trim());
-		}
-		
-		
-		for(String asp : aspectsName) {
+		for(String asp : aspects) {
+			asp = asp.trim();
 			try {
 				IType type = jProj.findType(asp);
 				for(IMethod meth : type.getMethods()) {
