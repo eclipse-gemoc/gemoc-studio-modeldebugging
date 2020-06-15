@@ -29,6 +29,7 @@ class DslValidator extends AbstractDslValidator {
 	public val IConfigurationElement[] exts = org.eclipse.core.runtime.Platform.getExtensionRegistry().getConfigurationElementsFor("org.eclipse.gemoc.gemoc_language_workbench.metaprog")
 	public val LanguageComponentHelper languageHelper = new LanguageComponentHelper();
 	public var ArrayList<IConfigurationElement> keys = new ArrayList<IConfigurationElement>()
+	public var String metaprog
 		
 	//public var IRuleProvider providedValidator
 
@@ -86,23 +87,26 @@ class DslValidator extends AbstractDslValidator {
 	}
 	
 	@Check
-	def checkMissingKeys(Dsl dsl){
-		var String metaprog
+	def checkApproach(Entry entry) {
+		
 		var ArrayList<String> approachesList = new ArrayList<String>()
 		
-		for (Entry entry: dsl.getEntries){
-			if("metaprog".matches(entry.key)){
+		if("metaprog".matches(entry.key)){
 				metaprog = entry.value
 				
 				for(IConfigurationElement elem : exts){
 					approachesList.add(elem.getAttribute("name"))
 				}
 				
-				if(!approachesList.contains(entry.value)){
+				if(!approachesList.contains(metaprog)){
 				error("Unknown metaprogramming approach", DslPackage.Literals.ENTRY__VALUE)
 				}
 			}
-		}
+	}
+	
+	
+	@Check
+	def checkMissingKeys(Dsl dsl){
 		
 		var ArrayList<String> dslKeys = new ArrayList<String>()
 		for(Entry entry : dsl.getEntries){
@@ -118,7 +122,5 @@ class DslValidator extends AbstractDslValidator {
 			
 		}
 	}
-	
-	
 
 }
