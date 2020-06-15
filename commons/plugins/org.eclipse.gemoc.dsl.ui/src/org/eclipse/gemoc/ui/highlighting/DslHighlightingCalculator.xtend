@@ -15,6 +15,7 @@ import org.eclipse.core.runtime.IConfigurationElement
 import org.eclipse.gemoc.dsl.Dsl
 import org.eclipse.gemoc.dsl.Entry
 import org.eclipse.gemoc.xdsmlframework.api.extensions.metaprog.LanguageComponentHelper
+import java.util.ArrayList
 
 public class DslHighlightingCalculator extends DefaultSemanticHighlightingCalculator {
 
@@ -24,15 +25,14 @@ public class DslHighlightingCalculator extends DefaultSemanticHighlightingCalcul
 		val LanguageComponentHelper languageHelper = new LanguageComponentHelper()
 		var Dsl dsl = root.getSemanticElement as Dsl
 		var String metaprog
-		var IConfigurationElement[] keys
+		var ArrayList<IConfigurationElement> keys = new ArrayList<IConfigurationElement>();
 		
 		for(Entry entry : dsl.getEntries){
 			if("metaprog".equals(entry.key)){
 				metaprog = entry.value
+				keys = languageHelper.getFullApproachKeys(metaprog)
 			}
 		}
-		
-		keys = languageHelper.getFullApproachKeys(metaprog)
 		
 		for (INode node : root.getAsTreeIterable()) {
 			val EObject grammarElement = node.getGrammarElement();
@@ -54,13 +54,20 @@ public class DslHighlightingCalculator extends DefaultSemanticHighlightingCalcul
 							
 							if(sem instanceof Entry){
 								
-								if(!keys.filter[e | (e.getAttribute('name') == sem.key) && (e.getAttribute('optional').matches("false"))].isEmpty){
-									acceptor.addPosition(node.getOffset(), node.getLength(),
+								if(!keys.empty){
+									if(!keys.filter[e | (e.getAttribute('name') == sem.key) && (e.getAttribute('optional').matches("false"))].isEmpty){
+										acceptor.addPosition(node.getOffset(), node.getLength(),
 										DslHighlightingConfiguration.KEY_PLUGIN_ID);
-								}else if (!keys.filter[e | (e.getAttribute('name') == sem.key) && (e.getAttribute('optional').matches("true"))].isEmpty){
-									acceptor.addPosition(node.getOffset(), node.getLength(),
-									DslHighlightingConfiguration.OPTIONAL_KEY_PLUGIN_ID);
-								}else{
+									}else if(!keys.filter[e | (e.getAttribute('name') == sem.key) && (e.getAttribute('optional').matches("true"))].isEmpty){
+										acceptor.addPosition(node.getOffset(), node.getLength(),
+										DslHighlightingConfiguration.OPTIONAL_KEY_PLUGIN_ID);
+									}else{
+										acceptor.addPosition(node.getOffset(), node.getLength(),
+										DslHighlightingConfiguration.KEY_ID);
+									
+									}
+								}
+								else{
 									acceptor.addPosition(node.getOffset(), node.getLength(),
 									DslHighlightingConfiguration.KEY_ID);
 								}

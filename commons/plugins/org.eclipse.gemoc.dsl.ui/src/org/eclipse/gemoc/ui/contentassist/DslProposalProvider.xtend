@@ -42,7 +42,7 @@ class DslProposalProvider extends AbstractDslProposalProvider {
 		super.complete_SPACE(model, ruleCall, context, acceptor)
 		
 		var String metaprog
-		var IConfigurationElement[] keys
+		var ArrayList<IConfigurationElement> keys = new ArrayList<IConfigurationElement>()
 		var ArrayList<String> dslKeys = new ArrayList<String>()
 		
 		if (model instanceof Dsl){

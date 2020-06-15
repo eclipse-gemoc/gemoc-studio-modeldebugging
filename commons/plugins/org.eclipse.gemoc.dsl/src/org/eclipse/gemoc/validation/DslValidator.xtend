@@ -28,7 +28,7 @@ class DslValidator extends AbstractDslValidator {
 	
 	public val IConfigurationElement[] exts = org.eclipse.core.runtime.Platform.getExtensionRegistry().getConfigurationElementsFor("org.eclipse.gemoc.gemoc_language_workbench.metaprog")
 	public val LanguageComponentHelper languageHelper = new LanguageComponentHelper();
-	public var IConfigurationElement[] keys
+	public var ArrayList<IConfigurationElement> keys = new ArrayList<IConfigurationElement>()
 		
 	//public var IRuleProvider providedValidator
 
