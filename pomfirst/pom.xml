@@ -1,0 +1,106 @@
+<project xmlns="http://maven.apache.org/POM/4.0.0" 
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" 
+    xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 
+    http://maven.apache.org/maven-v4_0_0.xsd"> 
+
+    <modelVersion>4.0.0</modelVersion>
+
+	<groupId>org.eclipse.gemoc</groupId>
+    <artifactId>org.eclipse.gemoc.modeldebugging.pomfirst</artifactId>
+	<version>1.0.0-SNAPSHOT</version>
+ 
+    <packaging>pom</packaging>
+
+	<properties>
+		<tycho.version>1.5.1</tycho.version>
+		<xtend.version>2.18.0</xtend.version>
+		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+		<eclipse-repo.url>http://download.eclipse.org/releases/photon</eclipse-repo.url>
+		<gemoc-repo.url>https://download.eclipse.org/gemoc/updates/nightly</gemoc-repo.url>
+		<maven.compiler.source>1.8</maven.compiler.source>
+		<maven.compiler.target>1.8</maven.compiler.target>
+		<tycho.scmUrl>scm:git:https://github.com/eclipse/gemoc-studio-modeldebugging.git</tycho.scmUrl>
+		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+	</properties>
+	
+		
+	<modules>
+        <module>../framework/execution_framework/pomfirst</module>
+        <module>../commons/plugins/org.eclipse.gemoc.commons.eclipse/pomfirst</module>
+        <module>../commons/plugins/org.eclipse.gemoc.commons.eclipse.messagingsystem.api/pomfirst</module>
+        <module>../commons/plugins/org.eclipse.gemoc.commons.eclipse.pde/pomfirst</module>
+        <module>../commons/plugins/org.eclipse.gemoc.commons.utils/pomfirst</module>
+        <module>../commons/plugins/org.eclipse.gemoc.dsl.model/pomfirst</module>
+        <module>../framework/execution_framework/plugins/org.eclipse.gemoc.executionframework.debugger/pomfirst</module>
+        <module>../framework/execution_framework/plugins/org.eclipse.gemoc.executionframework.engine/pomfirst</module>
+        <module>../framework/framework_commons/plugins/org.eclipse.gemoc.executionframework.reflectivetrace.model/pomfirst</module>
+        <module>../framework/framework_commons/plugins/org.eclipse.gemoc.xdsmlframework.api/pomfirst</module>
+        <module>../framework/framework_commons/plugins/org.eclipse.gemoc.xdsmlframework.commons/pomfirst</module>
+        <module>../simulationmodelanimation/plugins/org.eclipse.gemoc.dsl.debug/pomfirst</module>
+        <module>../simulationmodelanimation/plugins/org.eclipse.gemoc.dsl.debug.edit/pomfirst</module>
+        <module>../simulationmodelanimation/plugins/org.eclipse.gemoc.dsl.debug.ide/pomfirst</module>
+        <module>../trace/commons/plugins/org.eclipse.gemoc.trace.commons/pomfirst</module>
+        <module>../trace/commons/plugins/org.eclipse.gemoc.trace.commons.model/pomfirst</module>
+        <module>../trace/commons/plugins/org.eclipse.gemoc.trace.gemoc.api/pomfirst</module>
+    </modules>
+	
+	<build>
+		<plugins>
+			<!-- enable xtend compilation -->
+			<plugin>
+				<groupId>org.eclipse.xtend</groupId>
+				<artifactId>xtend-maven-plugin</artifactId>
+				<version>${xtend.version}</version>
+				<executions>
+					<execution>
+						<goals>
+							<goal>compile</goal>
+							<goal>xtend-install-debug-info</goal>
+							<goal>testCompile</goal>
+							<goal>xtend-test-install-debug-info</goal>
+						</goals>
+						<configuration>
+							<outputDirectory>xtend-gen</outputDirectory>
+						</configuration>
+					</execution>
+				</executions>
+				<!-- workaround https://github.com/eclipse/xtext/issues/1231 -->
+				<!-- workaround https://github.com/eclipse/xtext/issues/1373 -->
+				<!-- Remove with upgrade to Xtext 2.15 -->
+				<dependencies>
+					<dependency>
+						<groupId>org.eclipse.jdt</groupId>
+						<artifactId>org.eclipse.jdt.core</artifactId>
+						<version>3.13.102</version>
+					</dependency>
+					<dependency>
+						<groupId>org.eclipse.jdt</groupId>
+						<artifactId>org.eclipse.jdt.compiler.apt</artifactId>
+						<version>1.3.110</version>
+					</dependency>
+					<dependency>
+						<groupId>org.eclipse.jdt</groupId>
+						<artifactId>org.eclipse.jdt.compiler.tool</artifactId>
+						<version>1.2.101</version>
+					</dependency>
+					<dependency>
+						<groupId>org.eclipse.emf</groupId>
+						<artifactId>org.eclipse.emf.codegen</artifactId>
+						<version>2.11.0</version>
+					</dependency>
+				</dependencies>
+			</plugin>
+
+		</plugins>
+	</build>
+	
+	<repositories>
+		<repository>
+			<id>nexus-eclipse-gemoc</id>
+			<name>Nexus Eclipse GEMOC</name>
+			<releases><enabled>true</enabled></releases>
+			<snapshots><enabled>true</enabled></snapshots>
+			<url>https://repo.eclipse.org/content/groups/gemoc/</url>
+		</repository>
+	</repositories>
+</project>

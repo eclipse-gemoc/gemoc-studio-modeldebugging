@@ -1,0 +1,78 @@
+<project xmlns="http://maven.apache.org/POM/4.0.0"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+	<modelVersion>4.0.0</modelVersion>
+	<groupId>org.eclipse.gemoc.executionframework</groupId>
+	<artifactId>org.eclipse.gemoc.executionframework.mep</artifactId>
+	<version>1.0.0-SNAPSHOT</version>
+
+
+	<parent>
+		<groupId>org.eclipse.gemoc.executionframework</groupId>
+		<artifactId>org.eclipse.gemoc.executionframework.pomfirst</artifactId>
+		<version>1.0.0-SNAPSHOT</version>
+	</parent>
+
+	<properties>
+		<maven.compiler.target>1.8</maven.compiler.target>
+		<maven.compiler.source>1.8</maven.compiler.source>
+		<surefire-plugin.version>2.22.0</surefire-plugin.version>
+		<quarkus.version>0.21.1</quarkus.version>
+		<xtend.version>2.18.0</xtend.version>
+		<lsp4j.version>0.8.0</lsp4j.version>
+	</properties>
+
+
+	<dependencies>
+
+		<dependency>
+			<groupId>org.eclipse.xtext</groupId>
+			<artifactId>org.eclipse.xtext</artifactId>
+			<version>${xtend.version}</version>
+		</dependency>
+
+		<dependency>
+			<groupId>org.eclipse.lsp4j</groupId>
+			<artifactId>org.eclipse.lsp4j.debug</artifactId>
+			<version>${lsp4j.version}</version>
+		</dependency>
+		<dependency>
+			<groupId>org.eclipse.lsp4j</groupId>
+			<artifactId>org.eclipse.lsp4j.jsonrpc</artifactId>
+			<version>${lsp4j.version}</version>
+		</dependency>
+		<dependency>
+			<groupId>org.eclipse.emf</groupId>
+			<artifactId>org.eclipse.emf.edit</artifactId>
+			<version>2.16.0</version>
+		</dependency>
+		<dependency>
+			<groupId>org.eclipse.gemoc.commons</groupId>
+			<artifactId>org.eclipse.gemoc.commons.eclipse.pde</artifactId>
+			<version>3.0.0-SNAPSHOT</version>
+		</dependency>
+		<dependency>
+			<groupId>org.eclipse.gemoc.commons</groupId>
+			<artifactId>org.eclipse.gemoc.commons.eclipse.messagingsystem.api</artifactId>
+			<version>3.0.0-SNAPSHOT</version>
+		</dependency>
+		<dependency>
+			<groupId>org.eclipse.gemoc.pomfirst</groupId>
+			<artifactId>org.eclipse.gemoc.xdsmlframework.api</artifactId>
+			<version>4.0.0-SNAPSHOT</version>
+		</dependency>
+		<dependency>
+			<groupId>org.eclipse.gemoc.pomfirst</groupId>
+			<artifactId>org.eclipse.gemoc.xdsmlframework.commons</artifactId>
+			<version>4.0.0-SNAPSHOT</version>
+		</dependency>
+
+	</dependencies>
+
+	<build>
+		<plugins>
+
+		</plugins>
+	</build>
+
+</project>
