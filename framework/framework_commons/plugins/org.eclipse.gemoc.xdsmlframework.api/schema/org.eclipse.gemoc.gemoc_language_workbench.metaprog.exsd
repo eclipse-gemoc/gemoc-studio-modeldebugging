@@ -15,6 +15,9 @@
          <appinfo>
             <meta.element />
          </appinfo>
+         <documentation>
+            Extension point for the definition of meta-programming approaches.
+         </documentation>
       </annotation>
       <complexType>
          <choice>
@@ -48,7 +51,15 @@
    </element>
 
    <element name="approach">
+      <annotation>
+         <documentation>
+            Meta-programmation approach
+         </documentation>
+      </annotation>
       <complexType>
+         <sequence>
+            <element ref="languageComponent" minOccurs="1" maxOccurs="unbounded"/>
+         </sequence>
          <attribute name="name" type="string" use="required">
             <annotation>
                <documentation>
@@ -56,13 +67,53 @@
                </documentation>
             </annotation>
          </attribute>
-         <attribute name="validator" type="string" use="required">
+         <attribute name="dependencies" type="string" use="required">
             <annotation>
                <documentation>
-                  Validator for the metaprogramming approach, provides checks for the DSLValidator to perform.
+                  Dependencies of the meta-programming approach
+               </documentation>
+            </annotation>
+         </attribute>
+      </complexType>
+   </element>
+
+   <element name="languageComponent">
+      <annotation>
+         <documentation>
+            Allows to define an entry for a meta-programming approach.
+Each languageComponent must specify a name, a description, states whether it is optional or not.
+A validation rule can also be specify but is not required.
+         </documentation>
+      </annotation>
+      <complexType>
+         <attribute name="optional" type="boolean" use="required">
+            <annotation>
+               <documentation>
+                  State whether the languageComponent is optional or not.
+               </documentation>
+            </annotation>
+         </attribute>
+         <attribute name="name" type="string" use="required">
+            <annotation>
+               <documentation>
+                  Name of the languageComponent, the name will be used as the key of the entry in the dsl file.
+               </documentation>
+            </annotation>
+         </attribute>
+         <attribute name="description" type="string" use="required">
+            <annotation>
+               <documentation>
+                  Description of the languageComponent, the description can be used by the tools present in the GEMOC Studio.
+               </documentation>
+            </annotation>
+         </attribute>
+         <attribute name="validationRule" type="string">
+            <annotation>
+               <documentation>
+                  (optional) Validation Rule for the languageComponent, this validation implements the ILanguageComponentValidator.
                </documentation>
                <appinfo>
-                  <meta.attribute kind="java" basedOn=":org.eclipse.gemoc.xdsmlframework.api.extensions.metaprog.IRuleProvider"/>
+                  <meta.attribute kind="java" basedOn=":org.eclipse.gemoc.xdsmlframework.api.extensions.metaprog.IRule"/>
                </appinfo>
             </annotation>
          </attribute>

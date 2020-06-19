@@ -1,6 +1,5 @@
 package org.eclipse.gemoc.xdsmlframework.api.extensions.metaprog;
 
-import org.eclipse.gemoc.dsl.Dsl;
 import org.eclipse.gemoc.dsl.Entry;
 
 /**
@@ -10,22 +9,14 @@ import org.eclipse.gemoc.dsl.Entry;
  * @author GUEGUEN Ronan
  *
  */
-public interface IRule {
-		
-	/**
-	 * Returns a Message containing informations regarding the Dsl with a specific Severity depending on the Message send.
-	 * If nothing wrong is noticed in the Dsl, the Severity should be set as DEFAULT.
-	 * @param dsl -Dsl on which the validation will be performed
-	 * @return Message pointing to the Dsl
-	 */
-	public abstract Message execute(Dsl dsl);
-	
+public interface ILanguageComponentValidator {
+			
 	/** 
 	 * Returns a Message containing informations regarding the Dsl Entry with a specific Severity depending on the Message send.
 	 * If nothing wrong is noticed in the Entry, the Severity should be set as DEFAULT.
 	 * @param entry -Dsl entry on which the validation is performed
 	 * @return Message pointing to the Entry
 	 */
-	public abstract Message execute(Entry entry);
+	public abstract Message validate(Entry entry);
 
 }
