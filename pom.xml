@@ -35,7 +35,7 @@
 		
 		<eclipse.release.p2.url>http://download.eclipse.org/releases/2020-03</eclipse.release.p2.url>
 		<k3.p2.url>http://www.kermeta.org/k3/update_2018-09-05</k3.p2.url>
-		<melange.p2.url>http://melange.inria.fr/updatesite/nightly/update_2020-05-20</melange.p2.url>
+		<melange.p2.url>http://melange.inria.fr/updatesite/nightly/update_2020-06-19</melange.p2.url>
 		<elk.p2.url>http://download.eclipse.org/elk/updates/releases/0.4.1</elk.p2.url>
 		<aspectJ.p2.url>http://download.eclipse.org/tools/ajdt/48/dev/update</aspectJ.p2.url>
 		<sirius.p2.url>https://download.eclipse.org/sirius/updates/releases/6.1.3/photon</sirius.p2.url>
