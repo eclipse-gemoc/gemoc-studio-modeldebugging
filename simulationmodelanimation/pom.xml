@@ -87,7 +87,7 @@
 <!-- 	                     <artifact> -->
 <!-- 	                         <groupId>org.eclipse.gemoc</groupId> -->
 <!-- 	                         <artifactId>org.eclipse.gemoc.modeldebugging.target-platform</artifactId> -->
-<!-- 	                         <version>3.0.0-SNAPSHOT</version> -->
+<!-- 	                         <version>3.3.0-SNAPSHOT</version> -->
 <!-- 	                     </artifact> -->
 <!-- 	                 </target> -->
 					<target>

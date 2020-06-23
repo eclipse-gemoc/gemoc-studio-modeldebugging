@@ -10,7 +10,7 @@
 	
 	<groupId>org.eclipse.gemoc</groupId>
 	<artifactId>org.eclipse.gemoc.modeldebugging.root</artifactId>
-	<version>3.0.0-SNAPSHOT</version>
+	<version>3.3.0-SNAPSHOT</version>
 	
 	<licenses>
 		<license>
@@ -69,14 +69,14 @@
 						<extraClasspathElement>
 							<groupId>com.oracle</groupId>
 							<artifactId>javafx</artifactId>
-							<version>3.0.0-SNAPSHOT</version>
+							<version>3.3.0-SNAPSHOT</version>
 							<systemPath>${java.home}/lib/jfxrt.jar</systemPath>
 							<scope>system</scope>
 						</extraClasspathElement>
 						<extraClasspathElement>
 			                <groupId>com.oracle</groupId>
 			                <artifactId>javafxswt</artifactId>
-			                <version>3.0.0-SNAPSHOT</version>
+			                <version>3.3.0-SNAPSHOT</version>
 			                <systemPath>${java.home}/lib/jfxswt.jar</systemPath>
 			                <scope>system</scope>
 			            </extraClasspathElement>
@@ -200,7 +200,7 @@
                      <artifact>
                          <groupId>org.eclipse.gemoc</groupId>
                          <artifactId>org.eclipse.gemoc.modeldebugging.target-platform</artifactId>
-                         <version>3.0.0-SNAPSHOT</version>
+                         <version>3.3.0-SNAPSHOT</version>
                      </artifact>
                  </target>-->
 				</configuration>

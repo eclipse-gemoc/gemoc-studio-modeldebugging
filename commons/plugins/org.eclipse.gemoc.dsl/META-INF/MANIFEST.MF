@@ -1,8 +1,8 @@
 Manifest-Version: 1.0
 Bundle-ManifestVersion: 2
-Bundle-Name: org.eclipse.gemoc.dsl
-Bundle-Vendor: My Company
-Bundle-Version: 3.0.0.qualifier
+Bundle-Name: GEMOC Commons Dsl Xtext
+Bundle-Vendor: Eclipse GEMOC Project
+Bundle-Version: 3.3.0.qualifier
 Bundle-SymbolicName: org.eclipse.gemoc.dsl; singleton:=true
 Bundle-ActivationPolicy: lazy
 Require-Bundle: org.eclipse.xtext,
