@@ -26,10 +26,6 @@ class DslValidator extends AbstractDslValidator {
 	public static val DUPLICATEKEY = 'duplicateKey'
 	
 	public val LanguageComponentHelper languageHelper = new LanguageComponentHelper();
-	public var ArrayList<IConfigurationElement> keys = new ArrayList<IConfigurationElement>()
-	
-		
-	//public var IRuleProvider providedValidator
 
 	@Check
 	def checkDSLHasName(Dsl dsl) {
@@ -54,26 +50,32 @@ class DslValidator extends AbstractDslValidator {
 	@Check
 	def checkForEntry(Entry entry) {
 		
-		for(IConfigurationElement key : keys) {
-			val ILanguageComponentValidator rule = key.createExecutableExtension("validationRule") as ILanguageComponentValidator
-			var message = rule.validate(entry)
+		var dsl = entry.eContainer
+		
+		if(dsl instanceof Dsl){
+			for(IConfigurationElement key : getKeys(dsl)) {
+				val ILanguageComponentValidator rule = key.createExecutableExtension("validationRule") as ILanguageComponentValidator
+				var message = rule.validate(entry)
 			
-			switch message.getSeverity() {
+				switch message.getSeverity() {
 				
-				case Severity.ERROR :	error(message.getContent(),
+					case Severity.ERROR :	error(message.getContent(),
 														DslPackage.Literals.ENTRY__VALUE
 														)
-				case Severity.WARNING :	warning(message.getContent(),
+					case Severity.WARNING :	warning(message.getContent(),
 														DslPackage.Literals.ENTRY__VALUE
 													)
-				case Severity.INFO :	info(message.getContent(),
+					case Severity.INFO :	info(message.getContent(),
 														DslPackage.Literals.ENTRY__VALUE
 													)
-				case Severity.DEFAULT : message = new Message()
+					case Severity.DEFAULT : message = new Message()
 				
-				default : print("Unknown severity")
+					default : print("Unknown severity")
+				}
 			}
 		}
+		
+		
 
 	}
 	
@@ -111,7 +113,7 @@ class DslValidator extends AbstractDslValidator {
 		for(Entry entry : dsl.getEntries){
 			dslKeys.add(entry.getKey)
 		}
-		var keys = languageHelper.getFullApproachKeys(getApproach(dsl))
+		var keys = getKeys(dsl)
 		
 		for(IConfigurationElement elem : keys){
 			var name = elem.getAttribute("name")
@@ -132,6 +134,10 @@ class DslValidator extends AbstractDslValidator {
 				return entry.getValue
 			}
 		}
+	}
+	
+	def getKeys(Dsl dsl){
+		return languageHelper.getFullApproachKeys(getApproach(dsl))
 	}
 	
 }
