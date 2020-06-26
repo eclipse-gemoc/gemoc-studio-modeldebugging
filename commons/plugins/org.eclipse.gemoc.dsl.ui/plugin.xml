@@ -9,7 +9,7 @@
 			default="true"
 			extensions="dsl"
 			id="org.eclipse.gemoc.Dsl"
-			name="Dsl Editor">
+			name="GEMOC Dsl Editor">
 		</editor>
 	</extension>
 	<extension
@@ -80,7 +80,7 @@
 		<page
 			class="org.eclipse.gemoc.ui.DslExecutableExtensionFactory:org.eclipse.xtext.ui.editor.preferences.LanguageRootPreferencePage"
 			id="org.eclipse.gemoc.Dsl"
-			name="Dsl">
+			name="GEMOC Dsl">
 			<keywordReference id="org.eclipse.gemoc.ui.keyword_Dsl"/>
 		</page>
 		<page
@@ -103,7 +103,7 @@
 		<page
 			class="org.eclipse.gemoc.ui.DslExecutableExtensionFactory:org.eclipse.xtext.ui.editor.preferences.LanguageRootPreferencePage"
 			id="org.eclipse.gemoc.Dsl"
-			name="Dsl">
+			name="GEMOC Dsl">
 			<keywordReference id="org.eclipse.gemoc.ui.keyword_Dsl"/>
 			<enabledWhen>
 				<adapt type="org.eclipse.core.resources.IProject"/>
@@ -115,7 +115,7 @@
 		point="org.eclipse.ui.keywords">
 		<keyword
 			id="org.eclipse.gemoc.ui.keyword_Dsl"
-			label="Dsl"/>
+			label="GEMOC Dsl"/>
 	</extension>
 	<extension
 		point="org.eclipse.ui.commands">
@@ -221,21 +221,21 @@
 	<!-- marker definitions for org.eclipse.gemoc.Dsl -->
 	<extension
 			id="dsl.check.fast"
-			name="Dsl Problem"
+			name="GEMOC Dsl Problem"
 			point="org.eclipse.core.resources.markers">
 		<super type="org.eclipse.xtext.ui.check.fast"/>
 		<persistent value="true"/>
 	</extension>
 	<extension
 			id="dsl.check.normal"
-			name="Dsl Problem"
+			name="GEMOC Dsl Problem"
 			point="org.eclipse.core.resources.markers">
 		<super type="org.eclipse.xtext.ui.check.normal"/>
 		<persistent value="true"/>
 	</extension>
 	<extension
 			id="dsl.check.expensive"
-			name="Dsl Problem"
+			name="GEMOC Dsl Problem"
 			point="org.eclipse.core.resources.markers">
 		<super type="org.eclipse.xtext.ui.check.expensive"/>
 		<persistent value="true"/>
