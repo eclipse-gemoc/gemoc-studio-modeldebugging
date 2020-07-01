@@ -1,6 +1,5 @@
 package org.eclipse.gemoc.executionframework.mep.engine;
 
-import org.eclipse.gemoc.executionframework.mep.events.StoppedReason;
 import org.eclipse.gemoc.executionframework.mep.launch.MEPLauncherParameters;
 import org.eclipse.gemoc.executionframework.mep.types.SourceBreakpoint;
 import org.eclipse.gemoc.executionframework.mep.types.StackFrame;
@@ -10,11 +9,11 @@ public interface IMEPEngine {
 
 	abstract void internalLaunchEngine(MEPLauncherParameters launchParameters);
 	
-	abstract StoppedReason internalNext();
+	abstract void internalNext();
 	
-	abstract StoppedReason internalStepIn();
+	abstract void internalStepIn();
 
-	abstract StoppedReason internalStepOut();
+	abstract void internalStepOut();
 	
 	abstract void internalSetBreakpoints(SourceBreakpoint[] breakpoints);
 	

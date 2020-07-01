@@ -1,8 +1,9 @@
-package org.eclipse.gemoc.executionframework.engine.commons.sequential;
+package org.eclipse.gemoc.executionframework.engine.headless;
 
 import java.util.Collection;
 
 import org.eclipse.emf.common.util.URI;
+import org.eclipse.gemoc.executionframework.engine.commons.sequential.ISequentialRunConfiguration;
 import org.eclipse.gemoc.xdsmlframework.api.extensions.engine_addon.EngineAddonSpecificationExtension;
 
 public class HeadlessJavaEngineSequentialRunConfiguration implements ISequentialRunConfiguration {

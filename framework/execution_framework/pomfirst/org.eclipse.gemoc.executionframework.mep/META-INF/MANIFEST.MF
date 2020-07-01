@@ -1,0 +1,10 @@
+Manifest-Version: 1.0
+Bundle-ManifestVersion: 2
+Bundle-Name: Mep
+Bundle-SymbolicName: org.eclipse.gemoc.executionframework.mep
+Bundle-Version: 1.0.0.qualifier
+Export-Package: org.eclipse.gemoc.executionframework.mep.engine,
+ org.eclipse.gemoc.executionframework.mep.events,
+ org.eclipse.gemoc.executionframework.mep.launch,
+ org.eclipse.gemoc.executionframework.mep.services,
+ org.eclipse.gemoc.executionframework.mep.types

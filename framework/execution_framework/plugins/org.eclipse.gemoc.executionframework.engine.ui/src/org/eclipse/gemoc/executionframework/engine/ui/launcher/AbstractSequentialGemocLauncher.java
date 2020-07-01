@@ -31,15 +31,15 @@ import org.eclipse.emf.ecore.EcorePackage;
 import org.eclipse.gemoc.commons.eclipse.messagingsystem.api.MessagingSystem;
 import org.eclipse.gemoc.dsl.debug.ide.adapter.IDSLCurrentInstructionListener;
 import org.eclipse.gemoc.executionframework.engine.commons.EngineContextException;
+import org.eclipse.gemoc.executionframework.engine.commons.sequential.ISequentialModelExecutionContext;
+import org.eclipse.gemoc.executionframework.engine.commons.sequential.ISequentialRunConfiguration;
 import org.eclipse.gemoc.executionframework.engine.core.RunConfiguration;
 import org.eclipse.gemoc.executionframework.engine.ui.Activator;
 import org.eclipse.gemoc.executionframework.extensions.sirius.services.AbstractGemocAnimatorServices;
 import org.eclipse.gemoc.executionframework.extensions.sirius.services.AbstractGemocDebuggerServices;
 import org.eclipse.gemoc.xdsmlframework.api.core.EngineStatus.RunStatus;
 import org.eclipse.gemoc.xdsmlframework.api.core.ExecutionMode;
-import org.eclipse.gemoc.xdsmlframework.api.core.IExecutionContext;
 import org.eclipse.gemoc.xdsmlframework.api.core.IExecutionEngine;
-import org.eclipse.gemoc.xdsmlframework.api.core.IRunConfiguration;
 import org.eclipse.gemoc.xdsmlframework.api.engine_addon.IEngineAddon;
 import org.eclipse.jface.dialogs.MessageDialog;
 import org.eclipse.jface.viewers.ISelection;
@@ -47,8 +47,7 @@ import org.eclipse.jface.viewers.StructuredSelection;
 import org.eclipse.ui.IEditorPart;
 import org.eclipse.ui.PlatformUI;
 
-abstract public class AbstractSequentialGemocLauncher<C extends IExecutionContext<R, ?, ?>, R extends IRunConfiguration>
-		extends AbstractGemocLauncher<C> {
+abstract public class AbstractSequentialGemocLauncher extends AbstractGemocLauncher<ISequentialModelExecutionContext<?>> {
 
 	// warning this MODEL_ID must be the same as the one in the ModelLoader in order
 	// to enable correctly the breakpoints
@@ -59,16 +58,16 @@ abstract public class AbstractSequentialGemocLauncher<C extends IExecutionContex
 	// contribute to the progress bar
 	protected IProgressMonitor launchProgressMonitor = null;
 
-	private IExecutionEngine<C> _executionEngine;
+	private IExecutionEngine<ISequentialModelExecutionContext<?>> _executionEngine;
 
 	protected final static String executionStartedMessage = "Execution started successfully.";
 
-	protected abstract IExecutionEngine<C> createExecutionEngine(R runConfiguration, ExecutionMode executionMode)
+	protected abstract IExecutionEngine<ISequentialModelExecutionContext<?>> createExecutionEngine(ISequentialRunConfiguration runConfiguration, ExecutionMode executionMode)
 			throws CoreException, EngineContextException;
 
 	protected abstract void prepareViews();
 
-	protected abstract R parseLaunchConfiguration(ILaunchConfiguration configuration) throws CoreException;
+	protected abstract ISequentialRunConfiguration parseLaunchConfiguration(ILaunchConfiguration configuration) throws CoreException;
 
 	protected abstract MessagingSystem getMessagingSystem();
 
@@ -91,7 +90,7 @@ abstract public class AbstractSequentialGemocLauncher<C extends IExecutionContex
 					prepareViews();
 				}
 			});
-			R runConfiguration = parseLaunchConfiguration(configuration);
+			ISequentialRunConfiguration runConfiguration = parseLaunchConfiguration(configuration);
 
 			// We detect if we are running in debug mode or not
 			ExecutionMode executionMode = null;
@@ -260,7 +259,7 @@ abstract public class AbstractSequentialGemocLauncher<C extends IExecutionContex
 	}
 
 	@Override
-	public IExecutionEngine<C> getExecutionEngine() {
+	public IExecutionEngine<ISequentialModelExecutionContext<?>> getExecutionEngine() {
 		return _executionEngine;
 	}
 

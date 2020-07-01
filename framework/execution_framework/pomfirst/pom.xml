@@ -19,6 +19,7 @@
 	<packaging>pom</packaging>
 
 	<modules>
+		<module>org.eclipse.gemoc.executionframework.engine.headless</module>
 		<module>org.eclipse.gemoc.executionframework.mep</module>
 	</modules>
 
