@@ -23,7 +23,6 @@ The repository includes several components:
 - ___trace___ The plugins dedicated to execution traces. It offers two traces implementations that cans be used by the framework:
  - a simple generic trace metamodel 
  - an efficient trace metamodel powered by a generative approach. This trace enables all omniscient debugging capabilities of the framework and offers a multidimentional timeline.
-- ___java_execution___ contains an implementation of the framework using a sequential java engine (based on xtend+k3). 
 
 This project is included within the [GEMOC](http://gemoc.org/ "GEMOC Homepage"). This project offers an Eclipse package ([GEMOC Studio](http://gemoc.org/studio-download/)) with all these components preinstalled. It also provides additionnal engines (concurrent engine, coordination of concurrent engines), documentation and tutorials.
 
