@@ -9,11 +9,10 @@
     Contributors:
         Inria - initial API and implementation
  -->
-
 <feature
       id="org.eclipse.gemoc.gexpressions.feature"
       label="GExpressions Feature"
-      version="3.0.0.qualifier"
+      version="3.3.0.qualifier"
       image="gemocstudio32.png">
 
    <copyright url="http://www.eclipse.org/legal/epl-v10.html">
@@ -23,7 +22,7 @@ are made available under the terms of the Eclipse Public License v1.0
 which accompanies this distribution, and is available at
 http://www.eclipse.org/legal/epl-v10.html
    </copyright>
-   
+
    <plugin
          id="org.eclipse.gemoc.gexpressions.xtext"
          download-size="0"

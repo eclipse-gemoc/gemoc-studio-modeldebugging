@@ -1,5 +1,5 @@
 /*******************************************************************************
- * Copyright (c) 2008, 2017 THALES GLOBAL SERVICES.
+ * Copyright (c) 2008, 2020 THALES GLOBAL SERVICES.
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
  * which accompanies this distribution, and is available at
@@ -29,7 +29,7 @@ import org.eclipse.emf.transaction.TransactionalEditingDomain;
 import org.eclipse.sirius.business.api.session.Session;
 import org.eclipse.sirius.business.internal.session.danalysis.DAnalysisSessionImpl;
 import org.eclipse.sirius.common.tools.api.editing.EditingDomainFactoryService;
-import org.eclipse.sirius.common.tools.api.util.SiriusCrossReferenceAdapterImpl;
+import org.eclipse.sirius.common.tools.api.util.SiriusCrossReferenceAdapter;
 import org.eclipse.sirius.tools.internal.resource.ResourceSetUtil;
 import org.eclipse.sirius.viewpoint.DAnalysis;
 import org.eclipse.sirius.viewpoint.SiriusPlugin;
@@ -65,7 +65,7 @@ public final class DebugSessionFactory {
 
 		// Configure the resource set, its is done here and not before the
 		// editing domain creation which could provide its own resource set.
-		transactionalEditingDomain.getResourceSet().eAdapters().add(new SiriusCrossReferenceAdapterImpl());
+		transactionalEditingDomain.getResourceSet().eAdapters().add(new SiriusCrossReferenceAdapter());
 
 		// Create or load the session.
 		boolean alreadyExistingResource = exists(sessionResourceURI, transactionalEditingDomain.getResourceSet());

@@ -8,7 +8,7 @@
 	<parent>
 		<artifactId>org.eclipse.gemoc.modeldebugging.root</artifactId>
         <groupId>org.eclipse.gemoc</groupId>
-        <version>3.0.0-SNAPSHOT</version>
+        <version>3.3.0-SNAPSHOT</version>
         <relativePath>..</relativePath>
 	</parent>
 	<properties>
@@ -43,5 +43,11 @@
             <layout>p2</layout>
             <url>${aspectJ.p2.url}</url>
     	</repository>
+		<!--  e(fxc)lipse updatesite is currently required because they dropped from the release train -->
+		<repository>
+			<id>efxclipse</id>
+			<layout>p2</layout>
+			<url>${efxclipse.p2.url}</url>
+		</repository>
     </repositories>
 </project>

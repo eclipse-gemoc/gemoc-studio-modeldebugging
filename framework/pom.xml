@@ -8,7 +8,7 @@
 	<parent>
 		<groupId>org.eclipse.gemoc</groupId>
 		<artifactId>org.eclipse.gemoc.modeldebugging.root</artifactId>
-		<version>3.0.0-SNAPSHOT</version>
+		<version>3.3.0-SNAPSHOT</version>
 		<relativePath>..</relativePath>
 	</parent>
 
@@ -38,6 +38,12 @@
 			<id>Sirius</id>
 			<layout>p2</layout>
 			<url>${sirius.p2.url}</url>
+		</repository>
+		<!--  e(fxc)lipse updatesite is currently required because they dropped from the release train -->
+		<repository>
+			<id>efxclipse</id>
+			<layout>p2</layout>
+			<url>${efxclipse.p2.url}</url>
 		</repository>
 		<!-- <repository> -->
 		<!-- <id>ELK</id> -->

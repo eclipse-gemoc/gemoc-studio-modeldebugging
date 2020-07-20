@@ -11,6 +11,7 @@
 package org.eclipse.gemoc.xdsmlframework.extensions.sirius.wizards.pages;
 
 import org.eclipse.jface.wizard.WizardPage;
+import org.eclipse.sirius.diagram.business.internal.metamodel.helper.LayerHelper;
 import org.eclipse.sirius.diagram.description.DiagramDescription;
 import org.eclipse.sirius.diagram.description.Layer;
 import org.eclipse.swt.SWT;
@@ -77,7 +78,10 @@ public class AddDebugRepresentationPage extends WizardPage {
 
 	public void setDiagram(DiagramDescription diagram) {
 		debugLayerCombo.removeAll();
-		for (Layer layer : diagram.getAllLayers()) {
+		if(diagram.getDefaultLayer() != null) {
+			debugLayerCombo.add(diagram.getDefaultLayer().getName());
+		}
+		for (Layer layer : diagram.getAdditionalLayers()) {
 			debugLayerCombo.add(layer.getName());
 		}
 		debugLayerCombo.setText("Debug");
