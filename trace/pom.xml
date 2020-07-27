@@ -15,7 +15,8 @@
     <modules>    
         <module>commons</module>
         <module>generator</module>       
-        <module>manager</module>
+        <module>manager</module>     
+        <module>metp/plugins</module>
     </modules>
     
     <repositories>
