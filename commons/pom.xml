@@ -34,6 +34,9 @@
         <module>plugins/org.jaxen</module>
         <module>plugins/org.jdom2</module>
         
+        <!-- pomless plugins -->
+        <module>plugins</module>
+        
         <!-- feature and update site -->
         <module>releng</module>
         
