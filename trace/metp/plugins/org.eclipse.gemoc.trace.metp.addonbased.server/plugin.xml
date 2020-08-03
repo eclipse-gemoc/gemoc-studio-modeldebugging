@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?eclipse version="3.4"?>
+<plugin>
+   <extension
+         point="org.eclipse.gemoc.ws.server.endpoint">
+      <GEMOC_WS_EndPoint
+            class="org.eclipse.gemoc.trace.metp.addonbased.server.endpoint.EchoEndPoint"
+            id="org.eclipse.gemoc.trace.metp.addonbased.server.endpoint.EchoEndPoint">
+      </GEMOC_WS_EndPoint>
+   </extension>
+
+</plugin>
