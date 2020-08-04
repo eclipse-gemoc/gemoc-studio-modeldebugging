@@ -110,6 +110,7 @@ public class Activator extends Plugin {
 
 			server.start();
 			System.err.println("Assigned port: " + connector.getLocalPort());
+			System.out.println("Assigned port: " + connector.getLocalPort());
 			server.dump(System.err);
 		} catch (Throwable t) {
 			logError(t.getMessage(), t);

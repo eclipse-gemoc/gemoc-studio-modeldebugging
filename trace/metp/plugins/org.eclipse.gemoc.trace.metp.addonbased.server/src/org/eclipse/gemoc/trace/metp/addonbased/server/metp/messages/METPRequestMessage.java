@@ -8,15 +8,15 @@
  * Contributors:
  *     Inria - initial API and implementation
  *******************************************************************************/
-package org.eclipse.gemoc.trace.metp.addonbased.server.metp.services;
+package org.eclipse.gemoc.trace.metp.addonbased.server.metp.messages;
 
-import java.util.concurrent.CompletableFuture;
+import org.eclipse.lsp4j.jsonrpc.messages.RequestMessage;
 
-import org.eclipse.gemoc.trace.metp.addonbased.server.metp.data.EngineEventType;
-import org.eclipse.lsp4j.jsonrpc.services.JsonRequest;
-
-public interface IModelExecutionAddonProtocolServer {
-
-	@JsonRequest
-	public CompletableFuture<Void> initialize(String engineId, EngineEventType eventType) ;
+/**
+ * METP specific version of RequestMessage.
+ *
+ * @see DebugMessageTypeAdapter
+ */
+public class METPRequestMessage extends RequestMessage {
+	// no additional fields are needed to represent request messages in METP
 }

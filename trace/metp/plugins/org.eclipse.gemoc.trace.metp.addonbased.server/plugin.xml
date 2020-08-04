@@ -8,5 +8,11 @@
             id="org.eclipse.gemoc.trace.metp.addonbased.server.endpoint.EchoEndPoint">
       </GEMOC_WS_EndPoint>
    </extension>
-
+   <extension
+         point="org.eclipse.gemoc.ws.server.endpoint">
+      <GEMOC_WS_EndPoint
+            class="org.eclipse.gemoc.trace.metp.addonbased.server.endpoint.METPServerEndPoint"
+            id="org.eclipse.gemoc.trace.metp.addonbased.server.endpoint.METPServerEndPoint">
+      </GEMOC_WS_EndPoint>
+   </extension>
 </plugin>

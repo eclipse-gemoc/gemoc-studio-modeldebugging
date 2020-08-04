@@ -10,13 +10,8 @@
  *******************************************************************************/
 package org.eclipse.gemoc.trace.metp.addonbased.server.metp.services;
 
-import java.util.concurrent.CompletableFuture;
 
-import org.eclipse.gemoc.trace.metp.addonbased.server.metp.data.EngineEventType;
-import org.eclipse.lsp4j.jsonrpc.services.JsonRequest;
+public interface IModelExecutionTraceProtocolServer extends IModelExecutionAddonProtocolServer {
 
-public interface IModelExecutionAddonProtocolServer {
-
-	@JsonRequest
-	public CompletableFuture<Void> initialize(String engineId, EngineEventType eventType) ;
+	
 }

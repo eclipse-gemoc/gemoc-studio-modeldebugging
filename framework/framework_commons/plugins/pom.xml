@@ -22,6 +22,7 @@
 		<module>org.eclipse.gemoc.opsemanticsview.gen</module>
 		<module>org.eclipse.gemoc.opsemanticsview.gen.k3</module>
 		<module>org.eclipse.gemoc.opsemanticsview.model</module>
+		<module>org.eclipse.gemoc.ws.server</module>
 		<module>org.eclipse.gemoc.xdsmlframework.api</module>
 		<module>org.eclipse.gemoc.xdsmlframework.commons</module>
 		<module>org.eclipse.gemoc.xdsmlframework.commons.ui.k3</module>
