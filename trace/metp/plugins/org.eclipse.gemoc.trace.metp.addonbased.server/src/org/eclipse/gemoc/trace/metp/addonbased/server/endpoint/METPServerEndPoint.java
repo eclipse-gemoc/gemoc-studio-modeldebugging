@@ -74,6 +74,7 @@ public class METPServerEndPoint {
 				session.getBasicRemote().sendText(response);
 				internal.reset();
 				
+				LOGGER.debug("Response sent: "+ response);
 				System.out.println("[DEBUG] Sent: " + response);
 			}
 		};
