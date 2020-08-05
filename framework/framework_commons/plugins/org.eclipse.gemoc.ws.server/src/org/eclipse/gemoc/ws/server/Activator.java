@@ -55,6 +55,7 @@ public class Activator extends Plugin {
 
 	protected Server server;
 	protected ServerContainer wsContainer;
+	protected int assignedPort;
 
 	@Override
 	public void start(BundleContext context) throws Exception {
@@ -109,8 +110,8 @@ public class Activator extends Plugin {
 			}
 
 			server.start();
+			assignedPort = connector.getLocalPort();
 			System.err.println("Assigned port: " + connector.getLocalPort());
-			System.out.println("Assigned port: " + connector.getLocalPort());
 			server.dump(System.err);
 		} catch (Throwable t) {
 			logError(t.getMessage(), t);
@@ -120,6 +121,18 @@ public class Activator extends Plugin {
 	public synchronized void stopWSServer() throws Exception {
 		if (server != null)
 			server.stop();
+	}
+
+	public Server getServer() {
+		return server;
+	}
+
+	public ServerContainer getWsContainer() {
+		return wsContainer;
+	}
+
+	public int getAssignedPort() {
+		return assignedPort;
 	}
 
 }

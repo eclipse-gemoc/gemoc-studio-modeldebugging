@@ -1,11 +1,14 @@
 Manifest-Version: 1.0
 Bundle-ManifestVersion: 2
 Bundle-Name: GEMOC METP Client Timeline UI
-Bundle-SymbolicName: org.eclipse.gemoc.trace.metp.client.timeline.ui
+Bundle-SymbolicName: org.eclipse.gemoc.trace.metp.client.timeline.ui;singleton:=true
 Bundle-Version: 1.0.0.qualifier
 Bundle-Activator: org.eclipse.gemoc.trace.metp.client.timeline.ui.Activator
 Require-Bundle: org.eclipse.ui,
- org.eclipse.core.runtime
+ org.eclipse.core.runtime,
+ org.eclipse.gemoc.ws.server;bundle-version="1.0.0",
+ org.eclipse.gemoc.executionframework.ui;bundle-version="4.0.0"
 Bundle-RequiredExecutionEnvironment: JavaSE-1.8
 Automatic-Module-Name: org.eclipse.gemoc.trace.metp.client.timeline.ui
 Bundle-ActivationPolicy: lazy
+Import-Package: javax.inject

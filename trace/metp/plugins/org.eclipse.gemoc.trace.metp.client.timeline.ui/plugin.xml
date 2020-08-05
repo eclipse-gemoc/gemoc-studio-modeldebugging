@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?eclipse version="3.4"?>
+<plugin>
+   <extension
+         point="org.eclipse.ui.views">
+      <view
+            category="org.eclipse.gemoc.executionframework.ui.category"
+            class="org.eclipse.gemoc.trace.metp.client.timeline.ui.views.METPBrowserView"
+            icon="icons/IconeGemocModel-16.png"
+            id="org.eclipse.gemoc.trace.metp.client.timeline.ui.views.METPTestBrowserView"
+            inject="true"
+            name="Model Execution Trace View">
+      </view>
+   </extension>
+   <extension
+         point="org.eclipse.ui.perspectiveExtensions">
+      <perspectiveExtension
+            targetID="org.eclipse.debug.ui.DebugPerspective">
+         <view
+               id="org.eclipse.gemoc.trace.metp.client.timeline.ui.views.METPTestBrowserView"
+               ratio="0.5"
+               relationship="right"
+               relative="org.eclipse.ui.views.ProblemView">
+         </view>
+      </perspectiveExtension>
+      <perspectiveExtension
+            targetID="org.eclipse.gemoc.xdsmlframework.ide.ui.xdsml.perspective">
+         <view
+               id="org.eclipse.gemoc.trace.metp.client.timeline.ui.views.METPTestBrowserView"
+               ratio="0.5"
+               relationship="right"
+               relative="org.eclipse.ui.views.ProblemView">
+         </view>
+      </perspectiveExtension>
+   </extension>
+
+</plugin>
