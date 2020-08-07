@@ -1,24 +1,15 @@
+/*******************************************************************************
+ * Copyright (c) 2020 Inria and others.
+ * All rights reserved. This program and the accompanying materials
+ * are made available under the terms of the Eclipse Public License v1.0
+ * which accompanies this distribution, and is available at
+ * http://www.eclipse.org/legal/epl-v10.html
+ *
+ * Contributors:
+ *     Inria - initial API and implementation
+ *******************************************************************************/
 package org.eclipse.gemoc.trace.metp.client.timeline.ui.views;
 
-
-import org.eclipse.swt.widgets.Composite;
-import org.eclipse.ui.part.*;
-import org.eclipse.jface.viewers.*;
-import org.eclipse.swt.graphics.Image;
-import org.eclipse.core.runtime.FileLocator;
-import org.eclipse.core.runtime.Path;
-import org.eclipse.core.runtime.URIUtil;
-import org.eclipse.gemoc.trace.metp.client.timeline.ui.Activator;
-import org.eclipse.jface.action.*;
-import org.eclipse.jface.dialogs.MessageDialog;
-import org.eclipse.ui.*;
-import org.eclipse.swt.widgets.Menu;
-import org.eclipse.swt.SWT;
-import org.eclipse.swt.browser.Browser;
-import org.eclipse.swt.browser.LocationEvent;
-import org.eclipse.swt.browser.LocationListener;
-import org.eclipse.swt.browser.ProgressEvent;
-import org.eclipse.swt.browser.ProgressListener;
 
 import java.io.File;
 import java.io.IOException;
@@ -26,6 +17,28 @@ import java.net.URISyntaxException;
 import java.net.URL;
 
 import javax.inject.Inject;
+
+import org.eclipse.core.runtime.FileLocator;
+import org.eclipse.core.runtime.Path;
+import org.eclipse.core.runtime.URIUtil;
+import org.eclipse.gemoc.trace.metp.client.timeline.ui.Activator;
+import org.eclipse.jface.action.Action;
+import org.eclipse.jface.action.IMenuManager;
+import org.eclipse.jface.action.IToolBarManager;
+import org.eclipse.jface.action.Separator;
+import org.eclipse.jface.dialogs.MessageDialog;
+import org.eclipse.swt.SWT;
+import org.eclipse.swt.browser.Browser;
+import org.eclipse.swt.browser.LocationEvent;
+import org.eclipse.swt.browser.LocationListener;
+import org.eclipse.swt.browser.ProgressEvent;
+import org.eclipse.swt.browser.ProgressListener;
+import org.eclipse.swt.widgets.Composite;
+import org.eclipse.ui.IActionBars;
+import org.eclipse.ui.ISharedImages;
+import org.eclipse.ui.IWorkbench;
+import org.eclipse.ui.PlatformUI;
+import org.eclipse.ui.part.ViewPart;
 
 
 /**
@@ -53,12 +66,11 @@ public class METPBrowserView extends ViewPart {
 	 */
 	public static final String ID = "org.eclipse.gemoc.trace.metp.client.timeline.ui.views.METPBrowserView";
 	
-	public static final String BASIC_TIMELINE_PAGE_PATH = "web/basic_timeline";
+	public static final String SIMPLE_TIMELINE_PAGE_PATH = "web/simple-timeline/dist";
 	public static final String TEST_PAGE_PATH = "web/metp_test";
 
 	@Inject IWorkbench workbench;
 	
-	//private TableViewer viewer;
 	private Browser browserViewer;
 	private Action openTestPageAction;
 	private Action openMainTracePageAction;
@@ -70,28 +82,13 @@ public class METPBrowserView extends ViewPart {
 	 */
 	private Boolean completed = false;
 
-	class ViewLabelProvider extends LabelProvider implements ITableLabelProvider {
-		@Override
-		public String getColumnText(Object obj, int index) {
-			return getText(obj);
-		}
-		@Override
-		public Image getColumnImage(Object obj, int index) {
-			return getImage(obj);
-		}
-		@Override
-		public Image getImage(Object obj) {
-			return workbench.getSharedImages().getImage(ISharedImages.IMG_OBJ_ELEMENT);
-		}
-	}
-
 	@Override
 	public void createPartControl(Composite parent) {
 		
 		browserViewer = new Browser(parent, SWT.NONE);
 		
 		try {
-			URL url = FileLocator.find(Activator.getDefault().getBundle(), new Path(BASIC_TIMELINE_PAGE_PATH), null);
+			URL url = FileLocator.find(Activator.getDefault().getBundle(), new Path(SIMPLE_TIMELINE_PAGE_PATH), null);
 			url = FileLocator.toFileURL(url);
 			File file = URIUtil.toFile(URIUtil.toURI(url));
 			browserViewer.setUrl(file.getCanonicalPath()+"/index.html");
@@ -102,8 +99,12 @@ public class METPBrowserView extends ViewPart {
 	            	synchronized (completed) {
 	            		completed = true;	
 					}
-//	                System.out.println("Page loaded");
-//	                System.out.println(browserViewer.execute("alert(\"1\");"));
+	            	String metpWSport = Integer.toString(org.eclipse.gemoc.ws.server.Activator.getDefault().getAssignedPort());
+	            	//browserViewer.execute("document.initializeTimelineApp(\""+metpWSport+"\");");
+	            	browserViewer.execute("document.webTimeline.initWS(\""+metpWSport+"\");");
+	            	//System.out.println(browserViewer.execute("document.initializeTimelineApp(\""+metpWSport+"\");"));
+	            	   	//System.out.println(browserViewer.execute("document.sayHello();"));
+	                //System.out.println(browserViewer.execute("alert(windows.sayHello);"));
 	            }
 	            @Override
 	            public void changed(ProgressEvent event) {
@@ -155,11 +156,12 @@ public class METPBrowserView extends ViewPart {
 		openTestPageAction = new Action() {
 			public void run() {
 				try {
-					URL url = FileLocator.find(Activator.getDefault().getBundle(), new Path(BASIC_TIMELINE_PAGE_PATH), null);
+					URL url = FileLocator.find(Activator.getDefault().getBundle(), new Path(SIMPLE_TIMELINE_PAGE_PATH), null);
 					url = FileLocator.toFileURL(url);
 				
 					File file = URIUtil.toFile(URIUtil.toURI(url));
 					browserViewer.setUrl(file.getCanonicalPath()+"/index.html");
+					
 				} catch (IOException | URISyntaxException e) {
 					Activator.logError(e.getMessage(), e);
 				}
