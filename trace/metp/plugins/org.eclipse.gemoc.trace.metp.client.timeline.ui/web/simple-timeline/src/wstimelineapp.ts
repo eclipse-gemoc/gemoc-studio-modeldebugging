@@ -35,6 +35,15 @@ export class TimelineWebsocketApp {
 		d3.select("#debug").append("p").html("Connecting to "+url);
 		
 		// build d3 chart in #d3timeline
+		this.timeline = new GemocD3Timeline("#d3timeline");
+		
+	}
+	initWSForEngine(url : string, engineName : string) {
+		this.websocketUrl = url;
+		d3.select("#debug").append("p").html("Connecting to "+url);
+		d3.select("#debug").append("p").html("For engine "+engineName);
+		
+		// build d3 chart in #d3timeline
 		this.timeline = new GemocD3Timeline("d3timeline");
 		
 	}

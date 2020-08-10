@@ -10,6 +10,8 @@
  *******************************************************************************/
 import * as d3 from "d3";
 import * as wstimelineapp from "./wstimelineapp";
+import { GemocD3Timeline } from "./gemocd3timeline";
+//import * as D3Timeline from "./d3-timeline/d3-timeline" 
 
 /*const svgDimensions = { width: 500, height: 500 };
 const margin = { left: 5, right: 5, top: 10, bottom: 10 };
@@ -45,6 +47,25 @@ const chartGroup = createChartGroup();*/
 
 //let webTimeline = new wstimelineapp.TimelineWebsocketApp();
 (<any>document).webTimeline = new wstimelineapp.TimelineWebsocketApp();
+
+
+///  test timeline
+var timeline : GemocD3Timeline;
+timeline = new GemocD3Timeline("#testtimeline");
+timeline.draw();
+
+/*var width = 500;
+var testData = [
+        {times: [{"starting_time": 1355752800000, "ending_time": 1355759900000}, {"starting_time": 1355767900000, "ending_time": 1355774400000}]},
+        {times: [{"starting_time": 1355759910000, "ending_time": 1355761900000}, ]},
+        {times: [{"starting_time": 1355761910000, "ending_time": 1355763910000}]}
+      ];
+
+(<any>document).chart = D3Timeline;
+
+var svg = d3.select("#timeline1").append("svg").attr("width", width)
+          .datum(testData).call((<any>document).chart);*/
+
 //const webTimeline = new wstimelineapp.TimelineWebsocketApp();
 
 
