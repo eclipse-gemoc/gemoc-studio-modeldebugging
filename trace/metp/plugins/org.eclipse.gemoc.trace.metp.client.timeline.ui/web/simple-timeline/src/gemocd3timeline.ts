@@ -14,10 +14,16 @@ import * as d3_axis  from 'd3-axis'
 import * as test_data from './data'
 
 
+var w = window,
+    d = document,
+    e = d.documentElement,
+    g = d.getElementsByTagName('body')[0],
+    x = w.innerWidth || e.clientWidth || g.clientWidth,
+    y = w.innerHeight|| e.clientHeight|| g.clientHeight;
 
 // TODO find a way to adpat to the browser page size
 // possible way: https://stackoverflow.com/questions/16265123/resize-svg-when-window-is-resized-in-d3-js
-const svgDimensions = { width: 500, height: 500 };
+var svgDimensions = { width: x-10, height: 100 };
 const margin = { left: 5, right: 5, top: 10, bottom: 10 };
 const chartDimensions = {
   width: svgDimensions.width - margin.left - margin.right,
@@ -26,7 +32,7 @@ const chartDimensions = {
 
 export class GemocD3Timeline {
 	//svg : any;
-	svg : d3.Selection<SVGSVGElement, unknown, HTMLElement, any>;
+	public svg : d3.Selection<SVGSVGElement, unknown, HTMLElement, any>;
 	
 	constructor(containerId : string) {
 		this.svg  = d3
@@ -35,6 +41,12 @@ export class GemocD3Timeline {
 			.attr("width", svgDimensions.width)
 			.attr("height", svgDimensions.height)
 			.attr("style", "background-color: #FBFAF0");
+		
+		var that : GemocD3Timeline = this; // this is not accessible, create local val to replace it
+		// register for resize	
+		d3.select(window).on('resize', function(d,i){ 
+					that.resizeGemocD3TimelineSVG();
+	                });
 			
 	}
 	
@@ -53,11 +65,9 @@ export class GemocD3Timeline {
 	}
 	
 	drawTest() {
-		
-		
 		var dataIndex=1;
         var xBuffer=20;
-        var yBuffer=150;
+        var yBuffer=50;
         var lineLength=400;
         var spacing =50;
 
@@ -65,14 +75,13 @@ export class GemocD3Timeline {
 		    .attr("class", "tooltip")               
 		    .style("opacity", 0);
 
-
 		this.svg.append("g").selectAll("circle").data(test_data.resultCollectionSpainApr19).enter().append("circle")                               
 	        .attr("r", 5)   
 	    	.attr("cx", function(d,i){
 	                var spacing = lineLength/(test_data.resultCollectionSpainApr19.length);
                     return xBuffer+(i*spacing);
 	                })
-			.attr("cy", 150)
+			.attr("cy", 50)
 			.on("mouseover", function(d) {      
 	            div.transition()        
 	                .duration(200)      
@@ -92,6 +101,15 @@ export class GemocD3Timeline {
 			.attr("r", 20)
 			.attr("cx", 20)
 			.attr("cy", 20);*/
+	}
+	
+	resizeGemocD3TimelineSVG () {
+		x = w.innerWidth || e.clientWidth || g.clientWidth;
+    	// y = w.innerHeight|| e.clientHeight|| g.clientHeight;
+		svgDimensions.width = x - 10;
+		// svgDimensions.height = y - margin.bottom - margin.top;
+		this.svg.attr("width", svgDimensions.width);
+		// this.svg.attr("height", y);
 	}
 	
 };

@@ -6,7 +6,7 @@
     "module": "es6",
     "target": "es5",
     "moduleResolution": "node",
-    "declaration": false,
+    "declaration": true,
     "jsx": "react",
     "noLib": false,
     "allowJs": true,
