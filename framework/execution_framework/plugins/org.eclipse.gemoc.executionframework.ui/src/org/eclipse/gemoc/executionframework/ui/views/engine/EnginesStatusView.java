@@ -234,10 +234,11 @@ public class EnginesStatusView extends ViewPart implements IEngineAddon, IEngine
 				String result = "";
 				if (element instanceof IExecutionEngine) {
 					IExecutionEngine<?> engine = (IExecutionEngine<?>) element;
+					
 					GemocRunningEnginesRegistry registry = org.eclipse.gemoc.executionframework.engine.Activator.getDefault().gemocRunningEngineRegistry;
 					for (Entry<String, IExecutionEngine<?>> e : registry.getRunningEngines().entrySet()) {
 						if (e.getValue() == engine) {
-							result = e.getKey();
+							result = engine.getName() + "("+e.getKey()+")";
 							break;
 						}
 					}

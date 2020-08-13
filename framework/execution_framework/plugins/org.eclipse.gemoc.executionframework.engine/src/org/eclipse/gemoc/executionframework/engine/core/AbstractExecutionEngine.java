@@ -121,7 +121,7 @@ public abstract class AbstractExecutionEngine<C extends IExecutionContext<R, ?, 
 			getExecutionContext().dispose();
 			finishDispose();
 		} finally {
-			Activator.getDefault().gemocRunningEngineRegistry.unregisterEngine(getName());
+			Activator.getDefault().gemocRunningEngineRegistry.unregisterEngine(this);
 		}
 	}
 
