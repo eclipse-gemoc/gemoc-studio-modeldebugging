@@ -284,7 +284,7 @@ public abstract class AbstractExecutionEngine<C extends IExecutionContext<R, ?, 
 	@Override
 	public final <T extends IEngineAddon> T getAddon(Class<T> type) {
 		for (IEngineAddon c : getExecutionContext().getExecutionPlatform().getEngineAddons()) {
-			if (c.getClass().equals(type))
+			if (type.isAssignableFrom(c.getClass())) 
 				return (T) c;
 		}
 		return null;
