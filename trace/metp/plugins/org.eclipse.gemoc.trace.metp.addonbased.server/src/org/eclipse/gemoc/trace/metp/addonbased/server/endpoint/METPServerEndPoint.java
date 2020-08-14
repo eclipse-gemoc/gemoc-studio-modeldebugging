@@ -14,6 +14,7 @@ import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 import java.io.OutputStream;
 import java.io.UnsupportedEncodingException;
+import java.net.URLDecoder;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -22,6 +23,7 @@ import javax.websocket.OnError;
 import javax.websocket.OnMessage;
 import javax.websocket.OnOpen;
 import javax.websocket.Session;
+import javax.websocket.server.PathParam;
 import javax.websocket.server.ServerEndpoint;
 
 import org.eclipse.gemoc.commons.utils.ExtensibleInputStream;
@@ -32,7 +34,7 @@ import org.eclipse.lsp4j.jsonrpc.Launcher;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-@ServerEndpoint("/metp") 
+@ServerEndpoint("/metp/{engineId}") 
 public class METPServerEndPoint {
 	private static final Logger LOGGER = LoggerFactory.getLogger(METPServerEndPoint.class);
 
@@ -46,12 +48,24 @@ public class METPServerEndPoint {
 	
 	METPServerImpl server;
 	
+	/**
+	 * 
+	 * @param session
+	 * @param engineIndexString
+	 */
 	@OnOpen
-	public void onOpen(Session session) {
+	public void onOpen(Session session, @PathParam("engineId") String engineIdEncodedString) {
 		LOGGER.info("Starting connection...");
 		
+		String engineId = "";
+		try {
+			engineId = URLDecoder.decode(engineIdEncodedString, "UTF-8");
+		} catch (UnsupportedEncodingException e) {
+			LOGGER.error(e.getMessage(), e);
+		}
+		
 		// create server 
-		server =  new METPServerImpl();
+		server =  new METPServerImpl(engineId);
 		
 		
 		ExtensibleInputStream in = new ExtensibleInputStream();
@@ -85,13 +99,13 @@ public class METPServerEndPoint {
 		serverSideLauncher.startListening();
 	}
 	@OnClose
-	public void onClose(Session session) {
+	public void onClose(Session session, @PathParam("engineIndex") String engineIndex) {
 		activeSessions.remove(session);
 		LOGGER.debug("Closing session "+session.getId()+" "+session.getRequestURI());
 	}
 	
 	@OnMessage
-	public void onMessage(String message, Session session) {
+	public void onMessage(String message, Session session, @PathParam("engineIndex") String engineIndex) {
 		if(!message.startsWith("Content-Length:")) { //LSP specifies that there is a header but messages from Monaco do not have a header
 			supportHeader = false;
 			message = addHeader(message);
@@ -119,7 +133,7 @@ public class METPServerEndPoint {
 	}
 	
 	@OnError
-	public void onError(Session session, Throwable throwable) {
+	public void onError(Session session, Throwable throwable, @PathParam("engineIndex") String engineIndex) {
 		LOGGER.error("Error "+throwable.getMessage()+" on session "+session.getId()+" "+session.getRequestURI(), throwable);
 	}
 }

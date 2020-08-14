@@ -15,7 +15,7 @@ import org.eclipse.lsp4j.jsonrpc.messages.RequestMessage;
 /**
  * METP specific version of RequestMessage.
  *
- * @see DebugMessageTypeAdapter
+ * @see METPMessageTypeAdapter
  */
 public class METPRequestMessage extends RequestMessage {
 	// no additional fields are needed to represent request messages in METP

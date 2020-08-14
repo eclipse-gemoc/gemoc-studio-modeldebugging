@@ -10,6 +10,27 @@
  *******************************************************************************/
 package org.eclipse.gemoc.trace.metp.addonbased.server.metp.services;
 
+import org.eclipse.lsp4j.jsonrpc.services.JsonNotification;
+
 public interface IModelExecutionTraceProtocolClient extends IModelExecutionAddonProtocolClient {
 
+	// void statesAdded(List<State<?,?>> states);
+	@JsonNotification
+	void statesAdded();
+	
+	// void stepsStarted(List<Step<?>> steps);
+	@JsonNotification
+	void stepsStarted();
+	
+	// void stepsEnded(List<Step<?>> steps);
+	@JsonNotification
+	void stepsEnded();
+	
+	// void valuesAdded(List<Value<?>> values);
+	@JsonNotification
+	void valuesAdded();
+	
+	//void dimensionsAdded(List<Dimension<?>> dimensions);
+	@JsonNotification
+	void dimensionsAdded();
 }

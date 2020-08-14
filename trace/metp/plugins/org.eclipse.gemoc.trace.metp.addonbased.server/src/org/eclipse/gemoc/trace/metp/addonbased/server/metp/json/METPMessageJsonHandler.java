@@ -38,8 +38,10 @@ public class METPMessageJsonHandler extends MessageJsonHandler {
 	}
 
 	public GsonBuilder getDefaultGsonBuilder() {
-		return super.getDefaultGsonBuilder().registerTypeAdapterFactory(new DebugMessageTypeAdapter.Factory(this))
-				.registerTypeAdapterFactory(new DebugEnumTypeAdapter.Factory());
+		GsonBuilder gsonBuilder = super.getDefaultGsonBuilder();
+		gsonBuilder.registerTypeAdapterFactory(new METPMessageTypeAdapter.Factory(this));
+		gsonBuilder.registerTypeAdapterFactory(new DebugEnumTypeAdapter.Factory());
+		return gsonBuilder;
 	}
 
 }

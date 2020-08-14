@@ -17,7 +17,7 @@ import org.eclipse.lsp4j.jsonrpc.validation.NonNull;
 /**
  * METP specific version of ResponseMessage.
  *
- * @see DebugMessageTypeAdapter
+ * @see METPMessageTypeAdapter
  */
 public class METPResponseMessage extends ResponseMessage {
 	/**

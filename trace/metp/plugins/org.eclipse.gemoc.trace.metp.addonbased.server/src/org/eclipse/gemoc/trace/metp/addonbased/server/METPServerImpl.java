@@ -13,27 +13,49 @@ package org.eclipse.gemoc.trace.metp.addonbased.server;
 import java.util.LinkedHashMap;
 import java.util.Map;
 import java.util.concurrent.CompletableFuture;
+import java.util.function.Supplier;
 
+import org.eclipse.gemoc.trace.gemoc.api.IMultiDimensionalTraceAddon;
 import org.eclipse.gemoc.trace.metp.addonbased.server.metp.data.EngineEventType;
-import org.eclipse.gemoc.trace.metp.addonbased.server.metp.services.IModelExecutionAddonProtocolClient;
+import org.eclipse.gemoc.trace.metp.addonbased.server.metp.data.TraceCapabilities;
 import org.eclipse.gemoc.trace.metp.addonbased.server.metp.services.IModelExecutionTraceProtocolClient;
 import org.eclipse.gemoc.trace.metp.addonbased.server.metp.services.IModelExecutionTraceProtocolServer;
+import org.eclipse.gemoc.xdsmlframework.api.core.IExecutionEngine;
 import org.eclipse.lsp4j.jsonrpc.Endpoint;
+import org.eclipse.lsp4j.jsonrpc.ResponseErrorException;
 import org.eclipse.lsp4j.jsonrpc.json.JsonRpcMethod;
 import org.eclipse.lsp4j.jsonrpc.json.JsonRpcMethodProvider;
+import org.eclipse.lsp4j.jsonrpc.messages.ResponseError;
 import org.eclipse.lsp4j.jsonrpc.services.ServiceEndpoints;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-public class METPServerImpl implements IModelExecutionTraceProtocolServer, Endpoint, JsonRpcMethodProvider, IClientAware<IModelExecutionTraceProtocolClient> {
+public class METPServerImpl implements IModelExecutionTraceProtocolServer, Endpoint, JsonRpcMethodProvider,
+		IClientAware<IModelExecutionTraceProtocolClient> {
 
 	private static final Logger LOG = LoggerFactory.getLogger(METPServerImpl.class);
 
 	private Map<String, JsonRpcMethod> supportedMethods;
 
-	
 	protected IModelExecutionTraceProtocolClient traceClient;
 
+	
+	
+	protected boolean initialized = false;
+	
+	/**
+	 * id of the engine in the engine manager (ie.
+	 * org.eclipse.gemoc.executionframework.engine.Activator.getDefault().gemocRunningEngineRegistry)
+	 */
+	protected String engineId;
+
+	protected IExecutionEngine<?> engine;
+	protected ServerAddonTraceListener serverAddonTraceListener;
+
+	public METPServerImpl(String engineId) {
+		this.engineId = engineId;
+
+	}
 
 	@Override
 	public void connectClient(IModelExecutionTraceProtocolClient client) {
@@ -78,7 +100,7 @@ public class METPServerImpl implements IModelExecutionTraceProtocolServer, Endpo
 	}
 
 	// **************************************
-	// * IModelExecutionTraceProtocolServer *
+	// * IModelExecutionAddonProtocolServer *
 	// **************************************
 	@Override
 	public CompletableFuture<Void> initialize(String engineId, EngineEventType eventType) {
@@ -90,6 +112,50 @@ public class METPServerImpl implements IModelExecutionTraceProtocolServer, Endpo
 			}
 		});
 		return future;
+	}
+
+	// **************************************
+	// * IModelExecutionTraceProtocolServer *
+	// **************************************
+	@Override
+	public CompletableFuture<TraceCapabilities> initializeTrace() {
+		LOG.info("CompletableFuture<Void> initializeTrace()");
+		CompletableFuture<TraceCapabilities> future = CompletableFuture.supplyAsync(new Supplier<TraceCapabilities>() {
+			@Override
+			public TraceCapabilities get() {
+				// find the engine in the registry
+				METPServerImpl.this.engine = org.eclipse.gemoc.executionframework.engine.Activator.getDefault().gemocRunningEngineRegistry
+						.getRunningEngines().get(METPServerImpl.this.engineId);
+		
+				IMultiDimensionalTraceAddon<?, ?, ?, ?, ?> traceAddon = METPServerImpl.this.engine.getAddon(IMultiDimensionalTraceAddon.class);
+				if(traceAddon != null) {
+					serverAddonTraceListener = new ServerAddonTraceListener(METPServerImpl.this);
+					traceAddon.getTraceNotifier().addListener(serverAddonTraceListener);
+					initialized = true;
+					TraceCapabilities capabilities = new TraceCapabilities();
+					return capabilities;
+				} else {
+					ResponseError error = new ResponseError();
+					error.setMessage("Missing trace capability in engine (no IEngineAddon implementing IMultiDimensionalTraceAddon added to the execution)");
+					throw new ResponseErrorException(error);
+				}
+				
+			}
+		});
+		return future;
+	}
+	// **************************************
+	// * Destructor *
+	// **************************************
+
+	/**
+	 * dispose unused resources and remove listeners
+	 */
+	public void dispose() {
+		IMultiDimensionalTraceAddon<?, ?, ?, ?, ?> traceAddon = this.engine.getAddon(IMultiDimensionalTraceAddon.class);
+		if(traceAddon != null) {
+			traceAddon.getTraceNotifier().removeListener(serverAddonTraceListener);
+		}
 	}
 
 }
