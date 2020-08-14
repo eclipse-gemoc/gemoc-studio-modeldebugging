@@ -126,17 +126,22 @@ public class METPServerImpl implements IModelExecutionTraceProtocolServer, Endpo
 				// find the engine in the registry
 				METPServerImpl.this.engine = org.eclipse.gemoc.executionframework.engine.Activator.getDefault().gemocRunningEngineRegistry
 						.getRunningEngines().get(METPServerImpl.this.engineId);
-		
-				IMultiDimensionalTraceAddon<?, ?, ?, ?, ?> traceAddon = METPServerImpl.this.engine.getAddon(IMultiDimensionalTraceAddon.class);
-				if(traceAddon != null) {
-					serverAddonTraceListener = new ServerAddonTraceListener(METPServerImpl.this);
-					traceAddon.getTraceNotifier().addListener(serverAddonTraceListener);
-					initialized = true;
-					TraceCapabilities capabilities = new TraceCapabilities();
-					return capabilities;
+				if(METPServerImpl.this.engine != null) {
+					IMultiDimensionalTraceAddon<?, ?, ?, ?, ?> traceAddon = METPServerImpl.this.engine.getAddon(IMultiDimensionalTraceAddon.class);
+					if(traceAddon != null) {
+						serverAddonTraceListener = new ServerAddonTraceListener(METPServerImpl.this);
+						traceAddon.getTraceNotifier().addListener(serverAddonTraceListener);
+						initialized = true;
+						TraceCapabilities capabilities = new TraceCapabilities();
+						return capabilities;
+					} else {
+						ResponseError error = new ResponseError();
+						error.setMessage("Missing trace capability in engine (no IEngineAddon implementing IMultiDimensionalTraceAddon added to the execution)");
+						throw new ResponseErrorException(error);
+					}
 				} else {
 					ResponseError error = new ResponseError();
-					error.setMessage("Missing trace capability in engine (no IEngineAddon implementing IMultiDimensionalTraceAddon added to the execution)");
+					error.setMessage("no engine with the given id: "+METPServerImpl.this.engineId);
 					throw new ResponseErrorException(error);
 				}
 				
