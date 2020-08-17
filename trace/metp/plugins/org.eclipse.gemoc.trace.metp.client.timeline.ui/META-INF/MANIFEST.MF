@@ -7,7 +7,9 @@ Bundle-Activator: org.eclipse.gemoc.trace.metp.client.timeline.ui.Activator
 Require-Bundle: org.eclipse.ui,
  org.eclipse.core.runtime,
  org.eclipse.gemoc.ws.server;bundle-version="1.0.0",
- org.eclipse.gemoc.executionframework.ui;bundle-version="4.0.0"
+ org.eclipse.gemoc.executionframework.ui;bundle-version="4.0.0",
+ org.eclipse.gemoc.xdsmlframework.api;bundle-version="4.0.0",
+ org.eclipse.gemoc.executionframework.engine
 Bundle-RequiredExecutionEnvironment: JavaSE-1.8
 Automatic-Module-Name: org.eclipse.gemoc.trace.metp.client.timeline.ui
 Bundle-ActivationPolicy: lazy

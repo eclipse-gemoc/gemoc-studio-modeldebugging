@@ -1,0 +1,24 @@
+{
+	"name": "modelexecutiontraceprotocol",
+	"description": "Npm module with declarations for the model execution trace protocol",
+	"version": "0.0.1",
+	"author": "Inria",
+	"license": "EPL-1.0",
+	"repository": {
+		"type": "git",
+		"url": "https://github.com/eclipse/gemoc-studio-modeldebugging.git"
+	},
+	"bugs": {
+		"url": "https://github.com/eclipse/gemoc-studio-modeldebugging/issues"
+	},
+	"main": "./lib/ModelExecutionTraceProtocol.js",
+	"typings": "./lib/ModelExecutionTraceProtocol",
+	"devDependencies": {
+		"typescript": "3.5.2"
+	},
+	"scripts": {
+		"prepublish": "tsc -p ./src",
+		"compile": "tsc -p ./src",
+		"watch": "tsc -w -p ./src"
+	}
+}

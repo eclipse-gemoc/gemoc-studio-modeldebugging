@@ -13,15 +13,22 @@ package org.eclipse.gemoc.trace.metp.client.timeline.ui.views;
 
 import java.io.File;
 import java.io.IOException;
+import java.io.UnsupportedEncodingException;
 import java.net.URISyntaxException;
 import java.net.URL;
+import java.net.URLEncoder;
+import java.util.Optional;
 
 import javax.inject.Inject;
 
 import org.eclipse.core.runtime.FileLocator;
 import org.eclipse.core.runtime.Path;
 import org.eclipse.core.runtime.URIUtil;
+import org.eclipse.gemoc.executionframework.engine.core.GemocRunningEnginesRegistry;
+import org.eclipse.gemoc.executionframework.ui.views.engine.EngineSelectionDependentViewPart;
+import org.eclipse.gemoc.executionframework.ui.views.engine.EngineSelectionManager;
 import org.eclipse.gemoc.trace.metp.client.timeline.ui.Activator;
+import org.eclipse.gemoc.xdsmlframework.api.core.IExecutionEngine;
 import org.eclipse.jface.action.Action;
 import org.eclipse.jface.action.IMenuManager;
 import org.eclipse.jface.action.IToolBarManager;
@@ -38,7 +45,6 @@ import org.eclipse.ui.IActionBars;
 import org.eclipse.ui.ISharedImages;
 import org.eclipse.ui.IWorkbench;
 import org.eclipse.ui.PlatformUI;
-import org.eclipse.ui.part.ViewPart;
 
 
 /**
@@ -59,7 +65,7 @@ import org.eclipse.ui.part.ViewPart;
  * <p>
  */
 
-public class METPBrowserView extends ViewPart {
+public class METPBrowserView extends EngineSelectionDependentViewPart {
 
 	/**
 	 * The ID of the view as specified by the extension.
@@ -100,8 +106,26 @@ public class METPBrowserView extends ViewPart {
 	            		completed = true;	
 					}
 	            	String metpWSport = Integer.toString(org.eclipse.gemoc.ws.server.Activator.getDefault().getAssignedPort());
+	            	
+	            	EngineSelectionManager engineSelectionManager = org.eclipse.gemoc.executionframework.ui.Activator.getDefault().getEngineSelectionManager();
+	            	if(engineSelectionManager.get_lastSelectedEngine() != null) {
+	            		GemocRunningEnginesRegistry engineRegistry = org.eclipse.gemoc.executionframework.engine.Activator.getDefault().gemocRunningEngineRegistry;
+	            		Optional<String> engineId = engineRegistry.getIdForEngine(engineSelectionManager.get_lastSelectedEngine());
+	            		String encodedEngineId = "Unknown Engine";
+						try {
+							encodedEngineId = URLEncoder.encode(engineId.orElse("Unknown Engine"), "UTF-8");
+						} catch (UnsupportedEncodingException e) {
+							Activator.logError(e.getMessage(), e);
+						}
+	            		browserViewer.execute("document.webTimeline.initWSForEngine(\""+ encodedEngineId+"\", "
+	            				+metpWSport
+	            				+");");
+	            	} else {
+	            		browserViewer.execute("document.webTimeline.initWS("+metpWSport+");");
+	            	}
+	            	
 	            	//browserViewer.execute("document.initializeTimelineApp(\""+metpWSport+"\");");
-	            	browserViewer.execute("document.webTimeline.initWS(\""+metpWSport+"\");");
+	            	//browserViewer.execute("document.webTimeline.initWS(\"localhost:"+metpWSport+"\");");
 	            	//System.out.println(browserViewer.execute("document.initializeTimelineApp(\""+metpWSport+"\");"));
 	            	   	//System.out.println(browserViewer.execute("document.sayHello();"));
 	                //System.out.println(browserViewer.execute("alert(windows.sayHello);"));
@@ -202,5 +226,21 @@ public class METPBrowserView extends ViewPart {
 	@Override
 	public void setFocus() {
 		//viewer.getControl().setFocus();
+	}
+	
+	@Override
+	public void engineSelectionChanged(IExecutionEngine<?> engine) {
+		if (engine != null) {
+			synchronized (completed) {
+        		if(completed) {
+        			browserViewer.refresh();
+//        			String metpWSport = Integer.toString(org.eclipse.gemoc.ws.server.Activator.getDefault().getAssignedPort());
+//	            	browserViewer.execute("document.webTimeline.initWSForEngine(\"localhost:"
+//        					+metpWSport
+//        					+"\",\""
+//        					+ engine.getName()+"\");");
+        		}
+			}
+		}
 	}
 }

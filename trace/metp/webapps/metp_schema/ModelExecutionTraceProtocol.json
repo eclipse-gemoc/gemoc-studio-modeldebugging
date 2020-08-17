@@ -1,0 +1,474 @@
+{
+	"$schema": "http://json-schema.org/draft-04/schema#",
+	"title": "Model Execution Trace Protocol",
+	"description": "The Debug Adapter Protocol defines the protocol used between an editor or IDE and a debugger or runtime.",
+	"type": "object",
+
+
+	"definitions": {
+
+		"ProtocolMessage": {
+			"type": "object",
+			"title": "Base Protocol",
+			"description": "Base class of requests, responses, and events.",
+			"properties": {
+				"seq": {
+					"type": "integer",
+					"description": "Sequence number (also known as message ID). For protocol messages of type 'request' this ID can be used to cancel the request."
+				},
+				"type": {
+					"type": "string",
+					"description": "Message type.",
+					"_enum": [ "request", "response", "event" ]
+				}
+			},
+			"required": [ "seq", "type" ]
+		},
+
+		"Request": {
+			"allOf": [ { "$ref": "#/definitions/ProtocolMessage" }, {
+				"type": "object",
+				"description": "A client or debug adapter initiated request.",
+				"properties": {
+					"type": {
+						"type": "string",
+						"enum": [ "request" ]
+					},
+					"command": {
+						"type": "string",
+						"description": "The command to execute."
+					},
+					"arguments": {
+						"type": [ "array", "boolean", "integer", "null", "number" , "object", "string" ],
+						"description": "Object containing arguments for the command."
+					}
+				},
+				"required": [ "type", "command" ]
+			}]
+		},
+
+		"Event": {
+			"allOf": [ { "$ref": "#/definitions/ProtocolMessage" }, {
+				"type": "object",
+				"description": "A debug adapter initiated event.",
+				"properties": {
+					"type": {
+						"type": "string",
+						"enum": [ "event" ]
+					},
+					"event": {
+						"type": "string",
+						"description": "Type of event."
+					},
+					"body": {
+						"type": [ "array", "boolean", "integer", "null", "number" , "object", "string" ],
+						"description": "Event-specific information."
+					}
+				},
+				"required": [ "type", "event" ]
+			}]
+		},
+
+		"Response": {
+			"allOf": [ { "$ref": "#/definitions/ProtocolMessage" }, {
+				"type": "object",
+				"description": "Response for a request.",
+				"properties": {
+					"type": {
+						"type": "string",
+						"enum": [ "response" ]
+					},
+					"request_seq": {
+						"type": "integer",
+						"description": "Sequence number of the corresponding request."
+					},
+					"success": {
+						"type": "boolean",
+						"description": "Outcome of the request.\nIf true, the request was successful and the 'body' attribute may contain the result of the request.\nIf the value is false, the attribute 'message' contains the error in short form and the 'body' may contain additional information (see 'ErrorResponse.body.error')."
+					},
+					"command": {
+						"type": "string",
+						"description": "The command requested."
+					},
+					"message": {
+						"type": "string",
+						"description": "Contains the raw error in short form if 'success' is false.\nThis raw error might be interpreted by the frontend and is not shown in the UI.\nSome predefined values exist.",
+						"_enum": [ "cancelled" ],
+						"enumDescriptions": [
+							"request was cancelled."
+						]
+					},
+					"body": {
+						"type": [ "array", "boolean", "integer", "null", "number" , "object", "string" ],
+						"description": "Contains request result if success is true and optional error details if success is false."
+					}
+				},
+				"required": [ "type", "request_seq", "success", "command" ]
+			}]
+		},
+
+		"ErrorResponse": {
+			"allOf": [ { "$ref": "#/definitions/Response" }, {
+				"type": "object",
+				"description": "On error (whenever 'success' is false), the body can provide more details.",
+				"properties": {
+					"body": {
+						"type": "object",
+						"properties": {
+							"error": {
+								"$ref": "#/definitions/Message",
+								"description": "An optional, structured error message."
+							}
+						}
+					}
+				},
+				"required": [ "body" ]
+			}]
+		},
+
+		"CancelRequest": {
+			"allOf": [ { "$ref": "#/definitions/Request" }, {
+				"type": "object",
+				"description": "The 'cancel' request is used by the frontend in two situations:\n- to indicate that it is no longer interested in the result produced by a specific request issued earlier\n- to cancel a progress sequence. Clients should only call this request if the capability 'supportsCancelRequest' is true.\nThis request has a hint characteristic: a debug adapter can only be expected to make a 'best effort' in honouring this request but there are no guarantees.\nThe 'cancel' request may return an error if it could not cancel an operation but a frontend should refrain from presenting this error to end users.\nA frontend client should only call this request if the capability 'supportsCancelRequest' is true.\nThe request that got canceled still needs to send a response back. This can either be a normal result ('success' attribute true)\nor an error response ('success' attribute false and the 'message' set to 'cancelled').\nReturning partial results from a cancelled request is possible but please note that a frontend client has no generic way for detecting that a response is partial or not.\n The progress that got cancelled still needs to send a 'progressEnd' event back.\n A client should not assume that progress just got cancelled after sending the 'cancel' request.",
+				"properties": {
+					"command": {
+						"type": "string",
+						"enum": [ "cancel" ]
+					},
+					"arguments": {
+						"$ref": "#/definitions/CancelArguments"
+					}
+				},
+				"required": [ "command" ]
+			}]
+		},
+		"CancelArguments": {
+			"type": "object",
+			"description": "Arguments for 'cancel' request.",
+			"properties": {
+				"requestId": {
+					"type": "integer",
+					"description": "The ID (attribute 'seq') of the request to cancel. If missing no request is cancelled.\nBoth a 'requestId' and a 'progressId' can be specified in one request."
+				},
+				"progressId": {
+					"type": "string",
+					"description": "The ID (attribute 'progressId') of the progress to cancel. If missing no progress is cancelled.\nBoth a 'requestId' and a 'progressId' can be specified in one request."
+				}
+			}
+		},
+		"CancelResponse": {
+			"allOf": [ { "$ref": "#/definitions/Response" }, {
+				"type": "object",
+				"description": "Response to 'cancel' request. This is just an acknowledgement, so no body field is required."
+			}]
+		},
+
+		"InitializedEvent": {
+			"allOf": [ { "$ref": "#/definitions/Event" }, {
+				"type": "object",
+				"title": "Events",
+				"description": "This event indicates that the debug adapter is ready to accept configuration requests (e.g. SetBreakpointsRequest, SetExceptionBreakpointsRequest).\nA debug adapter is expected to send this event when it is ready to accept configuration requests (but not before the 'initialize' request has finished).\nThe sequence of events/requests is as follows:\n- adapters sends 'initialized' event (after the 'initialize' request has returned)\n- frontend sends zero or more 'setBreakpoints' requests\n- frontend sends one 'setFunctionBreakpoints' request (if capability 'supportsFunctionBreakpoints' is true)\n- frontend sends a 'setExceptionBreakpoints' request if one or more 'exceptionBreakpointFilters' have been defined (or if 'supportsConfigurationDoneRequest' is not defined or false)\n- frontend sends other future configuration requests\n- frontend sends one 'configurationDone' request to indicate the end of the configuration.",
+				"properties": {
+					"event": {
+						"type": "string",
+						"enum": [ "initialized" ]
+					}
+				},
+				"required": [ "event" ]
+			}]
+		},
+
+		"StoppedEvent": {
+			"allOf": [ { "$ref": "#/definitions/Event" }, {
+				"type": "object",
+				"description": "The event indicates that the execution of the debuggee has stopped due to some condition.\nThis can be caused by a break point previously set, a stepping request has completed, by executing a debugger statement etc.",
+				"properties": {
+					"event": {
+						"type": "string",
+						"enum": [ "stopped" ]
+					},
+					"body": {
+						"type": "object",
+						"properties": {
+							"reason": {
+								"type": "string",
+								"description": "The reason for the event.\nFor backward compatibility this string is shown in the UI if the 'description' attribute is missing (but it must not be translated).",
+								"_enum": [ "step", "breakpoint", "exception", "pause", "entry", "goto", "function breakpoint", "data breakpoint", "instruction breakpoint" ]
+							},
+							"description": {
+								"type": "string",
+								"description": "The full reason for the event, e.g. 'Paused on exception'. This string is shown in the UI as is and must be translated."
+							},
+							"threadId": {
+								"type": "integer",
+								"description": "The thread which was stopped."
+							},
+							"preserveFocusHint": {
+								"type": "boolean",
+								"description": "A value of true hints to the frontend that this event should not change the focus."
+							},
+							"text": {
+								"type": "string",
+								"description": "Additional information. E.g. if reason is 'exception', text contains the exception name. This string is shown in the UI."
+							},
+							"allThreadsStopped": {
+								"type": "boolean",
+								"description": "If 'allThreadsStopped' is true, a debug adapter can announce that all threads have stopped.\n- The client should use this information to enable that all threads can be expanded to access their stacktraces.\n- If the attribute is missing or false, only the thread with the given threadId can be expanded."
+							}
+						},
+						"required": [ "reason" ]
+					}
+				},
+				"required": [ "event", "body" ]
+			}]
+		},
+		"InitializeTraceRequest": {
+			"allOf": [ { "$ref": "#/definitions/Request" }, {
+				"type": "object",
+				"title": "Requests",
+				"description": "The 'initializeTrace' request is sent as the first request from the client to the model execution trace\nUntil the Model Execution Trace has responded to with an 'initializeTrace' response, the client must not send any additional requests or events to the Model Execution Trace.\nIn addition the Model Execution Trace is not allowed to send any requests or events to the client until it has responded with an 'initializeTrace' response.\nThe 'initializeTrace' request may only be sent once.",
+				"properties": {
+					"command": {
+						"type": "string",
+						"enum": [ "initializeTrace" ]
+					}
+				},
+				"required": [ "command"]
+			}]
+		},
+		"InitializeTraceResponse": {
+			"allOf": [ { "$ref": "#/definitions/Response" }, {
+				"type": "object",
+				"description": "Response to 'initializeTrace' request.",
+				"properties": {
+					"body": {
+						"$ref": "#/definitions/TraceCapabilities",
+						"description": "The capabilities of this Model Execution Trace."
+					}
+				}
+			}]
+		},
+		"GetFullTraceRequest": {
+			"allOf": [ { "$ref": "#/definitions/Request" }, {
+				"type": "object",
+				"title": "Requests",
+				"description": "The 'getFullTrace' request is sent to ask for the EMF resource containing the trace",
+				"properties": {
+					"command": {
+						"type": "string",
+						"enum": [ "getFullTrace" ]
+					},
+					"arguments": {
+						"$ref": "#/definitions/GetFullTraceRequestArguments"
+					}
+				},
+				"required": [ "command"]
+			}]
+		},
+		"GetFullTraceRequestArguments": {
+			"type": "object",
+			"description": "Arguments for 'getFullTrace' request.",
+			"properties": {
+				"serializationFormat": {
+					"type": "string",
+					"description": "The serialization format of the resource",
+					"_enum": [ "json", "xmi" ]
+				}
+			}
+		},
+		"GetFullTraceResponse": {
+			"allOf": [ { "$ref": "#/definitions/Response" }, {
+				"type": "object",
+				"description": "Response to 'getFullTrace' request.",
+				"properties": {
+					"body": {
+						"type": "string",
+						"description": "the Trace EMF model in the desired textual format"
+					}
+				}
+			}]
+		},
+		"InitializeRequest": {
+			"allOf": [ { "$ref": "#/definitions/Request" }, {
+				"type": "object",
+				"title": "Requests",
+				"description": "The 'initialize' request is sent as the first request from the client to the debug adapter\nin order to configure it with client capabilities and to retrieve capabilities from the debug adapter.\nUntil the debug adapter has responded to with an 'initialize' response, the client must not send any additional requests or events to the debug adapter.\nIn addition the debug adapter is not allowed to send any requests or events to the client until it has responded with an 'initialize' response.\nThe 'initialize' request may only be sent once.",
+				"properties": {
+					"command": {
+						"type": "string",
+						"enum": [ "initialize" ]
+					},
+					"arguments": {
+						"$ref": "#/definitions/InitializeRequestArguments"
+					}
+				},
+				"required": [ "command", "arguments" ]
+			}]
+		},
+		"InitializeRequestArguments": {
+			"type": "object",
+			"description": "Arguments for 'initialize' request.",
+			"properties": {
+				"clientID": {
+					"type": "string",
+					"description": "The ID of the (frontend) client using this adapter."
+				},
+				"clientName": {
+					"type": "string",
+					"description": "The human readable name of the (frontend) client using this adapter."
+				},
+				"adapterID": {
+					"type": "string",
+					"description": "The ID of the debug adapter."
+				},
+				"locale": {
+					"type": "string",
+					"description": "The ISO-639 locale of the (frontend) client using this adapter, e.g. en-US or de-CH."
+				},
+				"linesStartAt1": {
+					"type": "boolean",
+					"description": "If true all line numbers are 1-based (default)."
+				},
+				"columnsStartAt1": {
+					"type": "boolean",
+					"description": "If true all column numbers are 1-based (default)."
+				},
+				"pathFormat": {
+					"type": "string",
+					"_enum": [ "path", "uri" ],
+					"description": "Determines in what format paths are specified. The default is 'path', which is the native format."
+				},
+				"supportsVariableType": {
+					"type": "boolean",
+					"description": "Client supports the optional type attribute for variables."
+				},
+				"supportsVariablePaging": {
+					"type": "boolean",
+					"description": "Client supports the paging of variables."
+				},
+				"supportsRunInTerminalRequest": {
+					"type": "boolean",
+					"description": "Client supports the runInTerminal request."
+				},
+				"supportsMemoryReferences": {
+					"type": "boolean",
+					"description": "Client supports memory references."
+				},
+				"supportsProgressReporting": {
+					"type": "boolean",
+					"description": "Client supports progress reporting."
+				}
+			},
+			"required": [ "adapterID" ]
+		},
+		"InitializeResponse": {
+			"allOf": [ { "$ref": "#/definitions/Response" }, {
+				"type": "object",
+				"description": "Response to 'initialize' request.",
+				"properties": {
+					"body": {
+						"$ref": "#/definitions/Capabilities",
+						"description": "The capabilities of this debug adapter."
+					}
+				}
+			}]
+		},
+
+		"AttachRequest": {
+			"allOf": [ { "$ref": "#/definitions/Request" }, {
+				"type": "object",
+				"description": "The attach request is sent from the client to the debug adapter to attach to a debuggee that is already running.\nSince attaching is debugger/runtime specific, the arguments for this request are not part of this specification.",
+				"properties": {
+					"command": {
+						"type": "string",
+						"enum": [ "attach" ]
+					},
+					"arguments": {
+						"$ref": "#/definitions/AttachRequestArguments"
+					}
+				},
+				"required": [ "command", "arguments" ]
+			}]
+		},
+		"AttachRequestArguments": {
+			"type": "object",
+			"description": "Arguments for 'attach' request. Additional attributes are implementation specific.",
+			"properties": {
+				"__restart": {
+					"type": [ "array", "boolean", "integer", "null", "number", "object", "string" ],
+					"description": "Optional data from the previous, restarted session.\nThe data is sent as the 'restart' attribute of the 'terminated' event.\nThe client should leave the data intact."
+				}
+			}
+		},
+		"AttachResponse": {
+			"allOf": [ { "$ref": "#/definitions/Response" }, {
+				"type": "object",
+				"description": "Response to 'attach' request. This is just an acknowledgement, so no body field is required."
+			}]
+		},
+
+		"TraceCapabilities": {
+			"type": "object",
+			"title": "Types",
+			"description": "Information about the capabilities of a Model Execution trace.",
+			"properties": {
+				"supportsXXXRequest": {
+					"type": "boolean",
+					"description": "The model execution trace supports the 'XXX' request."
+				}
+			}
+		},
+		"Capabilities": {
+			"type": "object",
+			"title": "Types",
+			"description": "Information about the capabilities of a debug adapter.",
+			"properties": {
+				"supportsXXXRequest": {
+					"type": "boolean",
+					"description": "The model execution trace supports the 'XXX' request."
+				}
+			}
+		},
+
+		"Message": {
+			"type": "object",
+			"description": "A structured message object. Used to return errors from requests.",
+			"properties": {
+				"id": {
+					"type": "integer",
+					"description": "Unique identifier for the message."
+				},
+				"format": {
+					"type": "string",
+					"description": "A format string for the message. Embedded variables have the form '{name}'.\nIf variable name starts with an underscore character, the variable does not contain user data (PII) and can be safely used for telemetry purposes."
+				},
+				"variables": {
+					"type": "object",
+					"description": "An object used as a dictionary for looking up the variables in the format string.",
+					"additionalProperties": {
+						"type": "string",
+						"description": "Values must be strings."
+					}
+				},
+				"sendTelemetry": {
+					"type": "boolean",
+					"description": "If true send to telemetry."
+				},
+				"showUser": {
+					"type": "boolean",
+					"description": "If true show user."
+				},
+				"url": {
+					"type": "string",
+					"description": "An optional url where additional information about this message can be found."
+				},
+				"urlLabel": {
+					"type": "string",
+					"description": "An optional label that is presented to the user as the UI for opening the url."
+				}
+			},
+			"required": [ "id", "format" ]
+		}
+
+	}
+}

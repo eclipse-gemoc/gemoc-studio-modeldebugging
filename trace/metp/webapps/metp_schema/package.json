@@ -1,0 +1,27 @@
+{
+	"name": "generator",
+	"version": "0.0.1",
+	"description": "Generator",
+	"author": {
+		"name": "Inria",
+		"email": "didier.vojtisek@inria.fr"
+	},
+	"private": true,
+	"repository": {
+		"type": "git",
+		"url": "https://github.com/eclipse/gemoc-studio-modeldebugging.git"
+	},
+	"bugs": {
+		"url": "https://github.com/eclipse/gemoc-studio-modeldebugging/issues"
+	},
+	"devDependencies": {
+		"@types/node": "8.9.2",
+		"typescript": "2.6.1"
+	},
+	"scripts": {
+		"compile": "tsc -p ./src",
+		"watch": "tsc -w -p ./src",
+		"generate_ts": "node ./out/generator.js"
+	},
+	"main": "./out/generator"
+}

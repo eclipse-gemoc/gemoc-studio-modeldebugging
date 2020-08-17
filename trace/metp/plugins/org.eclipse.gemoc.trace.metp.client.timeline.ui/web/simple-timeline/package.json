@@ -1,6 +1,6 @@
 {
   "name": "simple-timeline",
-  "version": "1.0.0",
+  "version": "0.0.1",
   "description": "Simple Timeline web page for Model Execution Trace Protocol",
   "keywords": [
     "typescript",
@@ -8,6 +8,15 @@
     "websocket",
     "d3"
   ],
+  "author": "Inria",
+  "license": "EPL-1.0",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/eclipse/gemoc-studio-modeldebugging.git"
+  },
+  "bugs": {
+    "url": "https://github.com/eclipse/gemoc-studio-modeldebugging/issues"
+  },
   "main": "index.js",
   "directories": {
     "test": "test"
@@ -18,8 +27,6 @@
     "webpack": "webpack",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
-  "author": "",
-  "license": "EPL-1.0",
   "devDependencies": {
     "clean-webpack-plugin": "^3.0.0",
     "copy-webpack-plugin": "^6.0.3",
@@ -32,6 +39,7 @@
   },
   "dependencies": {
     "@types/d3": "^5.7.2",
+    "@types/node": "^14.0.27",
     "d3": "^5.16.0"
   }
 }
