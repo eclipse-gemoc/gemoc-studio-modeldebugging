@@ -10,14 +10,19 @@
  *******************************************************************************/
 package org.eclipse.gemoc.trace.metp.addonbased.server;
 
+import java.text.SimpleDateFormat;
 import java.util.LinkedHashMap;
+import java.util.Locale;
 import java.util.Map;
+import java.util.TimeZone;
 import java.util.concurrent.CompletableFuture;
 import java.util.function.Supplier;
 
 import org.eclipse.gemoc.trace.gemoc.api.IMultiDimensionalTraceAddon;
 import org.eclipse.gemoc.trace.metp.addonbased.server.metp.data.EngineEventType;
+import org.eclipse.gemoc.trace.metp.addonbased.server.metp.data.GetFullTraceRequestArguments;
 import org.eclipse.gemoc.trace.metp.addonbased.server.metp.data.TraceCapabilities;
+import org.eclipse.gemoc.trace.metp.addonbased.server.metp.services.IModelExecutionAddonProtocolServer;
 import org.eclipse.gemoc.trace.metp.addonbased.server.metp.services.IModelExecutionTraceProtocolClient;
 import org.eclipse.gemoc.trace.metp.addonbased.server.metp.services.IModelExecutionTraceProtocolServer;
 import org.eclipse.gemoc.xdsmlframework.api.core.IExecutionEngine;
@@ -27,15 +32,29 @@ import org.eclipse.lsp4j.jsonrpc.json.JsonRpcMethod;
 import org.eclipse.lsp4j.jsonrpc.json.JsonRpcMethodProvider;
 import org.eclipse.lsp4j.jsonrpc.messages.ResponseError;
 import org.eclipse.lsp4j.jsonrpc.services.ServiceEndpoints;
+import org.emfjson.jackson.annotations.EcoreIdentityInfo;
+import org.emfjson.jackson.module.EMFModule;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-public class METPServerImpl implements IModelExecutionTraceProtocolServer, Endpoint, JsonRpcMethodProvider,
+import com.fasterxml.jackson.core.JsonProcessingException;
+import com.fasterxml.jackson.databind.ObjectMapper;
+import com.fasterxml.jackson.databind.SerializationFeature;
+
+
+/**
+ * Implements both IModelExecutionTraceProtocolServer and IModelExecutionAddonProtocolServer
+ *
+ */
+public class METPServerImpl implements IModelExecutionTraceProtocolServer, IModelExecutionAddonProtocolServer, Endpoint, JsonRpcMethodProvider,
 		IClientAware<IModelExecutionTraceProtocolClient> {
 
 	private static final Logger LOG = LoggerFactory.getLogger(METPServerImpl.class);
 
 	private Map<String, JsonRpcMethod> supportedMethods;
+	private ObjectMapper emfjsonMapper;
+	private EMFModule emfjsonModule;
+
 
 	protected IModelExecutionTraceProtocolClient traceClient;
 
@@ -54,7 +73,7 @@ public class METPServerImpl implements IModelExecutionTraceProtocolServer, Endpo
 
 	public METPServerImpl(String engineId) {
 		this.engineId = engineId;
-
+		initEMFJSON();
 	}
 
 	@Override
@@ -103,7 +122,7 @@ public class METPServerImpl implements IModelExecutionTraceProtocolServer, Endpo
 	// * IModelExecutionAddonProtocolServer *
 	// **************************************
 	@Override
-	public CompletableFuture<Void> initialize(String engineId, EngineEventType eventType) {
+	public CompletableFuture<Void> initializeAddon(String engineId, EngineEventType eventType) {
 		LOG.info("CompletableFuture<Void> initialize(String engineId, EngineEventType eventType)");
 		CompletableFuture<Void> future = CompletableFuture.runAsync(new Runnable() {
 			@Override
@@ -149,9 +168,75 @@ public class METPServerImpl implements IModelExecutionTraceProtocolServer, Endpo
 		});
 		return future;
 	}
+	
+	
+	@Override
+	public CompletableFuture<String> getFullTrace(GetFullTraceRequestArguments arguments) {
+		CompletableFuture<String> future = CompletableFuture.supplyAsync(new Supplier<String>() {
+			@Override
+			public String get() {
+				METPServerImpl.this.engine = org.eclipse.gemoc.executionframework.engine.Activator.getDefault().gemocRunningEngineRegistry
+						.getRunningEngines().get(METPServerImpl.this.engineId);
+				if(METPServerImpl.this.engine != null) {
+					IMultiDimensionalTraceAddon<?, ?, ?, ?, ?> traceAddon = METPServerImpl.this.engine.getAddon(IMultiDimensionalTraceAddon.class);
+					if(traceAddon != null) {
+						try {
+							String s = METPServerImpl.this.emfjsonMapper.writeValueAsString(traceAddon.getTrace());
+							LOG.debug("FullTrace EMFJSON:\n"+s);
+							return s;
+						} catch (JsonProcessingException e) {
+							LOG.error(e.getMessage(), e);
+							ResponseError error = new ResponseError();
+							error.setMessage("Failed to convert Trace EObjects into JSON, "+e.getMessage());
+							throw new ResponseErrorException(error);
+						}
+					} else {
+						ResponseError error = new ResponseError();
+						error.setMessage("Missing trace capability in engine (no IEngineAddon implementing IMultiDimensionalTraceAddon added to the execution)");
+						throw new ResponseErrorException(error);
+					}
+				} else {
+					ResponseError error = new ResponseError();
+					error.setMessage("no engine with the given id: "+METPServerImpl.this.engineId);
+					throw new ResponseErrorException(error);
+				}
+			}
+		});
+		return future;
+	}
+	
 	// **************************************
-	// * Destructor *
+	// * Util								*
 	// **************************************
+	
+	protected void initEMFJSON() {
+		this.emfjsonMapper = new ObjectMapper();
+		final SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss", Locale.ENGLISH);
+		dateFormat.setTimeZone(TimeZone.getDefault());
+
+		this.emfjsonMapper.setDateFormat(dateFormat);
+		this.emfjsonMapper.setTimeZone(TimeZone.getDefault());
+
+		
+		// Optional
+		this.emfjsonMapper.configure(SerializationFeature.INDENT_OUTPUT, true);
+		        
+		this.emfjsonModule = new EMFModule();
+		this.emfjsonModule.configure(EMFModule.Feature.OPTION_USE_ID, true);
+		// Optional
+		this.emfjsonModule.configure(EMFModule.Feature.OPTION_SERIALIZE_TYPE, true);
+
+		this.emfjsonModule.setIdentityInfo(new EcoreIdentityInfo("_id"));
+		this.emfjsonMapper.registerModule(this.emfjsonModule);
+		
+	}
+	
+	
+	// **************************************
+	// * Destructor 						*
+	// **************************************
+
+	
 
 	/**
 	 * dispose unused resources and remove listeners
@@ -162,5 +247,8 @@ public class METPServerImpl implements IModelExecutionTraceProtocolServer, Endpo
 			traceAddon.getTraceNotifier().removeListener(serverAddonTraceListener);
 		}
 	}
+	
+	
+	
 
 }

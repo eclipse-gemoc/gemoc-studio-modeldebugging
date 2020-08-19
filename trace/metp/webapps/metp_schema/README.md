@@ -15,4 +15,6 @@ A generator is provided. It generates a node module (in typescript) correspondin
 
 * `npm run  watch` continuously compiles the generator (useful in dev)
 
-* `npm run  generate_ts` calls the generator to generate the typescript code from the `ModelExecutionTraceProtocol.json` into `../metp_protocol/src/ModelExecutionTraceProtocol.ts`
+* `npm run  generate` calls the generator to generate the language specific interface code from the `ModelExecutionTraceProtocol.json` 
+    * typescript into `../metp_protocol/src/ModelExecutionTraceProtocol.ts`
+    * java into `../../plugins/org.eclipse.gemoc.trace.metp.addonbased.server/src/org/eclipse/gemoc/trace/metp/addonbased/server/metp`

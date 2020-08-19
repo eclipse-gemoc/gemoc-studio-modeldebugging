@@ -24,19 +24,19 @@ fs.writeFileSync(`../metp_protocol/src/ModelExecutionTraceProtocol.ts`, emitTSSt
 
 console.log("***********************************************************");
 console.log("***** Generate IModelExecutionTraceProtocolServer.java ****");
-const emitJavaServerStr = JavaServerGeneratorModule('IModelExecutionTraceProtocolServer_gen',
+const emitJavaServerStr = JavaServerGeneratorModule('IModelExecutionTraceProtocolServer',
 	`org.eclipse.gemoc.trace.metp.addonbased.server.metp`, 
 	debugProtocolSchema);
-fs.writeFileSync(`../../plugins/org.eclipse.gemoc.trace.metp.addonbased.server/src/org/eclipse/gemoc/trace/metp/addonbased/server/metp/services/IModelExecutionTraceProtocolServer_gen.java`, 
+fs.writeFileSync(`../../plugins/org.eclipse.gemoc.trace.metp.addonbased.server/src/org/eclipse/gemoc/trace/metp/addonbased/server/metp/services/IModelExecutionTraceProtocolServer.java`, 
 	emitJavaServerStr, 
 	{ encoding: 'utf-8'});
 	
 console.log("***********************************************************");
 console.log("***** Generate IModelExecutionTraceProtocolClient.java ****");
-const emitJavaClientStr = JavaClientGeneratorModule('IModelExecutionTraceProtocolClient_gen',
+const emitJavaClientStr = JavaClientGeneratorModule('IModelExecutionTraceProtocolClient',
 	`org.eclipse.gemoc.trace.metp.addonbased.server.metp`, 
 	debugProtocolSchema);
-fs.writeFileSync(`../../plugins/org.eclipse.gemoc.trace.metp.addonbased.server/src/org/eclipse/gemoc/trace/metp/addonbased/server/metp/services/IModelExecutionTraceProtocolClient_gen.java`, 
+fs.writeFileSync(`../../plugins/org.eclipse.gemoc.trace.metp.addonbased.server/src/org/eclipse/gemoc/trace/metp/addonbased/server/metp/services/IModelExecutionTraceProtocolClient.java`, 
 	emitJavaClientStr, 
 	{ encoding: 'utf-8'});
 	
@@ -45,6 +45,6 @@ console.log("***** Generate IModelExecutionTraceProtocolData.xtend ****");
 const emitXtendArgumentsStr = XtendArgumentsGeneratorModule('ModelExecutionTraceProtocolData',
 	`org.eclipse.gemoc.trace.metp.addonbased.server.metp`, 
 	debugProtocolSchema);
-fs.writeFileSync(`../../plugins/org.eclipse.gemoc.trace.metp.addonbased.server/src/org/eclipse/gemoc/trace/metp/addonbased/server/metp/data/ModelExecutionTraceProtocolData_gen.xtend`, 
+fs.writeFileSync(`../../plugins/org.eclipse.gemoc.trace.metp.addonbased.server/src/org/eclipse/gemoc/trace/metp/addonbased/server/metp/data/ModelExecutionTraceProtocolData.xtend`, 
 	emitXtendArgumentsStr, 
 	{ encoding: 'utf-8'});
