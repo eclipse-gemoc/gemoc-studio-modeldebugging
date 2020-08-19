@@ -1,7 +1,7 @@
 {
 	"name": "generator",
 	"version": "0.0.1",
-	"description": "Generator",
+	"description": "Typescript and Xtend/java Generator from ModelExecutionTraceProtocol.json",
 	"author": {
 		"name": "Inria",
 		"email": "didier.vojtisek@inria.fr"
@@ -21,7 +21,7 @@
 	"scripts": {
 		"compile": "tsc -p ./src",
 		"watch": "tsc -w -p ./src",
-		"generate_ts": "node ./out/generator.js"
+		"generate": "node ./out/generator.js"
 	},
 	"main": "./out/generator"
 }
