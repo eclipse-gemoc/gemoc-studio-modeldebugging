@@ -12,7 +12,7 @@ import * as d3 from "d3";
 import {GemocD3Timeline} from "./gemocd3timeline";
 
 import {ModelExecutionTraceProtocol} from "modelexecutiontraceprotocol"
-import * as traceEcore from "./traceEcore"
+import * as genericTraceEcore from "./genericTraceEcore"
 //import {TraceClient} from "./traceClient";
 
 /*import {
@@ -83,7 +83,6 @@ export class TimelineWebsocketApp {
 			this.websocketHost = '127.0.0.1';	
 		}
 		d3.select("#debug").append("p").html("initWSForEngine() Connecting to ws://"+this.websocketHost+":"+this.websocketPort+"/metp/"+this.engineId);
-		d3.select("#debug").append("p").html("For engine "+engineName);
 		
 		//this.websocket = this.createWebSocket(this.websocketUrl);
 		//this.websocket = new WebSocket('ws://'+this.websocketHost+':'+this.websocketPort);
@@ -91,10 +90,10 @@ export class TimelineWebsocketApp {
 		
 		/*var metpClient = new TraceClient();
 	    metpClient.start(this.websocketPort);*/
-		
-		
+	
 		// build d3 chart in #d3timeline
 		this.timeline = new GemocD3Timeline("#d3timeline");
+		
 	}
 	
 	initWScommon(){
@@ -109,11 +108,14 @@ export class TimelineWebsocketApp {
 			this.initializeTraceRequest().then(
 				event => { // success
 					const eventResp = <ModelExecutionTraceProtocol.InitializeTraceResponse> event;
-					console.log(`[initializeTraceRequest] Success with ${eventResp}`);
+					console.log(`[initializeTraceRequest] Success with ${eventResp}`, eventResp);
+					
+					this.refreshTimeline();
 				},
 				event => { // failed
-					const eventResp = <ModelExecutionTraceProtocol.InitializeTraceResponse> event;
-					console.log(`[initializeTraceRequest] Error with ${eventResp}`);
+					//const eventResp = <ModelExecutionTraceProtocol.InitializeTraceResponse> event;
+					//console.log(`[initializeTraceRequest] Error with ${event}`);
+					d3.select("#debug").append("p").html("[initializeTraceRequest] Failed. "+event);
 				},
 			);
 			/*const traceReq = new ModelExecutionTraceProtocol.;
@@ -143,10 +145,12 @@ export class TimelineWebsocketApp {
 		this.websocket.onclose = (evt: CloseEvent) => {
 			if (evt.wasClean) {
 				alert(`[close] Connection closed cleanly, code=${evt.code} reason=${evt.reason}`);
+				// TODO should we try to reopen ? increase timout ?
 			} else {
 				// e.g. server process killed or network down
 				// event.code is usually 1006 in this case
 				alert('[close] Connection died');
+				// TODO should we try to reopen ?
 			}
 		};
 		
@@ -161,29 +165,30 @@ export class TimelineWebsocketApp {
 	}
 	
 	public receivedStepsStarted(o: Object) {
-		let  steps : traceEcore.Step[];
-		steps = <traceEcore.Step[]>o;
+		let  steps : genericTraceEcore.Step[];
+		steps = <genericTraceEcore.Step[]>o;
 		//console.log("receivedStepsStarted "+o ); 
 		console.log("receivedStepsStarted " + steps.length + " Step"); 
 		steps.forEach(step => console.log("   started: " + step._id + " Step"));	
 	}
 	public receivedStepsEnded(o: Object) {
 		
-		let  steps : traceEcore.Step[];
-		steps = <traceEcore.Step[]>o;
+		let  steps : genericTraceEcore.Step[];
+		steps = <genericTraceEcore.Step[]>o;
 		//console.log("receivedStepsStarted "+o ); 
 		console.log("receivedStepsEnded " + steps.length + " Step"); 
-		steps.forEach(step => console.log("   ended: " + step._id + " Step"));
+		steps.forEach(step => console.log("   ended: ", step));
 	}
 	public received( event: ModelExecutionTraceProtocol.Event) {
 		switch(event.event) {
 			case "stepsStarted": {
-				const rawData = JSON.parse(event.body);
+				const rawData = JSON.parse((<ModelExecutionTraceProtocol.StepsStartedEvent>event).body.stateListAsEMFJSON);
 				this.receivedStepsStarted(rawData);
 				break;
 			}
 			case "stepsEnded": {
-				const rawData = JSON.parse(event.body);
+				console.log("event.body=    ",event.body);
+				const rawData = JSON.parse(event.body.stateListAsEMFJSON);
 				this.receivedStepsEnded(rawData);
 				break;
 			}   
@@ -199,10 +204,15 @@ export class TimelineWebsocketApp {
 	public initializeTraceRequest(): Promise<ModelExecutionTraceProtocol.InitializeTraceResponse> {
 		return this.send('initializeTrace');
 	}
+	public getFullTraceRequest(): Promise<ModelExecutionTraceProtocol.GetFullTraceResponse> {
+		return this.send('getFullTrace');
+	}
 	
 	// ---- protocol messages 
 	public send(command: 'initializeTrace') : Promise<ModelExecutionTraceProtocol.InitializeTraceResponse>; 
+	public send(command: 'getFullTrace') : Promise<ModelExecutionTraceProtocol.GetFullTraceResponse>; 
 	public send(command: string, args?: any) : Promise<ModelExecutionTraceProtocol.Response>;
+	
 	
 	public send(command: string, args?: any): Promise<ModelExecutionTraceProtocol.Response> {
 
@@ -252,13 +262,27 @@ export class TimelineWebsocketApp {
 			const response = <ModelExecutionTraceProtocol.Response> rawData;
 			const clb = this.pendingRequests.get(response.request_seq);
 			if (clb) {
-				alert(`[received response] ${body}`);
-				console.log(`[received response] ${body}`);
-				console.log(`[received response] ${body}`);
+				//alert(`[received response] ${body}`);
+				console.log(`[received response]`,body);
 				this.pendingRequests.delete(response.request_seq);
 				clb(response);
 			}
 		}
+	}
+	
+	private refreshTimeline(){
+		this.getFullTraceRequest().then(
+			event => { // success
+				const eventResp = <ModelExecutionTraceProtocol.GetFullTraceResponse> event;
+				const rawData = JSON.parse(eventResp.body)
+				console.log(`[getFullTraceRequest] Success with ${rawData}`, rawData);
+				this.timeline.draw();
+			},
+			event => { // failed
+				//const eventResp = <ModelExecutionTraceProtocol.InitializeTraceResponse> event;
+				console.log(`[initializeTraceRequest] Error with ${event}`, event);
+			},
+		);
 	}
 };
 

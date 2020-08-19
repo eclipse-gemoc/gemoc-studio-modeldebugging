@@ -18,5 +18,5 @@ import org.eclipse.lsp4j.jsonrpc.services.JsonRequest;
 public interface IModelExecutionAddonProtocolServer {
 
 	@JsonRequest
-	public CompletableFuture<Void> initialize(String engineId, EngineEventType eventType) ;
+	public CompletableFuture<Void> initializeAddon(String engineId, EngineEventType eventType) ;
 }
