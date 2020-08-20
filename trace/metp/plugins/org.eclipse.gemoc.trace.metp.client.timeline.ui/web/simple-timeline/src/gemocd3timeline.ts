@@ -35,7 +35,7 @@ export class GemocD3Timeline {
 	//svg : any;
 	public svg : d3.Selection<SVGSVGElement, unknown, HTMLElement, any>;
 	
-	private AllRTDStatesLineYOffset : number // y position of the AllExecutionsStatesLine
+	private AllRTDStatesLineYOffset : number // y position of the AllRTDStatesLine
 	private rtdStateHeight : number	 // heigth of all RTD state graphical elements
 	private xPadding : number	// padding of elements
 	private yPadding : number
@@ -119,6 +119,7 @@ export class GemocD3Timeline {
 		const xPadding = this.xPadding;
 		const yPadding = this.yPadding;
 		
+		var that : GemocD3Timeline = this; // when 'this'' is not accessible, create a local var to replace it
 		// title text
 		this.svg.append("text")
     		.attr("x", 0)
@@ -150,7 +151,7 @@ export class GemocD3Timeline {
 	            div.transition()        
 	                .duration(200)      
 	                .style("opacity", .9);      
-	            div .html(state._id + "<br/>"  + state.values)  
+	            div .html(state._id + "<br/>"  + that.presentSateValues(state))  
 	                .style("left", (d3.event.pageX) + "px")     
 	                .style("top", (d3.event.pageY - 28) + "px");    
 	            })                  
@@ -169,30 +170,15 @@ export class GemocD3Timeline {
 		    	return i; // use position as label
 		    });
 		
-		// draw one circle with text per state on a line
-		/*this.svg.append("g").selectAll("circle").data(trace.states).enter().append("circle")
-			.attr("r", 5)   
-	    	.attr("cx", function(d,i){
-	               // var spacing = lineLength/(trace.states.length);
-                   // return xBuffer+(i*spacing);
-						return xSpacing + i*(bulletWidth + xPadding);
-	                })
-			.attr("cy", this.AllRTDStatesLineYOffset + 25) // 
-			.on("mouseover", function(d) {  
-				    
-	            div.transition()        
-	                .duration(200)      
-	                .style("opacity", .9);      
-	            div .html(d._id + "<br/>"  + d.values)  
-	                .style("left", (d3.event.pageX) + "px")     
-	                .style("top", (d3.event.pageY - 28) + "px");    
-	            })                  
-	        .on("mouseout", function(d) {       
-	            div.transition()        
-	                .duration(500)      
-	                .style("opacity", 0);   
-	        }); */
 	};
+	
+	presentSateValues(state : genericTraceEcore.State) : string {
+		var str = "";
+		for( let valueRef of state.values) {
+			str += valueRef.eClass + " " + valueRef.$ref+"<br>\n";
+		}
+		return str;
+	}
 	
 	resizeSVGToData(trace: genericTraceEcore.Trace){
 		const rtdWidth = this.rtdStateHeight;
