@@ -4,13 +4,11 @@ import * as genericTraceEcore from "./genericTraceEcore"
 //declare module traceEcore {
 // simplified version of the GenericTrace.ecore  for use with EMFJSON
 
-    export interface EObject_Ref {
-        eClass: string;
-        $ref: string;
+    export interface EObject_Ref extends genericTraceEcore.EMFJSONRef {
+		ref: any; // the resolved EObject
     }
-    export interface EStructuralFeature_Ref {
-        eClass: string;
-        $ref: string;
+    export interface EStructuralFeature_Ref extends genericTraceEcore.EMFJSONRef  {
+		ref: any; // the resolved EStructuralFeature
     }
 
     export interface GenericTracedObject  extends genericTraceEcore.TracedObject{

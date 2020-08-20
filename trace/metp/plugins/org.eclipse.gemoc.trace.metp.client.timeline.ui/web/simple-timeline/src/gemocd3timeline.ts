@@ -175,7 +175,31 @@ export class GemocD3Timeline {
 	presentSateValues(state : genericTraceEcore.State) : string {
 		var str = "";
 		for( let valueRef of state.values) {
-			str += valueRef.eClass + " " + valueRef.$ref+"<br>\n";
+			if(valueRef.ref) {
+				if(typeof valueRef.ref === 'object' && valueRef.ref["attributeValue"]) {
+					str += valueRef.ref["attributeValue"]+"<br>\n";
+				} else if(typeof valueRef.ref === 'object' && valueRef.ref["referenceValue"]) {
+					//str += valueRef.ref["referenceValue"]+"<br>\n";
+					str += "{"
+					Object.keys(valueRef.ref["referenceValue"]).forEach(key=> {
+						str += key+"="+valueRef.ref["referenceValue"][key]+", ";
+					});
+					str += "}<br>\n";
+					// TODO look and "lazy" query for external model ref
+					
+				} else if(typeof valueRef.ref === 'object') {
+					str += valueRef.eClass + " {"
+					Object.keys(valueRef.ref).forEach(key=> {
+						str += key+"="+valueRef.ref[key]+", ";
+					});
+					str += "}<br>\n";
+				} else {
+					str += valueRef.eClass + " " + valueRef.ref+"<br>\n";
+				}	
+			} else {
+				str += valueRef.eClass + " Unresolved[\"" + valueRef.$ref+"\"]<br>\n";
+			}
+			
 		}
 		return str;
 	}

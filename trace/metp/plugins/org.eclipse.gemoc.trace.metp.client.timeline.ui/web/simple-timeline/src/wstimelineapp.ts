@@ -13,6 +13,8 @@ import {GemocD3Timeline} from "./gemocd3timeline";
 
 import {ModelExecutionTraceProtocol} from "modelexecutiontraceprotocol"
 import * as genericTraceEcore from "./genericTraceEcore"
+
+import {EMFJSONsingleResourceResolver} from "./emfjsonSingleResourceResolver"
 //import {TraceClient} from "./traceClient";
 
 /*import {
@@ -191,6 +193,7 @@ export class TimelineWebsocketApp {
 		switch(event.event) {
 			case "stepsStarted": {
 				const rawData = JSON.parse((<ModelExecutionTraceProtocol.StepsStartedEvent>event).body.stateListAsEMFJSON);
+				
 				this.receivedStepsStarted(rawData);
 				break;
 			}
@@ -282,7 +285,9 @@ export class TimelineWebsocketApp {
 		this.getFullTraceRequest().then(
 			event => { // success
 				const eventResp = <ModelExecutionTraceProtocol.GetFullTraceResponse> event;
-				const rawData = JSON.parse(eventResp.body)
+				//const rawData = JSON.parse(eventResp.body)
+				var emfjsonSingleResourceResolver =  new EMFJSONsingleResourceResolver(eventResp.body);
+				const rawData = emfjsonSingleResourceResolver.load();
 				console.log(`[getFullTraceRequest] Success with ${rawData}`, rawData);
 				
 				this.timeline.redraw(<genericTraceEcore.Trace>rawData);

@@ -1,6 +1,10 @@
 //declare module traceEcore {
 // simplified version of the GenericTrace.ecore  for use with EMFJSON
 
+	export interface EMFJSONRef {
+			eClass: string;
+        	$ref: string;
+	}
 
     export interface MSEOccurrence {
         eClass: string;
@@ -25,9 +29,8 @@
         startingState: State_Ref;
         endingState: State_Ref;
     }
-	export interface Step_Ref {
-			eClass: string;
-        	$ref: string;
+	export interface Step_Ref extends EMFJSONRef {
+		ref: Step; // the resolved Step
 	}
 
     export interface BigStep  extends Step{
@@ -48,9 +51,8 @@
 		dimensions: Dimension_Ref;
     }
 
-	export interface Dimension_Ref {
-			eClass: string;
-        	$ref: string;
+	export interface Dimension_Ref  extends EMFJSONRef {
+			ref: Dimension; // the resolved Dimension
 	}
 	
 	export interface Dimension {
@@ -67,9 +69,8 @@
        // referenceValue: ReferenceValue;
        // attributeValue: string;
     }
-	export interface Value_Ref {
-			eClass: string;
-        	$ref: string;
+	export interface Value_Ref extends EMFJSONRef {
+			ref: Value; // the resolved Value
 	}
 
 
@@ -80,9 +81,8 @@
         values: Value_Ref[];
         endedSteps: Step_Ref[];
     }
-	export interface State_Ref {
-			eClass: string;
-        	$ref: string;
+	export interface State_Ref extends EMFJSONRef {
+			ref: State; // the resolved State
 	}
 
 
