@@ -22,8 +22,6 @@ var w = window,
     x = w.innerWidth || e.clientWidth || g.clientWidth,
     y = w.innerHeight|| e.clientHeight|| g.clientHeight;
 
-// TODO find a way to adpat to the browser page size
-// possible way: https://stackoverflow.com/questions/16265123/resize-svg-when-window-is-resized-in-d3-js
 var svgDimensions = { width: x-10, height: 100 };
 const margin = { left: 5, right: 5, top: 10, bottom: 10 };
 const chartDimensions = {
@@ -37,14 +35,35 @@ export class GemocD3Timeline {
 	//svg : any;
 	public svg : d3.Selection<SVGSVGElement, unknown, HTMLElement, any>;
 	
-	private AllExecutionsStatesLineY : number // y position of the AllExecutionsStatesLine
+	private AllRTDStatesLineYOffset : number // y position of the AllExecutionsStatesLine
+	private rtdStateHeight : number	 // heigth of all RTD state graphical elements
+	private xPadding : number	// padding of elements
+	private yPadding : number
+	private fontSize : string
+	private minSvgWidth : number
 	
 	constructor(containerId : string) {
 		this.containerID = containerId;
 		
-		this.AllExecutionsStatesLineY = 0;
+		// place the y offsets of the various elements in the svg
+		this.AllRTDStatesLineYOffset = 0;
+		
+		// set some sizes
+		this.rtdStateHeight = 20;
+		this.xPadding = 2;
+		this.yPadding = 2;
+		this.fontSize = "12px";
+		this.minSvgWidth = 150;
+
+		/*var that : GemocD3Timeline = this; // when 'this'' is not accessible, create a local var to replace it
+		// register for resize	
+		d3.select(window).on('resize', function(d,i){ 
+					that.resizeGemocD3TimelineSVGToBrowserSize();
+	                });*/
+		
 		
 		this.initSvg();
+
 		
 			
 	}
@@ -60,12 +79,8 @@ export class GemocD3Timeline {
 			.attr("height", svgDimensions.height)
 			.attr("style", "background-color: #FBFAF0");
 		
-		var that : GemocD3Timeline = this; // this is not accessible, create local val to replace it
-		// register for resize	
-		d3.select(window).on('resize', function(d,i){ 
-					that.resizeGemocD3TimelineSVG();
-	                });
 
+		
 		// enable tooltip
 		d3.select("body").append("div")   
 		    .attr("class", "tooltip") 
@@ -81,6 +96,8 @@ export class GemocD3Timeline {
 	}
 	redraw(trace: genericTraceEcore.Trace) {
 		this.initSvg();
+		// basic behavior: the svg grows according to the data in order to use the browser native scrollbar, a more efficient version should filter the represented data and implements its own scroll
+		this.resizeSVGToData(trace);
 		this.drawAllRTDStatesLine(trace);
 	}
 	
@@ -99,28 +116,68 @@ export class GemocD3Timeline {
 		var bulletR = 5;
 		var bulletWidth = bulletR*2;
 		var xSpacing = bulletR;
-		var xPadding = 1;
+		const xPadding = this.xPadding;
+		const yPadding = this.yPadding;
 		
 		// title text
 		this.svg.append("text")
     		.attr("x", 0)
-			.attr("y", this.AllExecutionsStatesLineY+15)
+			.attr("y", this.AllRTDStatesLineYOffset+15)
     		.text("All Executions States")
 			.attr("font-family", "sans-serif")
-            .attr("font-size", "12px");
+            .attr("font-size", this.fontSize);
+		
+		
+		const yOffset = this.AllRTDStatesLineYOffset + 25;
+		const rtdWidth = this.rtdStateHeight;
+		// draw one rounded rectangle with text per state on a line
+		var g = this.svg.selectAll(".aggregatedRTDState")
+			.data(trace.states)
+			.enter().append("g")	// g.transform is used to place both the text and the graphical element (Note: is this efficient ?)
+			.attr("class", "aggregatedRTDState")
+			.attr("transform", function(d, i){	
+				const x = xPadding + i*(rtdWidth + xPadding);
+				const y = yOffset;
+				return "translate(" + x + "," + y + ")";
+			});
+		g.append("rect")
+			.attr("width", rtdWidth)
+    		.attr("height", this.rtdStateHeight)
+			.attr("rx", this.rtdStateHeight/2)
+			//.attr("ry", 6)
+			.style("fill", "blue")
+			.on("mouseover", function(state) {  
+	            div.transition()        
+	                .duration(200)      
+	                .style("opacity", .9);      
+	            div .html(state._id + "<br/>"  + state.values)  
+	                .style("left", (d3.event.pageX) + "px")     
+	                .style("top", (d3.event.pageY - 28) + "px");    
+	            })                  
+	        .on("mouseout", function(d) {       
+	            div.transition()        
+	                .duration(500)      
+	                .style("opacity", 0);   
+	        });
+		g.append("text")
+			.attr("x", xPadding)
+			.attr("y", this.rtdStateHeight-yPadding )
+			.attr("font-family", "sans-serif")
+            .attr("font-size", this.fontSize)
+		    .style("fill", "white")
+		    .text(function(d, i) {
+		    	return i; // use position as label
+		    });
 		
 		// draw one circle with text per state on a line
-		var g = this.svg.append("g").selectAll("circle").data(trace.states).enter().append("circle")
+		/*this.svg.append("g").selectAll("circle").data(trace.states).enter().append("circle")
 			.attr("r", 5)   
 	    	.attr("cx", function(d,i){
 	               // var spacing = lineLength/(trace.states.length);
                    // return xBuffer+(i*spacing);
 						return xSpacing + i*(bulletWidth + xPadding);
 	                })
-			.attr("cy", this.AllExecutionsStatesLineY + 25) // 
-			.attr("text", function(d,i){
-						return i;
-	                })
+			.attr("cy", this.AllRTDStatesLineYOffset + 25) // 
 			.on("mouseover", function(d) {  
 				    
 	            div.transition()        
@@ -134,8 +191,15 @@ export class GemocD3Timeline {
 	            div.transition()        
 	                .duration(500)      
 	                .style("opacity", 0);   
-	        }); 
+	        }); */
 	};
+	
+	resizeSVGToData(trace: genericTraceEcore.Trace){
+		const rtdWidth = this.rtdStateHeight;
+		svgDimensions.width = Math.max(trace.states.length * (rtdWidth + this.xPadding), this.minSvgWidth);
+		// svgDimensions.height = y - margin.bottom - margin.top;
+		this.svg.attr("width", svgDimensions.width);
+	}
 	
 	drawAxis() {
 		var scale = d3_scale.scaleLinear();
@@ -184,7 +248,14 @@ export class GemocD3Timeline {
 			.attr("cy", 20);*/
 	}
 	
-	resizeGemocD3TimelineSVG () {
+	/**
+	 * allows to resize the svg to the size of the browser windows
+     * typical use:
+     *    var that : GemocD3Timeline = this;
+	 * 	  d3.select(window).on('resize', function(d,i){that.resizeGemocD3TimelineSVG();});
+     * cf. https://stackoverflow.com/questions/16265123/resize-svg-when-window-is-resized-in-d3-js
+	 */
+	resizeGemocD3TimelineSVGToBrowserSize () {
 		x = w.innerWidth || e.clientWidth || g.clientWidth;
     	// y = w.innerHeight|| e.clientHeight|| g.clientHeight;
 		svgDimensions.width = x - 10;
