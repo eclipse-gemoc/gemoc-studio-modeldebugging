@@ -12,6 +12,7 @@ import * as d3 from "d3";
 import * as d3_scale  from 'd3-scale'
 import * as d3_axis  from 'd3-axis'
 import * as test_data from './data'
+import * as genericTraceEcore from "./genericTraceEcore"
 
 
 var w = window,
@@ -31,12 +32,29 @@ const chartDimensions = {
 };
 
 export class GemocD3Timeline {
+	
+	private containerID : string
 	//svg : any;
 	public svg : d3.Selection<SVGSVGElement, unknown, HTMLElement, any>;
 	
+	private AllExecutionsStatesLineY : number // y position of the AllExecutionsStatesLine
+	
 	constructor(containerId : string) {
+		this.containerID = containerId;
+		
+		this.AllExecutionsStatesLineY = 0;
+		
+		this.initSvg();
+		
+			
+	}
+	
+	initSvg(){
+		// clear if any previous svg there
+		d3.select(this.containerID).select("svg").remove();
+		
 		this.svg  = d3
-			.select(containerId)
+			.select(this.containerID)
 			.append("svg")
 			.attr("width", svgDimensions.width)
 			.attr("height", svgDimensions.height)
@@ -47,14 +65,77 @@ export class GemocD3Timeline {
 		d3.select(window).on('resize', function(d,i){ 
 					that.resizeGemocD3TimelineSVG();
 	                });
-			
+
+		// enable tooltip
+		d3.select("body").append("div")   
+		    .attr("class", "tooltip") 
+			.attr("id", "tooltip")              
+		    .style("opacity", 0);
 	}
+	
 	
 	draw() {
 		//this.drawAxis();
-		this.drawTest();
+		//this.drawTest();
 		
 	}
+	redraw(trace: genericTraceEcore.Trace) {
+		this.initSvg();
+		this.drawAllRTDStatesLine(trace);
+	}
+	
+	drawAllRTDStatesLine(trace: genericTraceEcore.Trace){
+		
+		// find tooltip
+		var div = d3.select("#tooltip")
+		
+		
+		var dataIndex=1;
+        var xBuffer=20;
+        var yBuffer=50;
+        var lineLength=400;
+        //var spacing =50;
+
+		var bulletR = 5;
+		var bulletWidth = bulletR*2;
+		var xSpacing = bulletR;
+		var xPadding = 1;
+		
+		// title text
+		this.svg.append("text")
+    		.attr("x", 0)
+			.attr("y", this.AllExecutionsStatesLineY+15)
+    		.text("All Executions States")
+			.attr("font-family", "sans-serif")
+            .attr("font-size", "12px");
+		
+		// draw one circle with text per state on a line
+		var g = this.svg.append("g").selectAll("circle").data(trace.states).enter().append("circle")
+			.attr("r", 5)   
+	    	.attr("cx", function(d,i){
+	               // var spacing = lineLength/(trace.states.length);
+                   // return xBuffer+(i*spacing);
+						return xSpacing + i*(bulletWidth + xPadding);
+	                })
+			.attr("cy", this.AllExecutionsStatesLineY + 25) // 
+			.attr("text", function(d,i){
+						return i;
+	                })
+			.on("mouseover", function(d) {  
+				    
+	            div.transition()        
+	                .duration(200)      
+	                .style("opacity", .9);      
+	            div .html(d._id + "<br/>"  + d.values)  
+	                .style("left", (d3.event.pageX) + "px")     
+	                .style("top", (d3.event.pageY - 28) + "px");    
+	            })                  
+	        .on("mouseout", function(d) {       
+	            div.transition()        
+	                .duration(500)      
+	                .style("opacity", 0);   
+	        }); 
+	};
 	
 	drawAxis() {
 		var scale = d3_scale.scaleLinear();

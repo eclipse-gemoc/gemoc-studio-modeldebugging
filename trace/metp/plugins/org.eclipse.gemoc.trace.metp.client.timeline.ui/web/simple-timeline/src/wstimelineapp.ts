@@ -165,19 +165,27 @@ export class TimelineWebsocketApp {
 	}
 	
 	public receivedStepsStarted(o: Object) {
+		
+		// TODO refresh incrementally instead of a full redraw
+		this.refreshTimeline();		
+		/*
 		let  steps : genericTraceEcore.Step[];
 		steps = <genericTraceEcore.Step[]>o;
 		//console.log("receivedStepsStarted "+o ); 
 		console.log("receivedStepsStarted " + steps.length + " Step"); 
-		steps.forEach(step => console.log("   started: " + step._id + " Step"));	
+		steps.forEach(step => console.log("   started: " + step._id + " Step"));
+		*/	
 	}
 	public receivedStepsEnded(o: Object) {
-		
+		// TODO refresh incrementally instead of a full redraw
+		this.refreshTimeline();	
+		/*
 		let  steps : genericTraceEcore.Step[];
 		steps = <genericTraceEcore.Step[]>o;
 		//console.log("receivedStepsStarted "+o ); 
 		console.log("receivedStepsEnded " + steps.length + " Step"); 
 		steps.forEach(step => console.log("   ended: ", step));
+		*/
 	}
 	public received( event: ModelExecutionTraceProtocol.Event) {
 		switch(event.event) {
@@ -276,7 +284,8 @@ export class TimelineWebsocketApp {
 				const eventResp = <ModelExecutionTraceProtocol.GetFullTraceResponse> event;
 				const rawData = JSON.parse(eventResp.body)
 				console.log(`[getFullTraceRequest] Success with ${rawData}`, rawData);
-				this.timeline.draw();
+				
+				this.timeline.redraw(<genericTraceEcore.Trace>rawData);
 			},
 			event => { // failed
 				//const eventResp = <ModelExecutionTraceProtocol.InitializeTraceResponse> event;
