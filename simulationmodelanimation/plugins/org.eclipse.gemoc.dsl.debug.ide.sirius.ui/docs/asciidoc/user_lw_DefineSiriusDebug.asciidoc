@@ -76,6 +76,25 @@ The debugger services class is use to tell which representations should be activ
 
 image::images/workbench/language/debug_services.png[Debug services]
 
+
+[IMPORTANT]
+====
+
+The line `res.add(new StringCouple("DD_or_RN", "LAYER_ID"));` indicates
+which layers are part of the "debug" animation. Ie. if these layers must be activated automatically
+and updated when an execution is in debug mode.
+
+The way to indicate the layer depends on how you have created the layer:
+
+*  in case of a single odesign with all layers in a single viewpoint:
+** the first String _DD_or_RN_ is the _id_ of the Diagram Description
+** the second String _LAYER_ID_ is the _id_ of the Layer
+*	in case of a diagram extension:
+** the first String _DD_or_RN_ is the _Representation Name_ of the Diagram Extension (do not confuse with the Name !!)
+** the second String _LAYER_ID_ is the _id_ of the Layer
+
+====
+
 ====== Debug layer
 The default debug layer adds action to start the simulation in debug mode and to toggle breakpoints (1). When a breakpoint exists for an element of the diagram, a visual feedback is displayed according to the breakpoint state (2). The current instruction is also highlighted in yellow by default (3).
 
