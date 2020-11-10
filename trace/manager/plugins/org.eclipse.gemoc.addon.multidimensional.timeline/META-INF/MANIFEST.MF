@@ -21,10 +21,9 @@ Require-Bundle: org.eclipse.gemoc.timeline;bundle-version="1.0.0",
  org.eclipse.gemoc.dsl.debug.ide.sirius.ui;bundle-version="1.0.0",
  org.eclipse.gemoc.dsl.debug.ide,
  org.eclipse.gemoc.xdsmlframework.api,
- org.eclipse.gemoc.executionframework.debugger,
- org.eclipse.fx.core
+ org.eclipse.gemoc.executionframework.debugger
 Bundle-ActivationPolicy: lazy
-Bundle-RequiredExecutionEnvironment: JavaSE-1.8
+Bundle-RequiredExecutionEnvironment: JavaSE-11
 Export-Package: org.eclipse.gemoc.addon.multidimensional.timeline,
  org.eclipse.gemoc.addon.multidimensional.timeline.views
 Automatic-Module-Name: org.eclipse.gemoc.addon.multidimensional.timeline

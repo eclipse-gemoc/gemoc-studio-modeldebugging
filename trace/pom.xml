@@ -45,5 +45,10 @@
 			<layout>p2</layout>
 			<url>${efxclipse.p2.url}</url>
 		</repository>
+        <repository>
+			<id>efxclipse2</id>
+			<layout>p2</layout>
+			<url>${efxclipse2.p2.url}</url>
+		</repository>
     </repositories>
 </project>

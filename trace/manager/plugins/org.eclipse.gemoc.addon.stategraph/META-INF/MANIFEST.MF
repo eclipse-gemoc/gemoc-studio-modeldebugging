@@ -9,7 +9,6 @@ Bundle-Localization: plugin
 Bundle-Activator: org.eclipse.gemoc.addon.stategraph.Activator
 Require-Bundle: org.eclipse.ui,
  org.eclipse.core.runtime,
- org.eclipse.fx.ui.workbench3,
  org.eclipse.gemoc.executionframework.ui,
  org.eclipse.gemoc.xdsmlframework.api,
  org.eclipse.emf.ecore;visibility:=reexport,
@@ -20,8 +19,7 @@ Require-Bundle: org.eclipse.ui,
  org.eclipse.elk.core.service;bundle-version="0.1.0",
  org.eclipse.elk.graph;bundle-version="0.1.0",
  com.google.guava;bundle-version="15.0.0",
- org.eclipse.elk.alg.layered;bundle-version="0.1.0",
- org.eclipse.fx.core
-Bundle-RequiredExecutionEnvironment: JavaSE-1.8
+ org.eclipse.elk.alg.layered;bundle-version="0.1.0"
+Bundle-RequiredExecutionEnvironment: JavaSE-11
 Bundle-ActivationPolicy: lazy
 Automatic-Module-Name: org.eclipse.gemoc.addon.stategraph
