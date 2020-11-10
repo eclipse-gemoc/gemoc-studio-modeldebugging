@@ -76,6 +76,7 @@
         <!-- https://mvnrepository.com/artifact/org.openjfx/javafx -->
         <dependency>
             <groupId>org.openjfx</groupId>
+<<<<<<< HEAD
             <artifactId>javafx</artifactId>
             <version>11</version>
             <type>pom</type>
@@ -84,6 +85,8 @@
         <!-- https://mvnrepository.com/artifact/org.openjfx/javafx -->
         <dependency>
             <groupId>org.openjfx</groupId>
+=======
+>>>>>>> branch 'master' of https://github.com/eclipse/gemoc-studio-modeldebugging.git
             <artifactId>javafx-controls</artifactId>
             <version>11</version>
         </dependency>
