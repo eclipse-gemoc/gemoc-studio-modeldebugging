@@ -73,7 +73,7 @@
                     <groupId>org.openjfx</groupId>
                     <artifactId>javafx-swt</artifactId>
                     <version>11.0.2</version>
-                    <systemPath>${JAVAFX_HOME}/lib/javafx-swt.jar</systemPath>
+                    <systemPath>${env.JAVAFX_HOME}/lib/javafx-swt.jar</systemPath>
                     <scope>system</scope>
                 </extraClasspathElement>
                 </extraClasspathElements>
