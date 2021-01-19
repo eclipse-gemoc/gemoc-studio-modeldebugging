@@ -28,12 +28,12 @@
 
     <properties>
 		<tycho-version>1.7.0</tycho-version>
-    	<xtend.version>2.21.0</xtend.version>
+    	<xtend.version>2.24.0</xtend.version>
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
 		<tycho.scmUrl>scm:git:https://github.com/eclipse/gemoc-studio-modeldebugging.git</tycho.scmUrl>
 		<!-- <sonar.projectKey>gemoc:${project.groupId}:${project.artifactId}</sonar.projectKey>-->	
 		
-		<eclipse.release.p2.url>http://download.eclipse.org/releases/2020-03</eclipse.release.p2.url>
+		<eclipse.release.p2.url>http://download.eclipse.org/releases/2020-12</eclipse.release.p2.url>
 		<k3.p2.url>http://www.kermeta.org/k3/update_2018-09-05</k3.p2.url>
 		<melange.p2.url>http://melange.inria.fr/updatesite/nightly/update_2020-06-19</melange.p2.url>
 		<elk.p2.url>http://download.eclipse.org/elk/updates/releases/0.4.1</elk.p2.url>
