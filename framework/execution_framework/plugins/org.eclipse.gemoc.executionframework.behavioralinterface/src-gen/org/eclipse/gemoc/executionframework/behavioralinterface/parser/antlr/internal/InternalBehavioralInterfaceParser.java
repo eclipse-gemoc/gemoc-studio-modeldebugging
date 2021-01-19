@@ -769,7 +769,7 @@ public class InternalBehavioralInterfaceParser extends AbstractInternalAntlrPars
                       					if (current==null) {
                       						current = createModelElement(grammarAccess.getEventParameterRule());
                       					}
-                      					setWithLastConsumed(current, "many", true, "*");
+                      					setWithLastConsumed(current, "many", lv_many_3_0 != null, "*");
                       				
                     }
 
@@ -3296,7 +3296,7 @@ public class InternalBehavioralInterfaceParser extends AbstractInternalAntlrPars
                       							if (current==null) {
                       								current = createModelElement(grammarAccess.getXImportDeclarationRule());
                       							}
-                      							setWithLastConsumed(current, "static", true, "static");
+                      							setWithLastConsumed(current, "static", lv_static_1_0 != null, "static");
                       						
                     }
 
@@ -3330,7 +3330,7 @@ public class InternalBehavioralInterfaceParser extends AbstractInternalAntlrPars
                               							if (current==null) {
                               								current = createModelElement(grammarAccess.getXImportDeclarationRule());
                               							}
-                              							setWithLastConsumed(current, "extension", true, "extension");
+                              							setWithLastConsumed(current, "extension", lv_extension_2_0 != null, "extension");
                               						
                             }
 
@@ -3414,7 +3414,7 @@ public class InternalBehavioralInterfaceParser extends AbstractInternalAntlrPars
                               								if (current==null) {
                               									current = createModelElement(grammarAccess.getXImportDeclarationRule());
                               								}
-                              								setWithLastConsumed(current, "wildcard", true, "*");
+                              								setWithLastConsumed(current, "wildcard", lv_wildcard_4_0 != null, "*");
                               							
                             }
 
