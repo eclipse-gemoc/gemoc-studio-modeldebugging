@@ -80,6 +80,24 @@ class WorkspaceTestHelper {
 	 */
 	public static final int SWTBotPreferencesPLAYBACK_DELAY_4_GEMOC = 100;
 	
+	def void waitWorkbench() {
+		// avoids  that SWT freeze the UI
+		val workbenchAvailable = newArrayList(false);
+		while(workbenchAvailable.get(0)) {
+			Display.^default.syncExec(new Runnable(){
+				override run() {
+					if (PlatformUI.isWorkbenchRunning() && PlatformUI.getWorkbench().getActiveWorkbenchWindow() !== null) {
+						workbenchAvailable.set(0, true);
+					}
+				}
+			})
+			println("[WorkspaceTestHelper] waiting for Workbench availability")
+			Thread.sleep(1000);
+		}
+		WorkspaceTestHelper.reallyWaitForJobs(100)
+		println("[WorkspaceTestHelper] Workbench is available")
+	}
+	
 	def void init() {
 		
 		Display.^default.syncExec(new Runnable(){
