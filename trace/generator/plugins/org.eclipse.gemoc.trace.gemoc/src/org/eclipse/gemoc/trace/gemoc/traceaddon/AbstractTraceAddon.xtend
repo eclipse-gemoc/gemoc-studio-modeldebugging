@@ -47,15 +47,15 @@ import org.eclipse.gemoc.xdsmlframework.api.extensions.engine_addon.EngineAddonS
 
 abstract class AbstractTraceAddon implements IEngineAddon, IMultiDimensionalTraceAddon<Step<?>, State<?, ?>, TracedObject<?>, Dimension<?>, Value<?>> {
 
-	IExecutionContext<?, ?, ?> _executionContext
-	ITraceExplorer<Step<?>, State<?, ?>, TracedObject<?>, Dimension<?>, Value<?>> traceExplorer
-	ITraceExtractor<Step<?>, State<?, ?>, TracedObject<?>, Dimension<?>, Value<?>> traceExtractor
-	ITraceConstructor traceConstructor
-	ITraceNotifier traceNotifier
-	BatchModelChangeListener traceListener
-	var boolean needTransaction = true
-	BatchModelChangeListener listenerAddon
-	Trace<Step<?>, TracedObject<?>, State<?, ?>> trace
+	protected IExecutionContext<?, ?, ?> _executionContext
+	protected ITraceExplorer<Step<?>, State<?, ?>, TracedObject<?>, Dimension<?>, Value<?>> traceExplorer
+	protected ITraceExtractor<Step<?>, State<?, ?>, TracedObject<?>, Dimension<?>, Value<?>> traceExtractor
+	protected ITraceConstructor traceConstructor
+	protected ITraceNotifier traceNotifier
+	protected BatchModelChangeListener traceListener
+	protected var boolean needTransaction = true
+	protected BatchModelChangeListener listenerAddon
+	protected Trace<Step<?>, TracedObject<?>, State<?, ?>> trace
 	
 	
 	protected boolean activateUpdateEquivalenceClasses = true;
@@ -111,7 +111,7 @@ abstract class AbstractTraceAddon implements IEngineAddon, IMultiDimensionalTrac
 		manageStep(step, false)
 	}
 
-	private def manageStep(Step<?> step, boolean add) {
+	protected def manageStep(Step<?> step, boolean add) {
 		if (step !== null) {
 			modifyTrace([
 				traceConstructor.addState(listenerAddon.getChanges(this))
@@ -217,7 +217,7 @@ abstract class AbstractTraceAddon implements IEngineAddon, IMultiDimensionalTrac
 	/**
 	 * Same as above, but without message.
 	 */
-	private def void modifyTrace(Runnable r) {
+	protected def void modifyTrace(Runnable r) {
 		modifyTrace(r, "")
 	}
 

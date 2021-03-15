@@ -20,4 +20,4 @@ xtend-gen
 .polyglot.*
 .META-INF_MANIFEST.MF
 feature.xml.takari_issue_192
-
+**/.settings

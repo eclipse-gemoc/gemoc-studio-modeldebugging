@@ -19,7 +19,7 @@
 		<surefire-plugin.version>2.22.0</surefire-plugin.version>
 		<quarkus.version>0.21.1</quarkus.version>
 		<xtend.version>2.18.0</xtend.version>
-		<lsp4j.version>0.8.0</lsp4j.version>
+		<lsp4j.version>0.10.0</lsp4j.version>
 	</properties>
 
 
@@ -57,6 +57,55 @@
     		<artifactId>org.eclipse.emf.edit</artifactId>
     		<version>2.16.0</version>
 		</dependency>
+		
+	<dependency>
+      <groupId>org.eclipse.gemoc.modeldebugging.framework.commons</groupId>
+      <artifactId>org.eclipse.gemoc.xdsmlframework.api</artifactId>
+      <version>4.0.0-SNAPSHOT</version>
+    </dependency>
+  
+	<dependency>
+		<groupId>org.eclipse.gemoc.pomfirst</groupId>
+		<artifactId>org.eclipse.gemoc.executionframework.engine</artifactId>
+		<version>4.0.0-SNAPSHOT</version>
+	</dependency>
+	
+			<dependency>
+			<groupId>org.eclipse.gemoc.pomfirst</groupId>
+			<artifactId>org.eclipse.gemoc.executionframework.debugger</artifactId>
+			<version>4.0.0-SNAPSHOT</version>
+		</dependency>
+		
+		<dependency>
+			<groupId>org.eclipse.gemoc.trace.commons</groupId>
+			<artifactId>org.eclipse.gemoc.trace.gemoc.api</artifactId>
+			<version>3.0.1-SNAPSHOT</version>
+		</dependency>
+		
+				<dependency>
+			<groupId>DSLDebugger</groupId>
+			<artifactId>org.eclipse.gemoc.dsl.debug.ide</artifactId>
+			<version>3.0.1-SNAPSHOT</version>
+		</dependency>
+	
+		<dependency>
+		<groupId>org.eclipse.gemoc.multidimensional_trace_management</groupId>
+		<artifactId>org.eclipse.gemoc.trace.gemoc</artifactId>
+		<version>3.0.1-SNAPSHOT</version>
+	</dependency>
+	
+		<dependency>
+    <groupId>org.emfjson</groupId>
+    <artifactId>emfjson-jackson</artifactId>
+    <version>1.3.0</version>
+    </dependency>
+    
+    <!-- https://mvnrepository.com/artifact/com.fasterxml.jackson.core/jackson-core -->
+<dependency>
+    <groupId>com.fasterxml.jackson.core</groupId>
+    <artifactId>jackson-core</artifactId>
+    <version>2.12.1</version>
+</dependency>
 
 	</dependencies>
 

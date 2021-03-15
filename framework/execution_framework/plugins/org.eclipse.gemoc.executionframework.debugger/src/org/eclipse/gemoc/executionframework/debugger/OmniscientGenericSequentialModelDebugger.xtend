@@ -31,7 +31,7 @@ import org.eclipse.jface.dialogs.ErrorDialog
 
 class OmniscientGenericSequentialModelDebugger extends GenericSequentialModelDebugger implements ITraceViewListener {
 
-	var ITraceExplorer<Step<?>, State<?, ?>, TracedObject<?>, Dimension<?>, Value<?>> traceExplorer
+	var protected ITraceExplorer<Step<?>, State<?, ?>, TracedObject<?>, Dimension<?>, Value<?>> traceExplorer
 
 	var steppingOverStackFrameIndex = -1
 

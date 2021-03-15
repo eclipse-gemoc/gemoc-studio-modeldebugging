@@ -1,5 +1,6 @@
 package org.eclipse.gemoc.executionframework.mep.engine;
 
+import org.eclipse.gemoc.executionframework.debugger.IGemocDebugger;
 import org.eclipse.gemoc.executionframework.mep.launch.MEPLauncherParameters;
 import org.eclipse.gemoc.executionframework.mep.types.SourceBreakpoint;
 import org.eclipse.gemoc.executionframework.mep.types.StackFrame;
@@ -33,4 +34,8 @@ public interface IMEPEngine {
     
     abstract void removeAllMEPEventListeners();
 	
+    default IGemocDebugger getDebugger() {
+    	return null;
+    }
+    
 }

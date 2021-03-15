@@ -47,6 +47,11 @@
 		<artifactId>slf4j-api</artifactId>
 		<version>1.7.25</version>
 	</dependency>
+	<dependency>
+		<groupId>org.eclipse.gemoc.multidimensional_trace_management</groupId>
+		<artifactId>org.eclipse.gemoc.trace.gemoc</artifactId>
+		<version>3.0.1-SNAPSHOT</version>
+	</dependency>
   </dependencies>
   
   

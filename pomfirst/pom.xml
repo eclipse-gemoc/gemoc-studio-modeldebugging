@@ -12,7 +12,7 @@
     <packaging>pom</packaging>
 
 	<properties>
-		<tycho.version>1.5.1</tycho.version>
+		<tycho.version>1.7.0</tycho.version>
 		<xtend.version>2.18.0</xtend.version>
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
 		<eclipse-repo.url>http://download.eclipse.org/releases/photon</eclipse-repo.url>
@@ -33,6 +33,7 @@
         <module>../commons/plugins/org.eclipse.gemoc.dsl.model/pomfirst</module>
         <module>../framework/execution_framework/plugins/org.eclipse.gemoc.executionframework.debugger/pomfirst</module>
         <module>../framework/execution_framework/plugins/org.eclipse.gemoc.executionframework.engine/pomfirst</module>
+        <module>../framework/execution_framework/plugins/org.eclipse.gemoc.executionframework.engine.model/pomfirst</module>
         <module>../framework/framework_commons/plugins/org.eclipse.gemoc.executionframework.reflectivetrace.model/pomfirst</module>
         <module>../framework/framework_commons/plugins/org.eclipse.gemoc.xdsmlframework.api/pomfirst</module>
         <module>../framework/framework_commons/plugins/org.eclipse.gemoc.xdsmlframework.commons/pomfirst</module>

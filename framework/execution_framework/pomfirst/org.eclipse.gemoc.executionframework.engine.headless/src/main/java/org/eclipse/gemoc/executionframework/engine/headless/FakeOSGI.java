@@ -88,10 +88,12 @@ public class FakeOSGI {
         
         org.eclipse.gemoc.executionframework.engine.Activator activator = new org.eclipse.gemoc.executionframework.engine.Activator();
         org.eclipse.gemoc.executionframework.debugger.Activator activatorDebug = new org.eclipse.gemoc.executionframework.debugger.Activator();
-		FakeBundleContext context = new FakeBundleContext();
+		org.eclipse.gemoc.trace.gemoc.Activator activatorTrace = new org.eclipse.gemoc.trace.gemoc.Activator();
+        FakeBundleContext context = new FakeBundleContext();
         try {
 			activator.start(context);
 			activatorDebug.start(context);
+			activatorTrace.start(context);
 		} catch (Exception e1) {
 			// TODO Auto-generated catch block
 			e1.printStackTrace();

@@ -7,7 +7,7 @@ import org.eclipse.gemoc.xdsmlframework.api.core.ExecutionMode;
 import org.eclipse.gemoc.xdsmlframework.api.core.IExecutionWorkspace;
 import org.eclipse.gemoc.xdsmlframework.api.extensions.languages.LanguageDefinitionExtension;
 
-public abstract class AbstractSequentialHeadlessExecutionContext extends AbstractHeadlessExecutionContext<ISequentialRunConfiguration, LanguageDefinitionExtension> implements ISequentialModelExecutionContext<HeadlessExecutionPlatform>{
+public abstract class AbstractSequentialHeadlessExecutionContext extends AbstractHeadlessExecutionContext<ISequentialRunConfiguration, LanguageDefinitionExtension> implements ISequentialModelExecutionContext<HeadlessExecutionPlatform> {
 
 	public AbstractSequentialHeadlessExecutionContext(ISequentialRunConfiguration runConfiguration, ExecutionMode executionMode,
 			LanguageDefinitionExtension languageDefinitionExtension, IExecutionWorkspace executionWorkspace, HeadlessExecutionPlatform executionPlatform)

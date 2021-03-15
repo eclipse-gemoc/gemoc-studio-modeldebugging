@@ -3,18 +3,19 @@ import java.io.ByteArrayInputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.Set;
 import java.util.concurrent.CompletableFuture;
 import java.util.function.Supplier;
 
 import org.apache.log4j.Logger;
 import org.eclipse.emf.common.util.URI;
-import org.eclipse.emf.ecore.resource.Resource;
 import org.eclipse.emf.ecore.resource.ResourceSet;
 import org.eclipse.emf.ecore.resource.impl.ResourceSetImpl;
-import org.eclipse.gemoc.executionframework.mep.engine.IMEPEngine;
+import org.eclipse.gemoc.executionframework.mep.engine.ExecutionEngineSingleton;
 import org.eclipse.gemoc.executionframework.mep.engine.IMEPEventListener;
 import org.eclipse.gemoc.executionframework.mep.events.Output;
 import org.eclipse.gemoc.executionframework.mep.events.Stopped;
@@ -53,16 +54,19 @@ import org.eclipse.lsp4j.jsonrpc.json.JsonRpcMethodProvider;
 import org.eclipse.lsp4j.jsonrpc.messages.ResponseError;
 import org.eclipse.lsp4j.jsonrpc.services.ServiceEndpoints;
 
+import com.google.common.base.Objects;
+import com.google.common.collect.LinkedListMultimap;
+import com.google.common.collect.Multimap;
+
 abstract public class MEPServerLSP4J implements IModelExecutionProtocolServer, Endpoint, JsonRpcMethodProvider, ModelExecutionClientAware, IMEPEventListener {
 
 	private static final Logger LOG = Logger.getLogger(MEPServerLSP4J.class);
 
 	private Map<String, JsonRpcMethod> supportedMethods;
 	
-	//private final Multimap<String, Endpoint> extensionProviders = LinkedListMultimap.create();
-	
-	protected IMEPEngine mepEngine;
-	
+	private final Set<Endpoint> extensions = new HashSet<>();
+	private final Multimap<String, Endpoint> extensionProviders = LinkedListMultimap.create();
+		
 	protected IModelExecutionProtocolClient client;
 	
 	protected boolean initialized = false;
@@ -70,9 +74,17 @@ abstract public class MEPServerLSP4J implements IModelExecutionProtocolServer, E
 	protected MEPLauncherParameters launcherParameters = null;
 	protected Breakpoint[] breakpoints = new Breakpoint[0];
 	
-	public MEPServerLSP4J(IMEPEngine mepEngine) {
-		this.mepEngine = mepEngine;
-		this.mepEngine.addMEPEventListener(this);
+	public MEPServerLSP4J() {
+
+	}
+	
+	public void init() {
+		ExecutionEngineSingleton.acquireEngine().addMEPEventListener(this);
+		ExecutionEngineSingleton.releaseEngine();
+	}
+	
+	public void addExtension(Endpoint extension) {
+		this.extensions.add(extension);
 	}
 	
 	@Override
@@ -80,78 +92,62 @@ abstract public class MEPServerLSP4J implements IModelExecutionProtocolServer, E
 		if (supportedMethods != null) {
 			return supportedMethods;
 		}
-		//synchronized (extensionProviders) {
-			Map<String, JsonRpcMethod> supportedMethods = new LinkedHashMap<>();
-			supportedMethods.putAll(ServiceEndpoints.getSupportedMethods(getClass()));
 
-			for(JsonRpcMethod supportedMethod : supportedMethods.values()) {
-				LOG.info("supported method "+supportedMethod.getMethodName()+ " "+supportedMethod.getParameterTypes());
-			}
-			/*
-			Map<String, JsonRpcMethod> extensions = new LinkedHashMap<>();
-			for (IResourceServiceProvider resourceServiceProvider : getAllLanguages()) {
-				ILanguageServerExtension ext = resourceServiceProvider.get(ILanguageServerExtension.class);
-				if (ext != null) {
-					ext.initialize(access);
-					Map<String, JsonRpcMethod> supportedExtensions = ext instanceof JsonRpcMethodProvider
-							? ((JsonRpcMethodProvider) ext).supportedMethods()
-							: ServiceEndpoints.getSupportedMethods(ext.getClass());
-					for (Map.Entry<String, JsonRpcMethod> entry : supportedExtensions.entrySet()) {
-						if (supportedMethods.containsKey(entry.getKey())) {
-							LOG.error("The json rpc method \'" + entry.getKey()
-									+ "\' can not be an extension as it is already defined in the LSP standard.");
+		Map<String, JsonRpcMethod> supportedMethods = new LinkedHashMap<>();
+		supportedMethods.putAll(ServiceEndpoints.getSupportedMethods(getClass()));
+
+		for(JsonRpcMethod supportedMethod : supportedMethods.values()) {
+			LOG.info("supported method "+supportedMethod.getMethodName()+ " "+supportedMethod.getParameterTypes());
+		}
+		
+		Map<String, JsonRpcMethod> extensions = new LinkedHashMap<>();
+		for (Endpoint ext : this.extensions) {
+			if (ext != null) {
+				Map<String, JsonRpcMethod> supportedExtensions = ext instanceof JsonRpcMethodProvider
+						? ((JsonRpcMethodProvider) ext).supportedMethods()
+						: ServiceEndpoints.getSupportedMethods(ext.getClass());
+				for (Map.Entry<String, JsonRpcMethod> entry : supportedExtensions.entrySet()) {
+					if (supportedMethods.containsKey(entry.getKey())) {
+						LOG.error("The json rpc method \'" + entry.getKey()
+								+ "\' can not be an extension as it is already defined in the LSP standard.");
+					} else {
+						JsonRpcMethod existing = extensions.put(entry.getKey(), entry.getValue());
+						if (existing != null && !Objects.equal(existing, entry.getValue())) {
+							LOG.error("An incompatible LSP extension \'" + entry.getKey()
+									+ "\' has already been registered. Using 1 ignoring 2. \n1 : " + existing
+									+ " \n2 : " + entry.getValue());
+							extensions.put(entry.getKey(), existing);
 						} else {
-							JsonRpcMethod existing = extensions.put(entry.getKey(), entry.getValue());
-							if (existing != null && !Objects.equal(existing, entry.getValue())) {
-								LOG.error("An incompatible LSP extension \'" + entry.getKey()
-										+ "\' has already been registered. Using 1 ignoring 2. \n1 : " + existing
-										+ " \n2 : " + entry.getValue());
-								extensions.put(entry.getKey(), existing);
-							} else {
-								Endpoint endpoint = ServiceEndpoints.toEndpoint(ext);
-								extensionProviders.put(entry.getKey(), endpoint);
-								supportedMethods.put(entry.getKey(), entry.getValue());
-							}
+							Endpoint endpoint = ServiceEndpoints.toEndpoint(ext);
+							extensionProviders.put(entry.getKey(), endpoint);
+							supportedMethods.put(entry.getKey(), entry.getValue());
 						}
 					}
 				}
 			}
-			*/
-			this.supportedMethods = supportedMethods;
-			return supportedMethods;
-		//}
+		}
+		
+		this.supportedMethods = supportedMethods;
+		return supportedMethods;
 	}
 
 	@Override
 	public void notify(String method, Object parameter) {
-	/*	for (Endpoint endpoint : extensionProviders.get(method)) {
-			try {
-				endpoint.notify(method, parameter);
-			} catch (UnsupportedOperationException e) {
-				if (e != ILanguageServerExtension.NOT_HANDLED_EXCEPTION) {
-					throw e;
-				}
-			}
-		}*/
+		for (Endpoint endpoint : extensionProviders.get(method)) {
+			endpoint.notify(method, parameter);
+		}
 		LOG.info("notify "+method);
 	}
 
 	@Override
 	public CompletableFuture<?> request(String method, Object parameter) {
-	/*	if (!extensionProviders.containsKey(method)) {
+		if (!extensionProviders.containsKey(method)) {
 			throw new UnsupportedOperationException("The json request \'" + method + "\' is unknown.");
 		}
 		for (Endpoint endpoint : extensionProviders.get(method)) {
-			try {
-				return endpoint.request(method, parameter);
-			} catch (UnsupportedOperationException e) {
-				if (e != ILanguageServerExtension.NOT_HANDLED_EXCEPTION) {
-					throw e;
-				}
-			}
-		}*/
-		throw new UnsupportedOperationException("The json request \'" + method + "\' is unknown.");
-		//return null;
+			return endpoint.request(method, parameter);
+		}
+		return null;
 	}
 	
 	@Override
@@ -209,67 +205,55 @@ abstract public class MEPServerLSP4J implements IModelExecutionProtocolServer, E
 			//	throw new Exception("failed to launch with args\'" + args + "\'.");
 				LOG.info("launch received with args "+args);
 				
-				Resource res =  null;
-				if (args.containsKey(MEPLaunchParameterKey.noDebug.name())) {
-					//TODO: Normal launch if true
-				}
-				if (args.containsKey(MEPLaunchParameterKey.modelContent.name())) {
-					try {
-						ResourceSet rs = createResourceSet();
-						InputStream in = new ByteArrayInputStream("type foo type bar".getBytes());
-						res = rs.createResource(URI.createURI("dummy:/example.k3fsm"));
-					
-						res.load(in, rs.getLoadOptions());
-					
-						//Model model = (Model) resource.getContents().get(0);
-						LOG.info("root element in model-content is "+res.getContents().get(0));
+				launcherParameters = getDefaultLauncherParameters();
+				if (args != null) {
+					if (args.containsKey(MEPLaunchParameterKey.noDebug.name())) {
+						//TODO: Normal launch if true
+					}
+					if (args.containsKey(MEPLaunchParameterKey.modelContent.name())) {
+						try {
+							ResourceSet rs = createResourceSet();
+							InputStream in = new ByteArrayInputStream("type foo type bar".getBytes());
+							launcherParameters.resourceModel = rs.createResource(URI.createURI("dummy:/example.k3fsm"));
 						
-					} catch (IOException e) {
-						LOG.error(e.getMessage(), e);
+							launcherParameters.resourceModel.load(in, rs.getLoadOptions());
+						
+							//Model model = (Model) resource.getContents().get(0);
+							LOG.info("root element in model-content is "+launcherParameters.resourceModel.getContents().get(0));
+							
+						} catch (IOException e) {
+							LOG.error(e.getMessage(), e);
+						}
+					} else if(args.containsKey(MEPLaunchParameterKey.modelURI.name())) {
+						String modelURIString = (String) args.get(MEPLaunchParameterKey.modelURI.name());
+						URI uri = URI.createURI(modelURIString);
+						ResourceSet rs = createResourceSet();
+						launcherParameters.resourceModel = rs.createResource(uri);
+						try {
+							launcherParameters.resourceModel.load(rs.getLoadOptions());
+							launcherParameters.resourceModel.getContents().get(0);
+							LOG.info("root element in model uri is "+launcherParameters.resourceModel.getContents().get(0));
+						} catch (IOException e) {
+							LOG.error(e.getMessage(), e);
+						}
 					}
-				}
-				if(args.containsKey(MEPLaunchParameterKey.modelURI.name())) {
-					String modelURIString = (String) args.get(MEPLaunchParameterKey.modelURI.name());
-					URI uri = URI.createURI(modelURIString);
-					ResourceSet rs = createResourceSet();
-					res = rs.createResource(uri);
-					try {
-						res.load(rs.getLoadOptions());
-						res.getContents().get(0);
-					LOG.info("root element in model uri is "+res.getContents().get(0));
-					} catch (IOException e) {
-						LOG.error(e.getMessage(), e);
+					if(args.containsKey(MEPLaunchParameterKey.language.name())) {
+						launcherParameters.languageName = (String) args.get(MEPLaunchParameterKey.language.name());
+					}				
+					if(args.containsKey(MEPLaunchParameterKey.methodEntryPoint.name())) {
+						launcherParameters.methodEntryPoint = (String) args.get(MEPLaunchParameterKey.methodEntryPoint.name());
 					}
-				}
-				String languageName = "";
-				if(args.containsKey(MEPLaunchParameterKey.language.name())) {
-					languageName = (String) args.get(MEPLaunchParameterKey.language.name());
-				}				
-				String methodEntryPoint = "";
-				if(args.containsKey(MEPLaunchParameterKey.methodEntryPoint.name())) {
-					methodEntryPoint = (String) args.get(MEPLaunchParameterKey.methodEntryPoint.name());
-				}
-				String initializationMethod = "";
-				if(args.containsKey(MEPLaunchParameterKey.initializationMethod.name())) {
-					initializationMethod = (String) args.get(MEPLaunchParameterKey.initializationMethod.name());
-				}
-
-				String modelEntryPoint = "/";
-				if(args.containsKey(MEPLaunchParameterKey.modelEntryPoint.name())) {
-					modelEntryPoint = (String) args.get(MEPLaunchParameterKey.modelEntryPoint.name());
-				}
-				String initializationArguments = "/";
-				if(args.containsKey(MEPLaunchParameterKey.initializationArguments.name())) {
-					initializationArguments = (String) args.get(MEPLaunchParameterKey.initializationArguments.name());
+					if(args.containsKey(MEPLaunchParameterKey.initializationMethod.name())) {
+						launcherParameters.initializationMethod = (String) args.get(MEPLaunchParameterKey.initializationMethod.name());
+					}
+					if(args.containsKey(MEPLaunchParameterKey.modelEntryPoint.name())) {
+						launcherParameters.modelEntryPoint = (String) args.get(MEPLaunchParameterKey.modelEntryPoint.name());
+					}
+					if(args.containsKey(MEPLaunchParameterKey.initializationArguments.name())) {
+						launcherParameters.initializationMethodArgs = (String) args.get(MEPLaunchParameterKey.initializationArguments.name());
+					}
 				}
 				
-				launcherParameters = new MEPLauncherParameters();
-				launcherParameters.resourceModel = res;
-				launcherParameters.languageName = languageName;
-				launcherParameters.modelEntryPoint = modelEntryPoint; 
-				launcherParameters.methodEntryPoint = methodEntryPoint;
-				launcherParameters.initializationMethod = initializationMethod;
-				launcherParameters.initializationMethodArgs = initializationArguments;
 				launchGemocEngine(launcherParameters);
 				
 				simulationStarted = true;
@@ -290,7 +274,8 @@ abstract public class MEPServerLSP4J implements IModelExecutionProtocolServer, E
 					throw new ResponseErrorException(error);
 				}
 				
-				mepEngine.internalContinue();
+				ExecutionEngineSingleton.acquireEngine().internalContinue();
+				ExecutionEngineSingleton.releaseEngine();
 				
 				ContinueResponse response = new ContinueResponse();
 				return response;
@@ -310,7 +295,8 @@ abstract public class MEPServerLSP4J implements IModelExecutionProtocolServer, E
 					throw new ResponseErrorException(error);
 				}
 				
-				mepEngine.internalNext();
+				ExecutionEngineSingleton.acquireEngine().internalNext();
+				ExecutionEngineSingleton.releaseEngine();
 			}
 		});
 		return future;
@@ -327,7 +313,8 @@ abstract public class MEPServerLSP4J implements IModelExecutionProtocolServer, E
 					throw new ResponseErrorException(error);
 				}
 				
-				mepEngine.internalStepIn();
+				ExecutionEngineSingleton.acquireEngine().internalStepIn();
+				ExecutionEngineSingleton.releaseEngine();
 			}
 		});
 		return future;
@@ -370,7 +357,8 @@ abstract public class MEPServerLSP4J implements IModelExecutionProtocolServer, E
 					throw new ResponseErrorException(error);
 				}
 				
-				mepEngine.internalStepOut();
+				ExecutionEngineSingleton.acquireEngine().internalStepOut();
+				ExecutionEngineSingleton.releaseEngine();
 			}
 		});
 		return future;
@@ -397,7 +385,8 @@ abstract public class MEPServerLSP4J implements IModelExecutionProtocolServer, E
 					bp.setLine(sbp.getLine());
 					bps.add(bp);
 				}
-				mepEngine.internalSetBreakpoints(mepBreakpoints);
+				ExecutionEngineSingleton.acquireEngine().internalSetBreakpoints(mepBreakpoints);
+				ExecutionEngineSingleton.releaseEngine();
 				breakpoints = bps.toArray(new Breakpoint[0]);
 				response.setBreakpoints(breakpoints);
 				
@@ -418,7 +407,8 @@ abstract public class MEPServerLSP4J implements IModelExecutionProtocolServer, E
 					throw new ResponseErrorException(error);
 				}
 				if (simulationStarted) {
-					mepEngine.internalTerminate();
+					ExecutionEngineSingleton.acquireEngine().internalTerminate();
+					ExecutionEngineSingleton.releaseEngine();
 					simulationStarted = false;
 				}
 				launchGemocEngine(launcherParameters);
@@ -429,7 +419,8 @@ abstract public class MEPServerLSP4J implements IModelExecutionProtocolServer, E
 				for (Breakpoint bp : breakpoints) {
 					mepBreakpoints[i++] = new org.eclipse.gemoc.executionframework.mep.types.SourceBreakpoint(bp.getLine().intValue());
 				}
-				mepEngine.internalSetBreakpoints(mepBreakpoints);
+				ExecutionEngineSingleton.acquireEngine().internalSetBreakpoints(mepBreakpoints);
+				ExecutionEngineSingleton.releaseEngine();
 			}
 		});
 		return future;
@@ -446,15 +437,16 @@ abstract public class MEPServerLSP4J implements IModelExecutionProtocolServer, E
 					throw new ResponseErrorException(error);
 				}
 				StackTraceResponse response = new StackTraceResponse();
-				org.eclipse.gemoc.executionframework.mep.types.StackFrame[] mepFrames = mepEngine.internalStackTrace();
+				org.eclipse.gemoc.executionframework.mep.types.StackFrame[] mepFrames = ExecutionEngineSingleton.acquireEngine().internalStackTrace();
+				ExecutionEngineSingleton.releaseEngine();
 				StackFrame[] dapFrames = new StackFrame[mepFrames.length];
 				int i = 0;
 				for (org.eclipse.gemoc.executionframework.mep.types.StackFrame mepFrame : mepFrames) {
 					StackFrame dapFrame = new StackFrame();
-					dapFrame.setId(mepFrame.getId());
+					dapFrame.setId((int) mepFrame.getId());
 					dapFrame.setName(mepFrame.getName());
-					dapFrame.setLine(mepFrame.getLine());
-					dapFrame.setColumn(mepFrame.getColumn());
+					dapFrame.setLine((int) mepFrame.getLine());
+					dapFrame.setColumn((int) mepFrame.getColumn());
 					dapFrames[i++] = dapFrame;
 				}
 				response.setStackFrames(dapFrames);
@@ -475,7 +467,8 @@ abstract public class MEPServerLSP4J implements IModelExecutionProtocolServer, E
 					throw new ResponseErrorException(error);
 				}
 				VariablesResponse response = new VariablesResponse();
-				org.eclipse.gemoc.executionframework.mep.types.Variable[] mepVariables = mepEngine.internalVariables();
+				org.eclipse.gemoc.executionframework.mep.types.Variable[] mepVariables = ExecutionEngineSingleton.acquireEngine().internalVariables();
+				ExecutionEngineSingleton.releaseEngine();
 				Variable[] dapVariables = new Variable[mepVariables.length];
 				int i = 0;
 				for (org.eclipse.gemoc.executionframework.mep.types.Variable mepVariable : mepVariables) {
@@ -502,7 +495,8 @@ abstract public class MEPServerLSP4J implements IModelExecutionProtocolServer, E
 					throw new ResponseErrorException(error);
 				}
 				SourceResponse response = new SourceResponse();
-				response.setContent(mepEngine.internalSource());
+				response.setContent(ExecutionEngineSingleton.acquireEngine().internalSource());
+				ExecutionEngineSingleton.releaseEngine();
 				return response;
 			}
 		});
@@ -519,7 +513,8 @@ abstract public class MEPServerLSP4J implements IModelExecutionProtocolServer, E
 					error.setMessage("Simulation not started");
 					throw new ResponseErrorException(error);
 				}
-				mepEngine.internalTerminate();
+				ExecutionEngineSingleton.acquireEngine().internalTerminate();
+				ExecutionEngineSingleton.releaseEngine();
 				simulationStarted = false;
 			}
 		});
@@ -542,9 +537,14 @@ abstract public class MEPServerLSP4J implements IModelExecutionProtocolServer, E
 		//ResourceSetFactory.createFactory().createResourceSet(modelURI);
 		return new ResourceSetImpl();
 	}
+	
+	public MEPLauncherParameters getDefaultLauncherParameters() {
+		return new MEPLauncherParameters();
+	}
 
 	public void launchGemocEngine(MEPLauncherParameters parameters) {
-		mepEngine.internalLaunchEngine(parameters);
+		ExecutionEngineSingleton.acquireEngine().internalLaunchEngine(parameters);
+		ExecutionEngineSingleton.releaseEngine();
 	}
 	
 	@Override
