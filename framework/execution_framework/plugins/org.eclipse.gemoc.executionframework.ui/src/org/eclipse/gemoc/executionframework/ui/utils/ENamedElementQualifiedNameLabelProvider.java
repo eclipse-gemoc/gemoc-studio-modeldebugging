@@ -17,17 +17,16 @@ public class ENamedElementQualifiedNameLabelProvider extends LabelProvider {
 
 	@Override
 	public String getText(Object element) {
-		if(element instanceof ENamedElement){
+		if (element instanceof ENamedElement) {
 			StringBuilder sb = new StringBuilder();
-			if(((ENamedElement)element).eContainer() != null){
-				sb.append(getText(((ENamedElement)element).eContainer()));
+			if (((ENamedElement) element).eContainer() != null) {
+				sb.append(getText(((ENamedElement) element).eContainer()));
 				sb.append("::");
 			}
-			sb.append(((ENamedElement)element).getName());
+			sb.append(((ENamedElement) element).getName());
 			return sb.toString();
-		}
-		else return super.getText(element);
+		} else
+			return super.getText(element);
 	}
-	
 
 }

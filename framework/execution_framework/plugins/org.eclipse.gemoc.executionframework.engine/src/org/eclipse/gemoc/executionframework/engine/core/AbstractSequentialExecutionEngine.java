@@ -12,6 +12,7 @@ package org.eclipse.gemoc.executionframework.engine.core;
 
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
 import java.util.Set;
@@ -120,6 +121,7 @@ public abstract class AbstractSequentialExecutionEngine<C extends IExecutionCont
 	 * To be called just after each execution step by an implementing engine. If the
 	 * step was done through a RecordingCommand, it can be given.
 	 */
+
 	protected final void beforeExecutionStep(Object caller, String className, String operationName, RecordingCommand rc, List<Object> args) {
 		if (caller != null && caller instanceof EObject && editingDomain != null) {
 			// Call expected to be done from an EMF model, hence EObjects
@@ -146,19 +148,29 @@ public abstract class AbstractSequentialExecutionEngine<C extends IExecutionCont
 		} else {
 			result = traceAddon.getFactory().createStep(mse, new ArrayList<Object>(), new ArrayList<Object>());
 		}
-
+		result.getMseoccurrence().getParameters().addAll(Arrays.asList(args));
 		return result;
 	}
 
 	private EOperation findOperation(EObject object, String className, String methodName) {
 		// We try to find the corresponding EOperation in the execution
 		// metamodel
-		for (EOperation operation : object.eClass().getEAllOperations()) {
-			// TODO !!! this is not super correct yet as overloading allows the
-			// definition of 2 methods with the same name !!!
-			if (operation.getName().equalsIgnoreCase(methodName)) {
-				return operation;
+		EOperation result = null;
+		final List<EClass> openSet = new ArrayList<>();
+		openSet.add(object.eClass());
+		
+		while(result == null && !openSet.isEmpty()) {
+			final EClass eClass = openSet.remove(0);
+			for (EOperation operation : eClass.getEOperations()) {
+				if (operation.getName().equalsIgnoreCase(methodName)) {
+					result = operation;
+				}
 			}
+			openSet.addAll(eClass.getESuperTypes());
+		}
+		
+		if (result != null) {
+			return result;
 		}
 
 		// If we didn't find it, we try to find the class that should contain
@@ -244,7 +256,7 @@ public abstract class AbstractSequentialExecutionEngine<C extends IExecutionCont
 		}
 		return mse;
 	}
-
+	
 	@Override
 	protected void beforeStart() {
 

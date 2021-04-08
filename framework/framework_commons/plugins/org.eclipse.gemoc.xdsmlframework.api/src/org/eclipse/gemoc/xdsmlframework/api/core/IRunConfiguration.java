@@ -11,6 +11,8 @@
 package org.eclipse.gemoc.xdsmlframework.api.core;
 
 import java.util.Collection;
+import java.util.Map;
+import java.util.Set;
 
 import org.eclipse.emf.common.util.URI;
 import org.eclipse.gemoc.xdsmlframework.api.extensions.engine_addon.EngineAddonSpecificationExtension;
@@ -69,6 +71,26 @@ public interface IRunConfiguration {
 	 * @return
 	 */	
 	Boolean getAttribute(String attributeName, Boolean defaultValue);
+
+	/**
+	 * return a map attribute from the runconfiguration identified by attributeName
+	 * returns the default value if not found
+	 * This is useful for addon options for example
+	 * @param attributeName
+	 * @param defaultValue
+	 * @return
+	 */	
+	Map<String, String> getAttribute(String attributeName, Map<String, String> defaultValue);
+
+	/**
+	 * return a set attribute from the runconfiguration identified by attributeName
+	 * returns the default value if not found
+	 * This is useful for addon options for example
+	 * @param attributeName
+	 * @param defaultValue
+	 * @return
+	 */	
+	Set<String> getAttribute(String attributeName, Set<String> defaultValue);
 	
 	/**
 	 * the list of enabled engine addons
