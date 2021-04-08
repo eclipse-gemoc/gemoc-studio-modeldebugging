@@ -13,7 +13,9 @@ package org.eclipse.gemoc.executionframework.engine.core;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.HashMap;
+import java.util.Map;
 import java.util.Map.Entry;
+import java.util.Set;
 
 import org.eclipse.core.runtime.CoreException;
 import org.eclipse.debug.core.ILaunchConfiguration;
@@ -65,6 +67,7 @@ public class RunConfiguration implements IRunConfiguration {
 		_debugModelID = getAttribute(DEBUG_MODEL_ID, ".debugModel");
 	}
 
+	@Override
 	public String getAttribute(String attributeName, String defaultValue) {
 		try {
 			return _launchConfiguration.getAttribute(attributeName, defaultValue);
@@ -74,6 +77,7 @@ public class RunConfiguration implements IRunConfiguration {
 		}
 	}
 
+	@Override
 	public Integer getAttribute(String attributeName, Integer defaultValue) {
 		try {
 			return _launchConfiguration.getAttribute(attributeName, defaultValue);
@@ -83,7 +87,28 @@ public class RunConfiguration implements IRunConfiguration {
 		}
 	}
 
+	@Override
 	public Boolean getAttribute(String attributeName, Boolean defaultValue) {
+		try {
+			return _launchConfiguration.getAttribute(attributeName, defaultValue);
+		} catch (CoreException e) {
+			Activator.getDefault().error(e.getMessage(), e);
+			return defaultValue;
+		}
+	}
+
+	@Override
+	public Map<String, String> getAttribute(String attributeName, Map<String, String> defaultValue) {
+		try {
+			return _launchConfiguration.getAttribute(attributeName, defaultValue);
+		} catch (CoreException e) {
+			Activator.getDefault().error(e.getMessage(), e);
+			return defaultValue;
+		}
+	}
+
+	@Override
+	public Set<String> getAttribute(String attributeName, Set<String> defaultValue) {
 		try {
 			return _launchConfiguration.getAttribute(attributeName, defaultValue);
 		} catch (CoreException e) {

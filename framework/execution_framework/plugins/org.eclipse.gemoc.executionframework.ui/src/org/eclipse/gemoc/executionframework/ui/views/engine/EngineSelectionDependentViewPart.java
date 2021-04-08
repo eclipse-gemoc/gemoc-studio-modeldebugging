@@ -17,29 +17,26 @@ import org.eclipse.ui.PartInitException;
 import org.eclipse.ui.part.ViewPart;
 
 /**
- * Views that are dependent on the engine selection in the EnginesStatusView may subclass this to get registered to it
+ * Views that are dependent on the engine selection in the EnginesStatusView may
+ * subclass this to get registered to it
  *
  */
-public abstract class EngineSelectionDependentViewPart extends ViewPart implements
-		IEngineSelectionListener {
+public abstract class EngineSelectionDependentViewPart extends ViewPart implements IEngineSelectionListener {
 
-	
-	public EngineSelectionDependentViewPart()
-	{
+	public EngineSelectionDependentViewPart() {
 	}
-	
+
 	@Override
 	public void init(IViewSite site) throws PartInitException {
 		super.init(site);
 		startListeningToEngineSelectionChange();
 	}
-	
+
 	@Override
 	public void dispose() {
 		super.dispose();
 		stopListeningToEngineSelectionChange();
 	}
-
 
 	protected void startListeningToEngineSelectionChange() {
 		// make sure the EngineStatusView is open
@@ -51,6 +48,5 @@ public abstract class EngineSelectionDependentViewPart extends ViewPart implemen
 	protected void stopListeningToEngineSelectionChange() {
 		Activator.getDefault().getEngineSelectionManager().removeEngineSelectionListener(this);
 	}
-
 
 }

@@ -21,7 +21,6 @@ import org.eclipse.gemoc.commons.eclipse.messagingsystem.api.MessagingSystemMana
 import org.eclipse.gemoc.executionframework.ui.views.engine.EngineSelectionManager;
 import org.osgi.framework.BundleContext;
 
-
 /**
  * The activator class controls the plug-in life cycle
  *
@@ -33,11 +32,9 @@ public class Activator extends AbstractUIPlugin {
 	public static final String PLUGIN_ID = "org.eclipse.gemoc.gemoc_language_workbench.ui"; //$NON-NLS-1$
 
 	public static final String GEMOC_PROJECT_CONFIGURATION_FILE_EXTENSION = "xdsml";
-	public static final String GEMOC_PROJECT_CONFIGURATION_FILE = "project."
-			+ GEMOC_PROJECT_CONFIGURATION_FILE_EXTENSION;
+	public static final String GEMOC_PROJECT_CONFIGURATION_FILE = "project." + GEMOC_PROJECT_CONFIGURATION_FILE_EXTENSION;
 
 	// extension point constants
-	
 
 	public static final String MODEL_LOADER_CLASS_NAMEPART = "ModelLoader";
 	public static final String CODEEXECUTOR_CLASS_NAMEPART = "CodeExecutor";
@@ -48,12 +45,9 @@ public class Activator extends AbstractUIPlugin {
 	private static Activator plugin;
 
 	private final EngineSelectionManager engineSelectionManager = new EngineSelectionManager();
-	
-
-
 
 	private final List<IMSEPresenter> eventPresenters = new ArrayList<>();
-	
+
 	/**
 	 * The constructor
 	 */
@@ -80,8 +74,11 @@ public class Activator extends AbstractUIPlugin {
 	 * org.eclipse.ui.plugin.AbstractUIPlugin#stop(org.osgi.framework.BundleContext
 	 * )
 	 */
-	/* (non-Javadoc)
-	 * @see org.eclipse.ui.plugin.AbstractUIPlugin#stop(org.osgi.framework.BundleContext)
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see
+	 * org.eclipse.ui.plugin.AbstractUIPlugin#stop(org.osgi.framework.BundleContext)
 	 */
 	@Override
 	public void stop(BundleContext context) throws Exception {
@@ -99,11 +96,11 @@ public class Activator extends AbstractUIPlugin {
 	}
 
 	/**
-	 * Returns an image descriptor for the image file at the given plug-in
-	 * relative path
+	 * Returns an image descriptor for the image file at the given plug-in relative
+	 * path
 	 * 
 	 * @param path
-	 *            the path
+	 *                 the path
 	 * @return the image descriptor
 	 */
 	public static ImageDescriptor getImageDescriptor(String path) {
@@ -118,8 +115,6 @@ public class Activator extends AbstractUIPlugin {
 		Activator.getDefault().getLog().log(new Status(Status.ERROR, PLUGIN_ID, Status.OK, msg, e));
 	}
 
-
-	
 	/**
 	 * Gets the {@link List} of registered {@link IMSEPresenter}s.
 	 * 
@@ -128,20 +123,17 @@ public class Activator extends AbstractUIPlugin {
 	public List<IMSEPresenter> getEventPresenters() {
 		return eventPresenters;
 	}
-	
 
 	public EngineSelectionManager getEngineSelectionManager() {
 		return engineSelectionManager;
 	}
-	
+
 	protected MessagingSystem messaggingSystem = null;
-	
+
 	public MessagingSystem getMessaggingSystem() {
 		if (messaggingSystem == null) {
 			MessagingSystemManager msm = new MessagingSystemManager();
-			messaggingSystem = msm.createBestPlatformMessagingSystem(
-					org.eclipse.gemoc.executionframework.engine.Activator.PLUGIN_ID,
-					org.eclipse.gemoc.executionframework.engine.Activator.CONSOLE_NAME);
+			messaggingSystem = msm.createBestPlatformMessagingSystem(org.eclipse.gemoc.executionframework.engine.Activator.PLUGIN_ID, org.eclipse.gemoc.executionframework.engine.Activator.CONSOLE_NAME);
 		}
 		return messaggingSystem;
 	}

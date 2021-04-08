@@ -342,7 +342,7 @@ public class EnginesStatusView extends ViewPart implements IEngineAddon, IEngine
 	public void engineRegistered(final IExecutionEngine<?> engine) {
 		Display.getDefault().syncExec(new Runnable() {
 			public void run() {
-				Activator.getDefault().getMessaggingSystem().debug("Enabled implicit addon: "+EnginesStatusView.this.getAddonID(), Activator.PLUGIN_ID);
+				Activator.getDefault().getMessaggingSystem().debug("Enabled implicit addon: " + EnginesStatusView.this.getAddonID(), Activator.PLUGIN_ID);
 				engine.getExecutionContext().getExecutionPlatform().addEngineAddon(EnginesStatusView.this);
 				_viewer.setInput(org.eclipse.gemoc.executionframework.engine.Activator.getDefault().gemocRunningEngineRegistry);
 				TreeViewerHelper.resizeColumns(_viewer);
@@ -420,12 +420,8 @@ public class EnginesStatusView extends ViewPart implements IEngineAddon, IEngine
 		// the debugger addon will stop the execution in this event
 		// make sure to be called before in order to properly refresh the view
 		ArrayList<EngineAddonSortingRule> sortingRules = new ArrayList<EngineAddonSortingRule>();
-		sortingRules.add(new EngineAddonSortingRule( this,
-				EngineAddonSortingRule.EngineEvent.aboutToExecuteStep,
-				EngineAddonSortingRule.Priority.BEFORE,
-				Arrays.asList(IGemocDebugger.GROUP_TAG)));
+		sortingRules.add(new EngineAddonSortingRule(this, EngineAddonSortingRule.EngineEvent.aboutToExecuteStep, EngineAddonSortingRule.Priority.BEFORE, Arrays.asList(IGemocDebugger.GROUP_TAG)));
 		return sortingRules;
 	}
-	
-	
+
 }

@@ -63,6 +63,8 @@ public abstract class AbstractExecutionEngine<C extends IExecutionContext<R, ?, 
 	protected boolean _started = false;
 	protected boolean _isStopped = false;
 
+	protected String _name;
+
 	public Thread thread;
 	public boolean stopOnAddonError = false;
 	public Throwable error = null;
@@ -114,7 +116,6 @@ public abstract class AbstractExecutionEngine<C extends IExecutionContext<R, ?, 
 
 	@Override
 	public final void dispose() {
-
 		try {
 			stop();
 			notifyEngineAboutToDispose();
@@ -126,7 +127,7 @@ public abstract class AbstractExecutionEngine<C extends IExecutionContext<R, ?, 
 	}
 
 	public String getName() {
-		return engineKindName() + " " + _executionContext.getRunConfiguration().getExecutedModelURI();
+		return _name == null ? engineKindName() + " " + _executionContext.getRunConfiguration().getExecutedModelURI() : _name;
 	}
 
 	private void addonError(IEngineAddon addon, Exception e) {
@@ -210,7 +211,6 @@ public abstract class AbstractExecutionEngine<C extends IExecutionContext<R, ?, 
 		}
 	}
 
-	
 	protected void notifyAboutToExecuteLogicalStep(Step<?> l) {
 		for (IEngineAddon addon : getCachedSortedEngineAddons(EngineEvent.aboutToExecuteStep)) {
 			try {
@@ -218,8 +218,7 @@ public abstract class AbstractExecutionEngine<C extends IExecutionContext<R, ?, 
 			} catch (EngineStoppedException ese) {
 				Activator.getDefault().debug("Addon (" + addon.getClass().getSimpleName() + "@" + addon.hashCode() + ") has received stop command  with message : " + ese.getMessage());
 				stop();
-				throw ese; // do not continue to execute anything, forward
-							// exception
+				throw ese; // do not continue to execute anything, forward exception
 			} catch (Exception e) {
 				addonError(addon, e);
 			}
@@ -239,24 +238,24 @@ public abstract class AbstractExecutionEngine<C extends IExecutionContext<R, ?, 
 		}
 	}
 
-	
 	protected Map<EngineAddonSortingRule.EngineEvent, List<IEngineAddon>> sortedAddonMapCache = new HashMap<EngineAddonSortingRule.EngineEvent, List<IEngineAddon>>();
-	/** 
-	 * a cache for the sort algorithm
-	 * applies only to most relevant event such as stepExecuted aboutToExecuteLogicalStep
-	 * should not be used for engineStatusChanged because engines may add new implicit addon
-	 */ 
+
+	/**
+	 * a cache for the sort algorithm applies only to most relevant event such as
+	 * stepExecuted aboutToExecuteLogicalStep should not be used for
+	 * engineStatusChanged because engines may add new implicit addon
+	 */
 	protected List<IEngineAddon> getCachedSortedEngineAddons(EngineAddonSortingRule.EngineEvent engineEvent) {
 		List<IEngineAddon> cachedList = sortedAddonMapCache.get(engineEvent);
 		if (((cachedList != null))) {
-	      return cachedList;
-	    } else {
-	    	List<IEngineAddon> result = getExecutionContext().getExecutionPlatform().getSortedEngineAddons(engineEvent);
-	    	sortedAddonMapCache.put(engineEvent, result);
-	    	return result;
-	    }
+			return cachedList;
+		} else {
+			List<IEngineAddon> result = getExecutionContext().getExecutionPlatform().getSortedEngineAddons(engineEvent);
+			sortedAddonMapCache.put(engineEvent, result);
+			return result;
+		}
 	}
-	
+
 	/*
 	 * (non-Javadoc)
 	 * 
@@ -345,23 +344,19 @@ public abstract class AbstractExecutionEngine<C extends IExecutionContext<R, ?, 
 	public final void startSynchronous() {
 		try {
 			notifyEngineAboutToStart();
-			Activator.getDefault().gemocRunningEngineRegistry.registerEngine(getName(), AbstractExecutionEngine.this);
+			_name = Activator.getDefault().gemocRunningEngineRegistry.registerEngine(getName(), AbstractExecutionEngine.this);
 			setEngineStatus(EngineStatus.RunStatus.Running);
 			beforeStart();
 			notifyEngineStarted();
 			try {
 				performStart();
 			} finally {
-				// We always try to commit the last remaining
-				// transaction
+				// We always try to commit the last remaining transaction
 				commitCurrentTransaction();
 			}
-
 		} catch (EngineStoppedException stopException) {
-			// not really an error, simply print the stop exception
-			// message
+			// not really an error, simply print the stop exception message
 			Activator.getDefault().info("Engine stopped by the user : " + stopException.getMessage());
-
 		} catch (Throwable e) {
 			error = e;
 			e.printStackTrace();

@@ -13,6 +13,7 @@
 import org.eclipse.emf.transaction.RecordingCommand
 import org.eclipse.gemoc.xdsmlframework.api.core.IRunConfiguration
 import org.eclipse.gemoc.xdsmlframework.api.core.IExecutionContext
+import java.util.Arrays
 
 abstract class AbstractCommandBasedSequentialExecutionEngine<C extends IExecutionContext<R, ?, ?>, R extends IRunConfiguration> extends AbstractSequentialExecutionEngine<C, R> {
 
@@ -25,13 +26,17 @@ abstract class AbstractCommandBasedSequentialExecutionEngine<C extends IExecutio
 	 * @param operation
 	 */
 	protected def void executeOperation(Object caller, String className, String operationName, Runnable operation) {
+		executeOperation(caller, #{}, className, operationName, operation);
+	}
+	
+	protected def void executeOperation(Object caller, Object[] parameters, String className, String operationName, Runnable operation) {
 		val RecordingCommand rc = new RecordingCommand(editingDomain) {
 			override doExecute() {
 				operation.run()
 			}
 		}
 		try {
-			beforeExecutionStep(caller, className, operationName, rc)
+			beforeExecutionStep(caller, className, operationName, rc, Arrays.asList(parameters))
 			rc.execute
 			afterExecutionStep
 		} finally {
