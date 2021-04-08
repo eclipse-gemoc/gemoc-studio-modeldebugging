@@ -23,7 +23,7 @@ public class  EngineStatus {
 	Step<?> chosenLogicalStep;
 
 
-	public enum RunStatus { Initializing, Running, WaitingLogicalStepSelection, Stopped}
+	public enum RunStatus { Initializing, Running, WaitingLogicalStepSelection, WaitingForEvent, Stopped }
 
 	
 	/**
