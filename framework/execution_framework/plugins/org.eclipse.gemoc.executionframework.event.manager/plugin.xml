@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?eclipse version="3.4"?>
+<plugin>
+   <extension-point id="org.eclipse.gemoc.executionframework.event.event_emitter" name="Event Emitter" schema="schema/org.eclipse.gemoc.executionframework.event.event_emitter.exsd"/>
+   <extension-point id="org.eclipse.gemoc.executionframework.event.implementationrelationship" name="Implementation Relationship" schema="schema/org.eclipse.gemoc.executionframework.event.implementationrelationship.exsd"/>
+   <extension-point id="org.eclipse.gemoc.executionframework.event.subtypingrelationship" name="Subtyping Relationship" schema="schema/org.eclipse.gemoc.executionframework.event.subtypingrelationship.exsd"/>
+   <extension-point id="org.eclipse.gemoc.executionframework.event.metalanguage_rule_executor" name="Metalanguage Rule Executor" schema="schema/org.eclipse.gemoc.executionframework.event.metalanguageruleexecutor.exsd"/>
+</plugin>

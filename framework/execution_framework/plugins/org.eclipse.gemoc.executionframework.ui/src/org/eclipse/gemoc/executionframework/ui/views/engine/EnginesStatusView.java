@@ -169,6 +169,10 @@ public class EnginesStatusView extends ViewPart implements IEngineAddon, IEngine
 						result = SharedIcons.getSharedImage(SharedIcons.STOPPED_ENGINE_ICON);
 						break;
 
+					case WaitingForEvent:
+						result = SharedIcons.getSharedImage(SharedIcons.WAITING_ENGINE_ICON);
+						break;
+
 					case WaitingLogicalStepSelection:
 						result = SharedIcons.getSharedImage(SharedIcons.WAITING_ENGINE_ICON);
 						break;
@@ -248,6 +252,9 @@ public class EnginesStatusView extends ViewPart implements IEngineAddon, IEngine
 						break;
 					case Running:
 						result += "Running";
+						break;
+					case WaitingForEvent:
+						result += "Waiting For Event";
 						break;
 					case WaitingLogicalStepSelection:
 						result += "Waiting LogicalStep Selection";
