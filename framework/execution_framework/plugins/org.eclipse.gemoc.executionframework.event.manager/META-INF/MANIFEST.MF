@@ -10,8 +10,7 @@ Require-Bundle: org.eclipse.gemoc.executionframework.event.model;bundle-version=
  org.eclipse.ocl.ecore,
  org.eclipse.gemoc.dsl,
  org.eclipse.gemoc.opsemanticsview.model;bundle-version="3.0.0",
- org.eclipse.gemoc.xdsmlframework.api;bundle-version="3.0.0",
- esper-wrapper;bundle-version="1.0.0"
+ org.eclipse.gemoc.xdsmlframework.api;bundle-version="3.0.0"
 Bundle-ManifestVersion: 2
 Bundle-RequiredExecutionEnvironment: JavaSE-1.8
 Automatic-Module-Name: org.eclipse.gemoc.executionframework.event.manager
