@@ -48,9 +48,23 @@ class SWTBotHelper {
 		}
 	}
 	
+	static def void printViewList(SWTWorkbenchBot	bot) {
+		val views = bot.views
+		println("SWTBot View(" + views.size + "):")
+		for (item : views) {
+			Display.^default.syncExec(new Runnable() {
+				override run() {
+					println("\t" + item.title+ " "+ item.widget)
+					printWidgetList("\t\t","View ToolBarButton", item.toolbarButtons.map[swtBut | swtBut.widget].toList)
+				}
+			})
+		}
+	}
+	
 	static def printSWTBotStatus(SWTWorkbenchBot bot) {
 		println("### SWTBot context analysis ###")
 		printShellList(bot)
+		printViewList(bot)
 		printTreeList(bot)
 
 		Display.^default.syncExec(new Runnable() {
@@ -58,7 +72,7 @@ class SWTBotHelper {
 				try {
 					val matcherButton = allOf(widgetOfType(typeof(Button) /*, withLabel(label), withStyle(SWT.PUSH, "SWT.PUSH")*/ ))
 					val buttons = bot.widgets(matcherButton).toList
-					printWidgetList("Button",buttons)
+					printWidgetList("", "Button",buttons)
 				} catch (Exception e) {
 					println("SWTBot Button(0) [no Button in the UI after 20000ms]")
 					// this has required a 20000ms timeout but there is no Button in the bot now
@@ -68,18 +82,20 @@ class SWTBotHelper {
 				// ,	anyOf(withTooltip("Step &Into (F5)"), withTooltip("Step &Into")), withStyle(SWT.PUSH, "SWT.PUSH")
 				)
 				val toolItems = bot.widgets(matcherToolItem).toList
-				printWidgetList("ToolItem", toolItems)
+				printWidgetList("","ToolItem", toolItems)
 			}
 		})
 	}
 
-	static def printWidgetList(String itemType, List<? extends Widget> items) {
-		println("SWTBot " + itemType + "(" + items.size + "):")
+	static def printWidgetList(String indent, String itemType, List<? extends Widget> items) {
+		println(indent +"SWTBot " + itemType + "(" + items.size + "):")
 		for (item : items) {
 			if(item instanceof ToolItem) {
-				println("\t" + item + " toolTipText="+item.toolTipText)
+				println(indent +"\t"+ item + " toolTipText="+item.toolTipText)
+			} else if(item instanceof Button) {
+				println(indent +"\t" + item + " text="+ item.text  + " toolTipText="+item.toolTipText)	
 			} else {
-				println("\t" + item)	
+				println(indent +"\t" + item)
 			}
 		}
 	}
