@@ -56,6 +56,7 @@ import org.eclipse.sirius.ui.business.api.session.IEditingSession;
 import org.eclipse.sirius.ui.business.api.session.SessionUIManager;
 import org.eclipse.sirius.viewpoint.DRepresentation;
 import org.eclipse.sirius.viewpoint.description.RepresentationDescription;
+import org.eclipse.swt.widgets.Display;
 
 
 /*
@@ -628,6 +629,14 @@ public abstract class AbstractGemocDebuggerServices /*extends AbstractDSLDebugge
 				currentFrame = frame;
 				Set<URI> instructionUris = CURRENT_INSTRUCTIONS_PER_FRAME.get(getCurrentFrame());
 				if (instructionUris != null) {
+					// use async exec even if already run in UI Thread in order to prevent possible
+					// race conditions on sirius refresh
+					Display.getDefault().asyncExec(new Runnable() {
+						@Override
+						public void run() {
+							notifySirius(instructionUris, debugModelID);
+						}
+					});
 					notifySirius(instructionUris, debugModelID);
 				}
 			}
