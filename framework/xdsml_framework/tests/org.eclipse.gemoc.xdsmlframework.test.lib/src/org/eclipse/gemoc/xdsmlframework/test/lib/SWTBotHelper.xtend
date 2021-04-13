@@ -22,6 +22,8 @@ import org.eclipse.swt.widgets.ToolItem
 import org.eclipse.swt.widgets.Widget
 import java.util.List
 import org.eclipse.swt.widgets.Display
+import org.eclipse.swtbot.swt.finder.finders.UIThreadRunnable
+import org.eclipse.swtbot.swt.finder.results.VoidResult
 
 /**
  * Class containing helper methods for testing a workspace in a GEMOC Language workbench
@@ -52,7 +54,7 @@ class SWTBotHelper {
 		val views = bot.views
 		println("SWTBot View(" + views.size + "):")
 		for (item : views) {
-			Display.^default.syncExec(new Runnable() {
+			UIThreadRunnable.syncExec(new VoidResult() {
 				override run() {
 					println("\t" + item.title+ " "+ item.widget)
 					printWidgetList("\t\t","View ToolBarButton", item.toolbarButtons.map[swtBut | swtBut.widget].toList)
@@ -67,7 +69,7 @@ class SWTBotHelper {
 		printViewList(bot)
 		printTreeList(bot)
 
-		Display.^default.syncExec(new Runnable() {
+		UIThreadRunnable.syncExec(new VoidResult() {
 			override run() {
 				try {
 					val matcherButton = allOf(widgetOfType(typeof(Button) /*, withLabel(label), withStyle(SWT.PUSH, "SWT.PUSH")*/ ))
