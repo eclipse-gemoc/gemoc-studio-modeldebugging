@@ -12,7 +12,7 @@
 <feature
       id="org.eclipse.gemoc.modeldebugging.feature"
       label="GEMOC ModelDebugging"
-      version="3.1.0.qualifier"
+      version="3.3.0.qualifier"
       provider-name="%providerName"
       image="gemocstudio32.png">
 
@@ -125,9 +125,6 @@ Everyone is permitted to copy and distribute copies of this Agreement, but in or
 This Agreement is governed by the laws of the State of New York and the intellectual property laws of the United States of America. No party to this Agreement will bring a legal action under this Agreement more than one year after the cause of action arose. Each party waives its rights to a jury trial in any resulting litigation.
    </license>
 
-   <includes
-         id="org.eclipse.gemoc.execution.sequential.javaxdsml.feature"
-         version="0.0.0"/>
 
    <includes
          id="org.eclipse.gemoc.dsl.debug.feature"
@@ -168,7 +165,7 @@ This Agreement is governed by the laws of the State of New York and the intellec
    <includes
          id="org.eclipse.gemoc.modeldebugging.framework.commons.k3.feature"
          version="0.0.0"/>
-         
+
    <plugin
          id="org.eclipse.gemoc.language_workbench.documentation"
          download-size="0"
