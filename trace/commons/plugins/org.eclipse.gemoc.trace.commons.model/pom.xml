@@ -15,7 +15,7 @@
 
   <parent>
     <relativePath>../..</relativePath>
-    <groupId>org.eclipse.gemoc.trace.commons</groupId>
+    <groupId>org.eclipse.gemoc.gemoc-studio-modeldebugging.bundle</groupId>
     <artifactId>org.eclipse.gemoc.trace.commons.root</artifactId>
     <version>3.0.1-SNAPSHOT</version>
   </parent>

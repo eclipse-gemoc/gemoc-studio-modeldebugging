@@ -14,7 +14,7 @@
 	<modelVersion>4.0.0</modelVersion>
 
 	<parent>
-		<groupId>org.eclipse.gemoc.trace.manager</groupId>
+		<groupId>org.eclipse.gemoc.gemoc-studio-modeldebugging.bundle</groupId>
 		<artifactId>org.eclipse.gemoc.trace.manager.root</artifactId>
 		<version>3.0.1-SNAPSHOT</version>
 		<relativePath>../..</relativePath>

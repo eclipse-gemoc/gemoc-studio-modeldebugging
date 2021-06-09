@@ -14,11 +14,10 @@ Contributors:
   <modelVersion>4.0.0</modelVersion>
   <parent>
   	<artifactId>org.eclipse.gemoc.dsl.debug.parent</artifactId>
-  	<groupId>DSLDebugger</groupId>
+  	<groupId>org.eclipse.gemoc.gemoc-studio-modeldebugging.bundle</groupId>
   	<version>3.0.1-SNAPSHOT</version>	
   	<relativePath>../../</relativePath>
   </parent>
-  <groupId>DSLDebugger</groupId>
   <artifactId>org.eclipse.gemoc.dsl.debug.ui.feature</artifactId>
   <version>3.0.1-SNAPSHOT</version>
   <packaging>eclipse-feature</packaging>

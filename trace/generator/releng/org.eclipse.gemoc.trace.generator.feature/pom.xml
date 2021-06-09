@@ -3,13 +3,12 @@
     xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
   <modelVersion>4.0.0</modelVersion>
 
-  <groupId>org.eclipse.gemoc.trace.generator</groupId>
   <artifactId>org.eclipse.gemoc.trace.generator.feature</artifactId>
   <version>3.0.1-SNAPSHOT</version>
   <packaging>eclipse-feature</packaging>
 
    <parent>
-    <groupId>org.eclipse.gemoc.trace.generator</groupId>
+    <groupId>org.eclipse.gemoc.gemoc-studio-modeldebugging.bundle</groupId>
     <artifactId>org.eclipse.gemoc.trace.generator.root</artifactId>
     <version>3.0.1-SNAPSHOT</version>
     <relativePath>../..</relativePath>
