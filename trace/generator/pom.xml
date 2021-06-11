@@ -15,73 +15,10 @@
 	</parent>
 
 	<modules>
-
 		<!-- Plugins -->
-		<module>plugins/org.eclipse.gemoc.trace.gemoc</module>
-		<module>plugins/org.eclipse.gemoc.trace.gemoc.generator</module>
-		<module>plugins/org.eclipse.gemoc.trace.gemoc.ui</module>
-		<module>plugins/org.eclipse.gemoc.trace.metamodel.generator</module>
-		<module>plugins/org.eclipse.gemoc.trace.annotations</module>
+		<module>plugins</module>
 
 		<!-- Build feature -->
-		<module>releng/org.eclipse.gemoc.trace.generator.feature</module>
-
+		<module>releng</module>
 	</modules>
-
-	<properties>
-		<java.version>1.7</java.version>
-		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
-	</properties>
-
-	<build>
-		<plugins>
-
-			<plugin>
-				<groupId>org.eclipse.xtend</groupId>
-				<artifactId>xtend-maven-plugin</artifactId>
-				<version>${xtend.version}</version>
-				<executions>
-					<execution>
-						<goals>
-							<goal>compile</goal>
-						</goals>
-						<configuration>
-							<outputDirectory>xtend-gen</outputDirectory>
-						</configuration>
-					</execution>
-				</executions>
-			</plugin>
-
-			<plugin>
-				<groupId>org.apache.maven.plugins</groupId>
-				<artifactId>maven-compiler-plugin</artifactId>
-				<version>3.1</version>
-				<configuration>
-					<source>${java.version}</source>
-					<target>${java.version}</target>
-				</configuration>
-			</plugin>
-
-
-		</plugins>
-	</build>
-
-
-	<dependencies>
-		<dependency>
-			<groupId>org.eclipse.xtend</groupId>
-			<artifactId>xtend-maven-plugin</artifactId>
-			<version>${xtend.version}</version>
-		</dependency>
-		<dependency>
-			<groupId>org.eclipse.xtend</groupId>
-			<artifactId>org.eclipse.xtend.lib</artifactId>
-			<version>${xtend.version}</version>
-		</dependency>
-	</dependencies>
-
-
-
-
-
 </project>

@@ -15,15 +15,8 @@
 	</parent>
 
 	<modules>
-
-		<!-- Plugins -->
-		<module>plugins/org.eclipse.gemoc.addon.multidimensional.timeline</module>
-		<module>plugins/org.eclipse.gemoc.addon.stategraph</module>
-		<module>plugins/org.eclipse.gemoc.addon.diffviewer</module>
-
-		<!-- Build feature -->
-		<module>releng/org.eclipse.gemoc.trace.manager.feature</module>
-
+		<module>plugins</module>
+		<module>releng</module>
 	</modules>
 
 	<properties>

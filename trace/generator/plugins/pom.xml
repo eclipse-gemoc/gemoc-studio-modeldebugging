@@ -14,19 +14,24 @@
 	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd"
 	xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
 	<modelVersion>4.0.0</modelVersion>
-	<artifactId>org.eclipse.gemoc.trace.commons</artifactId>
+	<artifactId>org.eclipse.gemoc.trace.generator.plugins</artifactId>
 	<version>3.0.1-SNAPSHOT</version>
-	<packaging>eclipse-plugin</packaging>
-
-
-
+	<packaging>pom</packaging>
 
 	<parent>
 		<groupId>org.eclipse.gemoc.gemoc-studio-modeldebugging.bundle</groupId>
-		<artifactId>org.eclipse.gemoc.trace.commons.root</artifactId>
+		<artifactId>org.eclipse.gemoc.trace.generator.root</artifactId>
 		<version>3.0.1-SNAPSHOT</version>
-		<relativePath>../..</relativePath>
+		<relativePath>..</relativePath>
 	</parent>
+
+	<modules>
+		<module>org.eclipse.gemoc.trace.gemoc</module>
+		<module>org.eclipse.gemoc.trace.gemoc.generator</module>
+		<module>org.eclipse.gemoc.trace.gemoc.ui</module>
+		<module>org.eclipse.gemoc.trace.metamodel.generator</module>
+		<module>org.eclipse.gemoc.trace.annotations</module>
+	</modules>
 
 	<build>
 		<plugins>
@@ -46,7 +51,6 @@
 				</executions>
 			</plugin>
 
-
 			<plugin>
 				<groupId>org.apache.maven.plugins</groupId>
 				<artifactId>maven-clean-plugin</artifactId>
@@ -59,7 +63,6 @@
 					</filesets>
 				</configuration>
 			</plugin>
-			
 		</plugins>
 	</build>
 
