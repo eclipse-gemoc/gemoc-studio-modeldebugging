@@ -21,11 +21,7 @@
         <module>plugins/org.eclipse.gemoc.commons.eclipse.ui</module>
         <module>plugins/org.eclipse.gemoc.groovy</module>
         <module>plugins/org.eclipse.gemoc.timeline</module>
-        <module>plugins/gexpressions/org.eclipse.gemoc.gexpressions</module>
-        <module>plugins/gexpressions/org.eclipse.gemoc.gexpressions.edit</module>
-        <module>plugins/gexpressions/org.eclipse.gemoc.gexpressions.editor</module>
-        <module>plugins/gexpressions/org.eclipse.gemoc.gexpressions.xtext</module>
-        <module>plugins/gexpressions/org.eclipse.gemoc.gexpressions.xtext.ui</module>
+        <module>plugins/gexpressions</module>
         <module>plugins/org.eclipse.gemoc.dsl.model</module>
         <module>plugins/org.eclipse.gemoc.dsl</module>
         <module>plugins/org.eclipse.gemoc.dsl.ide</module>
