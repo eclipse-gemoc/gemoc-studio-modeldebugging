@@ -15,11 +15,8 @@
 	</properties>
     <modules>
         <!-- plugins -->
-        <module>plugins/org.eclipse.gemoc.xdsmlframework.ui.utils</module>
-        <module>plugins/org.eclipse.gemoc.xdsmlframework.ide.ui</module>        
-        <module>plugins/org.eclipse.gemoc.xdsmlframework.extensions.sirius</module>
-        <module>plugins/org.eclipse.gemoc.xdsmlframework.extensions.kermeta3</module>   
-        <module>tests/org.eclipse.gemoc.xdsmlframework.test.lib</module> 
+        <module>plugins</module>   
+        <module>tests</module> 
 
         <!-- feature -->
         <module>releng/org.eclipse.gemoc.xdsmlframework.feature</module>
