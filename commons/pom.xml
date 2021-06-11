@@ -11,23 +11,7 @@
 	</parent>
     <modules>
         <!-- plugins -->
-<!--         <module>../../org/eclipse/gemoc/gemoc_language_workbench/org.eclipse.gemoc.gemoc_language_workbench.api</module> -->
-        <module>plugins/org.eclipse.gemoc.commons.eclipse</module>
-        <module>plugins/org.eclipse.gemoc.commons.eclipse.messagingsystem.api</module>
-        <module>plugins/org.eclipse.gemoc.commons.eclipse.messagingsystem.ui</module>
-        <module>plugins/org.eclipse.gemoc.commons.eclipse.pde</module>
-        <module>plugins/org.eclipse.gemoc.commons.eclipse.jdt</module>
-        <module>plugins/org.eclipse.gemoc.commons.eclipse.jdt.autosrcfolder</module>
-        <module>plugins/org.eclipse.gemoc.commons.eclipse.ui</module>
-        <module>plugins/org.eclipse.gemoc.groovy</module>
-        <module>plugins/org.eclipse.gemoc.timeline</module>
-        <module>plugins/gexpressions</module>
-        <module>plugins/org.eclipse.gemoc.dsl.model</module>
-        <module>plugins/org.eclipse.gemoc.dsl</module>
-        <module>plugins/org.eclipse.gemoc.dsl.ide</module>
-        <module>plugins/org.eclipse.gemoc.dsl.ui</module>
-        <module>plugins/org.jaxen</module>
-        <module>plugins/org.jdom2</module>
+        <module>plugins</module>
         
         <!-- feature and update site -->
         <module>releng</module>
