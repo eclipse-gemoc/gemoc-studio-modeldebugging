@@ -422,8 +422,20 @@ class WorkspaceTestHelper {
 	}
 	
 	static def void waitForJobs() {
-		while (!Job.getJobManager().isIdle())
-			delay(100);
+		if(!Job.getJobManager().isIdle()) {
+			delay(500);
+		}	
+		while (!Job.getJobManager().isIdle()) {
+			val Job currentJob = Job.getJobManager().currentJob
+			for (job : Job.getJobManager().find(null)) {
+				if(job === currentJob) {
+					println("[waitForJobs](current) "+job.name)
+				} else {
+					println("[waitForJobs] "+job.name)
+				}
+			}
+			delay(300);
+		}
 	}
 	static var closed = false;
 	static def void delay(long waitTimeMillis) {
