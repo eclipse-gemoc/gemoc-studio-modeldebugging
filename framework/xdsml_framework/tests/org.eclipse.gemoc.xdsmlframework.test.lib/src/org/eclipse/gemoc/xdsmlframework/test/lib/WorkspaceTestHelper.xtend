@@ -422,19 +422,27 @@ class WorkspaceTestHelper {
 	}
 	
 	static def void waitForJobs() {
+		val delay = 500;
+		var retry = 600
 		if(!Job.getJobManager().isIdle()) {
-			delay(500);
+			delay(delay);
 		}	
 		while (!Job.getJobManager().isIdle()) {
 			val Job currentJob = Job.getJobManager().currentJob
-			for (job : Job.getJobManager().find(null)) {
-				if(job === currentJob) {
-					println("[waitForJobs](current) "+job.name)
-				} else {
-					println("[waitForJobs] "+job.name)
+			if(retry % 10 == 0 ) {  
+				for (job : Job.getJobManager().find(null)) {
+					if(job === currentJob) {
+						println("[waitForJobs](current) "+job.name+ " (rule="+job.rule+")")
+					} else {
+						println("[waitForJobs] "+job.name+ " (rule="+job.rule+")")
+					}
 				}
 			}
-			delay(300);
+			delay(delay);
+			retry = retry - 1
+			if(retry <= 0) {
+				throw new InterruptedException("waitForJobs timed out after " + delay * 600 + "ms")
+			}
 		}
 	}
 	static var closed = false;
