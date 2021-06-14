@@ -437,7 +437,8 @@ class WorkspaceTestHelper {
 					} else {
 						println("[waitForJobs] "+job.name+ " (rule="+job.rule+")")
 					}
-					if(job.name.contains("Git Repository Change Scanner") || job.name.contains("Periodic workspace save")) {
+					// cancel these jobs that tends to crash the tests
+					if(retry <= 300 && (job.name.contains("Git Repository Change Scanner") || job.name.contains("Periodic workspace save"))) {
 						println("[waitForJobs] CANCELLING job "+job.name+ " (rule="+job.rule+")")
 						
 					}
