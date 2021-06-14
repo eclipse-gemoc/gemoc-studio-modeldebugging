@@ -430,13 +430,20 @@ class WorkspaceTestHelper {
 		while (!Job.getJobManager().isIdle()) {
 			val Job currentJob = Job.getJobManager().currentJob
 			if(retry % 10 == 0 ) {  
-				for (job : Job.getJobManager().find(null)) {
+				val jobs = Job.getJobManager().find(null)
+				for (job : jobs) {
 					if(job === currentJob) {
 						println("[waitForJobs](current) "+job.name+ " (rule="+job.rule+")")
 					} else {
 						println("[waitForJobs] "+job.name+ " (rule="+job.rule+")")
 					}
 				}
+				val rules = jobs.filter[j | j.rule !== null].map[j | j.rule]
+				rules.forEach[r1 | rules.forEach[r2 | 
+					if(r1 != r2 && r1.isConflicting(r2)) {
+						println("[waitForJobs] conflicting rules: "+r1+ " / "+r2)
+					} 
+				]]
 			}
 			delay(delay);
 			retry = retry - 1
