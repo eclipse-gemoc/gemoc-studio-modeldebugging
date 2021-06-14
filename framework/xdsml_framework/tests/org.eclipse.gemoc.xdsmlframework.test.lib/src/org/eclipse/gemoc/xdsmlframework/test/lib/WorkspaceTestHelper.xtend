@@ -437,6 +437,10 @@ class WorkspaceTestHelper {
 					} else {
 						println("[waitForJobs] "+job.name+ " (rule="+job.rule+")")
 					}
+					if(job.name.contains("Git Repository Change Scanner") || job.name.contains("Periodic workspace save")) {
+						println("[waitForJobs] CANCELLING job "+job.name+ " (rule="+job.rule+")")
+						
+					}
 				}
 				val rules = jobs.filter[j | j.rule !== null].map[j | j.rule]
 				rules.forEach[r1 | rules.forEach[r2 | 
