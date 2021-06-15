@@ -94,6 +94,7 @@ class WorkspaceTestHelper {
 			println("[WorkspaceTestHelper] waiting for Workbench availability")
 			Thread.sleep(1000);
 		}
+		Thread.sleep(1000);
 		WorkspaceTestHelper.reallyWaitForJobs(100)
 		println("[WorkspaceTestHelper] Workbench is available")
 	}
