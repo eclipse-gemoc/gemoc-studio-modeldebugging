@@ -67,7 +67,7 @@
 	<dependencyManagement>
 		<dependencies>
 			<dependency>
-				<groupId>org.eclipse.gemoc.gemoc_studio</groupId>
+				<groupId>org.eclipse.gemoc.gemoc-studio</groupId>
 				<artifactId>gemoc-studio-bom</artifactId>
 				<version>${project.version}</version>
 				<scope>import</scope>

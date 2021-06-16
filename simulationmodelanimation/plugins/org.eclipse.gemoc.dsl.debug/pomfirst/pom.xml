@@ -5,7 +5,7 @@
 
 	<modelVersion>4.0.0</modelVersion>
 
-	<artifactId>org.eclipse.gemoc.commons.eclipse</artifactId>
+	<artifactId>org.eclipse.gemoc.dsl.debug</artifactId>
 
 	<packaging>jar</packaging>
 
@@ -46,7 +46,7 @@
 				<version>3.0.2</version>
 				<executions>
 					<execution>
-						<id>copy-resource-one</id>
+						<id>copy-resource-src</id>
 						<phase>generate-sources</phase>
 						<goals>
 							<goal>copy-resources</goal>
@@ -56,6 +56,21 @@
 							<resources>
 								<resource>
 									<directory>../src</directory>
+								</resource>
+							</resources>
+						</configuration>
+					</execution>
+					<execution>
+						<id>copy-resource-src-gen</id>
+						<phase>generate-sources</phase>
+						<goals>
+							<goal>copy-resources</goal>
+						</goals>
+						<configuration>
+							<outputDirectory>${basedir}/target/src/main/java</outputDirectory>
+							<resources>
+								<resource>
+									<directory>../src-gen</directory>
 								</resource>
 							</resources>
 						</configuration>
@@ -89,11 +104,5 @@
 			<artifactId>org.eclipse.emf.ecore</artifactId>
 		</dependency>
 
-
-		<dependency>
-			<groupId>${project.groupId}</groupId>
-			<artifactId>org.eclipse.gemoc.commons.eclipse.messagingsystem.api</artifactId>
-			<version>${project.version}</version>
-		</dependency>
 	</dependencies>
 </project>

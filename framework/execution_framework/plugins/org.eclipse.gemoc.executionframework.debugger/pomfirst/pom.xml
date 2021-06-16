@@ -5,12 +5,12 @@
 
 	<modelVersion>4.0.0</modelVersion>
 
-	<artifactId>org.eclipse.gemoc.commons.eclipse</artifactId>
+	<artifactId>org.eclipse.gemoc.executionframework.debugger</artifactId>
 
 	<packaging>jar</packaging>
 
 	<parent>
-		<relativePath>../../../../pomfirst</relativePath>
+		<relativePath>../../../../../pomfirst</relativePath>
 		<groupId>org.eclipse.gemoc.gemoc-studio-modeldebugging</groupId>
 		<artifactId>org.eclipse.gemoc.modeldebugging.root</artifactId>
 		<version>3.3.0-SNAPSHOT</version>
@@ -88,11 +88,36 @@
 			<groupId>org.eclipse.emf</groupId>
 			<artifactId>org.eclipse.emf.ecore</artifactId>
 		</dependency>
+		<dependency>
+			<groupId>org.eclipse.gemoc.gemoc-studio.thirdparty.bundle</groupId>
+			<artifactId>org.eclipse.emf.transaction</artifactId>
+		</dependency>
+
+		<dependency>
+			<groupId>org.eclipse.xtext</groupId>
+			<artifactId>org.eclipse.xtext</artifactId>
+		</dependency>
 
 
 		<dependency>
 			<groupId>${project.groupId}</groupId>
+			<artifactId>org.eclipse.gemoc.commons.eclipse</artifactId>
+			<version>${project.version}</version>
+		</dependency>
+		<dependency>
+			<groupId>${project.groupId}</groupId>
 			<artifactId>org.eclipse.gemoc.commons.eclipse.messagingsystem.api</artifactId>
+			<version>${project.version}</version>
+		</dependency>
+		
+		<dependency>
+			<groupId>${project.groupId}</groupId>
+			<artifactId>org.eclipse.gemoc.dsl.debug</artifactId>
+			<version>${project.version}</version>
+		</dependency>
+		<dependency>
+			<groupId>${project.groupId}</groupId>
+			<artifactId>org.eclipse.gemoc.dsl.debug.ide</artifactId>
 			<version>${project.version}</version>
 		</dependency>
 	</dependencies>
