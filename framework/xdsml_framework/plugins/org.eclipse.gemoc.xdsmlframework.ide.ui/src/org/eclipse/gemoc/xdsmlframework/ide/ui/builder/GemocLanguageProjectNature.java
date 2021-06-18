@@ -17,6 +17,7 @@ import org.eclipse.core.resources.ICommand;
 import org.eclipse.core.resources.IProject;
 import org.eclipse.core.resources.IProjectDescription;
 import org.eclipse.core.resources.IProjectNature;
+import org.eclipse.core.resources.IResource;
 import org.eclipse.core.runtime.CoreException;
 import org.eclipse.gemoc.commons.eclipse.jdt.JavaProject;
 import org.eclipse.gemoc.commons.eclipse.pde.manifest.ManifestChanger;
@@ -133,8 +134,9 @@ public class GemocLanguageProjectNature implements IProjectNature {
 	}
 	private void updateManifestFile(IProject project){
 		// complement manifest
-		ManifestChanger changer = new ManifestChanger(project);
 		try {
+			project.refreshLocal(IResource.DEPTH_INFINITE, null);
+			ManifestChanger changer = new ManifestChanger(project);
 			changer.addPluginDependency(org.eclipse.gemoc.xdsmlframework.api.Activator.PLUGIN_ID, "4.0.0", true, true);
 			changer.addPluginDependency("org.eclipse.emf.ecore.xmi", "2.8.0", true, true);	
 			changer.addPluginDependency("org.eclipse.gemoc.executionframework.engine", "4.0.0", true, true);
