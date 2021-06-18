@@ -94,7 +94,7 @@ class WorkspaceTestHelper {
 			println("[WorkspaceTestHelper] waiting for Workbench availability")
 			Thread.sleep(1000);
 		}
-		WorkspaceTestHelper.reallyWaitForJobs(100)
+		WorkspaceTestHelper.reallyWaitForJobs(50)
 		println("[WorkspaceTestHelper] Workbench is available")
 	}
 	
@@ -422,8 +422,44 @@ class WorkspaceTestHelper {
 	}
 	
 	static def void waitForJobs() {
-		while (!Job.getJobManager().isIdle())
-			delay(100);
+		val delay = 500;
+		var retry = 600
+		if(!Job.getJobManager().isIdle()) {
+			delay(delay);
+		}	
+		while (!Job.getJobManager().isIdle()) {
+			val Job currentJob = Job.getJobManager().currentJob
+			if(retry % 10 == 0 ) {  
+				val jobs = Job.getJobManager().find(null)
+				for (job : jobs) {
+					if(job === currentJob) {
+						println("[waitForJobs](current) "+job.name+ " (rule="+job.rule+")")
+					} else {
+						println("[waitForJobs] "+job.name+ " (rule="+job.rule+")")
+					}
+					// cancel these jobs that tends to crash the tests
+					if(retry <= 300 && (job.name.contains("Git Repository Change Scanner") || 
+						job.name.contains("Periodic workspace save") ||
+						job.name.contains("Workbench Auto-Save Job") ||
+						job.name.contains("Compacting resource model")
+					)) {
+						println("[waitForJobs] CANCELLING job "+job.name+ " (rule="+job.rule+")")
+						
+					}
+				}
+				val rules = jobs.filter[j | j.rule !== null].map[j | j.rule]
+				rules.forEach[r1 | rules.forEach[r2 | 
+					if(r1 != r2 && r1.isConflicting(r2)) {
+						println("[waitForJobs] conflicting rules: "+r1+ " / "+r2)
+					} 
+				]]
+			}
+			delay(delay);
+			retry = retry - 1
+			if(retry <= 0) {
+				throw new InterruptedException("waitForJobs timed out after " + delay * 600 + "ms")
+			}
+		}
 	}
 	static var closed = false;
 	static def void delay(long waitTimeMillis) {
