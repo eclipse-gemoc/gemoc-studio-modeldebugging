@@ -39,8 +39,8 @@
         <module>../simulationmodelanimation/plugins/org.eclipse.gemoc.dsl.debug/pomfirst</module>
         <module>../simulationmodelanimation/plugins/org.eclipse.gemoc.dsl.debug.edit/pomfirst</module>
         <module>../simulationmodelanimation/plugins/org.eclipse.gemoc.dsl.debug.ide/pomfirst</module>
-        <!-- <module>../trace/commons/plugins/org.eclipse.gemoc.trace.commons/pomfirst</module>
-        <module>../trace/commons/plugins/org.eclipse.gemoc.trace.commons.model/pomfirst</module>
+        <module>../trace/commons/plugins/org.eclipse.gemoc.trace.commons/pomfirst</module>
+        <!-- <module>../trace/commons/plugins/org.eclipse.gemoc.trace.commons.model/pomfirst</module>
         <module>../trace/commons/plugins/org.eclipse.gemoc.trace.gemoc.api/pomfirst</module> -->
     </modules>
 	
