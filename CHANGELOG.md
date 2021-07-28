@@ -1,5 +1,34 @@
 # Changelog
 
+## v3.3.0 (28/07/2021)
+
+#### Enhancements:
+
+- [**enhancement**] Consolidation and automatic bump of K3 versions [#185](https://github.com/eclipse/gemoc-studio-modeldebugging/pull/185)
+- [**enhancement**] [Event Manager PR#4] Event manager GUI plugin [#188](https://github.com/eclipse/gemoc-studio-modeldebugging/pull/188)
+- [**enhancement**] Improve test logs about locked jobs [#193](https://github.com/eclipse/gemoc-studio-modeldebugging/pull/193)
+- [**enhancement**][**refactoring**][**releng**] Add Sirius ELK support [#184](https://github.com/eclipse/gemoc-studio-modeldebugging/pull/184)
+- [**enhancement**] [Event Manager PR#1] Support for execution step parameters + misc. [#186](https://github.com/eclipse/gemoc-studio-modeldebugging/pull/186)
+- [**enhancement**] [Event Manager PR#2] Event manager plugin [#187](https://github.com/eclipse/gemoc-studio-modeldebugging/pull/187)
+
+#### Bug Fixes:
+
+- [**bug**] Disable flacky tests [#192](https://github.com/eclipse/gemoc-studio-modeldebugging/pull/192)
+- [**bug**] Fix wrongly reported .dsl error  [#180](https://github.com/eclipse/gemoc-studio-modeldebugging/pull/180)
+- [**bug**][**releng**] Fix event manager integration problems [#189](https://github.com/eclipse/gemoc-studio-modeldebugging/pull/189)
+
+#### Version upgrades
+
+- [**bump**] Bump to Eclipse 2021-06 [#196](https://github.com/eclipse/gemoc-studio-modeldebugging/pull/196)
+- [**bump**] Bump eclipse 2020-12 [#183](https://github.com/eclipse/gemoc-studio-modeldebugging/pull/183)
+- [**bump**] Bump to Eclipse 2020-03 [#178](https://github.com/eclipse/gemoc-studio-modeldebugging/pull/178)
+
+#### Release Engineering
+
+- [**releng**] Explicit repository feature [#190](https://github.com/eclipse/gemoc-studio-modeldebugging/pull/190)
+
+---
+
 ## v3.2.0 (16/06/2020)
 
 #### Enhancements:
