@@ -304,76 +304,77 @@ public class DefaultModelLoader implements IModelLoader {
 		for (DView view : session.getSelectedViews()) {
 			for (DRepresentationDescriptor repDescriptor : view.getOwnedRepresentationDescriptors()) {
 				DRepresentation representation = repDescriptor.getRepresentation();
-
-				final DSemanticDiagram diagram = (DSemanticDiagram) representation;
-				openEditorSubMonitor.subTask(diagram.getName());
-				final List<EObject> elements = new ArrayList<EObject>();
-				elements.add(diagram);
-
-				final IEditorPart editorPart = DialectUIManager.INSTANCE.openEditor(session, representation,
-						openEditorSubMonitor.newChild(1));
-				ToolManagement toolManagement = DiagramPlugin.getDefault().getToolManagement(diagram);
-				toolManagement.addToolFilter(new ToolFilter() {
+				if(representation instanceof DSemanticDiagram) {
+					final DSemanticDiagram diagram = (DSemanticDiagram) representation;
+					openEditorSubMonitor.subTask(diagram.getName());
+					final List<EObject> elements = new ArrayList<EObject>();
+					elements.add(diagram);
+	
+					final IEditorPart editorPart = DialectUIManager.INSTANCE.openEditor(session, representation,
+							openEditorSubMonitor.newChild(1));
+					ToolManagement toolManagement = DiagramPlugin.getDefault().getToolManagement(diagram);
+					toolManagement.addToolFilter(new ToolFilter() {
+							@Override
+							public boolean filter(DDiagram diagram, AbstractToolDescription tool) {
+								return true;
+							}
+						});
+					try {
+						RefreshDiagramOnOpeningCommand refresh = new RefreshDiagramOnOpeningCommand(editingDomain, diagram);
+						CommandExecution.execute(editingDomain, refresh);
+					} catch (Exception e) {
+						Activator.getDefault().getLog().log(new Status(IStatus.ERROR, Activator.PLUGIN_ID,
+								"Problem refreshing diagrams : " + diagram, e));
+					}
+	
+					if (editorPart instanceof DiagramEditorWithFlyOutPalette) {
+						PaletteUtils.colapsePalette((DiagramEditorWithFlyOutPalette) editorPart);
+					}
+	
+					RecordingCommand command = new RecordingCommand(editingDomain, "Activating animator and debug layers") {
 						@Override
-						public boolean filter(DDiagram diagram, AbstractToolDescription tool) {
-							return true;
-						}
-					});
-				try {
-					RefreshDiagramOnOpeningCommand refresh = new RefreshDiagramOnOpeningCommand(editingDomain, diagram);
-					CommandExecution.execute(editingDomain, refresh);
-				} catch (Exception e) {
-					Activator.getDefault().getLog().log(new Status(IStatus.ERROR, Activator.PLUGIN_ID,
-							"Problem refreshing diagrams : " + diagram, e));
-				}
-
-				if (editorPart instanceof DiagramEditorWithFlyOutPalette) {
-					PaletteUtils.colapsePalette((DiagramEditorWithFlyOutPalette) editorPart);
-				}
-
-				RecordingCommand command = new RecordingCommand(editingDomain, "Activating animator and debug layers") {
-					@Override
-					protected void doExecute() {
-						boolean hasADebugLayer = false;
-						Set<Layer> layers = new HashSet<Layer>();
-						layers.addAll(diagram.getDescription().getAdditionalLayers());
-						Collection<Viewpoint> selectedVp = session.getSelectedViewpoints(true);
-						for (Viewpoint vp : selectedVp) {
-							for (RepresentationExtensionDescription extension : vp.getOwnedRepresentationExtensions()) {
-								if (extension instanceof DiagramExtensionDescription) {
-									layers.addAll(((DiagramExtensionDescription) extension).getLayers());
+						protected void doExecute() {
+							boolean hasADebugLayer = false;
+							Set<Layer> layers = new HashSet<Layer>();
+							layers.addAll(diagram.getDescription().getAdditionalLayers());
+							Collection<Viewpoint> selectedVp = session.getSelectedViewpoints(true);
+							for (Viewpoint vp : selectedVp) {
+								for (RepresentationExtensionDescription extension : vp.getOwnedRepresentationExtensions()) {
+									if (extension instanceof DiagramExtensionDescription) {
+										layers.addAll(((DiagramExtensionDescription) extension).getLayers());
+									}
 								}
 							}
-						}
-						for (Layer l : layers) {
-							String descName = diagram.getDescription().getName();
-							String layerName = l.getName();
-							boolean mustBeActiveForDebug = AbstractDSLDebuggerServices.LISTENER
-									.isRepresentationToRefresh(context.getRunConfiguration().getDebugModelID(),
-											descName, layerName)
-									|| layerName.equalsIgnoreCase("Debug");
-							boolean mustBeActiveForAnimation = AbstractGemocAnimatorServices.ANIMATOR
-									.isRepresentationToRefresh(descName, layerName)
-									|| layerName.equalsIgnoreCase("Animation");
-							boolean mustBeActive = mustBeActiveForAnimation || mustBeActiveForDebug;
-							hasADebugLayer = hasADebugLayer || mustBeActiveForDebug;
-							if (mustBeActive && !diagram.getActivatedLayers().contains(l)) {
-								ChangeLayerActivationCommand c = new ChangeLayerActivationCommand(editingDomain,
-										diagram, l, openEditorSubMonitor.newChild(1));
-								c.execute();
+							for (Layer l : layers) {
+								String descName = diagram.getDescription().getName();
+								String layerName = l.getName();
+								boolean mustBeActiveForDebug = AbstractDSLDebuggerServices.LISTENER
+										.isRepresentationToRefresh(context.getRunConfiguration().getDebugModelID(),
+												descName, layerName)
+										|| layerName.equalsIgnoreCase("Debug");
+								boolean mustBeActiveForAnimation = AbstractGemocAnimatorServices.ANIMATOR
+										.isRepresentationToRefresh(descName, layerName)
+										|| layerName.equalsIgnoreCase("Animation");
+								boolean mustBeActive = mustBeActiveForAnimation || mustBeActiveForDebug;
+								hasADebugLayer = hasADebugLayer || mustBeActiveForDebug;
+								if (mustBeActive && !diagram.getActivatedLayers().contains(l)) {
+									ChangeLayerActivationCommand c = new ChangeLayerActivationCommand(editingDomain,
+											diagram, l, openEditorSubMonitor.newChild(1));
+									c.execute();
+								}
+							}
+							if (!hasADebugLayer) {
+								// no debug layer defined in the odesign for
+								// debugmodelID
+								Activator.getDefault().getLog()
+										.log(new Status(IStatus.WARNING, Activator.PLUGIN_ID,
+												"No debug service defined in the odesign for the debug model id : "
+														+ context.getRunConfiguration().getDebugModelID()));
 							}
 						}
-						if (!hasADebugLayer) {
-							// no debug layer defined in the odesign for
-							// debugmodelID
-							Activator.getDefault().getLog()
-									.log(new Status(IStatus.WARNING, Activator.PLUGIN_ID,
-											"No debug service defined in the odesign for the debug model id : "
-													+ context.getRunConfiguration().getDebugModelID()));
-						}
-					}
-				};
-				CommandExecution.execute(editingDomain, command);
+					};
+					CommandExecution.execute(editingDomain, command);
+				}
 			}
 		}
 
