@@ -357,7 +357,7 @@ public class DefaultModelLoader implements IModelLoader {
 										|| layerName.equalsIgnoreCase("Animation");
 								boolean mustBeActive = mustBeActiveForAnimation || mustBeActiveForDebug;
 								hasADebugLayer = hasADebugLayer || mustBeActiveForDebug;
-								if (mustBeActive && !diagram.getActivatedLayers().contains(l)) {
+								if (mustBeActive && !diagram.getActivatedLayers().contains(l) && !diagram.getActivatedTransientLayers().contains(l)) {
 									ChangeLayerActivationCommand c = new ChangeLayerActivationCommand(editingDomain,
 											diagram, l, openEditorSubMonitor.newChild(1));
 									c.execute();
