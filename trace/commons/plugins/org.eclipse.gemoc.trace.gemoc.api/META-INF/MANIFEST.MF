@@ -1,6 +1,6 @@
 Manifest-Version: 1.0
 Bundle-ManifestVersion: 2
-Bundle-Name: Api
+Bundle-Name: GMEOC Trace API
 Bundle-SymbolicName: org.eclipse.gemoc.trace.gemoc.api
 Bundle-Version: 3.0.1.qualifier
 Require-Bundle: org.eclipse.ui,
@@ -16,4 +16,5 @@ Require-Bundle: org.eclipse.ui,
 Bundle-RequiredExecutionEnvironment: JavaSE-1.8
 Export-Package: org.eclipse.gemoc.trace.gemoc.api; uses:="org.eclipse.emf.ecore,  org.eclipse.gemoc.executionframework.engine.mse, org.eclipse.gemoc.xdsmlframework.api.engine_addon,  org.eclipse.gemoc.timeline.view"
 Automatic-Module-Name: org.eclipse.gemoc.trace.gemoc.api
+Bundle-Vendor: Eclipse GEMOC Project
 

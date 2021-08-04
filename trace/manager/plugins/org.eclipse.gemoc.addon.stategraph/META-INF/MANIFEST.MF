@@ -1,10 +1,10 @@
 Manifest-Version: 1.0
 Bundle-ManifestVersion: 2
-Bundle-Name: %pluginName
+Bundle-Name: GEMOC StateGraph Addon
 Bundle-SymbolicName: org.eclipse.gemoc.addon.stategraph;singleton:=true
 Bundle-Version: 3.0.1.qualifier
 Bundle-ClassPath: .
-Bundle-Vendor: %providerName
+Bundle-Vendor: Eclipse GEMOC Project
 Bundle-Localization: plugin
 Bundle-Activator: org.eclipse.gemoc.addon.stategraph.Activator
 Require-Bundle: org.eclipse.ui,
