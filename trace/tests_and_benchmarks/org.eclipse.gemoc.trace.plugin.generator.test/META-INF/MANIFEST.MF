@@ -17,4 +17,5 @@ Require-Bundle: com.google.guava,
  org.eclipse.gemoc.trace.commons;bundle-version="1.0.0"
 Bundle-RequiredExecutionEnvironment: JavaSE-1.7
 Automatic-Module-Name: org.eclipse.gemoc.trace.plugin.generator.test
+Bundle-Vendor: Eclipse GEMOC Project
 

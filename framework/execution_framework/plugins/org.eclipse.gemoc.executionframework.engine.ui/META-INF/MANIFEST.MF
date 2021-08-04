@@ -38,3 +38,4 @@ Export-Package: org.eclipse.gemoc.executionframework.engine.ui,
  org.eclipse.gemoc.executionframework.engine.ui.launcher.tabs,
  org.eclipse.gemoc.executionframework.engine.ui.provider
 Automatic-Module-Name: org.eclipse.gemoc.executionframework.engine.ui
+Bundle-Vendor: Eclipse GEMOC Project

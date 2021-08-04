@@ -1,6 +1,6 @@
 Manifest-Version: 1.0
 Bundle-ManifestVersion: 2
-Bundle-Name: org.eclipse.gemoc.tracemm.gemoctrace
+Bundle-Name: org.eclipse.gemoc.trace.gemoc
 Bundle-SymbolicName: org.eclipse.gemoc.trace.gemoc;singleton:=true
 Bundle-Version: 3.0.1.qualifier
 Bundle-RequiredExecutionEnvironment: JavaSE-1.8
@@ -20,4 +20,5 @@ Bundle-ActivationPolicy: lazy
 Import-Package: org.eclipse.gemoc.executionframework.debugger
 Automatic-Module-Name: org.eclipse.gemoc.trace.gemoc
 Bundle-Activator: org.eclipse.gemoc.trace.gemoc.Activator
+Bundle-Vendor: Eclipse GEMOC Project
 

@@ -1,6 +1,6 @@
 Manifest-Version: 1.0
 Bundle-ManifestVersion: 2
-Bundle-Name: org.eclipse.gemoc.tracemm.k3al.generator
+Bundle-Name: org.eclipse.gemoc.trace.gemoc.generator
 Bundle-SymbolicName: org.eclipse.gemoc.trace.gemoc.generator;singleton:=true
 Bundle-Version: 3.0.1.qualifier
 Require-Bundle: com.google.guava,
@@ -32,3 +32,4 @@ Export-Package: org.eclipse.gemoc.trace.gemoc.generator,
  org.eclipse.gemoc.trace.gemoc.generator.codegen,
  org.eclipse.gemoc.trace.gemoc.generator.util
 Automatic-Module-Name: org.eclipse.gemoc.trace.gemoc.generator
+Bundle-Vendor: Eclipse GEMOC Project

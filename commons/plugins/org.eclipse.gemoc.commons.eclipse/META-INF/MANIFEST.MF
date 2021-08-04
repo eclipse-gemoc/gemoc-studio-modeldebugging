@@ -15,6 +15,6 @@ Export-Package: org.eclipse.gemoc.commons.eclipse,
  org.eclipse.gemoc.commons.eclipse.logging.backends,
  org.eclipse.gemoc.commons.eclipse.resource.merging
 Import-Package: org.eclipse.core.resources
-Bundle-Vendor: INRIA
+Bundle-Vendor: Eclipse GEMOC Project
 Bundle-Activator: org.eclipse.gemoc.commons.eclipse.Activator
 Automatic-Module-Name: org.eclipse.gemoc.commons.eclipse
