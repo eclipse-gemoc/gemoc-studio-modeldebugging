@@ -1,6 +1,6 @@
 Manifest-Version: 1.0
 Bundle-ManifestVersion: 2
-Bundle-Name: Gemoc Language Api
+Bundle-Name: GEMOC Language API
 Bundle-SymbolicName: org.eclipse.gemoc.xdsmlframework.api;singleton:=true
 Bundle-Version: 4.0.0.qualifier
 Bundle-Activator: org.eclipse.gemoc.xdsmlframework.api.Activator
@@ -23,3 +23,4 @@ Export-Package: org.eclipse.gemoc.xdsmlframework.api,
  org.eclipse.gemoc.xdsmlframework.api.extensions.languages,
  org.eclipse.gemoc.xdsmlframework.api.extensions.metaprog
 Automatic-Module-Name: org.eclipse.gemoc.xdsmlframework.api
+Bundle-Vendor: Eclipse GEMOC Project

@@ -4,7 +4,7 @@ Bundle-Name: %pluginName
 Bundle-SymbolicName: org.eclipse.gemoc.executionframework.reflectivetrace.model;singleton:=true
 Bundle-Version: 4.0.0.qualifier
 Bundle-ClassPath: .
-Bundle-Vendor: INRIA
+Bundle-Vendor: Eclipse GEMOC Project
 Bundle-Localization: plugin
 Bundle-RequiredExecutionEnvironment: JavaSE-1.8
 Export-Package: org.eclipse.gemoc.executionframework.reflectivetrace.gemoc_execution_trace,

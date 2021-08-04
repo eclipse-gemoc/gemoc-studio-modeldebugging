@@ -18,7 +18,7 @@ Require-Bundle: org.eclipse.gemoc.xdsmlframework.api,
  org.eclipse.gemoc.commons.eclipse.messagingsystem.api
 Bundle-ActivationPolicy: lazy
 Bundle-RequiredExecutionEnvironment: JavaSE-1.8
-Bundle-Vendor: GEMOC
+Bundle-Vendor: Eclipse GEMOC Project
 Export-Package: org.eclipse.gemoc.executionframework.ui,
  org.eclipse.gemoc.executionframework.ui.utils,
  org.eclipse.gemoc.executionframework.ui.views.engine,

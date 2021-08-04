@@ -3,7 +3,7 @@ Bundle-ManifestVersion: 2
 Bundle-Name: GEMOC Commons Eclipse UI
 Bundle-SymbolicName: org.eclipse.gemoc.commons.eclipse.ui;singleton:=true
 Bundle-Version: 3.3.0.qualifier
-Bundle-Vendor: INRIA
+Bundle-Vendor: Eclipse GEMOC Project
 Bundle-RequiredExecutionEnvironment: JavaSE-1.7
 Require-Bundle: org.eclipse.ui.workbench,
  org.eclipse.ui;bundle-version="3.105.0",

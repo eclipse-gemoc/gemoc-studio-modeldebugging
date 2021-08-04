@@ -14,3 +14,4 @@ Require-Bundle: org.eclipse.gemoc.executionframework.event.model;bundle-version=
 Bundle-ManifestVersion: 2
 Bundle-RequiredExecutionEnvironment: JavaSE-1.8
 Automatic-Module-Name: org.eclipse.gemoc.executionframework.event.manager
+Bundle-Vendor: Eclipse GEMOC Project

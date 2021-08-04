@@ -1,6 +1,6 @@
 Manifest-Version: 1.0
 Bundle-ManifestVersion: 2
-Bundle-Name: Gemoc MultiDimensional Timeline Addon
+Bundle-Name: GEMOC MultiDimensional Timeline Addon
 Bundle-SymbolicName: org.eclipse.gemoc.addon.multidimensional.timeline;singleton:=true
 Bundle-Version: 3.0.1.qualifier
 Bundle-Activator: org.eclipse.gemoc.addon.multidimensional.timeline.Activator
@@ -27,4 +27,5 @@ Bundle-RequiredExecutionEnvironment: JavaSE-11
 Export-Package: org.eclipse.gemoc.addon.multidimensional.timeline,
  org.eclipse.gemoc.addon.multidimensional.timeline.views
 Automatic-Module-Name: org.eclipse.gemoc.addon.multidimensional.timeline
+Bundle-Vendor: Eclipse GEMOC Project
 

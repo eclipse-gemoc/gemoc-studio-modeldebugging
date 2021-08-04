@@ -1,6 +1,6 @@
 Manifest-Version: 1.0
 Bundle-ManifestVersion: 2
-Bundle-Name: Util
+Bundle-Name: GEMOC Trace Commons
 Bundle-SymbolicName: org.eclipse.gemoc.trace.commons
 Bundle-Version: 3.0.1.qualifier
 Export-Package: org.eclipse.gemoc.trace.commons,
@@ -24,4 +24,5 @@ Require-Bundle: com.google.guava,
 Bundle-ClassPath: .
 Bundle-RequiredExecutionEnvironment: JavaSE-1.8
 Automatic-Module-Name: org.eclipse.gemoc.trace.commons
+Bundle-Vendor: Eclipse GEMOC Project
 

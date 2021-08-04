@@ -8,7 +8,7 @@ Bundle-Activator: org.eclipse.gemoc.commons.eclipse.messagingsystem.ui.Activator
 Bundle-ManifestVersion: 2
 Bundle-Name: GEMOC messagingsystem UI
 Bundle-SymbolicName: org.eclipse.gemoc.commons.eclipse.messagingsystem.ui;singleton:=true
-Bundle-Vendor: Inria DiverSE
+Bundle-Vendor: Eclipse GEMOC Project
 Bundle-Version: 3.3.0.qualifier
 Require-Bundle: org.eclipse.core.resources,
  org.eclipse.core.runtime,
