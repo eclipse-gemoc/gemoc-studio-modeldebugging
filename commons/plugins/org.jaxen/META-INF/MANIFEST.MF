@@ -19,8 +19,7 @@ Export-Package: org.jaxen,
  org.jaxen.saxpath.base,
  org.jaxen.saxpath.helpers,
  org.jaxen.util,
- org.jaxen.xom,
- org.w3c.dom
+ org.jaxen.xom
 Bundle-ClassPath: lib/jaxen-1.1.6.jar
 Automatic-Module-Name: org.jaxen
 Bundle-Vendor: Eclipse GEMOC Project
