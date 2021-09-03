@@ -1,5 +1,5 @@
 /*******************************************************************************
- * Copyright (c) 2016, 2017 Inria and others.
+ * Copyright (c) 2016, 2021 Inria and others.
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
  * which accompanies this distribution, and is available at
@@ -31,6 +31,7 @@ import org.eclipse.emf.common.util.EList;
 import org.eclipse.emf.common.util.URI;
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.EPackage;
+import org.eclipse.emf.ecore.EStructuralFeature.Setting;
 import org.eclipse.emf.ecore.resource.Resource;
 import org.eclipse.emf.ecore.resource.ResourceSet;
 import org.eclipse.emf.ecore.resource.impl.ExtensibleURIConverterImpl;
@@ -53,13 +54,11 @@ import org.eclipse.sirius.business.api.session.SessionManager;
 import org.eclipse.sirius.business.internal.session.SessionTransientAttachment;
 import org.eclipse.sirius.business.internal.session.danalysis.DAnalysisSessionImpl;
 import org.eclipse.sirius.common.tools.api.resource.ResourceSetFactory;
-import org.eclipse.sirius.diagram.DDiagram;
 import org.eclipse.sirius.diagram.DSemanticDiagram;
 import org.eclipse.sirius.diagram.DiagramPlugin;
 import org.eclipse.sirius.diagram.description.DiagramExtensionDescription;
 import org.eclipse.sirius.diagram.description.Layer;
 import org.eclipse.sirius.diagram.tools.api.command.ChangeLayerActivationCommand;
-import org.eclipse.sirius.diagram.tools.api.management.ToolFilter;
 import org.eclipse.sirius.diagram.tools.api.management.ToolManagement;
 import org.eclipse.sirius.diagram.ui.business.internal.command.RefreshDiagramOnOpeningCommand;
 import org.eclipse.sirius.ui.business.api.dialect.DialectEditor;
@@ -71,7 +70,6 @@ import org.eclipse.sirius.viewpoint.DRepresentationDescriptor;
 import org.eclipse.sirius.viewpoint.DView;
 import org.eclipse.sirius.viewpoint.description.RepresentationExtensionDescription;
 import org.eclipse.sirius.viewpoint.description.Viewpoint;
-import org.eclipse.sirius.viewpoint.description.tool.AbstractToolDescription;
 import org.eclipse.ui.IEditorPart;
 import org.eclipse.ui.IEditorSite;
 import org.eclipse.ui.PlatformUI;
@@ -270,11 +268,12 @@ public class DefaultModelLoader implements IModelLoader {
 
 		if (r.getContents().size() > 0) {
 
-			// get the used resource
-			Resource res = r.getContents().get(0).eResource();
-
-			// link the resource with Sirius session
-			res.eAdapters().add(new SessionTransientAttachment(session));
+			// get the used resources
+			Set<Resource> modelResources = findModelResources(r.getContents().get(0).eResource());
+			for(Resource modelResource : modelResources) {
+				// link all model resources with the Sirius debug session
+				modelResource.eAdapters().add(new SessionTransientAttachment(session));
+			}
 			RecordingCommand cmd = new RecordingCommand(editingDomain) {
 				@Override
 				protected void doExecute() {
@@ -304,76 +303,77 @@ public class DefaultModelLoader implements IModelLoader {
 		for (DView view : session.getSelectedViews()) {
 			for (DRepresentationDescriptor repDescriptor : view.getOwnedRepresentationDescriptors()) {
 				DRepresentation representation = repDescriptor.getRepresentation();
-
-				final DSemanticDiagram diagram = (DSemanticDiagram) representation;
-				openEditorSubMonitor.subTask(diagram.getName());
-				final List<EObject> elements = new ArrayList<EObject>();
-				elements.add(diagram);
-
-				final IEditorPart editorPart = DialectUIManager.INSTANCE.openEditor(session, representation,
-						openEditorSubMonitor.newChild(1));
-				ToolManagement toolManagement = DiagramPlugin.getDefault().getToolManagement(diagram);
-				toolManagement.addToolFilter(new ToolFilter() {
+				if(representation instanceof DSemanticDiagram) {
+					final DSemanticDiagram diagram = (DSemanticDiagram) representation;
+					openEditorSubMonitor.subTask(diagram.getName());
+					final List<EObject> elements = new ArrayList<EObject>();
+					elements.add(diagram);
+	
+					final IEditorPart editorPart = DialectUIManager.INSTANCE.openEditor(session, representation,
+							openEditorSubMonitor.newChild(1));
+					ToolManagement toolManagement = DiagramPlugin.getDefault().getToolManagement(diagram);
+//					toolManagement.addToolFilter(new ToolFilter() {
+//							@Override
+//							public boolean filter(DDiagram diagram, AbstractToolDescription tool) {
+//								return true;
+//							}
+//						});
+					try {
+						RefreshDiagramOnOpeningCommand refresh = new RefreshDiagramOnOpeningCommand(editingDomain, diagram);
+						CommandExecution.execute(editingDomain, refresh);
+					} catch (Exception e) {
+						Activator.getDefault().getLog().log(new Status(IStatus.ERROR, Activator.PLUGIN_ID,
+								"Problem refreshing diagrams : " + diagram, e));
+					}
+	
+					if (editorPart instanceof DiagramEditorWithFlyOutPalette) {
+						PaletteUtils.colapsePalette((DiagramEditorWithFlyOutPalette) editorPart);
+					}
+	
+					RecordingCommand command = new RecordingCommand(editingDomain, "Activating animator and debug layers") {
 						@Override
-						public boolean filter(DDiagram diagram, AbstractToolDescription tool) {
-							return true;
-						}
-					});
-				try {
-					RefreshDiagramOnOpeningCommand refresh = new RefreshDiagramOnOpeningCommand(editingDomain, diagram);
-					CommandExecution.execute(editingDomain, refresh);
-				} catch (Exception e) {
-					Activator.getDefault().getLog().log(new Status(IStatus.ERROR, Activator.PLUGIN_ID,
-							"Problem refreshing diagrams : " + diagram, e));
-				}
-
-				if (editorPart instanceof DiagramEditorWithFlyOutPalette) {
-					PaletteUtils.colapsePalette((DiagramEditorWithFlyOutPalette) editorPart);
-				}
-
-				RecordingCommand command = new RecordingCommand(editingDomain, "Activating animator and debug layers") {
-					@Override
-					protected void doExecute() {
-						boolean hasADebugLayer = false;
-						Set<Layer> layers = new HashSet<Layer>();
-						layers.addAll(diagram.getDescription().getAdditionalLayers());
-						Collection<Viewpoint> selectedVp = session.getSelectedViewpoints(true);
-						for (Viewpoint vp : selectedVp) {
-							for (RepresentationExtensionDescription extension : vp.getOwnedRepresentationExtensions()) {
-								if (extension instanceof DiagramExtensionDescription) {
-									layers.addAll(((DiagramExtensionDescription) extension).getLayers());
+						protected void doExecute() {
+							boolean hasADebugLayer = false;
+							Set<Layer> layers = new HashSet<Layer>();
+							layers.addAll(diagram.getDescription().getAdditionalLayers());
+							Collection<Viewpoint> selectedVp = session.getSelectedViewpoints(true);
+							for (Viewpoint vp : selectedVp) {
+								for (RepresentationExtensionDescription extension : vp.getOwnedRepresentationExtensions()) {
+									if (extension instanceof DiagramExtensionDescription) {
+										layers.addAll(((DiagramExtensionDescription) extension).getLayers());
+									}
 								}
 							}
-						}
-						for (Layer l : layers) {
-							String descName = diagram.getDescription().getName();
-							String layerName = l.getName();
-							boolean mustBeActiveForDebug = AbstractDSLDebuggerServices.LISTENER
-									.isRepresentationToRefresh(context.getRunConfiguration().getDebugModelID(),
-											descName, layerName)
-									|| layerName.equalsIgnoreCase("Debug");
-							boolean mustBeActiveForAnimation = AbstractGemocAnimatorServices.ANIMATOR
-									.isRepresentationToRefresh(descName, layerName)
-									|| layerName.equalsIgnoreCase("Animation");
-							boolean mustBeActive = mustBeActiveForAnimation || mustBeActiveForDebug;
-							hasADebugLayer = hasADebugLayer || mustBeActiveForDebug;
-							if (mustBeActive && !diagram.getActivatedLayers().contains(l)) {
-								ChangeLayerActivationCommand c = new ChangeLayerActivationCommand(editingDomain,
-										diagram, l, openEditorSubMonitor.newChild(1));
-								c.execute();
+							for (Layer l : layers) {
+								String descName = diagram.getDescription().getName();
+								String layerName = l.getName();
+								boolean mustBeActiveForDebug = AbstractDSLDebuggerServices.LISTENER
+										.isRepresentationToRefresh(context.getRunConfiguration().getDebugModelID(),
+												descName, layerName)
+										|| layerName.equalsIgnoreCase("Debug");
+								boolean mustBeActiveForAnimation = AbstractGemocAnimatorServices.ANIMATOR
+										.isRepresentationToRefresh(descName, layerName)
+										|| layerName.equalsIgnoreCase("Animation");
+								boolean mustBeActive = mustBeActiveForAnimation || mustBeActiveForDebug;
+								hasADebugLayer = hasADebugLayer || mustBeActiveForDebug;
+								if (mustBeActive && !diagram.getActivatedLayers().contains(l) && !diagram.getActivatedTransientLayers().contains(l)) {
+									ChangeLayerActivationCommand c = new ChangeLayerActivationCommand(editingDomain,
+											diagram, l, openEditorSubMonitor.newChild(1));
+									c.execute();
+								}
+							}
+							if (!hasADebugLayer) {
+								// no debug layer defined in the odesign for
+								// debugmodelID
+								Activator.getDefault().getLog()
+										.log(new Status(IStatus.WARNING, Activator.PLUGIN_ID,
+												"No debug service defined in the odesign for the debug model id : "
+														+ context.getRunConfiguration().getDebugModelID()));
 							}
 						}
-						if (!hasADebugLayer) {
-							// no debug layer defined in the odesign for
-							// debugmodelID
-							Activator.getDefault().getLog()
-									.log(new Status(IStatus.WARNING, Activator.PLUGIN_ID,
-											"No debug service defined in the odesign for the debug model id : "
-													+ context.getRunConfiguration().getDebugModelID()));
-						}
-					}
-				};
-				CommandExecution.execute(editingDomain, command);
+					};
+					CommandExecution.execute(editingDomain, command);
+				}
 			}
 		}
 
@@ -449,6 +449,26 @@ public class DefaultModelLoader implements IModelLoader {
 		return nsURIMapping;
 	}
 
+	/**
+	 * Find all resources used by this model
+	 */
+	protected static Set<Resource> findModelResources(Resource res){
+		Set<Resource> result = new HashSet<Resource>();
+		findModelResources(result, res);
+		return result;
+	}
+	protected static void findModelResources(Set<Resource> currentSet, Resource res){
+		currentSet.add(res);
+		
+		Map<EObject, Collection<Setting>> crossRefs = EcoreUtil.ExternalCrossReferencer.find(res);
+		for (EObject externalEObject : crossRefs.keySet()) {
+			Resource consideredResource = externalEObject.eResource();
+			if(consideredResource != null && !currentSet.contains(consideredResource)) {
+				findModelResources(currentSet, consideredResource);
+			}
+		}
+	}
+	
 	private static class MelangeURIConverter extends ExtensibleURIConverterImpl {
 
 		private HashMap<String, String> _nsURIMapping;

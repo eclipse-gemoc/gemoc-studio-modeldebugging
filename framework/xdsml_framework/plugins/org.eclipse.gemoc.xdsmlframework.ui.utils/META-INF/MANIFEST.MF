@@ -1,6 +1,6 @@
 Manifest-Version: 1.0
 Bundle-ManifestVersion: 2
-Bundle-Name: Utils
+Bundle-Name: GEMOC XDSMLFramework Utils
 Bundle-SymbolicName: org.eclipse.gemoc.xdsmlframework.ui.utils
 Bundle-Version: 4.0.0.qualifier
 Bundle-Activator: org.eclipse.gemoc.xdsmlframework.ui.utils.Activator
@@ -16,3 +16,4 @@ Bundle-ActivationPolicy: lazy
 Export-Package: org.eclipse.gemoc.xdsmlframework.ui.utils,
  org.eclipse.gemoc.xdsmlframework.ui.utils.dialogs
 Automatic-Module-Name: org.eclipse.gemoc.xdsmlframework.ui.utils
+Bundle-Vendor: Eclipse GEMOC Project

@@ -13,4 +13,5 @@ Require-Bundle: com.google.guava,
 Export-Package: org.eclipse.gemoc.trace.commons.testutil
 Bundle-RequiredExecutionEnvironment: JavaSE-1.8
 Automatic-Module-Name: org.eclipse.gemoc.trace.commons.testutil
+Bundle-Vendor: Eclipse GEMOC Project
 

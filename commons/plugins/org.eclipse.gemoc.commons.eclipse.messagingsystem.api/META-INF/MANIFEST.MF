@@ -3,7 +3,7 @@ Bundle-ManifestVersion: 2
 Bundle-Name: GEMOC messagingsystem api
 Bundle-SymbolicName: org.eclipse.gemoc.commons.eclipse.messagingsystem.api;singleton:=true
 Bundle-Version: 3.3.0.qualifier
-Bundle-Vendor: Inria DiverSE
+Bundle-Vendor: Eclipse GEMOC Project
 Require-Bundle: org.eclipse.core.runtime
 Bundle-RequiredExecutionEnvironment: JavaSE-1.7
 Bundle-ActivationPolicy: lazy

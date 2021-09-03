@@ -5,6 +5,7 @@ Bundle-SymbolicName: org.eclipse.gemoc.dsl.debug.ide.sirius.ui;singleton:=true
 Bundle-Version: 3.0.1.qualifier
 Bundle-RequiredExecutionEnvironment: JavaSE-1.8
 Bundle-Vendor: %providerName
+Bundle-Localization: plugin
 Require-Bundle: org.eclipse.debug.ui;bundle-version="3.7.0",
  org.eclipse.ui;bundle-version="3.7.0",
  org.eclipse.emf.edit.ui;bundle-version="2.7.0",
