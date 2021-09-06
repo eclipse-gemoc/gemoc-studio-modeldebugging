@@ -5,7 +5,7 @@
 
 	<modelVersion>4.0.0</modelVersion>
 
-	<artifactId>org.eclipse.gemoc.dsl.debug</artifactId>
+	<artifactId>org.eclipse.gemoc.trace.commons</artifactId>
 
 	<packaging>jar</packaging>
 
@@ -55,22 +55,7 @@
 							<outputDirectory>${basedir}/target/src/main/java</outputDirectory>
 							<resources>
 								<resource>
-									<directory>../src</directory>
-								</resource>
-							</resources>
-						</configuration>
-					</execution>
-					<execution>
-						<id>copy-resource-src-gen</id>
-						<phase>generate-sources</phase>
-						<goals>
-							<goal>copy-resources</goal>
-						</goals>
-						<configuration>
-							<outputDirectory>${basedir}/target/src/main/java</outputDirectory>
-							<resources>
-								<resource>
-									<directory>../src-gen</directory>
+									<directory>../../plugins/org.eclipse.gemoc.trace.commons/src</directory>
 								</resource>
 							</resources>
 						</configuration>
@@ -96,6 +81,14 @@
 			<artifactId>org.eclipse.core.resources</artifactId>
 		</dependency>
 		<dependency>
+			<groupId>org.eclipse.gemoc.gemoc-studio.thirdparty.bundle</groupId>
+			<artifactId>org.eclipse.debug.core</artifactId>
+		</dependency>
+		<dependency>
+			<groupId>org.eclipse.gemoc.gemoc-studio.thirdparty.bundle</groupId>
+			<artifactId>org.eclipse.debug.ui</artifactId>
+		</dependency>
+		<dependency>
 			<groupId>org.eclipse.emf</groupId>
 			<artifactId>org.eclipse.emf.common</artifactId>
 		</dependency>
@@ -103,6 +96,54 @@
 			<groupId>org.eclipse.emf</groupId>
 			<artifactId>org.eclipse.emf.ecore</artifactId>
 		</dependency>
+		<dependency>
+		    <groupId>org.eclipse.emf</groupId>
+		    <artifactId>org.eclipse.emf.codegen.ecore</artifactId>
+		   
+		</dependency>
+		<dependency>
+			<groupId>org.eclipse.emf</groupId>
+			<artifactId>org.eclipse.emf.edit</artifactId>
+		</dependency>
+		<dependency>
+			<groupId>org.eclipse.gemoc.gemoc-studio.thirdparty.bundle</groupId>
+			<artifactId>org.eclipse.emf.compare</artifactId>
+		</dependency>
+		<dependency>
+			<groupId>org.eclipse.gemoc.gemoc-studio.thirdparty.bundle</groupId>
+			<artifactId>org.eclipse.emf.transaction</artifactId>
+		</dependency>
 
+<!-- 		<dependency>
+			<groupId>${project.groupId}</groupId>
+			<artifactId>org.eclipse.gemoc.dsl.debug.edit</artifactId>
+			<version>${project.version}</version>
+		</dependency> -->
+
+
+
+		<dependency>
+			<groupId>org.eclipse.xtend</groupId>
+			<artifactId>org.eclipse.xtend.lib</artifactId>
+		</dependency>
+		<dependency>
+			<groupId>org.eclipse.xtend</groupId>
+			<artifactId>org.eclipse.xtend.ide.common</artifactId>
+	
+		</dependency>
+		<dependency>
+			<groupId>org.eclipse.xtext</groupId>
+			<artifactId>org.eclipse.xtext.xbase.lib</artifactId>
+		</dependency>
+	
+		<dependency>
+			<groupId>org.jdom</groupId>
+			<artifactId>jdom2</artifactId>
+		</dependency>
+		<dependency>
+			<groupId>junit</groupId>
+			<artifactId>junit</artifactId>
+		</dependency>
+	    
 	</dependencies>
 </project>

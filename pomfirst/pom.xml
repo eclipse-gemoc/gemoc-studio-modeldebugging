@@ -26,8 +26,8 @@
 		
 	<modules>
         <!-- <module>../framework/execution_framework/pomfirst</module> -->
-        <module>../commons/plugins/org.eclipse.gemoc.commons.eclipse/pomfirst</module>
-        <module>../commons/plugins/org.eclipse.gemoc.commons.eclipse.messagingsystem.api/pomfirst</module>
+        <module>../commons/pomfirst/org.eclipse.gemoc.commons.eclipse</module>
+        <module>../commons/pomfirst/org.eclipse.gemoc.commons.eclipse.messagingsystem.api</module>
         <!-- <module>../commons/plugins/org.eclipse.gemoc.commons.eclipse.pde/pomfirst</module>
         <module>../commons/plugins/org.eclipse.gemoc.commons.utils/pomfirst</module>
         <module>../commons/plugins/org.eclipse.gemoc.dsl.model/pomfirst</module>-->
@@ -36,10 +36,10 @@
         <module>../framework/framework_commons/plugins/org.eclipse.gemoc.executionframework.reflectivetrace.model/pomfirst</module>
         <module>../framework/framework_commons/plugins/org.eclipse.gemoc.xdsmlframework.api/pomfirst</module>
         <module>../framework/framework_commons/plugins/org.eclipse.gemoc.xdsmlframework.commons/pomfirst</module>-->
-        <module>../simulationmodelanimation/plugins/org.eclipse.gemoc.dsl.debug/pomfirst</module>
-        <module>../simulationmodelanimation/plugins/org.eclipse.gemoc.dsl.debug.edit/pomfirst</module>
-        <module>../simulationmodelanimation/plugins/org.eclipse.gemoc.dsl.debug.ide/pomfirst</module>
-        <module>../trace/commons/plugins/org.eclipse.gemoc.trace.commons/pomfirst</module>
+        <module>../simulationmodelanimation/pomfirst/org.eclipse.gemoc.dsl.debug</module>
+        <module>../simulationmodelanimation/pomfirst/org.eclipse.gemoc.dsl.debug.edit</module>
+        <module>../simulationmodelanimation/pomfirst/org.eclipse.gemoc.dsl.debug.ide</module>
+        <module>../trace/commons/plugins/org.eclipse.gemoc.trace.commons</module>
         <!-- <module>../trace/commons/plugins/org.eclipse.gemoc.trace.commons.model/pomfirst</module>
         <module>../trace/commons/plugins/org.eclipse.gemoc.trace.gemoc.api/pomfirst</module> -->
     </modules>

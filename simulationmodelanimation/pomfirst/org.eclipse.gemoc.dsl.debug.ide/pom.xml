@@ -5,7 +5,7 @@
 
 	<modelVersion>4.0.0</modelVersion>
 
-	<artifactId>org.eclipse.gemoc.commons.eclipse.messagingsystem.api</artifactId>
+	<artifactId>org.eclipse.gemoc.dsl.debug.ide</artifactId>
 
 	<packaging>jar</packaging>
 
@@ -46,7 +46,7 @@
 				<version>3.0.2</version>
 				<executions>
 					<execution>
-						<id>copy-resource-one</id>
+						<id>copy-resource-src</id>
 						<phase>generate-sources</phase>
 						<goals>
 							<goal>copy-resources</goal>
@@ -55,7 +55,7 @@
 							<outputDirectory>${basedir}/target/src/main/java</outputDirectory>
 							<resources>
 								<resource>
-									<directory>../src/main/java</directory>
+									<directory>../../plugins/org.eclipse.gemoc.dsl.debug.ide/src</directory>
 								</resource>
 							</resources>
 						</configuration>
@@ -75,11 +75,41 @@
 			</dependency>
 		</dependencies>
 	</dependencyManagement>
-
 	<dependencies>
 		<dependency>
 			<groupId>org.eclipse.platform</groupId>
 			<artifactId>org.eclipse.core.resources</artifactId>
 		</dependency>
+		<dependency>
+			<groupId>org.eclipse.gemoc.gemoc-studio.thirdparty.bundle</groupId>
+			<artifactId>org.eclipse.debug.core</artifactId>
+		</dependency>
+		<dependency>
+			<groupId>org.eclipse.gemoc.gemoc-studio.thirdparty.bundle</groupId>
+			<artifactId>org.eclipse.debug.ui</artifactId>
+		</dependency>
+		<dependency>
+			<groupId>org.eclipse.emf</groupId>
+			<artifactId>org.eclipse.emf.common</artifactId>
+		</dependency>
+		<dependency>
+			<groupId>org.eclipse.emf</groupId>
+			<artifactId>org.eclipse.emf.ecore</artifactId>
+		</dependency>
+		<dependency>
+			<groupId>org.eclipse.emf</groupId>
+			<artifactId>org.eclipse.emf.edit</artifactId>
+		</dependency>
+		<dependency>
+			<groupId>org.eclipse.gemoc.gemoc-studio.thirdparty.bundle</groupId>
+			<artifactId>org.eclipse.emf.transaction</artifactId>
+		</dependency>
+
+		<dependency>
+			<groupId>${project.groupId}</groupId>
+			<artifactId>org.eclipse.gemoc.dsl.debug.edit</artifactId>
+			<version>${project.version}</version>
+		</dependency>
+
 	</dependencies>
 </project>
