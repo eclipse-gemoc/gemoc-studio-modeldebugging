@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+    Copyright (c) 2017 Inria and others.
+    All rights reserved. This program and the accompanying materials
+    are made available under the terms of the Eclipse Public License v1.0
+    which accompanies this distribution, and is available at
+    http://www.eclipse.org/legal/epl-v10.html
+   
+    Contributors:
+        Inria - initial API and implementation
+ -->
+
+<project>
+  <modelVersion>4.0.0</modelVersion>
+
+  <parent>
+    <relativePath>..</relativePath>
+    <groupId>org.eclipse.gemoc.gemoc-studio-modeldebugging.bundle</groupId>
+    <artifactId>org.eclipse.gemoc.modeldebugging.xdsmlframework.root</artifactId>
+    <version>4.0.0-SNAPSHOT</version>
+  </parent>
+
+  <artifactId>org.eclipse.gemoc.xdsmlframework.plugins</artifactId>
+  <packaging>pom</packaging>
+  <modules>
+        <module>org.eclipse.gemoc.xdsmlframework.ui.utils</module>
+        <module>org.eclipse.gemoc.xdsmlframework.ide.ui</module>        
+        <module>org.eclipse.gemoc.xdsmlframework.extensions.sirius</module>
+        <module>org.eclipse.gemoc.xdsmlframework.extensions.kermeta3</module> 
+  </modules>
+</project>

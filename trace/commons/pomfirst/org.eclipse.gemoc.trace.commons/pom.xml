@@ -1,0 +1,174 @@
+<project xmlns="http://maven.apache.org/POM/4.0.0"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 
+    http://maven.apache.org/maven-v4_0_0.xsd">
+
+	<modelVersion>4.0.0</modelVersion>
+
+	<artifactId>org.eclipse.gemoc.trace.commons</artifactId>
+
+	<packaging>jar</packaging>
+
+	<parent>
+		<relativePath>../../../../pomfirst</relativePath>
+		<groupId>org.eclipse.gemoc.gemoc-studio-modeldebugging</groupId>
+		<artifactId>org.eclipse.gemoc.modeldebugging.root</artifactId>
+		<version>3.4.0-SNAPSHOT</version>
+	</parent>
+
+	<properties>
+		<tycho.scmUrl>scm:git:https://github.com/eclipse/gemoc-studio-modeldebugging.git</tycho.scmUrl>
+		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+	</properties>
+
+	<build>
+		<plugins>
+			<plugin>
+				<groupId>org.codehaus.mojo</groupId>
+				<artifactId>build-helper-maven-plugin</artifactId>
+				<version>3.2.0</version>
+				<executions>
+					<execution>
+						<phase>generate-sources</phase>
+						<goals>
+							<goal>add-source</goal>
+						</goals>
+						<configuration>
+							<sources>
+								<source>target/src/main/java</source>
+							</sources>
+						</configuration>
+					</execution>
+				</executions>
+			</plugin>
+			<plugin>
+				<artifactId>maven-resources-plugin</artifactId>
+				<version>3.0.2</version>
+				<executions>
+					<execution>
+						<id>copy-resource-src</id>
+						<phase>generate-sources</phase>
+						<goals>
+							<goal>copy-resources</goal>
+						</goals>
+						<configuration>
+							<outputDirectory>${basedir}/target/src/main/java</outputDirectory>
+							<resources>
+								<resource>
+									<directory>../../plugins/org.eclipse.gemoc.trace.commons/src</directory>
+									<excludes>
+									<!-- removed emf.compare dependency because it generates xtend-maven-plugin issue in  -->
+										<exclude>**/EMFCompareUtil.xtend</exclude>
+									</excludes>
+								</resource>
+							</resources>
+						</configuration>
+					</execution>
+				</executions>
+			</plugin>
+			<plugin> <!--  force build order in generate-sources phase -->
+				<groupId>org.eclipse.xtend</groupId>
+				<artifactId>xtend-maven-plugin</artifactId>
+				
+				<dependencies>
+					<dependency>
+						<groupId>org.eclipse.jdt</groupId>
+						<artifactId>org.eclipse.jdt.core</artifactId>
+						<version>3.13.102</version>
+					</dependency>
+					<dependency>
+						<groupId>org.eclipse.jdt</groupId>
+						<artifactId>org.eclipse.jdt.compiler.apt</artifactId>
+						<version>1.3.110</version>
+					</dependency>
+					<dependency>
+						<groupId>org.eclipse.jdt</groupId>
+						<artifactId>org.eclipse.jdt.compiler.tool</artifactId>
+						<version>1.2.101</version>
+					</dependency>
+					<dependency>
+						<groupId>org.eclipse.emf</groupId>
+						<artifactId>org.eclipse.emf.codegen</artifactId>
+						<version>2.11.0</version>
+					</dependency>
+				</dependencies>
+			</plugin>
+		</plugins>
+	</build>
+	<dependencies>
+		<dependency>
+			<groupId>org.eclipse.platform</groupId>
+			<artifactId>org.eclipse.core.resources</artifactId>
+		</dependency>
+		<dependency>
+			<groupId>org.eclipse.gemoc.gemoc-studio.thirdparty.bundle</groupId>
+			<artifactId>org.eclipse.debug.core</artifactId>
+		</dependency>
+		<dependency>
+			<groupId>org.eclipse.gemoc.gemoc-studio.thirdparty.bundle</groupId>
+			<artifactId>org.eclipse.debug.ui</artifactId>
+		</dependency>
+		<dependency>
+			<groupId>org.eclipse.emf</groupId>
+			<artifactId>org.eclipse.emf.common</artifactId>
+		</dependency>
+		<dependency>
+			<groupId>org.eclipse.emf</groupId>
+			<artifactId>org.eclipse.emf.ecore</artifactId>
+		</dependency>
+		<dependency>
+			<groupId>org.eclipse.emf</groupId>
+			<artifactId>org.eclipse.emf.ecore.xmi</artifactId>
+		</dependency>
+		<dependency>
+		    <groupId>org.eclipse.emf</groupId>
+		    <artifactId>org.eclipse.emf.codegen.ecore</artifactId>
+		</dependency>
+
+		<dependency>
+			<groupId>org.eclipse.gemoc.gemoc-studio.thirdparty.bundle</groupId>
+			<artifactId>org.eclipse.emf.edit</artifactId>
+		</dependency>
+		<!-- <dependency>
+			<groupId>org.eclipse.gemoc.gemoc-studio.thirdparty.bundle</groupId>
+			<artifactId>org.eclipse.emf.compare</artifactId>
+		</dependency>  -->
+		<dependency>
+			<groupId>org.eclipse.gemoc.gemoc-studio.thirdparty.bundle</groupId>
+			<artifactId>org.eclipse.emf.transaction</artifactId>
+		</dependency>
+
+<!-- 		<dependency>
+			<groupId>${project.groupId}</groupId>
+			<artifactId>org.eclipse.gemoc.dsl.debug.edit</artifactId>
+			<version>${project.version}</version>
+		</dependency> -->
+
+
+
+		<dependency>
+			<groupId>org.eclipse.xtend</groupId>
+			<artifactId>org.eclipse.xtend.lib</artifactId>
+		</dependency>
+		<dependency>
+			<groupId>org.eclipse.xtend</groupId>
+			<artifactId>org.eclipse.xtend.ide.common</artifactId>
+		</dependency>
+		<!-- <dependency>
+			<groupId>org.eclipse.xtext</groupId>
+			<artifactId>org.eclipse.xtext.xbase.lib</artifactId>
+		</dependency> -->
+		
+		
+	
+		<dependency>
+			<groupId>org.jdom</groupId>
+			<artifactId>jdom2</artifactId>
+		</dependency>
+		<dependency>
+			<groupId>junit</groupId>
+			<artifactId>junit</artifactId>
+		</dependency>
+	    
+	</dependencies>
+</project>

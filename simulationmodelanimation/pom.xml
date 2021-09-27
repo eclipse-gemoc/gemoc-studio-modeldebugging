@@ -11,7 +11,7 @@
 		<maven>3.0</maven>
 	</prerequisites>
 
-	<groupId>DSLDebugger</groupId>
+	<groupId>org.eclipse.gemoc.gemoc-studio-modeldebugging.bundle</groupId>
 	<artifactId>org.eclipse.gemoc.dsl.debug.parent</artifactId>
 	<version>3.0.1-SNAPSHOT</version>
 	<packaging>pom</packaging>
@@ -33,20 +33,14 @@
 
 	<modules>
 		<!-- Build plugins -->
-		<module>plugins/org.eclipse.gemoc.dsl.debug</module>
-		<module>plugins/org.eclipse.gemoc.dsl.debug.edit</module>
-		<module>plugins/org.eclipse.gemoc.dsl.debug.ide</module>
-		<module>plugins/org.eclipse.gemoc.dsl.debug.ide.sirius.ui</module>
-		<module>plugins/org.eclipse.gemoc.dsl.debug.ide.ui</module>
+		<module>plugins</module>
 
 		<!-- Build tests -->
 		<module>tests/org.eclipse.gemoc.dsl.debug.tests</module>
 		<!-- <module>tests/org.eclipse.gemoc.dsl.debug.ide.tests</module> -->
 
 		<!-- Build features -->
-		<module>releng/org.eclipse.gemoc.dsl.debug.feature</module>
-		<module>releng/org.eclipse.gemoc.dsl.debug.ui.feature</module>
-		<module>releng/org.eclipse.gemoc.dsl.debug.sirius.ui.feature</module>
+		<module>releng</module>
 	</modules>
 	<build>
 		<plugins>

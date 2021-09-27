@@ -15,7 +15,7 @@
 
   <parent>
     <relativePath>../../pom.xml</relativePath>
-    <groupId>org.eclipse.gemoc.modeldebugging.executionframework</groupId>
+    <groupId>org.eclipse.gemoc.gemoc-studio-modeldebugging.bundle</groupId>
     <artifactId>org.eclipse.gemoc.modeldebugging.executionframework.root</artifactId>
     <version>4.0.0-SNAPSHOT</version>
   </parent>
