@@ -60,7 +60,7 @@ pipeline {
 			    // Run the maven build with tests  
 			    withEnv(["STUDIO_VARIANT=${studioVariant}","BRANCH_VARIANT=${BRANCH_NAME}"]){ 
 			       	sh 'printenv'         
-				   	dir ('gemoc-studio/dev_support/full_compilation') {
+				   	dir ('gemoc-studio/dev_support/tycho_full_compilation') {
 						wrap([$class: 'Xvnc', takeScreenshot: false, useXauthority: true]) {
 							sh "mvn -Dmaven.test.failure.ignore \"-Dstudio.variant=${studioVariant}\" -Dbranch.variant=${BRANCH_VARIANT} clean verify --errors "
 						}
