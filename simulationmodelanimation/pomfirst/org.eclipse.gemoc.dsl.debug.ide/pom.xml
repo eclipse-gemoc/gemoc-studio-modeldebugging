@@ -98,9 +98,8 @@
 		</dependency>
 
 		<dependency>
-				<groupId>org.eclipse.gemoc.gemoc-studio.thirdparty.bundle</groupId>
-				<artifactId>org.eclipse.emf.edit</artifactId>
-			<version>2.16.0.20190920</version>
+			<groupId>org.eclipse.gemoc.gemoc-studio.thirdparty.bundle</groupId>
+			<artifactId>org.eclipse.emf.edit</artifactId>
 		</dependency>
 		<dependency>
 			<groupId>org.eclipse.gemoc.gemoc-studio.thirdparty.bundle</groupId>
