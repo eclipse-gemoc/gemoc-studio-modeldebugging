@@ -10,7 +10,27 @@
 	<version>3.4.0-SNAPSHOT</version>
  
     <packaging>pom</packaging>
-
+	<url>https://www.eclipse.org/gemoc/</url>
+    
+	<organization>
+		<name>Eclipse</name>
+		<url>https://www.eclipse.org</url>
+	</organization>
+	<licenses>
+		<license>
+			<name>Eclipse Public License, Version 1.0</name>
+			<url>http://www.eclipse.org/legal/epl-v10.html</url>
+		</license>
+	</licenses>
+	<developers>
+		<developer>
+			<name>Didier Vojtisek</name>
+			<email>didier.vojtisek@inria.fr</email>
+			<organization>Inria</organization>
+			<organizationUrl>http://www.inria.fr</organizationUrl>
+		</developer>
+	</developers>
+	
 	<properties>
 		<tycho.version>1.5.1</tycho.version>
 		<xtend.version>2.18.0</xtend.version>

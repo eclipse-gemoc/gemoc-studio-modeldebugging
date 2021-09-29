@@ -2,13 +2,12 @@
 	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
 	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 
     http://maven.apache.org/maven-v4_0_0.xsd">
-
 	<modelVersion>4.0.0</modelVersion>
-
 	<artifactId>org.eclipse.gemoc.trace.gemoc.api</artifactId>
 
 	<packaging>jar</packaging>
 
+	<url>https://www.eclipse.org/gemoc/</url>
 	<parent>
 		<relativePath>../../../../pomfirst</relativePath>
 		<groupId>org.eclipse.gemoc.gemoc-studio-modeldebugging</groupId>
