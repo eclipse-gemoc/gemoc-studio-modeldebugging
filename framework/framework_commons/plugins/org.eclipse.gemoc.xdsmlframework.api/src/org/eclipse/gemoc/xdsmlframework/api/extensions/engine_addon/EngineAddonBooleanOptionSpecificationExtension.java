@@ -23,7 +23,8 @@ public class EngineAddonBooleanOptionSpecificationExtension extends AbstractEngi
 
 	public boolean getDefaultValue()
 	{
-		return getAttribute(EngineAddonSpecificationExtensionPoint.GEMOC_ENGINE_ADDON_EXTENSION_POINT_OPTION_DEFAULTVALUE).equalsIgnoreCase("true");
+		String defaultValueString = getAttribute(EngineAddonSpecificationExtensionPoint.GEMOC_ENGINE_ADDON_EXTENSION_POINT_OPTION_DEFAULTVALUE);
+		return (defaultValueString != null ? defaultValueString : "false"  ).equalsIgnoreCase("true");
 	}
 		
 }

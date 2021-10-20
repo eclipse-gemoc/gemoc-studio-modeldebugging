@@ -190,7 +190,7 @@ public abstract class AbstractLaunchConfigurationDataProcessingTab extends Abstr
 				Button checkbox = configWidget.mainCheckButton;
 				checkbox.setSelection(value);
 				configWidget.setOptionsEnabled(value);
-				configWidget.optionInitializeFrom(configuration);
+				configWidget.optionInitializeFrom(configuration, extension);
 			} catch (CoreException e) {
 				Activator.error(e.getMessage(), e);
 			}
@@ -212,7 +212,7 @@ public abstract class AbstractLaunchConfigurationDataProcessingTab extends Abstr
 					Button checkbox = configWidget.mainCheckButton;
 					checkbox.setSelection(value);
 					configWidget.setOptionsEnabled(value);
-					configWidget.optionInitializeFrom(configuration);
+					configWidget.optionInitializeFrom(configuration, extension);
 				} catch (CoreException e) {
 					Activator.error(e.getMessage(), e);
 				}
