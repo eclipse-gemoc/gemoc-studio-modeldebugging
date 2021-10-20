@@ -25,7 +25,7 @@
           shortDescription="Data Trace support for any language">
        <addon_booleanOption
              defaultValue="false"
-             id="org.eclipse.gemoc.trace.gemoc.addon_booleanOption"
+             id="org.eclipse.gemoc.trace.gemoc.addon_equivClassComputing_booleanOption"
              name="Equivalency classes computing"
              shortDescription="Activate equivalency classes computing during trace recording (warning this is time consumming on long running models that don&apos;t have equivalent states)">
        </addon_booleanOption>

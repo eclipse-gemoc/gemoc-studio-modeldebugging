@@ -144,7 +144,7 @@ abstract class AbstractTraceAddon implements IEngineAddon, IMultiDimensionalTrac
 			
 			
 			// load addon options from the execution context
-			this.activateUpdateEquivalenceClasses = _executionContext.runConfiguration.getAttribute("org.eclipse.gemoc.trace.gemoc.addon_booleanOption", false);
+			this.activateUpdateEquivalenceClasses = _executionContext.runConfiguration.getAttribute("org.eclipse.gemoc.trace.gemoc.addon_equivClassComputing_booleanOption", false);
 
 			val modelResource = _executionContext.resourceModel
 
