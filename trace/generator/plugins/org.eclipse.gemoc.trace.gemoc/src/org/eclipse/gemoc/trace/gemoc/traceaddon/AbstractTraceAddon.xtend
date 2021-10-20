@@ -44,6 +44,7 @@ import org.eclipse.gemoc.xdsmlframework.api.core.IExecutionEngine
 import org.eclipse.gemoc.xdsmlframework.api.engine_addon.IEngineAddon
 import org.eclipse.gemoc.xdsmlframework.api.engine_addon.modelchangelistener.BatchModelChangeListener
 import org.eclipse.gemoc.xdsmlframework.api.extensions.engine_addon.EngineAddonSpecificationExtensionPoint
+import org.eclipse.gemoc.trace.gemoc.Activator
 
 abstract class AbstractTraceAddon implements IEngineAddon, IMultiDimensionalTraceAddon<Step<?>, State<?, ?>, TracedObject<?>, Dimension<?>, Value<?>> {
 
@@ -59,6 +60,8 @@ abstract class AbstractTraceAddon implements IEngineAddon, IMultiDimensionalTrac
 	
 	
 	protected boolean activateUpdateEquivalenceClasses = true;
+	protected boolean activateSaveOnEveryStep = true;
+	protected boolean activateSaveOnEngineStop = true;
 
 	protected abstract def ITraceConstructor constructTraceConstructor(Resource modelResource, Resource traceResource,
 		Map<EObject, TracedObject<?>> exeToTraced)
@@ -128,10 +131,13 @@ abstract class AbstractTraceAddon implements IEngineAddon, IMultiDimensionalTrac
 				// Updating the state of the trace explorer
 				traceExplorer.updateCallStack(step)
 			])
-			/*try {
-				traceConstructor.save()
-			} catch (Throwable t) {
-			}*/
+			if(activateSaveOnEveryStep) {
+				try {
+					traceConstructor.save()
+				} catch (Throwable t) {
+					Activator.warn("Error while saving trace",t)
+				}
+			}
 		}
 	}
 
@@ -145,7 +151,9 @@ abstract class AbstractTraceAddon implements IEngineAddon, IMultiDimensionalTrac
 			
 			// load addon options from the execution context
 			this.activateUpdateEquivalenceClasses = _executionContext.runConfiguration.getAttribute("org.eclipse.gemoc.trace.gemoc.addon_equivClassComputing_booleanOption", false);
-
+			this.activateSaveOnEveryStep = _executionContext.runConfiguration.getAttribute("org.eclipse.gemoc.trace.gemoc.addon_saveTraceOnStep_booleanOption", false);
+			this.activateSaveOnEngineStop = _executionContext.runConfiguration.getAttribute("org.eclipse.gemoc.trace.gemoc.addon_saveTraceOnEngineStop_booleanOption", false);
+			
 			val modelResource = _executionContext.resourceModel
 
 			// Creating the resource of the trace
@@ -189,6 +197,15 @@ abstract class AbstractTraceAddon implements IEngineAddon, IMultiDimensionalTrac
 			}
 		}
 	}
+	 override engineStopped(IExecutionEngine<?> engine) {
+	 	if(activateSaveOnEngineStop) {
+			try {
+				traceConstructor.save()
+			} catch (Throwable t) {
+				Activator.warn("Error while saving trace",t)
+			}
+		}
+	 }
 
 	/**
 	 * Wrapper using lambda to always use a RecordingCommand when modifying the trace
