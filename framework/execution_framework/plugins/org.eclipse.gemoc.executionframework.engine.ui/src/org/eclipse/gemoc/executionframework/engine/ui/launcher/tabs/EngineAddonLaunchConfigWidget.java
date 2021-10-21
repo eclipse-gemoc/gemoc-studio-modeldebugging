@@ -1,6 +1,7 @@
 package org.eclipse.gemoc.executionframework.engine.ui.launcher.tabs;
 
 import java.util.HashMap;
+import java.util.Optional;
 
 import org.eclipse.core.runtime.CoreException;
 import org.eclipse.debug.core.ILaunchConfiguration;
@@ -135,12 +136,14 @@ public class EngineAddonLaunchConfigWidget {
 	}
 	
 	
-	public void optionInitializeFrom(ILaunchConfiguration configuration) {
+	public void optionInitializeFrom(ILaunchConfiguration configuration, EngineAddonSpecificationExtension extension) {
 		if( optionGroup != null) {
 			for(EngineAddonBooleanOptionSpecificationExtension booleanOption : booleanOptionButtons.keySet()) {
 				try {
 					String key = booleanOption.getId();
-					boolean value = configuration.getAttribute(key, false);
+					Optional<EngineAddonBooleanOptionSpecificationExtension> booleanOptionSpec = extension.getAddonBooleanOptionSpecificationExtensions().stream().filter(s -> key.equals(s.getId()) ).findFirst();
+					boolean defaultValue = booleanOptionSpec.isPresent() ? booleanOptionSpec.get().getDefaultValue() : false;
+					boolean value = configuration.getAttribute(key, defaultValue);
 					booleanOptionButtons.get(booleanOption).setSelection(value);
 				} catch (CoreException e) {
 					Activator.error(e.getMessage(), e);
