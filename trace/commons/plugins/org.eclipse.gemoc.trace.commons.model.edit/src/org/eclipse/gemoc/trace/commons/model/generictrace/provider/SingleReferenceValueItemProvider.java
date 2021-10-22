@@ -8,11 +8,13 @@ import java.util.List;
 
 import org.eclipse.emf.common.notify.AdapterFactory;
 import org.eclipse.emf.common.notify.Notification;
-
+import org.eclipse.emf.ecore.provider.EcoreItemProviderAdapterFactory;
 import org.eclipse.emf.edit.provider.ComposeableAdapterFactory;
+import org.eclipse.emf.edit.provider.IItemLabelProvider;
 import org.eclipse.emf.edit.provider.IItemPropertyDescriptor;
 
 import org.eclipse.gemoc.trace.commons.model.generictrace.GenerictracePackage;
+import org.eclipse.gemoc.trace.commons.model.generictrace.SingleReferenceValue;
 
 /**
  * This is the item provider adapter for a {@link org.eclipse.gemoc.trace.commons.model.generictrace.SingleReferenceValue} object.
@@ -84,11 +86,20 @@ public class SingleReferenceValueItemProvider extends GenericReferenceValueItemP
 	 * This returns the label text for the adapted class.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * @generated
+	 * @generated NOT
 	 */
 	@Override
 	public String getText(Object object) {
-		return getString("_UI_SingleReferenceValue_type");
+		SingleReferenceValue srv = (SingleReferenceValue)object;
+		String label="";
+		if (srv.getReferenceValue() != null) {
+			EcoreItemProviderAdapterFactory factory = new EcoreItemProviderAdapterFactory();
+			IItemLabelProvider labelProvider = (IItemLabelProvider) factory.adapt(srv.getReferenceValue(), IItemLabelProvider.class);
+			if (labelProvider != null) {
+				label = " " +labelProvider.getText(srv.getReferenceValue());
+			}
+		}
+		return getString("_UI_SingleReferenceValue_type")+label;
 	}
 
 
