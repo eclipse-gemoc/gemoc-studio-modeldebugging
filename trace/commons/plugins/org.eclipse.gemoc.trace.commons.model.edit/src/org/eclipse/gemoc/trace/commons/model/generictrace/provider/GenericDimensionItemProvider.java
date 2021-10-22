@@ -10,10 +10,11 @@ import org.eclipse.emf.common.notify.AdapterFactory;
 import org.eclipse.emf.common.notify.Notification;
 
 import org.eclipse.emf.common.util.ResourceLocator;
-
+import org.eclipse.emf.ecore.provider.EcoreItemProviderAdapterFactory;
 import org.eclipse.emf.edit.provider.ComposeableAdapterFactory;
+import org.eclipse.emf.edit.provider.IItemLabelProvider;
 import org.eclipse.emf.edit.provider.IItemPropertyDescriptor;
-
+import org.eclipse.gemoc.trace.commons.model.generictrace.GenericDimension;
 import org.eclipse.gemoc.trace.commons.model.generictrace.GenerictraceFactory;
 import org.eclipse.gemoc.trace.commons.model.generictrace.GenerictracePackage;
 
@@ -91,11 +92,20 @@ public class GenericDimensionItemProvider extends DimensionItemProvider {
 	 * This returns the label text for the adapted class.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * @generated
+	 * @generated NOT
 	 */
 	@Override
 	public String getText(Object object) {
-		return getString("_UI_GenericDimension_type");
+		GenericDimension dim = (GenericDimension)object;
+		String label="";
+		if (dim.getDynamicProperty() != null) {
+			EcoreItemProviderAdapterFactory factory = new EcoreItemProviderAdapterFactory();
+			IItemLabelProvider labelProvider = (IItemLabelProvider) factory.adapt(dim.getDynamicProperty(), IItemLabelProvider.class);
+			if (labelProvider != null) {
+				label = " " +labelProvider.getText(dim.getDynamicProperty());
+			}
+		}
+		return getString("_UI_GenericDimension_type")+label;
 	}
 
 
