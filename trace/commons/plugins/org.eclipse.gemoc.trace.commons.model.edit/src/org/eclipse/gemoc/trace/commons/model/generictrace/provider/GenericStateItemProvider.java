@@ -8,11 +8,11 @@ import java.util.List;
 
 import org.eclipse.emf.common.notify.AdapterFactory;
 import org.eclipse.emf.common.notify.Notification;
-
+import org.eclipse.emf.common.util.EList;
 import org.eclipse.emf.common.util.ResourceLocator;
 
 import org.eclipse.emf.edit.provider.IItemPropertyDescriptor;
-
+import org.eclipse.gemoc.trace.commons.model.generictrace.GenericState;
 import org.eclipse.gemoc.trace.commons.model.trace.provider.StateItemProvider;
 
 /**
@@ -62,11 +62,19 @@ public class GenericStateItemProvider extends StateItemProvider {
 	 * This returns the label text for the adapted class.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * @generated
+	 * @generated NOT
 	 */
 	@Override
 	public String getText(Object object) {
-		return getString("_UI_GenericState_type");
+		GenericState gs = (GenericState)object;
+		String pos="";
+		if(gs.eContainer() != null) {
+			Object list = gs.eContainer().eGet(gs.eContainingFeature());
+			if(list instanceof EList) {
+				pos = " #"+((EList)list).indexOf(object);
+			}
+		}
+		return getString("_UI_GenericState_type")+pos;
 	}
 
 
