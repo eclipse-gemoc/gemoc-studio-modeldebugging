@@ -14,7 +14,7 @@ public class TraceHelper {
 					id += "/"+((EList)list).indexOf(step);
 				}
 			} else {
-				id = "/";
+				id = "#";
 			}
 			return id;
 		}
