@@ -17,7 +17,8 @@ import org.eclipse.emf.edit.provider.ViewerNotification;
 import org.eclipse.gemoc.trace.commons.model.generictrace.GenericParallelStep;
 import org.eclipse.gemoc.trace.commons.model.generictrace.GenerictraceFactory;
 import org.eclipse.gemoc.trace.commons.model.generictrace.GenerictracePackage;
-
+import org.eclipse.gemoc.trace.commons.model.generictrace.util.TraceHelper;
+import org.eclipse.gemoc.trace.commons.model.trace.Step;
 import org.eclipse.gemoc.trace.commons.model.trace.TracePackage;
 
 /**
@@ -101,7 +102,7 @@ public class GenericParallelStepItemProvider extends GenericStepItemProvider {
 	 */
 	@Override
 	public String getText(Object object) {
-		return getString("_UI_GenericParallelStep_type");
+		return getString("_UI_GenericParallelStep_type")+ " "+TraceHelper.stepComputedId((Step)object);
 	}
 
 

@@ -10,6 +10,8 @@ import org.eclipse.emf.common.notify.AdapterFactory;
 import org.eclipse.emf.common.notify.Notification;
 
 import org.eclipse.emf.edit.provider.IItemPropertyDescriptor;
+import org.eclipse.gemoc.trace.commons.model.generictrace.util.TraceHelper;
+import org.eclipse.gemoc.trace.commons.model.trace.Step;
 
 /**
  * This is the item provider adapter for a {@link org.eclipse.gemoc.trace.commons.model.generictrace.GenericSmallStep} object.
@@ -58,11 +60,11 @@ public class GenericSmallStepItemProvider extends GenericStepItemProvider {
 	 * This returns the label text for the adapted class.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * @generated
+	 * @generated NOT
 	 */
 	@Override
 	public String getText(Object object) {
-		return getString("_UI_GenericSmallStep_type");
+		return getString("_UI_GenericSmallStep_type") + " "+TraceHelper.stepComputedId((Step)object);
 	}
 
 

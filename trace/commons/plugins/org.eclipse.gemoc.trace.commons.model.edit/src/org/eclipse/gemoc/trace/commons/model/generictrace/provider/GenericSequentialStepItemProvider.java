@@ -17,7 +17,8 @@ import org.eclipse.emf.edit.provider.ViewerNotification;
 import org.eclipse.gemoc.trace.commons.model.generictrace.GenericSequentialStep;
 import org.eclipse.gemoc.trace.commons.model.generictrace.GenerictraceFactory;
 import org.eclipse.gemoc.trace.commons.model.generictrace.GenerictracePackage;
-
+import org.eclipse.gemoc.trace.commons.model.generictrace.util.TraceHelper;
+import org.eclipse.gemoc.trace.commons.model.trace.Step;
 import org.eclipse.gemoc.trace.commons.model.trace.TracePackage;
 
 /**
@@ -97,11 +98,11 @@ public class GenericSequentialStepItemProvider extends GenericStepItemProvider {
 	 * This returns the label text for the adapted class.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * @generated
+	 * @generated NOT
 	 */
 	@Override
 	public String getText(Object object) {
-		return getString("_UI_GenericSequentialStep_type");
+		return getString("_UI_GenericSequentialStep_type")+ " "+TraceHelper.stepComputedId((Step)object);
 	}
 
 
