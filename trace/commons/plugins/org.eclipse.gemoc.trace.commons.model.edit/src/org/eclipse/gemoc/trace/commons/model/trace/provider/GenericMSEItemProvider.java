@@ -8,10 +8,11 @@ import java.util.List;
 
 import org.eclipse.emf.common.notify.AdapterFactory;
 import org.eclipse.emf.common.notify.Notification;
-
+import org.eclipse.emf.ecore.EObject;
+import org.eclipse.emf.ecore.EOperation;
 import org.eclipse.emf.edit.provider.ComposeableAdapterFactory;
 import org.eclipse.emf.edit.provider.IItemPropertyDescriptor;
-
+import org.eclipse.gemoc.commons.eclipse.xtext.NameHelper;
 import org.eclipse.gemoc.trace.commons.model.trace.GenericMSE;
 import org.eclipse.gemoc.trace.commons.model.trace.TracePackage;
 
@@ -108,14 +109,27 @@ public class GenericMSEItemProvider extends MSEItemProvider {
 	 * This returns the label text for the adapted class.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * @generated
+	 * @generated NOT
 	 */
 	@Override
 	public String getText(Object object) {
+		StringBuilder sb = new StringBuilder();
+		sb.append(getString("_UI_GenericMSE_type"));
 		String label = ((GenericMSE)object).getName();
-		return label == null || label.length() == 0 ?
-			getString("_UI_GenericMSE_type") :
-			getString("_UI_GenericMSE_type") + " " + label;
+		if(sb != null) sb.append(" "+label);
+		//EcoreUtil.resolveAll((GenericMSE)object);
+		EObject caller = ((GenericMSE)object).getCallerReference();
+		if(caller != null) {
+			sb.append(" - ("+NameHelper.prettyObjectName(caller)+")");
+		}
+		else sb.append(" (null)");
+		sb.append("#");
+		EOperation op = ((GenericMSE)object).getActionReference();
+		if(op != null) {
+			sb.append("("+NameHelper.prettyObjectName(op)+")");
+		}
+		else sb.append("(null)");
+		return sb.toString();
 	}
 
 
