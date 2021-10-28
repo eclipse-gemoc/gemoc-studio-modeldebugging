@@ -29,8 +29,7 @@ import org.eclipse.gemoc.trace.commons.model.trace.MSEOccurrence
 import org.eclipse.gemoc.trace.commons.model.trace.ParallelStep
 import org.eclipse.gemoc.trace.commons.model.trace.Step
 import org.eclipse.gemoc.xdsmlframework.api.core.IExecutionEngine
-import org.eclipse.xtext.naming.DefaultDeclarativeQualifiedNameProvider
-import org.eclipse.gemoc.commons.eclipse.emf.EObjectUtil
+import org.eclipse.gemoc.commons.eclipse.xtext.NameHelper;
 
 class GenericSequentialModelDebugger extends AbstractGemocDebugger {
 
@@ -141,39 +140,39 @@ class GenericSequentialModelDebugger extends AbstractGemocDebugger {
 		nbStackFrames--;
 	}
 
-	protected val DefaultDeclarativeQualifiedNameProvider nameprovider = new DefaultDeclarativeQualifiedNameProvider();
-
-	private def String prettyObjectName(Object o) {
-		switch (o) {
-			EObject:prettyObjectName(o)
-			String: '''"«o»"'''
-			default:
-				o.toString
-		}
-	}
-	
-	private def String prettyObjectName(EObject o) {
-		val typeName = o.eClass().getName()
-		var String objectName
-		val qn = nameprovider.getFullyQualifiedName(o)
-		if(qn !== null) {
-			objectName = qn.toString
-		} else {
-			val String resBasedName = EObjectUtil.getResourceBasedName(o, false);
-			if( resBasedName !== null) {
-				objectName = resBasedName
-			} else {
-				objectName = o.toString
-			}
-		}
-		
-		return '''[«typeName»] «objectName»'''
-	}
+//	protected val DefaultDeclarativeQualifiedNameProvider nameprovider = new DefaultDeclarativeQualifiedNameProvider();
+//
+//	private def String prettyObjectName(Object o) {
+//		switch (o) {
+//			EObject:prettyObjectName(o)
+//			String: '''"«o»"'''
+//			default:
+//				o.toString
+//		}
+//	}
+//	
+//	private def String prettyObjectName(EObject o) {
+//		val typeName = o.eClass().getName()
+//		var String objectName
+//		val qn = nameprovider.getFullyQualifiedName(o)
+//		if(qn !== null) {
+//			objectName = qn.toString
+//		} else {
+//			val String resBasedName = EObjectUtil.getResourceBasedName(o, false);
+//			if( resBasedName !== null) {
+//				objectName = resBasedName
+//			} else {
+//				objectName = o.toString
+//			}
+//		}
+//		
+//		return '''[«typeName»] «objectName»'''
+//	}
 
 	protected def String prettyFrameName(MSEOccurrence mseoccurrence, boolean implicit) {
 		if (mseoccurrence !== null) {
 			val mse = mseoccurrence.mse
-			val String args = mseoccurrence.parameters.map[prettyObjectName].join(", ")
+			val String args = mseoccurrence.parameters.map[p | NameHelper.prettyObjectName(p)].join(", ")
 			return prettyFrameName(mse, implicit) + "(" + args + ")"
 		}
 	}
@@ -181,7 +180,7 @@ class GenericSequentialModelDebugger extends AbstractGemocDebugger {
 	protected def String prettyFrameName(MSE mse, boolean implicit) {
 		if (mse !== null) {
 			var EObject caller = mse.caller
-			val String objectName = prettyObjectName(caller)
+			val String objectName = NameHelper.prettyObjectName(caller)
 			val String opName = if (implicit) {
 					mse.action?.name + "_implicitStep"
 				} else {

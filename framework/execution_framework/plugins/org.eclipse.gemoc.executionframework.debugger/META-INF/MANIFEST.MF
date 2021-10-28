@@ -27,7 +27,8 @@ Require-Bundle: com.google.guava,
  org.eclipse.gemoc.commons.eclipse.pde;bundle-version="2.4.0",
  org.eclipse.gemoc.commons.eclipse.messagingsystem.api;bundle-version="2.4.0",
  fr.inria.diverse.melange.resource;bundle-version="0.2.1",
- org.eclipse.gemoc.trace.gemoc.api;bundle-version="3.0.0"
+ org.eclipse.gemoc.trace.gemoc.api;bundle-version="3.0.0",
+ org.eclipse.gemoc.commons.eclipse.xtext;bundle-version="1.0.0"
 Bundle-ActivationPolicy: lazy
 Export-Package: org.eclipse.gemoc.executionframework.debugger
 Automatic-Module-Name: org.eclipse.gemoc.executionframework.debugger
