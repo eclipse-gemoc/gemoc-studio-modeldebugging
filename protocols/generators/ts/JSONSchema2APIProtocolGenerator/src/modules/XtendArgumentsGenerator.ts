@@ -5,8 +5,6 @@
 
 'use strict';
 
-//import * as fs from 'fs';
-//import *  as P from  './json_schema.d';
 import {IProtocol, Protocol as P } from './json_schema';
 import {PropertyHelper} from './json_schemaHelpers'
 
@@ -33,17 +31,8 @@ export function XtendArgumentsGeneratorModule(moduleName: string, basePackageNam
 	s += line("import org.eclipse.lsp4j.jsonrpc.messages.Either");
 	s += line("import org.eclipse.lsp4j.jsonrpc.validation.NonNull");
 	s += line();
-	//s += comment(schema.description);
-	s += comment({ description : 'Declaration of parameters, response bodies, and event bodies for the model execution trace protocol.\nAuto-generated from json schema. Do not edit manually.'});
+	s += comment({ description : `Declaration of data classes and enum for the ${moduleName}.\nAuto-generated from json schema. Do not edit manually.`});
 
-	//s += openBlock(`public interface  ${moduleName}`);
-
-	// for (let typeName in schema.definitions) {
-	// 	console.log(typeName);
-	// }
-
-	// console.table(schema.definitions);
-	
 	for (let typeName in schema.definitions) {
 
 		const d2 = schema.definitions[typeName];
@@ -64,8 +53,11 @@ export function XtendArgumentsGeneratorModule(moduleName: string, basePackageNam
 						if(supertype == 'Response') {
 							// let's create the data'
 							//console.log(`create interface for Response  ${typeName}`);
-							
-							s += MessageInterface(typeName, <P.Definition> d);
+							if((<P.Definition> d).properties && (<P.Definition> d).properties['body']){
+								s += MessageInterface(typeName, <P.Definition>(<P.Definition> d).properties['body']);
+							} else {
+								s += MessageInterface(typeName, <P.Definition> d);
+							}
 						} else if(supertype == 'Event') {
 							// let's create the data'
 							//console.log(`create interface for Event ${typeName}`);
@@ -145,19 +137,34 @@ function MessageInterface(interfaceName: string, definition: P.Definition): stri
 
 function Enum(typeName: string, definition: P.StringType): string {
 	let s = line();
+	let commentableProp = <P.Commentable> definition;
 	s += comment(definition);
-	const x = enumAsOrType(definition.enum);
-	s += line(`export type ${typeName} = ${x};`);
+	//const x = enumAsOrType(definition.enum);
+	s += line(`enum ${typeName} {`);
+	numIndents++;
+	s += line(definition.enum.map((v, index) => {
+		let comment = '';
+		if (commentableProp.enumDescriptions && commentableProp.enumDescriptions.length > index) {
+			comment = formatDescription(commentableProp.enumDescriptions[index]);
+		}
+		return `${comment}${indent()}@SerializedName("${v}")\n${indent()}${EnumLiteralStringToJavaEnumLiteralString(v)}`;
+	}).join(`,\n`));
+
+
+	numIndents--;
+	s += line('}')
+
+
 	return s;
 }
 
-function enumAsOrType(enm: string[]) {
-	return enm.map(v => `'${v}'`).join(' | ');
-}
+// function enumAsOrType(enm: string[]) {
+// 	return enm.map(v => `'${v}'`).join(' | ');
+// }
 
-function enumAsDedicatedType(hostDefinitionName: string, propertyName: string) {
-	return hostDefinitionName+capitalizeFirstLetter(propertyName);
-}
+// function enumAsDedicatedType(hostDefinitionName: string, propertyName: string) {
+// 	return hostDefinitionName+capitalizeFirstLetter(propertyName);
+// }
 
 function comment(c: P.Commentable): string {
 
@@ -367,7 +374,7 @@ function propertySpecificTypeDef(propertyHelper: PropertyHelper): string {
 								// comment = "/** "+commentableProp.enumDescriptions[index]+' */\n'+indent();
 								// comment = comment.replace(/\n/g, '\n' + indent());
 							}
-							return `${comment}${indent()}@SerializedName("${v}")\n${indent()}${toEnumLiteral(v)}`;
+							return `${comment}${indent()}@SerializedName("${v}")\n${indent()}${EnumLiteralStringToJavaEnumLiteralString(v)}`;
 						}).join(`,\n`));
 					numIndents--;
 					s += line('}')
@@ -376,7 +383,7 @@ function propertySpecificTypeDef(propertyHelper: PropertyHelper): string {
 					s += line(`/** ${description}\n${indent()}*/`);
 					s += line('interface ' + propertyHelper.getDedicatedTypeJavaName() + ' {');
 					numIndents++;
-					s += line(prop._enum.map(v => `public static final String ${toEnumLiteral(v)} = "${v}";`)
+					s += line(prop._enum.map(v => `public static final String ${EnumLiteralStringToJavaEnumLiteralString(v)} = "${v}";`)
 						.join(`\n${indent()}`));
 					numIndents--;
 					s += line('}')
@@ -396,14 +403,24 @@ function propertySpecificTypeDef(propertyHelper: PropertyHelper): string {
 	return s;
 }
 
-function toEnumLiteral(string: string) {
-	// TODO  transform camelcase into  uppercase and _
-	return string.toUpperCase() ;
+
+/**
+ * 
+ * @param string Convert the string of the enum literal into Java Enume literal 
+ * Ie. remplace whitespace by '_'
+ *  uppercase
+ * replace camel case by snake case
+ * @returns 
+ */
+function EnumLiteralStringToJavaEnumLiteralString(s: string) {
+	s = s.replace(" ", "_");
+	s = s.split(/(?=[A-Z])/).join('_');
+	return s.toUpperCase() ;
 }
 
-function capitalizeFirstLetter(s: string) {
-	return s.charAt(0).toUpperCase() + s.slice(1);
-  }
+// function capitalizeFirstLetter(s: string) {
+// 	return s.charAt(0).toUpperCase() + s.slice(1);
+//   }
 
 function getRef(ref: string): string {
 	const REXP = /#\/(.+)\/(.+)/;

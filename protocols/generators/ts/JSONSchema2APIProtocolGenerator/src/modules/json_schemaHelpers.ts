@@ -51,6 +51,8 @@ export class PropertyHelper {
                 return `String`;
             case 'integer':
                 return 'Integer';
+            case 'number':
+                    return 'Float';
         }
         if (Array.isArray(prop.type)) {
             if (prop.type.length === 7 && prop.type.sort().join() === 'array,boolean,integer,null,number,object,string') {	// silly way to detect all possible json schema types
@@ -83,7 +85,22 @@ export class PropertyHelper {
         //     //return `{ [key: string]: ${orType(prop.additionalProperties.type)}; }`;
         // }
         // return '{}';
-        return `\/*  TODO objectTypeJavaName() ? ${prop} ${this.containerDefinitionName+capitalizeFirstLetter(this.propertyName)} *\/`
+        if (prop.properties) {
+            if(prop.properties['body']) {
+                return this.internalPropertyTypeOrRefJavaName(prop.properties['body']);
+            } else {
+                return `\/*  TODO objectTypeJavaName() properties ? ${prop} ${this.containerDefinitionName+capitalizeFirstLetter(this.propertyName)} *\/`
+            }
+            
+            // for (let propName in prop.properties) {
+            //     const required = prop.required ? prop.required.indexOf(propName) >= 0 : false;
+            //     return property(hostDefinitionName, propName, !required, prop.properties[propName]);
+            // }
+        } else if (prop.additionalProperties) {
+            return `\/*  TODO objectTypeJavaName() additionalProperties ? ${prop} ${this.containerDefinitionName+capitalizeFirstLetter(this.propertyName)} *\/`
+        } else {
+            return `\/*  TODO objectTypeJavaName() ? ${prop} ${this.containerDefinitionName+capitalizeFirstLetter(this.propertyName)} *\/`
+        }
     }
 
 }
@@ -98,10 +115,10 @@ function getRef(ref: string): string {
 	return ref;
 }
 
-function toEnumLiteral(string: string) {
-	// TODO  transform camelcase into  uppercase and _
-	return string.toUpperCase() ;
-}
+// function toEnumLiteral(string: string) {
+// 	// TODO  transform camelcase into  uppercase and _
+// 	return string.toUpperCase() ;
+// }
 
 function capitalizeFirstLetter(s: string) {
 	return s.charAt(0).toUpperCase() + s.slice(1);
