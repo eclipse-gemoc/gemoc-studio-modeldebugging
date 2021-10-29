@@ -6,6 +6,7 @@
 
 //import * as fs from 'fs';
 import {IProtocol, Protocol as P} from './json_schema';
+import {ResponseHelper, getJavaSafeName, capitalizeFirstLetter, isJavaKeyWord} from './json_schemaHelpers'
 
 let numIndents = 0;
 
@@ -63,8 +64,9 @@ export function JavaServerGeneratorModule(moduleName: string, basePackageName: s
 								responseDef = <P.Definition> respDef;
 							}
 						}
+						const response : ResponseHelper = new ResponseHelper(responseDefTypeName, responseDef);
 						
-						s += RequestInterface(requestName, <P.Definition> d, responseDef);
+						s += RequestInterface(requestName, <P.Definition> d, response);
 					}
 				}
 			}
@@ -77,8 +79,8 @@ export function JavaServerGeneratorModule(moduleName: string, basePackageName: s
 	return s;
 }
 
-function RequestInterface(interfaceName: string, definition: P.Definition, responsedefinition: P.Definition): string {
-
+//function RequestInterface(interfaceName: string, definition: P.Definition, responsedefinition: P.Definition): string {
+function RequestInterface(interfaceName: string, definition: P.Definition, responseHelper: ResponseHelper): string {
 	let desc = definition.description;
 	let methodName = "";
 	if (definition.properties && definition.properties.event && definition.properties.event['enum']) {
@@ -101,12 +103,18 @@ function RequestInterface(interfaceName: string, definition: P.Definition, respo
 	s += line("@JsonRequest");
 	// find response type
 	var returnType = 'CompletableFuture<Void>';
-	if(responsedefinition && responsedefinition.properties && responsedefinition.properties.body){
+
+	if(responseHelper.responseDef && responseHelper.responseDef.properties && responseHelper.responseDef.properties.body){
 		/*console.log(interfaceName+': responsedefinition = '+responsedefinition.properties.body);
 		console.log(responsedefinition.properties.body);
 		console.table(responsedefinition.properties.body);
 		console.table(argumentType(responsedefinition.properties.body));*/
-		returnType = "CompletableFuture<"+propertyType(responsedefinition.properties.body)+">";
+
+		if(responseHelper.responseDef.properties.body.type === 'object'){
+			returnType = "CompletableFuture<"+responseHelper.responseDefTypeName+">";
+		} else {
+			returnType = "CompletableFuture<"+propertyType(responseHelper.responseDef.properties.body)+">";
+		}
 	}
 	var argsString : string[] = [];
 	for (let propName in definition.properties) {

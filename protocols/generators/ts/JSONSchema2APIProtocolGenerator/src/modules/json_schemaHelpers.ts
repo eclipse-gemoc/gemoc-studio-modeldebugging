@@ -123,6 +123,16 @@ export class PropertyHelper {
 
 }
 
+export class ResponseHelper {
+    responseDefTypeName:  string;
+    responseDef: P.Definition;
+    constructor(responseDefTypeName:  string, responseDef: P.Definition){
+        this.responseDef=responseDef;
+        this.responseDefTypeName=responseDefTypeName;
+    }
+
+}
+
 function orType(enm: string | string[]): string {
 	if (typeof enm === 'string') {
 		return 'String';
