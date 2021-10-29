@@ -160,12 +160,12 @@ function getRef(ref: string): string {
  * @param s 
  */
 export function isJavaKeyWord(s: string): boolean {
-    return s === 'default' || s === 'switch' ;
+    return s === 'continue' ||s === 'default' || s === 'goto' || s === 'switch' ;
 }
 
 export function getJavaSafeName(s: string): string {
     if(isJavaKeyWord(s)){
-      return '_'+s+'_';   
+      return '_'+s;   
     } else return s;
 }
 

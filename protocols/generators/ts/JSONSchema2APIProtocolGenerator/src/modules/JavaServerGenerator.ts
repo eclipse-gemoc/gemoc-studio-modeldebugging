@@ -25,6 +25,7 @@ export function JavaServerGeneratorModule(moduleName: string, basePackageName: s
 	s += line("package "+basePackageName+".services;");
 	s += line();
 
+	s += line("import com.google.gson.annotations.SerializedName;");
 	s += line("import java.util.concurrent.CompletableFuture;");
 	s += line("import org.eclipse.lsp4j.jsonrpc.services.JsonRequest;");
 
@@ -127,8 +128,10 @@ function RequestInterface(interfaceName: string, definition: P.Definition, respo
 			argsString.push(`${propertyDef}`);
 		}
 	}
-	
-	s += openBlock(`default ${returnType} ${methodName}(`+argsString.join(', ')+`)`);
+	if(isJavaKeyWord(methodName)){
+		s += line(`@SerializedName("${methodName}")`);
+	}
+	s += openBlock(`default ${returnType} ${getJavaSafeName(methodName)}(`+argsString.join(', ')+`)`);
 	s += line(`throw new UnsupportedOperationException();`)
 	s += closeBlock();
 	return s;
