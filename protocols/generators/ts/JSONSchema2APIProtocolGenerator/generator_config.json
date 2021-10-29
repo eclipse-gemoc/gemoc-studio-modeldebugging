@@ -1,34 +1,10 @@
 {
-    "protocolGenConfigs" : [{
-        "protocolName" : "EngineAddonProtocol",
-        "protocolShortName" : "EAP",
-        "protocolJSONSchemaPath" : "../../../engine_addon_protocol/specification/EngineAddonProtocol.json",
-        "tsAPI" : {
-            "destFileName" : "../../../engine_addon_protocol/ts/org.eclipse.gemoc.protocols.eaop.api/src-gen/EngineAddonProtocol.ts"
-        },
-        "javaServer" : {
-            "packageName" : "org.eclipse.gemoc.protocols.eaop.api",
-            "destFileName" : "../../../engine_addon_protocol/tycho/plugins/org.eclipse.gemoc.protocols.eaop.api/src-gen/org/eclipse/gemoc/protocols/eaop/api/services/IEngineAddonProtocolServer.java"
-        },
-        "javaClient" : {
-            "packageName" : "org.eclipse.gemoc.protocols.eaop.api",
-            "destFileName" : "../../../engine_addon_protocol/tycho/plugins/org.eclipse.gemoc.protocols.eaop.api/src-gen/org/eclipse/gemoc/protocols/eaop/api/services/IEngineAddonProtocolClient.java"
-        },
-        "javaAPI" : {
-            "packageName" : "org.eclipse.gemoc.protocols.eaop.api",
-            "destFileName" : "../../../engine_addon_protocol/tycho/plugins/org.eclipse.gemoc.protocols.eaop.api/src-gen/org/eclipse/gemoc/protocols/eaop/api/data/EngineAddonProtocolData.xtend"
-        },
-        "plantuml" : {
-            "destFileName" : "../../../engine_addon_protocol/docs/images/EngineAddonProtocol.plantuml"
-        }
-    },
+    "protocolGenConfigs" : [
     {
         "protocolName" : "DebugAdapterProtocol",
         "protocolShortName" : "DAP",
         "protocolJSONSchemaPath" : "../../../dap/specification/debugAdapterProtocol.json",
-        "tsAPI" : {
-            "destFileName" : "../../../dap/ts/org.eclipse.gemoc.protocols.dap.api/src-gen/DebugAdapterProtocol.ts"
-        },
+        
         "javaServer" : {
             "packageName" : "org.eclipse.gemoc.protocols.dap.api",
             "destFileName" : "../../../dap/tycho/plugins/org.eclipse.gemoc.protocols.dap.api/src-gen/org/eclipse/gemoc/protocols/dap/api/services/IDebugAdapterProtocolServer.java"
@@ -40,9 +16,6 @@
         "javaAPI" : {
             "packageName" : "org.eclipse.gemoc.protocols.dap.api",
             "destFileName" : "../../../dap/tycho/plugins/org.eclipse.gemoc.protocols.dap.api/src-gen/org/eclipse/gemoc/protocols/dap/api/data/DebugAdapterProtocolData.xtend"
-        },
-        "plantuml" : {
-            "destFileName" : "../../../dap/docs/images/DebugAdapterProtocol.plantuml"
         }
     }
     ]

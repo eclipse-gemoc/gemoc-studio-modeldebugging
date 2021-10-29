@@ -1,3 +1,4 @@
+
 /*---------------------------------------------------------
  * Copyright (c) 2020 Inria and others.. All rights reserved.
  *--------------------------------------------------------*/
@@ -5,7 +6,9 @@
 'use strict';
 
 //import * as fs from 'fs';
-import {IProtocol, Protocol as P} from './json_schema';
+//import *  as P from  './json_schema.d';
+import {IProtocol, Protocol as P } from './json_schema';
+import {PropertyHelper} from './json_schemaHelpers'
 
 let numIndents = 0;
 
@@ -124,9 +127,18 @@ function MessageInterface(interfaceName: string, definition: P.Definition): stri
 /*	s += line(`throw new UnsupportedOperationException();`)*/
 	for (let propName in definition.properties) {
 		const required = definition.required ? definition.required.indexOf(propName) >= 0 : false;
-		s += property(propName, !required, definition.properties[propName]);
+		const propertyHelper: PropertyHelper = new PropertyHelper(interfaceName, propName, definition.properties[propName]);
+		s += property(!required, propertyHelper);
 	}
 	s += closeBlock();
+
+	// TODO property Enum Special classes 
+
+	for (let propName in definition.properties) {
+		const required = definition.required ? definition.required.indexOf(propName) >= 0 : false;
+		const propertyHelper: PropertyHelper = new PropertyHelper(interfaceName, propName, definition.properties[propName]);
+		s += propertySpecificTypeDef(propertyHelper);
+	}
 	return s;
 }
 
@@ -141,6 +153,10 @@ function Enum(typeName: string, definition: P.StringType): string {
 
 function enumAsOrType(enm: string[]) {
 	return enm.map(v => `'${v}'`).join(' | ');
+}
+
+function enumAsDedicatedType(hostDefinitionName: string, propertyName: string) {
+	return hostDefinitionName+capitalizeFirstLetter(propertyName);
 }
 
 function comment(c: P.Commentable): string {
@@ -185,6 +201,18 @@ function comment(c: P.Commentable): string {
 	return '';
 }
 
+function formatDescription(description: string) {
+	description = description.replace(/<code>(.*)<\/code>/g, "'$1'");
+	numIndents++;
+	description = description.replace(/\n/g, '\n' + indent());
+	numIndents--;
+	if (description.indexOf('\n') >= 0) {
+		return line(`/** ${description}\n${indent()} */`);
+	} else {
+		return line(`/** ${description} */`);
+	}
+}
+
 function openBlock(str: string, openChar?: string, indent?: boolean): string {
 	indent = typeof indent === 'boolean' ?  indent : true;
 	openChar = openChar || ' {';
@@ -200,83 +228,91 @@ function closeBlock(closeChar?: string, newline?: boolean): string {
 	return line(closeChar, newline);
 }
 
-function propertyType(prop: any): string {
-	if (prop.$ref) {
-		return getRef(prop.$ref);
-	}
-	switch (prop.type) {
-		case 'array':
-			const s = propertyType(prop.items);
-			if (s.indexOf(' ') >= 0) {
-				return `(${s})[]`;
-			}
-			return `${s}[]`;
-		case 'object':
-			return objectType(prop);
-		case 'string':
-			if (prop.enum) {
-				return enumAsOrType(prop.enum);
-			}
-			return `String`;
-		case 'integer':
-			return 'Integer';
-	}
-	if (Array.isArray(prop.type)) {
-		if (prop.type.length === 7 && prop.type.sort().join() === 'array,boolean,integer,null,number,object,string') {	// silly way to detect all possible json schema types
-			return 'Object';
-		} else {
-			return prop.type.map(v => v === 'integer' ? 'Integer' : v).join(' | ');
-		}
-	}
-	return prop.type;
-}
+// function propertyTypeOrRef(hostDefinitionName: string, propertyName: string, prop: (P.PropertyType | P.RefType )): string {
+// 	if (((prop as P.RefType)?.$ref)) {
+// 		return getRef((prop as P.RefType)?.$ref);
+// 	} else {
+// 		return propertyType(hostDefinitionName, propertyName, prop as P.PropertyType);
+// 	}
+// }
 
-function objectType(prop: any): string {
-	if (prop.properties) {
-		let s = openBlock('', '{', false);
-
-		for (let propName in prop.properties) {
-			const required = prop.required ? prop.required.indexOf(propName) >= 0 : false;
-			s += property(propName, !required, prop.properties[propName]);
-		}
-
-		s += closeBlock('}', false);
-		return s;
-	}
-	if (prop.additionalProperties) {
-		return `Map<String, ${orType(prop.additionalProperties.type)}>`;
-		//return `{ [key: string]: ${orType(prop.additionalProperties.type)}; }`;
-	}
-	return '{}';
-}
-
-function orType(enm: string | string[]): string {
-	if (typeof enm === 'string') {
-		return 'String';
-	}
-	return enm.join(' | ');
-}
-
-function requestArg(name: string,  prop: P.PropertyType): string {
-	let s = '';
-	s += comment(prop);
-	const type = propertyType(prop);
-	const propertyDef = `${type} ${name}`;
-	if (type[0] === '\'' && type[type.length-1] === '\'' && type.indexOf('|') < 0) {
-		s += line(`// ${propertyDef};`);
-	} else {
-		s += line(`${propertyDef};`);
-	}
-	return s;
-}
-
-function property(name: string, optional: boolean, prop: P.PropertyType): string {
-	let s = '';
-	s += comment(prop);
-	const type = propertyType(prop);
-	const propertyDef = `${type} ${name}`;
+// function propertyType(hostDefinitionName: string, propertyName: string, prop: P.PropertyType ): string {
 	
-	if (type[0] === '\'' && type[type.length-1] === '\'' && type.indexOf('|') < 0) {
+// 	switch (prop.type) {
+// 		case 'array':
+// 			const s = propertyTypeOrRef(hostDefinitionName, propertyName, prop.items);
+// 			if (s.indexOf(' ') >= 0) {
+// 				return `(${s})[]`;
+// 			}
+// 			return `${s}[]`;
+// 		case 'object':
+// 			return objectType(hostDefinitionName, prop);
+// 		case 'string':
+// 			//console.log("propertyType() prop.enum="+prop.enum)
+// 			if (prop.enum) {
+// 				return enumAsDedicatedType(hostDefinitionName, propertyName);
+// 			}
+// 			return `String`;
+// 		case 'integer':
+// 			return 'Integer';
+// 	}
+// 	if (Array.isArray(prop.type)) {
+// 		if (prop.type.length === 7 && prop.type.sort().join() === 'array,boolean,integer,null,number,object,string') {	// silly way to detect all possible json schema types
+// 			return 'Object';
+// 		} else {
+// 			return prop.type.map(v => v === 'integer' ? 'Integer' : v).join(' | ');
+// 		}
+// 	}
+// 	return prop.type;
+// }
+
+// function objectType(hostDefinitionName: string, prop: P.ObjectType): string {
+// 	if (prop.properties) {
+// 		let s = openBlock('', '{', false);
+
+// 		for (let propName in prop.properties) {
+// 			const required = prop.required ? prop.required.indexOf(propName) >= 0 : false;
+// 			s += property(hostDefinitionName, propName, !required, prop.properties[propName]);
+// 		}
+
+// 		s += closeBlock('}', false);
+// 		return s;
+// 	}
+// 	if (prop.additionalProperties) {
+// 		return `Map<String, Object>`;
+// 		//return `{ [key: string]: ${orType(prop.additionalProperties.type)}; }`;
+// 	}
+// 	return '{}';
+// }
+
+// function orType(enm: string | string[]): string {
+// 	if (typeof enm === 'string') {
+// 		return 'String';
+// 	}
+// 	return enm.join(' | ');
+// }
+
+// function requestArg(hostDefinitionName: string, name: string,  prop: P.PropertyType): string {
+// 	let s = '';
+// 	s += comment(prop);
+// 	const type = propertyType(hostDefinitionName, name, prop);
+// 	const propertyDef = `${type} ${name}`;
+// 	if (type[0] === '\'' && type[type.length-1] === '\'' && type.indexOf('|') < 0) {
+// 		s += line(`// ${propertyDef};`);
+// 	} else {
+// 		s += line(`${propertyDef};`);
+// 	}
+// 	return s;
+// }
+
+function property(optional: boolean, propertyHelper: PropertyHelper) {
+	let s = '';
+	s += comment(propertyHelper.propertyType as P.PropertyType);
+	const typeName = propertyHelper.propertyTypeOrRefJavaName()
+	//const type = propertyTypeOrRef(hostDefinitionName, propertyName, prop);
+	const propertyDef = `${typeName} ${propertyHelper.propertyName}`;
+	//console.table(prop)
+	if (typeName[0] === '\'' && typeName[typeName.length-1] === '\'' && typeName.indexOf('|') < 0) {
 		s += line(`// ${propertyDef};`);
 	} else {
 		if(!optional) {
@@ -286,6 +322,88 @@ function property(name: string, optional: boolean, prop: P.PropertyType): string
 	}
 	return s;
 }
+
+// Class or Enum definition coming from property that declares a new Type (enum or class with static Strings)
+function propertySpecificTypeDef(propertyHelper: PropertyHelper): string {
+	
+	let s = '';
+	const prop = propertyHelper.propertyType as P.PropertyType
+	if (Array.isArray(prop.type)) {
+		if (prop.type.length === 7 && prop.type.sort().join() === 'array,boolean,integer,null,number,object,string') {	// silly way to detect all possible json schema types
+			s+= '// Object';
+		} else {
+			s+=  '// '+ prop.type.map(v => v === 'integer' ? 'Integer' : v).join(' | ');
+		}
+	} else {
+		switch (prop.type) {
+			case 'array':
+				// const s2 = propertyTypeOrRef(hostDefinitionName, propertyName, prop.items);
+				// if (s2.indexOf(' ') >= 0) {
+				// 	s+=  '// '+ `(${s2})[]`;
+				// } else {
+				// 	s += '// '+ `${s2}[]`;
+				// }
+				s += `// TODO deal with array propertytype for ${propertyHelper.propertyName}`;
+				break;
+			case 'object':
+				//s += '// '+ objectType(hostDefinitionName, prop);
+
+				s += `// TODO deal with object propertytype for ${propertyHelper.propertyName}`;
+				break;
+			case 'string':
+				let commentableProp = <P.Commentable> prop;
+				let description = prop.description || '';
+				if (commentableProp.enum) {
+					// a 'closed' enum
+					s += line(`/** ${description}\n${indent()}*/`);
+					s += line('enum ' + propertyHelper.getDedicatedTypeJavaName() + ' {')
+					s += line();
+					numIndents++;
+					s += line(prop.enum.map((v, index) => {
+							let comment = '';
+							if (commentableProp.enumDescriptions && commentableProp.enumDescriptions.length > index) {
+								// ${commentableProp.enumDescriptions[i]}`
+								comment = formatDescription(commentableProp.enumDescriptions[index]);
+								// comment = "/** "+commentableProp.enumDescriptions[index]+' */\n'+indent();
+								// comment = comment.replace(/\n/g, '\n' + indent());
+							}
+							return `${comment}${indent()}@SerializedName("${v}")\n${indent()}${toEnumLiteral(v)}`;
+						}).join(`,\n`));
+					numIndents--;
+					s += line('}')
+				} else if (commentableProp._enum) {
+					// an 'open' enum
+					s += line(`/** ${description}\n${indent()}*/`);
+					s += line('interface ' + propertyHelper.getDedicatedTypeJavaName() + ' {');
+					numIndents++;
+					s += line(prop._enum.map(v => `public static final String ${toEnumLiteral(v)} = "${v}";`)
+						.join(`\n${indent()}`));
+					numIndents--;
+					s += line('}')
+				} else {
+					s += '// '+ `String`;
+				}
+				break;
+			case 'integer':
+				s += '// '+ 'Integer';
+				break;
+			default:
+				s += '// '+ prop.type;
+		}
+	}
+	s += line();
+
+	return s;
+}
+
+function toEnumLiteral(string: string) {
+	// TODO  transform camelcase into  uppercase and _
+	return string.toUpperCase() ;
+}
+
+function capitalizeFirstLetter(s: string) {
+	return s.charAt(0).toUpperCase() + s.slice(1);
+  }
 
 function getRef(ref: string): string {
 	const REXP = /#\/(.+)\/(.+)/;
