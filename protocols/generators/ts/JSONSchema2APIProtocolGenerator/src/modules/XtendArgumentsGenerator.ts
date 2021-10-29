@@ -6,7 +6,7 @@
 'use strict';
 
 import {IProtocol, Protocol as P } from './json_schema';
-import {PropertyHelper} from './json_schemaHelpers'
+import {PropertyHelper, getJavaSafeName, capitalizeFirstLetter, isJavaKeyWord} from './json_schemaHelpers'
 
 let numIndents = 0;
 
@@ -39,7 +39,7 @@ export function XtendArgumentsGeneratorModule(moduleName: string, basePackageNam
 
 		let supertype: string = null;
 		if ((<P.AllOf>d2).allOf) {
-			// responses and messages
+			// all definition with inheritances
 			const array = (<P.AllOf>d2).allOf;
 			for (let d of array) {
 				if ((<P.RefType>d).$ref) {
@@ -66,9 +66,13 @@ export function XtendArgumentsGeneratorModule(moduleName: string, basePackageNam
 								s += MessageInterface(typeName+"Arguments", <P.Definition>(<P.Definition> d).properties['body']);
 							}
 							//s += MessageInterface(typeName, <P.Definition> d);
+						} else if(supertype !== 'Request'){
+							s += MessageInterface(typeName, <P.Definition> d);
+						} else {
+							console.log("Ignore1 "+typeName+ " with supertype="+supertype);
 						}
 					} else {
-						//console.log("Ignore "+typeName);
+						console.log("Ignore2 "+typeName);
 					}
 				}
 			}	
@@ -83,7 +87,7 @@ export function XtendArgumentsGeneratorModule(moduleName: string, basePackageNam
 				if(typeName != 'ProtocolMessage') {
 					s += MessageInterface(typeName, <P.Definition> d2);
 				} else {
-					//console.log("Ignore "+typeName);
+					console.log("Ignore3 "+typeName);
 				}
 			}
 		}
@@ -133,6 +137,7 @@ function MessageInterface(interfaceName: string, definition: P.Definition): stri
 	}
 	return s;
 }
+
 
 
 function Enum(typeName: string, definition: P.StringType): string {
@@ -317,13 +322,17 @@ function property(optional: boolean, propertyHelper: PropertyHelper) {
 	s += comment(propertyHelper.propertyType as P.PropertyType);
 	const typeName = propertyHelper.propertyTypeOrRefJavaName()
 	//const type = propertyTypeOrRef(hostDefinitionName, propertyName, prop);
-	const propertyDef = `${typeName} ${propertyHelper.propertyName}`;
+	
+	const propertyDef = `${typeName} ${getJavaSafeName(propertyHelper.propertyName)}`;
 	//console.table(prop)
 	if (typeName[0] === '\'' && typeName[typeName.length-1] === '\'' && typeName.indexOf('|') < 0) {
 		s += line(`// ${propertyDef};`);
 	} else {
 		if(!optional) {
 			s += line('// @NonNull');
+		}
+		if(isJavaKeyWord(propertyHelper.propertyName)){
+			s += line(`@SerializedName("${propertyHelper.propertyName}")`);
 		}
 		s += line(`${propertyDef};`);
 	}

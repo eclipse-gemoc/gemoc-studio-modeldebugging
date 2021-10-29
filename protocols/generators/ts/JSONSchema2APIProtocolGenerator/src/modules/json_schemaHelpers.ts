@@ -35,8 +35,8 @@ export class PropertyHelper {
         switch (prop.type) {
             case 'array':
                 const s = this.internalPropertyTypeOrRefJavaName( prop.items);
-                console.table(prop.items);
-                console.table(this);
+                //console.table(prop.items);
+                //console.table(this);
                 if (s.indexOf(' ') >= 0) {
                     return `(${s})[]`;
                 }
@@ -55,11 +55,28 @@ export class PropertyHelper {
                     return 'Float';
         }
         if (Array.isArray(prop.type)) {
-            if (prop.type.length === 7 && prop.type.sort().join() === 'array,boolean,integer,null,number,object,string') {	// silly way to detect all possible json schema types
+
+            if(prop.type.length === 2 && prop.type['null']) {
+                // this is actually a nullable
+                let a = prop.type.filter(e  => e !== 'null')
+                switch (a[0]){
+                case 'string':
+                    return 'String';
+                case 'integer':
+                    return 'Integer';
+                case 'number':
+                    return 'Float';
+                }
                 return 'Object';
             } else {
-                return prop.type.map(v => v === 'integer' ? 'Integer' : v).join(' | ');
+                return 'Object';
             }
+
+            // if (prop.type.length === 7 && prop.type.sort().join() === 'array,boolean,integer,null,number,object,string') {	// silly way to detect all possible json schema types
+            //     return 'Object';
+            // } else {
+            //     return prop.type.map(v => v === 'integer' ? 'Integer' : v).join(' | ');
+            // }
         }
         return prop.type;
     }
@@ -97,12 +114,20 @@ export class PropertyHelper {
             //     return property(hostDefinitionName, propName, !required, prop.properties[propName]);
             // }
         } else if (prop.additionalProperties) {
-            return `\/*  TODO objectTypeJavaName() additionalProperties ? ${prop} ${this.containerDefinitionName+capitalizeFirstLetter(this.propertyName)} *\/`
+            // TODO check version of json_schema.d.ts and use of it ...
+            return `Map<String, String>`;
         } else {
             return `\/*  TODO objectTypeJavaName() ? ${prop} ${this.containerDefinitionName+capitalizeFirstLetter(this.propertyName)} *\/`
         }
     }
 
+}
+
+function orType(enm: string | string[]): string {
+	if (typeof enm === 'string') {
+		return 'String';
+	} 
+	return enm.join(' | ');
 }
 
 function getRef(ref: string): string {
@@ -120,6 +145,20 @@ function getRef(ref: string): string {
 // 	return string.toUpperCase() ;
 // }
 
-function capitalizeFirstLetter(s: string) {
+/**
+ * replace java keywords 
+ * @param s 
+ */
+export function isJavaKeyWord(s: string): boolean {
+    return s === 'default' || s === 'switch' ;
+}
+
+export function getJavaSafeName(s: string): string {
+    if(isJavaKeyWord(s)){
+      return '_'+s+'_';   
+    } else return s;
+}
+
+export function capitalizeFirstLetter(s: string) {
 	return s.charAt(0).toUpperCase() + s.slice(1);
 }
