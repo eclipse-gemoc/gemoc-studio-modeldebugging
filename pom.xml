@@ -31,6 +31,12 @@
 	</parent>
 	
 	<modules>
+	    <module>protocols/engine_addon_protocol/plugins/pom.xml</module>
+		<module>commons/pom.xml</module>
+	    <module>simulationmodelanimation/pom.xml</module>
+       	<module>trace/pom.xml</module>
+       	<module>framework/pom.xml</module>
+		<module>releng</module>
 	</modules>
 
     <properties>
@@ -282,44 +288,6 @@
 	</build>
 	
 	<profiles>
-		<!-- profiles are used to build sub groups -->
-		<!--  as they areactive by default, simply do mvn clean package to build everything -->
-		<profile>
-	        <id>commons</id>
-	        <activation>
-	            <activeByDefault>true</activeByDefault>
-	        </activation>
-	        <modules>
-	        	<module>commons/pom.xml</module>
-	        </modules>
-		</profile>		<profile>
-	        <id>modelanimation</id>
-	        <activation>
-	            <activeByDefault>true</activeByDefault>
-	        </activation>
-	        <modules>
-	        	<module>simulationmodelanimation/pom.xml</module>
-	        </modules>
-		</profile>
-		<profile>
-	        <id>trace_and_framework</id>
-	        <activation>
-	            <activeByDefault>true</activeByDefault>
-	        </activation>
-	        <modules>
-	        	<module>trace/pom.xml</module>
-	        	<module>framework/pom.xml</module>
-	        </modules>
-		</profile>
-		<profile>
-	        <id>releng</id>
-	        <activation>
-	            <activeByDefault>true</activeByDefault>
-	        </activation>
-	        <modules>
-	        	<module>releng</module>
-	        </modules>
-		</profile>
 		<profile>
 			<!-- This profile should be enabled for sonar analysis -->
 			<id>quality</id>
