@@ -56,6 +56,7 @@
         <module>../framework/framework_commons/plugins/org.eclipse.gemoc.executionframework.reflectivetrace.model/pomfirst</module> -->
         <module>../framework/framework_commons/pomfirst/org.eclipse.gemoc.xdsmlframework.api</module>
         <!-- <module>../framework/framework_commons/plugins/org.eclipse.gemoc.xdsmlframework.commons/pomfirst</module>-->
+        <module>../protocols/engine_addon_protocol/pomfirst/org.eclipse.gemoc.protocols.eaop.api</module>
         <module>../simulationmodelanimation/pomfirst/org.eclipse.gemoc.dsl.debug</module>
         <module>../simulationmodelanimation/pomfirst/org.eclipse.gemoc.dsl.debug.edit</module>
         <module>../simulationmodelanimation/pomfirst/org.eclipse.gemoc.dsl.debug.ide</module>

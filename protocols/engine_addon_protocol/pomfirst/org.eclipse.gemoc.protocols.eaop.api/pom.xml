@@ -5,7 +5,7 @@
 
 	<modelVersion>4.0.0</modelVersion>
 
-	<artifactId>org.eclipse.gemoc.commons.eclipse.messagingsystem.api</artifactId>
+	<artifactId>org.eclipse.gemoc.protocols.eaop.api</artifactId>
 
 	<packaging>jar</packaging>
 
@@ -23,6 +23,28 @@
 
 	<build>
 		<plugins>
+			
+			<plugin>
+				<artifactId>maven-resources-plugin</artifactId>
+				<version>3.0.2</version>
+				<executions>
+					<execution>
+						<id>copy-resource-src</id>
+						<phase>generate-sources</phase>
+						<goals>
+							<goal>copy-resources</goal>
+						</goals>
+						<configuration>
+							<outputDirectory>${basedir}/target/src/main/java</outputDirectory>
+							<resources>
+								<resource>
+									<directory>../../plugins/org.eclipse.gemoc.protocols.eaop.api/src-gen</directory>
+								</resource>
+							</resources>
+						</configuration>
+					</execution>
+				</executions> 
+			</plugin>
 			<plugin>
 				<groupId>org.codehaus.mojo</groupId>
 				<artifactId>build-helper-maven-plugin</artifactId>
@@ -41,30 +63,13 @@
 					</execution>
 				</executions>
 			</plugin>
-			<plugin>
-				<artifactId>maven-resources-plugin</artifactId>
-				<version>3.0.2</version>
-				<executions>
-					<execution>
-						<id>copy-resource-src</id>
-						<phase>generate-sources</phase>
-						<goals>
-							<goal>copy-resources</goal>
-						</goals>
-						<configuration>
-							<outputDirectory>${basedir}/target/src/main/java</outputDirectory>
-							<resources>
-								<resource>
-									<directory>../../plugins/org.eclipse.gemoc.commons.eclipse.messagingsystem.api/src/main/java</directory>
-								</resource>
-							</resources>
-						</configuration>
-					</execution>
-				</executions>
+			<plugin> <!--  force build order in generate-sources phase -->
+				<groupId>org.eclipse.xtend</groupId>
+				<artifactId>xtend-maven-plugin</artifactId>
 			</plugin>
 		</plugins>
 	</build>
-	<!-- <dependencyManagement>
+	<dependencyManagement>
 		<dependencies>
 			<dependency>
 				<groupId>org.eclipse.gemoc.gemoc-studio</groupId>
@@ -74,12 +79,34 @@
 				<type>pom</type>
 			</dependency>
 		</dependencies>
-	</dependencyManagement> -->
-
+	</dependencyManagement>
 	<dependencies>
 		<dependency>
 			<groupId>org.eclipse.platform</groupId>
 			<artifactId>org.eclipse.core.resources</artifactId>
 		</dependency>
+		<dependency>
+			<groupId>org.eclipse.emf</groupId>
+			<artifactId>org.eclipse.emf.common</artifactId>
+		</dependency>
+		<dependency>
+			<groupId>org.eclipse.emf</groupId>
+			<artifactId>org.eclipse.emf.ecore</artifactId>
+		</dependency>
+
+		<dependency>
+			<groupId>org.eclipse.xtend</groupId>
+			<artifactId>org.eclipse.xtend.lib</artifactId>
+		</dependency>
+		<dependency>
+			<groupId>org.eclipse.xtend</groupId>
+			<artifactId>org.eclipse.xtend.ide.common</artifactId>
+	
+		</dependency>
+		<dependency>
+			<groupId>org.eclipse.xtext</groupId>
+			<artifactId>org.eclipse.xtext.xbase.lib</artifactId>
+		</dependency>
+
 	</dependencies>
 </project>
