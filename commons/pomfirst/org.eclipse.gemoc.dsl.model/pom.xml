@@ -22,6 +22,11 @@
 	</properties>
 
 	<build>
+	   <resources>
+	     <resource>
+	       <directory>target/src/main/resources</directory>
+	     </resource>
+	   </resources>
 		<plugins>
 			<plugin>
 				<groupId>org.codehaus.mojo</groupId>
@@ -56,6 +61,10 @@
 							<resources>
 								<resource>
 									<directory>../../plugins/org.eclipse.gemoc.dsl.model/src</directory>
+								</resource>
+								<resource>
+									<targetPath>${basedir}/target/src/main/resources/model</targetPath>
+									<directory>../../plugins/org.eclipse.gemoc.dsl.model/model</directory>
 								</resource>
 							</resources>
 						</configuration>
