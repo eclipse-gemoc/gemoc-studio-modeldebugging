@@ -19,6 +19,7 @@ import java.util.stream.Collectors;
 
 import org.eclipse.core.runtime.CoreException;
 import org.eclipse.gemoc.executionframework.engine.Activator;
+import org.eclipse.gemoc.executionframework.event.manager.IEventManager;
 import org.eclipse.gemoc.xdsmlframework.api.core.IExecutionPlatform;
 import org.eclipse.gemoc.xdsmlframework.api.core.IModelLoader;
 import org.eclipse.gemoc.xdsmlframework.api.core.IRunConfiguration;
@@ -38,6 +39,10 @@ public class DefaultExecutionPlatform implements IExecutionPlatform {
 		_addons = new ArrayList<IEngineAddon>();
 
 		// instanciate addons (this includes language specific addons)
+		final IEventManager eventManager = EventManagerHelper.getEventManager(_languageDefinition.getName());
+		if (eventManager != null) {
+			addEngineAddon(eventManager);
+		}
 		for (EngineAddonSpecificationExtension extension : runConfiguration.getEngineAddonExtensions()) {
 			Activator.getDefault().debug("Enabled addon: "+extension.getName());
 			addEngineAddon(extension.instanciateComponent());

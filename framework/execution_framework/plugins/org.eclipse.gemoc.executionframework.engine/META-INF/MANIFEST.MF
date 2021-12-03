@@ -19,7 +19,8 @@ Require-Bundle: org.eclipse.gemoc.xdsmlframework.api,
  org.eclipse.emf.ecore,
  org.eclipse.debug.core,
  org.eclipse.gemoc.dsl.debug.ide,
- org.eclipse.gemoc.executionframework.engine.model;visibility:=reexport
+ org.eclipse.gemoc.executionframework.engine.model;visibility:=reexport,
+ org.eclipse.gemoc.executionframework.event.manager
 Bundle-ActivationPolicy: lazy
 Bundle-RequiredExecutionEnvironment: JavaSE-1.8
 Export-Package: org.eclipse.gemoc.executionframework.engine,

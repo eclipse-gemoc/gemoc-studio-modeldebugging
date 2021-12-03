@@ -46,16 +46,16 @@ public class GenericEventManager implements IEventManager {
 
 	private final RelationshipManager relationshipManager;
 	
-	private IntegrationFacade integrationFacade = null;
-
-	public GenericEventManager(String languageName, Resource executedResource,
+	private final Map<String, IMetalanguageRuleExecutor> metalanguageIntegrations = new HashMap<>();
+	
+	public GenericEventManager(String languageName,
 			List<IImplementationRelationship> implementationRelationships,
 			List<ISubtypingRelationship> subtypingRelationships) {
 		relationshipManager = new RelationshipManager(this);
 		implementationRelationships.forEach(r -> relationshipManager.registerImplementationRelationship(r));
 		subtypingRelationships.forEach(r -> relationshipManager.registerSubtypingRelationship(r));
 	}
-
+	
 	public RelationshipManager getRelationshipManager() {
 		return relationshipManager;
 	}
@@ -63,7 +63,6 @@ public class GenericEventManager implements IEventManager {
 	@Override
 	public void engineInitialized(IExecutionEngine<?> executionEngine) {
 		engine = executionEngine;
-		integrationFacade = new IntegrationFacade(engine);
 		relationshipManager.setExecutedResource(engine.getExecutionContext().getResourceModel());
 		IConfigurationElement[] eventEmitters = Platform.getExtensionRegistry()
 				.getConfigurationElementsFor("org.eclipse.gemoc.executionframework.event.event_emitter");
@@ -204,9 +203,32 @@ public class GenericEventManager implements IEventManager {
 				((CompositeCallRequest) callRequest).getCallRequests().forEach(cr -> handleCallRequest(cr));
 			} else if (callRequest instanceof SimpleCallRequest) {
 				final SimpleCallRequest simpleCallRequest = (SimpleCallRequest) callRequest;
-				integrationFacade.handleCallRequest(simpleCallRequest);
+				final IMetalanguageRuleExecutor ruleExecutor = metalanguageIntegrations
+						.computeIfAbsent(simpleCallRequest.getMetalanguage(), m -> findMetalanguageRuleExecutor(m));
+				if (ruleExecutor != null) {
+					ruleExecutor.handleCallRequest(simpleCallRequest);
+				} else {
+					throw new IllegalArgumentException(
+							"No metalanguage rule executor was found for metalanguage " + simpleCallRequest.getMetalanguage());
+				}
 			}
 		}
+	}
+
+	private IMetalanguageRuleExecutor findMetalanguageRuleExecutor(String metalanguage) {
+		return Arrays
+				.stream(Platform.getExtensionRegistry().getConfigurationElementsFor("org.eclipse.gemoc.executionframework.event.metalanguage_rule_executor"))
+				.filter(c -> c.getAttribute("metaprog").equals(metalanguage))
+				.findFirst().map(c -> {
+					IMetalanguageRuleExecutor result = null;
+					try {
+						result = (IMetalanguageRuleExecutor) c.createExecutableExtension("class");
+						result.setExecutionEngine(engine);
+					} catch (CoreException e) {
+						e.printStackTrace();
+					}
+					return result;
+				}).orElse(null);
 	}
 
 	@SuppressWarnings({ "rawtypes", "unchecked" })
