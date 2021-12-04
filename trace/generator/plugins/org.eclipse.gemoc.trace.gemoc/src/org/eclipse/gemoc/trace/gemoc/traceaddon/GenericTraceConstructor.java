@@ -469,7 +469,14 @@ public class GenericTraceConstructor implements ITraceConstructor {
 				else if (modelChange instanceof RemovedObjectModelChange) {
 					stateChanged = true;
 					final List<GenericValue> values = newState.getValues();
-					((GenericTracedObject) exeToTraced.get(o)).getAllDimensions().forEach(d -> values.remove(d.getValues().get(d.getValues().size() - 1)));
+					List<GenericDimension> dimensions = ((GenericTracedObject) exeToTraced.get(o)).getAllDimensions();
+					if (dimensions != null && dimensions.size()>0) {
+						for (GenericDimension d :dimensions) {
+							if (d.getValues() != null && d.getValues().size()>0) {
+								values.remove(d.getValues().get(d.getValues().size() - 1));
+							}
+						}
+					}
 				}
 				// Here we must look at non-collection mutable fields
 				// We must rollback the last values from the copied state, and add new values as well
