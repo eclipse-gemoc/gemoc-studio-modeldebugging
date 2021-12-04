@@ -13,6 +13,7 @@ package org.eclipse.gemoc.trace.gemoc.traceaddon;
 import java.util.ArrayList;
 import java.util.Deque;
 import java.util.HashSet;
+import java.util.Iterator;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
@@ -512,17 +513,18 @@ public class GenericTraceConstructor implements ITraceConstructor {
 							.findFirst().orElse(null);
 					if (dimension != null) {
 						final List<GenericValue> dimensionValues = dimension.getValues();
-						final ManyReferenceValue lastValue = (ManyReferenceValue) dimensionValues.get(dimensionValues.size() - 1);
-						List<EObject> values = new ArrayList<>();
-						if(dynamicProperty.isPresent()) {
-							values = (List<EObject>) dynamicProperty.get().getValue();
-						}
-						for (EObject eObj : values) {
-							addNewObjectToStateIfDynamic(eObj, newState);
-						}
+						final GenericValue lastDimensionValue = dimensionValues.get(dimensionValues.size() - 1);
 						boolean change = false;
-						if (lastValue != null) {
-							if (lastValue.getReferenceValues().size() == values.size()) {
+						if (lastDimensionValue instanceof ManyReferenceValue) {
+							final ManyReferenceValue lastValue = (ManyReferenceValue) lastDimensionValue;
+							List<EObject> values = new ArrayList<>();
+							if(dynamicProperty.isPresent()) {
+								values = (List<EObject>) dynamicProperty.get().getValue();
+							}
+							for (EObject eObj : values) {
+								addNewObjectToStateIfDynamic(eObj, newState);
+							}
+							if (lastValue != null && lastValue.getReferenceValues().size() == values.size()) {
 								java.util.Iterator<EObject> it = values.iterator();
 								for (EObject aPreviousValue : lastValue.getReferenceValues()) {
 									EObject aCurrentValue = it.next();
@@ -534,13 +536,86 @@ public class GenericTraceConstructor implements ITraceConstructor {
 							} else {
 								change = true;
 							}
-						} else {
-							change = true;
+						}
+						else if (lastDimensionValue instanceof ManyStringAttributeValue) {
+							final ManyStringAttributeValue lastValue = (ManyStringAttributeValue) lastDimensionValue;
+							List<String> values = new ArrayList<>();
+							if(dynamicProperty.isPresent()) {
+								values = (List<String>) dynamicProperty.get().getValue();
+							}
+							if (lastValue != null && lastValue.getAttributeValue().size() == values.size()) {
+								if (!lastValue.getAttributeValue().equals(values)) {
+									change = true;
+									break;
+								}
+							} else {
+								change = true;
+							}
+						}
+						else if (lastDimensionValue instanceof ManyIntegerAttributeValue) {
+							final ManyIntegerAttributeValue lastValue = (ManyIntegerAttributeValue) lastDimensionValue;
+							List<Integer> values = new ArrayList<>();
+							if(dynamicProperty.isPresent()) {
+								values = (List<Integer>) dynamicProperty.get().getValue();
+							}
+							if (lastValue != null && lastValue.getAttributeValue().size() == values.size()) {
+								if (!lastValue.getAttributeValue().equals(values)) {
+									change = true;
+									break;
+								}
+							} else {
+								change = true;
+							}
+						}
+						else if (lastDimensionValue instanceof ManyBooleanAttributeValue) {
+							final ManyBooleanAttributeValue lastValue = (ManyBooleanAttributeValue) lastDimensionValue;
+							List<Boolean> values = new ArrayList<>();
+							if(dynamicProperty.isPresent()) {
+								values = (List<Boolean>) dynamicProperty.get().getValue();
+							}
+							if (lastValue != null && lastValue.getAttributeValue().size() == values.size()) {
+								if (!lastValue.getAttributeValue().equals(values)) {
+									change = true;
+									break;
+								}
+							} else {
+								change = true;
+							}
+						}
+						else if (lastDimensionValue instanceof ManyDoubleAttributeValue) {
+							final ManyDoubleAttributeValue lastValue = (ManyDoubleAttributeValue) lastDimensionValue;
+							List<Double> values = new ArrayList<>();
+							if(dynamicProperty.isPresent()) {
+								values = (List<Double>) dynamicProperty.get().getValue();
+							}
+							if (lastValue != null && lastValue.getAttributeValue().size() == values.size()) {
+								if (!lastValue.getAttributeValue().equals(values)) {
+									change = true;
+									break;
+								}
+							} else {
+								change = true;
+							}
+						}
+						else if (lastDimensionValue instanceof ManyLongAttributeValue) {
+							final ManyLongAttributeValue lastValue = (ManyLongAttributeValue) lastDimensionValue;
+							List<Long> values = new ArrayList<>();
+							if(dynamicProperty.isPresent()) {
+								values = (List<Long>) dynamicProperty.get().getValue();
+							}
+							if (lastValue != null && lastValue.getAttributeValue().size() == values.size()) {
+								if (!lastValue.getAttributeValue().equals(values)) {
+									change = true;
+									break;
+								}
+							} else {
+								change = true;
+							}
 						}
 						if (change) {
 							stateChanged = true;
 							// Rollback: we remove the last value of this field from the new state
-							newState.getValues().remove(lastValue);
+							newState.getValues().remove(lastDimensionValue);
 							// And we create a proper new value
 							GenericValue newValue = getGenericValue(o, p, newState);
 							dimension.getValues().add(newValue);
