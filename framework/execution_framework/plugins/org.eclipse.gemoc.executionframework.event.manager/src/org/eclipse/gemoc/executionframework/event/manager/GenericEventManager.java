@@ -1,5 +1,6 @@
 package org.eclipse.gemoc.executionframework.event.manager;
 
+import com.google.common.collect.Streams;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collections;
@@ -14,13 +15,19 @@ import java.util.stream.Collectors;
 import org.eclipse.core.runtime.CoreException;
 import org.eclipse.core.runtime.IConfigurationElement;
 import org.eclipse.core.runtime.Platform;
+import org.eclipse.emf.common.util.URI;
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.EParameter;
 import org.eclipse.emf.ecore.EReference;
 import org.eclipse.emf.ecore.resource.Resource;
+import org.eclipse.emf.ecore.resource.ResourceSet;
+import org.eclipse.emf.ecore.resource.impl.ResourceSetImpl;
 import org.eclipse.emf.ecore.util.EcoreUtil;
+import org.eclipse.gemoc.dsl.Dsl;
+import org.eclipse.gemoc.dsl.Entry;
 import org.eclipse.gemoc.executionframework.behavioralinterface.behavioralInterface.BehavioralInterface;
 import org.eclipse.gemoc.executionframework.behavioralinterface.behavioralInterface.Event;
+import org.eclipse.gemoc.executionframework.engine.commons.DslHelper;
 import org.eclipse.gemoc.executionframework.event.model.event.EventOccurrence;
 import org.eclipse.gemoc.executionframework.event.model.event.EventOccurrenceType;
 import org.eclipse.gemoc.executionframework.event.model.event.Scenario;
@@ -37,6 +44,8 @@ import org.eclipse.gemoc.xdsmlframework.api.core.IExecutionEngine;
 
 public class GenericEventManager implements IEventManager {
 
+	private static final String SCENARIO_OPTION_ID = "org.eclipse.gemoc.executionframework.event.manager.scenario";
+	
 	private final LinkedTransferQueue<ICallRequest> callRequestQueue = new LinkedTransferQueue<>();
 	
 	private final LinkedTransferQueue<EventOccurrence> eventOccurrenceQueue = new LinkedTransferQueue<>();
@@ -53,18 +62,71 @@ public class GenericEventManager implements IEventManager {
 	
 	private final Map<String, IMetalanguageRuleExecutor> metalanguageIntegrations = new HashMap<>();
 	
-	public GenericEventManager(String languageName,
-			List<IImplementationRelationship> implementationRelationships,
-			List<ISubtypingRelationship> subtypingRelationships) {
+	public GenericEventManager() {
 		relationshipManager = new RelationshipManager(this);
-		implementationRelationships.forEach(r -> relationshipManager.registerImplementationRelationship(r));
-		subtypingRelationships.forEach(r -> relationshipManager.registerSubtypingRelationship(r));
 	}
 	
 	public RelationshipManager getRelationshipManager() {
 		return relationshipManager;
 	}
 
+	@Override
+	public void engineAboutToStart(IExecutionEngine<?> engine) {
+		configure(engine);
+	}
+	
+	private void configure(IExecutionEngine<?> engine) {
+		final Dsl dsl = DslHelper.load(engine.getExecutionContext().getLanguageDefinitionExtension().getName());
+		final Entry implementationRelationshipEntry = dsl.getEntry("implementation_relationships");
+		if (implementationRelationshipEntry != null) {
+			final Entry subtypingRelationshipEntry = dsl.getEntry("subtyping_relationships");
+			List<IImplementationRelationship> implementationRelationships = Arrays.stream(implementationRelationshipEntry.getValue()
+					.split(",")).map(s -> getImplementationRelationship(s.trim()))
+					.filter(r -> r != null).collect(Collectors.toList());
+			List<ISubtypingRelationship> subtypingRelationships = subtypingRelationshipEntry != null
+					? Arrays.stream(subtypingRelationshipEntry.getValue()
+							.split(",")).map(s -> getSubtypingRelationship(s.trim()))
+							.filter(r -> r != null).collect(Collectors.toList())
+					: Collections.emptyList();
+			implementationRelationships.forEach(r -> relationshipManager.registerImplementationRelationship(r));
+			subtypingRelationships.forEach(r -> relationshipManager.registerSubtypingRelationship(r));
+			final String scenarioURI = engine.getExecutionContext().getRunConfiguration().getAttribute(SCENARIO_OPTION_ID, "");
+			if (!scenarioURI.isBlank()) {
+				final ResourceSet rs = new ResourceSetImpl();
+				final Resource r = rs.getResource(URI.createPlatformResourceURI(scenarioURI, true), true);
+				Streams.stream(r.getAllContents()).filter(o -> o instanceof Scenario)
+						.findFirst()
+						.ifPresent(o -> setScenario((Scenario) o));
+			}
+		}
+	}
+	
+	private IImplementationRelationship getImplementationRelationship(String relationshipId) {
+		IConfigurationElement[] implementationRelationships = Platform.getExtensionRegistry()
+				.getConfigurationElementsFor("org.eclipse.gemoc.executionframework.event.implementationrelationship");
+		return Arrays.stream(implementationRelationships).filter(r -> r.getAttribute("id").equals(relationshipId)).findFirst().map(c -> {
+			try {
+				return (IImplementationRelationship) c.createExecutableExtension("class");
+			} catch (CoreException e) {
+				e.printStackTrace();
+			}
+			return null;
+		}).orElse(null);
+	}
+
+	private ISubtypingRelationship getSubtypingRelationship(String relationshipId) {
+		IConfigurationElement[] subtypingRelationships = Platform.getExtensionRegistry()
+				.getConfigurationElementsFor("org.eclipse.gemoc.executionframework.event.subtypingrelationship");
+		return Arrays.stream(subtypingRelationships).filter(r -> r.getAttribute("id").equals(relationshipId)).findFirst().map(c -> {
+			try {
+				return (ISubtypingRelationship) c.createExecutableExtension("Class");
+			} catch (CoreException e) {
+				e.printStackTrace();
+			}
+			return null;
+		}).orElse(null);
+	}
+	
 	@Override
 	public void engineInitialized(IExecutionEngine<?> executionEngine) {
 		engine = executionEngine;

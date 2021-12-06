@@ -16,23 +16,23 @@
    <extension
          point="org.eclipse.ui.views">
       <category
-            name="Sample Category"
-            id="org.eclipse.gemoc.executionframework.event.ui">
+            id="org.eclipse.gemoc.executionframework.ui.category"
+            name="Gemoc">
       </category>
       <view
             name="Event Manager"
             icon="icons/IconeGemocModel-16.png"
-            category="org.eclipse.gemoc.executionframework.event.ui"
+            category="org.eclipse.gemoc.executionframework.ui.category"
             class="org.eclipse.gemoc.executionframework.event.ui.views.EventManagerViewPart"
             id="org.eclipse.gemoc.executionframework.event.ui.views.EventManager">
       </view>
    </extension>
    <extension
          point="org.eclipse.gemoc.gemoc_language_workbench.engine_addon_group">
-      <AddonGroup
-            Name="Sequential"
-            id="Sequential.AddonGroup">
-      </AddonGroup>
+      <addonGroup
+            name="General"
+            id="General.AddonGroup">
+      </addonGroup>
    </extension>
    <extension
          point="org.eclipse.ui.perspectiveExtensions">
