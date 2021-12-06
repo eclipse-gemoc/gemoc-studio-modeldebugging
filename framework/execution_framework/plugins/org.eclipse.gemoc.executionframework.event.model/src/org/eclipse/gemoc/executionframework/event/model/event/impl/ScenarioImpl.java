@@ -1,6 +1,6 @@
 /**
  */
-package org.eclipse.gemoc.executionframework.value.model.value.impl;
+package org.eclipse.gemoc.executionframework.event.model.event.impl;
 
 import java.util.Collection;
 
@@ -9,45 +9,47 @@ import org.eclipse.emf.common.notify.NotificationChain;
 import org.eclipse.emf.common.util.EList;
 
 import org.eclipse.emf.ecore.EClass;
-import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.InternalEObject;
+
+import org.eclipse.emf.ecore.impl.MinimalEObjectImpl;
 
 import org.eclipse.emf.ecore.util.EObjectContainmentEList;
 import org.eclipse.emf.ecore.util.InternalEList;
 
-import org.eclipse.gemoc.executionframework.value.model.value.ManyObjectValue;
-import org.eclipse.gemoc.executionframework.value.model.value.ValuePackage;
+import org.eclipse.gemoc.executionframework.event.model.event.EventOccurrence;
+import org.eclipse.gemoc.executionframework.event.model.event.EventPackage;
+import org.eclipse.gemoc.executionframework.event.model.event.Scenario;
 
 /**
  * <!-- begin-user-doc -->
- * An implementation of the model object '<em><b>Many Object Value</b></em>'.
+ * An implementation of the model object '<em><b>Scenario</b></em>'.
  * <!-- end-user-doc -->
  * <p>
  * The following features are implemented:
  * </p>
  * <ul>
- *   <li>{@link org.eclipse.gemoc.executionframework.value.model.value.impl.ManyObjectValueImpl#getObjectValues <em>Object Values</em>}</li>
+ *   <li>{@link org.eclipse.gemoc.executionframework.event.model.event.impl.ScenarioImpl#getEvents <em>Events</em>}</li>
  * </ul>
  *
  * @generated
  */
-public class ManyObjectValueImpl extends ReferenceValueImpl implements ManyObjectValue {
+public class ScenarioImpl extends MinimalEObjectImpl.Container implements Scenario {
 	/**
-	 * The cached value of the '{@link #getObjectValues() <em>Object Values</em>}' containment reference list.
+	 * The cached value of the '{@link #getEvents() <em>Events</em>}' containment reference list.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * @see #getObjectValues()
+	 * @see #getEvents()
 	 * @generated
 	 * @ordered
 	 */
-	protected EList<EObject> objectValues;
+	protected EList<EventOccurrence> events;
 
 	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	protected ManyObjectValueImpl() {
+	protected ScenarioImpl() {
 		super();
 	}
 
@@ -58,7 +60,7 @@ public class ManyObjectValueImpl extends ReferenceValueImpl implements ManyObjec
 	 */
 	@Override
 	protected EClass eStaticClass() {
-		return ValuePackage.Literals.MANY_OBJECT_VALUE;
+		return EventPackage.Literals.SCENARIO;
 	}
 
 	/**
@@ -67,11 +69,11 @@ public class ManyObjectValueImpl extends ReferenceValueImpl implements ManyObjec
 	 * @generated
 	 */
 	@Override
-	public EList<EObject> getObjectValues() {
-		if (objectValues == null) {
-			objectValues = new EObjectContainmentEList<EObject>(EObject.class, this, ValuePackage.MANY_OBJECT_VALUE__OBJECT_VALUES);
+	public EList<EventOccurrence> getEvents() {
+		if (events == null) {
+			events = new EObjectContainmentEList<EventOccurrence>(EventOccurrence.class, this, EventPackage.SCENARIO__EVENTS);
 		}
-		return objectValues;
+		return events;
 	}
 
 	/**
@@ -82,8 +84,8 @@ public class ManyObjectValueImpl extends ReferenceValueImpl implements ManyObjec
 	@Override
 	public NotificationChain eInverseRemove(InternalEObject otherEnd, int featureID, NotificationChain msgs) {
 		switch (featureID) {
-			case ValuePackage.MANY_OBJECT_VALUE__OBJECT_VALUES:
-				return ((InternalEList<?>)getObjectValues()).basicRemove(otherEnd, msgs);
+			case EventPackage.SCENARIO__EVENTS:
+				return ((InternalEList<?>)getEvents()).basicRemove(otherEnd, msgs);
 		}
 		return super.eInverseRemove(otherEnd, featureID, msgs);
 	}
@@ -96,8 +98,8 @@ public class ManyObjectValueImpl extends ReferenceValueImpl implements ManyObjec
 	@Override
 	public Object eGet(int featureID, boolean resolve, boolean coreType) {
 		switch (featureID) {
-			case ValuePackage.MANY_OBJECT_VALUE__OBJECT_VALUES:
-				return getObjectValues();
+			case EventPackage.SCENARIO__EVENTS:
+				return getEvents();
 		}
 		return super.eGet(featureID, resolve, coreType);
 	}
@@ -111,9 +113,9 @@ public class ManyObjectValueImpl extends ReferenceValueImpl implements ManyObjec
 	@Override
 	public void eSet(int featureID, Object newValue) {
 		switch (featureID) {
-			case ValuePackage.MANY_OBJECT_VALUE__OBJECT_VALUES:
-				getObjectValues().clear();
-				getObjectValues().addAll((Collection<? extends EObject>)newValue);
+			case EventPackage.SCENARIO__EVENTS:
+				getEvents().clear();
+				getEvents().addAll((Collection<? extends EventOccurrence>)newValue);
 				return;
 		}
 		super.eSet(featureID, newValue);
@@ -127,8 +129,8 @@ public class ManyObjectValueImpl extends ReferenceValueImpl implements ManyObjec
 	@Override
 	public void eUnset(int featureID) {
 		switch (featureID) {
-			case ValuePackage.MANY_OBJECT_VALUE__OBJECT_VALUES:
-				getObjectValues().clear();
+			case EventPackage.SCENARIO__EVENTS:
+				getEvents().clear();
 				return;
 		}
 		super.eUnset(featureID);
@@ -142,10 +144,10 @@ public class ManyObjectValueImpl extends ReferenceValueImpl implements ManyObjec
 	@Override
 	public boolean eIsSet(int featureID) {
 		switch (featureID) {
-			case ValuePackage.MANY_OBJECT_VALUE__OBJECT_VALUES:
-				return objectValues != null && !objectValues.isEmpty();
+			case EventPackage.SCENARIO__EVENTS:
+				return events != null && !events.isEmpty();
 		}
 		return super.eIsSet(featureID);
 	}
 
-} //ManyObjectValueImpl
+} //ScenarioImpl

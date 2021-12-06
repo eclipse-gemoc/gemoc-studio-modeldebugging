@@ -69,6 +69,7 @@ public class LongObjectAttributeValueImpl extends AttributeValueImpl implements 
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
+	@Override
 	public Long getAttributeValue() {
 		return attributeValue;
 	}
@@ -78,6 +79,7 @@ public class LongObjectAttributeValueImpl extends AttributeValueImpl implements 
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
+	@Override
 	public void setAttributeValue(Long newAttributeValue) {
 		Long oldAttributeValue = attributeValue;
 		attributeValue = newAttributeValue;

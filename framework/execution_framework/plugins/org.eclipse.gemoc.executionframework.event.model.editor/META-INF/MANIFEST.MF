@@ -5,7 +5,7 @@ Bundle-SymbolicName: org.eclipse.gemoc.executionframework.event.model.editor;sin
 Automatic-Module-Name: org.eclipse.gemoc.executionframework.event.model.editor
 Bundle-Version: 1.0.0.qualifier
 Bundle-ClassPath: .
-Bundle-Activator: org.eclipse.gemoc.executionframework.event.testsuite.presentation.TestsuiteEditorPlugin$Implementation
+Bundle-Activator: org.eclipse.gemoc.executionframework.event.model.event.presentation.EventEditorPlugin$Implementation
 Bundle-Vendor: %providerName
 Bundle-Localization: plugin
 Bundle-RequiredExecutionEnvironment: JavaSE-1.8

@@ -141,11 +141,35 @@ public class EventItemProviderAdapterFactory extends EventAdapterFactory impleme
 	}
 
 	/**
+	 * This keeps track of the one adapter used for all {@link org.eclipse.gemoc.executionframework.event.model.event.Scenario} instances.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	protected ScenarioItemProvider scenarioItemProvider;
+
+	/**
+	 * This creates an adapter for a {@link org.eclipse.gemoc.executionframework.event.model.event.Scenario}.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	@Override
+	public Adapter createScenarioAdapter() {
+		if (scenarioItemProvider == null) {
+			scenarioItemProvider = new ScenarioItemProvider(this);
+		}
+
+		return scenarioItemProvider;
+	}
+
+	/**
 	 * This returns the root adapter factory that contains this factory.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
+	@Override
 	public ComposeableAdapterFactory getRootAdapterFactory() {
 		return parentAdapterFactory == null ? this : parentAdapterFactory.getRootAdapterFactory();
 	}
@@ -156,6 +180,7 @@ public class EventItemProviderAdapterFactory extends EventAdapterFactory impleme
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
+	@Override
 	public void setParentAdapterFactory(ComposedAdapterFactory parentAdapterFactory) {
 		this.parentAdapterFactory = parentAdapterFactory;
 	}
@@ -204,6 +229,7 @@ public class EventItemProviderAdapterFactory extends EventAdapterFactory impleme
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
+	@Override
 	public void addListener(INotifyChangedListener notifyChangedListener) {
 		changeNotifier.addListener(notifyChangedListener);
 	}
@@ -214,6 +240,7 @@ public class EventItemProviderAdapterFactory extends EventAdapterFactory impleme
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
+	@Override
 	public void removeListener(INotifyChangedListener notifyChangedListener) {
 		changeNotifier.removeListener(notifyChangedListener);
 	}
@@ -224,6 +251,7 @@ public class EventItemProviderAdapterFactory extends EventAdapterFactory impleme
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
+	@Override
 	public void fireNotifyChanged(Notification notification) {
 		changeNotifier.fireNotifyChanged(notification);
 
@@ -238,10 +266,12 @@ public class EventItemProviderAdapterFactory extends EventAdapterFactory impleme
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
+	@Override
 	public void dispose() {
 		if (eventOccurrenceItemProvider != null) eventOccurrenceItemProvider.dispose();
 		if (stopEventOccurrenceItemProvider != null) stopEventOccurrenceItemProvider.dispose();
 		if (eventOccurrenceArgumentItemProvider != null) eventOccurrenceArgumentItemProvider.dispose();
+		if (scenarioItemProvider != null) scenarioItemProvider.dispose();
 	}
 
 }

@@ -61,6 +61,7 @@ public class ManyBooleanAttributeValueImpl extends AttributeValueImpl implements
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
+	@Override
 	public EList<Boolean> getAttributeValue() {
 		if (attributeValue == null) {
 			attributeValue = new EDataTypeUniqueEList<Boolean>(Boolean.class, this, ValuePackage.MANY_BOOLEAN_ATTRIBUTE_VALUE__ATTRIBUTE_VALUE);

@@ -69,6 +69,7 @@ public class StringAttributeValueImpl extends AttributeValueImpl implements Stri
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
+	@Override
 	public String getAttributeValue() {
 		return attributeValue;
 	}
@@ -78,6 +79,7 @@ public class StringAttributeValueImpl extends AttributeValueImpl implements Stri
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
+	@Override
 	public void setAttributeValue(String newAttributeValue) {
 		String oldAttributeValue = attributeValue;
 		attributeValue = newAttributeValue;

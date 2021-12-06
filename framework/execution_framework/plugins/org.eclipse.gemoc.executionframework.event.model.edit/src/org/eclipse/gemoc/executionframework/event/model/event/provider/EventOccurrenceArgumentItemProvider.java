@@ -196,6 +196,16 @@ public class EventOccurrenceArgumentItemProvider
 		newChildDescriptors.add
 			(createChildParameter
 				(EventPackage.Literals.EVENT_OCCURRENCE_ARGUMENT__VALUE,
+				 ValueFactory.eINSTANCE.createLongAttributeValue()));
+
+		newChildDescriptors.add
+			(createChildParameter
+				(EventPackage.Literals.EVENT_OCCURRENCE_ARGUMENT__VALUE,
+				 ValueFactory.eINSTANCE.createLongObjectAttributeValue()));
+
+		newChildDescriptors.add
+			(createChildParameter
+				(EventPackage.Literals.EVENT_OCCURRENCE_ARGUMENT__VALUE,
 				 ValueFactory.eINSTANCE.createFloatAttributeValue()));
 
 		newChildDescriptors.add
@@ -227,6 +237,16 @@ public class EventOccurrenceArgumentItemProvider
 			(createChildParameter
 				(EventPackage.Literals.EVENT_OCCURRENCE_ARGUMENT__VALUE,
 				 ValueFactory.eINSTANCE.createManyIntegerObjectAttributeValue()));
+
+		newChildDescriptors.add
+			(createChildParameter
+				(EventPackage.Literals.EVENT_OCCURRENCE_ARGUMENT__VALUE,
+				 ValueFactory.eINSTANCE.createManyLongAttributeValue()));
+
+		newChildDescriptors.add
+			(createChildParameter
+				(EventPackage.Literals.EVENT_OCCURRENCE_ARGUMENT__VALUE,
+				 ValueFactory.eINSTANCE.createManyLongObjectAttributeValue()));
 
 		newChildDescriptors.add
 			(createChildParameter

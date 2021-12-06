@@ -62,6 +62,7 @@ public class SingleObjectValueImpl extends ReferenceValueImpl implements SingleO
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
+	@Override
 	public EObject getObjectValue() {
 		return objectValue;
 	}
@@ -86,6 +87,7 @@ public class SingleObjectValueImpl extends ReferenceValueImpl implements SingleO
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
+	@Override
 	public void setObjectValue(EObject newObjectValue) {
 		if (newObjectValue != objectValue) {
 			NotificationChain msgs = null;

@@ -77,6 +77,7 @@ public class EventOccurrenceArgumentImpl extends MinimalEObjectImpl.Container im
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
+	@Override
 	public EventParameter getParameter() {
 		if (parameter != null && parameter.eIsProxy()) {
 			InternalEObject oldParameter = (InternalEObject)parameter;
@@ -103,6 +104,7 @@ public class EventOccurrenceArgumentImpl extends MinimalEObjectImpl.Container im
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
+	@Override
 	public void setParameter(EventParameter newParameter) {
 		EventParameter oldParameter = parameter;
 		parameter = newParameter;
@@ -115,6 +117,7 @@ public class EventOccurrenceArgumentImpl extends MinimalEObjectImpl.Container im
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
+	@Override
 	public Value getValue() {
 		return value;
 	}
@@ -139,6 +142,7 @@ public class EventOccurrenceArgumentImpl extends MinimalEObjectImpl.Container im
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
+	@Override
 	public void setValue(Value newValue) {
 		if (newValue != value) {
 			NotificationChain msgs = null;
