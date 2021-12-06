@@ -37,12 +37,16 @@ import org.eclipse.gemoc.xdsmlframework.api.core.IExecutionEngine;
 public class GenericEventManager implements IEventManager {
 
 	private final LinkedTransferQueue<ICallRequest> callRequestQueue = new LinkedTransferQueue<>();
+	
+	private final LinkedTransferQueue<EventOccurrence> eventOccurrenceQueue = new LinkedTransferQueue<>();
 
 	private boolean canManageEvents = true;
 
 	private boolean waitForCallRequests = false;
 
 	private IExecutionEngine<?> engine;
+	
+	private boolean initialized = false;
 
 	private final RelationshipManager relationshipManager;
 	
@@ -74,15 +78,23 @@ public class GenericEventManager implements IEventManager {
 				e1.printStackTrace();
 			}
 		});
+		initialized = true;
+		EventOccurrence eventOccurrence = eventOccurrenceQueue.poll();
+		while (eventOccurrence != null) {
+			processEventOccurrence(eventOccurrence);
+			eventOccurrence = eventOccurrenceQueue.poll();
+		}
 	}
 
 	@Override
 	public void processEventOccurrence(EventOccurrence eventOccurrence) {
 		if (eventOccurrence instanceof StopEventOccurrence) {
 			processCallRequest(new StopRequest());
-		} else {
+		} else if (initialized) {
 			convertEventToExecutedResource(eventOccurrence, engine.getExecutionContext().getResourceModel());
 			relationshipManager.notifyEventOccurrence(eventOccurrence);
+		} else {
+			eventOccurrenceQueue.add(eventOccurrence);
 		}
 	}
 
@@ -144,25 +156,29 @@ public class GenericEventManager implements IEventManager {
 
 	@Override
 	public void aboutToExecuteStep(IExecutionEngine<?> engine, Step<?> stepToExecute) {
-		final MSEOccurrence mseOccurrence = stepToExecute.getMseoccurrence();
-		final String behavioralUnit = mseOccurrence.getMse().getCaller().eClass().getInstanceClassName()
-				+ "." + mseOccurrence.getMse().getAction().getName();
-		final Map<String, Object> argsMap = getArguments(mseOccurrence);
-		final CallNotification callNotification = new CallNotification(behavioralUnit, argsMap);
-		relationshipManager.notifyCall(callNotification);
-		processCallRequests();
+		if (initialized) {
+			final MSEOccurrence mseOccurrence = stepToExecute.getMseoccurrence();
+			final String behavioralUnit = mseOccurrence.getMse().getCaller().eClass().getInstanceClassName()
+					+ "." + mseOccurrence.getMse().getAction().getName();
+			final Map<String, Object> argsMap = getArguments(mseOccurrence);
+			final CallNotification callNotification = new CallNotification(behavioralUnit, argsMap);
+			relationshipManager.notifyCall(callNotification);
+			processCallRequests();
+		}
 	}
 
 	@Override
 	public void stepExecuted(IExecutionEngine<?> engine, Step<?> stepExecuted) {
-		final MSEOccurrence mseOccurrence = stepExecuted.getMseoccurrence();
-		final String behavioralUnit = mseOccurrence.getMse().getCaller().eClass().getInstanceClassName()
-				+ "." + mseOccurrence.getMse().getAction().getName();
-		final Map<String, Object> argsMap = getArguments(mseOccurrence);
-		final ReturnNotification returnNotification = new ReturnNotification(behavioralUnit, argsMap,
-				mseOccurrence.getResult());
-		relationshipManager.notifyCall(returnNotification);
-		processCallRequests();
+		if (initialized) {
+			final MSEOccurrence mseOccurrence = stepExecuted.getMseoccurrence();
+			final String behavioralUnit = mseOccurrence.getMse().getCaller().eClass().getInstanceClassName()
+					+ "." + mseOccurrence.getMse().getAction().getName();
+			final Map<String, Object> argsMap = getArguments(mseOccurrence);
+			final ReturnNotification returnNotification = new ReturnNotification(behavioralUnit, argsMap,
+					mseOccurrence.getResult());
+			relationshipManager.notifyCall(returnNotification);
+			processCallRequests();
+		}
 	}
 
 	private Map<String, Object> getArguments(MSEOccurrence mseOccurrence) {
