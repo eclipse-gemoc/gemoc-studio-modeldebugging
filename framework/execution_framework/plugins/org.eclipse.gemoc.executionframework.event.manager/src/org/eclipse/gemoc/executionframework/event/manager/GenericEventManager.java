@@ -23,6 +23,7 @@ import org.eclipse.gemoc.executionframework.behavioralinterface.behavioralInterf
 import org.eclipse.gemoc.executionframework.behavioralinterface.behavioralInterface.Event;
 import org.eclipse.gemoc.executionframework.event.model.event.EventOccurrence;
 import org.eclipse.gemoc.executionframework.event.model.event.EventOccurrenceType;
+import org.eclipse.gemoc.executionframework.event.model.event.Scenario;
 import org.eclipse.gemoc.executionframework.event.model.event.StopEventOccurrence;
 import org.eclipse.gemoc.executionframework.value.model.value.ManyReferenceValue;
 import org.eclipse.gemoc.executionframework.value.model.value.SingleObjectValue;
@@ -342,5 +343,10 @@ public class GenericEventManager implements IEventManager {
 	@Override
 	public void processCallRequest(ICallRequest callRequest) {
 		callRequestQueue.put(callRequest);
+	}
+
+	@Override
+	public void setScenario(Scenario scenario) {
+		eventOccurrenceQueue.addAll(scenario.getEvents());
 	}
 }

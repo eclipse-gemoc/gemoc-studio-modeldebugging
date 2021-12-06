@@ -18,8 +18,13 @@ import java.util.function.Predicate;
 import java.util.stream.Collectors;
 
 import org.eclipse.core.runtime.CoreException;
+import org.eclipse.emf.common.util.URI;
+import org.eclipse.emf.ecore.resource.Resource;
+import org.eclipse.emf.ecore.resource.ResourceSet;
+import org.eclipse.emf.ecore.resource.impl.ResourceSetImpl;
 import org.eclipse.gemoc.executionframework.engine.Activator;
 import org.eclipse.gemoc.executionframework.event.manager.IEventManager;
+import org.eclipse.gemoc.executionframework.event.model.event.Scenario;
 import org.eclipse.gemoc.xdsmlframework.api.core.IExecutionPlatform;
 import org.eclipse.gemoc.xdsmlframework.api.core.IModelLoader;
 import org.eclipse.gemoc.xdsmlframework.api.core.IRunConfiguration;
@@ -28,6 +33,8 @@ import org.eclipse.gemoc.xdsmlframework.api.engine_addon.EngineAddonSortingRule.
 import org.eclipse.gemoc.xdsmlframework.api.engine_addon.IEngineAddon;
 import org.eclipse.gemoc.xdsmlframework.api.extensions.engine_addon.EngineAddonSpecificationExtension;
 import org.eclipse.gemoc.xdsmlframework.api.extensions.languages.LanguageDefinitionExtension;
+
+import com.google.common.collect.Streams;
 
 public class DefaultExecutionPlatform implements IExecutionPlatform {
 
@@ -42,6 +49,14 @@ public class DefaultExecutionPlatform implements IExecutionPlatform {
 		final IEventManager eventManager = EventManagerHelper.getEventManager(_languageDefinition.getName());
 		if (eventManager != null) {
 			addEngineAddon(eventManager);
+			final String scenarioURI = runConfiguration.getAttribute("SCENARIO_URI", "");
+			if (!scenarioURI.isBlank()) {
+				final ResourceSet rs = new ResourceSetImpl();
+				final Resource r = rs.getResource(URI.createPlatformResourceURI(scenarioURI, true), true);
+				Streams.stream(r.getAllContents()).filter(o -> o instanceof Scenario)
+						.findFirst()
+						.ifPresent(o -> eventManager.setScenario((Scenario) o));
+			}
 		}
 		for (EngineAddonSpecificationExtension extension : runConfiguration.getEngineAddonExtensions()) {
 			Activator.getDefault().debug("Enabled addon: "+extension.getName());
