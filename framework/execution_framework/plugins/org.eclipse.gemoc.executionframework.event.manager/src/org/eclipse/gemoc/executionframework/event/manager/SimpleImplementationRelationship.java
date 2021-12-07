@@ -13,7 +13,9 @@ import org.eclipse.gemoc.executionframework.event.model.event.EventOccurrence;
 import org.eclipse.gemoc.executionframework.event.model.event.EventOccurrenceArgument;
 import org.eclipse.gemoc.executionframework.event.model.event.EventOccurrenceType;
 import org.eclipse.gemoc.executionframework.behavioralinterface.behavioralInterface.BehavioralInterface;
+import org.eclipse.gemoc.executionframework.behavioralinterface.behavioralInterface.BehavioralInterfacePackage;
 import org.eclipse.gemoc.executionframework.behavioralinterface.behavioralInterface.Event;
+import org.eclipse.gemoc.executionframework.behavioralinterface.behavioralInterface.EventParameter;
 
 public class SimpleImplementationRelationship implements IImplementationRelationship {
 
@@ -84,8 +86,11 @@ public class SimpleImplementationRelationship implements IImplementationRelation
 			if (eventOccurrence.getType() == EventOccurrenceType.ACCEPTED) {
 				final String eventName = eventOccurrence.getEvent().getName();
 				final String name = eventNameToExecutionRule.computeIfAbsent(eventName, s -> s.substring(5));
-
+				final List<EventParameter> eventParameters = eventOccurrence.getEvent().getParams();
 				final List<Object> arguments = eventOccurrence.getArgs().stream()
+						.sorted((arg1, arg2) -> {
+							return eventParameters.indexOf(arg1.getParameter()) - eventParameters.indexOf(arg2.getParameter());
+						})
 						.map(a -> EventManagerUtils.convertValueToObject(a.getValue())).collect(Collectors.toList());
 
 				final boolean rtc = this.runToCompletionSet.contains(name);
@@ -95,7 +100,7 @@ public class SimpleImplementationRelationship implements IImplementationRelation
 			return null;
 		};
 	}
-
+	
 	@Override
 	public BehavioralInterface getBehavioralInterface() {
 		return behavioralInterface;

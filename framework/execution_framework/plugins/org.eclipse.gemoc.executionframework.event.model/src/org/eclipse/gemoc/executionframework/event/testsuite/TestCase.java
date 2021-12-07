@@ -31,10 +31,6 @@ public interface TestCase extends EObject {
 	/**
 	 * Returns the value of the '<em><b>Name</b></em>' attribute.
 	 * <!-- begin-user-doc -->
-	 * <p>
-	 * If the meaning of the '<em>Name</em>' attribute isn't clear,
-	 * there really should be more of a description here...
-	 * </p>
 	 * <!-- end-user-doc -->
 	 * @return the value of the '<em>Name</em>' attribute.
 	 * @see #setName(String)
@@ -57,10 +53,6 @@ public interface TestCase extends EObject {
 	/**
 	 * Returns the value of the '<em><b>Model</b></em>' reference.
 	 * <!-- begin-user-doc -->
-	 * <p>
-	 * If the meaning of the '<em>Model</em>' reference isn't clear,
-	 * there really should be more of a description here...
-	 * </p>
 	 * <!-- end-user-doc -->
 	 * @return the value of the '<em>Model</em>' reference.
 	 * @see #setModel(EObject)
@@ -83,10 +75,6 @@ public interface TestCase extends EObject {
 	/**
 	 * Returns the value of the '<em><b>Expected Trace</b></em>' attribute.
 	 * <!-- begin-user-doc -->
-	 * <p>
-	 * If the meaning of the '<em>Expected Trace</em>' attribute isn't clear,
-	 * there really should be more of a description here...
-	 * </p>
 	 * <!-- end-user-doc -->
 	 * @return the value of the '<em>Expected Trace</em>' attribute.
 	 * @see #setExpectedTrace(String)
@@ -110,10 +98,6 @@ public interface TestCase extends EObject {
 	 * Returns the value of the '<em><b>Scenario</b></em>' containment reference list.
 	 * The list contents are of type {@link org.eclipse.gemoc.executionframework.event.model.event.EventOccurrence}.
 	 * <!-- begin-user-doc -->
-	 * <p>
-	 * If the meaning of the '<em>Scenario</em>' containment reference list isn't clear,
-	 * there really should be more of a description here...
-	 * </p>
 	 * <!-- end-user-doc -->
 	 * @return the value of the '<em>Scenario</em>' containment reference list.
 	 * @see org.eclipse.gemoc.executionframework.event.testsuite.TestsuitePackage#getTestCase_Scenario()

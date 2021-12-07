@@ -62,6 +62,7 @@ public abstract class TestCaseReportImpl extends MinimalEObjectImpl.Container im
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
+	@Override
 	public TestCase getTestCase() {
 		if (testCase != null && testCase.eIsProxy()) {
 			InternalEObject oldTestCase = (InternalEObject)testCase;
@@ -88,6 +89,7 @@ public abstract class TestCaseReportImpl extends MinimalEObjectImpl.Container im
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
+	@Override
 	public void setTestCase(TestCase newTestCase) {
 		TestCase oldTestCase = testCase;
 		testCase = newTestCase;

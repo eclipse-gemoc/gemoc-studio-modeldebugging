@@ -72,6 +72,7 @@ public class TestsuiteFactoryImpl extends EFactoryImpl implements TestsuiteFacto
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
+	@Override
 	public TestSuite createTestSuite() {
 		TestSuiteImpl testSuite = new TestSuiteImpl();
 		return testSuite;
@@ -82,6 +83,7 @@ public class TestsuiteFactoryImpl extends EFactoryImpl implements TestsuiteFacto
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
+	@Override
 	public TestCase createTestCase() {
 		TestCaseImpl testCase = new TestCaseImpl();
 		return testCase;
@@ -92,6 +94,7 @@ public class TestsuiteFactoryImpl extends EFactoryImpl implements TestsuiteFacto
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
+	@Override
 	public TestSuiteReport createTestSuiteReport() {
 		TestSuiteReportImpl testSuiteReport = new TestSuiteReportImpl();
 		return testSuiteReport;
@@ -102,6 +105,7 @@ public class TestsuiteFactoryImpl extends EFactoryImpl implements TestsuiteFacto
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
+	@Override
 	public TestCaseSuccess createTestCaseSuccess() {
 		TestCaseSuccessImpl testCaseSuccess = new TestCaseSuccessImpl();
 		return testCaseSuccess;
@@ -112,6 +116,7 @@ public class TestsuiteFactoryImpl extends EFactoryImpl implements TestsuiteFacto
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
+	@Override
 	public TestCaseFailure createTestCaseFailure() {
 		TestCaseFailureImpl testCaseFailure = new TestCaseFailureImpl();
 		return testCaseFailure;
@@ -122,6 +127,7 @@ public class TestsuiteFactoryImpl extends EFactoryImpl implements TestsuiteFacto
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
+	@Override
 	public TestCaseError createTestCaseError() {
 		TestCaseErrorImpl testCaseError = new TestCaseErrorImpl();
 		return testCaseError;
@@ -132,6 +138,7 @@ public class TestsuiteFactoryImpl extends EFactoryImpl implements TestsuiteFacto
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
+	@Override
 	public TestsuitePackage getTestsuitePackage() {
 		return (TestsuitePackage)getEPackage();
 	}

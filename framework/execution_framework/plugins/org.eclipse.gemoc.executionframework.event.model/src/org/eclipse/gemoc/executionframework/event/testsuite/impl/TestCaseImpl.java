@@ -125,6 +125,7 @@ public class TestCaseImpl extends MinimalEObjectImpl.Container implements TestCa
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
+	@Override
 	public String getName() {
 		return name;
 	}
@@ -134,6 +135,7 @@ public class TestCaseImpl extends MinimalEObjectImpl.Container implements TestCa
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
+	@Override
 	public void setName(String newName) {
 		String oldName = name;
 		name = newName;
@@ -146,6 +148,7 @@ public class TestCaseImpl extends MinimalEObjectImpl.Container implements TestCa
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
+	@Override
 	public EObject getModel() {
 		if (model != null && model.eIsProxy()) {
 			InternalEObject oldModel = (InternalEObject)model;
@@ -172,6 +175,7 @@ public class TestCaseImpl extends MinimalEObjectImpl.Container implements TestCa
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
+	@Override
 	public void setModel(EObject newModel) {
 		EObject oldModel = model;
 		model = newModel;
@@ -184,6 +188,7 @@ public class TestCaseImpl extends MinimalEObjectImpl.Container implements TestCa
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
+	@Override
 	public String getExpectedTrace() {
 		return expectedTrace;
 	}
@@ -193,6 +198,7 @@ public class TestCaseImpl extends MinimalEObjectImpl.Container implements TestCa
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
+	@Override
 	public void setExpectedTrace(String newExpectedTrace) {
 		String oldExpectedTrace = expectedTrace;
 		expectedTrace = newExpectedTrace;
@@ -205,6 +211,7 @@ public class TestCaseImpl extends MinimalEObjectImpl.Container implements TestCa
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
+	@Override
 	public EList<EventOccurrence> getScenario() {
 		if (scenario == null) {
 			scenario = new EObjectContainmentEList<EventOccurrence>(EventOccurrence.class, this, TestsuitePackage.TEST_CASE__SCENARIO);

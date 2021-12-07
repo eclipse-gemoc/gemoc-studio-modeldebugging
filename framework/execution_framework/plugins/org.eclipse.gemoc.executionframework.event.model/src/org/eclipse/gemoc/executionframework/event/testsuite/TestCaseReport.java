@@ -24,10 +24,6 @@ public interface TestCaseReport extends EObject {
 	/**
 	 * Returns the value of the '<em><b>Test Case</b></em>' reference.
 	 * <!-- begin-user-doc -->
-	 * <p>
-	 * If the meaning of the '<em>Test Case</em>' reference isn't clear,
-	 * there really should be more of a description here...
-	 * </p>
 	 * <!-- end-user-doc -->
 	 * @return the value of the '<em>Test Case</em>' reference.
 	 * @see #setTestCase(TestCase)

@@ -80,6 +80,7 @@ public class TestSuiteImpl extends MinimalEObjectImpl.Container implements TestS
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
+	@Override
 	public EList<TestCase> getTestCases() {
 		if (testCases == null) {
 			testCases = new EObjectContainmentEList<TestCase>(TestCase.class, this, TestsuitePackage.TEST_SUITE__TEST_CASES);
@@ -92,6 +93,7 @@ public class TestSuiteImpl extends MinimalEObjectImpl.Container implements TestS
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
+	@Override
 	public EList<EObject> getStorage() {
 		if (storage == null) {
 			storage = new EObjectContainmentEList<EObject>(EObject.class, this, TestsuitePackage.TEST_SUITE__STORAGE);

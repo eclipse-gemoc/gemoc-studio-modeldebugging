@@ -30,10 +30,6 @@ public interface EventOccurrence extends EObject {
 	/**
 	 * Returns the value of the '<em><b>Event</b></em>' reference.
 	 * <!-- begin-user-doc -->
-	 * <p>
-	 * If the meaning of the '<em>Event</em>' reference isn't clear,
-	 * there really should be more of a description here...
-	 * </p>
 	 * <!-- end-user-doc -->
 	 * @return the value of the '<em>Event</em>' reference.
 	 * @see #setEvent(Event)
@@ -57,10 +53,6 @@ public interface EventOccurrence extends EObject {
 	 * Returns the value of the '<em><b>Args</b></em>' containment reference list.
 	 * The list contents are of type {@link org.eclipse.gemoc.executionframework.event.model.event.EventOccurrenceArgument}.
 	 * <!-- begin-user-doc -->
-	 * <p>
-	 * If the meaning of the '<em>Args</em>' containment reference list isn't clear,
-	 * there really should be more of a description here...
-	 * </p>
 	 * <!-- end-user-doc -->
 	 * @return the value of the '<em>Args</em>' containment reference list.
 	 * @see org.eclipse.gemoc.executionframework.event.model.event.EventPackage#getEventOccurrence_Args()
@@ -73,10 +65,6 @@ public interface EventOccurrence extends EObject {
 	 * Returns the value of the '<em><b>Type</b></em>' attribute.
 	 * The literals are from the enumeration {@link org.eclipse.gemoc.executionframework.event.model.event.EventOccurrenceType}.
 	 * <!-- begin-user-doc -->
-	 * <p>
-	 * If the meaning of the '<em>Type</em>' attribute isn't clear,
-	 * there really should be more of a description here...
-	 * </p>
 	 * <!-- end-user-doc -->
 	 * @return the value of the '<em>Type</em>' attribute.
 	 * @see org.eclipse.gemoc.executionframework.event.model.event.EventOccurrenceType

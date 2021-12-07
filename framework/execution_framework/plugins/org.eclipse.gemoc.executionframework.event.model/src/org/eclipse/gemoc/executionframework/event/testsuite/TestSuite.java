@@ -28,10 +28,6 @@ public interface TestSuite extends EObject {
 	 * Returns the value of the '<em><b>Test Cases</b></em>' containment reference list.
 	 * The list contents are of type {@link org.eclipse.gemoc.executionframework.event.testsuite.TestCase}.
 	 * <!-- begin-user-doc -->
-	 * <p>
-	 * If the meaning of the '<em>Test Cases</em>' containment reference list isn't clear,
-	 * there really should be more of a description here...
-	 * </p>
 	 * <!-- end-user-doc -->
 	 * @return the value of the '<em>Test Cases</em>' containment reference list.
 	 * @see org.eclipse.gemoc.executionframework.event.testsuite.TestsuitePackage#getTestSuite_TestCases()
@@ -44,10 +40,6 @@ public interface TestSuite extends EObject {
 	 * Returns the value of the '<em><b>Storage</b></em>' containment reference list.
 	 * The list contents are of type {@link org.eclipse.emf.ecore.EObject}.
 	 * <!-- begin-user-doc -->
-	 * <p>
-	 * If the meaning of the '<em>Storage</em>' containment reference list isn't clear,
-	 * there really should be more of a description here...
-	 * </p>
 	 * <!-- end-user-doc -->
 	 * @return the value of the '<em>Storage</em>' containment reference list.
 	 * @see org.eclipse.gemoc.executionframework.event.testsuite.TestsuitePackage#getTestSuite_Storage()

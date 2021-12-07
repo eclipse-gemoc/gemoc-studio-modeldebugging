@@ -152,6 +152,7 @@ public class TestsuitePackageImpl extends EPackageImpl implements TestsuitePacka
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
+	@Override
 	public EClass getTestSuite() {
 		return testSuiteEClass;
 	}
@@ -161,6 +162,7 @@ public class TestsuitePackageImpl extends EPackageImpl implements TestsuitePacka
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
+	@Override
 	public EReference getTestSuite_TestCases() {
 		return (EReference)testSuiteEClass.getEStructuralFeatures().get(0);
 	}
@@ -170,6 +172,7 @@ public class TestsuitePackageImpl extends EPackageImpl implements TestsuitePacka
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
+	@Override
 	public EReference getTestSuite_Storage() {
 		return (EReference)testSuiteEClass.getEStructuralFeatures().get(1);
 	}
@@ -179,6 +182,7 @@ public class TestsuitePackageImpl extends EPackageImpl implements TestsuitePacka
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
+	@Override
 	public EClass getTestCase() {
 		return testCaseEClass;
 	}
@@ -188,6 +192,7 @@ public class TestsuitePackageImpl extends EPackageImpl implements TestsuitePacka
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
+	@Override
 	public EAttribute getTestCase_Name() {
 		return (EAttribute)testCaseEClass.getEStructuralFeatures().get(0);
 	}
@@ -197,6 +202,7 @@ public class TestsuitePackageImpl extends EPackageImpl implements TestsuitePacka
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
+	@Override
 	public EReference getTestCase_Model() {
 		return (EReference)testCaseEClass.getEStructuralFeatures().get(1);
 	}
@@ -206,6 +212,7 @@ public class TestsuitePackageImpl extends EPackageImpl implements TestsuitePacka
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
+	@Override
 	public EAttribute getTestCase_ExpectedTrace() {
 		return (EAttribute)testCaseEClass.getEStructuralFeatures().get(2);
 	}
@@ -215,6 +222,7 @@ public class TestsuitePackageImpl extends EPackageImpl implements TestsuitePacka
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
+	@Override
 	public EReference getTestCase_Scenario() {
 		return (EReference)testCaseEClass.getEStructuralFeatures().get(3);
 	}
@@ -224,6 +232,7 @@ public class TestsuitePackageImpl extends EPackageImpl implements TestsuitePacka
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
+	@Override
 	public EClass getTestSuiteReport() {
 		return testSuiteReportEClass;
 	}
@@ -233,6 +242,7 @@ public class TestsuitePackageImpl extends EPackageImpl implements TestsuitePacka
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
+	@Override
 	public EReference getTestSuiteReport_TestCaseReports() {
 		return (EReference)testSuiteReportEClass.getEStructuralFeatures().get(0);
 	}
@@ -242,6 +252,7 @@ public class TestsuitePackageImpl extends EPackageImpl implements TestsuitePacka
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
+	@Override
 	public EClass getTestCaseReport() {
 		return testCaseReportEClass;
 	}
@@ -251,6 +262,7 @@ public class TestsuitePackageImpl extends EPackageImpl implements TestsuitePacka
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
+	@Override
 	public EReference getTestCaseReport_TestCase() {
 		return (EReference)testCaseReportEClass.getEStructuralFeatures().get(0);
 	}
@@ -260,6 +272,7 @@ public class TestsuitePackageImpl extends EPackageImpl implements TestsuitePacka
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
+	@Override
 	public EClass getTestCaseSuccess() {
 		return testCaseSuccessEClass;
 	}
@@ -269,6 +282,7 @@ public class TestsuitePackageImpl extends EPackageImpl implements TestsuitePacka
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
+	@Override
 	public EClass getTestCaseFailure() {
 		return testCaseFailureEClass;
 	}
@@ -278,6 +292,7 @@ public class TestsuitePackageImpl extends EPackageImpl implements TestsuitePacka
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
+	@Override
 	public EAttribute getTestCaseFailure_Trace() {
 		return (EAttribute)testCaseFailureEClass.getEStructuralFeatures().get(0);
 	}
@@ -287,6 +302,7 @@ public class TestsuitePackageImpl extends EPackageImpl implements TestsuitePacka
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
+	@Override
 	public EClass getTestCaseError() {
 		return testCaseErrorEClass;
 	}
@@ -296,6 +312,7 @@ public class TestsuitePackageImpl extends EPackageImpl implements TestsuitePacka
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
+	@Override
 	public TestsuiteFactory getTestsuiteFactory() {
 		return (TestsuiteFactory)getEFactoryInstance();
 	}

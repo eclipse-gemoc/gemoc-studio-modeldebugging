@@ -27,10 +27,6 @@ public interface TestSuiteReport extends EObject {
 	 * Returns the value of the '<em><b>Test Case Reports</b></em>' containment reference list.
 	 * The list contents are of type {@link org.eclipse.gemoc.executionframework.event.testsuite.TestCaseReport}.
 	 * <!-- begin-user-doc -->
-	 * <p>
-	 * If the meaning of the '<em>Test Case Reports</em>' containment reference list isn't clear,
-	 * there really should be more of a description here...
-	 * </p>
 	 * <!-- end-user-doc -->
 	 * @return the value of the '<em>Test Case Reports</em>' containment reference list.
 	 * @see org.eclipse.gemoc.executionframework.event.testsuite.TestsuitePackage#getTestSuiteReport_TestCaseReports()

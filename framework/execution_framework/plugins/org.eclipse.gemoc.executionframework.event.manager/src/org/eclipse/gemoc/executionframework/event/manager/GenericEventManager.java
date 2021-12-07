@@ -1,6 +1,5 @@
 package org.eclipse.gemoc.executionframework.event.manager;
 
-import com.google.common.collect.Streams;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collections;
@@ -41,6 +40,8 @@ import org.eclipse.gemoc.trace.commons.model.trace.MSEOccurrence;
 import org.eclipse.gemoc.trace.commons.model.trace.Step;
 import org.eclipse.gemoc.xdsmlframework.api.core.EngineStatus.RunStatus;
 import org.eclipse.gemoc.xdsmlframework.api.core.IExecutionEngine;
+
+import com.google.common.collect.Streams;
 
 public class GenericEventManager implements IEventManager {
 

@@ -69,6 +69,7 @@ public class TestCaseFailureImpl extends TestCaseReportImpl implements TestCaseF
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
+	@Override
 	public String getTrace() {
 		return trace;
 	}
@@ -78,6 +79,7 @@ public class TestCaseFailureImpl extends TestCaseReportImpl implements TestCaseF
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
+	@Override
 	public void setTrace(String newTrace) {
 		String oldTrace = trace;
 		trace = newTrace;

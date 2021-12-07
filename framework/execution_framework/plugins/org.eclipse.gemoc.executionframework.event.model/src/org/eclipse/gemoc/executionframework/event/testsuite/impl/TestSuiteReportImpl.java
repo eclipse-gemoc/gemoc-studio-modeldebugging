@@ -68,6 +68,7 @@ public class TestSuiteReportImpl extends MinimalEObjectImpl.Container implements
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
+	@Override
 	public EList<TestCaseReport> getTestCaseReports() {
 		if (testCaseReports == null) {
 			testCaseReports = new EObjectContainmentEList<TestCaseReport>(TestCaseReport.class, this, TestsuitePackage.TEST_SUITE_REPORT__TEST_CASE_REPORTS);

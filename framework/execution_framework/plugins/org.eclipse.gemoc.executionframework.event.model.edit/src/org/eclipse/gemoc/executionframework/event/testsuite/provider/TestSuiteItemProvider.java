@@ -209,6 +209,11 @@ public class TestSuiteItemProvider
 		newChildDescriptors.add
 			(createChildParameter
 				(TestsuitePackage.Literals.TEST_SUITE__STORAGE,
+				 EventFactory.eINSTANCE.createScenario()));
+
+		newChildDescriptors.add
+			(createChildParameter
+				(TestsuitePackage.Literals.TEST_SUITE__STORAGE,
 				 BehavioralInterfaceFactory.eINSTANCE.createBehavioralInterface()));
 
 		newChildDescriptors.add
@@ -244,6 +249,16 @@ public class TestSuiteItemProvider
 		newChildDescriptors.add
 			(createChildParameter
 				(TestsuitePackage.Literals.TEST_SUITE__STORAGE,
+				 ValueFactory.eINSTANCE.createLongAttributeValue()));
+
+		newChildDescriptors.add
+			(createChildParameter
+				(TestsuitePackage.Literals.TEST_SUITE__STORAGE,
+				 ValueFactory.eINSTANCE.createLongObjectAttributeValue()));
+
+		newChildDescriptors.add
+			(createChildParameter
+				(TestsuitePackage.Literals.TEST_SUITE__STORAGE,
 				 ValueFactory.eINSTANCE.createFloatAttributeValue()));
 
 		newChildDescriptors.add
@@ -275,6 +290,16 @@ public class TestSuiteItemProvider
 			(createChildParameter
 				(TestsuitePackage.Literals.TEST_SUITE__STORAGE,
 				 ValueFactory.eINSTANCE.createManyIntegerObjectAttributeValue()));
+
+		newChildDescriptors.add
+			(createChildParameter
+				(TestsuitePackage.Literals.TEST_SUITE__STORAGE,
+				 ValueFactory.eINSTANCE.createManyLongAttributeValue()));
+
+		newChildDescriptors.add
+			(createChildParameter
+				(TestsuitePackage.Literals.TEST_SUITE__STORAGE,
+				 ValueFactory.eINSTANCE.createManyLongObjectAttributeValue()));
 
 		newChildDescriptors.add
 			(createChildParameter
