@@ -13,6 +13,7 @@ package org.eclipse.gemoc.trace.gemoc.traceaddon;
 import java.util.ArrayList;
 import java.util.Deque;
 import java.util.HashSet;
+import java.util.Iterator;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
@@ -20,6 +21,7 @@ import java.util.Optional;
 import java.util.Set;
 import java.util.stream.Collectors;
 
+import org.eclipse.emf.common.util.EList;
 import org.eclipse.emf.common.util.TreeIterator;
 import org.eclipse.emf.common.util.URI;
 import org.eclipse.emf.ecore.EAttribute;
@@ -46,7 +48,12 @@ import org.eclipse.gemoc.trace.commons.model.generictrace.IntegerAttributeValue;
 import org.eclipse.gemoc.trace.commons.model.generictrace.IntegerObjectAttributeValue;
 import org.eclipse.gemoc.trace.commons.model.generictrace.LongAttributeValue;
 import org.eclipse.gemoc.trace.commons.model.generictrace.LongObjectAttributeValue;
+import org.eclipse.gemoc.trace.commons.model.generictrace.ManyBooleanAttributeValue;
+import org.eclipse.gemoc.trace.commons.model.generictrace.ManyDoubleAttributeValue;
+import org.eclipse.gemoc.trace.commons.model.generictrace.ManyIntegerAttributeValue;
+import org.eclipse.gemoc.trace.commons.model.generictrace.ManyLongAttributeValue;
 import org.eclipse.gemoc.trace.commons.model.generictrace.ManyReferenceValue;
+import org.eclipse.gemoc.trace.commons.model.generictrace.ManyStringAttributeValue;
 import org.eclipse.gemoc.trace.commons.model.generictrace.SingleReferenceValue;
 import org.eclipse.gemoc.trace.commons.model.generictrace.StringAttributeValue;
 import org.eclipse.gemoc.trace.commons.model.launchconfiguration.LaunchConfiguration;
@@ -109,48 +116,93 @@ public class GenericTraceConstructor implements ITraceConstructor {
 		if (mutableProperty instanceof EAttribute) {
 			final EClassifier eType = mutableProperty.getEType();
 			if (eType == EcorePackage.Literals.EINT) {
-				final IntegerAttributeValue value = GenerictraceFactory.eINSTANCE.createIntegerAttributeValue();
-				if(dynamicProperty.isPresent()) {
-					value.setAttributeValue((Integer)dynamicProperty.get().getValue());
+				if (mutableProperty.getUpperBound() == -1) {
+					final ManyIntegerAttributeValue value = GenerictraceFactory.eINSTANCE.createManyIntegerAttributeValue();
+					if(dynamicProperty.isPresent()) {
+						value.getAttributeValue().addAll((EList<Integer>) dynamicProperty.get().getValue());
+					}
+					result = value;
 				}
-				result = value;
-			} else if (eType == EcorePackage.Literals.EBOOLEAN) {
-				final BooleanAttributeValue value = GenerictraceFactory.eINSTANCE.createBooleanAttributeValue();
-				if(dynamicProperty.isPresent()) {
-					value.setAttributeValue((Boolean)dynamicProperty.get().getValue());
+				else {
+					final IntegerAttributeValue value = GenerictraceFactory.eINSTANCE.createIntegerAttributeValue();
+					if(dynamicProperty.isPresent()) {
+						value.setAttributeValue((Integer)dynamicProperty.get().getValue());
+					}
+					result = value;
 				}
-				result = value;
-			} else if (eType == EcorePackage.Literals.ESTRING) {
-				final StringAttributeValue value = GenerictraceFactory.eINSTANCE.createStringAttributeValue();
-				if(dynamicProperty.isPresent()) {
-					value.setAttributeValue((String)dynamicProperty.get().getValue());
-				}
-				result = value;
 			} else  if (eType == EcorePackage.Literals.EINTEGER_OBJECT) {
 				final IntegerObjectAttributeValue value = GenerictraceFactory.eINSTANCE.createIntegerObjectAttributeValue();
 				if(dynamicProperty.isPresent()) {
 					value.setAttributeValue((Integer)dynamicProperty.get().getValue());
 				}
 				result = value;
-			} else if (eType == EcorePackage.Literals.EDOUBLE) {
-				final DoubleAttributeValue value = GenerictraceFactory.eINSTANCE.createDoubleAttributeValue();
-				if(dynamicProperty.isPresent()) {
-					value.setAttributeValue((Double)dynamicProperty.get().getValue());
+			} else if (eType == EcorePackage.Literals.EBOOLEAN) {
+				if (mutableProperty.getUpperBound() == -1) {
+					final ManyBooleanAttributeValue value = GenerictraceFactory.eINSTANCE.createManyBooleanAttributeValue();
+					if(dynamicProperty.isPresent()) {
+						value.getAttributeValue().addAll((EList<Boolean>) dynamicProperty.get().getValue());
+					}
+					result = value;
 				}
-				result = value;
-			} else if (eType == EcorePackage.Literals.EDOUBLE_OBJECT) {
+				else {
+					final BooleanAttributeValue value = GenerictraceFactory.eINSTANCE.createBooleanAttributeValue();
+					if(dynamicProperty.isPresent()) {
+						value.setAttributeValue((Boolean)dynamicProperty.get().getValue());
+					}
+					result = value;
+				}
+			} else if (eType == EcorePackage.Literals.ESTRING) {
+				if (mutableProperty.getUpperBound() == -1) {
+					final ManyStringAttributeValue value = GenerictraceFactory.eINSTANCE.createManyStringAttributeValue();
+					if(dynamicProperty.isPresent()) {
+						value.getAttributeValue().addAll((EList<String>) dynamicProperty.get().getValue());
+					}
+					result = value;
+				}
+				else {
+					final StringAttributeValue value = GenerictraceFactory.eINSTANCE.createStringAttributeValue();
+					if(dynamicProperty.isPresent()) {
+						value.setAttributeValue((String)dynamicProperty.get().getValue());
+					}
+					result = value;
+				}
+			} else if (eType == EcorePackage.Literals.EDOUBLE) {
+				if (mutableProperty.getUpperBound() == -1) {
+					final ManyDoubleAttributeValue value = GenerictraceFactory.eINSTANCE.createManyDoubleAttributeValue();
+					if(dynamicProperty.isPresent()) {
+						value.getAttributeValue().addAll((EList<Double>) dynamicProperty.get().getValue());
+					}
+					result = value;
+				}
+				else {
+					final DoubleAttributeValue value = GenerictraceFactory.eINSTANCE.createDoubleAttributeValue();
+					if(dynamicProperty.isPresent()) {
+						value.setAttributeValue((Double)dynamicProperty.get().getValue());
+					}
+					result = value;
+				}
+			}  else if (eType == EcorePackage.Literals.EDOUBLE_OBJECT) {
 				final DoubleObjectAttributeValue value = GenerictraceFactory.eINSTANCE.createDoubleObjectAttributeValue();
 				if(dynamicProperty.isPresent()) {
 					value.setAttributeValue((Double)dynamicProperty.get().getValue());
 				}
 				result = value;
 			} else if (eType == EcorePackage.Literals.ELONG) {
-				final LongAttributeValue value = GenerictraceFactory.eINSTANCE.createLongAttributeValue();
-				if(dynamicProperty.isPresent()) {
-					value.setAttributeValue((Long)dynamicProperty.get().getValue());
+				if (mutableProperty.getUpperBound() == -1) {
+					final ManyLongAttributeValue value = GenerictraceFactory.eINSTANCE.createManyLongAttributeValue();
+					if(dynamicProperty.isPresent()) {
+						value.getAttributeValue().addAll((EList<Long>) dynamicProperty.get().getValue());
+					}
+					result = value;
 				}
-				result = value;
-			} else if (eType == EcorePackage.Literals.ELONG_OBJECT) {
+				else {
+					final LongAttributeValue value = GenerictraceFactory.eINSTANCE.createLongAttributeValue();
+					if(dynamicProperty.isPresent()) {
+						value.setAttributeValue((Long)dynamicProperty.get().getValue());
+					}
+					result = value;
+				}
+			}  else if (eType == EcorePackage.Literals.ELONG_OBJECT) {
 				final LongObjectAttributeValue value = GenerictraceFactory.eINSTANCE.createLongObjectAttributeValue();
 				if(dynamicProperty.isPresent()) {
 					value.setAttributeValue((Long)dynamicProperty.get().getValue());
@@ -224,35 +276,80 @@ public class GenericTraceConstructor implements ITraceConstructor {
 				if (mutableProperty instanceof EAttribute) {
 					final EClassifier eType = mutableProperty.getEType();
 					if (eType == EcorePackage.Literals.EINT) {
-						final IntegerAttributeValue value = GenerictraceFactory.eINSTANCE.createIntegerAttributeValue();
-						if(dynamicProperty.isPresent()) {
-							value.setAttributeValue((Integer)dynamicProperty.get().getValue());
+						if (mutableProperty.getUpperBound() == -1) {
+							final ManyIntegerAttributeValue value = GenerictraceFactory.eINSTANCE.createManyIntegerAttributeValue();
+							if(dynamicProperty.isPresent()) {
+								value.getAttributeValue().addAll((EList<Integer>) dynamicProperty.get().getValue());
+							}
+							firstValue = value;
 						}
-						firstValue = value;
+						else {
+							final IntegerAttributeValue value = GenerictraceFactory.eINSTANCE.createIntegerAttributeValue();
+							if(dynamicProperty.isPresent()) {
+								value.setAttributeValue((Integer)dynamicProperty.get().getValue());
+							}
+							firstValue = value;
+						}
 					} else if (eType == EcorePackage.Literals.EBOOLEAN) {
-						final BooleanAttributeValue value = GenerictraceFactory.eINSTANCE.createBooleanAttributeValue();
-						if(dynamicProperty.isPresent()) {
-							value.setAttributeValue((Boolean)dynamicProperty.get().getValue());
+						if (mutableProperty.getUpperBound() == -1) {
+							final ManyBooleanAttributeValue value = GenerictraceFactory.eINSTANCE.createManyBooleanAttributeValue();
+							if(dynamicProperty.isPresent()) {
+								value.getAttributeValue().addAll((EList<Boolean>) dynamicProperty.get().getValue());
+							}
+							firstValue = value;
 						}
-						firstValue = value;
+						else {
+							final BooleanAttributeValue value = GenerictraceFactory.eINSTANCE.createBooleanAttributeValue();
+							if(dynamicProperty.isPresent()) {
+								value.setAttributeValue((Boolean)dynamicProperty.get().getValue());
+							}
+							firstValue = value;
+						}
 					} else if (eType == EcorePackage.Literals.ESTRING) {
-						final StringAttributeValue value = GenerictraceFactory.eINSTANCE.createStringAttributeValue();
-						if(dynamicProperty.isPresent()) {
-							value.setAttributeValue((String)dynamicProperty.get().getValue());
+						if (mutableProperty.getUpperBound() == -1) {
+							final ManyStringAttributeValue value = GenerictraceFactory.eINSTANCE.createManyStringAttributeValue();
+							if(dynamicProperty.isPresent()) {
+								value.getAttributeValue().addAll((EList<String>) dynamicProperty.get().getValue());
+							}
+							firstValue = value;
 						}
-						firstValue = value;
+						else {
+							final StringAttributeValue value = GenerictraceFactory.eINSTANCE.createStringAttributeValue();
+							if(dynamicProperty.isPresent()) {
+								value.setAttributeValue((String)dynamicProperty.get().getValue());
+							}
+							firstValue = value;
+						}
 					} else if (eType == EcorePackage.Literals.EDOUBLE) {
-						final DoubleAttributeValue value = GenerictraceFactory.eINSTANCE.createDoubleAttributeValue();
-						if(dynamicProperty.isPresent()) {
-							value.setAttributeValue((Double)dynamicProperty.get().getValue());
+						if (mutableProperty.getUpperBound() == -1) {
+							final ManyDoubleAttributeValue value = GenerictraceFactory.eINSTANCE.createManyDoubleAttributeValue();
+							if(dynamicProperty.isPresent()) {
+								value.getAttributeValue().addAll((EList<Double>) dynamicProperty.get().getValue());
+							}
+							firstValue = value;
 						}
-						firstValue = value; 
+						else {
+							final DoubleAttributeValue value = GenerictraceFactory.eINSTANCE.createDoubleAttributeValue();
+							if(dynamicProperty.isPresent()) {
+								value.setAttributeValue((Double)dynamicProperty.get().getValue());
+							}
+							firstValue = value;
+						}
 					} else if (eType == EcorePackage.Literals.ELONG) {
-						final LongAttributeValue value = GenerictraceFactory.eINSTANCE.createLongAttributeValue();
-						if(dynamicProperty.isPresent()) {
-							value.setAttributeValue((Long)dynamicProperty.get().getValue());
+						if (mutableProperty.getUpperBound() == -1) {
+							final ManyLongAttributeValue value = GenerictraceFactory.eINSTANCE.createManyLongAttributeValue();
+							if(dynamicProperty.isPresent()) {
+								value.getAttributeValue().addAll((EList<Long>) dynamicProperty.get().getValue());
+							}
+							firstValue = value;
 						}
-						firstValue = value;
+						else {
+							final LongAttributeValue value = GenerictraceFactory.eINSTANCE.createLongAttributeValue();
+							if(dynamicProperty.isPresent()) {
+								value.setAttributeValue((Long)dynamicProperty.get().getValue());
+							}
+							firstValue = value;
+						}
 					} else if (eType == EcorePackage.Literals.EINTEGER_OBJECT) {
 						final IntegerObjectAttributeValue value = GenerictraceFactory.eINSTANCE.createIntegerObjectAttributeValue();
 						if(dynamicProperty.isPresent()) {
@@ -372,7 +469,14 @@ public class GenericTraceConstructor implements ITraceConstructor {
 				else if (modelChange instanceof RemovedObjectModelChange) {
 					stateChanged = true;
 					final List<GenericValue> values = newState.getValues();
-					((GenericTracedObject) exeToTraced.get(o)).getAllDimensions().forEach(d -> values.remove(d.getValues().get(d.getValues().size() - 1)));
+					List<GenericDimension> dimensions = ((GenericTracedObject) exeToTraced.get(o)).getAllDimensions();
+					if (dimensions != null && dimensions.size()>0) {
+						for (GenericDimension d :dimensions) {
+							if (d.getValues() != null && d.getValues().size()>0) {
+								values.remove(d.getValues().get(d.getValues().size() - 1));
+							}
+						}
+					}
 				}
 				// Here we must look at non-collection mutable fields
 				// We must rollback the last values from the copied state, and add new values as well
@@ -416,17 +520,18 @@ public class GenericTraceConstructor implements ITraceConstructor {
 							.findFirst().orElse(null);
 					if (dimension != null) {
 						final List<GenericValue> dimensionValues = dimension.getValues();
-						final ManyReferenceValue lastValue = (ManyReferenceValue) dimensionValues.get(dimensionValues.size() - 1);
-						List<EObject> values = new ArrayList<>();
-						if(dynamicProperty.isPresent()) {
-							values = (List<EObject>) dynamicProperty.get().getValue();
-						}
-						for (EObject eObj : values) {
-							addNewObjectToStateIfDynamic(eObj, newState);
-						}
+						final GenericValue lastDimensionValue = dimensionValues.get(dimensionValues.size() - 1);
 						boolean change = false;
-						if (lastValue != null) {
-							if (lastValue.getReferenceValues().size() == values.size()) {
+						if (lastDimensionValue instanceof ManyReferenceValue) {
+							final ManyReferenceValue lastValue = (ManyReferenceValue) lastDimensionValue;
+							List<EObject> values = new ArrayList<>();
+							if(dynamicProperty.isPresent()) {
+								values = (List<EObject>) dynamicProperty.get().getValue();
+							}
+							for (EObject eObj : values) {
+								addNewObjectToStateIfDynamic(eObj, newState);
+							}
+							if (lastValue != null && lastValue.getReferenceValues().size() == values.size()) {
 								java.util.Iterator<EObject> it = values.iterator();
 								for (EObject aPreviousValue : lastValue.getReferenceValues()) {
 									EObject aCurrentValue = it.next();
@@ -438,13 +543,86 @@ public class GenericTraceConstructor implements ITraceConstructor {
 							} else {
 								change = true;
 							}
-						} else {
-							change = true;
+						}
+						else if (lastDimensionValue instanceof ManyStringAttributeValue) {
+							final ManyStringAttributeValue lastValue = (ManyStringAttributeValue) lastDimensionValue;
+							List<String> values = new ArrayList<>();
+							if(dynamicProperty.isPresent()) {
+								values = (List<String>) dynamicProperty.get().getValue();
+							}
+							if (lastValue != null && lastValue.getAttributeValue().size() == values.size()) {
+								if (!lastValue.getAttributeValue().equals(values)) {
+									change = true;
+									break;
+								}
+							} else {
+								change = true;
+							}
+						}
+						else if (lastDimensionValue instanceof ManyIntegerAttributeValue) {
+							final ManyIntegerAttributeValue lastValue = (ManyIntegerAttributeValue) lastDimensionValue;
+							List<Integer> values = new ArrayList<>();
+							if(dynamicProperty.isPresent()) {
+								values = (List<Integer>) dynamicProperty.get().getValue();
+							}
+							if (lastValue != null && lastValue.getAttributeValue().size() == values.size()) {
+								if (!lastValue.getAttributeValue().equals(values)) {
+									change = true;
+									break;
+								}
+							} else {
+								change = true;
+							}
+						}
+						else if (lastDimensionValue instanceof ManyBooleanAttributeValue) {
+							final ManyBooleanAttributeValue lastValue = (ManyBooleanAttributeValue) lastDimensionValue;
+							List<Boolean> values = new ArrayList<>();
+							if(dynamicProperty.isPresent()) {
+								values = (List<Boolean>) dynamicProperty.get().getValue();
+							}
+							if (lastValue != null && lastValue.getAttributeValue().size() == values.size()) {
+								if (!lastValue.getAttributeValue().equals(values)) {
+									change = true;
+									break;
+								}
+							} else {
+								change = true;
+							}
+						}
+						else if (lastDimensionValue instanceof ManyDoubleAttributeValue) {
+							final ManyDoubleAttributeValue lastValue = (ManyDoubleAttributeValue) lastDimensionValue;
+							List<Double> values = new ArrayList<>();
+							if(dynamicProperty.isPresent()) {
+								values = (List<Double>) dynamicProperty.get().getValue();
+							}
+							if (lastValue != null && lastValue.getAttributeValue().size() == values.size()) {
+								if (!lastValue.getAttributeValue().equals(values)) {
+									change = true;
+									break;
+								}
+							} else {
+								change = true;
+							}
+						}
+						else if (lastDimensionValue instanceof ManyLongAttributeValue) {
+							final ManyLongAttributeValue lastValue = (ManyLongAttributeValue) lastDimensionValue;
+							List<Long> values = new ArrayList<>();
+							if(dynamicProperty.isPresent()) {
+								values = (List<Long>) dynamicProperty.get().getValue();
+							}
+							if (lastValue != null && lastValue.getAttributeValue().size() == values.size()) {
+								if (!lastValue.getAttributeValue().equals(values)) {
+									change = true;
+									break;
+								}
+							} else {
+								change = true;
+							}
 						}
 						if (change) {
 							stateChanged = true;
 							// Rollback: we remove the last value of this field from the new state
-							newState.getValues().remove(lastValue);
+							newState.getValues().remove(lastDimensionValue);
 							// And we create a proper new value
 							GenericValue newValue = getGenericValue(o, p, newState);
 							dimension.getValues().add(newValue);
