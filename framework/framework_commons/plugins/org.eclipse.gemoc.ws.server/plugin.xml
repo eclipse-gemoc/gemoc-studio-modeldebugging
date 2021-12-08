@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?eclipse version="3.4"?>
+<plugin>
+   <extension-point id="org.eclipse.gemoc.ws.server.endpoint" name="org.eclipse.gemoc.ws.server.endpoint" schema="schema/org.eclipse.gemoc.ws.server.endpoint.exsd"/>
+   <extension
+         point="org.eclipse.gemoc.ws.server.endpoint">
+      <GEMOC_WS_EndPoint
+            class="org.eclipse.gemoc.ws.server.endpoint.TestEndPoint"
+            id="org.eclipse.gemoc.ws.server.endpoint.TestEndPoint">
+      </GEMOC_WS_EndPoint>
+   </extension>
+
+</plugin>
