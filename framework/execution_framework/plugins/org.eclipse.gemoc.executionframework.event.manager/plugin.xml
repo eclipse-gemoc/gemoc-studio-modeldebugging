@@ -15,11 +15,6 @@
           name="Event Manager"
           openViewIds="org.eclipse.gemoc.executionframework.event.ui.views.EventManager"
           shortDescription="Event handling for any language">
-       <addon_stringOption
-             id="org.eclipse.gemoc.executionframework.event.manager.scenario"
-             name="Scenario (optional)"
-             shortDescription="URI pointing to a scenario model to use for the execution.">
-       </addon_stringOption>
     </addon>
   </extension>
 </plugin>

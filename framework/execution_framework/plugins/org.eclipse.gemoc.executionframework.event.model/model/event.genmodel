@@ -25,8 +25,5 @@
       <genFeatures notify="false" createChild="false" propertySortChoices="true" ecoreFeature="ecore:EReference event.ecore#//EventOccurrenceArgument/parameter"/>
       <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference event.ecore#//EventOccurrenceArgument/value"/>
     </genClasses>
-    <genClasses ecoreClass="event.ecore#//Scenario">
-      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference event.ecore#//Scenario/events"/>
-    </genClasses>
   </genPackages>
 </genmodel:GenModel>

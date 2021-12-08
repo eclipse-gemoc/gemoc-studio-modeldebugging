@@ -80,10 +80,6 @@ public class EventAdapterFactory extends AdapterFactoryImpl {
 				return createEventOccurrenceArgumentAdapter();
 			}
 			@Override
-			public Adapter caseScenario(Scenario object) {
-				return createScenarioAdapter();
-			}
-			@Override
 			public Adapter defaultCase(EObject object) {
 				return createEObjectAdapter();
 			}
@@ -142,20 +138,6 @@ public class EventAdapterFactory extends AdapterFactoryImpl {
 	 * @generated
 	 */
 	public Adapter createEventOccurrenceArgumentAdapter() {
-		return null;
-	}
-
-	/**
-	 * Creates a new adapter for an object of class '{@link org.eclipse.gemoc.executionframework.event.model.event.Scenario <em>Scenario</em>}'.
-	 * <!-- begin-user-doc -->
-	 * This default implementation returns null so that we can easily ignore cases;
-	 * it's useful to ignore a case when inheritance will catch all the cases anyway.
-	 * <!-- end-user-doc -->
-	 * @return the new adapter.
-	 * @see org.eclipse.gemoc.executionframework.event.model.event.Scenario
-	 * @generated
-	 */
-	public Adapter createScenarioAdapter() {
 		return null;
 	}
 

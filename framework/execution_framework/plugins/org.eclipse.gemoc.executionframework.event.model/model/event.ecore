@@ -17,8 +17,4 @@
     <eLiterals name="ACCEPTED"/>
     <eLiterals name="EXPOSED" value="1"/>
   </eClassifiers>
-  <eClassifiers xsi:type="ecore:EClass" name="Scenario">
-    <eStructuralFeatures xsi:type="ecore:EReference" name="events" upperBound="-1"
-        eType="#//EventOccurrence" containment="true"/>
-  </eClassifiers>
 </ecore:EPackage>

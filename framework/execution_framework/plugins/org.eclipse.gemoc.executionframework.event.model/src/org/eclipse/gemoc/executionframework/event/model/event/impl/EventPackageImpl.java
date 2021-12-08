@@ -17,7 +17,6 @@ import org.eclipse.gemoc.executionframework.event.model.event.EventOccurrence;
 import org.eclipse.gemoc.executionframework.event.model.event.EventOccurrenceArgument;
 import org.eclipse.gemoc.executionframework.event.model.event.EventOccurrenceType;
 import org.eclipse.gemoc.executionframework.event.model.event.EventPackage;
-import org.eclipse.gemoc.executionframework.event.model.event.Scenario;
 import org.eclipse.gemoc.executionframework.event.model.event.StopEventOccurrence;
 
 import org.eclipse.gemoc.executionframework.value.model.value.ValuePackage;
@@ -49,13 +48,6 @@ public class EventPackageImpl extends EPackageImpl implements EventPackage {
 	 * @generated
 	 */
 	private EClass eventOccurrenceArgumentEClass = null;
-
-	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
-	private EClass scenarioEClass = null;
 
 	/**
 	 * <!-- begin-user-doc -->
@@ -215,26 +207,6 @@ public class EventPackageImpl extends EPackageImpl implements EventPackage {
 	 * @generated
 	 */
 	@Override
-	public EClass getScenario() {
-		return scenarioEClass;
-	}
-
-	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
-	@Override
-	public EReference getScenario_Events() {
-		return (EReference)scenarioEClass.getEStructuralFeatures().get(0);
-	}
-
-	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
-	@Override
 	public EEnum getEventOccurrenceType() {
 		return eventOccurrenceTypeEEnum;
 	}
@@ -278,9 +250,6 @@ public class EventPackageImpl extends EPackageImpl implements EventPackage {
 		eventOccurrenceArgumentEClass = createEClass(EVENT_OCCURRENCE_ARGUMENT);
 		createEReference(eventOccurrenceArgumentEClass, EVENT_OCCURRENCE_ARGUMENT__PARAMETER);
 		createEReference(eventOccurrenceArgumentEClass, EVENT_OCCURRENCE_ARGUMENT__VALUE);
-
-		scenarioEClass = createEClass(SCENARIO);
-		createEReference(scenarioEClass, SCENARIO__EVENTS);
 
 		// Create enums
 		eventOccurrenceTypeEEnum = createEEnum(EVENT_OCCURRENCE_TYPE);
@@ -331,9 +300,6 @@ public class EventPackageImpl extends EPackageImpl implements EventPackage {
 		initEClass(eventOccurrenceArgumentEClass, EventOccurrenceArgument.class, "EventOccurrenceArgument", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
 		initEReference(getEventOccurrenceArgument_Parameter(), theBehavioralInterfacePackage.getEventParameter(), null, "parameter", null, 0, 1, EventOccurrenceArgument.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 		initEReference(getEventOccurrenceArgument_Value(), theValuePackage.getValue(), null, "value", null, 0, 1, EventOccurrenceArgument.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
-
-		initEClass(scenarioEClass, Scenario.class, "Scenario", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
-		initEReference(getScenario_Events(), this.getEventOccurrence(), null, "events", null, 0, -1, Scenario.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 
 		// Initialize enums and add enum literals
 		initEEnum(eventOccurrenceTypeEEnum, EventOccurrenceType.class, "EventOccurrenceType");

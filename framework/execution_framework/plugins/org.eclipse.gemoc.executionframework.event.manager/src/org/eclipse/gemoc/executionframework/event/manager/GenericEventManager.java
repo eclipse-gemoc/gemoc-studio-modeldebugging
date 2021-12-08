@@ -14,13 +14,10 @@ import java.util.stream.Collectors;
 import org.eclipse.core.runtime.CoreException;
 import org.eclipse.core.runtime.IConfigurationElement;
 import org.eclipse.core.runtime.Platform;
-import org.eclipse.emf.common.util.URI;
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.EParameter;
 import org.eclipse.emf.ecore.EReference;
 import org.eclipse.emf.ecore.resource.Resource;
-import org.eclipse.emf.ecore.resource.ResourceSet;
-import org.eclipse.emf.ecore.resource.impl.ResourceSetImpl;
 import org.eclipse.emf.ecore.util.EcoreUtil;
 import org.eclipse.gemoc.dsl.Dsl;
 import org.eclipse.gemoc.dsl.Entry;
@@ -29,7 +26,6 @@ import org.eclipse.gemoc.executionframework.behavioralinterface.behavioralInterf
 import org.eclipse.gemoc.executionframework.engine.commons.DslHelper;
 import org.eclipse.gemoc.executionframework.event.model.event.EventOccurrence;
 import org.eclipse.gemoc.executionframework.event.model.event.EventOccurrenceType;
-import org.eclipse.gemoc.executionframework.event.model.event.Scenario;
 import org.eclipse.gemoc.executionframework.event.model.event.StopEventOccurrence;
 import org.eclipse.gemoc.executionframework.value.model.value.ManyReferenceValue;
 import org.eclipse.gemoc.executionframework.value.model.value.SingleObjectValue;
@@ -41,12 +37,8 @@ import org.eclipse.gemoc.trace.commons.model.trace.Step;
 import org.eclipse.gemoc.xdsmlframework.api.core.EngineStatus.RunStatus;
 import org.eclipse.gemoc.xdsmlframework.api.core.IExecutionEngine;
 
-import com.google.common.collect.Streams;
-
 public class GenericEventManager implements IEventManager {
 
-	private static final String SCENARIO_OPTION_ID = "org.eclipse.gemoc.executionframework.event.manager.scenario";
-	
 	private final LinkedTransferQueue<ICallRequest> callRequestQueue = new LinkedTransferQueue<>();
 	
 	private final LinkedTransferQueue<EventOccurrence> eventOccurrenceQueue = new LinkedTransferQueue<>();
@@ -91,14 +83,6 @@ public class GenericEventManager implements IEventManager {
 					: Collections.emptyList();
 			implementationRelationships.forEach(r -> relationshipManager.registerImplementationRelationship(r));
 			subtypingRelationships.forEach(r -> relationshipManager.registerSubtypingRelationship(r));
-			final String scenarioURI = engine.getExecutionContext().getRunConfiguration().getAttribute(SCENARIO_OPTION_ID, "");
-			if (!scenarioURI.isBlank()) {
-				final ResourceSet rs = new ResourceSetImpl();
-				final Resource r = rs.getResource(URI.createPlatformResourceURI(scenarioURI, true), true);
-				Streams.stream(r.getAllContents()).filter(o -> o instanceof Scenario)
-						.findFirst()
-						.ifPresent(o -> setScenario((Scenario) o));
-			}
 		}
 	}
 	
@@ -408,8 +392,4 @@ public class GenericEventManager implements IEventManager {
 		callRequestQueue.put(callRequest);
 	}
 
-	@Override
-	public void setScenario(Scenario scenario) {
-		eventOccurrenceQueue.addAll(scenario.getEvents());
-	}
 }

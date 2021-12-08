@@ -60,7 +60,6 @@ public class EventFactoryImpl extends EFactoryImpl implements EventFactory {
 			case EventPackage.EVENT_OCCURRENCE: return createEventOccurrence();
 			case EventPackage.STOP_EVENT_OCCURRENCE: return createStopEventOccurrence();
 			case EventPackage.EVENT_OCCURRENCE_ARGUMENT: return createEventOccurrenceArgument();
-			case EventPackage.SCENARIO: return createScenario();
 			default:
 				throw new IllegalArgumentException("The class '" + eClass.getName() + "' is not a valid classifier");
 		}
@@ -127,17 +126,6 @@ public class EventFactoryImpl extends EFactoryImpl implements EventFactory {
 	public EventOccurrenceArgument createEventOccurrenceArgument() {
 		EventOccurrenceArgumentImpl eventOccurrenceArgument = new EventOccurrenceArgumentImpl();
 		return eventOccurrenceArgument;
-	}
-
-	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
-	@Override
-	public Scenario createScenario() {
-		ScenarioImpl scenario = new ScenarioImpl();
-		return scenario;
 	}
 
 	/**

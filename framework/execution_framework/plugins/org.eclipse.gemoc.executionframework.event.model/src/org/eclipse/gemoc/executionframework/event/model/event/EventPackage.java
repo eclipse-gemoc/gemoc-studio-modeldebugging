@@ -214,43 +214,6 @@ public interface EventPackage extends EPackage {
 	int EVENT_OCCURRENCE_ARGUMENT_OPERATION_COUNT = 0;
 
 	/**
-	 * The meta object id for the '{@link org.eclipse.gemoc.executionframework.event.model.event.impl.ScenarioImpl <em>Scenario</em>}' class.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @see org.eclipse.gemoc.executionframework.event.model.event.impl.ScenarioImpl
-	 * @see org.eclipse.gemoc.executionframework.event.model.event.impl.EventPackageImpl#getScenario()
-	 * @generated
-	 */
-	int SCENARIO = 3;
-
-	/**
-	 * The feature id for the '<em><b>Events</b></em>' containment reference list.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 * @ordered
-	 */
-	int SCENARIO__EVENTS = 0;
-
-	/**
-	 * The number of structural features of the '<em>Scenario</em>' class.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 * @ordered
-	 */
-	int SCENARIO_FEATURE_COUNT = 1;
-
-	/**
-	 * The number of operations of the '<em>Scenario</em>' class.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 * @ordered
-	 */
-	int SCENARIO_OPERATION_COUNT = 0;
-
-	/**
 	 * The meta object id for the '{@link org.eclipse.gemoc.executionframework.event.model.event.EventOccurrenceType <em>Occurrence Type</em>}' enum.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -258,7 +221,7 @@ public interface EventPackage extends EPackage {
 	 * @see org.eclipse.gemoc.executionframework.event.model.event.impl.EventPackageImpl#getEventOccurrenceType()
 	 * @generated
 	 */
-	int EVENT_OCCURRENCE_TYPE = 4;
+	int EVENT_OCCURRENCE_TYPE = 3;
 
 
 	/**
@@ -345,27 +308,6 @@ public interface EventPackage extends EPackage {
 	 * @generated
 	 */
 	EReference getEventOccurrenceArgument_Value();
-
-	/**
-	 * Returns the meta object for class '{@link org.eclipse.gemoc.executionframework.event.model.event.Scenario <em>Scenario</em>}'.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @return the meta object for class '<em>Scenario</em>'.
-	 * @see org.eclipse.gemoc.executionframework.event.model.event.Scenario
-	 * @generated
-	 */
-	EClass getScenario();
-
-	/**
-	 * Returns the meta object for the containment reference list '{@link org.eclipse.gemoc.executionframework.event.model.event.Scenario#getEvents <em>Events</em>}'.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @return the meta object for the containment reference list '<em>Events</em>'.
-	 * @see org.eclipse.gemoc.executionframework.event.model.event.Scenario#getEvents()
-	 * @see #getScenario()
-	 * @generated
-	 */
-	EReference getScenario_Events();
 
 	/**
 	 * Returns the meta object for enum '{@link org.eclipse.gemoc.executionframework.event.model.event.EventOccurrenceType <em>Occurrence Type</em>}'.
@@ -469,24 +411,6 @@ public interface EventPackage extends EPackage {
 		 * @generated
 		 */
 		EReference EVENT_OCCURRENCE_ARGUMENT__VALUE = eINSTANCE.getEventOccurrenceArgument_Value();
-
-		/**
-		 * The meta object literal for the '{@link org.eclipse.gemoc.executionframework.event.model.event.impl.ScenarioImpl <em>Scenario</em>}' class.
-		 * <!-- begin-user-doc -->
-		 * <!-- end-user-doc -->
-		 * @see org.eclipse.gemoc.executionframework.event.model.event.impl.ScenarioImpl
-		 * @see org.eclipse.gemoc.executionframework.event.model.event.impl.EventPackageImpl#getScenario()
-		 * @generated
-		 */
-		EClass SCENARIO = eINSTANCE.getScenario();
-
-		/**
-		 * The meta object literal for the '<em><b>Events</b></em>' containment reference list feature.
-		 * <!-- begin-user-doc -->
-		 * <!-- end-user-doc -->
-		 * @generated
-		 */
-		EReference SCENARIO__EVENTS = eINSTANCE.getScenario_Events();
 
 		/**
 		 * The meta object literal for the '{@link org.eclipse.gemoc.executionframework.event.model.event.EventOccurrenceType <em>Occurrence Type</em>}' enum.
