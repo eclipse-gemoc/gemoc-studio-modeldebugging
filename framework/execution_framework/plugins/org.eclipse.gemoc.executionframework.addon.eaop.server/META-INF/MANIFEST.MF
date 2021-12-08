@@ -1,0 +1,14 @@
+Manifest-Version: 1.0
+Bundle-ManifestVersion: 2
+Bundle-Name: GEMOC Addon-based EAOP Server
+Bundle-SymbolicName: org.eclipse.gemoc.executionframework.addon.eaop.server;singleton:=true
+Bundle-Version: 1.0.0.qualifier
+Bundle-Activator: org.eclipse.gemoc.executionframework.addon.eaop.server.Activator
+Require-Bundle: org.eclipse.core.runtime,
+ org.eclipse.gemoc.protocols.eaop.api;bundle-version="2.3.0",
+ org.eclipse.gemoc.xdsmlframework.api;bundle-version="4.0.0",
+ org.eclipse.gemoc.ws.server;bundle-version="1.0.0"
+Bundle-RequiredExecutionEnvironment: JavaSE-11
+Automatic-Module-Name: org.eclipse.gemoc.executionframework.addon.eaop.server
+Bundle-ActivationPolicy: lazy
+Bundle-Vendor: Eclipse GEMOC Project

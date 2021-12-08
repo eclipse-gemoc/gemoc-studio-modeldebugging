@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?eclipse version="3.4"?>
+<plugin>
+   <extension
+         point="org.eclipse.gemoc.gemoc_language_workbench.engine_addon">
+      <addon
+            class="org.eclipse.gemoc.executionframework.addon.eaop.server.EaopEngineAddon"
+            id="org.eclipse.gemoc.executionframework.addon.eaop.server.addon"
+            name="org.eclipse.gemoc.executionframework.addon.eaop.server.addon">
+      </addon>
+   </extension>
+
+</plugin>
