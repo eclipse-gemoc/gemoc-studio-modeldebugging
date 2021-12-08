@@ -8,15 +8,15 @@
         },
         "javaServer" : {
             "packageName" : "org.eclipse.gemoc.protocols.eaop.api",
-            "destFileName" : "../../../engine_addon_protocol/tycho/plugins/org.eclipse.gemoc.protocols.eaop.api/src-gen/org/eclipse/gemoc/protocols/eaop/api/services/IEngineAddonProtocolServer.java"
+            "destFileName" : "../../../engine_addon_protocol/plugins/org.eclipse.gemoc.protocols.eaop.api/src-gen/org/eclipse/gemoc/protocols/eaop/api/services/IEngineAddonProtocolServer.java"
         },
         "javaClient" : {
             "packageName" : "org.eclipse.gemoc.protocols.eaop.api",
-            "destFileName" : "../../../engine_addon_protocol/tycho/plugins/org.eclipse.gemoc.protocols.eaop.api/src-gen/org/eclipse/gemoc/protocols/eaop/api/services/IEngineAddonProtocolClient.java"
+            "destFileName" : "../../../engine_addon_protocol/plugins/org.eclipse.gemoc.protocols.eaop.api/src-gen/org/eclipse/gemoc/protocols/eaop/api/services/IEngineAddonProtocolClient.java"
         },
         "javaAPI" : {
             "packageName" : "org.eclipse.gemoc.protocols.eaop.api",
-            "destFileName" : "../../../engine_addon_protocol/tycho/plugins/org.eclipse.gemoc.protocols.eaop.api/src-gen/org/eclipse/gemoc/protocols/eaop/api/data/EngineAddonProtocolData.xtend"
+            "destFileName" : "../../../engine_addon_protocol/plugins/org.eclipse.gemoc.protocols.eaop.api/src-gen/org/eclipse/gemoc/protocols/eaop/api/data/EngineAddonProtocolData.xtend"
         },
         "plantuml" : {
             "destFileName" : "../../../engine_addon_protocol/docs/images/EngineAddonProtocol.plantuml"
