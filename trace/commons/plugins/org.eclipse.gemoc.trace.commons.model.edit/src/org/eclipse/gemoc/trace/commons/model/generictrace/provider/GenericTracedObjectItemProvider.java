@@ -92,7 +92,11 @@ public class GenericTracedObjectItemProvider extends TracedObjectItemProvider {
 	public Collection<? extends EStructuralFeature> getChildrenFeatures(Object object) {
 		if (childrenFeatures == null) {
 			super.getChildrenFeatures(object);
-			childrenFeatures.add(GenerictracePackage.Literals.GENERIC_TRACED_OBJECT__ALL_DIMENSIONS);
+			
+			// NOTE: since "dimensions" is derived from "allDimensions", we must comment 
+			// the following generated line to avoid displaying each dimension twice in the edit view
+			//
+			// childrenFeatures.add(GenerictracePackage.Literals.GENERIC_TRACED_OBJECT__ALL_DIMENSIONS);
 		}
 		return childrenFeatures;
 	}
