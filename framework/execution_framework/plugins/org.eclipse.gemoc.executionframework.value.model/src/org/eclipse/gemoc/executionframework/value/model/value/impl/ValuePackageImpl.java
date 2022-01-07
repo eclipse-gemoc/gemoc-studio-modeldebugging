@@ -285,6 +285,7 @@ public class ValuePackageImpl extends EPackageImpl implements ValuePackage {
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
+	@Override
 	public EClass getValue() {
 		return valueEClass;
 	}
@@ -294,6 +295,7 @@ public class ValuePackageImpl extends EPackageImpl implements ValuePackage {
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
+	@Override
 	public EClass getAttributeValue() {
 		return attributeValueEClass;
 	}
@@ -303,6 +305,7 @@ public class ValuePackageImpl extends EPackageImpl implements ValuePackage {
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
+	@Override
 	public EClass getReferenceValue() {
 		return referenceValueEClass;
 	}
@@ -312,6 +315,7 @@ public class ValuePackageImpl extends EPackageImpl implements ValuePackage {
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
+	@Override
 	public EClass getBooleanAttributeValue() {
 		return booleanAttributeValueEClass;
 	}
@@ -321,6 +325,7 @@ public class ValuePackageImpl extends EPackageImpl implements ValuePackage {
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
+	@Override
 	public EAttribute getBooleanAttributeValue_AttributeValue() {
 		return (EAttribute)booleanAttributeValueEClass.getEStructuralFeatures().get(0);
 	}
@@ -330,6 +335,7 @@ public class ValuePackageImpl extends EPackageImpl implements ValuePackage {
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
+	@Override
 	public EClass getBooleanObjectAttributeValue() {
 		return booleanObjectAttributeValueEClass;
 	}
@@ -339,6 +345,7 @@ public class ValuePackageImpl extends EPackageImpl implements ValuePackage {
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
+	@Override
 	public EAttribute getBooleanObjectAttributeValue_AttributeValue() {
 		return (EAttribute)booleanObjectAttributeValueEClass.getEStructuralFeatures().get(0);
 	}
@@ -348,6 +355,7 @@ public class ValuePackageImpl extends EPackageImpl implements ValuePackage {
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
+	@Override
 	public EClass getIntegerAttributeValue() {
 		return integerAttributeValueEClass;
 	}
@@ -357,6 +365,7 @@ public class ValuePackageImpl extends EPackageImpl implements ValuePackage {
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
+	@Override
 	public EAttribute getIntegerAttributeValue_AttributeValue() {
 		return (EAttribute)integerAttributeValueEClass.getEStructuralFeatures().get(0);
 	}
@@ -366,6 +375,7 @@ public class ValuePackageImpl extends EPackageImpl implements ValuePackage {
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
+	@Override
 	public EClass getIntegerObjectAttributeValue() {
 		return integerObjectAttributeValueEClass;
 	}
@@ -375,6 +385,7 @@ public class ValuePackageImpl extends EPackageImpl implements ValuePackage {
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
+	@Override
 	public EAttribute getIntegerObjectAttributeValue_AttributeValue() {
 		return (EAttribute)integerObjectAttributeValueEClass.getEStructuralFeatures().get(0);
 	}
@@ -384,6 +395,7 @@ public class ValuePackageImpl extends EPackageImpl implements ValuePackage {
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
+	@Override
 	public EClass getLongAttributeValue() {
 		return longAttributeValueEClass;
 	}
@@ -393,6 +405,7 @@ public class ValuePackageImpl extends EPackageImpl implements ValuePackage {
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
+	@Override
 	public EAttribute getLongAttributeValue_AttributeValue() {
 		return (EAttribute)longAttributeValueEClass.getEStructuralFeatures().get(0);
 	}
@@ -402,6 +415,7 @@ public class ValuePackageImpl extends EPackageImpl implements ValuePackage {
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
+	@Override
 	public EClass getLongObjectAttributeValue() {
 		return longObjectAttributeValueEClass;
 	}
@@ -411,6 +425,7 @@ public class ValuePackageImpl extends EPackageImpl implements ValuePackage {
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
+	@Override
 	public EAttribute getLongObjectAttributeValue_AttributeValue() {
 		return (EAttribute)longObjectAttributeValueEClass.getEStructuralFeatures().get(0);
 	}
@@ -420,6 +435,7 @@ public class ValuePackageImpl extends EPackageImpl implements ValuePackage {
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
+	@Override
 	public EClass getFloatAttributeValue() {
 		return floatAttributeValueEClass;
 	}
@@ -429,6 +445,7 @@ public class ValuePackageImpl extends EPackageImpl implements ValuePackage {
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
+	@Override
 	public EAttribute getFloatAttributeValue_AttributeValue() {
 		return (EAttribute)floatAttributeValueEClass.getEStructuralFeatures().get(0);
 	}
@@ -438,6 +455,7 @@ public class ValuePackageImpl extends EPackageImpl implements ValuePackage {
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
+	@Override
 	public EClass getFloatObjectAttributeValue() {
 		return floatObjectAttributeValueEClass;
 	}
@@ -447,6 +465,7 @@ public class ValuePackageImpl extends EPackageImpl implements ValuePackage {
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
+	@Override
 	public EAttribute getFloatObjectAttributeValue_AttributeValue() {
 		return (EAttribute)floatObjectAttributeValueEClass.getEStructuralFeatures().get(0);
 	}
@@ -456,6 +475,7 @@ public class ValuePackageImpl extends EPackageImpl implements ValuePackage {
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
+	@Override
 	public EClass getStringAttributeValue() {
 		return stringAttributeValueEClass;
 	}
@@ -465,6 +485,7 @@ public class ValuePackageImpl extends EPackageImpl implements ValuePackage {
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
+	@Override
 	public EAttribute getStringAttributeValue_AttributeValue() {
 		return (EAttribute)stringAttributeValueEClass.getEStructuralFeatures().get(0);
 	}
@@ -474,6 +495,7 @@ public class ValuePackageImpl extends EPackageImpl implements ValuePackage {
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
+	@Override
 	public EClass getManyBooleanAttributeValue() {
 		return manyBooleanAttributeValueEClass;
 	}
@@ -483,6 +505,7 @@ public class ValuePackageImpl extends EPackageImpl implements ValuePackage {
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
+	@Override
 	public EAttribute getManyBooleanAttributeValue_AttributeValue() {
 		return (EAttribute)manyBooleanAttributeValueEClass.getEStructuralFeatures().get(0);
 	}
@@ -492,6 +515,7 @@ public class ValuePackageImpl extends EPackageImpl implements ValuePackage {
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
+	@Override
 	public EClass getManyBooleanObjectAttributeValue() {
 		return manyBooleanObjectAttributeValueEClass;
 	}
@@ -501,6 +525,7 @@ public class ValuePackageImpl extends EPackageImpl implements ValuePackage {
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
+	@Override
 	public EAttribute getManyBooleanObjectAttributeValue_AttributeValue() {
 		return (EAttribute)manyBooleanObjectAttributeValueEClass.getEStructuralFeatures().get(0);
 	}
@@ -510,6 +535,7 @@ public class ValuePackageImpl extends EPackageImpl implements ValuePackage {
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
+	@Override
 	public EClass getManyIntegerAttributeValue() {
 		return manyIntegerAttributeValueEClass;
 	}
@@ -519,6 +545,7 @@ public class ValuePackageImpl extends EPackageImpl implements ValuePackage {
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
+	@Override
 	public EAttribute getManyIntegerAttributeValue_AttributeValue() {
 		return (EAttribute)manyIntegerAttributeValueEClass.getEStructuralFeatures().get(0);
 	}
@@ -528,6 +555,7 @@ public class ValuePackageImpl extends EPackageImpl implements ValuePackage {
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
+	@Override
 	public EClass getManyIntegerObjectAttributeValue() {
 		return manyIntegerObjectAttributeValueEClass;
 	}
@@ -537,6 +565,7 @@ public class ValuePackageImpl extends EPackageImpl implements ValuePackage {
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
+	@Override
 	public EAttribute getManyIntegerObjectAttributeValue_AttributeValue() {
 		return (EAttribute)manyIntegerObjectAttributeValueEClass.getEStructuralFeatures().get(0);
 	}
@@ -546,6 +575,7 @@ public class ValuePackageImpl extends EPackageImpl implements ValuePackage {
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
+	@Override
 	public EClass getManyLongAttributeValue() {
 		return manyLongAttributeValueEClass;
 	}
@@ -555,6 +585,7 @@ public class ValuePackageImpl extends EPackageImpl implements ValuePackage {
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
+	@Override
 	public EAttribute getManyLongAttributeValue_AttributeValue() {
 		return (EAttribute)manyLongAttributeValueEClass.getEStructuralFeatures().get(0);
 	}
@@ -564,6 +595,7 @@ public class ValuePackageImpl extends EPackageImpl implements ValuePackage {
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
+	@Override
 	public EClass getManyLongObjectAttributeValue() {
 		return manyLongObjectAttributeValueEClass;
 	}
@@ -573,6 +605,7 @@ public class ValuePackageImpl extends EPackageImpl implements ValuePackage {
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
+	@Override
 	public EAttribute getManyLongObjectAttributeValue_AttributeValue() {
 		return (EAttribute)manyLongObjectAttributeValueEClass.getEStructuralFeatures().get(0);
 	}
@@ -582,6 +615,7 @@ public class ValuePackageImpl extends EPackageImpl implements ValuePackage {
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
+	@Override
 	public EClass getManyFloatAttributeValue() {
 		return manyFloatAttributeValueEClass;
 	}
@@ -591,6 +625,7 @@ public class ValuePackageImpl extends EPackageImpl implements ValuePackage {
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
+	@Override
 	public EAttribute getManyFloatAttributeValue_AttributeValue() {
 		return (EAttribute)manyFloatAttributeValueEClass.getEStructuralFeatures().get(0);
 	}
@@ -600,6 +635,7 @@ public class ValuePackageImpl extends EPackageImpl implements ValuePackage {
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
+	@Override
 	public EClass getManyFloatObjectAttributeValue() {
 		return manyFloatObjectAttributeValueEClass;
 	}
@@ -609,6 +645,7 @@ public class ValuePackageImpl extends EPackageImpl implements ValuePackage {
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
+	@Override
 	public EAttribute getManyFloatObjectAttributeValue_AttributeValue() {
 		return (EAttribute)manyFloatObjectAttributeValueEClass.getEStructuralFeatures().get(0);
 	}
@@ -618,6 +655,7 @@ public class ValuePackageImpl extends EPackageImpl implements ValuePackage {
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
+	@Override
 	public EClass getManyStringAttributeValue() {
 		return manyStringAttributeValueEClass;
 	}
@@ -627,6 +665,7 @@ public class ValuePackageImpl extends EPackageImpl implements ValuePackage {
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
+	@Override
 	public EAttribute getManyStringAttributeValue_AttributeValue() {
 		return (EAttribute)manyStringAttributeValueEClass.getEStructuralFeatures().get(0);
 	}
@@ -636,6 +675,7 @@ public class ValuePackageImpl extends EPackageImpl implements ValuePackage {
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
+	@Override
 	public EClass getSingleReferenceValue() {
 		return singleReferenceValueEClass;
 	}
@@ -645,6 +685,7 @@ public class ValuePackageImpl extends EPackageImpl implements ValuePackage {
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
+	@Override
 	public EReference getSingleReferenceValue_ReferenceValue() {
 		return (EReference)singleReferenceValueEClass.getEStructuralFeatures().get(0);
 	}
@@ -654,6 +695,7 @@ public class ValuePackageImpl extends EPackageImpl implements ValuePackage {
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
+	@Override
 	public EClass getManyReferenceValue() {
 		return manyReferenceValueEClass;
 	}
@@ -663,6 +705,7 @@ public class ValuePackageImpl extends EPackageImpl implements ValuePackage {
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
+	@Override
 	public EReference getManyReferenceValue_ReferenceValues() {
 		return (EReference)manyReferenceValueEClass.getEStructuralFeatures().get(0);
 	}
@@ -672,6 +715,7 @@ public class ValuePackageImpl extends EPackageImpl implements ValuePackage {
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
+	@Override
 	public EClass getSingleObjectValue() {
 		return singleObjectValueEClass;
 	}
@@ -681,6 +725,7 @@ public class ValuePackageImpl extends EPackageImpl implements ValuePackage {
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
+	@Override
 	public EReference getSingleObjectValue_ObjectValue() {
 		return (EReference)singleObjectValueEClass.getEStructuralFeatures().get(0);
 	}
@@ -690,6 +735,7 @@ public class ValuePackageImpl extends EPackageImpl implements ValuePackage {
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
+	@Override
 	public EClass getManyObjectValue() {
 		return manyObjectValueEClass;
 	}
@@ -699,6 +745,7 @@ public class ValuePackageImpl extends EPackageImpl implements ValuePackage {
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
+	@Override
 	public EReference getManyObjectValue_ObjectValues() {
 		return (EReference)manyObjectValueEClass.getEStructuralFeatures().get(0);
 	}
@@ -708,6 +755,7 @@ public class ValuePackageImpl extends EPackageImpl implements ValuePackage {
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
+	@Override
 	public ValueFactory getValueFactory() {
 		return (ValueFactory)getEFactoryInstance();
 	}

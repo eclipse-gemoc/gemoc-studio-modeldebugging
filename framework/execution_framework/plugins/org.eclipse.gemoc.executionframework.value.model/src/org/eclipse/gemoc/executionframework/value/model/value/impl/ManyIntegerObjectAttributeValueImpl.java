@@ -61,6 +61,7 @@ public class ManyIntegerObjectAttributeValueImpl extends AttributeValueImpl impl
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
+	@Override
 	public EList<Integer> getAttributeValue() {
 		if (attributeValue == null) {
 			attributeValue = new EDataTypeUniqueEList<Integer>(Integer.class, this, ValuePackage.MANY_INTEGER_OBJECT_ATTRIBUTE_VALUE__ATTRIBUTE_VALUE);

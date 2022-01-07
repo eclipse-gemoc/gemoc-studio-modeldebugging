@@ -19,8 +19,11 @@ import org.eclipse.emf.ecore.EParameter;
 import org.eclipse.emf.ecore.EReference;
 import org.eclipse.emf.ecore.resource.Resource;
 import org.eclipse.emf.ecore.util.EcoreUtil;
+import org.eclipse.gemoc.dsl.Dsl;
+import org.eclipse.gemoc.dsl.Entry;
 import org.eclipse.gemoc.executionframework.behavioralinterface.behavioralInterface.BehavioralInterface;
 import org.eclipse.gemoc.executionframework.behavioralinterface.behavioralInterface.Event;
+import org.eclipse.gemoc.executionframework.engine.commons.DslHelper;
 import org.eclipse.gemoc.executionframework.event.model.event.EventOccurrence;
 import org.eclipse.gemoc.executionframework.event.model.event.EventOccurrenceType;
 import org.eclipse.gemoc.executionframework.event.model.event.StopEventOccurrence;
@@ -37,33 +40,81 @@ import org.eclipse.gemoc.xdsmlframework.api.core.IExecutionEngine;
 public class GenericEventManager implements IEventManager {
 
 	private final LinkedTransferQueue<ICallRequest> callRequestQueue = new LinkedTransferQueue<>();
+	
+	private final LinkedTransferQueue<EventOccurrence> eventOccurrenceQueue = new LinkedTransferQueue<>();
 
 	private boolean canManageEvents = true;
 
 	private boolean waitForCallRequests = false;
 
 	private IExecutionEngine<?> engine;
+	
+	private boolean initialized = false;
 
 	private final RelationshipManager relationshipManager;
 	
-	private IntegrationFacade integrationFacade = null;
-
-	public GenericEventManager(String languageName, Resource executedResource,
-			List<IImplementationRelationship> implementationRelationships,
-			List<ISubtypingRelationship> subtypingRelationships) {
+	private final Map<String, IMetalanguageRuleExecutor> metalanguageIntegrations = new HashMap<>();
+	
+	public GenericEventManager() {
 		relationshipManager = new RelationshipManager(this);
-		implementationRelationships.forEach(r -> relationshipManager.registerImplementationRelationship(r));
-		subtypingRelationships.forEach(r -> relationshipManager.registerSubtypingRelationship(r));
 	}
-
+	
 	public RelationshipManager getRelationshipManager() {
 		return relationshipManager;
 	}
 
 	@Override
+	public void engineAboutToStart(IExecutionEngine<?> engine) {
+		configure(engine);
+	}
+	
+	private void configure(IExecutionEngine<?> engine) {
+		final Dsl dsl = DslHelper.load(engine.getExecutionContext().getLanguageDefinitionExtension().getName());
+		final Entry implementationRelationshipEntry = dsl.getEntry("implementation_relationships");
+		if (implementationRelationshipEntry != null) {
+			final Entry subtypingRelationshipEntry = dsl.getEntry("subtyping_relationships");
+			List<IImplementationRelationship> implementationRelationships = Arrays.stream(implementationRelationshipEntry.getValue()
+					.split(",")).map(s -> getImplementationRelationship(s.trim()))
+					.filter(r -> r != null).collect(Collectors.toList());
+			List<ISubtypingRelationship> subtypingRelationships = subtypingRelationshipEntry != null
+					? Arrays.stream(subtypingRelationshipEntry.getValue()
+							.split(",")).map(s -> getSubtypingRelationship(s.trim()))
+							.filter(r -> r != null).collect(Collectors.toList())
+					: Collections.emptyList();
+			implementationRelationships.forEach(r -> relationshipManager.registerImplementationRelationship(r));
+			subtypingRelationships.forEach(r -> relationshipManager.registerSubtypingRelationship(r));
+		}
+	}
+	
+	private IImplementationRelationship getImplementationRelationship(String relationshipId) {
+		IConfigurationElement[] implementationRelationships = Platform.getExtensionRegistry()
+				.getConfigurationElementsFor("org.eclipse.gemoc.executionframework.event.implementationrelationship");
+		return Arrays.stream(implementationRelationships).filter(r -> r.getAttribute("id").equals(relationshipId)).findFirst().map(c -> {
+			try {
+				return (IImplementationRelationship) c.createExecutableExtension("class");
+			} catch (CoreException e) {
+				e.printStackTrace();
+			}
+			return null;
+		}).orElse(null);
+	}
+
+	private ISubtypingRelationship getSubtypingRelationship(String relationshipId) {
+		IConfigurationElement[] subtypingRelationships = Platform.getExtensionRegistry()
+				.getConfigurationElementsFor("org.eclipse.gemoc.executionframework.event.subtypingrelationship");
+		return Arrays.stream(subtypingRelationships).filter(r -> r.getAttribute("id").equals(relationshipId)).findFirst().map(c -> {
+			try {
+				return (ISubtypingRelationship) c.createExecutableExtension("Class");
+			} catch (CoreException e) {
+				e.printStackTrace();
+			}
+			return null;
+		}).orElse(null);
+	}
+	
+	@Override
 	public void engineInitialized(IExecutionEngine<?> executionEngine) {
 		engine = executionEngine;
-		integrationFacade = new IntegrationFacade(engine);
 		relationshipManager.setExecutedResource(engine.getExecutionContext().getResourceModel());
 		IConfigurationElement[] eventEmitters = Platform.getExtensionRegistry()
 				.getConfigurationElementsFor("org.eclipse.gemoc.executionframework.event.event_emitter");
@@ -75,15 +126,23 @@ public class GenericEventManager implements IEventManager {
 				e1.printStackTrace();
 			}
 		});
+		initialized = true;
+		EventOccurrence eventOccurrence = eventOccurrenceQueue.poll();
+		while (eventOccurrence != null) {
+			processEventOccurrence(eventOccurrence);
+			eventOccurrence = eventOccurrenceQueue.poll();
+		}
 	}
 
 	@Override
 	public void processEventOccurrence(EventOccurrence eventOccurrence) {
 		if (eventOccurrence instanceof StopEventOccurrence) {
 			processCallRequest(new StopRequest());
-		} else {
+		} else if (initialized) {
 			convertEventToExecutedResource(eventOccurrence, engine.getExecutionContext().getResourceModel());
 			relationshipManager.notifyEventOccurrence(eventOccurrence);
+		} else {
+			eventOccurrenceQueue.add(eventOccurrence);
 		}
 	}
 
@@ -145,25 +204,29 @@ public class GenericEventManager implements IEventManager {
 
 	@Override
 	public void aboutToExecuteStep(IExecutionEngine<?> engine, Step<?> stepToExecute) {
-		final MSEOccurrence mseOccurrence = stepToExecute.getMseoccurrence();
-		final String behavioralUnit = mseOccurrence.getMse().getCaller().eClass().getInstanceClassName()
-				+ "." + mseOccurrence.getMse().getAction().getName();
-		final Map<String, Object> argsMap = getArguments(mseOccurrence);
-		final CallNotification callNotification = new CallNotification(behavioralUnit, argsMap);
-		relationshipManager.notifyCall(callNotification);
-		processCallRequests();
+		if (initialized) {
+			final MSEOccurrence mseOccurrence = stepToExecute.getMseoccurrence();
+			final String behavioralUnit = mseOccurrence.getMse().getCaller().eClass().getInstanceClassName()
+					+ "." + mseOccurrence.getMse().getAction().getName();
+			final Map<String, Object> argsMap = getArguments(mseOccurrence);
+			final CallNotification callNotification = new CallNotification(behavioralUnit, argsMap);
+			relationshipManager.notifyCall(callNotification);
+			processCallRequests();
+		}
 	}
 
 	@Override
 	public void stepExecuted(IExecutionEngine<?> engine, Step<?> stepExecuted) {
-		final MSEOccurrence mseOccurrence = stepExecuted.getMseoccurrence();
-		final String behavioralUnit = mseOccurrence.getMse().getCaller().eClass().getInstanceClassName()
-				+ "." + mseOccurrence.getMse().getAction().getName();
-		final Map<String, Object> argsMap = getArguments(mseOccurrence);
-		final ReturnNotification returnNotification = new ReturnNotification(behavioralUnit, argsMap,
-				mseOccurrence.getResult());
-		relationshipManager.notifyCall(returnNotification);
-		processCallRequests();
+		if (initialized) {
+			final MSEOccurrence mseOccurrence = stepExecuted.getMseoccurrence();
+			final String behavioralUnit = mseOccurrence.getMse().getCaller().eClass().getInstanceClassName()
+					+ "." + mseOccurrence.getMse().getAction().getName();
+			final Map<String, Object> argsMap = getArguments(mseOccurrence);
+			final ReturnNotification returnNotification = new ReturnNotification(behavioralUnit, argsMap,
+					mseOccurrence.getResult());
+			relationshipManager.notifyCall(returnNotification);
+			processCallRequests();
+		}
 	}
 
 	private Map<String, Object> getArguments(MSEOccurrence mseOccurrence) {
@@ -204,9 +267,32 @@ public class GenericEventManager implements IEventManager {
 				((CompositeCallRequest) callRequest).getCallRequests().forEach(cr -> handleCallRequest(cr));
 			} else if (callRequest instanceof SimpleCallRequest) {
 				final SimpleCallRequest simpleCallRequest = (SimpleCallRequest) callRequest;
-				integrationFacade.handleCallRequest(simpleCallRequest);
+				final IMetalanguageRuleExecutor ruleExecutor = metalanguageIntegrations
+						.computeIfAbsent(simpleCallRequest.getMetalanguage(), m -> findMetalanguageRuleExecutor(m));
+				if (ruleExecutor != null) {
+					ruleExecutor.handleCallRequest(simpleCallRequest);
+				} else {
+					throw new IllegalArgumentException(
+							"No metalanguage rule executor was found for metalanguage " + simpleCallRequest.getMetalanguage());
+				}
 			}
 		}
+	}
+
+	private IMetalanguageRuleExecutor findMetalanguageRuleExecutor(String metalanguage) {
+		return Arrays
+				.stream(Platform.getExtensionRegistry().getConfigurationElementsFor("org.eclipse.gemoc.executionframework.event.metalanguage_rule_executor"))
+				.filter(c -> c.getAttribute("metaprog").equals(metalanguage))
+				.findFirst().map(c -> {
+					IMetalanguageRuleExecutor result = null;
+					try {
+						result = (IMetalanguageRuleExecutor) c.createExecutableExtension("class");
+						result.setExecutionEngine(engine);
+					} catch (CoreException e) {
+						e.printStackTrace();
+					}
+					return result;
+				}).orElse(null);
 	}
 
 	@SuppressWarnings({ "rawtypes", "unchecked" })
@@ -305,4 +391,5 @@ public class GenericEventManager implements IEventManager {
 	public void processCallRequest(ICallRequest callRequest) {
 		callRequestQueue.put(callRequest);
 	}
+
 }

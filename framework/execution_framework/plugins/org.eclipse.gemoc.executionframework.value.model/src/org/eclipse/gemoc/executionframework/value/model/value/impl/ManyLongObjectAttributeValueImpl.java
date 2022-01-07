@@ -61,6 +61,7 @@ public class ManyLongObjectAttributeValueImpl extends AttributeValueImpl impleme
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
+	@Override
 	public EList<Long> getAttributeValue() {
 		if (attributeValue == null) {
 			attributeValue = new EDataTypeUniqueEList<Long>(Long.class, this, ValuePackage.MANY_LONG_OBJECT_ATTRIBUTE_VALUE__ATTRIBUTE_VALUE);

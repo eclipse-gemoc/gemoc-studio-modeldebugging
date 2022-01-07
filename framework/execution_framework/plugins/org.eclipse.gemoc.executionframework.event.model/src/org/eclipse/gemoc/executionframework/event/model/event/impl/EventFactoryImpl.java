@@ -100,6 +100,7 @@ public class EventFactoryImpl extends EFactoryImpl implements EventFactory {
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
+	@Override
 	public EventOccurrence createEventOccurrence() {
 		EventOccurrenceImpl eventOccurrence = new EventOccurrenceImpl();
 		return eventOccurrence;
@@ -110,6 +111,7 @@ public class EventFactoryImpl extends EFactoryImpl implements EventFactory {
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
+	@Override
 	public StopEventOccurrence createStopEventOccurrence() {
 		StopEventOccurrenceImpl stopEventOccurrence = new StopEventOccurrenceImpl();
 		return stopEventOccurrence;
@@ -120,6 +122,7 @@ public class EventFactoryImpl extends EFactoryImpl implements EventFactory {
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
+	@Override
 	public EventOccurrenceArgument createEventOccurrenceArgument() {
 		EventOccurrenceArgumentImpl eventOccurrenceArgument = new EventOccurrenceArgumentImpl();
 		return eventOccurrenceArgument;
@@ -150,6 +153,7 @@ public class EventFactoryImpl extends EFactoryImpl implements EventFactory {
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
+	@Override
 	public EventPackage getEventPackage() {
 		return (EventPackage)getEPackage();
 	}

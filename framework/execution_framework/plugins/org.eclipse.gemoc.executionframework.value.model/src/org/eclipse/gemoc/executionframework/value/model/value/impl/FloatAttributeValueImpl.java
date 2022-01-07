@@ -69,6 +69,7 @@ public class FloatAttributeValueImpl extends AttributeValueImpl implements Float
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
+	@Override
 	public float getAttributeValue() {
 		return attributeValue;
 	}
@@ -78,6 +79,7 @@ public class FloatAttributeValueImpl extends AttributeValueImpl implements Float
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
+	@Override
 	public void setAttributeValue(float newAttributeValue) {
 		float oldAttributeValue = attributeValue;
 		attributeValue = newAttributeValue;

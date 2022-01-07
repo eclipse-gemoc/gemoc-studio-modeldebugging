@@ -88,6 +88,7 @@ public class ValueFactoryImpl extends EFactoryImpl implements ValueFactory {
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
+	@Override
 	public BooleanAttributeValue createBooleanAttributeValue() {
 		BooleanAttributeValueImpl booleanAttributeValue = new BooleanAttributeValueImpl();
 		return booleanAttributeValue;
@@ -98,6 +99,7 @@ public class ValueFactoryImpl extends EFactoryImpl implements ValueFactory {
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
+	@Override
 	public BooleanObjectAttributeValue createBooleanObjectAttributeValue() {
 		BooleanObjectAttributeValueImpl booleanObjectAttributeValue = new BooleanObjectAttributeValueImpl();
 		return booleanObjectAttributeValue;
@@ -108,6 +110,7 @@ public class ValueFactoryImpl extends EFactoryImpl implements ValueFactory {
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
+	@Override
 	public IntegerAttributeValue createIntegerAttributeValue() {
 		IntegerAttributeValueImpl integerAttributeValue = new IntegerAttributeValueImpl();
 		return integerAttributeValue;
@@ -118,6 +121,7 @@ public class ValueFactoryImpl extends EFactoryImpl implements ValueFactory {
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
+	@Override
 	public IntegerObjectAttributeValue createIntegerObjectAttributeValue() {
 		IntegerObjectAttributeValueImpl integerObjectAttributeValue = new IntegerObjectAttributeValueImpl();
 		return integerObjectAttributeValue;
@@ -128,6 +132,7 @@ public class ValueFactoryImpl extends EFactoryImpl implements ValueFactory {
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
+	@Override
 	public LongAttributeValue createLongAttributeValue() {
 		LongAttributeValueImpl longAttributeValue = new LongAttributeValueImpl();
 		return longAttributeValue;
@@ -138,6 +143,7 @@ public class ValueFactoryImpl extends EFactoryImpl implements ValueFactory {
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
+	@Override
 	public LongObjectAttributeValue createLongObjectAttributeValue() {
 		LongObjectAttributeValueImpl longObjectAttributeValue = new LongObjectAttributeValueImpl();
 		return longObjectAttributeValue;
@@ -148,6 +154,7 @@ public class ValueFactoryImpl extends EFactoryImpl implements ValueFactory {
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
+	@Override
 	public FloatAttributeValue createFloatAttributeValue() {
 		FloatAttributeValueImpl floatAttributeValue = new FloatAttributeValueImpl();
 		return floatAttributeValue;
@@ -158,6 +165,7 @@ public class ValueFactoryImpl extends EFactoryImpl implements ValueFactory {
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
+	@Override
 	public FloatObjectAttributeValue createFloatObjectAttributeValue() {
 		FloatObjectAttributeValueImpl floatObjectAttributeValue = new FloatObjectAttributeValueImpl();
 		return floatObjectAttributeValue;
@@ -168,6 +176,7 @@ public class ValueFactoryImpl extends EFactoryImpl implements ValueFactory {
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
+	@Override
 	public StringAttributeValue createStringAttributeValue() {
 		StringAttributeValueImpl stringAttributeValue = new StringAttributeValueImpl();
 		return stringAttributeValue;
@@ -178,6 +187,7 @@ public class ValueFactoryImpl extends EFactoryImpl implements ValueFactory {
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
+	@Override
 	public ManyBooleanAttributeValue createManyBooleanAttributeValue() {
 		ManyBooleanAttributeValueImpl manyBooleanAttributeValue = new ManyBooleanAttributeValueImpl();
 		return manyBooleanAttributeValue;
@@ -188,6 +198,7 @@ public class ValueFactoryImpl extends EFactoryImpl implements ValueFactory {
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
+	@Override
 	public ManyBooleanObjectAttributeValue createManyBooleanObjectAttributeValue() {
 		ManyBooleanObjectAttributeValueImpl manyBooleanObjectAttributeValue = new ManyBooleanObjectAttributeValueImpl();
 		return manyBooleanObjectAttributeValue;
@@ -198,6 +209,7 @@ public class ValueFactoryImpl extends EFactoryImpl implements ValueFactory {
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
+	@Override
 	public ManyIntegerAttributeValue createManyIntegerAttributeValue() {
 		ManyIntegerAttributeValueImpl manyIntegerAttributeValue = new ManyIntegerAttributeValueImpl();
 		return manyIntegerAttributeValue;
@@ -208,6 +220,7 @@ public class ValueFactoryImpl extends EFactoryImpl implements ValueFactory {
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
+	@Override
 	public ManyIntegerObjectAttributeValue createManyIntegerObjectAttributeValue() {
 		ManyIntegerObjectAttributeValueImpl manyIntegerObjectAttributeValue = new ManyIntegerObjectAttributeValueImpl();
 		return manyIntegerObjectAttributeValue;
@@ -218,6 +231,7 @@ public class ValueFactoryImpl extends EFactoryImpl implements ValueFactory {
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
+	@Override
 	public ManyLongAttributeValue createManyLongAttributeValue() {
 		ManyLongAttributeValueImpl manyLongAttributeValue = new ManyLongAttributeValueImpl();
 		return manyLongAttributeValue;
@@ -228,6 +242,7 @@ public class ValueFactoryImpl extends EFactoryImpl implements ValueFactory {
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
+	@Override
 	public ManyLongObjectAttributeValue createManyLongObjectAttributeValue() {
 		ManyLongObjectAttributeValueImpl manyLongObjectAttributeValue = new ManyLongObjectAttributeValueImpl();
 		return manyLongObjectAttributeValue;
@@ -238,6 +253,7 @@ public class ValueFactoryImpl extends EFactoryImpl implements ValueFactory {
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
+	@Override
 	public ManyFloatAttributeValue createManyFloatAttributeValue() {
 		ManyFloatAttributeValueImpl manyFloatAttributeValue = new ManyFloatAttributeValueImpl();
 		return manyFloatAttributeValue;
@@ -248,6 +264,7 @@ public class ValueFactoryImpl extends EFactoryImpl implements ValueFactory {
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
+	@Override
 	public ManyFloatObjectAttributeValue createManyFloatObjectAttributeValue() {
 		ManyFloatObjectAttributeValueImpl manyFloatObjectAttributeValue = new ManyFloatObjectAttributeValueImpl();
 		return manyFloatObjectAttributeValue;
@@ -258,6 +275,7 @@ public class ValueFactoryImpl extends EFactoryImpl implements ValueFactory {
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
+	@Override
 	public ManyStringAttributeValue createManyStringAttributeValue() {
 		ManyStringAttributeValueImpl manyStringAttributeValue = new ManyStringAttributeValueImpl();
 		return manyStringAttributeValue;
@@ -268,6 +286,7 @@ public class ValueFactoryImpl extends EFactoryImpl implements ValueFactory {
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
+	@Override
 	public SingleReferenceValue createSingleReferenceValue() {
 		SingleReferenceValueImpl singleReferenceValue = new SingleReferenceValueImpl();
 		return singleReferenceValue;
@@ -278,6 +297,7 @@ public class ValueFactoryImpl extends EFactoryImpl implements ValueFactory {
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
+	@Override
 	public ManyReferenceValue createManyReferenceValue() {
 		ManyReferenceValueImpl manyReferenceValue = new ManyReferenceValueImpl();
 		return manyReferenceValue;
@@ -288,6 +308,7 @@ public class ValueFactoryImpl extends EFactoryImpl implements ValueFactory {
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
+	@Override
 	public SingleObjectValue createSingleObjectValue() {
 		SingleObjectValueImpl singleObjectValue = new SingleObjectValueImpl();
 		return singleObjectValue;
@@ -298,6 +319,7 @@ public class ValueFactoryImpl extends EFactoryImpl implements ValueFactory {
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
+	@Override
 	public ManyObjectValue createManyObjectValue() {
 		ManyObjectValueImpl manyObjectValue = new ManyObjectValueImpl();
 		return manyObjectValue;
@@ -308,6 +330,7 @@ public class ValueFactoryImpl extends EFactoryImpl implements ValueFactory {
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
+	@Override
 	public ValuePackage getValuePackage() {
 		return (ValuePackage)getEPackage();
 	}

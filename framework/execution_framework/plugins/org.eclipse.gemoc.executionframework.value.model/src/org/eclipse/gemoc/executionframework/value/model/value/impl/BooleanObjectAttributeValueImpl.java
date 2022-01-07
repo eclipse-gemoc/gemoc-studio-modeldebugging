@@ -69,6 +69,7 @@ public class BooleanObjectAttributeValueImpl extends AttributeValueImpl implemen
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
+	@Override
 	public Boolean getAttributeValue() {
 		return attributeValue;
 	}
@@ -78,6 +79,7 @@ public class BooleanObjectAttributeValueImpl extends AttributeValueImpl implemen
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
+	@Override
 	public void setAttributeValue(Boolean newAttributeValue) {
 		Boolean oldAttributeValue = attributeValue;
 		attributeValue = newAttributeValue;

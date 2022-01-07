@@ -62,6 +62,7 @@ public class ManyReferenceValueImpl extends ReferenceValueImpl implements ManyRe
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
+	@Override
 	public EList<EObject> getReferenceValues() {
 		if (referenceValues == null) {
 			referenceValues = new EObjectResolvingEList<EObject>(EObject.class, this, ValuePackage.MANY_REFERENCE_VALUE__REFERENCE_VALUES);

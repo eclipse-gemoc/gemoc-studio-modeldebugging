@@ -5,4 +5,16 @@
    <extension-point id="org.eclipse.gemoc.executionframework.event.implementationrelationship" name="Implementation Relationship" schema="schema/org.eclipse.gemoc.executionframework.event.implementationrelationship.exsd"/>
    <extension-point id="org.eclipse.gemoc.executionframework.event.subtypingrelationship" name="Subtyping Relationship" schema="schema/org.eclipse.gemoc.executionframework.event.subtypingrelationship.exsd"/>
    <extension-point id="org.eclipse.gemoc.executionframework.event.metalanguage_rule_executor" name="Metalanguage Rule Executor" schema="schema/org.eclipse.gemoc.executionframework.event.metalanguageruleexecutor.exsd"/>
+
+	<extension point="org.eclipse.gemoc.gemoc_language_workbench.engine_addon">
+    <addon
+          addonGroupId="General.AddonGroup"
+          class="org.eclipse.gemoc.executionframework.event.manager.GenericEventManager"
+          default="false"
+          id="org.eclipse.gemoc.executionframework.event.manager"
+          name="Event Manager"
+          openViewIds="org.eclipse.gemoc.executionframework.event.ui.views.EventManager"
+          shortDescription="Event handling for any language">
+    </addon>
+  </extension>
 </plugin>

@@ -105,6 +105,7 @@ public class EventOccurrenceImpl extends MinimalEObjectImpl.Container implements
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
+	@Override
 	public Event getEvent() {
 		if (event != null && event.eIsProxy()) {
 			InternalEObject oldEvent = (InternalEObject)event;
@@ -131,6 +132,7 @@ public class EventOccurrenceImpl extends MinimalEObjectImpl.Container implements
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
+	@Override
 	public void setEvent(Event newEvent) {
 		Event oldEvent = event;
 		event = newEvent;
@@ -143,6 +145,7 @@ public class EventOccurrenceImpl extends MinimalEObjectImpl.Container implements
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
+	@Override
 	public EList<EventOccurrenceArgument> getArgs() {
 		if (args == null) {
 			args = new EObjectContainmentEList<EventOccurrenceArgument>(EventOccurrenceArgument.class, this, EventPackage.EVENT_OCCURRENCE__ARGS);
@@ -155,6 +158,7 @@ public class EventOccurrenceImpl extends MinimalEObjectImpl.Container implements
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
+	@Override
 	public EventOccurrenceType getType() {
 		return type;
 	}
@@ -164,6 +168,7 @@ public class EventOccurrenceImpl extends MinimalEObjectImpl.Container implements
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
+	@Override
 	public void setType(EventOccurrenceType newType) {
 		EventOccurrenceType oldType = type;
 		type = newType == null ? TYPE_EDEFAULT : newType;
