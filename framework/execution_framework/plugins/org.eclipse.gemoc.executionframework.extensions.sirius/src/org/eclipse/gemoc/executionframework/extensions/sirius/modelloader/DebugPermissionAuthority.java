@@ -49,24 +49,28 @@ public class DebugPermissionAuthority extends AbstractPermissionAuthority
 
 	@Override
 	public boolean canEditFeature(EObject eObj, String featureName) {
+		if(eObj.eResource() == null) return true;
 		Integer integer = allow.get(eObj.eResource().getResourceSet());
 		return integer != null && integer.intValue() > 0;
 	}
 
 	@Override
 	public boolean canEditInstance(EObject eObj) {
+		if(eObj.eResource() == null) return true;
 		Integer integer = allow.get(eObj.eResource().getResourceSet());
 		return integer != null && integer.intValue() > 0;
 	}
 
 	@Override
 	public boolean canCreateIn(EObject eObj) {
+		if(eObj.eResource() == null) return true;
 		Integer integer = allow.get(eObj.eResource().getResourceSet());
 		return integer != null && integer.intValue() > 0;
 	}
 
 	@Override
 	public boolean canDeleteInstance(EObject target) {
+		if(target.eResource() == null) return true;
 		Integer integer = allow.get(target.eResource().getResourceSet());
 		return integer != null && integer.intValue() > 0;
 	}
