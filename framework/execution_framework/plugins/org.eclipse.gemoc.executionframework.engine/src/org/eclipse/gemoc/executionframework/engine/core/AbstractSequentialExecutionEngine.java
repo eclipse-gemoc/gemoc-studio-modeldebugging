@@ -14,7 +14,10 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collections;
+import java.util.HashMap;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Map;
 import java.util.Set;
 
 import org.eclipse.emf.ecore.EClass;
@@ -151,10 +154,18 @@ public abstract class AbstractSequentialExecutionEngine<C extends IExecutionCont
 		result.getMseoccurrence().getParameters().addAll(Arrays.asList(args));
 		return result;
 	}
+	
+	private Map<EClass, Set<EOperation>> orphanOperations = new HashMap<EClass, Set<EOperation>>();
+	
+	private void addOrpanOperation(EClass c, EOperation op) {
+		if (!orphanOperations.containsKey(c)) {
+			orphanOperations.put(c, new HashSet<>());
+		}
+		orphanOperations.get(c).add(op);
+	}
 
 	private EOperation findOperation(EObject object, String className, String methodName) {
-		// We try to find the corresponding EOperation in the execution
-		// metamodel
+		// We try to find the corresponding EOperation
 		EOperation result = null;
 		final List<EClass> openSet = new ArrayList<>();
 		openSet.add(object.eClass());
@@ -173,10 +184,19 @@ public abstract class AbstractSequentialExecutionEngine<C extends IExecutionCont
 			return result;
 		}
 
+		// Else if the EOperation was created already
+		if (orphanOperations.containsKey(object.eClass())) {
+			for (EOperation op : orphanOperations.get(object.eClass())) {
+				if (op.getName().equals(methodName)) {
+					return op;
+				}
+			}
+		}
 		// Else we create the missing operation (VERY approximatively)
 		EOperation operation = EcoreFactory.eINSTANCE.createEOperation();
 		this.getActionModel().getOrphanOperations().add(operation);
 		operation.setName(methodName);
+		addOrpanOperation(object.eClass(),operation);
 		return operation;
 	}
 
