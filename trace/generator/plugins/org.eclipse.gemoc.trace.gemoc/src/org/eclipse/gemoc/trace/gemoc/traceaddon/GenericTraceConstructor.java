@@ -263,7 +263,7 @@ public class GenericTraceConstructor implements ITraceConstructor {
 		if (!exeToTraced.containsKey(object)) {
 			List<MutableField> fields = dynamicPartAccessor.extractMutableField(object);
 			final GenericTracedObject tracedObject = GenerictraceFactory.eINSTANCE.createGenericTracedObject();
-			if (dynamicPartAccessor.isDynamic(object) || !fields.isEmpty()) {
+			if (!dynamicPartAccessor.isDynamic(object)) {
 				tracedObject.setOriginalObject(object);
 			}
 			exeToTraced.put(object, tracedObject);
@@ -664,6 +664,7 @@ public class GenericTraceConstructor implements ITraceConstructor {
 				traceResource.getContents().add(mseModel);
 			}
 			mseModel.getOwnedMSEs().add(step_cast.getMseoccurrence().getMse());
+			mseModel.getOrphanOperations().add(step_cast.getMseoccurrence().getMse().getAction());
 			GenericState state = traceRoot.getStates().get(traceRoot.getStates().size() - 1);
 			step_cast.setStartingState(state);
 			if (!context.isEmpty() && context.getFirst() != null) {

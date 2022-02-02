@@ -77,6 +77,7 @@ public abstract class BigStepImpl<StepSubtype extends Step<StateSubType>, StateS
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
+	@Override
 	public EList<StepSubtype> getSubSteps() {
 		if (subSteps == null) {
 			subSteps = new EObjectContainmentEList<StepSubtype>(Step.class, this, TracePackage.BIG_STEP__SUB_STEPS);

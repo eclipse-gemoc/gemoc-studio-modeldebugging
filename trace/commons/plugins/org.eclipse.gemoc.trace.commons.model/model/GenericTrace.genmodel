@@ -20,6 +20,7 @@
     </genClasses>
     <genClasses ecoreClass="GenericTrace.ecore#//MSEModel">
       <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference GenericTrace.ecore#//MSEModel/ownedMSEs"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference GenericTrace.ecore#//MSEModel/orphanOperations"/>
     </genClasses>
     <genClasses ecoreClass="GenericTrace.ecore#//GenericMSE">
       <genFeatures notify="false" createChild="false" propertySortChoices="true" ecoreFeature="ecore:EReference GenericTrace.ecore#//GenericMSE/callerReference"/>

@@ -173,28 +173,20 @@ public abstract class AbstractSequentialExecutionEngine<C extends IExecutionCont
 			return result;
 		}
 
-		// If we didn't find it, we try to find the class that should contain
-		// this operation
-		EClass containingEClass = null;
-		if (object.eClass().getName().equalsIgnoreCase(className)) {
-			containingEClass = object.eClass();
-		} else {
-			for (EClass candidate : object.eClass().getEAllSuperTypes()) {
-				if (candidate.getName().equalsIgnoreCase(className)) {
-					containingEClass = candidate;
-				}
-			}
-		}
-
-		// Then we create the missing operation (VERY approximatively)
+		// Else we create the missing operation (VERY approximatively)
 		EOperation operation = EcoreFactory.eINSTANCE.createEOperation();
-		if (containingEClass != null) {
-			containingEClass.getEOperations().add(operation);
-		}
+		this.getActionModel().getOrphanOperations().add(operation);
 		operation.setName(methodName);
 		return operation;
 	}
 
+	private MSEModel getActionModel() {
+		if (_actionModel == null) {
+			_actionModel = TraceFactory.eINSTANCE.createMSEModel();
+		}
+		return _actionModel;
+	}
+	
 	/**
 	 * Find the MSE element for the triplet caller/className/MethodName in the model
 	 * of precalculated possible MSE. If it doesn't exist yet, create one and add it
@@ -210,14 +202,9 @@ public abstract class AbstractSequentialExecutionEngine<C extends IExecutionCont
 	 */
 	public final MSE findOrCreateMSE(EObject caller, String className, String methodName) {
 		EOperation operation = findOperation(caller, className, methodName);
-		// TODO Should be created/loaded before execution by analyzing the
-		// model?
-		if (_actionModel == null) {
-			_actionModel = TraceFactory.eINSTANCE.createMSEModel();
-		}
 
-		if (_actionModel != null) {
-			for (MSE existingMSE : _actionModel.getOwnedMSEs()) {
+		if (getActionModel() != null) {
+			for (MSE existingMSE : getActionModel().getOwnedMSEs()) {
 				if (existingMSE.getCaller().equals(caller) && ((existingMSE.getAction() != null && existingMSE.getAction().equals(operation)) || (existingMSE.getAction() == null && operation == null))) {
 					// no need to create one, we already have it
 					return existingMSE;
@@ -233,26 +220,26 @@ public abstract class AbstractSequentialExecutionEngine<C extends IExecutionCont
 		else
 			mse.setName("MSE_" + caller.getClass().getSimpleName() + "_" + methodName);
 		// and add it for possible reuse
-		if (_actionModel != null) {
+		if (getActionModel() != null) {
 
-			if (_actionModel.eResource() != null) {
-				TransactionUtil.getEditingDomain(_actionModel.eResource());
-				RecordingCommand command = new RecordingCommand(TransactionUtil.getEditingDomain(_actionModel.eResource()), "Saving new MSE ") {
+			if (getActionModel().eResource() != null) {
+				TransactionUtil.getEditingDomain(getActionModel().eResource());
+				RecordingCommand command = new RecordingCommand(TransactionUtil.getEditingDomain(getActionModel().eResource()), "Saving new MSE ") {
 					@Override
 					protected void doExecute() {
-						_actionModel.getOwnedMSEs().add(mse);
+						getActionModel().getOwnedMSEs().add(mse);
 						try {
-							_actionModel.eResource().save(null);
+							getActionModel().eResource().save(null);
 						} catch (IOException e) {
 							// TODO Auto-generated catch block
 							e.printStackTrace();
 						}
 					}
 				};
-				TransactionUtil.getEditingDomain(_actionModel.eResource()).getCommandStack().execute(command);
+				TransactionUtil.getEditingDomain(getActionModel().eResource()).getCommandStack().execute(command);
 			}
 		} else {
-			_actionModel.getOwnedMSEs().add(mse);
+			getActionModel().getOwnedMSEs().add(mse);
 		}
 		return mse;
 	}
