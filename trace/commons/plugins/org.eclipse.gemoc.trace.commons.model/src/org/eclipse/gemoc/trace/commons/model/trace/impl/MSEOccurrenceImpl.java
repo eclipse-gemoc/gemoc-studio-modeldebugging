@@ -100,6 +100,7 @@ public class MSEOccurrenceImpl extends MinimalEObjectImpl.Container implements M
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
+	@Override
 	public MSE getMse() {
 		if (mse != null && mse.eIsProxy()) {
 			InternalEObject oldMse = (InternalEObject)mse;
@@ -126,6 +127,7 @@ public class MSEOccurrenceImpl extends MinimalEObjectImpl.Container implements M
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
+	@Override
 	public void setMse(MSE newMse) {
 		MSE oldMse = mse;
 		mse = newMse;
@@ -138,6 +140,7 @@ public class MSEOccurrenceImpl extends MinimalEObjectImpl.Container implements M
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
+	@Override
 	public EList<Object> getParameters() {
 		if (parameters == null) {
 			parameters = new EDataTypeUniqueEList<Object>(Object.class, this, TracePackage.MSE_OCCURRENCE__PARAMETERS);
@@ -150,6 +153,7 @@ public class MSEOccurrenceImpl extends MinimalEObjectImpl.Container implements M
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
+	@Override
 	public EList<Object> getResult() {
 		if (result == null) {
 			result = new EDataTypeUniqueEList<Object>(Object.class, this, TracePackage.MSE_OCCURRENCE__RESULT);
@@ -248,7 +252,7 @@ public class MSEOccurrenceImpl extends MinimalEObjectImpl.Container implements M
 	public String toString() {
 		if (eIsProxy()) return super.toString();
 
-		StringBuffer result = new StringBuffer(super.toString());
+		StringBuilder result = new StringBuilder(super.toString());
 		result.append(" (parameters: ");
 		result.append(parameters);
 		result.append(", result: ");

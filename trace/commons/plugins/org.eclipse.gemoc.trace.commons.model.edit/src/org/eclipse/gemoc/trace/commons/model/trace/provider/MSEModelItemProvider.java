@@ -13,6 +13,7 @@ import org.eclipse.emf.common.util.ResourceLocator;
 
 import org.eclipse.emf.ecore.EStructuralFeature;
 
+import org.eclipse.emf.ecore.EcoreFactory;
 import org.eclipse.emf.edit.provider.IEditingDomainItemProvider;
 import org.eclipse.emf.edit.provider.IItemLabelProvider;
 import org.eclipse.emf.edit.provider.IItemPropertyDescriptor;
@@ -78,6 +79,7 @@ public class MSEModelItemProvider
 		if (childrenFeatures == null) {
 			super.getChildrenFeatures(object);
 			childrenFeatures.add(TracePackage.Literals.MSE_MODEL__OWNED_MS_ES);
+			childrenFeatures.add(TracePackage.Literals.MSE_MODEL__ORPHAN_OPERATIONS);
 		}
 		return childrenFeatures;
 	}
@@ -131,6 +133,7 @@ public class MSEModelItemProvider
 
 		switch (notification.getFeatureID(MSEModel.class)) {
 			case TracePackage.MSE_MODEL__OWNED_MS_ES:
+			case TracePackage.MSE_MODEL__ORPHAN_OPERATIONS:
 				fireNotifyChanged(new ViewerNotification(notification, notification.getNotifier(), true, false));
 				return;
 		}
@@ -152,6 +155,11 @@ public class MSEModelItemProvider
 			(createChildParameter
 				(TracePackage.Literals.MSE_MODEL__OWNED_MS_ES,
 				 TraceFactory.eINSTANCE.createGenericMSE()));
+
+		newChildDescriptors.add
+			(createChildParameter
+				(TracePackage.Literals.MSE_MODEL__ORPHAN_OPERATIONS,
+				 EcoreFactory.eINSTANCE.createEOperation()));
 	}
 
 	/**

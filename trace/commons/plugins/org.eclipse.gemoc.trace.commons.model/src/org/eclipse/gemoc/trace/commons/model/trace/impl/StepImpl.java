@@ -96,6 +96,7 @@ public abstract class StepImpl<StateSubType extends State<?, ?>> extends Minimal
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
+	@Override
 	public MSEOccurrence getMseoccurrence() {
 		return mseoccurrence;
 	}
@@ -120,6 +121,7 @@ public abstract class StepImpl<StateSubType extends State<?, ?>> extends Minimal
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
+	@Override
 	public void setMseoccurrence(MSEOccurrence newMseoccurrence) {
 		if (newMseoccurrence != mseoccurrence) {
 			NotificationChain msgs = null;
@@ -140,6 +142,7 @@ public abstract class StepImpl<StateSubType extends State<?, ?>> extends Minimal
 	 * @generated
 	 */
 	@SuppressWarnings("unchecked")
+	@Override
 	public StateSubType getStartingState() {
 		if (startingState != null && startingState.eIsProxy()) {
 			InternalEObject oldStartingState = (InternalEObject)startingState;
@@ -181,6 +184,7 @@ public abstract class StepImpl<StateSubType extends State<?, ?>> extends Minimal
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
+	@Override
 	public void setStartingState(StateSubType newStartingState) {
 		if (newStartingState != startingState) {
 			NotificationChain msgs = null;
@@ -201,6 +205,7 @@ public abstract class StepImpl<StateSubType extends State<?, ?>> extends Minimal
 	 * @generated
 	 */
 	@SuppressWarnings("unchecked")
+	@Override
 	public StateSubType getEndingState() {
 		if (endingState != null && endingState.eIsProxy()) {
 			InternalEObject oldEndingState = (InternalEObject)endingState;
@@ -242,6 +247,7 @@ public abstract class StepImpl<StateSubType extends State<?, ?>> extends Minimal
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
+	@Override
 	public void setEndingState(StateSubType newEndingState) {
 		if (newEndingState != endingState) {
 			NotificationChain msgs = null;

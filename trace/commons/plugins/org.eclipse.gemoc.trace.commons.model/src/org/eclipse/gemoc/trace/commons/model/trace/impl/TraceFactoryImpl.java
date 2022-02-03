@@ -110,6 +110,7 @@ public class TraceFactoryImpl extends EFactoryImpl implements TraceFactory {
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
+	@Override
 	public MSEOccurrence createMSEOccurrence() {
 		MSEOccurrenceImpl mseOccurrence = new MSEOccurrenceImpl();
 		return mseOccurrence;
@@ -120,6 +121,7 @@ public class TraceFactoryImpl extends EFactoryImpl implements TraceFactory {
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
+	@Override
 	public MSEModel createMSEModel() {
 		MSEModelImpl mseModel = new MSEModelImpl();
 		return mseModel;
@@ -130,6 +132,7 @@ public class TraceFactoryImpl extends EFactoryImpl implements TraceFactory {
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
+	@Override
 	public GenericMSE createGenericMSE() {
 		GenericMSEImpl genericMSE = new GenericMSEImpl();
 		return genericMSE;
@@ -158,6 +161,7 @@ public class TraceFactoryImpl extends EFactoryImpl implements TraceFactory {
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
+	@Override
 	public TracePackage getTracePackage() {
 		return (TracePackage)getEPackage();
 	}
