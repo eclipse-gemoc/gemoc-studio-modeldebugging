@@ -40,10 +40,6 @@
 	</build>
  
 	<repositories>
-		<repository>
-			<id>Eclipse release</id>
-			<layout>p2</layout>
-			<url>${eclipse.release.p2.url}</url>
-		</repository>
+
 	</repositories>
 </project>
