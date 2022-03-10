@@ -1,6 +1,7 @@
 package org.eclipse.gemoc.xdsmlframework.api.extensions.metaprog;
 
 import java.util.ArrayList;
+
 import java.util.List;
 
 import org.eclipse.emf.common.util.TreeIterator;
@@ -33,7 +34,7 @@ public class EcoreRule implements ILanguageComponentValidator{
 			
 			URI uri = URI.createURI(entry.getValue());
 			
-			if(!uri.isPlatformResource()) {
+			if(!uri.isPlatformResource() && !uri.isPlatformPlugin()) {
 				return (new Message("File for \"ecore\" entry not in the workspace", Severity.ERROR));
 			}
 						

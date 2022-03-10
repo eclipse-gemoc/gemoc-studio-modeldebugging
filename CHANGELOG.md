@@ -1,5 +1,31 @@
 # Changelog
 
+## v3.4.0 (10/01/2022)
+
+#### Enhancements:
+
+- [**enhancement**] Add generic trace edit [#208](https://github.com/eclipse/gemoc-studio-modeldebugging/pull/208)
+- [**enhancement**] Event management integration [#210](https://github.com/eclipse/gemoc-studio-modeldebugging/pull/210)
+
+#### Bug Fixes:
+
+- [**bug**] Reenable multidimensionnal trace saving [#206](https://github.com/eclipse/gemoc-studio-modeldebugging/pull/206)
+- [**bug**] [fix] manage many-values in the trace constructor + [fix] bug in trace constructor with dyn obj removal + [fix] allow ecore from plugin in .dsl file [#209](https://github.com/eclipse/gemoc-studio-modeldebugging/pull/209)
+- [**bug**] Disable 'allDimensions' feature in the trace edit view [#211](https://github.com/eclipse/gemoc-studio-modeldebugging/pull/211)
+- [**bug**] Sirius support for model with referenced resources [#202](https://github.com/eclipse/gemoc-studio-modeldebugging/pull/202)
+- [**bug**] Fix jdom two dependencies chains issue [#200](https://github.com/eclipse/gemoc-studio-modeldebugging/pull/200)
+- [**bug**] Fix model loader crash and animation layer activation [#199](https://github.com/eclipse/gemoc-studio-modeldebugging/pull/199)
+
+#### Version upgrades
+
+- [**bump**][**releng**] Bump Studio to 3.4.0 [#198](https://github.com/eclipse/gemoc-studio-modeldebugging/pull/198)
+
+#### Release Engineering
+
+- [**releng**] Bundle vs pomfirst separate build and groupid [#203](https://github.com/eclipse/gemoc-studio-modeldebugging/pull/203)
+
+---
+
 ## v3.3.0 (28/07/2021)
 
 #### Enhancements:

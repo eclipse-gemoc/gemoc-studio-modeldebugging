@@ -26,7 +26,7 @@
     <parent>
 		<groupId>org.eclipse.gemoc.gemoc-studio</groupId>
 		<artifactId>gemoc_studio-eclipse-bom</artifactId>
-		<version>3.4.0-SNAPSHOT</version>
+		<version>3.5.0-SNAPSHOT</version>
 		<relativePath>../gemoc-studio/gemoc_studio/plugins/gemoc_studio-eclipse-bom</relativePath>
 	</parent>
 	
@@ -164,6 +164,14 @@
 				<artifactId>target-platform-configuration</artifactId>
 				<version>${tycho-version}</version>
 				<configuration>
+					<target>
+                        <artifact>
+                            <groupId>org.eclipse.gemoc.gemoc-studio.bundle</groupId>
+                            <artifactId>org.eclipse.gemoc.gemoc_studio.targetplatform</artifactId>
+                            <version>3.5.0-SNAPSHOT</version>
+                            <classifier>gemoc_studio</classifier>
+                        </artifact>
+                    </target>
 					<!-- environments that will be built -->
 					<environments>
 						<environment>

@@ -57,6 +57,7 @@ public abstract class MSEImpl extends ENamedElementImpl implements MSE {
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
+	@Override
 	public EObject getCaller() {
 		// TODO: implement this method
 		// Ensure that you remove @generated or mark it @generated NOT
@@ -68,6 +69,7 @@ public abstract class MSEImpl extends ENamedElementImpl implements MSE {
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
+	@Override
 	public EOperation getAction() {
 		// TODO: implement this method
 		// Ensure that you remove @generated or mark it @generated NOT

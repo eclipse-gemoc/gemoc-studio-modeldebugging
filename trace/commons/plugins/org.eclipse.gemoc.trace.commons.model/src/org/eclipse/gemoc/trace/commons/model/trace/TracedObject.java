@@ -44,7 +44,6 @@ public interface TracedObject<DimensionSubType extends Dimension<?>> extends EOb
 	 * @return the value of the '<em>Dimensions</em>' reference list.
 	 * @see org.eclipse.gemoc.trace.commons.model.trace.TracePackage#getTracedObject_Dimensions()
 	 * @model transient="true" volatile="true" derived="true"
-	 *        annotation="http://www.eclipse.org/emf/2002/GenModel get='return getDimensionsInternal();'"
 	 * @generated
 	 */
 	EList<DimensionSubType> getDimensions();
@@ -53,7 +52,6 @@ public interface TracedObject<DimensionSubType extends Dimension<?>> extends EOb
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @model kind="operation"
-	 *        annotation="http://www.eclipse.org/emf/2002/GenModel body='// Default implementation, returning empty list.\nfinal EList<DimensionSubType> result = new org.eclipse.emf.ecore.util.BasicInternalEList<DimensionSubType>(Object.class);\nreturn result;'"
 	 * @generated
 	 */
 	EList<DimensionSubType> getDimensionsInternal();

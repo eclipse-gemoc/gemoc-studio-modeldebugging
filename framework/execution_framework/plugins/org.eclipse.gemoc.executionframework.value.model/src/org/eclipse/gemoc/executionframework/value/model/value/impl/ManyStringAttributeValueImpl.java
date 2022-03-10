@@ -61,6 +61,7 @@ public class ManyStringAttributeValueImpl extends AttributeValueImpl implements 
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
+	@Override
 	public EList<String> getAttributeValue() {
 		if (attributeValue == null) {
 			attributeValue = new EDataTypeUniqueEList<String>(String.class, this, ValuePackage.MANY_STRING_ATTRIBUTE_VALUE__ATTRIBUTE_VALUE);

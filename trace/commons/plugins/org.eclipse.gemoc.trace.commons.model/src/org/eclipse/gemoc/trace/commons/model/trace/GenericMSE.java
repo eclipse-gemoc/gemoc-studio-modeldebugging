@@ -89,7 +89,6 @@ public interface GenericMSE extends MSE {
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @model kind="operation"
-	 *        annotation="http://www.eclipse.org/emf/2002/GenModel body='return callerReference;'"
 	 * @generated
 	 */
 	EObject getCaller();
@@ -98,7 +97,6 @@ public interface GenericMSE extends MSE {
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @model kind="operation"
-	 *        annotation="http://www.eclipse.org/emf/2002/GenModel body='return actionReference;'"
 	 * @generated
 	 */
 	EOperation getAction();

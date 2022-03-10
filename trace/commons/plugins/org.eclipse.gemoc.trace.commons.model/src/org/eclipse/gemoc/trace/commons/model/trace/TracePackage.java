@@ -217,13 +217,22 @@ public interface TracePackage extends EPackage {
 	int MSE_MODEL__OWNED_MS_ES = 0;
 
 	/**
+	 * The feature id for the '<em><b>Orphan Operations</b></em>' containment reference list.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int MSE_MODEL__ORPHAN_OPERATIONS = 1;
+
+	/**
 	 * The number of structural features of the '<em>MSE Model</em>' class.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @generated
 	 * @ordered
 	 */
-	int MSE_MODEL_FEATURE_COUNT = 1;
+	int MSE_MODEL_FEATURE_COUNT = 2;
 
 	/**
 	 * The number of operations of the '<em>MSE Model</em>' class.
@@ -971,6 +980,17 @@ public interface TracePackage extends EPackage {
 	EReference getMSEModel_OwnedMSEs();
 
 	/**
+	 * Returns the meta object for the containment reference list '{@link org.eclipse.gemoc.trace.commons.model.trace.MSEModel#getOrphanOperations <em>Orphan Operations</em>}'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return the meta object for the containment reference list '<em>Orphan Operations</em>'.
+	 * @see org.eclipse.gemoc.trace.commons.model.trace.MSEModel#getOrphanOperations()
+	 * @see #getMSEModel()
+	 * @generated
+	 */
+	EReference getMSEModel_OrphanOperations();
+
+	/**
 	 * Returns the meta object for class '{@link org.eclipse.gemoc.trace.commons.model.trace.GenericMSE <em>Generic MSE</em>}'.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -1396,6 +1416,14 @@ public interface TracePackage extends EPackage {
 		 * @generated
 		 */
 		EReference MSE_MODEL__OWNED_MS_ES = eINSTANCE.getMSEModel_OwnedMSEs();
+
+		/**
+		 * The meta object literal for the '<em><b>Orphan Operations</b></em>' containment reference list feature.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * @generated
+		 */
+		EReference MSE_MODEL__ORPHAN_OPERATIONS = eINSTANCE.getMSEModel_OrphanOperations();
 
 		/**
 		 * The meta object literal for the '{@link org.eclipse.gemoc.trace.commons.model.trace.impl.GenericMSEImpl <em>Generic MSE</em>}' class.

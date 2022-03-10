@@ -78,6 +78,7 @@ public abstract class DimensionImpl<ValueSubType extends Value<?>> extends Minim
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
+	@Override
 	public EList<ValueSubType> getValues() {
 		if (values == null) {
 			values = new EObjectContainmentEList<ValueSubType>(Value.class, this, TracePackage.DIMENSION__VALUES);

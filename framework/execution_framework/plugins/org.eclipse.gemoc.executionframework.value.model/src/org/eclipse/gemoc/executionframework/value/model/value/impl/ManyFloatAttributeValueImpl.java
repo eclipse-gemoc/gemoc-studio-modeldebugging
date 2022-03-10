@@ -61,6 +61,7 @@ public class ManyFloatAttributeValueImpl extends AttributeValueImpl implements M
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
+	@Override
 	public EList<Float> getAttributeValue() {
 		if (attributeValue == null) {
 			attributeValue = new EDataTypeUniqueEList<Float>(Float.class, this, ValuePackage.MANY_FLOAT_ATTRIBUTE_VALUE__ATTRIBUTE_VALUE);

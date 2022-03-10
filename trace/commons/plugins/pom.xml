@@ -28,6 +28,7 @@
 		<module>org.eclipse.gemoc.trace.commons</module>
 		<module>org.eclipse.gemoc.trace.gemoc.api</module>
 		<module>org.eclipse.gemoc.trace.commons.model</module>
+		<module>org.eclipse.gemoc.trace.commons.model.edit</module>
 	</modules>
 
 	<build>

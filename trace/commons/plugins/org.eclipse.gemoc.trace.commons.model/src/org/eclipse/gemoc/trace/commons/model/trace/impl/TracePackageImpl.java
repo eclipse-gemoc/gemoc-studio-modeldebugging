@@ -172,7 +172,7 @@ public class TracePackageImpl extends EPackageImpl implements TracePackage {
 
 	/**
 	 * Creates, registers, and initializes the <b>Package</b> for this model, and for any others upon which it depends.
-	 * 
+	 *
 	 * <p>This method is used to initialize {@link TracePackage#eINSTANCE} when that field is accessed.
 	 * Clients should not invoke it directly. Instead, they should simply access that field to obtain the package.
 	 * <!-- begin-user-doc -->
@@ -186,7 +186,8 @@ public class TracePackageImpl extends EPackageImpl implements TracePackage {
 		if (isInited) return (TracePackage)EPackage.Registry.INSTANCE.getEPackage(TracePackage.eNS_URI);
 
 		// Obtain or create and register package
-		TracePackageImpl theTracePackage = (TracePackageImpl)(EPackage.Registry.INSTANCE.get(eNS_URI) instanceof TracePackageImpl ? EPackage.Registry.INSTANCE.get(eNS_URI) : new TracePackageImpl());
+		Object registeredTracePackage = EPackage.Registry.INSTANCE.get(eNS_URI);
+		TracePackageImpl theTracePackage = registeredTracePackage instanceof TracePackageImpl ? (TracePackageImpl)registeredTracePackage : new TracePackageImpl();
 
 		isInited = true;
 
@@ -203,7 +204,6 @@ public class TracePackageImpl extends EPackageImpl implements TracePackage {
 		// Mark meta-data to indicate it can't be changed
 		theTracePackage.freeze();
 
-  
 		// Update the registry and return the package
 		EPackage.Registry.INSTANCE.put(TracePackage.eNS_URI, theTracePackage);
 		return theTracePackage;
@@ -214,6 +214,7 @@ public class TracePackageImpl extends EPackageImpl implements TracePackage {
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
+	@Override
 	public EClass getMSEOccurrence() {
 		return mseOccurrenceEClass;
 	}
@@ -223,6 +224,7 @@ public class TracePackageImpl extends EPackageImpl implements TracePackage {
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
+	@Override
 	public EReference getMSEOccurrence_Mse() {
 		return (EReference)mseOccurrenceEClass.getEStructuralFeatures().get(0);
 	}
@@ -232,6 +234,7 @@ public class TracePackageImpl extends EPackageImpl implements TracePackage {
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
+	@Override
 	public EAttribute getMSEOccurrence_Parameters() {
 		return (EAttribute)mseOccurrenceEClass.getEStructuralFeatures().get(1);
 	}
@@ -241,6 +244,7 @@ public class TracePackageImpl extends EPackageImpl implements TracePackage {
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
+	@Override
 	public EAttribute getMSEOccurrence_Result() {
 		return (EAttribute)mseOccurrenceEClass.getEStructuralFeatures().get(2);
 	}
@@ -250,6 +254,7 @@ public class TracePackageImpl extends EPackageImpl implements TracePackage {
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
+	@Override
 	public EClass getMSE() {
 		return mseEClass;
 	}
@@ -259,6 +264,7 @@ public class TracePackageImpl extends EPackageImpl implements TracePackage {
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
+	@Override
 	public EOperation getMSE__GetCaller() {
 		return mseEClass.getEOperations().get(0);
 	}
@@ -268,6 +274,7 @@ public class TracePackageImpl extends EPackageImpl implements TracePackage {
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
+	@Override
 	public EOperation getMSE__GetAction() {
 		return mseEClass.getEOperations().get(1);
 	}
@@ -277,6 +284,7 @@ public class TracePackageImpl extends EPackageImpl implements TracePackage {
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
+	@Override
 	public EClass getMSEModel() {
 		return mseModelEClass;
 	}
@@ -286,6 +294,7 @@ public class TracePackageImpl extends EPackageImpl implements TracePackage {
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
+	@Override
 	public EReference getMSEModel_OwnedMSEs() {
 		return (EReference)mseModelEClass.getEStructuralFeatures().get(0);
 	}
@@ -295,6 +304,17 @@ public class TracePackageImpl extends EPackageImpl implements TracePackage {
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
+	@Override
+	public EReference getMSEModel_OrphanOperations() {
+		return (EReference)mseModelEClass.getEStructuralFeatures().get(1);
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	@Override
 	public EClass getGenericMSE() {
 		return genericMSEEClass;
 	}
@@ -304,6 +324,7 @@ public class TracePackageImpl extends EPackageImpl implements TracePackage {
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
+	@Override
 	public EReference getGenericMSE_CallerReference() {
 		return (EReference)genericMSEEClass.getEStructuralFeatures().get(0);
 	}
@@ -313,6 +334,7 @@ public class TracePackageImpl extends EPackageImpl implements TracePackage {
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
+	@Override
 	public EReference getGenericMSE_ActionReference() {
 		return (EReference)genericMSEEClass.getEStructuralFeatures().get(1);
 	}
@@ -322,6 +344,7 @@ public class TracePackageImpl extends EPackageImpl implements TracePackage {
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
+	@Override
 	public EOperation getGenericMSE__GetCaller() {
 		return genericMSEEClass.getEOperations().get(0);
 	}
@@ -331,6 +354,7 @@ public class TracePackageImpl extends EPackageImpl implements TracePackage {
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
+	@Override
 	public EOperation getGenericMSE__GetAction() {
 		return genericMSEEClass.getEOperations().get(1);
 	}
@@ -340,6 +364,7 @@ public class TracePackageImpl extends EPackageImpl implements TracePackage {
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
+	@Override
 	public EClass getStep() {
 		return stepEClass;
 	}
@@ -349,6 +374,7 @@ public class TracePackageImpl extends EPackageImpl implements TracePackage {
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
+	@Override
 	public EReference getStep_Mseoccurrence() {
 		return (EReference)stepEClass.getEStructuralFeatures().get(0);
 	}
@@ -358,6 +384,7 @@ public class TracePackageImpl extends EPackageImpl implements TracePackage {
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
+	@Override
 	public EReference getStep_StartingState() {
 		return (EReference)stepEClass.getEStructuralFeatures().get(1);
 	}
@@ -367,6 +394,7 @@ public class TracePackageImpl extends EPackageImpl implements TracePackage {
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
+	@Override
 	public EReference getStep_EndingState() {
 		return (EReference)stepEClass.getEStructuralFeatures().get(2);
 	}
@@ -376,6 +404,7 @@ public class TracePackageImpl extends EPackageImpl implements TracePackage {
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
+	@Override
 	public EClass getBigStep() {
 		return bigStepEClass;
 	}
@@ -385,6 +414,7 @@ public class TracePackageImpl extends EPackageImpl implements TracePackage {
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
+	@Override
 	public EReference getBigStep_SubSteps() {
 		return (EReference)bigStepEClass.getEStructuralFeatures().get(0);
 	}
@@ -394,6 +424,7 @@ public class TracePackageImpl extends EPackageImpl implements TracePackage {
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
+	@Override
 	public EClass getSmallStep() {
 		return smallStepEClass;
 	}
@@ -403,6 +434,7 @@ public class TracePackageImpl extends EPackageImpl implements TracePackage {
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
+	@Override
 	public EClass getSequentialStep() {
 		return sequentialStepEClass;
 	}
@@ -412,6 +444,7 @@ public class TracePackageImpl extends EPackageImpl implements TracePackage {
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
+	@Override
 	public EClass getParallelStep() {
 		return parallelStepEClass;
 	}
@@ -421,6 +454,7 @@ public class TracePackageImpl extends EPackageImpl implements TracePackage {
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
+	@Override
 	public EClass getTrace() {
 		return traceEClass;
 	}
@@ -430,6 +464,7 @@ public class TracePackageImpl extends EPackageImpl implements TracePackage {
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
+	@Override
 	public EReference getTrace_RootStep() {
 		return (EReference)traceEClass.getEStructuralFeatures().get(0);
 	}
@@ -439,6 +474,7 @@ public class TracePackageImpl extends EPackageImpl implements TracePackage {
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
+	@Override
 	public EReference getTrace_TracedObjects() {
 		return (EReference)traceEClass.getEStructuralFeatures().get(1);
 	}
@@ -448,6 +484,7 @@ public class TracePackageImpl extends EPackageImpl implements TracePackage {
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
+	@Override
 	public EReference getTrace_States() {
 		return (EReference)traceEClass.getEStructuralFeatures().get(2);
 	}
@@ -457,6 +494,7 @@ public class TracePackageImpl extends EPackageImpl implements TracePackage {
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
+	@Override
 	public EReference getTrace_Launchconfiguration() {
 		return (EReference)traceEClass.getEStructuralFeatures().get(3);
 	}
@@ -466,6 +504,7 @@ public class TracePackageImpl extends EPackageImpl implements TracePackage {
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
+	@Override
 	public EClass getTracedObject() {
 		return tracedObjectEClass;
 	}
@@ -475,6 +514,7 @@ public class TracePackageImpl extends EPackageImpl implements TracePackage {
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
+	@Override
 	public EReference getTracedObject_Dimensions() {
 		return (EReference)tracedObjectEClass.getEStructuralFeatures().get(0);
 	}
@@ -484,6 +524,7 @@ public class TracePackageImpl extends EPackageImpl implements TracePackage {
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
+	@Override
 	public EOperation getTracedObject__GetDimensionsInternal() {
 		return tracedObjectEClass.getEOperations().get(0);
 	}
@@ -493,6 +534,7 @@ public class TracePackageImpl extends EPackageImpl implements TracePackage {
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
+	@Override
 	public EClass getDimension() {
 		return dimensionEClass;
 	}
@@ -502,6 +544,7 @@ public class TracePackageImpl extends EPackageImpl implements TracePackage {
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
+	@Override
 	public EReference getDimension_Values() {
 		return (EReference)dimensionEClass.getEStructuralFeatures().get(0);
 	}
@@ -511,6 +554,7 @@ public class TracePackageImpl extends EPackageImpl implements TracePackage {
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
+	@Override
 	public EClass getValue() {
 		return valueEClass;
 	}
@@ -520,6 +564,7 @@ public class TracePackageImpl extends EPackageImpl implements TracePackage {
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
+	@Override
 	public EReference getValue_States() {
 		return (EReference)valueEClass.getEStructuralFeatures().get(0);
 	}
@@ -529,6 +574,7 @@ public class TracePackageImpl extends EPackageImpl implements TracePackage {
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
+	@Override
 	public EClass getState() {
 		return stateEClass;
 	}
@@ -538,6 +584,7 @@ public class TracePackageImpl extends EPackageImpl implements TracePackage {
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
+	@Override
 	public EReference getState_StartedSteps() {
 		return (EReference)stateEClass.getEStructuralFeatures().get(0);
 	}
@@ -547,6 +594,7 @@ public class TracePackageImpl extends EPackageImpl implements TracePackage {
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
+	@Override
 	public EReference getState_EndedSteps() {
 		return (EReference)stateEClass.getEStructuralFeatures().get(1);
 	}
@@ -556,6 +604,7 @@ public class TracePackageImpl extends EPackageImpl implements TracePackage {
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
+	@Override
 	public EReference getState_Values() {
 		return (EReference)stateEClass.getEStructuralFeatures().get(2);
 	}
@@ -565,6 +614,7 @@ public class TracePackageImpl extends EPackageImpl implements TracePackage {
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
+	@Override
 	public EDataType getISerializable() {
 		return iSerializableEDataType;
 	}
@@ -574,6 +624,7 @@ public class TracePackageImpl extends EPackageImpl implements TracePackage {
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
+	@Override
 	public TraceFactory getTraceFactory() {
 		return (TraceFactory)getEFactoryInstance();
 	}
@@ -608,6 +659,7 @@ public class TracePackageImpl extends EPackageImpl implements TracePackage {
 
 		mseModelEClass = createEClass(MSE_MODEL);
 		createEReference(mseModelEClass, MSE_MODEL__OWNED_MS_ES);
+		createEReference(mseModelEClass, MSE_MODEL__ORPHAN_OPERATIONS);
 
 		genericMSEEClass = createEClass(GENERIC_MSE);
 		createEReference(genericMSEEClass, GENERIC_MSE__CALLER_REFERENCE);
@@ -817,6 +869,7 @@ public class TracePackageImpl extends EPackageImpl implements TracePackage {
 
 		initEClass(mseModelEClass, MSEModel.class, "MSEModel", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
 		initEReference(getMSEModel_OwnedMSEs(), this.getMSE(), null, "ownedMSEs", null, 0, -1, MSEModel.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+		initEReference(getMSEModel_OrphanOperations(), theEcorePackage.getEOperation(), null, "orphanOperations", null, 0, -1, MSEModel.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 
 		initEClass(genericMSEEClass, GenericMSE.class, "GenericMSE", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
 		initEReference(getGenericMSE_CallerReference(), theEcorePackage.getEObject(), null, "callerReference", null, 0, 1, GenericMSE.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);

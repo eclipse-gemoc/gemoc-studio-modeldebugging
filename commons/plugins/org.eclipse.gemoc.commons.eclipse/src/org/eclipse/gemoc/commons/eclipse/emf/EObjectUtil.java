@@ -11,6 +11,7 @@
 package org.eclipse.gemoc.commons.eclipse.emf;
 
 import org.eclipse.emf.ecore.EObject;
+import org.eclipse.emf.ecore.impl.BasicEObjectImpl;
 import org.eclipse.emf.ecore.resource.Resource;
 
 public class EObjectUtil {
@@ -45,7 +46,9 @@ public class EObjectUtil {
 	public static String getResourceBasedName(EObject obj, boolean useFullResourcePath) {
 		Resource res = obj.eResource();
 		if( res == null) {
-			return null;
+			if(obj.eIsProxy() && obj instanceof BasicEObjectImpl) {
+				return ((BasicEObjectImpl)obj).eProxyURI().toString();
+			} else return null;
 		}
 		if(useFullResourcePath) {
 			return res.getURI().toPlatformString(true) + res.getURIFragment(obj);

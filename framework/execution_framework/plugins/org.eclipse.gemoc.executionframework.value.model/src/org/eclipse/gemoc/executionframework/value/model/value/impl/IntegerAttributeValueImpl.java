@@ -69,6 +69,7 @@ public class IntegerAttributeValueImpl extends AttributeValueImpl implements Int
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
+	@Override
 	public int getAttributeValue() {
 		return attributeValue;
 	}
@@ -78,6 +79,7 @@ public class IntegerAttributeValueImpl extends AttributeValueImpl implements Int
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
+	@Override
 	public void setAttributeValue(int newAttributeValue) {
 		int oldAttributeValue = attributeValue;
 		attributeValue = newAttributeValue;

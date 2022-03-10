@@ -33,8 +33,6 @@ xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xs
 		<module>org.eclipse.gemoc.executionframework.engine.ui</module>
 		<module>org.eclipse.gemoc.executionframework.event.manager</module>
 		<module>org.eclipse.gemoc.executionframework.event.model</module>
-		<module>org.eclipse.gemoc.executionframework.event.model.edit</module>
-		<module>org.eclipse.gemoc.executionframework.event.model.editor</module>
 		<module>org.eclipse.gemoc.executionframework.event.ui</module>
 		<module>org.eclipse.gemoc.executionframework.extensions.sirius</module>
 		<module>org.eclipse.gemoc.executionframework.ui</module>

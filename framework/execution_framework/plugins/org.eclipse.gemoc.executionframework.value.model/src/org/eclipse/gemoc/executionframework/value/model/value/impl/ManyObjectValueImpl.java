@@ -66,6 +66,7 @@ public class ManyObjectValueImpl extends ReferenceValueImpl implements ManyObjec
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
+	@Override
 	public EList<EObject> getObjectValues() {
 		if (objectValues == null) {
 			objectValues = new EObjectContainmentEList<EObject>(EObject.class, this, ValuePackage.MANY_OBJECT_VALUE__OBJECT_VALUES);

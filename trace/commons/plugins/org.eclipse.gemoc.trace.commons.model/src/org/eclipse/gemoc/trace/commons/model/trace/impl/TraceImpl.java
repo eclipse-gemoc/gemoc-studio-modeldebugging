@@ -117,6 +117,7 @@ public abstract class TraceImpl<StepSubType extends Step<?>, TracedObjectSubtype
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
+	@Override
 	public StepSubType getRootStep() {
 		return rootStep;
 	}
@@ -141,6 +142,7 @@ public abstract class TraceImpl<StepSubType extends Step<?>, TracedObjectSubtype
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
+	@Override
 	public void setRootStep(StepSubType newRootStep) {
 		if (newRootStep != rootStep) {
 			NotificationChain msgs = null;
@@ -160,6 +162,7 @@ public abstract class TraceImpl<StepSubType extends Step<?>, TracedObjectSubtype
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
+	@Override
 	public EList<TracedObjectSubtype> getTracedObjects() {
 		if (tracedObjects == null) {
 			tracedObjects = new EObjectContainmentEList<TracedObjectSubtype>(TracedObject.class, this, TracePackage.TRACE__TRACED_OBJECTS);
@@ -172,6 +175,7 @@ public abstract class TraceImpl<StepSubType extends Step<?>, TracedObjectSubtype
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
+	@Override
 	public EList<StateSubType> getStates() {
 		if (states == null) {
 			states = new EObjectContainmentEList<StateSubType>(State.class, this, TracePackage.TRACE__STATES);
@@ -184,6 +188,7 @@ public abstract class TraceImpl<StepSubType extends Step<?>, TracedObjectSubtype
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
+	@Override
 	public LaunchConfiguration getLaunchconfiguration() {
 		return launchconfiguration;
 	}
@@ -208,6 +213,7 @@ public abstract class TraceImpl<StepSubType extends Step<?>, TracedObjectSubtype
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
+	@Override
 	public void setLaunchconfiguration(LaunchConfiguration newLaunchconfiguration) {
 		if (newLaunchconfiguration != launchconfiguration) {
 			NotificationChain msgs = null;

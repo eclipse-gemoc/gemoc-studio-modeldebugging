@@ -126,6 +126,7 @@ public class EventPackageImpl extends EPackageImpl implements EventPackage {
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
+	@Override
 	public EClass getEventOccurrence() {
 		return eventOccurrenceEClass;
 	}
@@ -135,6 +136,7 @@ public class EventPackageImpl extends EPackageImpl implements EventPackage {
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
+	@Override
 	public EReference getEventOccurrence_Event() {
 		return (EReference)eventOccurrenceEClass.getEStructuralFeatures().get(0);
 	}
@@ -144,6 +146,7 @@ public class EventPackageImpl extends EPackageImpl implements EventPackage {
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
+	@Override
 	public EReference getEventOccurrence_Args() {
 		return (EReference)eventOccurrenceEClass.getEStructuralFeatures().get(1);
 	}
@@ -153,6 +156,7 @@ public class EventPackageImpl extends EPackageImpl implements EventPackage {
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
+	@Override
 	public EAttribute getEventOccurrence_Type() {
 		return (EAttribute)eventOccurrenceEClass.getEStructuralFeatures().get(2);
 	}
@@ -162,6 +166,7 @@ public class EventPackageImpl extends EPackageImpl implements EventPackage {
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
+	@Override
 	public EClass getStopEventOccurrence() {
 		return stopEventOccurrenceEClass;
 	}
@@ -171,6 +176,7 @@ public class EventPackageImpl extends EPackageImpl implements EventPackage {
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
+	@Override
 	public EClass getEventOccurrenceArgument() {
 		return eventOccurrenceArgumentEClass;
 	}
@@ -180,6 +186,7 @@ public class EventPackageImpl extends EPackageImpl implements EventPackage {
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
+	@Override
 	public EReference getEventOccurrenceArgument_Parameter() {
 		return (EReference)eventOccurrenceArgumentEClass.getEStructuralFeatures().get(0);
 	}
@@ -189,6 +196,7 @@ public class EventPackageImpl extends EPackageImpl implements EventPackage {
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
+	@Override
 	public EReference getEventOccurrenceArgument_Value() {
 		return (EReference)eventOccurrenceArgumentEClass.getEStructuralFeatures().get(1);
 	}
@@ -198,6 +206,7 @@ public class EventPackageImpl extends EPackageImpl implements EventPackage {
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
+	@Override
 	public EEnum getEventOccurrenceType() {
 		return eventOccurrenceTypeEEnum;
 	}
@@ -207,6 +216,7 @@ public class EventPackageImpl extends EPackageImpl implements EventPackage {
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
+	@Override
 	public EventFactory getEventFactory() {
 		return (EventFactory)getEFactoryInstance();
 	}
