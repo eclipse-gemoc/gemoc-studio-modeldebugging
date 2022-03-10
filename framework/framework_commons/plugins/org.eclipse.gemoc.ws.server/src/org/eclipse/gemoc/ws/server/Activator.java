@@ -21,7 +21,7 @@ import org.eclipse.gemoc.ws.server.endpoint.EndPointExtensionPointHelper;
 import org.eclipse.jetty.server.Server;
 import org.eclipse.jetty.server.ServerConnector;
 import org.eclipse.jetty.servlet.ServletContextHandler;
-import org.eclipse.jetty.websocket.jsr356.server.deploy.WebSocketServerContainerInitializer;
+//import org.eclipse.jetty.websocket.jsr356.server.deploy.WebSocketServerContainerInitializer;
 import org.osgi.framework.BundleContext;
 
 public class Activator extends Plugin {
@@ -100,7 +100,8 @@ public class Activator extends Plugin {
 
 		try {
 			// Initialize javax.websocket layer
-			wsContainer = WebSocketServerContainerInitializer.configureContext(servletContext);
+			wsContainer = (ServerContainer)servletContext.getAttribute(ServerContainer.class.getName());
+			//wsContainer = WebSocketServerContainerInitializer.configureContext(servletContext);
 
 			// Add WebSocket endpoint to javax.websocket layer
 			// wsContainer.addEndpoint(TestEndPoint.class);
