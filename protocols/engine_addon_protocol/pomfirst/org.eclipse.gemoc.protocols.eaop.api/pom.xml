@@ -10,7 +10,7 @@
 	<packaging>jar</packaging>
 
 	<parent>
-		<relativePath>../../../pomfirst</relativePath>
+		<relativePath>../../../../pomfirst</relativePath>
 		<groupId>org.eclipse.gemoc.gemoc-studio-modeldebugging</groupId>
 		<artifactId>org.eclipse.gemoc.modeldebugging.root</artifactId>
 		<version>3.5.0-SNAPSHOT</version>
