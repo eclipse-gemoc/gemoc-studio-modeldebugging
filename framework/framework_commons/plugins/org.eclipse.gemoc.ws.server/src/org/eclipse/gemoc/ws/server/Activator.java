@@ -10,7 +10,9 @@
  *******************************************************************************/
 package org.eclipse.gemoc.ws.server;
 
+import javax.servlet.ServletContext;
 import javax.websocket.server.ServerContainer;
+import javax.websocket.server.ServerEndpoint;
 
 import org.eclipse.core.runtime.IProgressMonitor;
 import org.eclipse.core.runtime.IStatus;
@@ -21,6 +23,12 @@ import org.eclipse.gemoc.ws.server.endpoint.EndPointExtensionPointHelper;
 import org.eclipse.jetty.server.Server;
 import org.eclipse.jetty.server.ServerConnector;
 import org.eclipse.jetty.servlet.ServletContextHandler;
+import org.eclipse.jetty.servlet.ServletHolder;
+import org.eclipse.jetty.websocket.servlet.WebSocketUpgradeFilter;
+import org.eclipse.jetty.websocket.server.JettyWebSocketServerContainer;
+import org.eclipse.jetty.websocket.server.JettyWebSocketServlet;
+import org.eclipse.jetty.websocket.server.JettyWebSocketServletFactory;
+import org.eclipse.jetty.websocket.server.config.JettyWebSocketServletContainerInitializer;
 //import org.eclipse.jetty.websocket.jsr356.server.deploy.WebSocketServerContainerInitializer;
 import org.osgi.framework.BundleContext;
 
@@ -94,29 +102,104 @@ public class Activator extends Plugin {
 
 		// Setup the basic application "context" for this application at "/"
 		// This is also known as the handler tree (in jetty speak)
-		ServletContextHandler servletContext = new ServletContextHandler(ServletContextHandler.SESSIONS);
-		servletContext.setContextPath("/");
-		server.setHandler(servletContext);
+		ServletContextHandler servletContextHandler = new ServletContextHandler(ServletContextHandler.SESSIONS);
+		servletContextHandler.setContextPath("/");
+		server.setHandler(servletContextHandler);
 
 		try {
 			// Initialize javax.websocket layer
-			wsContainer = (ServerContainer)servletContext.getAttribute(ServerContainer.class.getName());
-			//wsContainer = WebSocketServerContainerInitializer.configureContext(servletContext);
+			servletContextHandler.addServletContainerInitializer(
+					new JettyWebSocketServletContainerInitializer(new JettyWebSocketServletContainerInitializer.Configurator() {
+				
+				@Override
+				public void accept(ServletContext servletContext, JettyWebSocketServerContainer container) {
+					for( Class<?> endPointClass :EndPointExtensionPointHelper.getAllEndPointClasses()) {
+						ServerEndpoint endPointAnnotation = endPointClass.getDeclaredAnnotation(javax.websocket.server.ServerEndpoint.class);
+						if(endPointAnnotation != null) {
+							String path = endPointAnnotation.value();
+							System.err.println("Adding EndPoint class: " + endPointClass.getCanonicalName() + " on "+path);
+							//servletContext.get
+							container.addMapping(path, endPointClass);
+							//servletContextHandler.addServlet(new ServletHolder(endPointClass), path);
+						}
+					}
+					
+				}
+			}) );
+			//servletContextHandler.addServlet(EclipseGemocServlet.class,"/");
+			/*for( Class<?> endPointClass :EndPointExtensionPointHelper.getAllEndPointClasses()) {
+				ServerEndpoint endPointAnnotation = endPointClass.getDeclaredAnnotation(javax.websocket.server.ServerEndpoint.class);
+				if(endPointAnnotation != null) {
+					String path = endPointAnnotation.value();
+					System.err.println("Adding EndPoint class: " + endPointClass.getCanonicalName() + " on "+path);
+					servletContextHandler.addServlet(new ServletHolder(endPointClass), path);
+				}
+			}*/
+			//servletContextHandler.getServletContext()
+			//JettyWebSocketServerContainer wsContainer2 = JettyWebSocketServerContainer.getContainer(servletContextHandler.getServletContext());
+			//wsContainer = JettyWebSocketServletContainerInitializer.configure(servletContext);
 
 			// Add WebSocket endpoint to javax.websocket layer
 			// wsContainer.addEndpoint(TestEndPoint.class);
+			/*
+			
+			WebSocketUpgradeFilter wsuf = WebSocketUpgradeFilter.configureContext(servletContextHandler);
+			
+			JettyWebSocketServerContainer.ensureContainer(servletContextHandler.getServletContext());
+			JettyWebSocketServerContainer wsContainer2 = JettyWebSocketServerContainer.getContainer(servletContextHandler.getServletContext());
+			
 			for( Class<?> endPointClass :EndPointExtensionPointHelper.getAllEndPointClasses()) {
-				System.err.println("Adding EndPoint class: " + endPointClass.getCanonicalName());
-				wsContainer.addEndpoint(endPointClass);
+				//wsContainer.addEndpoint(endPointClass);
+				ServerEndpoint endPointAnnotation = endPointClass.getDeclaredAnnotation(javax.websocket.server.ServerEndpoint.class);
+				if(endPointAnnotation != null) {
+					String path = endPointAnnotation.value();
+					System.err.println("Adding EndPoint class: " + endPointClass.getCanonicalName() + " on "+path);
+					wsContainer2.addMapping(path, endPointClass);
+				} else {
+					System.err.println("Failed to add EndPoint class: " + endPointClass.getCanonicalName());
+				}
 			}
-
+*/
 			server.start();
+			/*while(!server.isStarted()) {
+				Thread.sleep(100);
+			}
+			JettyWebSocketServerContainer wsContainer2 = JettyWebSocketServerContainer.getContainer(servletContextHandler.getServletContext());
+			
+			for( Class<?> endPointClass :EndPointExtensionPointHelper.getAllEndPointClasses()) {
+				//wsContainer.addEndpoint(endPointClass);
+				ServerEndpoint endPointAnnotation = endPointClass.getDeclaredAnnotation(javax.websocket.server.ServerEndpoint.class);
+				if(endPointAnnotation != null) {
+					String path = endPointAnnotation.value();
+					System.err.println("Adding EndPoint class: " + endPointClass.getCanonicalName() + " on "+path);
+					wsContainer2.addMapping(new ServletPathSpec(path), endPointClass);
+				} else {
+					System.err.println("Failed to add EndPoint class: " + endPointClass.getCanonicalName());
+				}
+			}*/
 			assignedPort = connector.getLocalPort();
 			System.err.println("Assigned port: " + connector.getLocalPort());
 			server.dump(System.err);
 		} catch (Throwable t) {
 			logError(t.getMessage(), t);
 		}
+	}
+	
+	
+	
+	
+	public class EclipseGemocServlet extends JettyWebSocketServlet {
+	    /**
+		 * 
+		 */
+		private static final long serialVersionUID = -1383115328058942867L;
+
+		@Override
+	    public void configure(JettyWebSocketServletFactory factory) {
+	    	for( Class<?> endPointClass :EndPointExtensionPointHelper.getAllEndPointClasses()) {
+	    		factory.register(endPointClass);	
+	    	}
+	    }
 	}
 
 	public synchronized void stopWSServer() throws Exception {
