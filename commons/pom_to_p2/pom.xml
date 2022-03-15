@@ -25,31 +25,24 @@
                             <artifacts>
                                 <!-- specify your depencies here -->
                                 <!-- groupId:artifactId:version -->
-								<!--<artifact>
-									<id>org.eclipse.jetty.websocket:websocket-jetty-api:10.0.6</id>
-									<source>true</source>
-								</artifact>-->
+								
 								<artifact>
-									<id>org.eclipse.jetty.websocket:websocket-jetty-server:10.0.6</id>
+									<id>org.eclipse.jetty.toolchain:jetty-javax-websocket-api:1.1.2</id>
+									<source>true</source>
+    								<!--<override>true</override>
+									<instructions>
+										<_removeheaders>Require-Capability</_removeheaders>
+									</instructions>-->
+								</artifact>org.eclipse.jetty.websocket
+								<artifact>
+									<id>org.eclipse.jetty.websocket:websocket-javax-server:10.0.6</id>
 									<source>true</source>
     								<!--<override>true</override>
 									<instructions>
 										<_removeheaders>Require-Capability</_removeheaders>
 									</instructions>-->
 								</artifact>
-								<!--<artifact>
-									<id>org.eclipse.jetty.websocket:websocket-jetty-common:10.0.6</id>
-									<source>true</source>
-								</artifact>
-								<artifact>
-									<id>org.eclipse.jetty.websocket:websocket-core-common:10.0.6</id>
-									<source>true</source>
-								</artifact>
-								<artifact>
-									<id>org.eclipse.jetty:jetty-webapp:10.0.6</id>
-									<source>true</source>
-								</artifact>-->
-
+								
 								<artifact>
 									<id>org.apache.aries.spifly:org.apache.aries.spifly.dynamic.bundle:1.3.4</id>
 									<source>false</source>

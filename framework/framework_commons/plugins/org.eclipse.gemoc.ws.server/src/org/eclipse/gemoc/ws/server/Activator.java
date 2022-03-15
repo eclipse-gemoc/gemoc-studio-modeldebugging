@@ -10,7 +10,6 @@
  *******************************************************************************/
 package org.eclipse.gemoc.ws.server;
 
-import javax.servlet.ServletContext;
 import javax.websocket.server.ServerContainer;
 import javax.websocket.server.ServerEndpoint;
 
@@ -21,15 +20,8 @@ import org.eclipse.core.runtime.Status;
 import org.eclipse.core.runtime.jobs.Job;
 import org.eclipse.gemoc.ws.server.endpoint.EndPointExtensionPointHelper;
 import org.eclipse.jetty.server.Server;
-import org.eclipse.jetty.server.ServerConnector;
 import org.eclipse.jetty.servlet.ServletContextHandler;
-import org.eclipse.jetty.servlet.ServletHolder;
-import org.eclipse.jetty.websocket.servlet.WebSocketUpgradeFilter;
-import org.eclipse.jetty.websocket.server.JettyWebSocketServerContainer;
-import org.eclipse.jetty.websocket.server.JettyWebSocketServlet;
-import org.eclipse.jetty.websocket.server.JettyWebSocketServletFactory;
-import org.eclipse.jetty.websocket.server.config.JettyWebSocketServletContainerInitializer;
-//import org.eclipse.jetty.websocket.jsr356.server.deploy.WebSocketServerContainerInitializer;
+import org.eclipse.jetty.websocket.javax.server.config.JavaxWebSocketServletContainerInitializer;
 import org.osgi.framework.BundleContext;
 
 public class Activator extends Plugin {
@@ -94,114 +86,46 @@ public class Activator extends Plugin {
 		super.stop(context);
 	}
 
+	/**
+	 * Starts a standard API websocket server using jetty 10
+	 * 
+	 * https://www.eclipse.org/jetty/documentation/jetty-10/programming-guide/index.html#pg-server-websocket-standard
+	 * 
+	 * @throws Exception
+	 */
 	public synchronized void startWSServer() throws Exception {
-		server = new Server();
-		ServerConnector connector = new ServerConnector(server);
-		connector.setPort(0);
-		server.addConnector(connector);
+		// Create a Server with a ServerConnector listening on random port.
+		server = new Server(0);
+		
+		// Create a ServletContextHandler with the given context path.
+		ServletContextHandler handler = new ServletContextHandler(server, "/");
+		server.setHandler(handler);
+		
+		// Setup the ServerContainer and the WebSocket endpoints for this web application context.
+		JavaxWebSocketServletContainerInitializer.configure(handler, (servletContext, container) ->
+		{
+		    // Configure the ServerContainer.
+		    container.setDefaultMaxTextMessageBufferSize(128 * 1024);
 
-		// Setup the basic application "context" for this application at "/"
-		// This is also known as the handler tree (in jetty speak)
-		ServletContextHandler servletContextHandler = new ServletContextHandler(ServletContextHandler.SESSIONS);
-		servletContextHandler.setContextPath("/");
-		server.setHandler(servletContextHandler);
-
-		try {
-			// Initialize javax.websocket layer
-			servletContextHandler.addServletContainerInitializer(
-					new JettyWebSocketServletContainerInitializer(new JettyWebSocketServletContainerInitializer.Configurator() {
-				
-				@Override
-				public void accept(ServletContext servletContext, JettyWebSocketServerContainer container) {
-					for( Class<?> endPointClass :EndPointExtensionPointHelper.getAllEndPointClasses()) {
-						ServerEndpoint endPointAnnotation = endPointClass.getDeclaredAnnotation(javax.websocket.server.ServerEndpoint.class);
-						if(endPointAnnotation != null) {
-							String path = endPointAnnotation.value();
-							System.err.println("Adding EndPoint class: " + endPointClass.getCanonicalName() + " on "+path);
-							//servletContext.get
-							container.addMapping(path, endPointClass);
-							//servletContextHandler.addServlet(new ServletHolder(endPointClass), path);
-						}
-					}
-					
-				}
-			}) );
-			//servletContextHandler.addServlet(EclipseGemocServlet.class,"/");
-			/*for( Class<?> endPointClass :EndPointExtensionPointHelper.getAllEndPointClasses()) {
+		    // Simple registration of your WebSocket endpoints.
+		    for( Class<?> endPointClass :EndPointExtensionPointHelper.getAllEndPointClasses()) {
 				ServerEndpoint endPointAnnotation = endPointClass.getDeclaredAnnotation(javax.websocket.server.ServerEndpoint.class);
 				if(endPointAnnotation != null) {
 					String path = endPointAnnotation.value();
 					System.err.println("Adding EndPoint class: " + endPointClass.getCanonicalName() + " on "+path);
-					servletContextHandler.addServlet(new ServletHolder(endPointClass), path);
-				}
-			}*/
-			//servletContextHandler.getServletContext()
-			//JettyWebSocketServerContainer wsContainer2 = JettyWebSocketServerContainer.getContainer(servletContextHandler.getServletContext());
-			//wsContainer = JettyWebSocketServletContainerInitializer.configure(servletContext);
-
-			// Add WebSocket endpoint to javax.websocket layer
-			// wsContainer.addEndpoint(TestEndPoint.class);
-			/*
-			
-			WebSocketUpgradeFilter wsuf = WebSocketUpgradeFilter.configureContext(servletContextHandler);
-			
-			JettyWebSocketServerContainer.ensureContainer(servletContextHandler.getServletContext());
-			JettyWebSocketServerContainer wsContainer2 = JettyWebSocketServerContainer.getContainer(servletContextHandler.getServletContext());
-			
-			for( Class<?> endPointClass :EndPointExtensionPointHelper.getAllEndPointClasses()) {
-				//wsContainer.addEndpoint(endPointClass);
-				ServerEndpoint endPointAnnotation = endPointClass.getDeclaredAnnotation(javax.websocket.server.ServerEndpoint.class);
-				if(endPointAnnotation != null) {
-					String path = endPointAnnotation.value();
-					System.err.println("Adding EndPoint class: " + endPointClass.getCanonicalName() + " on "+path);
-					wsContainer2.addMapping(path, endPointClass);
-				} else {
-					System.err.println("Failed to add EndPoint class: " + endPointClass.getCanonicalName());
+					// Simple registration of WebSocket endpoints.
+					container.addEndpoint(endPointClass);
 				}
 			}
-*/
-			server.start();
-			/*while(!server.isStarted()) {
-				Thread.sleep(100);
-			}
-			JettyWebSocketServerContainer wsContainer2 = JettyWebSocketServerContainer.getContainer(servletContextHandler.getServletContext());
-			
-			for( Class<?> endPointClass :EndPointExtensionPointHelper.getAllEndPointClasses()) {
-				//wsContainer.addEndpoint(endPointClass);
-				ServerEndpoint endPointAnnotation = endPointClass.getDeclaredAnnotation(javax.websocket.server.ServerEndpoint.class);
-				if(endPointAnnotation != null) {
-					String path = endPointAnnotation.value();
-					System.err.println("Adding EndPoint class: " + endPointClass.getCanonicalName() + " on "+path);
-					wsContainer2.addMapping(new ServletPathSpec(path), endPointClass);
-				} else {
-					System.err.println("Failed to add EndPoint class: " + endPointClass.getCanonicalName());
-				}
-			}*/
-			assignedPort = connector.getLocalPort();
-			System.err.println("Assigned port: " + connector.getLocalPort());
-			server.dump(System.err);
-		} catch (Throwable t) {
-			logError(t.getMessage(), t);
-		}
-	}
-	
-	
-	
-	
-	public class EclipseGemocServlet extends JettyWebSocketServlet {
-	    /**
-		 * 
-		 */
-		private static final long serialVersionUID = -1383115328058942867L;
 
-		@Override
-	    public void configure(JettyWebSocketServletFactory factory) {
-	    	for( Class<?> endPointClass :EndPointExtensionPointHelper.getAllEndPointClasses()) {
-	    		factory.register(endPointClass);	
-	    	}
-	    }
+		});
+		
+		server.start();
+		assignedPort = server.getURI().getPort();
+		System.err.println("Assigned port: " + server.getURI().getPort());
+		server.dump(System.err);
 	}
-
+		
 	public synchronized void stopWSServer() throws Exception {
 		if (server != null)
 			server.stop();
@@ -209,10 +133,6 @@ public class Activator extends Plugin {
 
 	public Server getServer() {
 		return server;
-	}
-
-	public ServerContainer getWsContainer() {
-		return wsContainer;
 	}
 
 	public int getAssignedPort() {
