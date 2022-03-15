@@ -13,6 +13,9 @@ public class Activator implements BundleActivator {
 
 	public void start(BundleContext bundleContext) throws Exception {
 		Activator.context = bundleContext;
+		
+		// activate ws server
+		org.eclipse.gemoc.ws.server.Activator.getDefault();
 	}
 
 	public void stop(BundleContext bundleContext) throws Exception {
