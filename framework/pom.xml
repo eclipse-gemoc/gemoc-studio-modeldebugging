@@ -59,7 +59,7 @@
 			<layout>p2</layout>
 			<url>${melange.p2.url}</url>
 		</repository>
-
+ 
 		<repository>
 			<id>Thirdparty</id>
 			<layout>p2</layout>
