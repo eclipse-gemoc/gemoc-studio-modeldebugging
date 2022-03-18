@@ -11,3 +11,7 @@ Require-Bundle: org.eclipse.core.runtime;bundle-version="3.14.0",
  org.eclipse.lsp4j.generator;bundle-version="0.12.0"
 Bundle-Vendor: Eclipse GEMOC Project
 Automatic-Module-Name: org.eclipse.gemoc.protocols.eaop.api
+Export-Package: org.eclipse.gemoc.protocols.eaop.api.data,
+ org.eclipse.gemoc.protocols.eaop.api.json,
+ org.eclipse.gemoc.protocols.eaop.api.messages,
+ org.eclipse.gemoc.protocols.eaop.api.services

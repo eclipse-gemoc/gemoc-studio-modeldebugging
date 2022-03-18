@@ -9,5 +9,12 @@
             name="org.eclipse.gemoc.executionframework.addon.eaop.server.addon">
       </addon>
    </extension>
+   <extension
+         point="org.eclipse.gemoc.ws.server.endpoint">
+      <GEMOC_WS_EndPoint
+            class="org.eclipse.gemoc.executionframework.addon.eaop.server.EaopServerEndPoint"
+            id="org.eclipse.gemoc.executionframework.addon.eaop.server.EaopServerEndPoint">
+      </GEMOC_WS_EndPoint>
+   </extension>
 
 </plugin>
