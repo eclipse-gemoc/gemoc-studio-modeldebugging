@@ -1,0 +1,48 @@
+Manifest-Version: 1.0
+Created-By: Apache Maven Bundle Plugin
+Build-Jdk-Spec: 11
+Implementation-Vendor: Eclipse Jetty Project
+Implementation-Version: 10.0.6
+url: https://www.eclipse.org/jetty/
+Bnd-LastModified: 1624980656601
+Bundle-Classpath: .
+Bundle-Copyright: Copyright (c) 2008-2021 Mort Bay Consulting Pty Ltd an
+ d others.
+Bundle-Description: Jetty module for Jetty :: Asynchronous HTTP Client
+Bundle-DocURL: https://www.eclipse.org/jetty/
+Bundle-License: https://www.eclipse.org/legal/epl-2.0, https://www.apach
+ e.org/licenses/LICENSE-2.0
+Bundle-ManifestVersion: 2
+Bundle-Name: Jetty :: Asynchronous HTTP Client
+Bundle-RequiredExecutionEnvironment: JavaSE-11
+Bundle-SymbolicName: org.eclipse.jetty.client
+Bundle-Vendor: Eclipse Jetty Project
+Bundle-Version: 10.0.6
+Import-Package: javax.security.auth,javax.security.auth.callback,javax.s
+ ecurity.auth.login,org.eclipse.jetty.alpn.client;version="[10.0.6,11)",
+ org.eclipse.jetty.client.dynamic,org.eclipse.jetty.client.http,org.ecli
+ pse.jetty.client.util,org.eclipse.jetty.http;version="[10.0.6,11)",org.
+ eclipse.jetty.io;version="[10.0.6,11)",org.eclipse.jetty.io.ssl;version
+ ="[10.0.6,11)",org.eclipse.jetty.jmx;resolution:=optional;version="[10.
+ 0.6,11)",org.eclipse.jetty.util;version="[10.0.6,11)",org.eclipse.jetty
+ .util.annotation;version="[10.0.6,11)",org.eclipse.jetty.util.component
+ ;version="[10.0.6,11)",org.eclipse.jetty.util.ssl;version="[10.0.6,11)"
+ ,org.eclipse.jetty.util.thread;version="[10.0.6,11)",org.ietf.jgss,org.
+ slf4j;version="[1.7,3.0)",org.slf4j.event;version="[1.7,3.0)",org.slf4j
+ .helpers;version="[1.7,3.0)",org.slf4j.spi;version="[1.7,3.0)"
+Export-Package: org.eclipse.jetty.client;uses:="org.eclipse.jetty.client
+ .api,org.eclipse.jetty.client.util,org.eclipse.jetty.http,org.eclipse.j
+ etty.io,org.eclipse.jetty.util,org.eclipse.jetty.util.annotation,org.ec
+ lipse.jetty.util.component,org.eclipse.jetty.util.ssl,org.eclipse.jetty
+ .util.thread,org.slf4j";version="10.0.6",org.eclipse.jetty.client.api;u
+ ses:="org.eclipse.jetty.http,org.eclipse.jetty.util";version="10.0.6",o
+ rg.eclipse.jetty.client.dynamic;uses:="org.eclipse.jetty.client,org.ecl
+ ipse.jetty.io";version="10.0.6",org.eclipse.jetty.client.http;uses:="or
+ g.eclipse.jetty.client,org.eclipse.jetty.client.api,org.eclipse.jetty.h
+ ttp,org.eclipse.jetty.io,org.eclipse.jetty.util,org.eclipse.jetty.util.
+ annotation,org.eclipse.jetty.util.thread";version="10.0.6",org.eclipse.
+ jetty.client.jmx;uses:="org.eclipse.jetty.jmx";version="10.0.6",org.ecl
+ ipse.jetty.client.util;uses:="org.eclipse.jetty.client,org.eclipse.jett
+ y.client.api,org.eclipse.jetty.http,org.eclipse.jetty.io,org.eclipse.je
+ tty.util,org.eclipse.jetty.util.thread";version="10.0.6"
+Automatic-Module-Name: org.eclipse.jetty.client

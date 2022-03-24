@@ -1,0 +1,20 @@
+Manifest-Version: 1.0
+Bundle-ManifestVersion: 2
+Bundle-Name: alpn-api
+Bundle-SymbolicName: org.eclipse.jetty.alpn.api
+Bundle-Version: 1.1.3.v20160715
+Bundle-Vendor: Eclipse Jetty Project
+Bundle-RequiredExecutionEnvironment: JavaSE-11
+Created-By: Apache Maven Bundle Plugin
+Archiver-Version: Plexus Archiver
+Build-Jdk: 1.8.0_92
+Import-Package: javax.net.ssl
+Bundle-License: http://www.apache.org/licenses/LICENSE-2.0, http://www.eclipse.org/org/documents/epl-v10.php
+Tool: Bnd-1.15.0
+Bundle-Copyright: Copyright (c) 2008-2016 Mort Bay Consulting Pty. Ltd.
+Bundle-Description: Application Layer Protocol Negotiation API
+Built-By: janb
+Bnd-LastModified: 1468552806425
+Automatic-Module-Name: org.eclipse.jetty.alpn.api
+Bundle-DocURL: http://www.eclipse.org/jetty/documentation/current/alpn-chapter.html
+Export-Package: org.eclipse.jetty.alpn

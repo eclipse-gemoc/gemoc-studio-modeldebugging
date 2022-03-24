@@ -1,0 +1,56 @@
+Manifest-Version: 1.0
+Created-By: Apache Maven Bundle Plugin
+Build-Jdk-Spec: 11
+Implementation-Vendor: Eclipse Jetty Project
+Implementation-Version: 10.0.6
+url: https://www.eclipse.org/jetty/
+Bnd-LastModified: 1624980697787
+Bundle-Classpath: .
+Bundle-Copyright: Copyright (c) 2008-2021 Mort Bay Consulting Pty Ltd an
+ d others.
+Bundle-Description: Jetty module for Jetty :: Webapp Application Support
+Bundle-DocURL: https://www.eclipse.org/jetty/
+Bundle-License: https://www.eclipse.org/legal/epl-2.0, https://www.apach
+ e.org/licenses/LICENSE-2.0
+Bundle-ManifestVersion: 2
+Bundle-Name: Jetty :: Webapp Application Support
+Bundle-RequiredExecutionEnvironment: JavaSE-11
+Bundle-SymbolicName: org.eclipse.jetty.webapp
+Bundle-Vendor: Eclipse Jetty Project
+Bundle-Version: 10.0.6
+Export-Package: org.eclipse.jetty.webapp;version="10.0.6";
+  uses:="org.eclipse.jetty.server.session,
+   org.slf4j,
+   org.eclipse.jetty.util.component,
+   org.eclipse.jetty.util,
+   org.eclipse.jetty.server.handler,
+   org.eclipse.jetty.xml,
+   org.eclipse.jetty.security,
+   javax.servlet,
+   org.eclipse.jetty.server,
+   org.eclipse.jetty.util.resource,
+   org.eclipse.jetty.servlet"
+Import-Package: javax.servlet;version="[4.0.0,5)",
+ javax.servlet.descriptor;version="[4.0.0,5)",
+ javax.servlet.http;version="[4.0.0,5)",
+ org.eclipse.jetty.http;version="[10.0.6,11)",
+ org.eclipse.jetty.http.pathmap;version="[10.0.6,11)",
+ org.eclipse.jetty.security;version="[10.0.6,11)",
+ org.eclipse.jetty.security.authentication;version="10.0.6",
+ org.eclipse.jetty.server;version="[10.0.6,11)",
+ org.eclipse.jetty.server.handler;version="[10.0.6,11)",
+ org.eclipse.jetty.server.session;version="[10.0.6,11)",
+ org.eclipse.jetty.servlet;version="[10.0.6,11)",
+ org.eclipse.jetty.util;version="[10.0.6,11)",
+ org.eclipse.jetty.util.annotation;version="[10.0.6,11)",
+ org.eclipse.jetty.util.component;version="[10.0.6,11)",
+ org.eclipse.jetty.util.resource;version="[10.0.6,11)",
+ org.eclipse.jetty.util.security;version="[10.0.6,11)",
+ org.eclipse.jetty.util.thread;version="[10.0.6,11)",
+ org.eclipse.jetty.xml;version="[10.0.6,11)",
+ org.slf4j;version="[1.7,3.0)",
+ org.slf4j.event;version="[1.7,3.0)",
+ org.slf4j.helpers;version="[1.7,3.0)",
+ org.slf4j.spi;version="[1.7,3.0)",
+ org.xml.sax
+Automatic-Module-Name: org.eclipse.jetty.webapp
