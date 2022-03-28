@@ -26,7 +26,6 @@
   
   <modules>
         <module>gexpressions</module>
-        <module>jetty</module>
         <module>org.eclipse.gemoc.commons.eclipse</module>
         <module>org.eclipse.gemoc.commons.eclipse.messagingsystem.api</module>
         <module>org.eclipse.gemoc.commons.eclipse.messagingsystem.ui</module>
