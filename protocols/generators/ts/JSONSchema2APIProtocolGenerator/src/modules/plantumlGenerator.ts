@@ -6,6 +6,7 @@
 
 //import * as fs from 'fs';
 import {IProtocol, Protocol as P} from './json_schema';
+import {PropertyHelper, ResponseHelper} from './json_schemaHelpers'
 
 let numIndents = 0;
 
@@ -14,8 +15,13 @@ export function PlantumlGeneratorModule(protocolName: string,  schema: IProtocol
 	let s = '';
 	s += line("@startuml");
 	s += line("' GENERATED FILE, DO NOT MODIFY MANUALLY");
+	s+= line("left to right direction");
 	s += line();
 	s += line("package "+protocolName+"_API {");
+
+	let links = '';
+	let messagesClasses = '';
+	let dtoClasses = '';
 
 	
 	s += line("package data {");
@@ -40,18 +46,27 @@ export function PlantumlGeneratorModule(protocolName: string,  schema: IProtocol
 							// let's create the data'
 							//console.log(`create interface for Response  ${typeName}`);
 							
-							s += MessageInterface(typeName, <P.Definition> d);
+							if((<P.Definition> d).properties && (<P.Definition> d).properties['body']){
+								messagesClasses += MessageInterface(typeName, <P.Definition>(<P.Definition> d).properties['body'], true);
+								links += MessageInterfaceLinks(typeName, <P.Definition>(<P.Definition> d).properties['body']);
+							} else {
+								messagesClasses += MessageInterface(typeName, <P.Definition> d, true);
+								links += MessageInterfaceLinks(typeName, <P.Definition> d2);
+							}
 						} else if(supertype == 'Event') {
 							// let's create the data'
 							//console.log(`create interface for Event ${typeName}`);
 							//console.log((<P.Definition> d).properties['body']);
 							if((<P.Definition> d).properties['body']){
-								s += MessageInterface(typeName+"Arguments", <P.Definition>(<P.Definition> d).properties['body']);
+								messagesClasses += MessageInterface(typeName+"Arguments", <P.Definition>(<P.Definition> d).properties['body'], true);
+								links += MessageInterfaceLinks(typeName+"Arguments", <P.Definition>(<P.Definition> d).properties['body']);
+							} else {	
+								console.log("plantuml Ignore1 "+typeName);
 							}
 							//s += MessageInterface(typeName, <P.Definition> d);
 						}
 					} else {
-						//console.log("Ignore "+typeName);
+						console.log("plantuml Ignore2 "+typeName);
 					}
 				}
 			}	
@@ -64,12 +79,21 @@ export function PlantumlGeneratorModule(protocolName: string,  schema: IProtocol
 				s += Enum(typeName, <P.StringType> d2);
 			} else {
 				if(typeName != 'ProtocolMessage') {
-					s += MessageInterface(typeName, <P.Definition> d2);
+					dtoClasses += MessageInterface(typeName, <P.Definition> d2, true);
+					links += MessageInterfaceLinks(typeName, <P.Definition> d2);
 				} 
 			}
 		}
 	}
+	s += line("package messageClasses {");
+	s += messagesClasses;
 	s += line("}");
+	s += line("package dtoClasses {");
+	s += dtoClasses;
+	s += line("}");
+	s += line("}");
+
+	s += links;
 
 	s += line("package services {");
 
@@ -96,8 +120,8 @@ export function PlantumlGeneratorModule(protocolName: string,  schema: IProtocol
 								responseDef = <P.Definition> respDef;
 							}
 						}
-						
-						s += RequestInterface(requestName, <P.Definition> d, responseDef);
+						const response : ResponseHelper = new ResponseHelper(responseDefTypeName, responseDef);
+						s += RequestInterface(requestName, <P.Definition> d, response);
 					}
 				}
 			}
@@ -129,7 +153,7 @@ export function PlantumlGeneratorModule(protocolName: string,  schema: IProtocol
 	s += closeBlock();
 	s += line("}");
 
-	s+= line('services -[hidden]- data');
+	//s+= line('services -[hidden]- data');
 
 //	s += closeBlock();
 	s += line("}");
@@ -139,37 +163,50 @@ export function PlantumlGeneratorModule(protocolName: string,  schema: IProtocol
 	return s;
 }
 
-function MessageInterface(interfaceName: string, definition: P.Definition): string {
+function MessageInterface(interfaceName: string, definition: P.Definition, useLink : boolean): string {
 
-	// let desc = definition.description;
-	// if (definition.properties && definition.properties.event && definition.properties.event['enum']) {
-	// 	const eventName = `${definition.properties.event['enum'][0]}`;
-	// 	if (eventName) {
-	// 		desc = `Event message for '${eventName}' event type.\n${desc}`;
-	// 	}
-	// } else if (definition.properties && definition.properties.command && definition.properties.command['enum']) {
-	// 	const requestName = `${definition.properties.command['enum'][0]}`;
-	// 	if (requestName) {
-	// 		const RequestName = requestName[0].toUpperCase() + requestName.substr(1);
-	// 		desc = `${RequestName} request; value of command field is '${requestName}'.\n${desc}`;
-	// 	}
-	// }
+	console.log("plantuml MessageInterface "+interfaceName);
+	
 	let s = '';
-	//s += comment({ description : desc });
-
-	//s += line("@JsonRpcData");
 	
 	s += openBlock(`class ${interfaceName} `);
-/*	s += line(`throw new UnsupportedOperationException();`)*/
 	for (let propName in definition.properties) {
 		const required = definition.required ? definition.required.indexOf(propName) >= 0 : false;
-		s += property(propName, !required, definition.properties[propName]);
+		const propertyHelper: PropertyHelper = new PropertyHelper(interfaceName, propName, definition.properties[propName]);
+		const prop = definition.properties[propName];
+		if(!useLink || !propertyIsLinkable(prop)){
+			s += property(propName, !required, definition.properties[propName]);
+		}
 	}
 	s += closeBlock();
 	return s;
 }
 
-function RequestInterface(interfaceName: string, definition: P.Definition, responsedefinition: P.Definition): string {
+/**
+ * Create links instead of attribute when possible
+ * @param interfaceName 
+ * @param definition 
+ * @returns 
+ */
+function MessageInterfaceLinks(interfaceName: string, definition: P.Definition): string {
+	let s = '';
+	for (let propName in definition.properties) {
+		const required = definition.required ? definition.required.indexOf(propName) >= 0 : false;
+		const propertyHelper: PropertyHelper = new PropertyHelper(interfaceName, propName, definition.properties[propName]);
+		const prop = definition.properties[propName];
+		const type = propertySimpleType(prop);
+		if(propertyIsLinkable(prop)){
+			if(propertyIsMany(prop)) {
+				s +=  line(interfaceName + " *-- \"*\" " + type + " :  "+propName);
+			} else {
+				s +=  line(interfaceName + " *-- " + type + " :  "+propName);
+			}
+		}
+	}
+	return s;
+}
+
+function RequestInterface(interfaceName: string, definition: P.Definition, responseHelper: ResponseHelper): string {
 
 	// let desc = definition.description;
 	let methodName = "";
@@ -193,12 +230,16 @@ function RequestInterface(interfaceName: string, definition: P.Definition, respo
 	
 	// find response type
 	var returnType = '@JsonRequest| ';
-	if(responsedefinition && responsedefinition.properties && responsedefinition.properties.body){
-		/*console.log(interfaceName+': responsedefinition = '+responsedefinition.properties.body);
-		console.log(responsedefinition.properties.body);
-		console.table(responsedefinition.properties.body);
-		console.table(argumentType(responsedefinition.properties.body));*/
-		returnType = "@JsonRequest| "+propertyType(responsedefinition.properties.body);
+	if(responseHelper.responseDef && responseHelper.responseDef.properties && responseHelper.responseDef.properties.body){
+		//console.log(interfaceName+': responsedefinition = '+responsedefinition.properties.body);
+		//console.log(responsedefinition.properties.body);
+		//console.table(responsedefinition.properties.body);
+		//console.table(argumentType(responsedefinition.properties.body));
+		if(responseHelper.responseDef.properties.body.type === 'object'){
+			returnType = responseHelper.responseDefTypeName;
+		} else {
+			returnType = returnType+ propertyType(responseHelper.responseDef.properties.body);
+		}
 	}
 	var argsString : string[] = [];
 	for (let propName in definition.properties) {
@@ -323,13 +364,80 @@ function closeBlock(closeChar?: string, newline?: boolean): string {
 	numIndents--;
 	return line(closeChar, newline);
 }
+ 
+function propertyIsLinkable(prop: any): boolean {
+	if (prop.$ref) { return true; }
+	switch (prop.type) {
+		case 'array':			
+			const s = propertyType(prop.items);
+			return propertyIsLinkable(prop.items);
+		case 'object':
+			return false;
+		case 'string':
+			return false;
+		case 'integer':
+			return false;
+	}
+	return false;
+}
+function propertyIsMany(prop: any): boolean {
+	if (prop.$ref) { return false; }
+	switch (prop.type) {
+		case 'array':			
+			return true;
+		case 'object':
+			return false;
+		case 'string':
+			return false;
+		case 'integer':
+			return false;
+	}
+	return false;
+}
 
-function propertyType(prop: any): string {
+/**
+ * simple type name (without multiplicity brackets)
+ * @param prop 
+ * @returns 
+ */
+function propertySimpleType(prop: any): string {
 	if (prop.$ref) {
-		return getRef(prop.$ref);
+		//console.log("propertyType is aref " + getRef(prop.$ref));
+		return ""+getRef(prop.$ref);
 	}
 	switch (prop.type) {
-		case 'array':
+		case 'array':			
+			const s = propertyType(prop.items);
+			if (s.indexOf(' ') >= 0) {
+				return `${s}`;
+			}
+			return `${s}`;
+		case 'object':
+			return objectType(prop);
+		case 'string':
+			if (prop.enum) {
+				return enumAsOrType(prop.enum);
+			}
+			return `String`;
+		case 'integer':
+			return 'Integer';
+	}
+	if (Array.isArray(prop.type)) {
+		if (prop.type.length === 7 && prop.type.sort().join() === 'array,boolean,integer,null,number,object,string') {	// silly way to detect all possible json schema types
+			return 'Object';
+		} else {
+			return prop.type.map(v => v === 'integer' ? 'Integer' : v).join(' | ');
+		}
+	}
+	return prop.type;
+}
+function propertyType(prop: any): string {
+	if (prop.$ref) {
+		//console.log("propertyType is aref " + getRef(prop.$ref));
+		return ""+getRef(prop.$ref);
+	}
+	switch (prop.type) {
+		case 'array':			
 			const s = propertyType(prop.items);
 			if (s.indexOf(' ') >= 0) {
 				return `(${s})[]`;
@@ -399,7 +507,9 @@ function property(name: string, optional: boolean, prop: P.PropertyType): string
 	//s += comment(prop);
 	const type = propertyType(prop);
 	const propertyDef = `${type} ${name}`;
-	
+	/*if(prop.type == 'object' && name == 'body') {
+		console.log("this is a body object");
+	}*/
 	if (type[0] === '\'' && type[type.length-1] === '\'' && type.indexOf('|') < 0) {
 		s += line(`\' ${propertyDef};`);
 	} else {
@@ -408,8 +518,10 @@ function property(name: string, optional: boolean, prop: P.PropertyType): string
 		// }
 		s += line(`${propertyDef}`);
 	}
+	//console.log("type ="+type+"; name="+name);
 	return s;
 }
+
 
 function getRef(ref: string): string {
 	const REXP = /#\/(.+)\/(.+)/;
