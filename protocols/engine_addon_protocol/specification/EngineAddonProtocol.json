@@ -138,7 +138,7 @@
 						"type": "object",
 						"properties": {
 							"engine": {
-								"$ref": "#/definitions/ExecutionEngine",
+								"$ref": "#/definitions/ExecutionEngineDto",
 								"description": "The name of the engine that is will start"
 							}
 						},
@@ -161,7 +161,7 @@
 						"type": "object",
 						"properties": {
 							"engine": {
-								"$ref": "#/definitions/ExecutionEngine",
+								"$ref": "#/definitions/ExecutionEngineDto",
 								"description": "The name of the started engine"
 							}
 						},
@@ -184,7 +184,7 @@
 						"type": "object",
 						"properties": {
 							"engine": {
-								"$ref": "#/definitions/ExecutionEngine",
+								"$ref": "#/definitions/ExecutionEngineDto",
 								"description": "The name of the initialized engine"
 							}
 						},
@@ -207,7 +207,7 @@
 						"type": "object",
 						"properties": {
 							"engine": {
-								"$ref": "#/definitions/ExecutionEngine",
+								"$ref": "#/definitions/ExecutionEngineDto",
 								"description": "The name of the engine"
 							}
 						},
@@ -230,7 +230,7 @@
 						"type": "object",
 						"properties": {
 							"engine": {
-								"$ref": "#/definitions/ExecutionEngine",
+								"$ref": "#/definitions/ExecutionEngineDto",
 								"description": "The name of the engine"
 							}
 						},
@@ -253,7 +253,7 @@
 						"type": "object",
 						"properties": {
 							"engine": {
-								"$ref": "#/definitions/ExecutionEngine",
+								"$ref": "#/definitions/ExecutionEngineDto",
 								"description": "The name of the engine"
 							}
 						},
@@ -276,11 +276,11 @@
 						"type": "object",
 						"properties": {
 							"engine": {
-								"$ref": "#/definitions/ExecutionEngine",
+								"$ref": "#/definitions/ExecutionEngineDto",
 								"description": "The name of the engine"
 							},
 							"stepToExecute": {
-								"$ref": "#/definitions/Step",
+								"$ref": "#/definitions/StepDto",
 								"description": "step that is about to execute"
 							}
 						},
@@ -303,11 +303,11 @@
 						"type": "object",
 						"properties": {
 							"engine": {
-								"$ref": "#/definitions/ExecutionEngine",
+								"$ref": "#/definitions/ExecutionEngineDto",
 								"description": "The name of the engine"
 							},
 							"stepToExecute": {
-								"$ref": "#/definitions/Step",
+								"$ref": "#/definitions/StepDto",
 								"description": "step executed"
 							}
 						},
@@ -353,7 +353,7 @@
 						"type": "object",
 						"properties": {
 							"state": {
-								"$ref": "#/definitions/State",
+								"$ref": "#/definitions/StateDto",
 								"description": ""
 							}
 						}
@@ -397,8 +397,8 @@
 					"body": {
 						"type": "object",
 						"properties": {
-							"state": {
-								"$ref": "#/definitions/Step",
+							"step": {
+								"$ref": "#/definitions/StepDto",
 								"description": ""
 							}
 						}
@@ -407,7 +407,7 @@
 				"required": [ "body" ]
 			}]
 		},
-		"ExecutionEngine": {
+		"ExecutionEngineDto": {
 			"type": "object",
 			"title": "Types",
 			"description": "Information about the Execution Engine.",
@@ -422,13 +422,13 @@
 				}
 			}
 		},
-		"Step": {
+		"StepDto": {
 			"type": "object",
 			"title": "Types",
 			"description": "Information about a Step.",
 			"properties": {
 				"mseOccurence": {
-					"$ref": "#/definitions/MSEOccurence",
+					"$ref": "#/definitions/MSEOccurenceDto",
 					"description": ""
 				},
 				"startingStateID": {
@@ -441,13 +441,13 @@
 				}
 			}
 		},
-		"MSEOccurence": {
+		"MSEOccurenceDto": {
 			"type": "object",
 			"title": "Types",
 			"description": "Information about a MSEOccurence.",
 			"properties": {
 				"mse": {
-					"$ref": "#/definitions/MSE",
+					"$ref": "#/definitions/MSEDto",
 					"description": ""
 				},
 				"parameters": {
@@ -461,7 +461,7 @@
 				
 			}
 		},
-		"MSE": {
+		"MSEDto": {
 			"type": "object",
 			"title": "Types",
 			"description": "Information about a MSE.",
@@ -476,7 +476,7 @@
 				}
 			}
 		},
-		"State": {
+		"StateDto": {
 			"type": "object",
 			"title": "Types",
 			"description": "Information about a State. NOTE: version working as diff between previous steps (StartedStep) / next steps (EndedSteps)",
@@ -485,7 +485,7 @@
 					"type": "array",
 					"description": "",
 					"items": {
-						"$ref": "#/definitions/StateValue"
+						"$ref": "#/definitions/StateValueDto"
 					}
 				},
 				"startedStepsID": {
@@ -504,7 +504,7 @@
 				}
 			}
 		},
-		"StateValue": {
+		"StateValueDto": {
 			"type": "object",
 			"title": "Types",
 			"description": "Information about a StateValue.",
