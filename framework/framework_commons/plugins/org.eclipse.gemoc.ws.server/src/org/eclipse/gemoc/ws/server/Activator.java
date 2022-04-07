@@ -10,8 +10,11 @@
  *******************************************************************************/
 package org.eclipse.gemoc.ws.server;
 
+import javax.servlet.ServletContext;
+import javax.websocket.DeploymentException;
 import javax.websocket.server.ServerContainer;
 import javax.websocket.server.ServerEndpoint;
+import javax.websocket.server.ServerEndpointConfig;
 
 import org.eclipse.core.runtime.IProgressMonitor;
 import org.eclipse.core.runtime.IStatus;
@@ -106,11 +109,11 @@ public class Activator extends Plugin {
 		server.setHandler(handler);
 
 		// Setup the ServerContainer and the WebSocket endpoints for this web
-		// application context.
+		
+
 		JavaxWebSocketServletContainerInitializer.configure(handler, (servletContext, container) -> {
 			// Configure the ServerContainer.
 			container.setDefaultMaxTextMessageBufferSize(128 * 1024);
-
 			// Simple registration of your WebSocket endpoints.
 			for (Class<?> endPointClass : EndPointExtensionPointHelper.getAllEndPointClasses()) {
 				try {
@@ -121,6 +124,8 @@ public class Activator extends Plugin {
 						info("Adding Endpoint class: " + endPointClass.getCanonicalName() + " on " + path);
 						// Simple registration of WebSocket endpoints.
 						container.addEndpoint(endPointClass);
+						// doesn't work yet, -> Cannot load platform configurator, probably a classpath/osgi issue
+						//container.addEndpoint(ServerEndpointConfig.Builder.create(endPointClass, path).build());
 					}
 				} catch (Exception e) {
 					error("Failed to add Enpoint class: " + endPointClass.getCanonicalName(), e);

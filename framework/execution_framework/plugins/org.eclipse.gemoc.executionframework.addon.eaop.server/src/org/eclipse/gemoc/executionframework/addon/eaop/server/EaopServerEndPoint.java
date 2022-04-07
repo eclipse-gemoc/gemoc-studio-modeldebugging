@@ -25,7 +25,8 @@ import org.eclipse.lsp4j.jsonrpc.Launcher;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-@ServerEndpoint("/metp/{engineId}")
+//@ServerEndpoint("/eaop/{engineId}")*
+@ServerEndpoint("/eaop")
 public class EaopServerEndPoint {
 	
 	private static final Logger LOGGER = LoggerFactory.getLogger(EaopServerEndPoint.class);
@@ -42,22 +43,25 @@ public class EaopServerEndPoint {
 	
 	/**
 	 * 
-	 * @param session
-	 * @param engineIndexString
+	 * @param session	 
 	 */
 	@OnOpen
-	public void onOpen(Session session, @PathParam("engineId") String engineIdEncodedString) {
+	public void onOpen(Session session) {
+	//public void onOpen(Session session, @PathParam("engineId") String engineIdEncodedString) {
 		LOGGER.info("Starting connection...");
+		//Activator.debug("Starting connection: engineId=\""+ engineIdEncodedString+"\"");
+		Activator.debug("Starting connection");
 		
 		String engineId = "";
-		try {
+		/*try {
 			engineId = URLDecoder.decode(engineIdEncodedString, "UTF-8");
 		} catch (UnsupportedEncodingException e) {
 			LOGGER.error(e.getMessage(), e);
-		}
+		}*/
 		
 		// create server 
-		server =  new EaopServerImpl(engineId);
+		server =  new EaopServerImpl();
+		Activator.getDefault().getStartedEaopServer().add(server);
 		
 		
 		ExtensibleInputStream in = new ExtensibleInputStream();
@@ -93,6 +97,7 @@ public class EaopServerEndPoint {
 	@OnClose
 	public void onClose(Session session, CloseReason closeReason) {
 		activeSessions.remove(session);
+		Activator.getDefault().getStartedEaopServer().remove(server);
 		LOGGER.debug("Closing session "+session.getId()+" "+session.getRequestURI());
 	}
 	
