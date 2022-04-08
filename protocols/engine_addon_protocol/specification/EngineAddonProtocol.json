@@ -128,7 +128,7 @@
 		"EngineAboutToStartEvent": {
 			"allOf": [ { "$ref": "#/definitions/Event" }, {
 				"type": "object",
-				"description": "The event indicates that an engine is about to start",
+				"description": "The (blocking) event indicates that an engine is about to start",
 				"properties": {
 					"event": {
 						"type": "string",
@@ -315,6 +315,47 @@
 					}
 				},
 				"required": [ "event", "body" ]
+			}]
+		},		
+		"InitializeRequest": {
+			"allOf": [ { "$ref": "#/definitions/Request" }, {
+				"type": "object",
+				"description": "The 'initialize' request is sent as the first request from the client to the eaop\nin order to configure it with client capabilities and register for engine events\nThe 'initialize' request may only be sent once.",
+				"properties": {
+					"command": {
+						"type": "string",
+						"enum": [ "initialize" ]
+					},
+					"arguments": {
+						"$ref": "#/definitions/InitializeArguments"
+					}
+				},
+				"required": [ "command", "arguments"  ]
+			}]
+		},
+		"InitializeArguments": {
+			"type": "object",
+			"description": "Arguments for 'Initialize' request.",
+			"properties": {
+				"engineIdRegExp": {
+					"type": "string",
+					"description": "Regular expression of the engineId of the engine(s) this client is controling/monitoring. (optional, default is '.*')"
+				}
+			},
+			"required": []
+		},
+		"InitializeResponse": {
+			"allOf": [ { "$ref": "#/definitions/Response" }, {
+				"type": "object",
+				"description": "Response to 'initialize' request. ",
+				"properties": {
+					"body": {
+						"type": "object",
+						"properties": {
+						}
+					}
+				},
+				"required": [ "body" ]
 			}]
 		},
 		"GetStateRequest": {
