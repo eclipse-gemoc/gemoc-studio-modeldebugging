@@ -21,4 +21,5 @@ Import-Package: javax.servlet;version="4.0.0",
  org.eclipse.jetty.servlet;version="10.0.6",
  org.eclipse.jetty.util;version="10.0.6",
  org.eclipse.jetty.util.component;version="10.0.6",
- org.eclipse.jetty.websocket.javax.server.config;version="10.0.6"
+ org.eclipse.jetty.websocket.javax.server.config;version="10.0.6",
+ org.eclipse.jetty.websocket.javax.server.internal;version="10.0.6"
