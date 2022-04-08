@@ -21,6 +21,7 @@ export function PlantumlGeneratorModule(protocolName: string,  schema: IProtocol
 
 	let links = '';
 	let messagesClasses = '';
+	let messagesClassesList :string[] = [];
 	let dtoClasses = '';
 
 	
@@ -48,9 +49,11 @@ export function PlantumlGeneratorModule(protocolName: string,  schema: IProtocol
 							
 							if((<P.Definition> d).properties && (<P.Definition> d).properties['body']){
 								messagesClasses += MessageInterface(typeName, <P.Definition>(<P.Definition> d).properties['body'], true);
+								messagesClassesList.push(typeName);
 								links += MessageInterfaceLinks(typeName, <P.Definition>(<P.Definition> d).properties['body']);
 							} else {
 								messagesClasses += MessageInterface(typeName, <P.Definition> d, true);
+								messagesClassesList.push(typeName);
 								links += MessageInterfaceLinks(typeName, <P.Definition> d2);
 							}
 						} else if(supertype == 'Event') {
@@ -59,6 +62,7 @@ export function PlantumlGeneratorModule(protocolName: string,  schema: IProtocol
 							//console.log((<P.Definition> d).properties['body']);
 							if((<P.Definition> d).properties['body']){
 								messagesClasses += MessageInterface(typeName+"Arguments", <P.Definition>(<P.Definition> d).properties['body'], true);
+								messagesClassesList.push(typeName+"Arguments");
 								links += MessageInterfaceLinks(typeName+"Arguments", <P.Definition>(<P.Definition> d).properties['body']);
 							} else {	
 								console.log("plantuml Ignore1 "+typeName);
@@ -79,7 +83,13 @@ export function PlantumlGeneratorModule(protocolName: string,  schema: IProtocol
 				s += Enum(typeName, <P.StringType> d2);
 			} else {
 				if(typeName != 'ProtocolMessage') {
-					dtoClasses += MessageInterface(typeName, <P.Definition> d2, true);
+					//console.log(`create interface for DTO ${typeName}`);
+					if(typeName.toLowerCase().endsWith('dto')){
+						dtoClasses += MessageInterface(typeName, <P.Definition> d2, true);
+					} else {
+						messagesClasses += MessageInterface(typeName, <P.Definition> d2, true);
+						messagesClassesList.push(typeName);
+					}
 					links += MessageInterfaceLinks(typeName, <P.Definition> d2);
 				} 
 			}
@@ -94,6 +104,10 @@ export function PlantumlGeneratorModule(protocolName: string,  schema: IProtocol
 	s += line("}");
 
 	s += links;
+
+	messagesClassesList.forEach(function (messagesClass) {
+		s += line(""+messagesClass+" -[hidden]- dtoClasses" );
+	});
 
 	s += line("package services {");
 
