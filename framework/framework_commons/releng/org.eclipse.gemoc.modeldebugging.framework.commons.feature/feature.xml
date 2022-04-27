@@ -9,7 +9,6 @@
     Contributors:
         Inria - initial API and implementation
  -->
-
 <feature
       id="org.eclipse.gemoc.modeldebugging.framework.commons.feature"
       label="ModelDebugging framework commons"
@@ -68,5 +67,11 @@ http://www.eclipse.org/legal/epl-v10.html
          version="0.0.0"
          unpack="false"/>
 
+   <plugin
+         id="org.eclipse.gemoc.ws.server"
+         download-size="0"
+         install-size="0"
+         version="0.0.0"
+         unpack="false"/>
 
 </feature>

@@ -46,7 +46,7 @@
 				<version>3.0.2</version>
 				<executions>
 					<execution>
-						<id>copy-resource-one</id>
+						<id>copy-resource-src</id>
 						<phase>generate-sources</phase>
 						<goals>
 							<goal>copy-resources</goal>

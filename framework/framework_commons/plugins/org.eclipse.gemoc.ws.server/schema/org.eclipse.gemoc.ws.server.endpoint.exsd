@@ -1,0 +1,117 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<!-- Schema file written by PDE -->
+<schema targetNamespace="org.eclipse.gemoc.ws.server" xmlns="http://www.w3.org/2001/XMLSchema">
+<annotation>
+      <appinfo>
+         <meta.schema plugin="org.eclipse.gemoc.ws.server" id="org.eclipse.gemoc.ws.server.endpoint" name="org.eclipse.gemoc.ws.server.endpoint"/>
+      </appinfo>
+      <documentation>
+         [Enter description of this extension point.]
+      </documentation>
+   </annotation>
+
+   <element name="extension">
+      <annotation>
+         <appinfo>
+            <meta.element />
+         </appinfo>
+         <documentation>
+            Contribute a new @ServerEndpoint or @ClientEndpoint to the server hosted by the org.eclipse.gemoc.ws.server
+         </documentation>
+      </annotation>
+      <complexType>
+         <choice>
+            <element ref="GEMOC_WS_EndPoint"/>
+         </choice>
+         <attribute name="point" type="string" use="required">
+            <annotation>
+               <documentation>
+                  
+               </documentation>
+            </annotation>
+         </attribute>
+         <attribute name="id" type="string">
+            <annotation>
+               <documentation>
+                  
+               </documentation>
+            </annotation>
+         </attribute>
+         <attribute name="name" type="string">
+            <annotation>
+               <documentation>
+                  
+               </documentation>
+               <appinfo>
+                  <meta.attribute translatable="true"/>
+               </appinfo>
+            </annotation>
+         </attribute>
+      </complexType>
+   </element>
+
+   <element name="GEMOC_WS_EndPoint">
+      <annotation>
+         <documentation>
+            Contribute a new @ServerEndpoint or @ClientEndpoint to the server hosted by the org.eclipse.gemoc.ws.server
+         </documentation>
+      </annotation>
+      <complexType>
+         <attribute name="id" type="string" use="required">
+            <annotation>
+               <documentation>
+                  Id in order to help retreive this contribution
+               </documentation>
+            </annotation>
+         </attribute>
+         <attribute name="class" type="string">
+            <annotation>
+               <documentation>
+                  class implementing the JSR356 API with an @ServerEndpoint or @ClientEndpoint annotation tha will be added to the WebSocket server
+               </documentation>
+               <appinfo>
+                  <meta.attribute kind="java"/>
+               </appinfo>
+            </annotation>
+         </attribute>
+      </complexType>
+   </element>
+
+   <annotation>
+      <appinfo>
+         <meta.section type="since"/>
+      </appinfo>
+      <documentation>
+         [Enter the first release in which this extension point appears.]
+      </documentation>
+   </annotation>
+
+   <annotation>
+      <appinfo>
+         <meta.section type="examples"/>
+      </appinfo>
+      <documentation>
+         [Enter extension point usage example here.]
+      </documentation>
+   </annotation>
+
+   <annotation>
+      <appinfo>
+         <meta.section type="apiinfo"/>
+      </appinfo>
+      <documentation>
+         [Enter API information here.]
+      </documentation>
+   </annotation>
+
+   <annotation>
+      <appinfo>
+         <meta.section type="implementation"/>
+      </appinfo>
+      <documentation>
+         [Enter information about supplied implementation of this extension point.]
+      </documentation>
+   </annotation>
+
+
+</schema>

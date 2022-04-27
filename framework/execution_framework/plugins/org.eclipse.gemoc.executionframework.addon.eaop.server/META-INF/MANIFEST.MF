@@ -1,0 +1,30 @@
+Manifest-Version: 1.0
+Bundle-ManifestVersion: 2
+Bundle-Name: GEMOC Addon-based EAOP Server
+Bundle-SymbolicName: org.eclipse.gemoc.executionframework.addon.eaop.server;singleton:=true
+Bundle-Version: 1.0.0.qualifier
+Bundle-Activator: org.eclipse.gemoc.executionframework.addon.eaop.server.Activator
+Require-Bundle: org.eclipse.core.runtime,
+ org.eclipse.gemoc.protocols.eaop.api;bundle-version="2.3.0",
+ org.eclipse.gemoc.xdsmlframework.api;bundle-version="4.0.0",
+ org.eclipse.gemoc.ws.server;bundle-version="1.0.0",
+ org.eclipse.gemoc.commons.utils;bundle-version="1.0.0",
+ org.mapstruct;bundle-version="1.4.2",
+ org.eclipse.gemoc.trace.commons.model,
+ org.eclipse.gemoc.executionframework.engine;bundle-version="4.0.0",
+ org.eclipse.gemoc.commons.eclipse.messagingsystem.api
+Bundle-RequiredExecutionEnvironment: JavaSE-11
+Automatic-Module-Name: org.eclipse.gemoc.executionframework.addon.eaop.server
+Bundle-ActivationPolicy: lazy
+Bundle-Vendor: Eclipse GEMOC Project
+Import-Package: com.google.gson;version="2.8.8",
+ javax.websocket;version="1.1.0",
+ javax.websocket.server;version="1.1.0",
+ org.eclipse.lsp4j.generator;version="0.12.0.v20210402-1305",
+ org.eclipse.lsp4j.jsonrpc;version="0.12.0.v20210402-1305",
+ org.eclipse.lsp4j.jsonrpc.json;version="0.12.0.v20210402-1305",
+ org.eclipse.lsp4j.jsonrpc.messages;version="0.12.0.v20210402-1305",
+ org.eclipse.lsp4j.jsonrpc.services;version="0.12.0.v20210402-1305",
+ org.slf4j
+Export-Package: org.eclipse.gemoc.executionframework.addon.eaop.server,
+ org.eclipse.gemoc.executionframework.addon.eaop.server.rpclaunch

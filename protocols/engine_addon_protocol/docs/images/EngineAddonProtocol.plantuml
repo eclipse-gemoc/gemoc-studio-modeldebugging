@@ -1,0 +1,106 @@
+@startuml
+' GENERATED FILE, DO NOT MODIFY MANUALLY
+
+package EngineAddonProtocol_API {
+package data {
+class EngineAboutToStartEventArguments  {
+	ExecutionEngine engine
+}
+class EngineStartedEventArguments  {
+	ExecutionEngine engine
+}
+class EngineInitializedEventArguments  {
+	ExecutionEngine engine
+}
+class EngineAboutToStopEventArguments  {
+	ExecutionEngine engine
+}
+class EngineStoppedEventArguments  {
+	ExecutionEngine engine
+}
+class EngineAboutToDisposeEventArguments  {
+	ExecutionEngine engine
+}
+class AboutToExecuteStepEventArguments  {
+	ExecutionEngine engine
+	Step stepToExecute
+}
+class StepExecutedEventArguments  {
+	ExecutionEngine engine
+	Step stepToExecute
+}
+class GetStateArguments  {
+	String stateId
+}
+class GetStateResponse  {
+	{
+		State state
+	} body
+}
+class GetStepArguments  {
+	String stateId
+}
+class GetStepResponse  {
+	{
+		Step state
+	} body
+}
+class ExecutionEngine  {
+	String engineKindName
+	String engineName
+}
+class Step  {
+	MSEOccurence mseOccurence
+	String startingStateID
+	String endingStateID
+}
+class MSEOccurence  {
+	MSE mse
+	String parameters
+	String result
+}
+class MSE  {
+	String callerEObjectURI
+	String actionID
+}
+class State  {
+	StateValue[] changedValues
+	String[] startedStepsID
+	String[] endedStepsID
+}
+class StateValue  {
+}
+class Message  {
+	Integer id
+	String format
+	Map<String, String> variables
+	boolean sendTelemetry
+	boolean showUser
+	String url
+	String urlLabel
+}
+}
+package services {
+class EngineAddonProtocolServer {
+	@JsonRequest| {
+		State state
+	} getState(GetStateArguments arguments)
+	@JsonRequest| {
+		Step state
+	} getStep(GetStepArguments arguments)
+}
+class EngineAddonProtocolClient {
+	@JsonNotification| void engineAboutToStart(EngineAboutToStartEventArguments args)
+	@JsonNotification| void engineStarted(EngineStartedEventArguments args)
+	@JsonNotification| void engineInitialized(EngineInitializedEventArguments args)
+	@JsonNotification| void engineAboutToStop(EngineAboutToStopEventArguments args)
+	@JsonNotification| void engineStopped(EngineStoppedEventArguments args)
+	@JsonNotification| void engineAboutToDispose(EngineAboutToDisposeEventArguments args)
+	@JsonNotification| void aboutToExecuteStep(AboutToExecuteStepEventArguments args)
+	@JsonNotification| void stepExecuted(StepExecutedEventArguments args)
+}
+}
+services -[hidden]- data
+}
+@enduml
+
