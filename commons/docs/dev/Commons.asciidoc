@@ -53,8 +53,13 @@ They are organized in order to minimize the dependencies to Eclipse.
 - `org.eclipse.gemoc.commons.eclipse.messagingsystem.ui`: UI for messagingsystem.api
 - `org.eclipse.gemoc.commons.eclipse.pde`: various helper classes and abstract classes allowing to manipulate plugin definition (modify manifest, classpath, build.properties); 
 it also offers a base _new project wizard_ supporting extensible templates.
-- `org.eclipse.gemoc.commons.eclipse.ui`
+- `org.eclipse.gemoc.commons.eclipse.ui` : helpers related to Eclipse UI.
+- `org.eclipse.gemoc.commons.eclipse.xtext` : helpers related to xText.
 
+
+==== Commons
+
+- `org.eclipse.gemoc.commons.utils` : helpers not related to any framework. Currently contains classes useful in protocol management.
 
 [[devguide-commons-timeline]]
 ==== Timeline
