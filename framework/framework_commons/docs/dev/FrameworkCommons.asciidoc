@@ -15,6 +15,81 @@ endif::[]
 footnote:[asciidoc source of this page:  https://github.com/eclipse/gemoc-studio-modeldebugging/tree/master/execution_framework/xdsml_framework/docs/dev/FrameworkCommons.asciidoc.]
 
 
+List of plugins:
+
+- `org.eclipse.gemoc.executionframework.reflectivetrace.model`:  
+- `org.eclipse.gemoc.opsemanticsview.gen`: 
+- `org.eclipse.gemoc.opsemanticsview.gen.k3` :
+- `org.eclipse.gemoc.opsemanticsview.model` :
+- `org.eclipse.gemoc.ws.server` :
+- `org.eclipse.gemoc.xdsmlframework.api` :
+- `org.eclipse.gemoc.xdsmlframework.commons` :
+- `org.eclipse.gemoc.xdsmlframework.commons.ui.k3` :
+
+==== Websocket server
+
+The `org.eclipse.gemoc.ws.server` plugin offers services to add websocket endpoints in an Eclipse application (with UI or headles).
+
+
+The plugin starts a websocket server on a free port of the system. It uses Jetty as server.
+
+It defines an extension point to define websocket endpoint so any other plugin can contribute their endpoint.
+
+
+Example of use declaring a test endpoint:
+
+In your `plugin.xml:`
+[source,xml]
+----
+<extension point="org.eclipse.gemoc.ws.server.endpoint">
+  <GEMOC_WS_EndPoint
+    class="org.example.endpoint.TestEndPoint" <1>
+    id="org.example.TestEndPoint">
+  </GEMOC_WS_EndPoint>
+</extension>
+----
+<1> Name of the class implementing JSR 356 `javax.websocket.server.ServerEndpoint`.
+
+Class implementing the endpoint.
+[source,java]
+----
+package org.example.endpoint;
+
+import javax.websocket.OnMessage;
+import javax.websocket.server.ServerEndpoint;
+
+@ServerEndpoint("/test") <1>
+public class TestEndPoint {
+
+    @OnMessage
+    public void handleOnMessage(String message) {
+        System.out.println("Message received by WebSocket : "+message); <2>
+    } 
+}
+----
+<1> path in the websocket server. If the alocated port is 96458, the endpoint is available at `ws://0.0.0.0:96458/test` (or `ws://localhost:96458/test` )
+<2> behavior when receiving message on this endpoint.
+
+
+On start, the server look for an available port (this is displayed on the console).
+
+
+[TIP]
+====
+An example of plugin using the `org.eclipse.gemoc.ws.server` in GEMOC Studio (available in the IDE and headless application) is https://github.com/eclipse/gemoc-studio-modeldebugging/tree/master/framework/execution_framework/plugins/org.eclipse.gemoc.executionframework.addon.eaop.server[org.eclipse.gemoc.executionframework.addon.eaop.server].
+====
+
+
+[NOTE]
+====
+The websocket server is started only when the `org.eclipse.gemoc.ws.server` plugin starts, 
+you may either need to add it to the OSGI start or wait for another plugin to use it.
+====
+
+
+==== Framework Commons XDSLMFramework
+
+
 <<img-FrameworkCommons-overview-CD-devguide>> shows some of the major interfaces of the execution framework API. 
 Most notably, the _IEngineAddon_ and _IExecutionEngine_ interfaces that are the entry points when implementing an Addon for GEMOC. 
 
@@ -25,4 +100,6 @@ image::images/dev/frameworkcommons_api_overview_CD.png["Execution Framework API 
 
 
 TIP: The section <<dev-new-addons>> contains some details and code snippets about how to write an engine addon.
+
+
 
