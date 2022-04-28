@@ -26,9 +26,10 @@ List of plugins:
 - `org.eclipse.gemoc.xdsmlframework.commons` :
 - `org.eclipse.gemoc.xdsmlframework.commons.ui.k3` :
 
+[[devguide-frameworkcommons-ws-server]]
 ==== Websocket server
 
-The `org.eclipse.gemoc.ws.server` plugin offers services to add websocket endpoints in an Eclipse application (with UI or headles).
+The `org.eclipse.gemoc.ws.server` plugin offers services to add websocket endpoints in an Eclipse application (with UI or headless).
 
 
 The plugin starts a websocket server on a free port of the system. It uses Jetty as server.
