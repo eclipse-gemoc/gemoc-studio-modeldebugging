@@ -19,7 +19,7 @@ The  figure <<img-EAOP-CD-devguide>> presents the Client and Server JSON RPC met
 
 [[img-EAOP-CD-devguide]]
 .Engine Add-On Protocol overview
-image::images/EngineAddonProtocol.png["EngineAddonProtocol"]
+image::images/EngineAddonProtocol.png[EngineAddonProtocol, 1024]
 
 
 

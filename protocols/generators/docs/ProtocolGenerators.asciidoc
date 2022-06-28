@@ -1,0 +1,50 @@
+////////////////////////////////////////////////////////////////
+//	Reproduce title only if not included in master documentation
+////////////////////////////////////////////////////////////////
+ifndef::includedInMaster[]
+
+= Developer Guide
+== Protocols
+
+endif::[]
+
+=== Protocol generators 
+
+footnote:[asciidoc source of this page:  https://github.com/eclipse/gemoc-studio-modeldebugging/tree/master/protocols/generators/docs/ProtocolGenerators.asciidoc.]
+
+GEMOC provides a basic generator in order to consistently create protocol implementations using LSP like approach.
+
+[NOTE]
+====
+The current generator primarily targets websocket endpoints, but the generated classes are probabl generic enough to be used in other context. 
+
+====
+
+
+===  JSONSchema2APIProtocolGenerator 
+
+`JSONSchema2APIProtocolGenerator` allows to generate several interfaces, implementations and documentation artifacts from a JSON schema representing the protocol message specification.
+
+The current version of `JSONSchema2APIProtocolGenerator` is written in typescript.
+
+Inputs :
+It uses a file `generator_config.json` to drive the generations and output directories.
+`generator_config.json` defines some parameters such as
+
+* *protocolJSONSchemaPath* :   path to the JSON schema representing the protocol messages
+
+
+Currently supported output:
+
+* *plantuml* : a graphical representation of the protocol
+* *tsAPI* : a typescript implementation of the API (Work In Progress, please contribute )
+* *javaAPI* : a java implementation of the API and the DTO (data transfert object), actually generated using xTend and using `org.eclipse.lsp4j.jsonrpc` library.
+* *javaServer* : a java interface of this protocol server 
+* *javaClient* : a java interface of this protocol client
+
+
+
+
+
+
+ 
