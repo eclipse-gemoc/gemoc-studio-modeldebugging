@@ -1,0 +1,26 @@
+////////////////////////////////////////////////////////////////
+//	Reproduce title only if not included in master documentation
+////////////////////////////////////////////////////////////////
+ifndef::includedInMaster[]
+
+= Developer Guide
+== Protocols
+
+endif::[]
+
+=== Engine Add-On Protocol 
+
+footnote:[asciidoc source of this page:  https://github.com/eclipse/gemoc-studio-modeldebugging/tree/master/protocols/engine_addon_protocol/docs/EngineAddonProtocol.asciidoc.]
+
+The goal of the Engine Add-On Protocol (EAOP)  is to provide services similar to those offered by the java IEngineAddon API (cf. <<img-FrameworkCommons-overview-CD-devguide>>)
+but via websocket communication.
+
+The  figure <<img-EAOP-CD-devguide>> presents the Client and Server JSON RPC methods and the exchanged data.
+
+[[img-EAOP-CD-devguide]]
+.Engine Add-On Protocol overview
+image::images/EngineAddonProtocol.png[EngineAddonProtocol, 1024]
+
+
+
+ 

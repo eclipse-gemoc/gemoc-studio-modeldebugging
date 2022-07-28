@@ -78,6 +78,7 @@ public abstract class ValueImpl<StateSubType extends State<?, ?>> extends Minima
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
+	@Override
 	public EList<StateSubType> getStates() {
 		if (states == null) {
 			states = new EObjectWithInverseResolvingEList.ManyInverse<StateSubType>(State.class, this, TracePackage.VALUE__STATES, TracePackage.STATE__VALUES);

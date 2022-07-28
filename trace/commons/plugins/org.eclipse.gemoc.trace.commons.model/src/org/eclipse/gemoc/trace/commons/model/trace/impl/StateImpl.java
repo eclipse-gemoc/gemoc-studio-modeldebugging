@@ -101,6 +101,7 @@ public abstract class StateImpl<StepSubType extends Step<?>, ValueSubType extend
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
+	@Override
 	public EList<StepSubType> getStartedSteps() {
 		if (startedSteps == null) {
 			startedSteps = new EObjectWithInverseResolvingEList<StepSubType>(Step.class, this, TracePackage.STATE__STARTED_STEPS, TracePackage.STEP__STARTING_STATE);
@@ -113,6 +114,7 @@ public abstract class StateImpl<StepSubType extends Step<?>, ValueSubType extend
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
+	@Override
 	public EList<StepSubType> getEndedSteps() {
 		if (endedSteps == null) {
 			endedSteps = new EObjectWithInverseResolvingEList<StepSubType>(Step.class, this, TracePackage.STATE__ENDED_STEPS, TracePackage.STEP__ENDING_STATE);
@@ -125,6 +127,7 @@ public abstract class StateImpl<StepSubType extends Step<?>, ValueSubType extend
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
+	@Override
 	public EList<ValueSubType> getValues() {
 		if (values == null) {
 			values = new EObjectWithInverseResolvingEList.ManyInverse<ValueSubType>(Value.class, this, TracePackage.STATE__VALUES, TracePackage.VALUE__STATES);

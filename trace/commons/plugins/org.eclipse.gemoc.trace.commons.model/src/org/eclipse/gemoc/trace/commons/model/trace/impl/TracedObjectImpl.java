@@ -61,6 +61,7 @@ public abstract class TracedObjectImpl<DimensionSubType extends Dimension<?>> ex
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
+	@Override
 	public EList<DimensionSubType> getDimensions() {
 		return getDimensionsInternal();
 	}
@@ -70,6 +71,7 @@ public abstract class TracedObjectImpl<DimensionSubType extends Dimension<?>> ex
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
+	@Override
 	public EList<DimensionSubType> getDimensionsInternal() {
 		// Default implementation, returning empty list.
 		final EList<DimensionSubType> result = new org.eclipse.emf.ecore.util.BasicInternalEList<DimensionSubType>(Object.class);

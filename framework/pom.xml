@@ -17,12 +17,37 @@
 		<module>xdsml_framework</module>
 	</modules>
 
+	<properties>
+   </properties>
+
+
+	<build>
+		<plugins>
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-antrun-plugin</artifactId>
+				<version>1.1</version>
+				<executions>
+					<execution>
+						<phase>initialize</phase>
+						<goals>
+							<goal>run</goal>
+						</goals>
+						<configuration>
+							<tasks>
+								<echo>Displaying value of 'mypath' property</echo>
+								<echo>[mypath] ${mypath}</echo>
+								<echo>[mypath2] ${mypath2}</echo>
+							</tasks>
+						</configuration>
+					</execution>
+				</executions>
+			</plugin>
+		</plugins>
+	</build>
+
 	<repositories>
-		<repository>
-			<id>Eclipse release</id>
-			<layout>p2</layout>
-			<url>${eclipse.release.p2.url}</url>
-		</repository>
+		
 		<repository>
 			<id>K3</id>
 			<layout>p2</layout>
@@ -32,12 +57,6 @@
 			<id>Melange</id>
 			<layout>p2</layout>
 			<url>${melange.p2.url}</url>
-		</repository>
-		<!--  e(fxc)lipse updatesite is currently required because they dropped from the release train -->
-		<repository>
-			<id>efxclipse</id>
-			<layout>p2</layout>
-			<url>${efxclipse.p2.url}</url>
 		</repository>
 	</repositories>
 </project>

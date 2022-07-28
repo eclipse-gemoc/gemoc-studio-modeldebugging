@@ -1,0 +1,32 @@
+{
+	"name": "json-schema-2-api-protocol-generator",
+	"version": "0.0.1",
+	"description": "Typescript and Xtend/java Generator from json schema definition of a JSONRCP protocol",
+	"author": {
+		"name": "Inria",
+		"email": "didier.vojtisek@inria.fr"
+	},
+	"private": true,
+	"repository": {
+		"type": "git",
+		"url": "https://github.com/eclipse/gemoc-studio-modeldebugging.git"
+	},
+	"bugs": {
+		"url": "https://github.com/eclipse/gemoc-studio-modeldebugging/issues"
+	},
+	"devDependencies": {
+		"@types/node": "^16.11.6",
+		"fs-extra": "^10.0.0",
+		"typescript": "^3.9.7"
+	},
+	"scripts": {
+		"build": "tsc -p .",
+		"watch": "tsc -w -p .",
+		"generate": "node ./dist/Generator.js ./generator_config.json"
+	},
+	"main": "./dist/Generator",
+	"dependencies": {
+		"fs": "^0.0.1-security",
+		"process": "^0.11.10"
+	}
+}

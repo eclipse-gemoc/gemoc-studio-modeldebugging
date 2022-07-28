@@ -1,0 +1,34 @@
+{
+    // Use IntelliSense to learn about possible attributes.
+    // Hover to view descriptions of existing attributes.
+    // For more information, visit: https://go.microsoft.com/fwlink/?linkid=830387
+    "version": "0.2.0",
+    "configurations": [
+        {
+            "name": "Launch Test Generator",
+            "program": "${workspaceFolder}/dist/testgenconf",
+            "args": ["./generator_config.json"
+            ],
+            "request": "launch",
+            "skipFiles": [
+                "<node_internals>/**"
+            ],
+            "type": "pwa-node"
+        },
+        {
+            "name": "Launch Generator",
+            "program": "${workspaceFolder}/dist/Generator",
+            "args": ["../../../mep/specification/ModelExecutionProtocol.json", 
+                "../../../mep/ModelExecutionProtocol.ts", 
+                "../../../mep/IModelExecutionTraceProtocolServer.java",
+                "../../../mep/IModelExecutionTraceProtocolClient.java",
+                "../../../mep/IModelExecutionTraceProtocolData.xtend"
+            ],
+            "request": "launch",
+            "skipFiles": [
+                "<node_internals>/**"
+            ],
+            "type": "pwa-node"
+        }
+    ]
+}

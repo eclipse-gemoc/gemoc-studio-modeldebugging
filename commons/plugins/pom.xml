@@ -34,6 +34,7 @@
         <module>org.eclipse.gemoc.commons.eclipse.jdt.autosrcfolder</module>
         <module>org.eclipse.gemoc.commons.eclipse.ui</module>
         <module>org.eclipse.gemoc.commons.eclipse.xtext</module>
+        <module>org.eclipse.gemoc.commons.utils</module>
         <module>org.eclipse.gemoc.groovy</module>
         <module>org.eclipse.gemoc.timeline</module>
         <module>org.eclipse.gemoc.dsl.model</module>

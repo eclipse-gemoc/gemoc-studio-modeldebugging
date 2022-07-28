@@ -87,6 +87,7 @@ public class GenericMSEImpl extends MSEImpl implements GenericMSE {
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
+	@Override
 	public EObject getCallerReference() {
 		if (callerReference != null && callerReference.eIsProxy()) {
 			InternalEObject oldCallerReference = (InternalEObject)callerReference;
@@ -113,6 +114,7 @@ public class GenericMSEImpl extends MSEImpl implements GenericMSE {
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
+	@Override
 	public void setCallerReference(EObject newCallerReference) {
 		EObject oldCallerReference = callerReference;
 		callerReference = newCallerReference;
@@ -125,6 +127,7 @@ public class GenericMSEImpl extends MSEImpl implements GenericMSE {
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
+	@Override
 	public EOperation getActionReference() {
 		if (actionReference != null && actionReference.eIsProxy()) {
 			InternalEObject oldActionReference = (InternalEObject)actionReference;
@@ -151,6 +154,7 @@ public class GenericMSEImpl extends MSEImpl implements GenericMSE {
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
+	@Override
 	public void setActionReference(EOperation newActionReference) {
 		EOperation oldActionReference = actionReference;
 		actionReference = newActionReference;
@@ -163,6 +167,7 @@ public class GenericMSEImpl extends MSEImpl implements GenericMSE {
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
+	@Override
 	public EObject getCaller() {
 		return callerReference;
 	}
@@ -172,6 +177,7 @@ public class GenericMSEImpl extends MSEImpl implements GenericMSE {
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
+	@Override
 	public EOperation getAction() {
 		return actionReference;
 	}

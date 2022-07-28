@@ -16,6 +16,9 @@
   <eClassifiers xsi:type="ecore:EClass" name="MSEModel">
     <eStructuralFeatures xsi:type="ecore:EReference" name="ownedMSEs" upperBound="-1"
         eType="#//MSE" containment="true"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="orphanOperations" upperBound="-1"
+        eType="ecore:EClass ../../org.eclipse.emf.ecore/model/Ecore.ecore#//EOperation"
+        containment="true"/>
   </eClassifiers>
   <eClassifiers xsi:type="ecore:EClass" name="GenericMSE" eSuperTypes="#//MSE">
     <eOperations name="getCaller" eType="ecore:EClass ../../org.eclipse.emf.ecore/model/Ecore.ecore#//EObject">

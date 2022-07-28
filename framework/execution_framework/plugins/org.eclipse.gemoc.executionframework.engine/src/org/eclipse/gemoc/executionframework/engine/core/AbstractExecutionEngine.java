@@ -386,7 +386,7 @@ public abstract class AbstractExecutionEngine<C extends IExecutionContext<R, ?, 
 			currentTransaction.getCommand().dispose();
 	}
 
-	private void commitCurrentTransaction() {
+	private synchronized void commitCurrentTransaction() {
 		if (currentTransaction != null) {
 			try {
 				currentTransaction.commit();
