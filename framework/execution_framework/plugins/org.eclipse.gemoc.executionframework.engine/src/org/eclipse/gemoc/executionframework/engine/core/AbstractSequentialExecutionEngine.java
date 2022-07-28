@@ -88,8 +88,8 @@ public abstract class AbstractSequentialExecutionEngine<C extends IExecutionCont
 	}
 
 	@Override
-	protected final void afterExecutionStep() {
-		super.afterExecutionStep();
+	protected final void afterExecutionStep(Object returnValue) {
+		super.afterExecutionStep(returnValue);
 	}
 
 	/**
@@ -148,7 +148,6 @@ public abstract class AbstractSequentialExecutionEngine<C extends IExecutionCont
 		} else {
 			result = traceAddon.getFactory().createStep(mse, new ArrayList<Object>(), new ArrayList<Object>());
 		}
-		result.getMseoccurrence().getParameters().addAll(Arrays.asList(args));
 		return result;
 	}
 

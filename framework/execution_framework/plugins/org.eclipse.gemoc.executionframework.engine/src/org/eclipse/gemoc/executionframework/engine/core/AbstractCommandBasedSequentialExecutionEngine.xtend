@@ -4,16 +4,17 @@
  * are made available under the terms of the Eclipse Public License v1.0
  * which accompanies this distribution, and is available at
  * http://www.eclipse.org/legal/epl-v10.html
- *
+ * 
  * Contributors:
  *     Inria - initial API and implementation
  *******************************************************************************/
- package org.eclipse.gemoc.executionframework.engine.core
+package org.eclipse.gemoc.executionframework.engine.core
 
-import org.eclipse.emf.transaction.RecordingCommand
-import org.eclipse.gemoc.xdsmlframework.api.core.IRunConfiguration
-import org.eclipse.gemoc.xdsmlframework.api.core.IExecutionContext
 import java.util.Arrays
+import java.util.concurrent.Callable
+import org.eclipse.emf.transaction.RecordingCommand
+import org.eclipse.gemoc.xdsmlframework.api.core.IExecutionContext
+import org.eclipse.gemoc.xdsmlframework.api.core.IRunConfiguration
 
 abstract class AbstractCommandBasedSequentialExecutionEngine<C extends IExecutionContext<R, ?, ?>, R extends IRunConfiguration> extends AbstractSequentialExecutionEngine<C, R> {
 
@@ -25,20 +26,25 @@ abstract class AbstractCommandBasedSequentialExecutionEngine<C extends IExecutio
 	 * @param operationName
 	 * @param operation
 	 */
-	protected def void executeOperation(Object caller, String className, String operationName, Runnable operation) {
+	protected def void executeOperation(Object caller, String className, String operationName,
+		Callable<Object> operation) {
 		executeOperation(caller, #{}, className, operationName, operation);
 	}
-	
-	protected def void executeOperation(Object caller, Object[] parameters, String className, String operationName, Runnable operation) {
+
+	var Object lastResult = null
+
+	protected def void executeOperation(Object caller, Object[] parameters, String className, String operationName,
+		Callable<Object> operation) {
 		val RecordingCommand rc = new RecordingCommand(editingDomain) {
 			override doExecute() {
-				operation.run()
+				AbstractCommandBasedSequentialExecutionEngine.this.lastResult = operation.call()
 			}
 		}
 		try {
 			beforeExecutionStep(caller, className, operationName, rc, Arrays.asList(parameters))
 			rc.execute
-			afterExecutionStep
+			afterExecutionStep(lastResult)
+			lastResult = null
 		} finally {
 			// Important to remove notifiers.
 			rc.dispose
