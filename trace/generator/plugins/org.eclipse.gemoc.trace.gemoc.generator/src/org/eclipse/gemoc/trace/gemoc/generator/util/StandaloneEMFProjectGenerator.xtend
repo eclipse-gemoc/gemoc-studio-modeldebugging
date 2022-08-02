@@ -289,8 +289,10 @@ public class StandaloneEMFProjectGenerator {
 			return GenJDKLevel.JDK60_LITERAL;
 		} else if ("1.7".equals(complianceLevel)) {
 			return GenJDKLevel.JDK70_LITERAL;
-		} else {
+		} else if ("1.8".equals(complianceLevel)) {
 			return GenJDKLevel.JDK80_LITERAL;
+		} else {
+			return GenJDKLevel.JDK110_LITERAL;
 		}
 	}
 
