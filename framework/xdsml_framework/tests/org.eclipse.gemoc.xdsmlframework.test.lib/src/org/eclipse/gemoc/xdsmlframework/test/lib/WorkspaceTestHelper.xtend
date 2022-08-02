@@ -58,6 +58,7 @@ import org.eclipse.xtext.junit4.ui.util.IResourcesSetupUtil
 import org.eclipse.xtext.junit4.ui.util.JavaProjectSetupUtil
 import org.junit.Assert
 import org.osgi.framework.Bundle
+import org.eclipse.core.runtime.OperationCanceledException
 
 /**
  * Class containing helper methods for testing a workspace in a GEMOC Language workbench
@@ -422,7 +423,7 @@ class WorkspaceTestHelper {
 	}
 	
 	static def void waitForJobs() {
-		val delay = 500;
+		val delay = 1000;
 		var retry = 600
 		if(!Job.getJobManager().isIdle()) {
 			delay(delay);
@@ -444,7 +445,7 @@ class WorkspaceTestHelper {
 						job.name.contains("Compacting resource model")
 					)) {
 						println("[waitForJobs] CANCELLING job "+job.name+ " (rule="+job.rule+")")
-						
+						job.cancel
 					}
 				}
 				val rules = jobs.filter[j | j.rule !== null].map[j | j.rule]
@@ -461,6 +462,8 @@ class WorkspaceTestHelper {
 			}
 		}
 	}
+	
+	
 	static var closed = false;
 	static def void delay(long waitTimeMillis) {
 		val Display display = Display.getCurrent();
