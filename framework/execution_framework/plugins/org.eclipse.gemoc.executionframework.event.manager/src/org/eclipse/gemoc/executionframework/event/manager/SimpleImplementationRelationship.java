@@ -8,14 +8,13 @@ import java.util.function.Consumer;
 import java.util.function.Function;
 import java.util.stream.Collectors;
 
+import org.eclipse.gemoc.executionframework.behavioralinterface.behavioralInterface.BehavioralInterface;
+import org.eclipse.gemoc.executionframework.behavioralinterface.behavioralInterface.Event;
+import org.eclipse.gemoc.executionframework.behavioralinterface.behavioralInterface.EventParameter;
 import org.eclipse.gemoc.executionframework.event.model.event.EventFactory;
 import org.eclipse.gemoc.executionframework.event.model.event.EventOccurrence;
 import org.eclipse.gemoc.executionframework.event.model.event.EventOccurrenceArgument;
 import org.eclipse.gemoc.executionframework.event.model.event.EventOccurrenceType;
-import org.eclipse.gemoc.executionframework.behavioralinterface.behavioralInterface.BehavioralInterface;
-import org.eclipse.gemoc.executionframework.behavioralinterface.behavioralInterface.BehavioralInterfacePackage;
-import org.eclipse.gemoc.executionframework.behavioralinterface.behavioralInterface.Event;
-import org.eclipse.gemoc.executionframework.behavioralinterface.behavioralInterface.EventParameter;
 
 public class SimpleImplementationRelationship implements IImplementationRelationship {
 

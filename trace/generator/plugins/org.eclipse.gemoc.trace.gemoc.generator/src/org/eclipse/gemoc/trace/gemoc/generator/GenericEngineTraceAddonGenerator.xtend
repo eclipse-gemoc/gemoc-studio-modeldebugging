@@ -210,7 +210,7 @@ class GenericEngineTraceAddonGenerator {
 		ManifestUtil.addToPluginManifest(project, m, "org.eclipse.gemoc.trace.commons")
 		ManifestUtil.addToPluginManifest(project, m, "org.eclipse.gemoc.xdsmlframework.api")
 		ManifestUtil.addToPluginManifest(project, m, "org.eclipse.gemoc.trace.commons.model")
-		ManifestUtil.setRequiredExecutionEnvironmentToPluginManifest(project, m, "JavaSE-1.8")
+		ManifestUtil.setRequiredExecutionEnvironmentToPluginManifest(project, m, "JavaSE-11")
 	}
 	
 	private def void addExtensionPoint() {

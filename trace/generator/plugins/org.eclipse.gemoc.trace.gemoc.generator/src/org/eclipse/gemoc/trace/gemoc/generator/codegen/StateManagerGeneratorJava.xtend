@@ -167,7 +167,6 @@ class StateManagerGeneratorJava {
 						return result;
 					}
 					
-					@SuppressWarnings("unchecked")
 					private void restoreStateExecute(«stateFQN» state) {
 						for («valueFQN» value : state.getValues()) {
 							«FOR p : traceability.allMutableProperties.sortBy[getFQN] SEPARATOR "else"»
