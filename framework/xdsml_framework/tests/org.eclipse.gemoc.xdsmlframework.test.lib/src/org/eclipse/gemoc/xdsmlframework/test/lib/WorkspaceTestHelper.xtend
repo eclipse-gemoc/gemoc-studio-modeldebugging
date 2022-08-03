@@ -54,11 +54,12 @@ import org.eclipse.ui.dialogs.IOverwriteQuery
 import org.eclipse.ui.handlers.IHandlerService
 import org.eclipse.ui.internal.wizards.datatransfer.ZipLeveledStructureProvider
 import org.eclipse.ui.wizards.datatransfer.ImportOperation
-import org.eclipse.xtext.junit4.ui.util.IResourcesSetupUtil
-import org.eclipse.xtext.junit4.ui.util.JavaProjectSetupUtil
+import org.eclipse.xtext.ui.testing.util.IResourcesSetupUtil
+import org.eclipse.xtext.ui.testing.util.JavaProjectSetupUtil
 import org.junit.Assert
 import org.osgi.framework.Bundle
-import org.eclipse.core.runtime.OperationCanceledException
+import java.nio.file.Files
+import java.util.Comparator
 
 /**
  * Class containing helper methods for testing a workspace in a GEMOC Language workbench
@@ -513,4 +514,27 @@ class WorkspaceTestHelper {
 			}
 		}
 	}	
+	
+	def static forceCleanPreviousWorkspaceContent(){
+		
+		IResourcesSetupUtil::cleanWorkspace
+		
+		val dirName = ResourcesPlugin.getWorkspace().getRoot().getLocation().toString()
+		System.out.println("workspace content ("+dirName + ")")
+		val ArrayList<java.nio.file.Path> dirsToDelete = newArrayList
+        
+        Files.list(new File(dirName).toPath()).forEach([path | 
+        	System.out.println("   " +path)
+        	if(!path.endsWith(".metadata")) {
+        		dirsToDelete.add(path)
+        	}
+        ])
+        
+        
+        dirsToDelete.forEach[ dir |
+        	System.out.println("Deleting " +dir + "...")
+        	Files.walk(dir).sorted(Comparator.reverseOrder()).map[ p | p.toFile].forEach[ f | f.delete]
+        ]
+        
+	}
 }
