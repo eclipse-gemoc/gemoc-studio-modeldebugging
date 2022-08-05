@@ -115,12 +115,12 @@
 		</dependency> -->
 
 		<dependency>
-			<groupId>${project.groupId}</groupId>
+			<groupId>org.eclipse.gemoc.gemoc-studio-commons</groupId>
 			<artifactId>org.eclipse.gemoc.commons.eclipse</artifactId>
 			<version>${project.version}</version>
 		</dependency>
 		<dependency>
-			<groupId>${project.groupId}</groupId>
+			<groupId>org.eclipse.gemoc.gemoc-studio-commons</groupId>
 			<artifactId>org.eclipse.gemoc.dsl.model</artifactId>
 			<version>${project.version}</version>
 		</dependency>
