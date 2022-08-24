@@ -32,7 +32,6 @@
 	
 	<modules>
 	    <module>protocols/engine_addon_protocol/pom.xml</module>
-		<module>commons/pom.xml</module>
 	    <module>simulationmodelanimation/pom.xml</module>
        	<module>trace/pom.xml</module>
        	<module>framework/pom.xml</module>

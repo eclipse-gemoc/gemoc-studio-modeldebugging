@@ -1,74 +1,40 @@
 @startuml
 ' GENERATED FILE, DO NOT MODIFY MANUALLY
+left to right direction
 
 package EngineAddonProtocol_API {
 package data {
+package messageClasses {
 class EngineAboutToStartEventArguments  {
-	ExecutionEngine engine
 }
 class EngineStartedEventArguments  {
-	ExecutionEngine engine
 }
 class EngineInitializedEventArguments  {
-	ExecutionEngine engine
 }
 class EngineAboutToStopEventArguments  {
-	ExecutionEngine engine
 }
 class EngineStoppedEventArguments  {
-	ExecutionEngine engine
 }
 class EngineAboutToDisposeEventArguments  {
-	ExecutionEngine engine
 }
 class AboutToExecuteStepEventArguments  {
-	ExecutionEngine engine
-	Step stepToExecute
 }
 class StepExecutedEventArguments  {
-	ExecutionEngine engine
-	Step stepToExecute
+}
+class InitializeArguments  {
+	String engineIdRegExp
+}
+class InitializeResponse  {
 }
 class GetStateArguments  {
 	String stateId
 }
 class GetStateResponse  {
-	{
-		State state
-	} body
 }
 class GetStepArguments  {
 	String stateId
 }
 class GetStepResponse  {
-	{
-		Step state
-	} body
-}
-class ExecutionEngine  {
-	String engineKindName
-	String engineName
-}
-class Step  {
-	MSEOccurence mseOccurence
-	String startingStateID
-	String endingStateID
-}
-class MSEOccurence  {
-	MSE mse
-	String parameters
-	String result
-}
-class MSE  {
-	String callerEObjectURI
-	String actionID
-}
-class State  {
-	StateValue[] changedValues
-	String[] startedStepsID
-	String[] endedStepsID
-}
-class StateValue  {
 }
 class Message  {
 	Integer id
@@ -80,14 +46,66 @@ class Message  {
 	String urlLabel
 }
 }
+package dtoClasses {
+class ExecutionEngineDto  {
+	String engineKindName
+	String engineName
+}
+class StepDto  {
+	String startingStateID
+	String endingStateID
+}
+class MSEOccurenceDto  {
+	String parameters
+	String result
+}
+class MSEDto  {
+	String callerEObjectURI
+	String actionID
+}
+class StateDto  {
+	String[] startedStepsID
+	String[] endedStepsID
+}
+class StateValueDto  {
+}
+}
+}
+EngineAboutToStartEventArguments *-- ExecutionEngineDto :  engine
+EngineStartedEventArguments *-- ExecutionEngineDto :  engine
+EngineInitializedEventArguments *-- ExecutionEngineDto :  engine
+EngineAboutToStopEventArguments *-- ExecutionEngineDto :  engine
+EngineStoppedEventArguments *-- ExecutionEngineDto :  engine
+EngineAboutToDisposeEventArguments *-- ExecutionEngineDto :  engine
+AboutToExecuteStepEventArguments *-- ExecutionEngineDto :  engine
+AboutToExecuteStepEventArguments *-- StepDto :  stepToExecute
+StepExecutedEventArguments *-- ExecutionEngineDto :  engine
+StepExecutedEventArguments *-- StepDto :  stepToExecute
+GetStateResponse *-- StateDto :  state
+GetStepResponse *-- StepDto :  step
+StepDto *-- MSEOccurenceDto :  mseOccurence
+MSEOccurenceDto *-- MSEDto :  mse
+StateDto *-- "*" StateValueDto :  changedValues
+EngineAboutToStartEventArguments -[hidden]- dtoClasses
+EngineStartedEventArguments -[hidden]- dtoClasses
+EngineInitializedEventArguments -[hidden]- dtoClasses
+EngineAboutToStopEventArguments -[hidden]- dtoClasses
+EngineStoppedEventArguments -[hidden]- dtoClasses
+EngineAboutToDisposeEventArguments -[hidden]- dtoClasses
+AboutToExecuteStepEventArguments -[hidden]- dtoClasses
+StepExecutedEventArguments -[hidden]- dtoClasses
+InitializeArguments -[hidden]- dtoClasses
+InitializeResponse -[hidden]- dtoClasses
+GetStateArguments -[hidden]- dtoClasses
+GetStateResponse -[hidden]- dtoClasses
+GetStepArguments -[hidden]- dtoClasses
+GetStepResponse -[hidden]- dtoClasses
+Message -[hidden]- dtoClasses
 package services {
 class EngineAddonProtocolServer {
-	@JsonRequest| {
-		State state
-	} getState(GetStateArguments arguments)
-	@JsonRequest| {
-		Step state
-	} getStep(GetStepArguments arguments)
+	InitializeResponse initialize(InitializeArguments arguments)
+	GetStateResponse getState(GetStateArguments arguments)
+	GetStepResponse getStep(GetStepArguments arguments)
 }
 class EngineAddonProtocolClient {
 	@JsonNotification| void engineAboutToStart(EngineAboutToStartEventArguments args)
@@ -100,7 +118,6 @@ class EngineAddonProtocolClient {
 	@JsonNotification| void stepExecuted(StepExecutedEventArguments args)
 }
 }
-services -[hidden]- data
 }
 @enduml
 
