@@ -10,8 +10,8 @@
  *******************************************************************************/
 package org.eclipse.gemoc.executionframework.engine;
 
-import org.eclipse.gemoc.commons.eclipse.logging.backends.DefaultLoggingBackend;
 import org.eclipse.gemoc.commons.eclipse.GemocPlugin;
+import org.eclipse.gemoc.commons.eclipse.logging.backends.DefaultLoggingBackend;
 import org.eclipse.gemoc.executionframework.engine.core.GemocRunningEnginesRegistry;
 import org.osgi.framework.BundleContext;
 
