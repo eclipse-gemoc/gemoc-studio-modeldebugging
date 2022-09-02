@@ -47,8 +47,9 @@
 	<modules>
         <!-- <module>../framework/execution_framework/pomfirst</module> -->
         <!-- <module>../framework/execution_framework/plugins/org.eclipse.gemoc.executionframework.debugger/pomfirst</module> -->
-        <!-- <module>../framework/execution_framework/plugins/org.eclipse.gemoc.executionframework.engine/pomfirst</module>
-        <module>../framework/framework_commons/plugins/org.eclipse.gemoc.executionframework.reflectivetrace.model/pomfirst</module> -->
+        <module>../framework/execution_framework/pomfirst/org.eclipse.gemoc.executionframework.engine.model</module>
+        <!--<module>../framework/execution_framework/pomfirst/org.eclipse.gemoc.executionframework.engine</module>-->
+        <!-- <module>../framework/framework_commons/plugins/org.eclipse.gemoc.executionframework.reflectivetrace.model/pomfirst</module> -->
         <module>../framework/framework_commons/pomfirst/org.eclipse.gemoc.xdsmlframework.api</module>
         <!-- <module>../framework/framework_commons/plugins/org.eclipse.gemoc.xdsmlframework.commons/pomfirst</module>-->
         <module>../protocols/engine_addon_protocol/pomfirst/org.eclipse.gemoc.protocols.eaop.api</module>
@@ -131,6 +132,13 @@
 			<url>https://repo.eclipse.org/content/groups/gemoc/</url>
 		</repository>
 	</repositories> -->
+	<repositories>
+		<repository>
+			<id>K3</id>
+			<url>https://maven.inria.fr/artifactory/public/</url>  
+		</repository>
+	</repositories>
+	
 	<distributionManagement>
 		<repository>
 			<id>repo.eclipse.org</id>
