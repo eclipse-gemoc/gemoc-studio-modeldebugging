@@ -14,6 +14,6 @@ Require-Bundle: org.eclipse.gemoc.executionframework.event.model;bundle-version=
  org.eclipse.gemoc.executionframework.engine,
  com.google.guava
 Bundle-ManifestVersion: 2
-Bundle-RequiredExecutionEnvironment: JavaSE-1.8
+Bundle-RequiredExecutionEnvironment: JavaSE-11
 Automatic-Module-Name: org.eclipse.gemoc.executionframework.event.manager
 Bundle-Vendor: Eclipse GEMOC Project

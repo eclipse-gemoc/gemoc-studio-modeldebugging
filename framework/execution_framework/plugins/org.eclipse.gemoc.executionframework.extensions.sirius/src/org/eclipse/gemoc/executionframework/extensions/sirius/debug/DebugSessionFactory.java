@@ -32,7 +32,7 @@ import org.eclipse.sirius.common.tools.api.editing.EditingDomainFactoryService;
 import org.eclipse.sirius.common.tools.api.util.SiriusCrossReferenceAdapter;
 import org.eclipse.sirius.tools.internal.resource.ResourceSetUtil;
 import org.eclipse.sirius.viewpoint.DAnalysis;
-import org.eclipse.sirius.viewpoint.SiriusPlugin;
+import org.eclipse.sirius.tools.api.SiriusPlugin;
 import org.eclipse.sirius.viewpoint.ViewpointFactory;
 
 /**

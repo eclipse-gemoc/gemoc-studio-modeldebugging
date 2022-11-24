@@ -7,7 +7,7 @@
 
 	<groupId>org.eclipse.gemoc.gemoc-studio-modeldebugging</groupId>
 	<artifactId>org.eclipse.gemoc.modeldebugging.root</artifactId>
-	<version>3.5.0-SNAPSHOT</version>
+	<version>3.6.0-SNAPSHOT</version>
  
     <packaging>pom</packaging>
 	<url>https://www.eclipse.org/gemoc/</url>
@@ -46,11 +46,6 @@
 		
 	<modules>
         <!-- <module>../framework/execution_framework/pomfirst</module> -->
-        <module>../commons/pomfirst/org.eclipse.gemoc.commons.eclipse</module>
-        <module>../commons/pomfirst/org.eclipse.gemoc.commons.eclipse.messagingsystem.api</module>
-        <!-- <module>../commons/plugins/org.eclipse.gemoc.commons.eclipse.pde/pomfirst</module>
-        <module>../commons/plugins/org.eclipse.gemoc.commons.utils/pomfirst</module>-->
-        <module>../commons/pomfirst/org.eclipse.gemoc.dsl.model</module>
         <!-- <module>../framework/execution_framework/plugins/org.eclipse.gemoc.executionframework.debugger/pomfirst</module> -->
         <!-- <module>../framework/execution_framework/plugins/org.eclipse.gemoc.executionframework.engine/pomfirst</module>
         <module>../framework/framework_commons/plugins/org.eclipse.gemoc.executionframework.reflectivetrace.model/pomfirst</module> -->
@@ -121,7 +116,7 @@
 			<dependency>
 				<groupId>org.eclipse.gemoc.gemoc-studio</groupId>
 				<artifactId>gemoc-studio-bom</artifactId>
-				<version>3.5.0-SNAPSHOT</version>
+				<version>3.6.0-SNAPSHOT</version>
 				<scope>import</scope>
 				<type>pom</type>
 			</dependency>

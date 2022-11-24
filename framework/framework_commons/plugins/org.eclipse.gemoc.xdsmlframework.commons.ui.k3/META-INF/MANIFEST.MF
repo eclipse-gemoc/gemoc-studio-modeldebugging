@@ -19,7 +19,8 @@ Require-Bundle: org.eclipse.ui.workbench,
  org.eclipse.emf.codegen.ecore,
  org.eclipse.gemoc.executionframework.ui,
  org.eclipse.gemoc.xdsmlframework.ui.utils,
- org.eclipse.emf.ecore.xmi
+ org.eclipse.emf.ecore.xmi,
+ org.eclipse.gemoc.commons.eclipse.pde.ui;bundle-version="3.3.0"
 Bundle-RequiredExecutionEnvironment: JavaSE-1.8
 Automatic-Module-Name: org.eclipse.gemoc.xdsmlframework.commons.ui.k3
 Bundle-ActivationPolicy: lazy
