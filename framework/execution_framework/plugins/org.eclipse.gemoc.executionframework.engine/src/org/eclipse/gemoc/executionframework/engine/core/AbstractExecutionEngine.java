@@ -526,7 +526,7 @@ public abstract class AbstractExecutionEngine<C extends IExecutionContext<R, ?, 
 
 			Step<?> step = currentSteps.pop();
 			if (returnValue.isPresent()) {
-				step.getMseoccurrence().getResult().add(returnValue);
+				step.getMseoccurrence().getResult().add(returnValue.get());
 			}
 			
 			// We commit the transaction (which might be a different one
