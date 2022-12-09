@@ -92,6 +92,7 @@ public class GenericDimensionImpl extends DimensionImpl<GenericValue> implements
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
+	@Override
 	public EStructuralFeature getDynamicProperty() {
 		if (dynamicProperty != null && dynamicProperty.eIsProxy()) {
 			InternalEObject oldDynamicProperty = (InternalEObject)dynamicProperty;
@@ -118,6 +119,7 @@ public class GenericDimensionImpl extends DimensionImpl<GenericValue> implements
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
+	@Override
 	public void setDynamicProperty(EStructuralFeature newDynamicProperty) {
 		EStructuralFeature oldDynamicProperty = dynamicProperty;
 		dynamicProperty = newDynamicProperty;

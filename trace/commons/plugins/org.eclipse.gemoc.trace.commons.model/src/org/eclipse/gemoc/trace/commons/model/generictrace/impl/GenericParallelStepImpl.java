@@ -75,6 +75,7 @@ public class GenericParallelStepImpl extends GenericStepImpl implements GenericP
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
+	@Override
 	public EList<GenericStep> getSubSteps() {
 		if (subSteps == null) {
 			subSteps = new EObjectContainmentEList<GenericStep>(GenericStep.class, this, GenerictracePackage.GENERIC_PARALLEL_STEP__SUB_STEPS);

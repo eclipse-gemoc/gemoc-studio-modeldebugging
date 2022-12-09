@@ -323,6 +323,7 @@ public class GenerictracePackageImpl extends EPackageImpl implements Generictrac
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
+	@Override
 	public EClass getGenericSequentialStep() {
 		return genericSequentialStepEClass;
 	}
@@ -332,6 +333,7 @@ public class GenerictracePackageImpl extends EPackageImpl implements Generictrac
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
+	@Override
 	public EClass getGenericParallelStep() {
 		return genericParallelStepEClass;
 	}
@@ -341,6 +343,7 @@ public class GenerictracePackageImpl extends EPackageImpl implements Generictrac
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
+	@Override
 	public EClass getGenericSmallStep() {
 		return genericSmallStepEClass;
 	}
@@ -350,6 +353,7 @@ public class GenerictracePackageImpl extends EPackageImpl implements Generictrac
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
+	@Override
 	public EClass getGenericReferenceValue() {
 		return genericReferenceValueEClass;
 	}
@@ -359,6 +363,7 @@ public class GenerictracePackageImpl extends EPackageImpl implements Generictrac
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
+	@Override
 	public EClass getGenericDimension() {
 		return genericDimensionEClass;
 	}
@@ -368,6 +373,7 @@ public class GenerictracePackageImpl extends EPackageImpl implements Generictrac
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
+	@Override
 	public EReference getGenericDimension_DynamicProperty() {
 		return (EReference)genericDimensionEClass.getEStructuralFeatures().get(0);
 	}
@@ -377,6 +383,7 @@ public class GenerictracePackageImpl extends EPackageImpl implements Generictrac
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
+	@Override
 	public EClass getGenericTracedObject() {
 		return genericTracedObjectEClass;
 	}
@@ -386,6 +393,7 @@ public class GenerictracePackageImpl extends EPackageImpl implements Generictrac
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
+	@Override
 	public EReference getGenericTracedObject_OriginalObject() {
 		return (EReference)genericTracedObjectEClass.getEStructuralFeatures().get(0);
 	}
@@ -395,6 +403,7 @@ public class GenerictracePackageImpl extends EPackageImpl implements Generictrac
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
+	@Override
 	public EReference getGenericTracedObject_AllDimensions() {
 		return (EReference)genericTracedObjectEClass.getEStructuralFeatures().get(1);
 	}
@@ -404,6 +413,7 @@ public class GenerictracePackageImpl extends EPackageImpl implements Generictrac
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
+	@Override
 	public EOperation getGenericTracedObject__GetDimensionsInternal() {
 		return genericTracedObjectEClass.getEOperations().get(0);
 	}
@@ -413,6 +423,7 @@ public class GenerictracePackageImpl extends EPackageImpl implements Generictrac
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
+	@Override
 	public EClass getGenericState() {
 		return genericStateEClass;
 	}
@@ -422,6 +433,7 @@ public class GenerictracePackageImpl extends EPackageImpl implements Generictrac
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
+	@Override
 	public EClass getGenericTrace() {
 		return genericTraceEClass;
 	}
@@ -431,6 +443,7 @@ public class GenerictracePackageImpl extends EPackageImpl implements Generictrac
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
+	@Override
 	public EClass getGenericAttributeValue() {
 		return genericAttributeValueEClass;
 	}
@@ -440,6 +453,7 @@ public class GenerictracePackageImpl extends EPackageImpl implements Generictrac
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
+	@Override
 	public EClass getBooleanAttributeValue() {
 		return booleanAttributeValueEClass;
 	}
@@ -449,6 +463,7 @@ public class GenerictracePackageImpl extends EPackageImpl implements Generictrac
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
+	@Override
 	public EAttribute getBooleanAttributeValue_AttributeValue() {
 		return (EAttribute)booleanAttributeValueEClass.getEStructuralFeatures().get(0);
 	}
@@ -458,6 +473,7 @@ public class GenerictracePackageImpl extends EPackageImpl implements Generictrac
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
+	@Override
 	public EClass getIntegerAttributeValue() {
 		return integerAttributeValueEClass;
 	}
@@ -467,6 +483,7 @@ public class GenerictracePackageImpl extends EPackageImpl implements Generictrac
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
+	@Override
 	public EAttribute getIntegerAttributeValue_AttributeValue() {
 		return (EAttribute)integerAttributeValueEClass.getEStructuralFeatures().get(0);
 	}
@@ -476,6 +493,7 @@ public class GenerictracePackageImpl extends EPackageImpl implements Generictrac
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
+	@Override
 	public EClass getStringAttributeValue() {
 		return stringAttributeValueEClass;
 	}
@@ -485,6 +503,7 @@ public class GenerictracePackageImpl extends EPackageImpl implements Generictrac
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
+	@Override
 	public EAttribute getStringAttributeValue_AttributeValue() {
 		return (EAttribute)stringAttributeValueEClass.getEStructuralFeatures().get(0);
 	}
@@ -494,6 +513,7 @@ public class GenerictracePackageImpl extends EPackageImpl implements Generictrac
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
+	@Override
 	public EClass getManyBooleanAttributeValue() {
 		return manyBooleanAttributeValueEClass;
 	}
@@ -503,6 +523,7 @@ public class GenerictracePackageImpl extends EPackageImpl implements Generictrac
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
+	@Override
 	public EAttribute getManyBooleanAttributeValue_AttributeValue() {
 		return (EAttribute)manyBooleanAttributeValueEClass.getEStructuralFeatures().get(0);
 	}
@@ -512,6 +533,7 @@ public class GenerictracePackageImpl extends EPackageImpl implements Generictrac
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
+	@Override
 	public EClass getManyIntegerAttributeValue() {
 		return manyIntegerAttributeValueEClass;
 	}
@@ -521,6 +543,7 @@ public class GenerictracePackageImpl extends EPackageImpl implements Generictrac
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
+	@Override
 	public EAttribute getManyIntegerAttributeValue_AttributeValue() {
 		return (EAttribute)manyIntegerAttributeValueEClass.getEStructuralFeatures().get(0);
 	}
@@ -530,6 +553,7 @@ public class GenerictracePackageImpl extends EPackageImpl implements Generictrac
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
+	@Override
 	public EClass getManyStringAttributeValue() {
 		return manyStringAttributeValueEClass;
 	}
@@ -539,6 +563,7 @@ public class GenerictracePackageImpl extends EPackageImpl implements Generictrac
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
+	@Override
 	public EAttribute getManyStringAttributeValue_AttributeValue() {
 		return (EAttribute)manyStringAttributeValueEClass.getEStructuralFeatures().get(0);
 	}
@@ -548,6 +573,7 @@ public class GenerictracePackageImpl extends EPackageImpl implements Generictrac
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
+	@Override
 	public EClass getGenericStep() {
 		return genericStepEClass;
 	}
@@ -557,6 +583,7 @@ public class GenerictracePackageImpl extends EPackageImpl implements Generictrac
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
+	@Override
 	public EClass getGenericValue() {
 		return genericValueEClass;
 	}
@@ -566,6 +593,7 @@ public class GenerictracePackageImpl extends EPackageImpl implements Generictrac
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
+	@Override
 	public EClass getSingleReferenceValue() {
 		return singleReferenceValueEClass;
 	}
@@ -575,6 +603,7 @@ public class GenerictracePackageImpl extends EPackageImpl implements Generictrac
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
+	@Override
 	public EReference getSingleReferenceValue_ReferenceValue() {
 		return (EReference)singleReferenceValueEClass.getEStructuralFeatures().get(0);
 	}
@@ -584,6 +613,7 @@ public class GenerictracePackageImpl extends EPackageImpl implements Generictrac
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
+	@Override
 	public EClass getManyReferenceValue() {
 		return manyReferenceValueEClass;
 	}
@@ -593,6 +623,7 @@ public class GenerictracePackageImpl extends EPackageImpl implements Generictrac
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
+	@Override
 	public EReference getManyReferenceValue_ReferenceValues() {
 		return (EReference)manyReferenceValueEClass.getEStructuralFeatures().get(0);
 	}
@@ -602,6 +633,7 @@ public class GenerictracePackageImpl extends EPackageImpl implements Generictrac
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
+	@Override
 	public EClass getIntegerObjectAttributeValue() {
 		return integerObjectAttributeValueEClass;
 	}
@@ -611,6 +643,7 @@ public class GenerictracePackageImpl extends EPackageImpl implements Generictrac
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
+	@Override
 	public EAttribute getIntegerObjectAttributeValue_AttributeValue() {
 		return (EAttribute)integerObjectAttributeValueEClass.getEStructuralFeatures().get(0);
 	}
@@ -620,6 +653,7 @@ public class GenerictracePackageImpl extends EPackageImpl implements Generictrac
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
+	@Override
 	public EClass getDoubleAttributeValue() {
 		return doubleAttributeValueEClass;
 	}
@@ -629,6 +663,7 @@ public class GenerictracePackageImpl extends EPackageImpl implements Generictrac
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
+	@Override
 	public EAttribute getDoubleAttributeValue_AttributeValue() {
 		return (EAttribute)doubleAttributeValueEClass.getEStructuralFeatures().get(0);
 	}
@@ -638,6 +673,7 @@ public class GenerictracePackageImpl extends EPackageImpl implements Generictrac
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
+	@Override
 	public EClass getManyDoubleAttributeValue() {
 		return manyDoubleAttributeValueEClass;
 	}
@@ -647,6 +683,7 @@ public class GenerictracePackageImpl extends EPackageImpl implements Generictrac
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
+	@Override
 	public EAttribute getManyDoubleAttributeValue_AttributeValue() {
 		return (EAttribute)manyDoubleAttributeValueEClass.getEStructuralFeatures().get(0);
 	}
@@ -656,6 +693,7 @@ public class GenerictracePackageImpl extends EPackageImpl implements Generictrac
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
+	@Override
 	public EClass getDoubleObjectAttributeValue() {
 		return doubleObjectAttributeValueEClass;
 	}
@@ -665,6 +703,7 @@ public class GenerictracePackageImpl extends EPackageImpl implements Generictrac
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
+	@Override
 	public EAttribute getDoubleObjectAttributeValue_AttributeValue() {
 		return (EAttribute)doubleObjectAttributeValueEClass.getEStructuralFeatures().get(0);
 	}
@@ -674,6 +713,7 @@ public class GenerictracePackageImpl extends EPackageImpl implements Generictrac
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
+	@Override
 	public EClass getLongAttributeValue() {
 		return longAttributeValueEClass;
 	}
@@ -683,6 +723,7 @@ public class GenerictracePackageImpl extends EPackageImpl implements Generictrac
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
+	@Override
 	public EAttribute getLongAttributeValue_AttributeValue() {
 		return (EAttribute)longAttributeValueEClass.getEStructuralFeatures().get(0);
 	}
@@ -692,6 +733,7 @@ public class GenerictracePackageImpl extends EPackageImpl implements Generictrac
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
+	@Override
 	public EClass getManyLongAttributeValue() {
 		return manyLongAttributeValueEClass;
 	}
@@ -701,6 +743,7 @@ public class GenerictracePackageImpl extends EPackageImpl implements Generictrac
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
+	@Override
 	public EAttribute getManyLongAttributeValue_AttributeValue() {
 		return (EAttribute)manyLongAttributeValueEClass.getEStructuralFeatures().get(0);
 	}
@@ -710,6 +753,7 @@ public class GenerictracePackageImpl extends EPackageImpl implements Generictrac
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
+	@Override
 	public EClass getLongObjectAttributeValue() {
 		return longObjectAttributeValueEClass;
 	}
@@ -719,6 +763,7 @@ public class GenerictracePackageImpl extends EPackageImpl implements Generictrac
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
+	@Override
 	public EAttribute getLongObjectAttributeValue_AttributeValue() {
 		return (EAttribute)longObjectAttributeValueEClass.getEStructuralFeatures().get(0);
 	}
@@ -728,6 +773,7 @@ public class GenerictracePackageImpl extends EPackageImpl implements Generictrac
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
+	@Override
 	public EDataType getISerializable() {
 		return iSerializableEDataType;
 	}
@@ -737,6 +783,7 @@ public class GenerictracePackageImpl extends EPackageImpl implements Generictrac
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
+	@Override
 	public GenerictraceFactory getGenerictraceFactory() {
 		return (GenerictraceFactory)getEFactoryInstance();
 	}

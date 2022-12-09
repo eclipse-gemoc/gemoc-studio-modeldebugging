@@ -30,10 +30,6 @@ public interface Footprint extends EObject {
 	 * Returns the value of the '<em><b>Accesses</b></em>' reference list.
 	 * The list contents are of type {@link org.eclipse.emf.ecore.EObject}.
 	 * <!-- begin-user-doc -->
-	 * <p>
-	 * If the meaning of the '<em>Accesses</em>' reference list isn't clear,
-	 * there really should be more of a description here...
-	 * </p>
 	 * <!-- end-user-doc -->
 	 * @return the value of the '<em>Accesses</em>' reference list.
 	 * @see org.eclipse.gemoc.trace.commons.model.trace.TracePackage#getFootprint_Accesses()
@@ -46,10 +42,6 @@ public interface Footprint extends EObject {
 	 * Returns the value of the '<em><b>Changes</b></em>' reference list.
 	 * The list contents are of type {@link org.eclipse.emf.ecore.EObject}.
 	 * <!-- begin-user-doc -->
-	 * <p>
-	 * If the meaning of the '<em>Changes</em>' reference list isn't clear,
-	 * there really should be more of a description here...
-	 * </p>
 	 * <!-- end-user-doc -->
 	 * @return the value of the '<em>Changes</em>' reference list.
 	 * @see org.eclipse.gemoc.trace.commons.model.trace.TracePackage#getFootprint_Changes()
@@ -62,10 +54,6 @@ public interface Footprint extends EObject {
 	 * Returns the value of the '<em><b>Instantiations</b></em>' reference list.
 	 * The list contents are of type {@link org.eclipse.emf.ecore.EClass}.
 	 * <!-- begin-user-doc -->
-	 * <p>
-	 * If the meaning of the '<em>Instantiations</em>' reference list isn't clear,
-	 * there really should be more of a description here...
-	 * </p>
 	 * <!-- end-user-doc -->
 	 * @return the value of the '<em>Instantiations</em>' reference list.
 	 * @see org.eclipse.gemoc.trace.commons.model.trace.TracePackage#getFootprint_Instantiations()

@@ -72,6 +72,7 @@ public class GenericSmallStepImpl extends GenericStepImpl implements GenericSmal
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
+	@Override
 	public Footprint getFootprint() {
 		return footprint;
 	}
@@ -96,6 +97,7 @@ public class GenericSmallStepImpl extends GenericStepImpl implements GenericSmal
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
+	@Override
 	public void setFootprint(Footprint newFootprint) {
 		if (newFootprint != footprint) {
 			NotificationChain msgs = null;

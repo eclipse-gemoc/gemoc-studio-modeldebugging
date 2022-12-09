@@ -5,9 +5,17 @@ package org.eclipse.gemoc.trace.commons.model.trace.impl;
 import org.eclipse.emf.ecore.EAttribute;
 import org.eclipse.emf.ecore.EClass;
 import org.eclipse.emf.ecore.EDataType;
+import org.eclipse.emf.ecore.EGenericType;
 import org.eclipse.emf.ecore.EOperation;
+import org.eclipse.emf.ecore.EPackage;
 import org.eclipse.emf.ecore.EReference;
+import org.eclipse.emf.ecore.ETypeParameter;
+import org.eclipse.emf.ecore.EcorePackage;
+
+import org.eclipse.emf.ecore.impl.EPackageImpl;
+
 import org.eclipse.gemoc.trace.commons.model.launchconfiguration.LaunchconfigurationPackage;
+
 import org.eclipse.gemoc.trace.commons.model.trace.BigStep;
 import org.eclipse.gemoc.trace.commons.model.trace.Dimension;
 import org.eclipse.gemoc.trace.commons.model.trace.Footprint;
@@ -24,9 +32,6 @@ import org.eclipse.gemoc.trace.commons.model.trace.TraceFactory;
 import org.eclipse.gemoc.trace.commons.model.trace.TracePackage;
 import org.eclipse.gemoc.trace.commons.model.trace.TracedObject;
 import org.eclipse.gemoc.trace.commons.model.trace.Value;
-
-
-
 
 /**
  * <!-- begin-user-doc -->
@@ -447,8 +452,7 @@ public class TracePackageImpl extends EPackageImpl implements TracePackage {
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-
- @Override
+	@Override
 	public EClass getSequentialStep() {
 		return sequentialStepEClass;
 	}
@@ -638,7 +642,7 @@ public class TracePackageImpl extends EPackageImpl implements TracePackage {
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
- @Override
+	@Override
 	public EReference getFootprint_Accesses() {
 		return (EReference)footprintEClass.getEStructuralFeatures().get(0);
 	}
@@ -648,7 +652,7 @@ public class TracePackageImpl extends EPackageImpl implements TracePackage {
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
- @Override
+	@Override
 	public EReference getFootprint_Changes() {
 		return (EReference)footprintEClass.getEStructuralFeatures().get(1);
 	}
@@ -658,7 +662,7 @@ public class TracePackageImpl extends EPackageImpl implements TracePackage {
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
- @Override
+	@Override
 	public EReference getFootprint_Instantiations() {
 		return (EReference)footprintEClass.getEStructuralFeatures().get(2);
 	}
@@ -668,8 +672,7 @@ public class TracePackageImpl extends EPackageImpl implements TracePackage {
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-
- @Override
+	@Override
 	public EDataType getISerializable() {
 		return iSerializableEDataType;
 	}

@@ -86,6 +86,7 @@ public class FootprintImpl extends MinimalEObjectImpl.Container implements Footp
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
+	@Override
 	public EList<EObject> getAccesses() {
 		if (accesses == null) {
 			accesses = new EObjectResolvingEList<EObject>(EObject.class, this, TracePackage.FOOTPRINT__ACCESSES);
@@ -98,6 +99,7 @@ public class FootprintImpl extends MinimalEObjectImpl.Container implements Footp
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
+	@Override
 	public EList<EObject> getChanges() {
 		if (changes == null) {
 			changes = new EObjectResolvingEList<EObject>(EObject.class, this, TracePackage.FOOTPRINT__CHANGES);
@@ -110,6 +112,7 @@ public class FootprintImpl extends MinimalEObjectImpl.Container implements Footp
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
+	@Override
 	public EList<EClass> getInstantiations() {
 		if (instantiations == null) {
 			instantiations = new EObjectResolvingEList<EClass>(EClass.class, this, TracePackage.FOOTPRINT__INSTANTIATIONS);
