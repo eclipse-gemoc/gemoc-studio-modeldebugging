@@ -257,7 +257,7 @@ class WorkspaceTestHelper {
 	}
 
 	/**
-	 * Creates and lauches a new run configuration for {@link project}
+	 * Creates and launches a new run configuration for {@link project}
 	 * using {@link mainClass} as the main Java class.
 	 *
 	 * @return the produced console output
@@ -459,6 +459,13 @@ class WorkspaceTestHelper {
 			delay(delay);
 			retry = retry - 1
 			if(retry <= 0) {
+				println("waitForJobs timed out after " + delay * 600 + "ms")
+				println("[waitForJobs] CANCELLING all jobs ")
+				val jobs = Job.getJobManager().find(null)
+				for (job : jobs) {
+					println("[waitForJobs] CANCELLING job "+job.name+ " (rule="+job.rule+")")
+					job.cancel
+				}
 				throw new InterruptedException("waitForJobs timed out after " + delay * 600 + "ms")
 			}
 		}
