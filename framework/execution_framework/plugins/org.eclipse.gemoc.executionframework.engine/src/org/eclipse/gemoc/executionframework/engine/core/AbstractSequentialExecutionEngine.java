@@ -149,7 +149,7 @@ public abstract class AbstractSequentialExecutionEngine<C extends IExecutionCont
 			occurrence.setMse(mse);
 			result = step;
 		} else {
-			result = traceAddon.getFactory().createStep(mse, new ArrayList<Object>(), new ArrayList<Object>());
+			result = traceAddon.getFactory().createStep(mse, args, new ArrayList<Object>());
 		}
 		return result;
 	}
