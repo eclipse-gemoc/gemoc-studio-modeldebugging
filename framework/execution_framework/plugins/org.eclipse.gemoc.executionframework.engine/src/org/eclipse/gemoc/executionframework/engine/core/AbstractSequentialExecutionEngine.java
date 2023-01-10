@@ -12,12 +12,12 @@ package org.eclipse.gemoc.executionframework.engine.core;
 
 import java.io.IOException;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.Collections;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
+import java.util.Optional;
 import java.util.Set;
 
 import org.eclipse.emf.ecore.EClass;
@@ -91,8 +91,8 @@ public abstract class AbstractSequentialExecutionEngine<C extends IExecutionCont
 	}
 
 	@Override
-	protected final void afterExecutionStep() {
-		super.afterExecutionStep();
+	protected final void afterExecutionStep(Optional<Object> returnValue) {
+		super.afterExecutionStep(returnValue);
 	}
 
 	/**
@@ -151,7 +151,6 @@ public abstract class AbstractSequentialExecutionEngine<C extends IExecutionCont
 		} else {
 			result = traceAddon.getFactory().createStep(mse, args, new ArrayList<Object>());
 		}
-		result.getMseoccurrence().getParameters().addAll(Arrays.asList(args));
 		return result;
 	}
 	
