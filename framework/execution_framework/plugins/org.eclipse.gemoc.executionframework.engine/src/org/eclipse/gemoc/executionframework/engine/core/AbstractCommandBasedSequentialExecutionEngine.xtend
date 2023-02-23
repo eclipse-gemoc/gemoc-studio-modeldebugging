@@ -11,11 +11,11 @@
 package org.eclipse.gemoc.executionframework.engine.core
 
 import java.util.Arrays
+import java.util.List
 import java.util.concurrent.Callable
 import org.eclipse.emf.transaction.RecordingCommand
 import org.eclipse.gemoc.xdsmlframework.api.core.IExecutionContext
 import org.eclipse.gemoc.xdsmlframework.api.core.IRunConfiguration
-import java.util.Optional
 
 abstract class AbstractCommandBasedSequentialExecutionEngine<C extends IExecutionContext<R, ?, ?>, R extends IRunConfiguration> extends AbstractSequentialExecutionEngine<C, R> {
 
@@ -28,14 +28,14 @@ abstract class AbstractCommandBasedSequentialExecutionEngine<C extends IExecutio
 	 * @param operation
 	 */
 	protected def void executeOperation(Object caller, String className, String operationName,
-		Callable<Optional<Object>> operation) {
+		Callable<List<Object>> operation) {
 		executeOperation(caller, #{}, className, operationName, operation);
 	}
 
-	var Optional<Object> lastResult = null
+	var List<Object> lastResult = null
 
 	protected def void executeOperation(Object caller, Object[] parameters, String className, String operationName,
-		Callable<Optional<Object>> operation) {
+		Callable<List<Object>> operation) {
 		val RecordingCommand rc = new RecordingCommand(editingDomain) {
 			override doExecute() {
 				AbstractCommandBasedSequentialExecutionEngine.this.lastResult = operation.call()

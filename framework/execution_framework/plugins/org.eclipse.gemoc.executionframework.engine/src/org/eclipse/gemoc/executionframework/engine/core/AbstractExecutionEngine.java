@@ -18,7 +18,6 @@ import java.util.HashMap;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
-import java.util.Optional;
 import java.util.Set;
 
 import org.eclipse.emf.ecore.resource.ResourceSet;
@@ -518,17 +517,17 @@ public abstract class AbstractExecutionEngine<C extends IExecutionContext<R, ?, 
 	/**
 	 * To be called just after each execution step by an implementing engine.
 	 */
-	protected void afterExecutionStep(Optional<Object> returnValue) {
+	protected void afterExecutionStep(List<Object> returnValue) {
 
 		RecordingCommand emptyrc = null;
 
 		try {
 
 			Step<?> step = currentSteps.pop();
-			if (returnValue.isPresent()) {
-				step.getMseoccurrence().getResult().add(returnValue.get());
+			if (!returnValue.isEmpty()) {
+				step.getMseoccurrence().getResult().add(returnValue.get(0));
 			}
-			
+
 			// We commit the transaction (which might be a different one
 			// than the one created earlier, or null if two operations
 			// end successively)

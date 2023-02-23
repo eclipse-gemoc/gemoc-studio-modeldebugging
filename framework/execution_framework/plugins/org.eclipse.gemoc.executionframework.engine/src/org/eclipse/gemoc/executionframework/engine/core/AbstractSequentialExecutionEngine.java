@@ -17,7 +17,6 @@ import java.util.HashMap;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
-import java.util.Optional;
 import java.util.Set;
 
 import org.eclipse.emf.ecore.EClass;
@@ -91,7 +90,7 @@ public abstract class AbstractSequentialExecutionEngine<C extends IExecutionCont
 	}
 
 	@Override
-	protected final void afterExecutionStep(Optional<Object> returnValue) {
+	protected final void afterExecutionStep(List<Object> returnValue) {
 		super.afterExecutionStep(returnValue);
 	}
 
