@@ -14,7 +14,9 @@ import java.io.ByteArrayInputStream
 import java.io.File
 import java.net.URL
 import java.net.URLClassLoader
+import java.nio.file.Files
 import java.util.ArrayList
+import java.util.Comparator
 import java.util.HashSet
 import java.util.List
 import java.util.Set
@@ -58,8 +60,6 @@ import org.eclipse.xtext.ui.testing.util.IResourcesSetupUtil
 import org.eclipse.xtext.ui.testing.util.JavaProjectSetupUtil
 import org.junit.Assert
 import org.osgi.framework.Bundle
-import java.nio.file.Files
-import java.util.Comparator
 
 /**
  * Class containing helper methods for testing a workspace in a GEMOC Language workbench
@@ -443,7 +443,8 @@ class WorkspaceTestHelper {
 					if(retry <= 300 && (job.name.contains("Git Repository Change Scanner") || 
 						job.name.contains("Periodic workspace save") ||
 						job.name.contains("Workbench Auto-Save Job") ||
-						job.name.contains("Compacting resource model")
+						job.name.contains("Compacting resource model") ||
+						job.name.contains("Open Blocked Dialog")
 					)) {
 						println("[waitForJobs] CANCELLING job "+job.name+ " (rule="+job.rule+")")
 						job.cancel

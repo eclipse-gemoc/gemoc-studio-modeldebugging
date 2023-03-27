@@ -32,15 +32,25 @@ class SWTBotHelper {
 		
 	
 	/**
-	 * relaunch the  waitForJobs several times in case some other background task
-	 * also wait for idle time to triggers new jobs 
+	 * print the list of shell known by swtbot
 	 */
 	static def void printShellList(SWTWorkbenchBot	bot) {
 		val shells = bot.shells.toList
 		println("SWTBot Known shells("+shells.size+"):")
 		for (shell : shells) {
-			println("\t"+shell)
+			System.out.println('''«shell» - text="«shell.text»"  id="«shell.id»"''')
 		}
+	}
+	
+	/**
+	 * Print the shell list using the UI Thread
+	 */
+	static def void printShellListUI(SWTWorkbenchBot bot) {
+		Display.getDefault().syncExec(new Runnable() {
+			override void run() {
+				printShellList(bot)
+			}
+		});
 	}
 	
 	static def void printTreeList(SWTWorkbenchBot	bot) {
