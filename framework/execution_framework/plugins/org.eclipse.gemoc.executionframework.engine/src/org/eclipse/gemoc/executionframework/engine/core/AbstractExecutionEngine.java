@@ -517,13 +517,16 @@ public abstract class AbstractExecutionEngine<C extends IExecutionContext<R, ?, 
 	/**
 	 * To be called just after each execution step by an implementing engine.
 	 */
-	protected void afterExecutionStep() {
+	protected void afterExecutionStep(List<Object> returnValue) {
 
 		RecordingCommand emptyrc = null;
 
 		try {
 
 			Step<?> step = currentSteps.pop();
+			if (!returnValue.isEmpty()) {
+				step.getMseoccurrence().getResult().add(returnValue.get(0));
+			}
 
 			// We commit the transaction (which might be a different one
 			// than the one created earlier, or null if two operations

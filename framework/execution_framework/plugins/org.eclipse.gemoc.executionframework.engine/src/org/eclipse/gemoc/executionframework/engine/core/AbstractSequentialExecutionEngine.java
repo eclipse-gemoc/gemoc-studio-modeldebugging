@@ -12,7 +12,6 @@ package org.eclipse.gemoc.executionframework.engine.core;
 
 import java.io.IOException;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.Collections;
 import java.util.HashMap;
 import java.util.HashSet;
@@ -91,8 +90,8 @@ public abstract class AbstractSequentialExecutionEngine<C extends IExecutionCont
 	}
 
 	@Override
-	protected final void afterExecutionStep() {
-		super.afterExecutionStep();
+	protected final void afterExecutionStep(List<Object> returnValue) {
+		super.afterExecutionStep(returnValue);
 	}
 
 	/**
@@ -149,9 +148,8 @@ public abstract class AbstractSequentialExecutionEngine<C extends IExecutionCont
 			occurrence.setMse(mse);
 			result = step;
 		} else {
-			result = traceAddon.getFactory().createStep(mse, new ArrayList<Object>(), new ArrayList<Object>());
+			result = traceAddon.getFactory().createStep(mse, args, new ArrayList<Object>());
 		}
-		result.getMseoccurrence().getParameters().addAll(Arrays.asList(args));
 		return result;
 	}
 	

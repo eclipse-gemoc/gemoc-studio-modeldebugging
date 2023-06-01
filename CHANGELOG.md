@@ -1,5 +1,31 @@
 # Changelog
 
+## v3.6.0 (06/04/2023)
+
+#### Enhancements:
+
+- [**enhancement**] Manage step return values [#226](https://github.com/eclipse/gemoc-studio-modeldebugging/pull/226)
+
+#### Bug Fixes:
+
+- [**bug**] Bump to version of k3 including StepCommand return null fix [#229](https://github.com/eclipse/gemoc-studio-modeldebugging/pull/229)
+- [**bug**] Fix: provide args to step factory [#227](https://github.com/eclipse/gemoc-studio-modeldebugging/pull/227)
+
+#### Refactorings
+
+- [**refactoring**] Move commons from modeldebugging repository to dedicated repository [#223](https://github.com/eclipse/gemoc-studio-modeldebugging/pull/223)
+- [**refactoring**] Split commons eclipse pde to remove UI dependency [#224](https://github.com/eclipse/gemoc-studio-modeldebugging/pull/224)
+
+#### Version upgrades
+
+- [**bump**] Bump to Eclipse 2022-06 [#222](https://github.com/eclipse/gemoc-studio-modeldebugging/pull/222)
+
+#### Release Engineering
+
+- [**releng**] Flaky test management [#228](https://github.com/eclipse/gemoc-studio-modeldebugging/pull/228)
+
+---
+
 ## v3.5.0 (30/06/2022)
 
 #### Enhancements:
