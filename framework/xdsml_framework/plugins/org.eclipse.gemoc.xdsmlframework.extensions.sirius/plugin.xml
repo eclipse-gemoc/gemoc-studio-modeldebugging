@@ -80,7 +80,7 @@
       </menuContribution>
    </extension>
    <extension
-         point="org.eclipse.gemoc.commons.eclipse.pde.templates">
+         point="org.eclipse.gemoc.commons.eclipse.pde.ui.templates">
       <template
             class="org.eclipse.gemoc.xdsmlframework.extensions.sirius.wizards.templates.specification.BasicObjectDiagramTemplate"
             contributingId="org.eclipse.gemoc.xdsmlframework.extensions.sirius.template1"
@@ -89,7 +89,7 @@
       </template>
    </extension>
    <extension
-         point="org.eclipse.gemoc.commons.eclipse.pde.projectContent">
+         point="org.eclipse.gemoc.commons.eclipse.pde.ui.projectContent">
       <wizard
             class="org.eclipse.gemoc.xdsmlframework.extensions.sirius.wizards.templates.specification.BasicObjectDiagramNewWizard"
             id="org.eclipse.gemoc.xdsmlframework.extensions.sirius.wizards.templates.specification.projectContent.BasicObjectDiagram"
