@@ -33,14 +33,13 @@
 	
 	<properties>
 		<tycho.version>1.5.1</tycho.version>
-		<xtend.version>2.18.0</xtend.version>
+		<xtend.version>2.27.0</xtend.version>
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
 		<eclipse-repo.url>http://download.eclipse.org/releases/photon</eclipse-repo.url>
 		<gemoc-repo.url>https://download.eclipse.org/gemoc/updates/nightly</gemoc-repo.url>
-		<maven.compiler.source>1.8</maven.compiler.source>
-		<maven.compiler.target>1.8</maven.compiler.target>
+		<maven.compiler.source>11</maven.compiler.source>
+		<maven.compiler.target>11</maven.compiler.target>
 		<tycho.scmUrl>scm:git:https://github.com/eclipse/gemoc-studio-modeldebugging.git</tycho.scmUrl>
-		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
 	</properties>
 	
 		
@@ -106,8 +105,26 @@
 					</dependency>
 				</dependencies> -->
 			</plugin>
-
 		</plugins>
+		
+		<pluginManagement>
+			<plugins>
+				<plugin>
+					<groupId>org.codehaus.mojo</groupId>
+					<artifactId>build-helper-maven-plugin</artifactId>
+					<version>3.2.0</version>
+				</plugin>
+				<plugin>
+					<artifactId>maven-resources-plugin</artifactId>
+					<version>3.0.2</version>
+				</plugin>
+	            <plugin>
+	                <groupId>org.apache.maven.plugins</groupId>
+	                <artifactId>maven-compiler-plugin</artifactId>
+	                <version>3.8.1</version>
+	            </plugin>
+			</plugins>
+		</pluginManagement>
 	</build>
 	
 
