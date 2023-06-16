@@ -109,8 +109,8 @@
 				<version>${tycho-version}</version>
 				<configuration>
 					<encoding>UTF-8</encoding>
-					<source>11</source>
-					<target>11</target>					
+					<source>17</source>
+					<target>17</target>					
 				</configuration>
 			</plugin>
 			<!-- enable source bundle generation -->
@@ -125,21 +125,18 @@
 							<goal>plugin-source</goal>
 						</goals>
 					</execution>
-				</executions>
-			</plugin>
-			<!-- enable source feature generation -->
-			<plugin>
-				<groupId>org.eclipse.tycho.extras</groupId>
-				<artifactId>tycho-source-feature-plugin</artifactId>
-				<version>${tycho-version}</version>
-				<executions>
 					<execution>
-						<id>source-feature</id>
-						<phase>package</phase>
-						<goals>
-							<goal>source-feature</goal>
-						</goals>
-					</execution>
+			            <id>feature-source</id>
+			            <goals>
+			              <goal>feature-source</goal>
+			            </goals>
+			            <configuration>
+			              <excludes>
+			                <!-- provide plug-ins not containing any source code -->
+			                <!-- also possible to exclude feature-->
+			              </excludes>
+			            </configuration>
+          			</execution>
 				</executions>
 			</plugin>
 			<plugin>
