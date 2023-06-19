@@ -23,13 +23,26 @@
 
 	<build>
 		<plugins>
-			
 			<plugin>
 				<artifactId>maven-resources-plugin</artifactId>
-				<version>3.0.2</version>
 				<executions>
 					<execution>
 						<id>copy-resource-src</id>
+						<phase>generate-sources</phase>
+						<goals>
+							<goal>copy-resources</goal>
+						</goals>
+						<configuration>
+							<outputDirectory>${basedir}/target/src/main/java</outputDirectory>
+							<resources>
+								<resource>
+									<directory>../../plugins/org.eclipse.gemoc.protocols.eaop.api/src</directory>
+								</resource>
+							</resources>
+						</configuration>
+					</execution>
+					<execution>
+						<id>copy-resource-src-gen</id>
 						<phase>generate-sources</phase>
 						<goals>
 							<goal>copy-resources</goal>
@@ -48,7 +61,6 @@
 			<plugin>
 				<groupId>org.codehaus.mojo</groupId>
 				<artifactId>build-helper-maven-plugin</artifactId>
-				<version>3.2.0</version>
 				<executions>
 					<execution>
 						<phase>generate-sources</phase>
@@ -101,12 +113,18 @@
 		<dependency>
 			<groupId>org.eclipse.xtend</groupId>
 			<artifactId>org.eclipse.xtend.ide.common</artifactId>
-	
 		</dependency>
 		<dependency>
 			<groupId>org.eclipse.xtext</groupId>
 			<artifactId>org.eclipse.xtext.xbase.lib</artifactId>
 		</dependency>
-
+		<dependency>
+		    <groupId>org.eclipse.lsp4j</groupId>
+		    <artifactId>org.eclipse.lsp4j.jsonrpc</artifactId>
+		</dependency>
+		<dependency>
+		    <groupId>org.eclipse.lsp4j</groupId>
+		    <artifactId>org.eclipse.lsp4j.generator</artifactId>
+		</dependency>
 	</dependencies>
 </project>
