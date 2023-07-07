@@ -21,16 +21,14 @@ import java.io.InputStream;
 import java.io.OutputStream;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.jar.Attributes;
 
 import org.eclipse.core.resources.IFile;
 import org.eclipse.core.resources.IProject;
 import org.eclipse.core.resources.IResource;
 import org.eclipse.core.runtime.CoreException;
 import org.eclipse.core.runtime.IProgressMonitor;
-import org.eclipse.jdt.core.IJavaProject;
-//import org.eclipse.xtend.ide.buildpath.XtendLibClasspathAdder;
-import org.eclipse.xtext.util.MergeableManifest;
+import org.eclipse.xtext.util.MergeableManifest2;
+import org.eclipse.xtext.util.MergeableManifest2.Attributes;
 
 /**
  * Code taken from XtendLibClasspathAdder
@@ -38,14 +36,13 @@ import org.eclipse.xtext.util.MergeableManifest;
  * @author ebousse
  *
  */
-@SuppressWarnings("restriction")
 public class ManifestUtil {
 
-	private static MergeableManifest createMergableManifest(
+	private static MergeableManifest2 createMergableManifest(
 			IResource manifestFile) throws IOException, CoreException {
 		InputStream originalManifest = ((IFile) manifestFile).getContents();
 		try {
-			return new MergeableManifest(originalManifest);
+			return new MergeableManifest2(originalManifest);
 		} finally {
 			originalManifest.close();
 		}
@@ -61,7 +58,7 @@ public class ManifestUtil {
 			OutputStream output = null;
 			InputStream input = null;
 			try {
-				MergeableManifest manifest = createMergableManifest(manifestFile);
+				MergeableManifest2 manifest = createMergableManifest(manifestFile);
 				List<String> plunginsToAdd = new ArrayList<String>();
 				plunginsToAdd.add(pluginToAdd);
 				manifest.addRequiredBundles(newHashSet(plunginsToAdd));
@@ -93,9 +90,9 @@ public class ManifestUtil {
 			OutputStream output = null;
 			InputStream input = null;
 			try {
-				MergeableManifest manifest = createMergableManifest(manifestFile);
+				MergeableManifest2 manifest = createMergableManifest(manifestFile);
 				Attributes atts = manifest.getMainAttributes();
-				atts.putValue("Bundle-RequiredExecutionEnvironment", requiredExecutionEnvironment);
+				atts.put("Bundle-RequiredExecutionEnvironment", requiredExecutionEnvironment);
 				ByteArrayOutputStream out = new ByteArrayOutputStream();
 				output = new BufferedOutputStream(out);
 				manifest.write(output);

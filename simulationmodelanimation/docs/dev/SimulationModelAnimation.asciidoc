@@ -23,7 +23,7 @@ architecture information not copied yet in this document may be found in http://
 The content of this framework can be used standalone in order to use only basic animation and debug services. The concrete implementation then has to create its own engine and launcher architecture (Ie. reproduce the other parts of the GEMOC framework in order to integrate the DSL in the IDE UI). An example of such implementation can be found with the Arduino Designer demo https://github.com/mbats/arduino
 ====
 
-[[devguide-simulationmodelanimation-framework-debugmodelpresentation]]
+[[devguide-simulationmodelanimation-framework-debugger]]
 ==== Debugger 
 
 This is the base for the debugger.
