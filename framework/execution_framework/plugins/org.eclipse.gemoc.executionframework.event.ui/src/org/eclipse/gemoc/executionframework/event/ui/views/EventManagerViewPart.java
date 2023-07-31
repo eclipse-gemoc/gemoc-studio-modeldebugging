@@ -13,6 +13,7 @@ package org.eclipse.gemoc.executionframework.event.ui.views;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashMap;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
@@ -94,7 +95,11 @@ public class EventManagerViewPart extends EngineSelectionDependentViewPart imple
 	private final IEventManagerListener eventListener = new IEventManagerListener() {
 		@Override
 		public Set<BehavioralInterface> getBehavioralInterfaces() {
-			return eventManager.getBehavioralInterfaces();
+			if (eventManager != null) {
+				return eventManager.getBehavioralInterfaces();
+			} else {
+				return new HashSet<BehavioralInterface>();
+			}
 		}
 
 		@Override
@@ -288,16 +293,17 @@ public class EventManagerViewPart extends EngineSelectionDependentViewPart imple
 		behavioralInterfaces.clear();
 		clearBehavioralInterfaceList();
 		clearEventOccurrenceConfiguratorGroup();
+		events.clear();
 		if (executionEngine != null) {
 			setExecutedModel(executionEngine.getExecutionContext().getResourceModel());
 			eventManager = executionEngine.getAddonsTypedBy(IEventManager.class).stream().findFirst().orElse(null);
-			eventManager.addListener(eventListener);
-			events.clear();
-			fillBehavioralInterfaceList(eventManager.getBehavioralInterfaces());
-			executionEngine.getExecutionContext().getExecutionPlatform().addEngineAddon(this);
+			if( eventManager != null ) {
+				eventManager.addListener(eventListener);
+				fillBehavioralInterfaceList(eventManager.getBehavioralInterfaces());
+				executionEngine.getExecutionContext().getExecutionPlatform().addEngineAddon(this);
+			}
 		} else {
 			executedModel = null;
-			events.clear();
 			eventToEventOccurrences.clear();
 		}
 	}
