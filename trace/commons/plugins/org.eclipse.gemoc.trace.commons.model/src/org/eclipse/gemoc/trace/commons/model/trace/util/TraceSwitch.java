@@ -1,18 +1,6 @@
-/*******************************************************************************
- * Copyright (c) 2017 Inria and others.
- * All rights reserved. This program and the accompanying materials
- * are made available under the terms of the Eclipse Public License v1.0
- * which accompanies this distribution, and is available at
- * http://www.eclipse.org/legal/epl-v10.html
- *
- * Contributors:
- *     Inria - initial API and implementation
- *******************************************************************************/
 /**
  */
 package org.eclipse.gemoc.trace.commons.model.trace.util;
-
-import org.eclipse.gemoc.trace.commons.model.trace.*;
 
 import org.eclipse.emf.ecore.EModelElement;
 import org.eclipse.emf.ecore.ENamedElement;
@@ -20,6 +8,8 @@ import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.EPackage;
 
 import org.eclipse.emf.ecore.util.Switch;
+
+import org.eclipse.gemoc.trace.commons.model.trace.*;
 
 /**
  * <!-- begin-user-doc -->
@@ -170,6 +160,12 @@ public class TraceSwitch<T> extends Switch<T> {
 			case TracePackage.STATE: {
 				State<?, ?> state = (State<?, ?>)theEObject;
 				T result = caseState(state);
+				if (result == null) result = defaultCase(theEObject);
+				return result;
+			}
+			case TracePackage.FOOTPRINT: {
+				Footprint footprint = (Footprint)theEObject;
+				T result = caseFootprint(footprint);
 				if (result == null) result = defaultCase(theEObject);
 				return result;
 			}
@@ -384,6 +380,21 @@ public class TraceSwitch<T> extends Switch<T> {
 	 * @generated
 	 */
 	public <StepSubType extends Step<?>, ValueSubType extends Value<?>> T caseState(State<StepSubType, ValueSubType> object) {
+		return null;
+	}
+
+	/**
+	 * Returns the result of interpreting the object as an instance of '<em>Footprint</em>'.
+	 * <!-- begin-user-doc -->
+	 * This implementation returns null;
+	 * returning a non-null result will terminate the switch.
+	 * <!-- end-user-doc -->
+	 * @param object the target of the switch.
+	 * @return the result of interpreting the object as an instance of '<em>Footprint</em>'.
+	 * @see #doSwitch(org.eclipse.emf.ecore.EObject) doSwitch(EObject)
+	 * @generated
+	 */
+	public T caseFootprint(Footprint object) {
 		return null;
 	}
 

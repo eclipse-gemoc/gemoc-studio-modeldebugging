@@ -116,6 +116,7 @@ public class LaunchconfigurationFactoryImpl extends EFactoryImpl implements Laun
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
+	@Override
 	public LaunchConfiguration createLaunchConfiguration() {
 		LaunchConfigurationImpl launchConfiguration = new LaunchConfigurationImpl();
 		return launchConfiguration;
@@ -126,6 +127,7 @@ public class LaunchconfigurationFactoryImpl extends EFactoryImpl implements Laun
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
+	@Override
 	public LanguageNameParameter createLanguageNameParameter() {
 		LanguageNameParameterImpl languageNameParameter = new LanguageNameParameterImpl();
 		return languageNameParameter;
@@ -136,6 +138,7 @@ public class LaunchconfigurationFactoryImpl extends EFactoryImpl implements Laun
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
+	@Override
 	public AddonExtensionParameter createAddonExtensionParameter() {
 		AddonExtensionParameterImpl addonExtensionParameter = new AddonExtensionParameterImpl();
 		return addonExtensionParameter;
@@ -146,6 +149,7 @@ public class LaunchconfigurationFactoryImpl extends EFactoryImpl implements Laun
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
+	@Override
 	public ModelURIParameter createModelURIParameter() {
 		ModelURIParameterImpl modelURIParameter = new ModelURIParameterImpl();
 		return modelURIParameter;
@@ -156,6 +160,7 @@ public class LaunchconfigurationFactoryImpl extends EFactoryImpl implements Laun
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
+	@Override
 	public AnimatorURIParameter createAnimatorURIParameter() {
 		AnimatorURIParameterImpl animatorURIParameter = new AnimatorURIParameterImpl();
 		return animatorURIParameter;
@@ -166,6 +171,7 @@ public class LaunchconfigurationFactoryImpl extends EFactoryImpl implements Laun
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
+	@Override
 	public EntryPointParameter createEntryPointParameter() {
 		EntryPointParameterImpl entryPointParameter = new EntryPointParameterImpl();
 		return entryPointParameter;
@@ -176,6 +182,7 @@ public class LaunchconfigurationFactoryImpl extends EFactoryImpl implements Laun
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
+	@Override
 	public InitializationArgumentsParameter createInitializationArgumentsParameter() {
 		InitializationArgumentsParameterImpl initializationArgumentsParameter = new InitializationArgumentsParameterImpl();
 		return initializationArgumentsParameter;
@@ -186,6 +193,7 @@ public class LaunchconfigurationFactoryImpl extends EFactoryImpl implements Laun
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
+	@Override
 	public ModelRootParameter createModelRootParameter() {
 		ModelRootParameterImpl modelRootParameter = new ModelRootParameterImpl();
 		return modelRootParameter;
@@ -196,6 +204,7 @@ public class LaunchconfigurationFactoryImpl extends EFactoryImpl implements Laun
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
+	@Override
 	public InitializationMethodParameter createInitializationMethodParameter() {
 		InitializationMethodParameterImpl initializationMethodParameter = new InitializationMethodParameterImpl();
 		return initializationMethodParameter;
@@ -224,6 +233,7 @@ public class LaunchconfigurationFactoryImpl extends EFactoryImpl implements Laun
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
+	@Override
 	public LaunchconfigurationPackage getLaunchconfigurationPackage() {
 		return (LaunchconfigurationPackage)getEPackage();
 	}

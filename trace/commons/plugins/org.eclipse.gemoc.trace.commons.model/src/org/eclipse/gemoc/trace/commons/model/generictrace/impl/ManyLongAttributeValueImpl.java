@@ -61,6 +61,7 @@ public class ManyLongAttributeValueImpl extends GenericAttributeValueImpl implem
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
+	@Override
 	public EList<Long> getAttributeValue() {
 		if (attributeValue == null) {
 			attributeValue = new EDataTypeUniqueEList<Long>(Long.class, this, GenerictracePackage.MANY_LONG_ATTRIBUTE_VALUE__ATTRIBUTE_VALUE);

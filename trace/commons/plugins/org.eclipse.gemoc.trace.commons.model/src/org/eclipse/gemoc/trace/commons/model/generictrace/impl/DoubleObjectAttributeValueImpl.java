@@ -69,6 +69,7 @@ public class DoubleObjectAttributeValueImpl extends GenericAttributeValueImpl im
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
+	@Override
 	public Double getAttributeValue() {
 		return attributeValue;
 	}
@@ -78,6 +79,7 @@ public class DoubleObjectAttributeValueImpl extends GenericAttributeValueImpl im
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
+	@Override
 	public void setAttributeValue(Double newAttributeValue) {
 		Double oldAttributeValue = attributeValue;
 		attributeValue = newAttributeValue;

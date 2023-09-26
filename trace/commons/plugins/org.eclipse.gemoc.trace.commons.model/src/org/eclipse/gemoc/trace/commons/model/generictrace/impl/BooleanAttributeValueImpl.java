@@ -79,6 +79,7 @@ public class BooleanAttributeValueImpl extends GenericAttributeValueImpl impleme
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
+	@Override
 	public boolean isAttributeValue() {
 		return attributeValue;
 	}
@@ -88,6 +89,7 @@ public class BooleanAttributeValueImpl extends GenericAttributeValueImpl impleme
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
+	@Override
 	public void setAttributeValue(boolean newAttributeValue) {
 		boolean oldAttributeValue = attributeValue;
 		attributeValue = newAttributeValue;

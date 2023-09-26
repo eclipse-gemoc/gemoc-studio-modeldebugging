@@ -71,6 +71,7 @@ public class ManyIntegerAttributeValueImpl extends GenericAttributeValueImpl imp
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
+	@Override
 	public EList<Integer> getAttributeValue() {
 		if (attributeValue == null) {
 			attributeValue = new EDataTypeUniqueEList<Integer>(Integer.class, this, GenerictracePackage.MANY_INTEGER_ATTRIBUTE_VALUE__ATTRIBUTE_VALUE);

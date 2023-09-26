@@ -145,7 +145,7 @@ public class LaunchconfigurationPackageImpl extends EPackageImpl implements Laun
 
 	/**
 	 * Creates, registers, and initializes the <b>Package</b> for this model, and for any others upon which it depends.
-	 * 
+	 *
 	 * <p>This method is used to initialize {@link LaunchconfigurationPackage#eINSTANCE} when that field is accessed.
 	 * Clients should not invoke it directly. Instead, they should simply access that field to obtain the package.
 	 * <!-- begin-user-doc -->
@@ -159,7 +159,8 @@ public class LaunchconfigurationPackageImpl extends EPackageImpl implements Laun
 		if (isInited) return (LaunchconfigurationPackage)EPackage.Registry.INSTANCE.getEPackage(LaunchconfigurationPackage.eNS_URI);
 
 		// Obtain or create and register package
-		LaunchconfigurationPackageImpl theLaunchconfigurationPackage = (LaunchconfigurationPackageImpl)(EPackage.Registry.INSTANCE.get(eNS_URI) instanceof LaunchconfigurationPackageImpl ? EPackage.Registry.INSTANCE.get(eNS_URI) : new LaunchconfigurationPackageImpl());
+		Object registeredLaunchconfigurationPackage = EPackage.Registry.INSTANCE.get(eNS_URI);
+		LaunchconfigurationPackageImpl theLaunchconfigurationPackage = registeredLaunchconfigurationPackage instanceof LaunchconfigurationPackageImpl ? (LaunchconfigurationPackageImpl)registeredLaunchconfigurationPackage : new LaunchconfigurationPackageImpl();
 
 		isInited = true;
 
@@ -172,7 +173,6 @@ public class LaunchconfigurationPackageImpl extends EPackageImpl implements Laun
 		// Mark meta-data to indicate it can't be changed
 		theLaunchconfigurationPackage.freeze();
 
-  
 		// Update the registry and return the package
 		EPackage.Registry.INSTANCE.put(LaunchconfigurationPackage.eNS_URI, theLaunchconfigurationPackage);
 		return theLaunchconfigurationPackage;
@@ -183,6 +183,7 @@ public class LaunchconfigurationPackageImpl extends EPackageImpl implements Laun
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
+	@Override
 	public EClass getLaunchConfiguration() {
 		return launchConfigurationEClass;
 	}
@@ -192,6 +193,7 @@ public class LaunchconfigurationPackageImpl extends EPackageImpl implements Laun
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
+	@Override
 	public EReference getLaunchConfiguration_Parameters() {
 		return (EReference)launchConfigurationEClass.getEStructuralFeatures().get(0);
 	}
@@ -201,6 +203,7 @@ public class LaunchconfigurationPackageImpl extends EPackageImpl implements Laun
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
+	@Override
 	public EAttribute getLaunchConfiguration_Type() {
 		return (EAttribute)launchConfigurationEClass.getEStructuralFeatures().get(1);
 	}
@@ -210,6 +213,7 @@ public class LaunchconfigurationPackageImpl extends EPackageImpl implements Laun
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
+	@Override
 	public EClass getLaunchConfigurationParameter() {
 		return launchConfigurationParameterEClass;
 	}
@@ -219,6 +223,7 @@ public class LaunchconfigurationPackageImpl extends EPackageImpl implements Laun
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
+	@Override
 	public EAttribute getLaunchConfigurationParameter_Value() {
 		return (EAttribute)launchConfigurationParameterEClass.getEStructuralFeatures().get(0);
 	}
@@ -228,6 +233,7 @@ public class LaunchconfigurationPackageImpl extends EPackageImpl implements Laun
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
+	@Override
 	public EClass getLanguageNameParameter() {
 		return languageNameParameterEClass;
 	}
@@ -237,6 +243,7 @@ public class LaunchconfigurationPackageImpl extends EPackageImpl implements Laun
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
+	@Override
 	public EClass getAddonExtensionParameter() {
 		return addonExtensionParameterEClass;
 	}
@@ -246,6 +253,7 @@ public class LaunchconfigurationPackageImpl extends EPackageImpl implements Laun
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
+	@Override
 	public EClass getModelURIParameter() {
 		return modelURIParameterEClass;
 	}
@@ -255,6 +263,7 @@ public class LaunchconfigurationPackageImpl extends EPackageImpl implements Laun
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
+	@Override
 	public EClass getAnimatorURIParameter() {
 		return animatorURIParameterEClass;
 	}
@@ -264,6 +273,7 @@ public class LaunchconfigurationPackageImpl extends EPackageImpl implements Laun
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
+	@Override
 	public EClass getEntryPointParameter() {
 		return entryPointParameterEClass;
 	}
@@ -273,6 +283,7 @@ public class LaunchconfigurationPackageImpl extends EPackageImpl implements Laun
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
+	@Override
 	public EClass getInitializationArgumentsParameter() {
 		return initializationArgumentsParameterEClass;
 	}
@@ -282,6 +293,7 @@ public class LaunchconfigurationPackageImpl extends EPackageImpl implements Laun
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
+	@Override
 	public EClass getModelRootParameter() {
 		return modelRootParameterEClass;
 	}
@@ -291,6 +303,7 @@ public class LaunchconfigurationPackageImpl extends EPackageImpl implements Laun
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
+	@Override
 	public EClass getInitializationMethodParameter() {
 		return initializationMethodParameterEClass;
 	}
@@ -300,6 +313,7 @@ public class LaunchconfigurationPackageImpl extends EPackageImpl implements Laun
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
+	@Override
 	public EDataType getISerializable() {
 		return iSerializableEDataType;
 	}
@@ -309,6 +323,7 @@ public class LaunchconfigurationPackageImpl extends EPackageImpl implements Laun
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
+	@Override
 	public LaunchconfigurationFactory getLaunchconfigurationFactory() {
 		return (LaunchconfigurationFactory)getEFactoryInstance();
 	}

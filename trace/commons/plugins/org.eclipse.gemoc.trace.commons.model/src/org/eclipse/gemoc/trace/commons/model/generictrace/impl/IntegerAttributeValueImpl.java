@@ -79,6 +79,7 @@ public class IntegerAttributeValueImpl extends GenericAttributeValueImpl impleme
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
+	@Override
 	public int getAttributeValue() {
 		return attributeValue;
 	}
@@ -88,6 +89,7 @@ public class IntegerAttributeValueImpl extends GenericAttributeValueImpl impleme
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
+	@Override
 	public void setAttributeValue(int newAttributeValue) {
 		int oldAttributeValue = attributeValue;
 		attributeValue = newAttributeValue;

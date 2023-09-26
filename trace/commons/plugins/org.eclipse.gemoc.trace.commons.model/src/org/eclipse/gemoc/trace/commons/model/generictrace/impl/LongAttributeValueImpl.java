@@ -69,6 +69,7 @@ public class LongAttributeValueImpl extends GenericAttributeValueImpl implements
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
+	@Override
 	public long getAttributeValue() {
 		return attributeValue;
 	}
@@ -78,6 +79,7 @@ public class LongAttributeValueImpl extends GenericAttributeValueImpl implements
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
+	@Override
 	public void setAttributeValue(long newAttributeValue) {
 		long oldAttributeValue = attributeValue;
 		attributeValue = newAttributeValue;

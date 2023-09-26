@@ -61,6 +61,7 @@ public class ManyDoubleAttributeValueImpl extends GenericAttributeValueImpl impl
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
+	@Override
 	public EList<Double> getAttributeValue() {
 		if (attributeValue == null) {
 			attributeValue = new EDataTypeUniqueEList<Double>(Double.class, this, GenerictracePackage.MANY_DOUBLE_ATTRIBUTE_VALUE__ATTRIBUTE_VALUE);

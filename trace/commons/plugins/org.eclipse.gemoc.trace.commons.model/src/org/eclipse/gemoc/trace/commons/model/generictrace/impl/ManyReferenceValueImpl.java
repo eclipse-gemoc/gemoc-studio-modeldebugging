@@ -71,6 +71,7 @@ public class ManyReferenceValueImpl extends GenericReferenceValueImpl implements
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
+	@Override
 	public EList<EObject> getReferenceValues() {
 		if (referenceValues == null) {
 			referenceValues = new EObjectResolvingEList<EObject>(EObject.class, this, GenerictracePackage.MANY_REFERENCE_VALUE__REFERENCE_VALUES);

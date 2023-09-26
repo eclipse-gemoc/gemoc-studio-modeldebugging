@@ -18,6 +18,7 @@ import org.eclipse.gemoc.trace.commons.model.launchconfiguration.Launchconfigura
 
 import org.eclipse.gemoc.trace.commons.model.trace.BigStep;
 import org.eclipse.gemoc.trace.commons.model.trace.Dimension;
+import org.eclipse.gemoc.trace.commons.model.trace.Footprint;
 import org.eclipse.gemoc.trace.commons.model.trace.GenericMSE;
 import org.eclipse.gemoc.trace.commons.model.trace.MSEModel;
 import org.eclipse.gemoc.trace.commons.model.trace.MSEOccurrence;
@@ -136,6 +137,13 @@ public class TracePackageImpl extends EPackageImpl implements TracePackage {
 	 * @generated
 	 */
 	private EClass stateEClass = null;
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	private EClass footprintEClass = null;
 
 	/**
 	 * <!-- begin-user-doc -->
@@ -435,6 +443,16 @@ public class TracePackageImpl extends EPackageImpl implements TracePackage {
 	 * @generated
 	 */
 	@Override
+	public EReference getSmallStep_Footprint() {
+		return (EReference)smallStepEClass.getEStructuralFeatures().get(0);
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	@Override
 	public EClass getSequentialStep() {
 		return sequentialStepEClass;
 	}
@@ -615,6 +633,46 @@ public class TracePackageImpl extends EPackageImpl implements TracePackage {
 	 * @generated
 	 */
 	@Override
+	public EClass getFootprint() {
+		return footprintEClass;
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	@Override
+	public EReference getFootprint_Accesses() {
+		return (EReference)footprintEClass.getEStructuralFeatures().get(0);
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	@Override
+	public EReference getFootprint_Changes() {
+		return (EReference)footprintEClass.getEStructuralFeatures().get(1);
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	@Override
+	public EReference getFootprint_Instantiations() {
+		return (EReference)footprintEClass.getEStructuralFeatures().get(2);
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	@Override
 	public EDataType getISerializable() {
 		return iSerializableEDataType;
 	}
@@ -676,6 +734,7 @@ public class TracePackageImpl extends EPackageImpl implements TracePackage {
 		createEReference(bigStepEClass, BIG_STEP__SUB_STEPS);
 
 		smallStepEClass = createEClass(SMALL_STEP);
+		createEReference(smallStepEClass, SMALL_STEP__FOOTPRINT);
 
 		sequentialStepEClass = createEClass(SEQUENTIAL_STEP);
 
@@ -701,6 +760,11 @@ public class TracePackageImpl extends EPackageImpl implements TracePackage {
 		createEReference(stateEClass, STATE__STARTED_STEPS);
 		createEReference(stateEClass, STATE__ENDED_STEPS);
 		createEReference(stateEClass, STATE__VALUES);
+
+		footprintEClass = createEClass(FOOTPRINT);
+		createEReference(footprintEClass, FOOTPRINT__ACCESSES);
+		createEReference(footprintEClass, FOOTPRINT__CHANGES);
+		createEReference(footprintEClass, FOOTPRINT__INSTANTIATIONS);
 
 		// Create data types
 		iSerializableEDataType = createEDataType(ISERIALIZABLE);
@@ -891,6 +955,7 @@ public class TracePackageImpl extends EPackageImpl implements TracePackage {
 		initEReference(getBigStep_SubSteps(), g1, null, "subSteps", null, 0, -1, BigStep.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 
 		initEClass(smallStepEClass, SmallStep.class, "SmallStep", IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
+		initEReference(getSmallStep_Footprint(), this.getFootprint(), null, "footprint", null, 0, 1, SmallStep.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 
 		initEClass(sequentialStepEClass, SequentialStep.class, "SequentialStep", IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
 
@@ -928,6 +993,11 @@ public class TracePackageImpl extends EPackageImpl implements TracePackage {
 		initEReference(getState_EndedSteps(), g1, this.getStep_EndingState(), "endedSteps", null, 0, -1, State.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 		g1 = createEGenericType(stateEClass_ValueSubType);
 		initEReference(getState_Values(), g1, this.getValue_States(), "values", null, 0, -1, State.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, !IS_ORDERED);
+
+		initEClass(footprintEClass, Footprint.class, "Footprint", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
+		initEReference(getFootprint_Accesses(), theEcorePackage.getEObject(), null, "accesses", null, 0, -1, Footprint.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+		initEReference(getFootprint_Changes(), theEcorePackage.getEObject(), null, "changes", null, 0, -1, Footprint.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+		initEReference(getFootprint_Instantiations(), theEcorePackage.getEClass(), null, "instantiations", null, 0, -1, Footprint.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 
 		// Initialize data types
 		initEDataType(iSerializableEDataType, byte[].class, "ISerializable", IS_SERIALIZABLE, !IS_GENERATED_INSTANCE_CLASS);
