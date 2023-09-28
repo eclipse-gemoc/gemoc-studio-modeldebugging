@@ -9,7 +9,7 @@
  *     INRIA - initial API and implementation
  *******************************************************************************/
 
-package org.eclipse.gemoc.executionframework.engine.ui.launcher;
+package org.eclipse.gemoc.executionframework.engine.ui.concurrency.launcher;
 
 import java.util.Collection;
 import java.util.List;
@@ -42,6 +42,7 @@ import org.eclipse.gemoc.executionframework.engine.core.RunConfiguration;
 import org.eclipse.gemoc.executionframework.engine.ui.Activator;
 import org.eclipse.gemoc.executionframework.engine.ui.concurrency.strategyselector.StrategySelectionView;
 import org.eclipse.gemoc.executionframework.engine.ui.concurrency.views.step.LogicalStepsView;
+import org.eclipse.gemoc.executionframework.engine.ui.launcher.AbstractGemocLauncher;
 import org.eclipse.gemoc.executionframework.extensions.sirius.services.AbstractGemocAnimatorServices;
 import org.eclipse.gemoc.executionframework.extensions.sirius.services.AbstractGemocDebuggerServices;
 import org.eclipse.gemoc.executionframework.ui.views.engine.EnginesStatusView;
