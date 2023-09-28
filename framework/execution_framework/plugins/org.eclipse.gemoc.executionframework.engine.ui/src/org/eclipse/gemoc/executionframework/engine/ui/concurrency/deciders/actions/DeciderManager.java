@@ -14,9 +14,9 @@ package org.eclipse.gemoc.executionframework.engine.ui.concurrency.deciders.acti
 import java.util.ArrayList;
 import java.util.List;
 
-import org.eclipse.gemoc.executionframework.engine.concurrency.ILogicalStepDecider;
 import org.eclipse.gemoc.executionframework.engine.concurrency.deciders.DeciderSpecificationExtension;
 import org.eclipse.gemoc.executionframework.engine.concurrency.deciders.DeciderSpecificationExtensionPoint;
+import org.eclipse.gemoc.executionframework.engine.concurrency.deciders.ILogicalStepDecider;
 
 public class DeciderManager {
 

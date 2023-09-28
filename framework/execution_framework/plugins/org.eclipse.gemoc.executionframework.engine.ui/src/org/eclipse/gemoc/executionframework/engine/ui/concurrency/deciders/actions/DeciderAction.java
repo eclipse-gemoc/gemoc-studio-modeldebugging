@@ -13,8 +13,8 @@ package org.eclipse.gemoc.executionframework.engine.ui.concurrency.deciders.acti
 
 import org.eclipse.core.runtime.CoreException;
 import org.eclipse.gemoc.executionframework.engine.concurrency.AbstractConcurrentExecutionEngine;
-import org.eclipse.gemoc.executionframework.engine.concurrency.ILogicalStepDecider;
 import org.eclipse.gemoc.executionframework.engine.concurrency.deciders.DeciderSpecificationExtension;
+import org.eclipse.gemoc.executionframework.engine.concurrency.deciders.ILogicalStepDecider;
 import org.eclipse.gemoc.executionframework.engine.ui.Activator;
 import org.eclipse.jface.action.Action;
 import org.eclipse.jface.resource.ImageDescriptor;

@@ -9,10 +9,11 @@
  *     INRIA - initial API and implementation
  *     I3S Laboratory - API update and bug fix
  *******************************************************************************/
-package org.eclipse.gemoc.executionframework.engine.concurrency;
+package org.eclipse.gemoc.executionframework.engine.concurrency.deciders;
 
 import java.util.List;
 
+import org.eclipse.gemoc.executionframework.engine.concurrency.AbstractConcurrentExecutionEngine;
 import org.eclipse.gemoc.trace.commons.model.trace.ParallelStep;
 import org.eclipse.gemoc.xdsmlframework.api.core.IDisposable;
 

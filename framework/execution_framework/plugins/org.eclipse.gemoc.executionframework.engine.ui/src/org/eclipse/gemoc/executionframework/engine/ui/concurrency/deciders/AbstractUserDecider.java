@@ -16,8 +16,8 @@ import java.util.concurrent.Semaphore;
 
 import org.eclipse.gemoc.commons.eclipse.ui.ViewHelper;
 import org.eclipse.gemoc.executionframework.engine.concurrency.AbstractConcurrentExecutionEngine;
-import org.eclipse.gemoc.executionframework.engine.concurrency.DeciderException;
-import org.eclipse.gemoc.executionframework.engine.concurrency.ILogicalStepDecider;
+import org.eclipse.gemoc.executionframework.engine.concurrency.deciders.DeciderException;
+import org.eclipse.gemoc.executionframework.engine.concurrency.deciders.ILogicalStepDecider;
 import org.eclipse.gemoc.executionframework.engine.ui.concurrency.SharedIcons;
 import org.eclipse.gemoc.executionframework.engine.ui.concurrency.views.step.LogicalStepsView;
 import org.eclipse.gemoc.trace.commons.model.trace.ParallelStep;

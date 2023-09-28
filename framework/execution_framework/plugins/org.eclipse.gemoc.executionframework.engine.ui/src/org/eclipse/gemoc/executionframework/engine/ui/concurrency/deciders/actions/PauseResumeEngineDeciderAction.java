@@ -12,8 +12,8 @@
 package org.eclipse.gemoc.executionframework.engine.ui.concurrency.deciders.actions;
 
 import org.eclipse.gemoc.executionframework.engine.concurrency.AbstractConcurrentExecutionEngine;
-import org.eclipse.gemoc.executionframework.engine.concurrency.DeciderException;
-import org.eclipse.gemoc.executionframework.engine.concurrency.ILogicalStepDecider;
+import org.eclipse.gemoc.executionframework.engine.concurrency.deciders.DeciderException;
+import org.eclipse.gemoc.executionframework.engine.concurrency.deciders.ILogicalStepDecider;
 import org.eclipse.gemoc.executionframework.engine.ui.concurrency.SharedIcons;
 import org.eclipse.gemoc.executionframework.engine.ui.concurrency.deciders.AbstractUserDecider;
 import org.eclipse.gemoc.executionframework.ui.views.engine.actions.AbstractEngineAction;

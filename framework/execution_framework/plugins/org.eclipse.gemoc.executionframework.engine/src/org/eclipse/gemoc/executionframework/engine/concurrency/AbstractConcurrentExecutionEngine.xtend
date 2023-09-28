@@ -10,6 +10,8 @@ import org.chocosolver.solver.Model
 import org.eclipse.emf.ecore.EPackage
 import org.eclipse.emf.ecore.util.EcoreUtil
 import org.eclipse.gemoc.executionframework.engine.Activator
+import org.eclipse.gemoc.executionframework.engine.concurrency.deciders.DeciderException
+import org.eclipse.gemoc.executionframework.engine.concurrency.deciders.ILogicalStepDecider
 import org.eclipse.gemoc.executionframework.engine.concurrency.strategies.ConcurrencyStrategy
 import org.eclipse.gemoc.executionframework.engine.concurrency.strategies.EnumeratingFilteringStrategy
 import org.eclipse.gemoc.executionframework.engine.concurrency.strategies.FilteringStrategy

@@ -49,7 +49,7 @@
 	      
 	      	      <view
 	            category="org.eclipse.gemoc.executionframework.ui.category"
-	            class="org.eclipse.gemoc.executionframework.engine.ui.concurrency.strategy_selector.StrategySelectionView"
+	            class="org.eclipse.gemoc.executionframework.engine.ui.concurrency.strategyselector.StrategySelectionView"
 	            icon="icons/IconeGemocModel-16.png"
 	            id="org.eclipse.gemoc.executionframework.engine.io.views.StrategySelectionView"
 	            name="Strategy Selection">

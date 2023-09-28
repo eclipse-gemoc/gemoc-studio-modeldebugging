@@ -13,6 +13,7 @@ package org.eclipse.gemoc.executionframework.engine.concurrency;
 
 import org.eclipse.gemoc.executionframework.engine.commons.AbstractModelExecutionContext;
 import org.eclipse.gemoc.executionframework.engine.commons.EngineContextException;
+import org.eclipse.gemoc.executionframework.engine.concurrency.deciders.ILogicalStepDecider;
 import org.eclipse.gemoc.xdsmlframework.api.core.ExecutionMode;
 import org.eclipse.gemoc.xdsmlframework.api.core.IExecutionPlatform;
 import org.eclipse.gemoc.xdsmlframework.api.extensions.languages.LanguageDefinitionExtension;

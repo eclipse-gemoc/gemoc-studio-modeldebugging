@@ -15,7 +15,6 @@ import java.net.URL;
 
 import org.eclipse.core.runtime.CoreException;
 import org.eclipse.core.runtime.Platform;
-import org.eclipse.gemoc.executionframework.engine.concurrency.ILogicalStepDecider;
 import org.eclipse.gemoc.xdsmlframework.api.extensions.Extension;
 import org.osgi.framework.Bundle;
 

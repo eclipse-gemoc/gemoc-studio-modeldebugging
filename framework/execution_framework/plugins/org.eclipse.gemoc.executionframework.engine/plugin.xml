@@ -13,15 +13,11 @@
    <extension
          point="org.eclipse.gemoc.gemoc_language_workbench.deciders">
       <DeciderSpecification
-            Class="org.eclipse.gemoc.execution.concurrent.ccsljavaengine.deciders.RandomDecider"
+            Class="org.eclipse.gemoc.executionframework.engine.concurrency.deciders.RandomDecider"
             Icon="icons/question-shield-black-16.png"
             Name="Random decider">
       </DeciderSpecification>
-      <DeciderSpecification
-            Class="org.eclipse.gemoc.execution.concurrent.ccsljavaengine.deciders.CcslSolverDecider"
-            Icon="icons/app-shield-black-16.png"
-            Name="Solver decider">
-      </DeciderSpecification>
+
    </extension>
       <extension
          point="org.eclipse.gemoc.gemoc_language_workbench.engine_addon_group">
@@ -34,16 +30,6 @@
             id="Concurrent.AddonGroup">
       </addonGroup>
    </extension>
-   <extension
-         point="org.eclipse.gemoc.gemoc_language_workbench.engine_addon">
-      <addon
-            addonGroupId="Concurrent.AddonGroup"
-            class="org.eclipse.gemoc.execution.concurrent.ccsljavaengine.eventscheduling.trace.EventSchedulingModelExecutionTracingAddon"
-            default="false"
-            name="MultiBranch Reflective Trace"
-            shortDescription="Trace the execution events. It is able to trace LogicalStep decisions of concurrent engine."
-            id="EventSchedulingExecutionTracing.Addon">
-      </addon>
-   </extension>
+
 
 </plugin>

@@ -1,4 +1,4 @@
-package org.eclipse.gemoc.executionframework.engine.concurrency;
+package org.eclipse.gemoc.executionframework.engine.concurrency.deciders;
 
 public class DeciderException extends Exception {
 
