@@ -1,4 +1,5 @@
-package org.eclipse.gemoc.executionframework.engine.ui.concurrency.strategy_selector
+
+package org.eclipse.gemoc.executionframework.engine.ui.concurrency.strategyselector
 
 import java.beans.PropertyChangeListener
 import java.beans.PropertyChangeSupport

@@ -1,4 +1,4 @@
-package org.eclipse.gemoc.executionframework.engine.ui.concurrency.strategy_selector
+package org.eclipse.gemoc.executionframework.engine.ui.concurrency.strategyselector
 
 import org.eclipse.gemoc.executionframework.engine.ui.concurrency.strategies.StrategyDefinition
 import org.eclipse.swt.widgets.Control

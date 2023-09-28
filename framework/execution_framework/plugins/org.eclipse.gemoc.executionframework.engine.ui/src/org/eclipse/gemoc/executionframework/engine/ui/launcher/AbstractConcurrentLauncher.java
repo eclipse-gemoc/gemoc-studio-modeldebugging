@@ -40,7 +40,7 @@ import org.eclipse.gemoc.executionframework.engine.concurrency.ConcurrentRunConf
 import org.eclipse.gemoc.executionframework.engine.concurrency.IConcurrentRunConfiguration;
 import org.eclipse.gemoc.executionframework.engine.core.RunConfiguration;
 import org.eclipse.gemoc.executionframework.engine.ui.Activator;
-import org.eclipse.gemoc.executionframework.engine.ui.concurrency.strategy_selector.StrategySelectionView;
+import org.eclipse.gemoc.executionframework.engine.ui.concurrency.strategyselector.StrategySelectionView;
 import org.eclipse.gemoc.executionframework.engine.ui.concurrency.views.step.LogicalStepsView;
 import org.eclipse.gemoc.executionframework.extensions.sirius.services.AbstractGemocAnimatorServices;
 import org.eclipse.gemoc.executionframework.extensions.sirius.services.AbstractGemocDebuggerServices;

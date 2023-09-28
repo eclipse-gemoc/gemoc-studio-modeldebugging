@@ -7,8 +7,8 @@ import org.eclipse.gemoc.executionframework.engine.concurrency.ConcurrentRunConf
 import org.eclipse.gemoc.executionframework.engine.ui.concurrency.strategies.LaunchConfigurationContext
 import org.eclipse.gemoc.executionframework.engine.ui.concurrency.strategies.StrategyDefinition
 import org.eclipse.gemoc.executionframework.engine.ui.concurrency.strategies.StrategyRegistry
-import org.eclipse.gemoc.executionframework.engine.ui.concurrency.strategy_selector.StrategyConfigurationUpdateListener
-import org.eclipse.gemoc.executionframework.engine.ui.concurrency.strategy_selector.StrategySelectionControl
+import org.eclipse.gemoc.executionframework.engine.ui.concurrency.strategyselector.StrategyConfigurationUpdateListener
+import org.eclipse.gemoc.executionframework.engine.ui.concurrency.strategyselector.StrategySelectionControl
 import org.eclipse.swt.widgets.Composite
 import org.eclipse.swt.widgets.Control
 

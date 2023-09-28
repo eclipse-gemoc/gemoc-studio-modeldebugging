@@ -1,4 +1,4 @@
-package org.eclipse.gemoc.executionframework.engine.ui.concurrency.strategy_selector
+package org.eclipse.gemoc.executionframework.engine.ui.concurrency.strategyselector
 
 import java.util.ArrayList
 import java.util.HashMap
@@ -35,7 +35,7 @@ class StrategySelectionControl extends Composite {
 	val LaunchConfigurationContext configContext
 
 	@Accessors(PUBLIC_SETTER)
-	var StrategyConfigurationUpdateListener updateListener = null
+	var org.eclipse.gemoc.executionframework.engine.ui.concurrency.strategyselector.StrategyConfigurationUpdateListener updateListener = null
 
 	var ScrolledComposite scrollPane
 	var Composite content
