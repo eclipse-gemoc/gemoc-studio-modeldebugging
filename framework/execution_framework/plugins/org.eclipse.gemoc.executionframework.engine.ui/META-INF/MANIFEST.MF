@@ -32,7 +32,7 @@ Require-Bundle: org.eclipse.gemoc.xdsmlframework.api,
  org.eclipse.ui.workbench,
  org.eclipse.ui.ide;bundle-version="3.14.0"
 Bundle-ActivationPolicy: lazy
-Bundle-RequiredExecutionEnvironment: JavaSE-11
+Bundle-RequiredExecutionEnvironment: JavaSE-17
 Export-Package: org.eclipse.gemoc.executionframework.engine.ui,
  org.eclipse.gemoc.executionframework.engine.ui.concurrency,
  org.eclipse.gemoc.executionframework.engine.ui.concurrency.deciders,
