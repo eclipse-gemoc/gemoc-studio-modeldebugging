@@ -32,8 +32,18 @@ Require-Bundle: org.eclipse.gemoc.xdsmlframework.api,
  org.eclipse.ui.workbench,
  org.eclipse.ui.ide;bundle-version="3.14.0"
 Bundle-ActivationPolicy: lazy
-Bundle-RequiredExecutionEnvironment: JavaSE-11
+Bundle-RequiredExecutionEnvironment: JavaSE-17
 Export-Package: org.eclipse.gemoc.executionframework.engine.ui,
+ org.eclipse.gemoc.executionframework.engine.ui.concurrency,
+ org.eclipse.gemoc.executionframework.engine.ui.concurrency.deciders,
+ org.eclipse.gemoc.executionframework.engine.ui.concurrency.deciders.actions,
+ org.eclipse.gemoc.executionframework.engine.ui.concurrency.launcher,
+ org.eclipse.gemoc.executionframework.engine.ui.concurrency.strategies,
+ org.eclipse.gemoc.executionframework.engine.ui.concurrency.strategies.concurrency,
+ org.eclipse.gemoc.executionframework.engine.ui.concurrency.strategies.filters,
+ org.eclipse.gemoc.executionframework.engine.ui.concurrency.strategyselector,
+ org.eclipse.gemoc.executionframework.engine.ui.concurrency.views.step,
+ org.eclipse.gemoc.executionframework.engine.ui.genericdebugmodel,
  org.eclipse.gemoc.executionframework.engine.ui.launcher,
  org.eclipse.gemoc.executionframework.engine.ui.launcher.tabs,
  org.eclipse.gemoc.executionframework.engine.ui.provider

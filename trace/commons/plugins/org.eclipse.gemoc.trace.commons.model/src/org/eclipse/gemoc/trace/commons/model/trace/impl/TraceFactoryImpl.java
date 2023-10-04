@@ -1,18 +1,6 @@
-/*******************************************************************************
- * Copyright (c) 2017 Inria and others.
- * All rights reserved. This program and the accompanying materials
- * are made available under the terms of the Eclipse Public License v1.0
- * which accompanies this distribution, and is available at
- * http://www.eclipse.org/legal/epl-v10.html
- *
- * Contributors:
- *     Inria - initial API and implementation
- *******************************************************************************/
 /**
  */
 package org.eclipse.gemoc.trace.commons.model.trace.impl;
-
-import org.eclipse.gemoc.trace.commons.model.trace.*;
 
 import org.eclipse.emf.ecore.EClass;
 import org.eclipse.emf.ecore.EDataType;
@@ -22,6 +10,8 @@ import org.eclipse.emf.ecore.EPackage;
 import org.eclipse.emf.ecore.impl.EFactoryImpl;
 
 import org.eclipse.emf.ecore.plugin.EcorePlugin;
+
+import org.eclipse.gemoc.trace.commons.model.trace.*;
 
 /**
  * <!-- begin-user-doc -->
@@ -70,6 +60,7 @@ public class TraceFactoryImpl extends EFactoryImpl implements TraceFactory {
 			case TracePackage.MSE_OCCURRENCE: return createMSEOccurrence();
 			case TracePackage.MSE_MODEL: return createMSEModel();
 			case TracePackage.GENERIC_MSE: return createGenericMSE();
+			case TracePackage.FOOTPRINT: return createFootprint();
 			default:
 				throw new IllegalArgumentException("The class '" + eClass.getName() + "' is not a valid classifier");
 		}
@@ -136,6 +127,17 @@ public class TraceFactoryImpl extends EFactoryImpl implements TraceFactory {
 	public GenericMSE createGenericMSE() {
 		GenericMSEImpl genericMSE = new GenericMSEImpl();
 		return genericMSE;
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	@Override
+	public Footprint createFootprint() {
+		FootprintImpl footprint = new FootprintImpl();
+		return footprint;
 	}
 
 	/**

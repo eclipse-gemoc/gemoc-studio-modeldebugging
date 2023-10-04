@@ -71,6 +71,7 @@ public class ManyBooleanAttributeValueImpl extends GenericAttributeValueImpl imp
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
+	@Override
 	public EList<Boolean> getAttributeValue() {
 		if (attributeValue == null) {
 			attributeValue = new EDataTypeUniqueEList<Boolean>(Boolean.class, this, GenerictracePackage.MANY_BOOLEAN_ATTRIBUTE_VALUE__ATTRIBUTE_VALUE);

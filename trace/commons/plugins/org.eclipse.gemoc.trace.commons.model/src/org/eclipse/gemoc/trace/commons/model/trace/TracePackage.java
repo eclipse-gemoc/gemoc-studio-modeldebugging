@@ -1,13 +1,3 @@
-/*******************************************************************************
- * Copyright (c) 2017 Inria and others.
- * All rights reserved. This program and the accompanying materials
- * are made available under the terms of the Eclipse Public License v1.0
- * which accompanies this distribution, and is available at
- * http://www.eclipse.org/legal/epl-v10.html
- *
- * Contributors:
- *     Inria - initial API and implementation
- *******************************************************************************/
 /**
  */
 package org.eclipse.gemoc.trace.commons.model.trace;
@@ -491,13 +481,22 @@ public interface TracePackage extends EPackage {
 	int SMALL_STEP__ENDING_STATE = STEP__ENDING_STATE;
 
 	/**
+	 * The feature id for the '<em><b>Footprint</b></em>' containment reference.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int SMALL_STEP__FOOTPRINT = STEP_FEATURE_COUNT + 0;
+
+	/**
 	 * The number of structural features of the '<em>Small Step</em>' class.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @generated
 	 * @ordered
 	 */
-	int SMALL_STEP_FEATURE_COUNT = STEP_FEATURE_COUNT + 0;
+	int SMALL_STEP_FEATURE_COUNT = STEP_FEATURE_COUNT + 1;
 
 	/**
 	 * The number of operations of the '<em>Small Step</em>' class.
@@ -876,13 +875,68 @@ public interface TracePackage extends EPackage {
 	int STATE_OPERATION_COUNT = 0;
 
 	/**
+	 * The meta object id for the '{@link org.eclipse.gemoc.trace.commons.model.trace.impl.FootprintImpl <em>Footprint</em>}' class.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @see org.eclipse.gemoc.trace.commons.model.trace.impl.FootprintImpl
+	 * @see org.eclipse.gemoc.trace.commons.model.trace.impl.TracePackageImpl#getFootprint()
+	 * @generated
+	 */
+	int FOOTPRINT = 14;
+
+	/**
+	 * The feature id for the '<em><b>Accesses</b></em>' reference list.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int FOOTPRINT__ACCESSES = 0;
+
+	/**
+	 * The feature id for the '<em><b>Changes</b></em>' reference list.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int FOOTPRINT__CHANGES = 1;
+
+	/**
+	 * The feature id for the '<em><b>Instantiations</b></em>' reference list.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int FOOTPRINT__INSTANTIATIONS = 2;
+
+	/**
+	 * The number of structural features of the '<em>Footprint</em>' class.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int FOOTPRINT_FEATURE_COUNT = 3;
+
+	/**
+	 * The number of operations of the '<em>Footprint</em>' class.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int FOOTPRINT_OPERATION_COUNT = 0;
+
+	/**
 	 * The meta object id for the '<em>ISerializable</em>' data type.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @see org.eclipse.gemoc.trace.commons.model.trace.impl.TracePackageImpl#getISerializable()
 	 * @generated
 	 */
-	int ISERIALIZABLE = 14;
+	int ISERIALIZABLE = 15;
 
 
 	/**
@@ -1117,6 +1171,17 @@ public interface TracePackage extends EPackage {
 	EClass getSmallStep();
 
 	/**
+	 * Returns the meta object for the containment reference '{@link org.eclipse.gemoc.trace.commons.model.trace.SmallStep#getFootprint <em>Footprint</em>}'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return the meta object for the containment reference '<em>Footprint</em>'.
+	 * @see org.eclipse.gemoc.trace.commons.model.trace.SmallStep#getFootprint()
+	 * @see #getSmallStep()
+	 * @generated
+	 */
+	EReference getSmallStep_Footprint();
+
+	/**
 	 * Returns the meta object for class '{@link org.eclipse.gemoc.trace.commons.model.trace.SequentialStep <em>Sequential Step</em>}'.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -1305,6 +1370,49 @@ public interface TracePackage extends EPackage {
 	 * @generated
 	 */
 	EReference getState_Values();
+
+	/**
+	 * Returns the meta object for class '{@link org.eclipse.gemoc.trace.commons.model.trace.Footprint <em>Footprint</em>}'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return the meta object for class '<em>Footprint</em>'.
+	 * @see org.eclipse.gemoc.trace.commons.model.trace.Footprint
+	 * @generated
+	 */
+	EClass getFootprint();
+
+	/**
+	 * Returns the meta object for the reference list '{@link org.eclipse.gemoc.trace.commons.model.trace.Footprint#getAccesses <em>Accesses</em>}'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return the meta object for the reference list '<em>Accesses</em>'.
+	 * @see org.eclipse.gemoc.trace.commons.model.trace.Footprint#getAccesses()
+	 * @see #getFootprint()
+	 * @generated
+	 */
+	EReference getFootprint_Accesses();
+
+	/**
+	 * Returns the meta object for the reference list '{@link org.eclipse.gemoc.trace.commons.model.trace.Footprint#getChanges <em>Changes</em>}'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return the meta object for the reference list '<em>Changes</em>'.
+	 * @see org.eclipse.gemoc.trace.commons.model.trace.Footprint#getChanges()
+	 * @see #getFootprint()
+	 * @generated
+	 */
+	EReference getFootprint_Changes();
+
+	/**
+	 * Returns the meta object for the reference list '{@link org.eclipse.gemoc.trace.commons.model.trace.Footprint#getInstantiations <em>Instantiations</em>}'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return the meta object for the reference list '<em>Instantiations</em>'.
+	 * @see org.eclipse.gemoc.trace.commons.model.trace.Footprint#getInstantiations()
+	 * @see #getFootprint()
+	 * @generated
+	 */
+	EReference getFootprint_Instantiations();
 
 	/**
 	 * Returns the meta object for data type '<em>ISerializable</em>'.
@@ -1530,6 +1638,14 @@ public interface TracePackage extends EPackage {
 		EClass SMALL_STEP = eINSTANCE.getSmallStep();
 
 		/**
+		 * The meta object literal for the '<em><b>Footprint</b></em>' containment reference feature.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * @generated
+		 */
+		EReference SMALL_STEP__FOOTPRINT = eINSTANCE.getSmallStep_Footprint();
+
+		/**
 		 * The meta object literal for the '{@link org.eclipse.gemoc.trace.commons.model.trace.impl.SequentialStepImpl <em>Sequential Step</em>}' class.
 		 * <!-- begin-user-doc -->
 		 * <!-- end-user-doc -->
@@ -1686,6 +1802,40 @@ public interface TracePackage extends EPackage {
 		 * @generated
 		 */
 		EReference STATE__VALUES = eINSTANCE.getState_Values();
+
+		/**
+		 * The meta object literal for the '{@link org.eclipse.gemoc.trace.commons.model.trace.impl.FootprintImpl <em>Footprint</em>}' class.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * @see org.eclipse.gemoc.trace.commons.model.trace.impl.FootprintImpl
+		 * @see org.eclipse.gemoc.trace.commons.model.trace.impl.TracePackageImpl#getFootprint()
+		 * @generated
+		 */
+		EClass FOOTPRINT = eINSTANCE.getFootprint();
+
+		/**
+		 * The meta object literal for the '<em><b>Accesses</b></em>' reference list feature.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * @generated
+		 */
+		EReference FOOTPRINT__ACCESSES = eINSTANCE.getFootprint_Accesses();
+
+		/**
+		 * The meta object literal for the '<em><b>Changes</b></em>' reference list feature.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * @generated
+		 */
+		EReference FOOTPRINT__CHANGES = eINSTANCE.getFootprint_Changes();
+
+		/**
+		 * The meta object literal for the '<em><b>Instantiations</b></em>' reference list feature.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * @generated
+		 */
+		EReference FOOTPRINT__INSTANTIATIONS = eINSTANCE.getFootprint_Instantiations();
 
 		/**
 		 * The meta object literal for the '<em>ISerializable</em>' data type.

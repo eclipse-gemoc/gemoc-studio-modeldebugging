@@ -129,6 +129,7 @@ public class GenerictraceFactoryImpl extends EFactoryImpl implements Generictrac
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
+	@Override
 	public GenericSequentialStep createGenericSequentialStep() {
 		GenericSequentialStepImpl genericSequentialStep = new GenericSequentialStepImpl();
 		return genericSequentialStep;
@@ -139,6 +140,7 @@ public class GenerictraceFactoryImpl extends EFactoryImpl implements Generictrac
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
+	@Override
 	public GenericParallelStep createGenericParallelStep() {
 		GenericParallelStepImpl genericParallelStep = new GenericParallelStepImpl();
 		return genericParallelStep;
@@ -149,6 +151,7 @@ public class GenerictraceFactoryImpl extends EFactoryImpl implements Generictrac
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
+	@Override
 	public GenericSmallStep createGenericSmallStep() {
 		GenericSmallStepImpl genericSmallStep = new GenericSmallStepImpl();
 		return genericSmallStep;
@@ -159,6 +162,7 @@ public class GenerictraceFactoryImpl extends EFactoryImpl implements Generictrac
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
+	@Override
 	public GenericDimension createGenericDimension() {
 		GenericDimensionImpl genericDimension = new GenericDimensionImpl();
 		return genericDimension;
@@ -169,6 +173,7 @@ public class GenerictraceFactoryImpl extends EFactoryImpl implements Generictrac
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
+	@Override
 	public GenericTracedObject createGenericTracedObject() {
 		GenericTracedObjectImpl genericTracedObject = new GenericTracedObjectImpl();
 		return genericTracedObject;
@@ -179,6 +184,7 @@ public class GenerictraceFactoryImpl extends EFactoryImpl implements Generictrac
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
+	@Override
 	public GenericState createGenericState() {
 		GenericStateImpl genericState = new GenericStateImpl();
 		return genericState;
@@ -189,6 +195,7 @@ public class GenerictraceFactoryImpl extends EFactoryImpl implements Generictrac
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
+	@Override
 	public <StepSubType extends GenericStep> GenericTrace<StepSubType> createGenericTrace() {
 		GenericTraceImpl<StepSubType> genericTrace = new GenericTraceImpl<StepSubType>();
 		return genericTrace;
@@ -199,6 +206,7 @@ public class GenerictraceFactoryImpl extends EFactoryImpl implements Generictrac
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
+	@Override
 	public BooleanAttributeValue createBooleanAttributeValue() {
 		BooleanAttributeValueImpl booleanAttributeValue = new BooleanAttributeValueImpl();
 		return booleanAttributeValue;
@@ -209,6 +217,7 @@ public class GenerictraceFactoryImpl extends EFactoryImpl implements Generictrac
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
+	@Override
 	public IntegerAttributeValue createIntegerAttributeValue() {
 		IntegerAttributeValueImpl integerAttributeValue = new IntegerAttributeValueImpl();
 		return integerAttributeValue;
@@ -219,6 +228,7 @@ public class GenerictraceFactoryImpl extends EFactoryImpl implements Generictrac
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
+	@Override
 	public StringAttributeValue createStringAttributeValue() {
 		StringAttributeValueImpl stringAttributeValue = new StringAttributeValueImpl();
 		return stringAttributeValue;
@@ -229,6 +239,7 @@ public class GenerictraceFactoryImpl extends EFactoryImpl implements Generictrac
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
+	@Override
 	public ManyBooleanAttributeValue createManyBooleanAttributeValue() {
 		ManyBooleanAttributeValueImpl manyBooleanAttributeValue = new ManyBooleanAttributeValueImpl();
 		return manyBooleanAttributeValue;
@@ -239,6 +250,7 @@ public class GenerictraceFactoryImpl extends EFactoryImpl implements Generictrac
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
+	@Override
 	public ManyIntegerAttributeValue createManyIntegerAttributeValue() {
 		ManyIntegerAttributeValueImpl manyIntegerAttributeValue = new ManyIntegerAttributeValueImpl();
 		return manyIntegerAttributeValue;
@@ -249,6 +261,7 @@ public class GenerictraceFactoryImpl extends EFactoryImpl implements Generictrac
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
+	@Override
 	public ManyStringAttributeValue createManyStringAttributeValue() {
 		ManyStringAttributeValueImpl manyStringAttributeValue = new ManyStringAttributeValueImpl();
 		return manyStringAttributeValue;
@@ -259,6 +272,7 @@ public class GenerictraceFactoryImpl extends EFactoryImpl implements Generictrac
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
+	@Override
 	public SingleReferenceValue createSingleReferenceValue() {
 		SingleReferenceValueImpl singleReferenceValue = new SingleReferenceValueImpl();
 		return singleReferenceValue;
@@ -269,6 +283,7 @@ public class GenerictraceFactoryImpl extends EFactoryImpl implements Generictrac
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
+	@Override
 	public ManyReferenceValue createManyReferenceValue() {
 		ManyReferenceValueImpl manyReferenceValue = new ManyReferenceValueImpl();
 		return manyReferenceValue;
@@ -279,6 +294,7 @@ public class GenerictraceFactoryImpl extends EFactoryImpl implements Generictrac
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
+	@Override
 	public IntegerObjectAttributeValue createIntegerObjectAttributeValue() {
 		IntegerObjectAttributeValueImpl integerObjectAttributeValue = new IntegerObjectAttributeValueImpl();
 		return integerObjectAttributeValue;
@@ -289,6 +305,7 @@ public class GenerictraceFactoryImpl extends EFactoryImpl implements Generictrac
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
+	@Override
 	public DoubleAttributeValue createDoubleAttributeValue() {
 		DoubleAttributeValueImpl doubleAttributeValue = new DoubleAttributeValueImpl();
 		return doubleAttributeValue;
@@ -299,6 +316,7 @@ public class GenerictraceFactoryImpl extends EFactoryImpl implements Generictrac
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
+	@Override
 	public ManyDoubleAttributeValue createManyDoubleAttributeValue() {
 		ManyDoubleAttributeValueImpl manyDoubleAttributeValue = new ManyDoubleAttributeValueImpl();
 		return manyDoubleAttributeValue;
@@ -309,6 +327,7 @@ public class GenerictraceFactoryImpl extends EFactoryImpl implements Generictrac
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
+	@Override
 	public DoubleObjectAttributeValue createDoubleObjectAttributeValue() {
 		DoubleObjectAttributeValueImpl doubleObjectAttributeValue = new DoubleObjectAttributeValueImpl();
 		return doubleObjectAttributeValue;
@@ -319,6 +338,7 @@ public class GenerictraceFactoryImpl extends EFactoryImpl implements Generictrac
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
+	@Override
 	public LongAttributeValue createLongAttributeValue() {
 		LongAttributeValueImpl longAttributeValue = new LongAttributeValueImpl();
 		return longAttributeValue;
@@ -329,6 +349,7 @@ public class GenerictraceFactoryImpl extends EFactoryImpl implements Generictrac
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
+	@Override
 	public ManyLongAttributeValue createManyLongAttributeValue() {
 		ManyLongAttributeValueImpl manyLongAttributeValue = new ManyLongAttributeValueImpl();
 		return manyLongAttributeValue;
@@ -339,6 +360,7 @@ public class GenerictraceFactoryImpl extends EFactoryImpl implements Generictrac
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
+	@Override
 	public LongObjectAttributeValue createLongObjectAttributeValue() {
 		LongObjectAttributeValueImpl longObjectAttributeValue = new LongObjectAttributeValueImpl();
 		return longObjectAttributeValue;
@@ -367,6 +389,7 @@ public class GenerictraceFactoryImpl extends EFactoryImpl implements Generictrac
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
+	@Override
 	public GenerictracePackage getGenerictracePackage() {
 		return (GenerictracePackage)getEPackage();
 	}

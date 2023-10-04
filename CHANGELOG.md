@@ -53,6 +53,7 @@
 #### Enhancements:
 
 - [**enhancement**] Initial version of a Webprotocol based EngineAddon server [#220](https://github.com/eclipse/gemoc-studio-modeldebugging/pull/220)
+- [**enhancement**] Initial version of a Webprotocol based EngineAddon server [#220](https://github.com/eclipse/gemoc-studio-modeldebugging/pull/220)
 - [**enhancement**] Add generic trace edit [#208](https://github.com/eclipse/gemoc-studio-modeldebugging/pull/208)
 - [**enhancement**] Event management integration [#210](https://github.com/eclipse/gemoc-studio-modeldebugging/pull/210)
 - [**enhancement**] Consolidation and automatic bump of K3 versions [#185](https://github.com/eclipse/gemoc-studio-modeldebugging/pull/185)

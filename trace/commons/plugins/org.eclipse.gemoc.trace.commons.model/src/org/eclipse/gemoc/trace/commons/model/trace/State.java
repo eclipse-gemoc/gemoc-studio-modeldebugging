@@ -1,13 +1,3 @@
-/*******************************************************************************
- * Copyright (c) 2017 Inria and others.
- * All rights reserved. This program and the accompanying materials
- * are made available under the terms of the Eclipse Public License v1.0
- * which accompanies this distribution, and is available at
- * http://www.eclipse.org/legal/epl-v10.html
- *
- * Contributors:
- *     Inria - initial API and implementation
- *******************************************************************************/
 /**
  */
 package org.eclipse.gemoc.trace.commons.model.trace;
@@ -39,10 +29,6 @@ public interface State<StepSubType extends Step<?>, ValueSubType extends Value<?
 	 * Returns the value of the '<em><b>Started Steps</b></em>' reference list.
 	 * It is bidirectional and its opposite is '{@link org.eclipse.gemoc.trace.commons.model.trace.Step#getStartingState <em>Starting State</em>}'.
 	 * <!-- begin-user-doc -->
-	 * <p>
-	 * If the meaning of the '<em>Started Steps</em>' reference list isn't clear,
-	 * there really should be more of a description here...
-	 * </p>
 	 * <!-- end-user-doc -->
 	 * @return the value of the '<em>Started Steps</em>' reference list.
 	 * @see org.eclipse.gemoc.trace.commons.model.trace.TracePackage#getState_StartedSteps()
@@ -56,10 +42,6 @@ public interface State<StepSubType extends Step<?>, ValueSubType extends Value<?
 	 * Returns the value of the '<em><b>Ended Steps</b></em>' reference list.
 	 * It is bidirectional and its opposite is '{@link org.eclipse.gemoc.trace.commons.model.trace.Step#getEndingState <em>Ending State</em>}'.
 	 * <!-- begin-user-doc -->
-	 * <p>
-	 * If the meaning of the '<em>Ended Steps</em>' reference list isn't clear,
-	 * there really should be more of a description here...
-	 * </p>
 	 * <!-- end-user-doc -->
 	 * @return the value of the '<em>Ended Steps</em>' reference list.
 	 * @see org.eclipse.gemoc.trace.commons.model.trace.TracePackage#getState_EndedSteps()
@@ -73,10 +55,6 @@ public interface State<StepSubType extends Step<?>, ValueSubType extends Value<?
 	 * Returns the value of the '<em><b>Values</b></em>' reference list.
 	 * It is bidirectional and its opposite is '{@link org.eclipse.gemoc.trace.commons.model.trace.Value#getStates <em>States</em>}'.
 	 * <!-- begin-user-doc -->
-	 * <p>
-	 * If the meaning of the '<em>Values</em>' reference list isn't clear,
-	 * there really should be more of a description here...
-	 * </p>
 	 * <!-- end-user-doc -->
 	 * @return the value of the '<em>Values</em>' reference list.
 	 * @see org.eclipse.gemoc.trace.commons.model.trace.TracePackage#getState_Values()

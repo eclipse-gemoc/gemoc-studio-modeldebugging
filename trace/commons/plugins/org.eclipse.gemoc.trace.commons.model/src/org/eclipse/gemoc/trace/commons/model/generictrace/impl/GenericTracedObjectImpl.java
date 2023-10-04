@@ -90,6 +90,7 @@ public class GenericTracedObjectImpl extends TracedObjectImpl<GenericDimension> 
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
+	@Override
 	public EObject getOriginalObject() {
 		if (originalObject != null && originalObject.eIsProxy()) {
 			InternalEObject oldOriginalObject = (InternalEObject)originalObject;
@@ -116,6 +117,7 @@ public class GenericTracedObjectImpl extends TracedObjectImpl<GenericDimension> 
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
+	@Override
 	public void setOriginalObject(EObject newOriginalObject) {
 		EObject oldOriginalObject = originalObject;
 		originalObject = newOriginalObject;
@@ -128,6 +130,7 @@ public class GenericTracedObjectImpl extends TracedObjectImpl<GenericDimension> 
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
+	@Override
 	public EList<GenericDimension> getAllDimensions() {
 		if (allDimensions == null) {
 			allDimensions = new EObjectContainmentEList<GenericDimension>(GenericDimension.class, this, GenerictracePackage.GENERIC_TRACED_OBJECT__ALL_DIMENSIONS);
@@ -140,6 +143,7 @@ public class GenericTracedObjectImpl extends TracedObjectImpl<GenericDimension> 
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
+	@Override
 	public EList<GenericDimension> getDimensionsInternal() {
 		final EList<GenericDimension> result = new org.eclipse.emf.ecore.util.BasicInternalEList<GenericDimension>(Object.class);
 		result.addAll(super.getDimensionsInternal());

@@ -10,6 +10,26 @@
       </addonGroup>
    </extension>
 
+   <extension
+         point="org.eclipse.gemoc.gemoc_language_workbench.deciders">
+      <DeciderSpecification
+            Class="org.eclipse.gemoc.executionframework.engine.concurrency.deciders.RandomDecider"
+            Icon="icons/question-shield-black-16.png"
+            Name="Random decider">
+      </DeciderSpecification>
+
+   </extension>
+      <extension
+         point="org.eclipse.gemoc.gemoc_language_workbench.engine_addon_group">
+      <addonGroup
+            name="General"
+            id="General.AddonGroup">
+      </addonGroup>
+      <addonGroup
+            name="Concurrent"
+            id="Concurrent.AddonGroup">
+      </addonGroup>
+   </extension>
 
 
 </plugin>

@@ -78,6 +78,8 @@
         <eTypeArguments/>
       </eBounds>
     </eTypeParameters>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="footprint" eType="#//Footprint"
+        containment="true"/>
     <eGenericSuperTypes eClassifier="#//Step">
       <eTypeArguments eTypeParameter="#//SmallStep/StateSubType"/>
     </eGenericSuperTypes>
@@ -214,5 +216,13 @@
         upperBound="-1" eOpposite="#//Value/states">
       <eGenericType eTypeParameter="#//State/ValueSubType"/>
     </eStructuralFeatures>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="Footprint">
+    <eStructuralFeatures xsi:type="ecore:EReference" name="accesses" upperBound="-1"
+        eType="ecore:EClass ../../org.eclipse.emf.ecore/model/Ecore.ecore#//EObject"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="changes" upperBound="-1"
+        eType="ecore:EClass ../../org.eclipse.emf.ecore/model/Ecore.ecore#//EObject"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="instantiations" upperBound="-1"
+        eType="ecore:EClass ../../org.eclipse.emf.ecore/model/Ecore.ecore#//EClass"/>
   </eClassifiers>
 </ecore:EPackage>

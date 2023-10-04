@@ -71,6 +71,7 @@ public class SingleReferenceValueImpl extends GenericReferenceValueImpl implemen
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
+	@Override
 	public EObject getReferenceValue() {
 		if (referenceValue != null && referenceValue.eIsProxy()) {
 			InternalEObject oldReferenceValue = (InternalEObject)referenceValue;
@@ -97,6 +98,7 @@ public class SingleReferenceValueImpl extends GenericReferenceValueImpl implemen
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
+	@Override
 	public void setReferenceValue(EObject newReferenceValue) {
 		EObject oldReferenceValue = referenceValue;
 		referenceValue = newReferenceValue;
