@@ -31,6 +31,7 @@
 		<module>org.eclipse.gemoc.trace.gemoc.ui</module>
 		<module>org.eclipse.gemoc.trace.metamodel.generator</module>
 		<module>org.eclipse.gemoc.trace.annotations</module>
+		<module>org.eclipse.gemoc.trace.gemoc.concurrent</module>
 	</modules>
 
 	<build>
