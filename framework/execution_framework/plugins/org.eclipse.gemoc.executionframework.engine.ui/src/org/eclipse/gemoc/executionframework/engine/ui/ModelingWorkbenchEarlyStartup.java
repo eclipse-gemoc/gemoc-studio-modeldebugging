@@ -9,7 +9,7 @@
  *     INRIA - initial API and implementation
  *     I3S Laboratory - API update and bug fix
  *******************************************************************************/
-package org.eclipse.gemoc.executionframework.engine.ui.concurrency;
+package org.eclipse.gemoc.executionframework.engine.ui;
 
 import org.eclipse.ui.IStartup;
 
