@@ -92,7 +92,7 @@
 							<artifactId>${project.artifactId}</artifactId>
 							<version>${project.version}</version>
 							<classifier>
-								../../releng/org.eclipse.gemoc.dsl.debug.target/dsldebug-photon
+								../../releng/org.eclipse.gemoc.dsl.debug.target/dsldebug-2023-06
 							</classifier>
 						</artifact>
 					</target>
