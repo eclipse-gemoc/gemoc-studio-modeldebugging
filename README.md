@@ -32,6 +32,6 @@ This project is included within the [GEMOC](http://gemoc.org/ "GEMOC Homepage").
 This project is still in incubation and need more work to reach industrial grade. If you need some help to get started with this project or have any questions about it feel free to contact [Cédric Brun](mailto:cedric.brun@obeo.fr).
 
 # Development
-- Continuous integration on [Eclipse CI](https://ci.eclipse.org/gemoc/job/gemoc-studio/)
+- Continuous integration on [Eclipse CI](https://ci.eclipse.org/gemoc/job/gemoc-studio-integration/)
 - [Instructions for building](https://github.com/eclipse/gemoc-studio/tree/master/dev_support/tycho_full_compilation)
 
